@@ -1,0 +1,36 @@
+1359828975280	Copy compilation unit
+1359830020505	Copy compilation unit
+1359831079754	Delete elements
+1359831232297	Copy files
+1359833197557	Rename resource 'index.jsp'
+1359834337331	Delete elements
+1359834369914	Rename field 'noteService'
+1359834417633	Rename type 'NoteRepository'
+1359834441660	Rename type 'NoteService'
+1359834536463	Rename local variable 'note'
+1359834642781	Rename field 'noteRepository'
+1359834701991	Rename type 'NoteController'
+1359840327844	Rename local variable 'noteId'
+1359840471843	Rename local variable 'note'
+1359840494852	Rename local variable 'customer'
+1359840509314	Copy compilation unit
+1359840551751	Copy compilation unit
+1359884088705	Copy compilation unit
+1359884096254	Copy compilation unit
+1359884106185	Copy compilation unit
+1359884763624	Copy files
+1359884781049	Copy files
+1359884791539	Copy files
+1359884873749	Copy compilation units
+1359884905730	Rename local variable 'customer'
+1359884932498	Rename field 'customerRepository'
+1359885854586	Copy compilation units
+1359887465446	Copy file
+1359887953832	Rename method 'findOne'
+1359889890057	Delete element
+1359890666852	Rename resource 'errors.css'
+1359892650207	Rename method 'findByCustomerIdNotEqualToId'
+1359895782837	Rename local variable 'customer'
+1359895880732	Rename method 'findByRegistration'
+1359895898350	Rename method 'findByNoRegistration'
+1359899099311	Delete element

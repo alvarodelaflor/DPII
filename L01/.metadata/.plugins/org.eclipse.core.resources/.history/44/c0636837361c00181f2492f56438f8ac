@@ -1,0 +1,157 @@
+/*
+ * SampleTest.java
+ * 
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package sample;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.BindingResultUtils;
+import org.springframework.validation.MapBindingResult;
+import org.springframework.validation.Validator;
+
+import utilities.AbstractTest;
+import domain.DomainEntity;
+
+@ContextConfiguration(locations = {
+	"classpath:spring/junit.xml"
+})
+@RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
+public class SampleTest extends AbstractTest {
+
+	// Ancillary entities -----------------------------------------------------
+
+	class SampleEntity extends DomainEntity {
+
+		@NotBlank
+		private String	name;
+
+		@Email
+		private String	email;
+
+
+		public String getName() {
+			return this.name;
+		}
+
+		public void setName(final String name) {
+			this.name = name;
+		}
+
+		public String getEmail() {
+			return this.email;
+		}
+
+		public void setEmail(final String email) {
+			this.email = email;
+		}
+	}
+
+
+	@Autowired
+	private Validator	validator;
+
+
+	// System under test ------------------------------------------------------
+
+	// Tests ------------------------------------------------------------------
+
+	// The following are fictitious test cases that are intended to check that 
+	// JUnit works well in this project.  Just righ-click this class and run 
+	// it using JUnit.
+
+	@Test
+	public void samplePositiveTest() {
+		Assert.isTrue(true);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void sampleNegativeTest() {
+		Assert.isTrue(false);
+	}
+
+	@Test
+	public void sampleValidationPositiveTest() {
+		SampleEntity entity;
+		final BindingResult binding;
+
+		entity = new SampleEntity();
+		entity.setName("John Doe");
+		entity.setEmail("john.doe@mail.com");
+BindingResult x; x = new MapBindingResult();
+		binding = BindingResultUtils.getBindingResult(null, "sample");
+		this.validator.validate(entity, binding);
+	}
+
+	@Test
+	public void sampleValidationNegativeTest() {
+		SampleEntity entity;
+		BindingResult binding;
+		Map<Object, Object> model;
+
+		entity = new SampleEntity();
+		entity.setName("    ");
+		entity.setEmail("john.doe at mail.com");
+
+		model = new HashMap<Object, Object>();
+		
+		binding = BindingResultUtils.getBindingResult(model, "sample");
+		
+		this.validator.validate(entity, binding);
+	}
+
+	@Test
+	public void sampleDriver() {
+		final Object testingData[][] = {
+			{
+				"userAccount1", 4, null
+			}, {
+				"userAccount2", 5, null
+			}, {
+				"userAccount3", 6, null
+			}, {
+				"non-existent", 0, AssertionError.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.sampleTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void sampleTemplate(final String beanName, final int id, final Class<?> expected) {
+		Class<?> caught;
+		int dbId;
+
+		caught = null;
+		try {
+			dbId = super.getEntityId(beanName);
+			Assert.isTrue(dbId == id);
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+}

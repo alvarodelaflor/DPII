@@ -1,0 +1,144 @@
+/* NoteController.java
+ *
+ * Copyright (C) 2013 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ * 
+ */
+
+package controllers.customer;
+
+import java.util.Collection;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import services.CustomerService;
+import services.NoteService;
+import controllers.AbstractController;
+import domain.Customer;
+import domain.Note;
+
+@Controller
+@RequestMapping("/note/customer")
+public class NoteCustomerController extends AbstractController {
+		
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private NoteService noteService;
+	@Autowired
+	private CustomerService customerService;
+	
+	// Constructors -----------------------------------------------------------
+	
+	public NoteCustomerController() {
+		super();
+	}
+	
+	// Listing ----------------------------------------------------------------
+
+	@RequestMapping("/list")
+	public ModelAndView list() {
+		ModelAndView result;
+		Collection<Note> notes;		
+					
+		notes = noteService.findByPrincipal();
+		result = new ModelAndView("note/list");
+		result.addObject("notes", notes);
+		
+		return result;
+	}
+	
+	// Creation ---------------------------------------------------------------
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		Customer customer;
+		Note note;
+		
+		customer = customerService.findByPrincipal();		
+		note = noteService.create(customer);
+		result = createEditModelAndView(note);
+		
+		return result;
+	}
+	
+	// Edition ----------------------------------------------------------------
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam int noteId) {
+		ModelAndView result;
+		Note note;
+		
+		note = noteService.findOneToEdit(noteId);		
+		result = createEditModelAndView(note);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid @ModelAttribute Note note, BindingResult bindingResult) {
+		ModelAndView result;		
+				
+		if (bindingResult.hasErrors()) {
+			result = createEditModelAndView(note);
+		} else {
+			try {
+				noteService.save(note);				
+				result = new ModelAndView("redirect:list.do");
+			} catch (Throwable oops) {
+				result = createEditModelAndView(note, "note.commit.error");
+			}
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(@ModelAttribute Note note, BindingResult bindingResult) {
+		ModelAndView result;		
+		
+		try {
+			noteService.delete(note);			
+			result = new ModelAndView("redirect:list.do");
+		} catch (Throwable oops) {
+			result = createEditModelAndView(note, "note.commit.error");
+		}
+		
+		return result;
+	}
+	
+	// Ancillary methods ------------------------------------------------------
+	
+	protected ModelAndView createEditModelAndView(Note note) {
+		ModelAndView result;
+		
+		result = createEditModelAndView(note, null);
+		
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Note note, String message) {
+		ModelAndView result;
+		
+		result = new ModelAndView("note/edit");
+		result.addObject("note", note);
+		result.addObject("message", message);
+		
+		return result;
+	}	
+
+}

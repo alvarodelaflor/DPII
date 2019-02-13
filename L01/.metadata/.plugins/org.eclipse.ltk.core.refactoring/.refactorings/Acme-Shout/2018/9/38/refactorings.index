@@ -1,0 +1,23 @@
+1537435944475	Copy compilation unit
+1537439890232	Copy files
+1537440023743	Delete element
+1537440113750	Copy compilation unit
+1537440124981	Rename type 'LoginService'
+1537440206427	Copy compilation unit
+1537440217040	Rename type 'UserAccountRepository'
+1537441098905	Rename local variable 'url'
+1537442103768	Rename compilation unit 'Bookmark.java'
+1537442112393	Rename compilation unit 'BookmarkRepository.java'
+1537442119502	Rename compilation unit 'BookmarkService.java'
+1537443275222	Delete element
+1537445054156	Rename field 'ShoutRepository'
+1537445066140	Rename field 'ShoutService'
+1537447001578	Rename local variable 'sentences'
+1537455819385	Rename type 'ShoutService'
+1537456542401	Rename type 'shoutService'
+1537456718120	Rename method 'countAll'
+1537456725526	Rename method 'countShort'
+1537460408765	Copy compilation unit
+1537460419078	Rename type 'Shout'
+1537461131109	Rename type 'CalculatorForm'
+1537544004728	Rename local variable 'Shouts'

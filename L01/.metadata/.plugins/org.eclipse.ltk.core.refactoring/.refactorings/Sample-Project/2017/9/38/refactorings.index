@@ -1,0 +1,9 @@
+1506096715954	Rename field 'specificationFile'
+1506096748675	Rename field 'entitySpecification'
+1506096755514	Rename field 'entityMap'
+1506099558774	Delete element
+1506157139126	Rename resource 'entities.map'
+1506158147289	Rename method 'getEntityId'
+1506158175159	Rename method 'getEntityById'
+1506158689575	Rename local variable 'username'
+1506158693217	Rename local variable 'announcementId'

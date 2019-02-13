@@ -1,0 +1,31 @@
+1488621546812	Copy package
+1488621553722	Rename package 'reviewers.controllers'
+1488621573912	Copy compilation unit
+1488622267791	Rename local variable 'customer'
+1488627756713	Rename local variable 'stringBuilder'
+1488635426537	Rename type 'CustomToStringBuilder'
+1488642618818	Rename local variable 'array'
+1488642622318	Rename local variable 'calue'
+1488642627318	Rename local variable 'array'
+1488642934224	Rename local variable 'item'
+1488643522498	Rename local variable 'value'
+1488643535498	Rename local variable 'array'
+1488643540498	Rename local variable 'obj'
+1488646651248	Delete element
+1488646733623	Rename type 'CustomPrintBuilder'
+1488646752311	Rename type 'PrettyPrinter'
+1488646767889	Rename method 'printObject'
+1488648974906	Rename type 'DatabaseUtil'
+1488649011805	Rename type 'Utilities'
+1488649086454	Copy compilation unit
+1488649373417	Rename method 'TurnOff'
+1488650807156	Delete element
+1488650849727	Rename type 'DatabaseHelper'
+1488651014377	Rename local variable 'result'
+1488651762791	Rename type 'ConsolePrinter'
+1488654079758	Rename local variable 'type'
+1488655206489	Rename local variable 'declaredType'
+1488658108894	Rename local variable 'passNumber'
+1488665710235	Rename method 'commitTransaction'
+1488665729816	Rename method 'rollbackTransaction'
+1488666001611	Rename local variable 'beanName'

@@ -1,0 +1,47 @@
+/*
+ * LoginService.java
+ * 
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.BookmarkRepository;
+import security.UserAccount;
+import domain.Bookmark;
+
+@Service
+@Transactional
+public class BookmarkService {
+
+	// Managed repository -----------------------------------------------------
+
+	@Autowired
+	BookmarkRepository	bookmarkRepository;
+
+	// Business methods -------------------------------------------------------
+
+	@Override
+	public Collection<Bookmark> findAll() {
+		Collection<Bookmark> result;
+
+		result = this.bookmarkRepository.findAll();
+
+		return result;
+	}
+
+}

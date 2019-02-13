@@ -1,0 +1,23 @@
+1488727998423	Copy compilation unit
+1488728009798	Rename type 'CopyOfPopulateDatabase'
+1488728597408	Rename local variable 'persist'
+1488728605439	Rename local variable 'populationMap'
+1488728613470	Rename local variable 'populationList'
+1488728989001	Rename local variable 'persist'
+1488729087986	Extract method 'cleanEntities'
+1488729252236	Rename local variable 'retry'
+1488729257783	Rename local variable 'result'
+1488729596798	Rename local variable 'ityMap'
+1488729759329	Rename local variable 'tryout'
+1488729766439	Rename local variable 'sorted'
+1488729769939	Rename local variable 'XXXXX'
+1488729839470	Rename local variable 'tryout'
+1488729845033	Rename local variable 'sorted'
+1488729871220	Rename local variable 'cache'
+1488729894798	Rename local variable 'tryout'
+1488729907329	Rename local variable 'sorted'
+1488730023095	Rename local variable 'order'
+1488730065095	Rename local variable 'reservoir'
+1488731245564	Delete element
+1488731838204	Copy compilation unit
+1488732496220	Rename local variable 'cause'

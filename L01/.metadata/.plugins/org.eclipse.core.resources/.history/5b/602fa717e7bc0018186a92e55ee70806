@@ -1,0 +1,79 @@
+/*
+ * LoginService.java
+ * 
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package services;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import repositories.ShoutRepository;
+import security.LoginService;
+import security.UserAccount;
+import domain.Shout;
+
+@Service
+@Transactional
+public class shoutService {
+
+	// Managed repository -----------------------------------------------------
+
+	@Autowired
+	private ShoutRepository	shoutRepository;
+
+
+	// CRUD methods -----------------------------------------------------------
+
+	public Collection<Shout> findAll() {
+		Collection<Shout> result;
+
+		result = this.shoutRepository.findAll();
+
+		return result;
+	}
+
+	public Shout create() {
+		Shout result;
+		UserAccount userAccount;
+		String username;
+
+		userAccount = LoginService.getPrincipal();
+		username = userAccount.getUsername();
+
+		result = new Shout();
+		result.setUsername(username);
+		result.setLink("");
+		result.setText("");
+
+		return result;
+	}
+
+	public void save(final Shout shout) {
+		this.shoutRepository.save(shout);
+	}
+	
+	// Business methods -------------------------------------------------------
+
+	public static Map<String, Double> computeStatistics() {
+		Map<String, Double> result;
+		
+		result = new HashMap<String, Double>();
+		result.put("number.shouts", shoutRepository.count());
+		result.put("number.short.shouts", shoutRepository.countShort());
+		result.put("number.short.shouts", shoutRepository.countLong());
+		
+		return result;
+	}
+
+}

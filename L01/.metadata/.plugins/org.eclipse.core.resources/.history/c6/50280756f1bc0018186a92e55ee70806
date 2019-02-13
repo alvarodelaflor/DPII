@@ -1,0 +1,57 @@
+/*
+ * DomainEntity.java
+ * 
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package forms;
+
+import javax.persistence.Entity;
+import javax.validation.constraints.Pattern;
+
+@Entity
+public class CalculatorForm {
+
+	// Constructors -----------------------------------------------------------
+
+	public CalculatorForm() {
+		super();
+	}
+
+	// Properties -------------------------------------------------------------
+
+	private double	x;
+	private double  y;
+	private String	operator;
+	
+	public double getX() {
+		return x;
+	}
+	
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
+	
+	@Pattern("^[\\+\\-\\*\\/]$")
+	public String getOperator() {
+		return operator;
+	}
+	
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+
+}

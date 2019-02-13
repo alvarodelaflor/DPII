@@ -1,0 +1,179 @@
+/* PopulateDatabase.java
+ *
+ * Copyright (C) 2012 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ * 
+ */
+
+package utilities;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.ejb.Ejb3Configuration;
+import org.hibernate.jdbc.Work;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import domain.DomainEntity;
+
+@SuppressWarnings("deprecation")
+public class PopulateDatabase {
+	
+	public static final String PersistenceUnit = "Sample";
+	public static final String DatabaseName = "Sample";
+
+	public static void main(String[] args) throws Throwable {
+
+		ApplicationContext ctx;
+		EntityManagerFactory emf;
+		EntityManager em;
+		EntityTransaction et;
+
+		ctx = new ClassPathXmlApplicationContext("classpath:utilities/PopulateDatabase.xml");
+		
+		emf = Persistence.createEntityManagerFactory(PersistenceUnit);
+		em = emf.createEntityManager();		
+		et = em.getTransaction();
+						
+//		{
+//			for (Entry<String, Object> entry : emf.getProperties().entrySet())
+//				System.out.println(entry.getKey() + " = " + entry.getValue());
+//		}
+				
+		initialiseDatabase(em);
+				
+		et.begin();		
+		try {
+			for (Entry<String, Object> entry : ctx.getBeansWithAnnotation(Entity.class).entrySet()) {
+				String beanName;
+				DomainEntity entity;
+				
+				beanName = entry.getKey();
+				entity = (DomainEntity) entry.getValue();
+				em.persist(entity);				
+				System.out.println(String.format("Persisting (%s, %s@%d)",
+						beanName, 
+						entity.getClass().getName(),
+						entity.getId()));
+			}
+			et.commit();
+		} catch (Exception oops) {
+			oops.printStackTrace();
+			et.rollback();			
+		} finally {
+			if (em.isOpen())
+				em.close();
+			if (emf.isOpen())
+				emf.close();
+		}
+	}
+	
+	private static void initialiseDatabase(EntityManager entityManager) throws Throwable {		
+		String script;
+		final ArrayList<String> statements;
+		Session session;
+		
+		script = exportSchema();
+		
+		
+		session = entityManager.unwrap(Session.class);
+		session.doWork(new Work() {			
+			@Override
+			public void execute(Connection connection) throws SQLException {
+				for (String line : statements) {
+					Statement statement;
+					
+						// System.out.println(line);
+						statement = connection.createStatement();
+						statement.execute(line);	
+					}
+				}
+			}
+		});
+		
+	}
+
+	private static List<String> exportSchema() throws Throwable {
+		List<String> result;
+		File file;
+		String schema;
+		StringBuilder script;
+		
+		file = saveSchema();
+		schema = readSchema(file);
+		
+		script = new StringBuilder();
+		script.append(String.format("drop database if exists `%s`;\n", DatabaseName));
+		script.append(String.format("create database `%s`;\n", DatabaseName));
+		script.append(String.format("use `%s`;\n", DatabaseName));
+		script.append(schema);
+		
+		result = new ArrayList<String>();
+		for (String statement : script.toString().split(";")) {
+			if (!StringUtils.isBlank(statement))
+				result.add(statement);
+		}
+		
+		return result;
+	}
+
+	private static File saveSchema() throws Throwable {
+		File result;
+		Ejb3Configuration ejb3Configuration;
+		Configuration configuration;		
+		SchemaExport schemaExport;		
+				
+		ejb3Configuration = new Ejb3Configuration().configure(PersistenceUnit, new Properties());
+		configuration = ejb3Configuration.getHibernateConfiguration();
+		configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		
+		result = File.createTempFile("PopulateDatabase", UUID.randomUUID().toString());
+		
+		schemaExport = new SchemaExport(configuration);
+		schemaExport.setDelimiter(";");
+		schemaExport.setFormat(false);
+		schemaExport.setOutputFile(result.getAbsolutePath());
+		schemaExport.setFormat(true);
+		schemaExport.execute(false, false, false, true);
+		
+		return result;
+	}
+
+	private static String readSchema(File file) throws Throwable {
+		StringBuilder result;		
+		BufferedReader reader;
+		String line;
+		
+		result = new StringBuilder();
+		reader = new BufferedReader(new FileReader(file.getAbsolutePath()));
+		while ((line = reader.readLine()) != null) {
+			result.append(line);
+			result.append('\n');
+		}
+		
+		return result.toString();
+	}
+
+}

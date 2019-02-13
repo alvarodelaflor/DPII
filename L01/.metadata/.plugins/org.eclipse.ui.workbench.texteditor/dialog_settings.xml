@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="237" key="DIALOG_WIDTH"/>
+		<item value="464" key="DIALOG_Y_ORIGIN"/>
+		<item value="993" key="DIALOG_X_ORIGIN"/>
+		<item value="362" key="DIALOG_HEIGHT"/>
+		<item value="1|Tahoma|8.25|0|WINDOWS|1|-11|0|0|0|400|0|0|0|1|0|0|0|0|Tahoma" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="exam4" key="selection"/>
+		<list key="findhistory">
+			<item value="exam4"/>
+			<item value="/20"/>
+			<item value="shout"/>
+			<item value="SHOUT"/>
+			<item value="Certification&quot;"/>
+			<item value="Announcement"/>
+			<item value="assert"/>
+			<item value="assertion"/>
+		</list>
+		<list key="replacehistory">
+			<item value="this."/>
+			<item value="customer."/>
+			<item value="Sample"/>
+			<item value=".err."/>
+			<item value=""/>
+			<item value="Double"/>
+			<item value=" "/>
+			<item value="event."/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="389" key="DIALOG_Y_ORIGIN"/>
+		<item value="609" key="DIALOG_X_ORIGIN"/>
+	</section>
+</section>

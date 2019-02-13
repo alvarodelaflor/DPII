@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="customer1" />
+		<property name="password" value="ffbc4675f864e0e9aab8bdf7a0437010" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="customer2" />
+		<property name="password" value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="customer3" />
+		<property name="password" value="033f7f6121501ae98285ad77f216d5e7" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="reviewer1" />
+		<property name="password" value="6ce19528a40dde9521d97cf7ba264eca" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="REVIEWER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="reviewer2" />
+		<property name="password" value="2693b57f0f59df94caacefb811e99851" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="REVIEWER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Administrators -->
+	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Administrator 1" />
+		<property name="email" value="adminitrator1@mail.com" />
+		<property name="phone" value="Phone-1" />
+		<property name="address" value="Address 1" />
+		<property name="userAccount" ref="userAccount1" />		
+	</bean>
+		
+	<!-- Customers -->
+	
+	<bean id="customer1" class="domain.Customer">
+		<property name="name" value="Customer 1" />
+		<property name="email" value="customer1@mail.com" />
+		<property name="phone" value="Phone-1" />
+		<property name="address" value="Address 1" />
+		<property name="userAccount" ref="userAccount2" />		
+		<property name="registrations">
+			<list>
+				<ref bean="registration1" />
+				<ref bean="registration2" />
+				<ref bean="registration5" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="customer2" class="domain.Customer">
+		<property name="name" value="Customer 2" />
+		<property name="email" value="customer2@mail.com" />
+		<property name="phone" value="Phone-2" />
+		<property name="address" value="Address 2" />
+		<property name="userAccount" ref="userAccount3" />		
+		<property name="registrations">
+			<list>
+				<ref bean="registration3" />
+				<ref bean="registration4" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="customer3" class="domain.Customer">
+		<property name="name" value="Customer 3" />
+		<property name="email" value="customer3@mail.com" />
+		<property name="phone" value="Phone-3" />
+		<property name="address" value="Address 3" />
+		<property name="userAccount" ref="userAccount4" />		
+		<property name="registrations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Reviewers -->
+	
+	<bean id="reviewer1" class="domain.Reviewer">
+		<property name="name" value="Reviewer 1" />
+		<property name="email" value="reviewer1@mail.com" />
+		<property name="phone" value="Phone-1" />
+		<property name="address" value="Address 1" />
+		<property name="userAccount" ref="userAccount5" />	
+		<property name="announcements">
+			<list>
+				<ref bean="announcement1" />
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="reviewer2" class="domain.Reviewer">
+		<property name="name" value="Reviewer 2" />
+		<property name="email" value="reviewer2@mail.com" />
+		<property name="phone" value="Phone-1" />
+		<property name="address" value="Address 1" />
+		<property name="userAccount" ref="userAccount6" />
+		<property name="announcements">
+			<list>
+				<ref bean="announcement2" />
+				<ref bean="announcement3" />
+			</list>
+		</property>			
+	</bean>
+	
+	<!-- Registrations -->
+	
+	<bean id="registration1" class="domain.Registration">
+		<property name="moment" value="01/31/2015 12:00" />
+		<property name="owner" ref="customer1" />
+		<property name="announcement" ref="announcement1" />
+		<property name="examPaper" ref="examPaper1" />		
+	</bean>
+	
+	<bean id="registration2" class="domain.Registration">
+		<property name="moment" value="01/31/2015 12:45" />
+		<property name="owner" ref="customer1" />
+		<property name="announcement" ref="announcement2" />
+		<property name="examPaper" ref="examPaper2" />		
+	</bean>
+	
+	<bean id="registration3" class="domain.Registration">
+		<property name="moment" value="01/30/2015 10:10" />
+		<property name="owner" ref="customer2" />
+		<property name="announcement" ref="announcement3" />
+		<property name="examPaper"> <null /> </property>		
+	</bean>
+	
+	<bean id="registration4" class="domain.Registration">
+		<property name="moment" value="02/01/2015 13:00" />
+		<property name="owner" ref="customer2" />
+		<property name="announcement" ref="announcement6" />
+		<property name="examPaper"> <null /> </property>		
+	</bean>
+	
+	<bean id="registration5" class="domain.Registration">
+		<property name="moment" value="02/01/2012 13:30" />
+		<property name="owner" ref="customer1" />
+		<property name="announcement" ref="announcement3" />
+		<property name="examPaper"> <null /> </property>		
+	</bean>
+	
+	<!-- Announcements -->
+	
+	<bean id="announcement1" class="domain.Announcement">
+		<property name="title" value="Announcement 1" />
+		<property name="description" value="Description 1" />
+		<property name="moment" value="11/30/2016 10:00" />
+		<property name="reviewer" ref="reviewer1" />
+		<property name="registrations">
+			<list>
+				<ref bean="registration1" />				
+			</list>
+		</property>
+		<property name="exam" ref="exam1" />
+	</bean>
+	
+	<bean id="announcement2" class="domain.Announcement">
+		<property name="title" value="Announcement 2" />
+		<property name="description" value="Description 2" />
+		<property name="moment" value="07/20/2012 12:00" />
+		<property name="reviewer" ref="reviewer2" />
+		<property name="registrations">
+			<list>
+				<ref bean="registration2" />
+			</list>
+		</property>
+		<property name="exam" ref="exam2" />
+	</bean>		
+	
+	<bean id="announcement3" class="domain.Announcement">
+		<property name="title" value="Announcement 3" />
+		<property name="description" value="Description 3" />
+		<property name="moment" value="12/01/2013 15:00" />
+		<property name="reviewer" ref="reviewer2"/>
+		<property name="registrations">
+			<list>
+				<ref bean="registration3" />
+				<ref bean="registration4" />
+				<ref bean="registration5" />
+			</list>
+		</property>
+		<property name="exam" ref="exam3" />
+	</bean>
+	
+	<bean id="announcement4" class="domain.Announcement">
+		<property name="title" value="Announcement 4" />
+		<property name="description" value="Description 4" />
+		<property name="moment" value="01/01/2017 17:00" />
+		<property name="reviewer"> <null /> </property>
+		<property name="registrations">
+			<list>				
+			</list>
+		</property>
+		<property name="exam" ref="exam3" />
+	</bean>
+	
+	<bean id="announcement5" class="domain.Announcement">
+		<property name="title" value="Announcement 5" />
+		<property name="description" value="Description 5" />
+		<property name="moment" value="12/31/2016 12:00" />
+		<property name="reviewer"> <null /> </property>
+		<property name="registrations">
+			<list>				
+			</list>
+		</property>
+		<property name="exam" ref="exam3" />
+	</bean>
+	
+	<bean id="announcement6" class="domain.Announcement">
+		<property name="title" value="Announcement 6" />
+		<property name="description" value="Description 6" />
+		<property name="moment" value="01/01/3000 00:00" />
+		<property name="reviewer"> <null /> </property>
+		<property name="registrations">
+			<list>				
+			</list>
+		</property>
+		<property name="exam" ref="exam1" />
+	</bean>
+	
+	<bean id="announcement7" class="domain.Announcement">
+		<property name="title" value="Announcement 7" />
+		<property name="description" value="Description 7" />
+		<property name="moment" value="01/01/2000 00:00" />
+		<property name="reviewer"> <null /> </property>
+		<property name="registrations">
+			<list>				
+			</list>
+		</property>
+		<property name="exam" ref="exam1" />
+	</bean>
+
+<!-- Certifications -->
+	
+	<bean id="certification1" class="domain.Certification">
+		<property name="title" value="Certification 1" />
+		<property name="description" value="Description 1" />
+		<property name="extinctionDate" value="01/02/2019 23:59" />
+		<property name="fee" value="100.00" />
+		<property name="exams">
+			<list>
+				<ref bean="exam1" />
+				<ref bean="exam2" />
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="certification2" class="domain.Certification">
+		<property name="title" value="Certification 2" />
+		<property name="description" value="Description 2" />
+		<property name="extinctionDate" value="01/02/2019 10:00" />
+		<property name="fee" value="100.00" />
+		<property name="exams">
+			<list>
+				<ref bean="exam3" />
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="certification3" class="domain.Certification">
+		<property name="title" value="Certification 3" />
+		<property name="description" value="Description 3" />
+		<property name="extinctionDate" value="01/02/2016 23:59" />
+		<property name="fee" value="100.00" />
+		<property name="exams">
+			<list>
+				<ref bean="exam4" />
+			</list>
+		</property>		
+	</bean>
+
+	<!-- Exam papers -->
+	
+	<bean id="examPaper1" class="domain.ExamPaper">
+		<property name="mark"> <null/> </property>
+		<property name="score"> <null/> </property>
+		<property name="answers">
+			<list>
+				<ref bean="answer1" />
+				<ref bean="answer2" />
+			</list> 
+		</property>
+		<property name="registration" ref="registration1" />
+	</bean>
+	
+	<bean id="examPaper2" class="domain.ExamPaper">
+		<property name="mark"> <null/> </property>
+		<property name="score"> <null/> </property>
+		<property name="answers">
+			<list>
+				<ref bean="answer3" />
+				<ref bean="answer4" />
+			</list> 
+		</property>
+		<property name="registration" ref="registration2" />
+	</bean>
+	
+	<!-- Answers -->
+	
+	<bean id="answer1" class="domain.OpenAnswer">
+		<property name="number" value="1" />
+		<property name="mark"> <null/> </property>
+		<property name="text" value="Answer 1" />	
+		<property name="examPaper" ref="examPaper1" />		
+	</bean>	
+	
+	<bean id="answer2" class="domain.OpenAnswer">
+		<property name="number" value="2" />
+		<property name="mark"> <null/> </property>
+		<property name="text" value="Answer 2" />
+		<property name="examPaper" ref="examPaper1" />			
+	</bean>
+	
+	<bean id="answer3" class="domain.TestAnswer">
+		<property name="number" value="1" />
+		<property name="mark"> <null/> </property>
+		<property name="selected" value="1" />	
+		<property name="examPaper" ref="examPaper2" />		
+	</bean>	
+	
+	<bean id="answer4" class="domain.TestAnswer">
+		<property name="number" value="2" />
+		<property name="mark"> <null/> </property>
+		<property name="selected" value="2" />
+		<property name="examPaper" ref="examPaper2" />			
+	</bean>
+		
+	<!-- Exams -->
+	
+	<bean id="exam1" class="domain.Exam">
+		<property name="title" value="Exam 1" />
+		<property name="minimumMark" value="5" />
+		<property name="minimumScore" value="1" />
+		<property name="certification" ref="certification1" />
+		<property name="questions">
+			<list>
+				<ref bean="question1" />
+				<ref bean="question2" />
+			</list>
+		</property>				
+	</bean>
+	
+	<bean id="exam2" class="domain.Exam">
+		<property name="title" value="Exam 2" />
+		<property name="minimumMark" value="5" />
+		<property name="minimumScore" value="1" />
+		<property name="certification" ref="certification1" />
+		<property name="questions">
+			<list>
+				<ref bean="question3" />
+				<ref bean="question4" />
+			</list>
+		</property>				
+	</bean>
+	
+	<bean id="exam3" class="domain.Exam">
+		<property name="title" value="Exam 3" />
+		<property name="minimumMark" value="5" />
+		<property name="minimumScore" value="1" />
+		<property name="certification" ref="certification2" />
+		<property name="questions">
+			<list>
+				<ref bean="question5" />
+				<ref bean="question6" />
+				<ref bean="question7" />
+			</list>
+		</property>				
+	</bean>
+	
+	<bean id="exam4" class="domain.Exam">
+		<property name="title" value="Exam 4" />
+		<property name="minimumMark" value="5" />
+		<property name="minimumScore" value="1" />
+		<property name="certification" ref="certification3" />
+		<property name="questions">
+			<list>
+				<ref bean="question8" />
+			</list>
+		</property>				
+	</bean>		
+	
+	<!-- Questions -->
+	
+	<bean id="question1" class="domain.OpenQuestion">
+		<property name="number" value="1" />
+		<property name="statement" value="Question 1" />
+		<property name="maximumMark" value="1" />
+		<property name="answer" value="Answer 1" />
+		<property name="exam" ref="exam1" />						
+	</bean>
+	
+	<bean id="question2" class="domain.OpenQuestion">
+		<property name="number" value="2" />
+		<property name="statement" value="Question 2" />
+		<property name="maximumMark" value="1" />
+		<property name="answer" value="Answer 2" />
+		<property name="exam" ref="exam1" />						
+	</bean>
+	
+	<bean id="question3" class="domain.OpenQuestion">
+		<property name="number" value="1" />
+		<property name="statement" value="Question 3" />
+		<property name="maximumMark" value="1" />
+		<property name="answer" value="Answer 3" />
+		<property name="exam" ref="exam2" />						
+	</bean>
+	
+	<bean id="question4" class="domain.OpenQuestion">
+		<property name="number" value="2" />
+		<property name="statement" value="Question 4" />
+		<property name="maximumMark" value="1" />
+		<property name="answer" value="Answer 4" />
+		<property name="exam" ref="exam2" />						
+	</bean>
+	
+	<bean id="question5" class="domain.TestQuestion">
+		<property name="number" value="1" />
+		<property name="statement" value="Question 5" />
+		<property name="maximumMark" value="1" />
+		<property name="answers">
+			<list>
+				<value>Choice 1</value>
+				<value>Choice 2</value>
+				<value>Choice 3</value>
+			</list>			
+		</property>
+		<property name="correct" value="1" />
+		<property name="exam" ref="exam3" />						
+	</bean>
+	
+	<bean id="question6" class="domain.TestQuestion">
+		<property name="number" value="2" />
+		<property name="statement" value="Question 6" />
+		<property name="maximumMark" value="1" />
+		<property name="answers">
+			<list>
+				<value>Choice 1</value>
+				<value>Choice 2</value>
+				<value>Choice 3</value>
+			</list>
+		</property>
+		<property name="correct" value="1" />
+		<property name="exam" ref="exam3" />						
+	</bean>				
+	
+	<bean id="question7" class="domain.TestQuestion">
+		<property name="number" value="3" />
+		<property name="statement" value="Question 7" />
+		<property name="maximumMark" value="1" />
+		<property name="answers">
+			<list>
+				<value>Choice 1</value>
+				<value>Choice 2</value>
+				<value>Choice 3</value>
+			</list>
+		</property>
+		<property name="correct" value="1" />
+		<property name="exam" ref="exam3" />						
+	</bean>
+	
+	<bean id="question8" class="domain.OpenQuestion">
+		<property name="number" value="1" />
+		<property name="statement" value="Question 8" />
+		<property name="maximumMark" value="1" />
+		<property name="answer" value="Answer 8" />
+		<property name="exam" ref="exam4" />						
+	</bean>				
+	
+</beans>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;converters&apos; to &apos;Notebook/src/main/java&apos;&#x0D;&#x0A;- Original project: &apos;EventManager&apos;&#x0D;&#x0A;- Destination element: &apos;Notebook/src/main/java&apos;&#x0D;&#x0A;- Original element: &apos;EventManager/src/main/java/converters&apos;" description="Copy package" destination="=Notebook/src\/main\/java" element1="/src\/main\/java&lt;converters" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1360174694093" version="1.0"/>
+</session>

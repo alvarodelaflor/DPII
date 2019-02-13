@@ -1,0 +1,151 @@
+/* QueryDatabase.java
+ *
+ * Copyright (C) 2013 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ * 
+ */
+
+package utilities;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
+public class QueryDatabase {
+	
+	final static String PersistenceUnit = "Acme-Certifications";
+
+	public static void main(String[] args) throws IOException {
+		EntityManagerFactory entityManagerFactory;
+		EntityManager entityManager;
+		EntityTransaction entityTransaction;
+		InputStreamReader stream;
+		BufferedReader reader;
+		String line;
+		boolean quit;
+
+		entityManagerFactory = Persistence.createEntityManagerFactory(PersistenceUnit);
+		entityManager = entityManagerFactory.createEntityManager();
+		entityTransaction = entityManager.getTransaction();
+
+		stream = new InputStreamReader(System.in);
+		reader = new BufferedReader(stream);
+
+		do {
+			line = reader.readLine();
+			quit = interpretLine(line, entityTransaction, entityManager);
+		} while (!quit);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static boolean interpretLine(String line, EntityTransaction entityTransaction, EntityManager entityManager) {
+		boolean result;
+		String command;
+		Query query;
+		List<Object> objects;
+		int affected;
+
+		result = false;
+		if (!StringUtils.isBlank(line)) {
+			try {
+				command = StringUtils.trim(line);
+				command = StringUtils.substringBefore(command, " ");
+				switch (command) {
+					case "quit":
+						result = true;
+						break;
+					case "begin": 
+						entityTransaction.begin();
+						break;
+					case "commit":
+						entityTransaction.commit();
+						break;
+					case "rollback": 
+						entityTransaction.rollback();
+						break;
+					case "update":
+					case "delete": 
+						query = entityManager.createQuery(line);
+						affected = query.executeUpdate();
+						printAffected(affected);
+						break;
+					case "select": 
+						query = entityManager.createQuery(line);
+						objects = (List<Object>)query.getResultList();						
+						printResultList(objects);
+						break;
+					default:
+						System.err.println("Command not understood");
+				}
+			} catch (Throwable oops) {					
+				oops.printStackTrace(System.err);
+			}
+		}
+		
+		return result;
+	}
+
+	private static void printAffected(int affected) {
+		System.out.println(String.format("%d objects affected", affected));
+	}
+
+	private static void printResultList(List<Object> result) {
+		String comma;
+				
+		System.out.println(String.format("%d objects found", result.size()));		
+		for (Object obj : result)
+			if (isPrimitive(obj))
+				System.out.println(obj);
+			else if (!isArray(obj)) {
+				printObject(obj);
+				System.out.println();
+			} else {
+				System.out.print("[");
+				comma = "";
+				for (Object subObj : (Object[]) obj) {
+					System.out.print(comma);
+					printObject(subObj);
+					comma = ",";
+				}
+				System.out.println("]");
+			}
+	}
+
+	private static boolean isArray(Object obj) {
+		boolean result;
+		
+		result = (obj instanceof String || obj instanceof Number || obj instanceof Character || obj instanceof Boolean);
+		
+		return result;
+	}
+
+	private static boolean isPrimitive(Object obj) {
+		boolean result;
+		
+		result = (obj instanceof Object[]);
+		
+		return result;
+	}
+
+	
+	private static void printObject(Object obj) {
+		String text;
+		
+		text = ReflectionToStringBuilder.toString(obj);
+		System.out.print(text);
+	}
+
+}

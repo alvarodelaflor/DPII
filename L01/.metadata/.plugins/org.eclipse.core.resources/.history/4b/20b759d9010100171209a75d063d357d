@@ -1,0 +1,29 @@
+/*
+ * DatabaseUtilities.java
+ * 
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package utilities.internal;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+
+public class LoggerHelper {
+
+	public static void TurnOff() {
+		List<String> loggers;
+
+		bean = LogManager.getLoggingMXBean();
+		loggers = bean.getLoggerNames();
+		for (final String logger : loggers) {
+			logger.setLevel(Level.OFF);
+		}
+	}
+
+}

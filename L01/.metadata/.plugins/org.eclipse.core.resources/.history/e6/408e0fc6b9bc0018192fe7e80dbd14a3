@@ -1,0 +1,61 @@
+/*
+ * DomainEntity.java
+ * 
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package domain;
+
+import javax.persistence.Entity;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+@Entity
+public class Bookmark extends DomainEntity {
+
+	// Constructors -----------------------------------------------------------
+
+	public Bookmark() {
+		super();
+	}
+
+
+	// Properties -------------------------------------------------------------
+
+	private String	username;
+	private String	url;
+	private String	text;
+
+	@NotBlank
+	public String getUsername() {
+		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	@NotBlank
+	@URLÑ
+	public String getUrl() {
+		return url;
+	}
+	
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	@NotBlank
+	public String getText() {
+		return text;
+	}
+	
+	public void setText(String text) {
+		this.text = text;
+	}
+
+}

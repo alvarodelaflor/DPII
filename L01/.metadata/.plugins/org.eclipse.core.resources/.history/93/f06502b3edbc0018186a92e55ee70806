@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="customer" />
+		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="super" />
+		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Shouts -->
+	
+	<bean id="shout1" class="domain.Shout">
+		<property name="username" value="John Doe" />
+		<property name="link" value="http://www.us.es" />
+		<property name="text" value="My alma mater" />
+	</bean>
+	
+	<bean id="shout2" class="domain.Shout">
+		<property name="username" value="Hedy ZD" />
+		<property name="link" value="http://academiasonsalseros.com" />
+		<property name="text" value="Learn salsa, bachata, and kizomba!" />
+	</bean>
+	
+	<bean id="shout3" class="domain.Shout">		
+		<property name="username" value="María López" />
+		<property name="link" value="https://www.change.org/p/para-todos-no-al-maltrato-animal" />
+		<property name="text" value="No al maltrato animal" />
+	</bean>
+	
+	<bean id="shout4" class="domain.Shout">
+		<property name="username" value="Jane Doe" />
+		<property name="link" value="https://www.change.org/p/george-osborne-stop-taxing-periods-period" />
+		<property name="text" value="End tampom tax now!" />
+	</bean>
+	
+	<bean id="shout5" class="domain.Shout">
+		<property name="username" value="James Bond" />
+		<property name="link" value="https://www.kuoni.co.uk/inspiration/around-the-world-with-james-bond" />
+		<property name="text" value="I defnitely need more holidays" />
+	</bean>
+	
+	<bean id="shout6" class="domain.Shout">
+		<property name="username" value="Loren Zo" />
+		<property name="link" value="https://www.google.es/search?q=flowers" />
+		<property name="text" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+	</bean>
+	
+	<bean id="shout7" class="domain.Shout">
+		<property name="username" value="Espinete Fan #1" />
+		<property name="link" value="https://en.wikipedia.org/wiki/Espinete" />
+		<property name="text" value="Espinete! I terribly miss you!" />
+	</bean>
+	
+</beans>

@@ -1,0 +1,38 @@
+/*
+ * ThrowablePrinter.java
+ * 
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package utilities.internal;
+
+public class ThrowablePrinter {
+
+	public static void print(final Throwable oops) {
+		assert oops != null;
+
+		Throwable iterator;
+		String message;
+		int position;
+
+		iterator = oops;
+		while (iterator != null) {
+			message = oops.getMessage();
+			if (message.matches("^[a-zA-Z\\.]+\\:")) {
+				position = message.indexOf(':');
+				message = message.substring(position)
+			}
+				
+			
+			System.err.println(oops.getClass().getName());
+			System.err.println();
+			
+			System.err.println(iterator.getMessage());
+			iterator = iterator.getCause();
+		}
+	}
+}

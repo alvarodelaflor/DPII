@@ -1,0 +1,176 @@
+/*
+ * PopulateDatabase.java
+ * 
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package utilities;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.persistence.Entity;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import utilities.internal.DatabaseUtil;
+import domain.DomainEntity;
+
+public class PopulateDatabase {
+
+	public static void main(final String[] args) {
+		DatabaseUtil databaseUtil;
+		ApplicationContext populationContext;
+		Map<String, Object> entityMap;
+		List<Entry<String, Object>> sortedEntities;
+
+		LogManager.getLogger("org.hibernate").setLevel(Level.OFF);
+		databaseUtil = null;
+
+		try {
+			System.out.printf("PopulateDatabase 1.9%n");
+			System.out.printf("--------------------%n%n");
+
+			System.out.printf("Initialising persistence context `%s'%n", DatabaseConfig.PersistenceUnit);
+			databaseUtil = new DatabaseUtil();
+			databaseUtil.open();
+
+			System.out.printf("Creating database `%s' (%s)%n", databaseUtil.getDatabaseName(), databaseUtil.getDatabaseDialectName());
+			databaseUtil.recreateDatabase();
+
+			System.out.printf("Reading web of entities from `PopulateDatabase.xml'");
+			populationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
+			entityMap = populationContext.getBeansWithAnnotation(Entity.class);
+			System.out.printf(" (%d entities found)%n", entityMap.size());
+
+			System.out.printf("Trying to sort entities topologically%n");
+			sortedEntities = PopulateDatabase.sort(databaseUtil, entityMap);
+
+			System.out.printf("Trying to save the best ordering found%n");
+			PopulateDatabase.persist(databaseUtil, sortedEntities);
+		} catch (final Throwable oops) {
+			System.err.println(oops.getClass().getName());
+			System.err.println(oops.getMessage());
+		} finally {
+			System.out.printf("Closing persistence context%n");
+			if (databaseUtil != null) {
+				databaseUtil.close();
+			}
+		}
+	}
+
+	private static List<Entry<String, Object>> sort(final DatabaseUtil databaseUtil, final Map<String, Object> populationMap) {
+		LinkedList<Entry<String, Object>> result;
+		LinkedList<Entry<String, Object>> retry;
+		int passCounter;
+		final int entityCount;
+		double percentage;
+
+		result = new LinkedList<Entry<String, Object>>();
+		result.addAll(populationMap.entrySet());
+		retry = new LinkedList<Entry<String, Object>>();
+		passCounter = 0;
+		percentage = 0.00;
+
+		do {
+			try {
+				databaseUtil.openTransaction();
+				PopulateDatabase.cleanEntities(result);
+
+				while (!result.isEmpty()) {
+					//String name;
+					DomainEntity entity;
+					Entry<String, Object> entry;
+
+					entry = result.getFirst();
+					//name = entry.getKey();
+					entity = (DomainEntity) entry.getValue();
+
+					// System.out.printf("> %s: %s", beanName, entity.getClass().getName());
+					databaseUtil.persist(entity);
+					// System.out.printf(" -> id = %d, version = %d%n", entity.getId(), entity.getVersion());
+
+					result.removeFirst();
+					retry.addLast(entry);
+				}
+				databaseUtil.undoTransaction();
+				percentage = 100.00;
+				result.addAll(retry);
+				retry.clear();
+				// System.out.printf(" >>> %.2f%% ***%n", percentage);
+			} catch (final Throwable oops) {
+				Entry<String, Object> entry;
+
+				databaseUtil.undoTransaction();
+
+				// System.out.printf(" -> Failed!%n");
+				// System.out.println(oops.getClass().getName());
+				// System.out.println(oops.getMessage());
+
+				percentage = 100.00 * result.size() / entityCount;
+				// System.out.printf(" >>> %.2f%% ***%n", percentage);
+
+				entry = result.removeFirst();
+				retry.addAll(result);
+				retry.addLast(entry);
+				result.clear();
+				result.addAll(retry);
+				retry.clear();
+			}
+			passCounter++;
+		} while (passCounter < entityCount && percentage < 100);
+
+		PopulateDatabase.cleanEntities(result);
+
+		System.out.printf("%n");
+		databaseUtil.openTransaction();
+		for (final Entry<String, Object> entry : result) {
+			String name;
+			DomainEntity entity;
+
+			name = entry.getKey();
+			entity = (DomainEntity) entry.getValue();
+			System.out.printf("> %s", name);
+			databaseUtil.persist(entity);
+			System.out.printf(": %s%n", entity.toString());
+		}
+		databaseUtil.closeTransaction();
+		System.out.printf("%n");
+
+		result = null;
+
+		return result;
+	}
+
+	private static void cleanEntities(final LinkedList<Entry<String, Object>> result) {
+		for (final Entry<String, Object> entry : result) {
+			DomainEntity entity;
+
+			entity = (DomainEntity) entry.getValue();
+			entity.setId(0);
+			entity.setVersion(0);
+		}
+	}
+
+	private static void persist(final DatabaseUtil databaseUtil, final List<Entry<String, Object>> sortedEntities) {
+		// TODO Auto-generated method stub
+
+		System.err.printf("It's not possible to sort your web of entities so that it can be%n");
+		System.err.printf("persisted.  Above, you can find the best partial topological order%n");
+		System.err.printf("that was found.  The last entity that can be persisted will give you%n");
+		System.err.printf("a hint regarding the association that cannot be persisted.  Please,%n");
+		System.err.printf("analyse it and consider making it unidirectional.%n");
+		System.err.printf("%n");
+
+	}
+
+}

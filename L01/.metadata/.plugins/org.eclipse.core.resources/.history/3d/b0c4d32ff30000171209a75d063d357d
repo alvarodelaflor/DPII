@@ -1,0 +1,141 @@
+/*
+ * CustomPrintStyle.java
+ * 
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package utilities.internal;
+
+import java.util.Collection;
+
+import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+import domain.DomainEntity;
+
+public class CustomPrintStyle extends ToStringStyle {
+
+	private static final long	serialVersionUID	= -7153302077570861674L;
+
+
+	CustomPrintStyle() {
+		super();
+
+		this.setUseShortClassName(false);
+		this.setUseIdentityHashCode(false);
+		this.setDefaultFullDetail(true);
+		this.setNullText("null");
+		this.setUseClassName(true);
+		this.setUseClassName(true);
+
+		this.setArrayStart("[");
+		this.setArrayStart("]");
+		this.setArraySeparator(", ");
+		this.setArrayContentDetail(true);
+
+		this.setContentStart(SystemUtils.LINE_SEPARATOR + "\t");
+		this.setContentEnd(null);
+
+		this.setFieldNameValueSeparator(" = ");
+		this.setFieldSeparator("\n\t");
+		this.setFieldSeparatorAtStart(false);
+		this.setFieldSeparatorAtEnd(false);
+
+	}
+
+	protected void appendObject(final StringBuffer buffer, final Object value) {
+		this.appendDetail(buffer, null, value);
+	}
+
+	protected void appendArray(final StringBuffer buffer, final Object[] value) {
+		String separator;
+
+		separator = "";
+		buffer.append(this.getArrayStart());
+		for (final Object obj : value) {
+			this.appendDetail(buffer, null, obj);
+			buffer.append(separator);
+			separator = this.getArraySeparator();
+		}
+		buffer.append(this.getArrayEnd());
+		buffer.append(" : ");
+		buffer.append(value.getClass().getName());
+	}
+
+	@Override
+	protected void appendDetail(final StringBuffer buffer, final String fieldName, final Object value) {
+		String left, right;
+
+		if (value instanceof String) {
+			left = right = "\"";
+		} else if (value instanceof Character) {
+			left = right = "\'";
+		} else if (!(value instanceof DomainEntity) && !(value instanceof Number)) {
+			left = "<";
+			right = ">";
+		} else {
+			left = "";
+			right = "";
+		}
+
+		right = String.format("%s : %s", right, value.getClass().getName());
+
+		buffer.append(left);
+		buffer.append(value);
+		buffer.append(right);
+	}
+
+	@Override
+	protected void appendDetail(final StringBuffer buffer, final String fieldName, final Object[] value) {
+		Object item;
+
+		buffer.append(this.getArrayStart());
+		for (int i = 0; i < value.length; i++) {
+			item = value[i];
+			if (i > 0) {
+				buffer.append(this.getArraySeparator());
+			}
+			if (item == null) {
+				this.appendNullText(buffer, fieldName);
+			} else {
+				this.appendInternal(buffer, fieldName, item, false);
+			}
+		}
+		buffer.append(this.getArrayEnd());
+		buffer.append(" : ");
+		buffer.append(value.getClass().getName());
+	}
+
+	@Override
+	protected void appendDetail(final StringBuffer buffer, final String fieldName, @SuppressWarnings("rawtypes") final Collection value) {
+		String separator;
+
+		separator = "";
+		buffer.append(this.getArrayStart());
+		for (final Object obj : value) {
+			buffer.append(separator);
+			if (obj == null) {
+				this.appendNullText(buffer, fieldName);
+			} else {
+				this.appendInternal(buffer, fieldName, obj, false);
+			}
+			separator = this.getArraySeparator();
+		}
+		buffer.append(this.getArrayEnd());
+		buffer.append(" : ");
+		buffer.append(value.getClass().getName());
+	}
+
+	@Override
+	protected void appendNullText(final StringBuffer buffer, final String fieldName) {
+		buffer.append(super.getNullText());
+	}
+
+	private Object readResolve() {
+		return this.getClass().getName();
+	}
+}

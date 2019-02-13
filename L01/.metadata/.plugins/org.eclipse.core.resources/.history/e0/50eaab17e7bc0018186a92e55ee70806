@@ -1,0 +1,78 @@
+/*
+ * AdministratorController.java
+ * 
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
+
+package controllers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping("/administrator")
+public class AdministratorController extends AbstractController {
+
+	// Constructors -----------------------------------------------------------
+
+	public AdministratorController() {
+		super();
+	}
+
+	// Action-1 ---------------------------------------------------------------		
+
+	@RequestMapping("/action-1")
+	public ModelAndView action1() {
+		ModelAndView result;
+		List<String> quotes;
+
+		quotes = new ArrayList<String>();
+		quotes.add("Make it simple, not simpler -- Albert Einstein");
+		quotes.add("I have a dream -- Martin L. King");
+		quotes.add("It always seem impossible until it's done -- Nelson Mandela");
+		quotes.add("Intense love does not measure, it just gives -- Mother Theresa");
+		quotes.add("Cosas veredes, amigo Sancho que non crederes -- Don Quixote");
+		quotes.add("Hay algo que ni siquiera Dios pudo negar a los hombres: la libertad -- Adolfo Suárez");
+
+		result = new ModelAndView("administrator/action-1");
+		result.addObject("quotes", quotes);
+
+		return result;
+	}
+
+	// Action-2 ---------------------------------------------------------------
+
+	@RequestMapping("/action-2")
+	public ModelAndView action2() {
+		ModelAndView result;
+		List<String> labels;
+		List<Double> data;
+
+		labels = new ArrayList<String>();
+		labels.add("Quarter-01");
+		labels.add("Quarter-02");
+		labels.add("Quarter-03");
+		labels.add("Quarter-04");
+
+		data = new ArrayList<Double>();
+		data.add(Math.random() * 100);
+		data.add(Math.random() * 100);
+		data.add(Math.random() * 100);
+		data.add(Math.random() * 100);
+
+		result = new ModelAndView("administrator/action-2");
+		result.addObject("labels", labels);
+		result.addObject("data", data);
+
+		return result;
+	}
+
+}

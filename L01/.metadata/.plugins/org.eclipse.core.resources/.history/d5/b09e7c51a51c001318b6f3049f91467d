@@ -1,0 +1,100 @@
+/* QueryDatabase.java
+ *
+ * Copyright (C) 2012 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ * 
+ */
+
+package utilities;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import org.apache.commons.lang.StringUtils;
+
+public class QueryDatabase {
+	
+	final static String PersistenceUnit = "Sample";
+
+	public static void main(String[] args) throws IOException {
+		EntityManagerFactory entityManagerFactory;
+		EntityManager entityManager;
+		EntityTransaction entityTransaction;
+		InputStreamReader stream;
+		BufferedReader reader;
+		String line;
+
+		entityManagerFactory = Persistence.createEntityManagerFactory(PersistenceUnit);
+		entityManager = entityManagerFactory.createEntityManager();
+		entityTransaction = entityManager.getTransaction();
+
+		stream = new InputStreamReader(System.in);
+		reader = new BufferedReader(stream);
+
+		line = reader.readLine();
+		while (!line.equals("quit")) {
+			interpretLine(line, entityTransaction, entityManager);			
+			line = reader.readLine();
+		}
+
+	}
+
+	private static void interpretLine(String line, EntityTransaction entityTransaction, EntityManager entityManager) {
+		Query query;
+		List<Object> result;
+		int affected;
+
+		if (!StringUtils.isBlank(line)) {
+			try {
+				switch (line) {
+					case "begin": 
+						entityTransaction.begin();
+						break;
+					case "commit":
+						entityTransaction.commit();
+						break;
+					case "rollback": 
+						entityTransaction.rollback();
+						break;
+					default: 
+						query = entityManager.createQuery(line);
+						if (line.startsWith("update") || line.startsWith("delete")) {
+							affected = query.executeUpdate();
+							System.out.println(String.format("%d objects affected", affected));
+						} else {
+							result = (List<Object>)query.getResultList();
+							System.out.println(String.format("%d results found", result.size()));
+							printResultList(result);
+						}
+				}
+			} catch (Throwable oops) {
+				System.err.println(oops.getMessage());
+				// oops.printStackTrace(System.err);
+			}
+		}
+	}
+
+	private static void printResultList(List<Object> result) {
+		for (Object obj : result)
+			if (!(obj instanceof Object[]))
+				System.out.println(obj);
+			else {
+				for (Object subObj : (Object[]) obj) {
+					System.out.print(subObj);
+					System.out.print(' ');
+				}
+				System.out.println();
+			}
+	}
+}

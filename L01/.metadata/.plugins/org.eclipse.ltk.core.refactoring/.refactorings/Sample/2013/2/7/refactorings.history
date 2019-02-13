@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;Notebook/src/main/resources&apos;&#x0D;&#x0A;- Original project: &apos;Sample&apos;&#x0D;&#x0A;- Destination element: &apos;Notebook/src/main/resources&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     displaytag_es.properties&#x0D;&#x0A;     displaytag.properties" description="Copy files" destination="=Notebook/src\/main\/resources" element1="src/main/resources/displaytag_es.properties" element2="src/main/resources/displaytag.properties" files="2" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1360953241147" units="0" version="1.0"/>
+</session>

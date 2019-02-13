@@ -1,0 +1,48 @@
+package services;
+
+import java.util.Collection;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.util.Assert;
+
+import domain.Certification;
+
+@WebAppConfiguration
+@ContextConfiguration(locations = {"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+public class CertificationTests {
+
+	private static final Log logger = LogFactory.getLog(SpringJUnit4ClassRunner.class);
+
+	@Autowired
+	private CertificationService certificationService;
+
+	@Test
+	public void test1() {
+		Collection<Certification> certifications;
+
+		certifications = certificationService.findAll();
+		Assert.isTrue(certifications.size() == 3);
+
+		logger.error("Hello world!!!!");
+	}
+
+	@Test
+	public void passes() {
+		Assert.isTrue(true);
+	}
+	
+	@Test
+	public void fails() {
+		Assert.isTrue(false);
+	}
+
+}
