@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+C:\Documents and Settings\Student\Desktop\Sample-Workspace-1.18.2\.metadata\.plugins\org.eclipse.jdt.core
