@@ -12,6 +12,8 @@
   
 	ALVARO 17/02/2019 12:38 Añadido valores para brotherhood procession
 	ALVARO 17/02/2019 15:06 Cambiado logo
+	ALVARO 17/02/2019 19:32 Añadido floatBro
+	ALVARO 17/02/2019 21:43 Añadido enrolled
 -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
@@ -41,6 +43,8 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
+					<li><a href="floatBro/brotherhood/list.do"><spring:message code="master.page.brotherhood.floatBro.list" /></a></li>
+					<li><a href="enrolled/brotherhood/list.do"><spring:message code="master.page.brotherhood.enrolled.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -53,7 +57,7 @@
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
-			        (<security:authentication property="principal.username" />)
+			        (<spring:message code="master.page.brotherhood" />)
 				</a>
 				<ul>
 					<li class="arrow"></li>				

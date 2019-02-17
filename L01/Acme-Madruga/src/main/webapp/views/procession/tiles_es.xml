@@ -24,12 +24,12 @@
 <tiles-definitions>
 
 	<definition name="procession/brotherhood/list" extends="master.page">	
-		<put-attribute name="title" value="Hermano Mayor: Lista de procesiones" />
+		<put-attribute name="title" value="Hermandad: Lista de procesiones" />
 		<put-attribute name="body" value="/views/procession/list_brotherhood.jsp" />
 	</definition>
 	
 	<definition name="procession/brotherhood/create" extends="master.page">	
-		<put-attribute name="title" value="Hermano Mayor: Crear procesion" />
+		<put-attribute name="title" value="Hermandad: Crear procesion" />
 		<put-attribute name="body" value="/views/procession/edit.jsp" />
 	</definition>
 	
@@ -39,7 +39,7 @@
 	</definition>
 	
 	<definition name="procession/brotherhood/show" extends="master.page">	
-		<put-attribute name="title" value="Hermano Mayor: Mostrar procesión" />
+		<put-attribute name="title" value="Hermandad: Mostrar procesión" />
 		<put-attribute name="body" value="/views/procession/show_brotherhood.jsp" />
 	</definition>
 	

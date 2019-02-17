@@ -1,8 +1,13 @@
 #./src/main/resources/Entities.map
-#Sun Feb 17 17:45:07 CET 2019
-procession02=12
-userAccount3=9
-procession01=11
-userAccount2=8
-userAccount1=7
-brotherhood01=10
+#Sun Feb 17 23:42:42 CET 2019
+procession02=19
+procession01=18
+enrolled01=22
+floatBro02=21
+brotherhood01=17
+member01=16
+floatBro01=20
+userAccount4=15
+userAccount3=14
+userAccount2=13
+userAccount1=12

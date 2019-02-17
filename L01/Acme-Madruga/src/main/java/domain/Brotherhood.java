@@ -21,6 +21,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * CONTROL DE CAMBIOS Brotherhoods.java
  * 
  * ALVARO 17/02/2019 11:23 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 17:10 AÑADIDO PROCESIONES Y FLOAT
+ * ALVARO 17/02/2019 20:03 AÑADIDO ENROLLED
  */
 
 @Entity
@@ -31,6 +33,8 @@ public class Brotherhood extends Actor {
 	private Date					establishmentDate;
 	private Collection<String>		pictures;
 	private Collection<Procession>	processions;
+	private Collection<FloatBro>	floatBro;
+	private Collection<Enrolled>	enrolleds;
 
 
 	@NotBlank
@@ -69,5 +73,23 @@ public class Brotherhood extends Actor {
 
 	public void setProcessions(final Collection<Procession> processions) {
 		this.processions = processions;
+	}
+
+	@OneToMany(mappedBy = "brotherhood")
+	public Collection<FloatBro> getFloatBro() {
+		return this.floatBro;
+	}
+
+	public void setFloatBro(final Collection<FloatBro> floatBro) {
+		this.floatBro = floatBro;
+	}
+
+	@OneToMany(mappedBy = "brotherhood")
+	public Collection<Enrolled> getEnrolleds() {
+		return this.enrolleds;
+	}
+
+	public void setEnrolleds(final Collection<Enrolled> enrolleds) {
+		this.enrolleds = enrolleds;
 	}
 }

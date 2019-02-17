@@ -15,6 +15,8 @@
   
 	ALVARO 17/02/2019 13:11 Añadidos valores de brotherhood y procession
 	ALVARO 17/02/2019 17:18 Editados tickets procesiones
+	ALVARO 17/02/2019 19:35 Añadidos 2 floats
+	ALVARO 17/02/2019 20:29 Añadidos member y enrolled
  -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -64,8 +66,34 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="member" />
+		<property name="password" value="aa08769cdcb26674c6706093503ff0a3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MEMBER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- Other domain beans come here -->	
 	
+	<!-- MEMBER -->
+	
+    <bean id="member01" class="domain.Member">
+    	<property name="name" value="Manuel" />
+    	<property name="middleName" value="Boss" />
+    	<property name="surname" value="Ruiz de Lopera" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="donManuel@alum.us.es" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount4"/>	
+    </bean>
+    
+    <!-- MEMBER -->
 	<!-- BROTHERHOOD -->
 	
     <bean id="brotherhood01" class="domain.Brotherhood">
@@ -78,15 +106,14 @@
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
         <property name="userAccount" ref= "userAccount2"/>
         
-        <property name="title" value= "Hermano Mayor de la VERA CRUZ"/>
+        <property name="title" value= "Hermandad de la VERA CRUZ"/>
         <property name="establishmentDate" value="2018/11/10 08:00" />
         <property name="pictures">
 			<list value-type="java.lang.String">
            		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
             	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
 			</list>
-        </property>
-		
+        </property>		
     </bean>
     
     <!-- BROTHERHOOD -->
@@ -108,5 +135,41 @@
 		<property name="ticker" value="200403-FGHIJ" />
 		<property name="isFinal" value= "false"/>
     </bean>
-    <!-- PROCESSION -->	
+    <!-- PROCESSION -->
+    <!-- FLOAT -->
+	<bean id="floatBro01" class="domain.FloatBro">
+    	<property name="title" value="Old Float" />
+        <property name="description" value="The bigger float" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>
+        <property name="brotherhood" ref= "brotherhood01"/>
+    </bean>
+    
+    <bean id="floatBro02" class="domain.FloatBro">
+    	<property name="title" value="New Float" />
+        <property name="description" value="The tiny float" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>
+        <property name="brotherhood" ref= "brotherhood01"/>
+    </bean>
+    <!-- FLOAT -->
+    <!-- ENROLLED -->
+	
+    <bean id="enrolled01" class="domain.Enrolled">
+    	<property name="member" ref= "member01"/>
+    	<property name="state">
+    		<null></null>
+    	</property>
+    	<property name="brotherhood" ref= "brotherhood01"/>
+    </bean>
+    
+    <!-- ENROLLED -->
 </beans>

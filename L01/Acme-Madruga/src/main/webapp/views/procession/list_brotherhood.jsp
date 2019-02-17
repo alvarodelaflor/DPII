@@ -30,32 +30,32 @@
 			<display:table name="processions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 				<c:choose>
 					<c:when test="${row.isFinal==true}">
-						<display:column titleKey="procession.edit" style="background-color: #28E256" > 
+						<display:column titleKey="procession.edit" style="background-color: #58FA58" > 
 							
 						</display:column>
-						<display:column titleKey="procession.delete" style="background-color: #28E256" > 
+						<display:column titleKey="procession.delete" style="background-color: #58FA58" > 
 							
 						</display:column>
-						<display:column titleKey="procession.ticker" style="background-color: #28E256" > 
+						<display:column titleKey="procession.ticker" style="background-color: #58FA58" > 
 							<a href="procession/brotherhood/show.do?processionId=${row.id}">${row.ticker}</a>
 						</display:column>
-						<display:column property="title" titleKey="procession.title" style="background-color: #28E256"></display:column>
-						<display:column titleKey="procession.isFinal" style="background-color: #28E256">
+						<display:column property="title" titleKey="procession.title" style="background-color: #58FA58"></display:column>
+						<display:column titleKey="procession.isFinal" style="background-color: #58FA58">
 							<spring:message code="procession.${row.isFinal}"/>
 						</display:column>
 					</c:when>
 					<c:otherwise>
-						<display:column titleKey="procession.ticker" style="background-color: #E12A2A" > 
+						<display:column titleKey="procession.ticker" style="background-color: #FA5858" > 
 							<a href="procession/brotherhood/edit.do?id=${row.id}"><spring:message code="procession.edit"></spring:message></a>
 						</display:column>
-						<display:column titleKey="procession.delete" style="background-color: #E12A2A" > 
+						<display:column titleKey="procession.delete" style="background-color: #FA5858" > 
 							<a href="procession/brotherhood/delete.do?id=${row.id}"><spring:message code="procession.delete"></spring:message></a>
 						</display:column>
-						<display:column titleKey="procession.ticker" style="background-color: #E12A2A" > 
+						<display:column titleKey="procession.ticker" style="background-color: #FA5858" > 
 							<a href="procession/brotherhood/show.do?processionId=${row.id}">${row.ticker}</a>
 						</display:column>
-						<display:column property="title" titleKey="procession.title" style="background-color: #E12A2A"></display:column>
-						<display:column titleKey="procession.isFinal" style="background-color: #E12A2A">
+						<display:column property="title" titleKey="procession.title" style="background-color: #FA5858"></display:column>
+						<display:column titleKey="procession.isFinal" style="background-color: #FA5858">
 							<spring:message code="procession.${row.isFinal}"/>
 						</display:column>					
 					</c:otherwise>

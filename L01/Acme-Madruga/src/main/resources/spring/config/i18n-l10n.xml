@@ -14,6 +14,8 @@
 	CONTROL DE CAMBIOS i18n-l10n.xml
   
 	ALVARO 17/02/2019 12:38 Añadido value de procession
+	ALVARO 17/02/2019 19:30 Añadido value de floatBro
+	ALVARO 17/02/2019 21:41 Añadido value de enrolled
  -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -33,6 +35,8 @@
 		<value>/views/profile/messages</value>
 		<!-- ALVARO -->
 		<value>/views/procession/messages</value>
+		<value>/views/floatBro/messages</value>
+		<value>/views/enrolled/messages</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		
