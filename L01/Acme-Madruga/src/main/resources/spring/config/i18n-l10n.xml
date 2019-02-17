@@ -9,6 +9,12 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  -->
+ 
+ <!--
+	CONTROL DE CAMBIOS i18n-l10n.xml
+  
+	ALVARO 17/02/2019 12:38 Añadido value de procession
+ -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
@@ -24,8 +30,25 @@
 		<value>/views/welcome/messages</value>
 		
 		<value>/views/administrator/messages</value>
-		<value>/views/customer/messages</value>
 		<value>/views/profile/messages</value>
+		<!-- ALVARO -->
+		<value>/views/procession/messages</value>
+		<!-- ALVARO -->
+		<!-- FRAN -->
+		
+		<!-- FRAN -->
+		<!-- CARMEN -->
+		
+		<!-- CARMEN -->
+		<!-- FERRETE -->
+		
+		<!-- FERRETE -->
+		<!-- ANTONIO SANCHEZ -->
+		
+		<!-- ANTONIO SANCHEZ -->
+		<!-- ANTONIO SALVAT -->
+		
+		<!-- ANTONIO SALVAT -->
 	</util:list>
 
 </beans>

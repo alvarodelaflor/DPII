@@ -7,6 +7,12 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  --%>
+<!--
+	CONTROL DE CAMBIOS header.jsp
+  
+	ALVARO 17/02/2019 12:38 Añadido valores para brotherhood procession
+	ALVARO 17/02/2019 15:06 Cambiado logo
+-->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -14,7 +20,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<a href="#"><img src="images/logo.png" alt="Acme-Madrugá Co., Inc." /></a>
+	<a href="#"><img style="width:20%;" src="images/logo.jpg" alt="Acme-Madrugá Co., Inc." /></a>
 </div>
 
 <div>
@@ -30,12 +36,11 @@
 			</li>
 		</security:authorize>
 		
-		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
+		<security:authorize access="hasRole('BROTHERHOOD')">
+			<li><a class="fNiv"><spring:message	code="master.page.brotherhood" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
+					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -51,10 +56,7 @@
 			        (<security:authentication property="principal.username" />)
 				</a>
 				<ul>
-					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+					<li class="arrow"></li>				
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

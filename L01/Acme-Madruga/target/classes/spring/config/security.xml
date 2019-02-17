@@ -9,6 +9,11 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  -->
+<!--
+	CONTROL DE CAMBIOS security.xml
+  
+	ALVARO 17/02/2019 12:38 Añadido value de procession brotherhood
+-->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"	
@@ -44,12 +49,32 @@
 		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" /> 
 
-		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
-
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" />
+		
+		<!-- ALVARO -->
+		<security:intercept-url pattern="/procession/brotherhood/list.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/procession/brotherhood/show.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/procession/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/procession/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/procession/brotherhood/create.do" access="hasRole('BROTHERHOOD')" /> 
+		<!-- ALVARO -->
+		<!-- FRAN -->
+		
+		<!-- FRAN -->
+		<!-- CARMEN -->
+		
+		<!-- CARMEN -->
+		<!-- FERRETE -->
+		
+		<!-- FERRETE -->
+		<!-- ANTONIO SANCHEZ -->
+		
+		<!-- ANTONIO SANCHEZ -->
+		<!-- ANTONIO SALVAT -->
+		
+		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

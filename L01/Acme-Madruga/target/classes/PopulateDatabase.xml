@@ -9,6 +9,12 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  -->
+ 
+ <!--
+	CONTROL DE CAMBIOS PopulateDatabase.xml
+  
+	ALVARO 17/02/2019 13:11 Añadidos valores de brotherhood y procession
+ -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -31,12 +37,12 @@
 	</bean>
 
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="username" value="brotherhood" />
+		<property name="password" value="44843b89fec33a1c48bbb3967b65abce" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="BROTHERHOOD" />
 				</bean>
 			</list>
 		</property>
@@ -51,7 +57,7 @@
 					<property name="authority" value="ADMIN" />
 				</bean>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="BROTHERHOOD" />
 				</bean>
 			</list>
 		</property>
@@ -59,4 +65,45 @@
 	
 	<!-- Other domain beans come here -->	
 	
+	<!-- BROTHERHOOD -->
+	
+    <bean id="brotherhood01" class="domain.Brotherhood">
+    	<property name="name" value="Alvaro" />
+    	<property name="middleName" value="Dogran" />
+    	<property name="surname" value="de la Flor Bonilla" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="alvdebon@alum.us.es" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount2"/>
+        
+        <property name="title" value= "Hermano Mayor de la VERA CRUZ"/>
+        <property name="establishmentDate" value="2018/11/10 08:00" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>
+		
+    </bean>
+    
+    <!-- BROTHERHOOD -->
+    <!-- PROCESSION -->
+    <bean id="procession01" class="domain.Procession">
+    	<property name="title" value="Virgen del Rosario" />
+    	<property name="description" value="Salida de la virgen del Rosario" />
+    	<property name="moment" value="2020/04/03 21:00" />
+		<property name="brotherhood" ref= "brotherhood01"/>
+		<property name="ticker" value="2020/04/03-ABCDE" />
+    </bean>
+    
+    <bean id="procession02" class="domain.Procession">
+    	<property name="title" value="Cristo de la Vera+Cruz" />
+    	<property name="description" value="Salida del cristo" />
+    	<property name="moment" value="2020/04/03 21:00" />
+		<property name="brotherhood" ref= "brotherhood01"/>
+		<property name="ticker" value="2020/04/03-FGHIJ" />
+    </bean>
+    <!-- PROCESSION -->	
 </beans>
