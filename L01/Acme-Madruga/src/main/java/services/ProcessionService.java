@@ -2,13 +2,16 @@
 package services;
 
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ProcessionRepository;
 import security.LoginService;
@@ -20,6 +23,7 @@ import domain.Procession;
  * CONTROL DE CAMBIOS ProcessionService.java
  * 
  * ALVARO 17/02/2019 12:02 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 16:35 AÑADIDO RECONSTRUIDOR PROCESSION Y REPARADO GENERADOR DE TICKETS
  */
 
 @Service
@@ -35,6 +39,9 @@ public class ProcessionService {
 	@Autowired
 	private BrotherhoodService		brotherhoodService;
 
+	@Autowired
+	Validator						validator;
+
 
 	//Simple CRUD Methods ------------------
 
@@ -44,7 +51,6 @@ public class ProcessionService {
 		final UserAccount login = LoginService.getPrincipal();
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId());
 		procession.setBrotherhood(brotherhood);
-		procession.setMoment(LocalDateTime.now().toDate());
 		return procession;
 
 	}
@@ -56,9 +62,12 @@ public class ProcessionService {
 			final int randomInt = new SecureRandom().nextInt(characterSet.length());
 			sb.append(characterSet.substring(randomInt, randomInt + 1));
 		}
-		return procession.getMoment().toString().replaceAll("-", "") + "-" + sb.toString();
-	}
+		final Date date = procession.getMoment();
+		final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		final String dateConvert = sdf.format(date);
 
+		return dateConvert.replaceAll("-", "") + "-" + sb.toString();
+	}
 	public Collection<Procession> findAll() {
 		return this.processionRepository.findAll();
 	}
@@ -67,7 +76,16 @@ public class ProcessionService {
 		return this.processionRepository.findOne(id);
 	}
 	public Procession save(final Procession procession) {
-		procession.setTicker(this.randomTicker(procession));
+		if (procession.getTicker() != null && procession.getTicker().length() > 0) {
+			// CONSERVO SU ANTERIOR TICKER
+		} else
+			procession.setTicker(this.randomTicker(procession));
+		/*
+		 * Ya que no le podemos pasar nada al create porque el reconstruidor hace que se lo cargue decidimos colocar
+		 * aquí la asignación del brotherhood y será en el controlador donde se vigile que la edición la realiza el creador
+		 * de esa procession
+		 */
+		procession.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 		return this.processionRepository.save(procession);
 	}
 
@@ -111,5 +129,21 @@ public class ProcessionService {
 		final Brotherhood brotherhoodProcession = this.findOne(processionId).getBrotherhood();
 		Assert.isTrue(brotherhoodLogin.equals(brotherhoodProcession));
 		return this.findOne(processionId);
+	}
+
+	public Procession reconstruct(final Procession procession, final BindingResult binding) {
+		Procession result;
+
+		if (procession.getId() == 0)
+			result = procession;
+		else {
+			result = this.processionRepository.findOne(procession.getId());
+			result.setTitle(procession.getTitle());
+			result.setDescription(procession.getDescription());
+			result.setMoment(procession.getMoment());
+			result.setIsFinal(procession.getIsFinal());
+			this.validator.validate(procession, binding);
+		}
+		return result;
 	}
 }

@@ -12,8 +12,6 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -31,6 +29,7 @@ import domain.Procession;
  * CONTROL DE CAMBIOS ProcessionBrotherhoodController.java
  * 
  * ALVARO 17/02/2019 12:29 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 16:35 AÑADIDO RECONSTRUIDOR PROCESSION
  */
 
 @Controller
@@ -122,8 +121,10 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Procession procession, final BindingResult binding) {
+	public ModelAndView save(Procession procession, final BindingResult binding) {
 		ModelAndView result;
+
+		procession = this.processionService.reconstruct(procession, binding);
 		if (binding.hasErrors()) {
 			System.out.println("El error pasa por aquí alvaro (IF de save())");
 			System.out.println(binding);

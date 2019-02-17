@@ -33,6 +33,7 @@ public class Procession extends DomainEntity {
 	private Date		moment;
 	private Brotherhood	brotherhood;
 	private String		ticker;
+	private Boolean		isFinal;
 
 
 	public String getTitle() {
@@ -78,5 +79,13 @@ public class Procession extends DomainEntity {
 
 	public void setTicker(final String ticker) {
 		this.ticker = ticker;
+	}
+
+	public Boolean getIsFinal() {
+		return this.isFinal;
+	}
+
+	public void setIsFinal(final Boolean isFinal) {
+		this.isFinal = isFinal;
 	}
 }

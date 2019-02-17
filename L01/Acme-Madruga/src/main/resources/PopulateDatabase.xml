@@ -14,6 +14,7 @@
 	CONTROL DE CAMBIOS PopulateDatabase.xml
   
 	ALVARO 17/02/2019 13:11 Añadidos valores de brotherhood y procession
+	ALVARO 17/02/2019 17:18 Editados tickets procesiones
  -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -95,7 +96,8 @@
     	<property name="description" value="Salida de la virgen del Rosario" />
     	<property name="moment" value="2020/04/03 21:00" />
 		<property name="brotherhood" ref= "brotherhood01"/>
-		<property name="ticker" value="2020/04/03-ABCDE" />
+		<property name="ticker" value="20200403-ABCDE" />
+		<property name="isFinal" value= "true"/>
     </bean>
     
     <bean id="procession02" class="domain.Procession">
@@ -103,7 +105,8 @@
     	<property name="description" value="Salida del cristo" />
     	<property name="moment" value="2020/04/03 21:00" />
 		<property name="brotherhood" ref= "brotherhood01"/>
-		<property name="ticker" value="2020/04/03-FGHIJ" />
+		<property name="ticker" value="200403-FGHIJ" />
+		<property name="isFinal" value= "false"/>
     </bean>
     <!-- PROCESSION -->	
 </beans>

@@ -14,6 +14,7 @@
 	CONTROL DE CAMBIOS tiles_es.xml PROCESSION
   
 	ALVARO 17/02/2019 12:38 CREACIÓN
+	ALVARO 17/02/2019 16:47 AÑADIDO CREATE Y EDIT
 -->
 
 <!DOCTYPE tiles-definitions PUBLIC
@@ -24,7 +25,22 @@
 
 	<definition name="procession/brotherhood/list" extends="master.page">	
 		<put-attribute name="title" value="Hermano Mayor: Lista de procesiones" />
-		<put-attribute name="body" value="/views/procession/list_customer.jsp" />
+		<put-attribute name="body" value="/views/procession/list_brotherhood.jsp" />
+	</definition>
+	
+	<definition name="procession/brotherhood/create" extends="master.page">	
+		<put-attribute name="title" value="Hermano Mayor: Crear procesion" />
+		<put-attribute name="body" value="/views/procession/edit.jsp" />
+	</definition>
+	
+	<definition name="procession/brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Editar procesión" />
+		<put-attribute name="body" value="/views/procession/edit.jsp" />
+	</definition>
+	
+	<definition name="procession/brotherhood/show" extends="master.page">	
+		<put-attribute name="title" value="Hermano Mayor: Mostrar procesión" />
+		<put-attribute name="body" value="/views/procession/show_brotherhood.jsp" />
 	</definition>
 	
 </tiles-definitions>
