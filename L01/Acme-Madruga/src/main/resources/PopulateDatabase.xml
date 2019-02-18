@@ -17,6 +17,7 @@
 	ALVARO 17/02/2019 17:18 Editados tickets procesiones
 	ALVARO 17/02/2019 19:35 Añadidos 2 floats
 	ALVARO 17/02/2019 20:29 Añadidos member y enrolled
+	ALVARO 18/02/2019 09:02 Añadidos positions por defecto
  -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -162,7 +163,6 @@
     </bean>
     <!-- FLOAT -->
     <!-- ENROLLED -->
-	
     <bean id="enrolled01" class="domain.Enrolled">
     	<property name="member" ref= "member01"/>
     	<property name="state">
@@ -170,6 +170,41 @@
     	</property>
     	<property name="brotherhood" ref= "brotherhood01"/>
     </bean>
-    
     <!-- ENROLLED -->
+    <!-- POSITION -->
+    <bean id="position01" class="domain.Position">
+    	<property name="nameEs" value= "Presidente"/>
+    	<property name="nameEn" value= "President"/>
+    </bean>
+
+    <bean id="position02" class="domain.Position">
+    	<property name="nameEs" value= "Vice Presidente"/>
+    	<property name="nameEn" value= "Vicepresident"/>
+    </bean>
+    
+    <bean id="position03" class="domain.Position">
+    	<property name="nameEn" value= "Secretary"/>
+    	<property name="nameEs" value= "Secretario"/>
+    </bean>
+    
+    <bean id="position04" class="domain.Position">
+    	<property name="nameEn" value= "Treasurer"/>
+    	<property name="nameEs" value= "Tesorero"/>
+    </bean>
+    
+    <bean id="position05" class="domain.Position">
+    	<property name="nameEn" value= "Historian"/>
+    	<property name="nameEs" value= "Historiador"/>
+    </bean>
+    
+    <bean id="position06" class="domain.Position">
+    	<property name="nameEn" value= "Frundaiser"/>
+    	<property name="nameEs" value= "Promotor"/>
+    </bean>
+    
+    <bean id="position07" class="domain.Position">
+    	<property name="nameEn" value= "Officer"/>
+    	<property name="nameEs" value= "Vocal"/>
+    </bean>
+    <!-- POSITION -->
 </beans>

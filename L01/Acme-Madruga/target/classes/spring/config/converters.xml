@@ -22,6 +22,8 @@
 			Add your own converters using entries of the following form: 
 			<bean class="converters.Class1ToClass2" /> 
 		-->
+		<bean class="converters.PositionToStringConverter" /> 
+		<bean class="converters.StringToPositionConverter" /> 
 	</util:list>
 	
 </beans>

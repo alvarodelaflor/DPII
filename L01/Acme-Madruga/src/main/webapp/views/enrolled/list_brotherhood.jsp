@@ -70,7 +70,7 @@
 		</security:authorize>
 	</div>
 	<div>
-		<form method="get" action=" ">
+		<form method="get" action="#">
 			<button type="submit">
 				<spring:message code="back" />
 			</button>

@@ -29,13 +29,8 @@
           	<acme:textbox code="floatBro.title" path="title"/>
           	<acme:textbox code="floatBro.description" path="description"/>
           	
-          	<acme:cancel url=" " code="cancel"/>
-          	<input type="submit" name="save" value=<spring:message code="send" />/>
+          	<acme:cancel url="floatBro/brotherhood/list.do" code="cancel"/>
+          	<acme:submit name="save" code="send"/>
 		</form:form>
-	</div>
-    <div>  
-		<form method="get" action="floatBro/brotherhood/list.do">
-    		<button type="submit"><spring:message code="back" /></button>
-		</form>
 	</div>
 </body>

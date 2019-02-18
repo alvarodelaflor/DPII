@@ -88,6 +88,8 @@ public class EnrolledService {
 		else {
 			result = this.enrolledRepository.findOne(enrolled.getId());
 			result.setState(enrolled.getState());
+			if (enrolled.getPosition() != null)
+				result.setPosition(enrolled.getPosition());
 			this.validator.validate(enrolled, binding);
 		}
 		return result;

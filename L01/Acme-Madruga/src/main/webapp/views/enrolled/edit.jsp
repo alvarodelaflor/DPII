@@ -21,7 +21,26 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<body>
+<style type="text/css">
+	.oculta{
+	display:none;
+	}
+</style>
+
+<script type= "text/javascript"> 
+	function mostrar(value_elemento){
+	var elemento;
+	elemento = document.getElementById('capa0');
+	if (true == value_elemento || "true" == value_elemento){
+		elemento.style.display="block";
+	}else{
+		elemento.style.display="none";
+		}
+	}
+</script>
+
+<body  onload="mostrar(${enrolled.state});">
+
 	<div>
     	<form:form class="formularioEdicion" method="POST" modelAttribute="enrolled" action="enrolled/brotherhood/edit.do">
           	<form:hidden path="id"/>
@@ -29,20 +48,28 @@
           	<form:label path="state">
 			<spring:message code="enrolled.state" />:
 			</form:label>
-			<form:select path="state" >
+			<form:select path="state" onchange="mostrar(this.value);">
 				<form:option value="false"><spring:message code="enrolled.false"/></form:option>
 				<form:option value="true"><spring:message code="enrolled.true"/></form:option>
 			</form:select>
 			<form:errors cssClass="error" path="state" />
 			<br/>
-          	
-          	<acme:cancel url=" " code="cancel"/>
-          	<input type="submit" name="save" value=<spring:message code="send" />/>
+			<div class="oculta" id="capa0" >
+				<form:label path="position"><spring:message code="enrolled.position" /></form:label>
+				<form:select path="position" >
+					<c:choose>
+						<c:when test="${language == true}">
+							<form:options items="${positions}" itemLabel="nameEn" itemValue="id"/>
+						</c:when>
+						<c:otherwise>
+							<form:options items="${positions}" itemLabel="nameEs" itemValue="id"/>
+						</c:otherwise>
+					</c:choose>
+				</form:select>
+				<form:errors cssClass="error" path="position"/><br>
+          	</div>
+          	<acme:cancel url="enrolled/brotherhood/list.do" code="cancel"/>
+          	<acme:submit name="save" code="send"/>
 		</form:form>
-	</div>
-    <div>  
-		<form method="get" action="enrolled/brotherhood/list.do">
-    		<button type="submit"><spring:message code="back" /></button>
-		</form>
 	</div>
 </body>

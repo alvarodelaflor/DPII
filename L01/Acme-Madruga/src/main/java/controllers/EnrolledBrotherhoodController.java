@@ -13,6 +13,7 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.EnrolledService;
+import services.PositionService;
 import domain.Enrolled;
+import domain.Position;
 
 /*
  * CONTROL DE CAMBIOS EnrolledBrotherhoodController.java
@@ -37,6 +40,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 
 	@Autowired
 	private EnrolledService	enrolledService;
+	@Autowired
+	private PositionService	positionService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -148,17 +153,32 @@ public class EnrolledBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("enrolled/brotherhood/edit");
 
+		final Collection<Position> positions = this.positionService.findAll();
+		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
+		Boolean language;
+		if (actuallanguage.equals("English")) {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = true;
+		} else {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = false;
+		}
+
+		result.addObject("language", language);
 		result.addObject("enrolled", enrolled);
+		result.addObject("positions", positions);
 
 		return result;
 	}
-
 	private ModelAndView createEditModelAndView(final Enrolled enrolled, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("enrolled/brotherhood/edit");
 
+		final Collection<Position> positions = this.positionService.findAll();
+
 		result.addObject("enrolled", enrolled);
+		result.addObject("positions", positions);
 		result.addObject("message", messageCode);
 
 		return result;

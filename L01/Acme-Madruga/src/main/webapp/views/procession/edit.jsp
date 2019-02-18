@@ -39,13 +39,8 @@
 			<form:errors cssClass="error" path="isFinal" />
 			<br/>
           	
-          	<acme:cancel url=" " code="cancel"/>
-          	<input type="submit" name="save" value=<spring:message code="send" />/>
+          	<acme:cancel url="procession/brotherhood/list.do" code="cancel"/>
+          	<acme:submit name="save" code="send"/>
 		</form:form>
-	</div>
-    <div>  
-		<form method="get" action="procession/brotherhood/list.do">
-    		<button type="submit"><spring:message code="back" /></button>
-		</form>
 	</div>
 </body>

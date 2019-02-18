@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /*
  * CONTROL DE CAMBIOS Member.java
@@ -22,7 +23,17 @@ public class Enrolled extends DomainEntity {
 	private Member		member;
 	private Boolean		state;
 	private Brotherhood	brotherhood;
+	private Position	position;
 
+
+	@OneToOne
+	public Position getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(final Position position) {
+		this.position = position;
+	}
 
 	@ManyToOne(optional = false)
 	public Member getMember() {
