@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+ 
+ <!--
+	CONTROL DE CAMBIOS PopulateDatabase.xml
+  
+	ALVARO 17/02/2019 13:11 Añadidos valores de brotherhood y procession
+	ALVARO 17/02/2019 17:18 Editados tickets procesiones
+	ALVARO 17/02/2019 19:35 Añadidos 2 floats
+	ALVARO 17/02/2019 20:29 Añadidos member y enrolled
+	ALVARO 18/02/2019 09:02 Añadidos positions por defecto
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="brotherhood" />
+		<property name="password" value="44843b89fec33a1c48bbb3967b65abce" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="BROTHERHOOD" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="super" />
+		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+				<bean class="security.Authority">
+					<property name="authority" value="BROTHERHOOD" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="member" />
+		<property name="password" value="aa08769cdcb26674c6706093503ff0a3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MEMBER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Other domain beans come here -->	
+	
+	<!-- MEMBER -->
+	
+    <bean id="member01" class="domain.Member">
+    	<property name="name" value="Manuel" />
+    	<property name="middleName" value="Boss" />
+    	<property name="surname" value="Ruiz de Lopera" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="donManuel@alum.us.es" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount4"/>	
+    </bean>
+    
+    <!-- MEMBER -->
+	<!-- BROTHERHOOD -->
+	
+    <bean id="brotherhood01" class="domain.Brotherhood">
+    	<property name="name" value="Alvaro" />
+    	<property name="middleName" value="Dogran" />
+    	<property name="surname" value="de la Flor Bonilla" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="alvdebon@alum.us.es" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount2"/>
+        
+        <property name="title" value= "Hermandad de la VERA CRUZ"/>
+        <property name="establishmentDate" value="2018/11/10 08:00" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>		
+    </bean>
+    
+    <!-- BROTHERHOOD -->
+    <!-- PROCESSION -->
+    <bean id="procession01" class="domain.Procession">
+    	<property name="title" value="Virgen del Rosario" />
+    	<property name="description" value="Salida de la virgen del Rosario" />
+    	<property name="moment" value="2020/04/03 21:00" />
+		<property name="brotherhood" ref= "brotherhood01"/>
+		<property name="ticker" value="20200403-ABCDE" />
+		<property name="isFinal" value= "true"/>
+    </bean>
+    
+    <bean id="procession02" class="domain.Procession">
+    	<property name="title" value="Cristo de la Vera+Cruz" />
+    	<property name="description" value="Salida del cristo" />
+    	<property name="moment" value="2020/04/03 21:00" />
+		<property name="brotherhood" ref= "brotherhood01"/>
+		<property name="ticker" value="200403-FGHIJ" />
+		<property name="isFinal" value= "false"/>
+    </bean>
+    <!-- PROCESSION -->
+    <!-- FLOAT -->
+	<bean id="floatBro01" class="domain.FloatBro">
+    	<property name="title" value="Old Float" />
+        <property name="description" value="The bigger float" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>
+        <property name="brotherhood" ref= "brotherhood01"/>
+    </bean>
+    
+    <bean id="floatBro02" class="domain.FloatBro">
+    	<property name="title" value="New Float" />
+        <property name="description" value="The tiny float" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>
+        <property name="brotherhood" ref= "brotherhood01"/>
+    </bean>
+    <!-- FLOAT -->
+    <!-- ENROLLED -->
+    <bean id="enrolled01" class="domain.Enrolled">
+    	<property name="member" ref= "member01"/>
+    	<property name="state">
+    		<null></null>
+    	</property>
+    	<property name="brotherhood" ref= "brotherhood01"/>
+    </bean>
+    <!-- ENROLLED -->
+    <!-- POSITION -->
+    <bean id="position01" class="domain.Position">
+    	<property name="nameEs" value= "Presidente"/>
+    	<property name="nameEn" value= "President"/>
+    </bean>
+
+    <bean id="position02" class="domain.Position">
+    	<property name="nameEs" value= "Vice Presidente"/>
+    	<property name="nameEn" value= "Vicepresident"/>
+    </bean>
+    
+    <bean id="position03" class="domain.Position">
+    	<property name="nameEn" value= "Secretary"/>
+    	<property name="nameEs" value= "Secretario"/>
+    </bean>
+    
+    <bean id="position04" class="domain.Position">
+    	<property name="nameEn" value= "Treasurer"/>
+    	<property name="nameEs" value= "Tesorero"/>
+    </bean>
+    
+    <bean id="position05" class="domain.Position">
+    	<property name="nameEn" value= "Historian"/>
+    	<property name="nameEs" value= "Historiador"/>
+    </bean>
+    
+    <bean id="position06" class="domain.Position">
+    	<property name="nameEn" value= "Frundaiser"/>
+    	<property name="nameEs" value= "Promotor"/>
+    </bean>
+    
+    <bean id="position07" class="domain.Position">
+    	<property name="nameEn" value= "Officer"/>
+    	<property name="nameEs" value= "Vocal"/>
+    </bean>
+    <!-- POSITION -->
+</beans>
