@@ -18,7 +18,7 @@ import domain.Request;
 /*
  * CONTROL DE CAMBIOS PositionService.java
  * 
- * ALVARO 18/02/2019 09:22 CREACIÓN DE LA CLASE
+ * ALVARO 18/02/2019 09:22 CREACIï¿½N DE LA CLASE
  */
 
 @Transactional
@@ -93,3 +93,69 @@ public class RequestService {
 		return result;
 	}
 }
+
+	public Request create(final int processionId) {
+		final Request r = new Request();
+		final Procession procession = this.processionService.findOne(processionId);
+		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+
+		// We have to check if the procession is in final mode
+		Assert.isTrue(procession.getIsFinal());
+		// We have to check if we are an active member of the brotherhood
+		Assert.isTrue(this.memberService.isBrotherhoodActiveMember(owner.getId(), procession.getBrotherhood().getId()));
+
+		r.setProcession(procession);
+		r.setMember(owner);
+
+		return r;
+	}
+	private ProcessionService	processionService;
+	@Autowired
+	private MemberService		memberService;
+	@Autowired
+	public Collection<Request> getLoggedRequests() {
+		Assert.isTrue(this.checkAuthority("MEMBER"));
+		final Member logged = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+		return this.requestRepository.getMemberRequests(logged.getId());
+	}
+
+	public Request findOne(final int id) {
+		final Request req = this.requestRepository.findOne(id);
+		// We are either the brotherhood who owns the procession or the owner of the request
+
+		final boolean processionOwner = req.getProcession().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal());
+		final boolean requestOwner = req.getMember().getUserAccount().equals(LoginService.getPrincipal());
+
+		Assert.isTrue(processionOwner || requestOwner);
+		return req;
+	}
+	public Request save(final Request request) {
+		Request res;
+		if (request.getId() == 0) {
+			// Creating, we want to check member authority
+			Assert.isTrue(this.checkAuthority("MEMBER"));
+			res = this.requestRepository.save(request);
+		} else {
+			final Request req = this.requestRepository.findOne(request.getId());
+			// Check if request's procession is owned by the brotherhood
+			Assert.isTrue(req.getProcession().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal()));
+			// Check if request is "pending"
+			Assert.isNull(req.getStatus());
+			res = this.requestRepository.save(req);
+		}
+		return res;
+	}
+	public void delete(final int id) {
+		final Request req = this.requestRepository.findOne(id);
+		// To delete a request we must be the owner and it must be 'PENDING'
+		Assert.isTrue(req.getMember().getUserAccount().equals(LoginService.getPrincipal()));
+		Assert.isNull(req.getStatus());
+		this.requestRepository.delete(id);
+	}
+
+	private boolean checkAuthority(final String authority) {
+		final UserAccount acc = LoginService.getPrincipal();
+		final Authority member = new Authority();
+		member.setAuthority(authority);
+		return acc.getAuthorities().contains(member);
+	}

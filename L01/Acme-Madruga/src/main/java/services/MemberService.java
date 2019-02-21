@@ -19,6 +19,7 @@ import domain.Member;
  * CONTROL DE CAMBIOS MemberService.java
  * 
  * ALVARO 17/02/2019 11:51 CREACIÓN DE LA CLASE
+ * HIPONA 21/02/2019 9:57 isBrotherhoodActiveMember
  */
 
 @Service
@@ -68,4 +69,9 @@ public class MemberService {
 		res = this.memberRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
+
+	public Boolean isBrotherhoodActiveMember(final int memberId, final int brotherHoodId) {
+		return this.memberRepository.isBrotherhoodActiveMember(memberId, brotherHoodId) > 0;
+	}
+
 }

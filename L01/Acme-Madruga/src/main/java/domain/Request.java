@@ -14,7 +14,7 @@ import auxiliar.PositionAux;
 /*
  * CONTROL DE CAMBIOS Position.java
  * 
- * ALVARO 18/02/2019 09:00 CREACIÓN DE LA CLASE
+ * ALVARO 18/02/2019 09:00 CREACIï¿½N DE LA CLASE
  */
 
 @Entity

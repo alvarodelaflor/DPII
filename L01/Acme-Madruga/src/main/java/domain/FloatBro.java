@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 /*
  * CONTROL DE CAMBIOS FloatBro.java
  * 
- * ALVARO 17/02/2019 19:12 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 19:12 CREACIï¿½N DE LA CLASE
  */
 
 @Entity

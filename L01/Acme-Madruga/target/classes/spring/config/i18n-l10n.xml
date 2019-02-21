@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 
@@ -56,4 +57,63 @@
 		<!-- ANTONIO SALVAT -->
 	</util:list>
 
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * i18n-l10n.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+ 
+ <!--
+	CONTROL DE CAMBIOS i18n-l10n.xml
+  
+	ALVARO 17/02/2019 12:38 Añadido value de procession
+	ALVARO 17/02/2019 19:30 Añadido value de floatBro
+	ALVARO 17/02/2019 21:41 Añadido value de enrolled
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd 
+	">
+
+	<util:list id="messages">
+		<value>/views/master-page/messages</value>
+		<value>/views/misc/messages</value>
+		<value>/views/security/messages</value>		
+		<value>/views/welcome/messages</value>
+		
+		<value>/views/administrator/messages</value>
+		<value>/views/profile/messages</value>
+		<!-- ALVARO -->
+		<value>/views/procession/messages</value>
+		<value>/views/floatBro/messages</value>
+		<value>/views/enrolled/messages</value>
+		<!-- ALVARO -->
+		<!-- FRAN -->
+		
+		<!-- FRAN -->
+		<!-- CARMEN -->
+		
+		<!-- CARMEN -->
+		<!-- FERRETE -->
+		
+		<!-- FERRETE -->
+		<!-- ANTONIO SANCHEZ -->
+		<value>/views/request/messages</value>
+		<!-- ANTONIO SANCHEZ -->
+		<!-- ANTONIO SALVAT -->
+		
+		<!-- ANTONIO SALVAT -->
+	</util:list>
+
+>>>>>>> hipona
 </beans>

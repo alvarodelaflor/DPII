@@ -20,8 +20,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 /*
  * CONTROL DE CAMBIOS Procession.java
  * 
- * ALVARO 17/02/2019 11:30 CREACIÓN DE LA CLASE
- * ALVARO 17/02/2019 12:06 AÑADIDO ATRIBUTO TICKER
+ * ALVARO 17/02/2019 11:30 CREACIï¿½N DE LA CLASE
+ * ALVARO 17/02/2019 12:06 Aï¿½ADIDO ATRIBUTO TICKER
  */
 
 @Entity

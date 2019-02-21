@@ -1,7 +1,7 @@
 
 package domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 /*
  * CONTROL DE CAMBIOS Member.java
  * 
- * ALVARO 17/02/2019 19:57 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 19:57 CREACIï¿½N DE LA CLASE
  */
 
 @Entity
@@ -26,7 +26,7 @@ public class Enrolled extends DomainEntity {
 	private Boolean		state;
 	private Brotherhood	brotherhood;
 	private Position	position;
-	private Date		dropMomemnt;
+	private Date		dropMoment;
 
 
 	@OneToOne
@@ -64,11 +64,12 @@ public class Enrolled extends DomainEntity {
 		this.brotherhood = brotherhood;
 	}
 
-	public Date getDropMomemnt() {
-		return this.dropMomemnt;
+	public Date getDropMoment() {
+		return this.dropMoment;
 	}
 
-	public void setDropMomemnt(final Date dropMomemnt) {
-		this.dropMomemnt = dropMomemnt;
+	public void setDropMoment(final Date dropMoment) {
+		this.dropMoment = dropMoment;
 	}
+
 }
