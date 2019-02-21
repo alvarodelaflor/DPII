@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /*
@@ -34,8 +35,19 @@ public class Procession extends DomainEntity {
 	private Brotherhood	brotherhood;
 	private String		ticker;
 	private Boolean		isFinal;
+	private Integer		maxRow;
+	private FloatBro	floatBro;
 
 
+	public Integer getMaxRow() {
+		return this.maxRow;
+	}
+
+	public void setMaxRow(final Integer maxRow) {
+		this.maxRow = maxRow;
+	}
+
+	@NotBlank
 	public String getTitle() {
 		return this.title;
 	}
@@ -44,6 +56,7 @@ public class Procession extends DomainEntity {
 		this.title = title;
 	}
 
+	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
@@ -87,5 +100,14 @@ public class Procession extends DomainEntity {
 
 	public void setIsFinal(final Boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+
+	@ManyToOne(optional = false)
+	public FloatBro getFloatBro() {
+		return this.floatBro;
+	}
+
+	public void setFloatBro(final FloatBro floatBro) {
+		this.floatBro = floatBro;
 	}
 }

@@ -43,6 +43,8 @@
 						<display:column titleKey="procession.isFinal" style="background-color: #58FA58">
 							<spring:message code="procession.${row.isFinal}"/>
 						</display:column>
+						<display:column property="maxRow" titleKey="procession.maxRow" style="background-color: #58FA58"></display:column>
+						<display:column property="floatBro.title" titleKey="procession.floatBro" style="background-color: #58FA58"></display:column>
 					</c:when>
 					<c:otherwise>
 						<display:column titleKey="procession.ticker" style="background-color: #FA5858" > 
@@ -57,7 +59,9 @@
 						<display:column property="title" titleKey="procession.title" style="background-color: #FA5858"></display:column>
 						<display:column titleKey="procession.isFinal" style="background-color: #FA5858">
 							<spring:message code="procession.${row.isFinal}"/>
-						</display:column>					
+						</display:column>
+						<display:column property="maxRow" titleKey="procession.maxRow" style="background-color: #FA5858"></display:column>
+						<display:column property="floatBro.title" titleKey="procession.floatBro" style="background-color: #FA5858"></display:column>					
 					</c:otherwise>
 				</c:choose>
 			</display:table>

@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.sql.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -24,6 +26,7 @@ public class Enrolled extends DomainEntity {
 	private Boolean		state;
 	private Brotherhood	brotherhood;
 	private Position	position;
+	private Date		dropMomemnt;
 
 
 	@OneToOne
@@ -59,5 +62,13 @@ public class Enrolled extends DomainEntity {
 
 	public void setBrotherhood(final Brotherhood brotherhood) {
 		this.brotherhood = brotherhood;
+	}
+
+	public Date getDropMomemnt() {
+		return this.dropMomemnt;
+	}
+
+	public void setDropMomemnt(final Date dropMomemnt) {
+		this.dropMomemnt = dropMomemnt;
 	}
 }

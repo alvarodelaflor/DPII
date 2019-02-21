@@ -108,13 +108,7 @@
         <property name="userAccount" ref= "userAccount2"/>
         
         <property name="title" value= "Hermandad de la VERA CRUZ"/>
-        <property name="establishmentDate" value="2018/11/10 08:00" />
-        <property name="pictures">
-			<list value-type="java.lang.String">
-           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
-            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
-			</list>
-        </property>		
+        <property name="establishmentDate" value="2018/11/10 08:00" />		
     </bean>
     
     <!-- BROTHERHOOD -->
@@ -126,6 +120,8 @@
 		<property name="brotherhood" ref= "brotherhood01"/>
 		<property name="ticker" value="20200403-ABCDE" />
 		<property name="isFinal" value= "true"/>
+		<property name="maxRow" value= "10"/>
+		<property name="floatBro" ref= "floatBro01"/>
     </bean>
     
     <bean id="procession02" class="domain.Procession">
@@ -135,30 +131,22 @@
 		<property name="brotherhood" ref= "brotherhood01"/>
 		<property name="ticker" value="200403-FGHIJ" />
 		<property name="isFinal" value= "false"/>
+		<property name="maxRow" value= "9"/>
+		<property name="floatBro" ref= "floatBro02"/>
     </bean>
     <!-- PROCESSION -->
     <!-- FLOAT -->
 	<bean id="floatBro01" class="domain.FloatBro">
     	<property name="title" value="Old Float" />
         <property name="description" value="The bigger float" />
-        <property name="pictures">
-			<list value-type="java.lang.String">
-           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
-            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
-			</list>
-        </property>
+		<property name="pictures" value="https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg'https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG" />
         <property name="brotherhood" ref= "brotherhood01"/>
     </bean>
     
     <bean id="floatBro02" class="domain.FloatBro">
     	<property name="title" value="New Float" />
         <property name="description" value="The tiny float" />
-        <property name="pictures">
-			<list value-type="java.lang.String">
-           		<value>https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg</value>
-            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
-			</list>
-        </property>
+		<property name="pictures" value="https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg'https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG" />
         <property name="brotherhood" ref= "brotherhood01"/>
     </bean>
     <!-- FLOAT -->
@@ -207,4 +195,39 @@
     	<property name="nameEs" value= "Vocal"/>
     </bean>
     <!-- POSITION -->
+    <!-- REQUEST -->
+    <bean id="request01" class="domain.Request">
+    	<property name="member" ref= "member01"/>
+    	<property name="status">
+    		<null></null>
+    	</property>
+    	<property name="positionAux" ref= "positionaux01"/>
+    </bean>
+    <!-- REQUEST -->
+    <!-- POSITIONAUX -->
+    <bean id="positionaux01" class="auxiliar.PositionAux">
+    	<property name="row" value= "0"/>
+    	<property name="colum" value= "0"/>
+    	<property name="status" value= "false"/>
+    	<property name="procession" ref= "procession01"/>
+    </bean>
+    <bean id="positionaux02" class="auxiliar.PositionAux">
+    	<property name="row" value= "0"/>
+    	<property name="colum" value= "1"/>
+    	<property name="status" value= "false"/>
+    	<property name="procession" ref= "procession01"/>
+    </bean>
+    <bean id="positionaux03" class="auxiliar.PositionAux">
+    	<property name="row" value= "1"/>
+    	<property name="colum" value= "0"/>
+    	<property name="status" value= "false"/>
+    	<property name="procession" ref= "procession01"/>
+    </bean>
+    <bean id="positionaux04" class="auxiliar.PositionAux">
+    	<property name="row" value= "1"/>
+    	<property name="colum" value= "1"/>
+    	<property name="status" value= "false"/>
+    	<property name="procession" ref= "procession01"/>
+    </bean>
+    <!-- REQUEST -->
 </beans>

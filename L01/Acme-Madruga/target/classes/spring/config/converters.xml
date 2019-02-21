@@ -23,7 +23,11 @@
 			<bean class="converters.Class1ToClass2" /> 
 		-->
 		<bean class="converters.PositionToStringConverter" /> 
-		<bean class="converters.StringToPositionConverter" /> 
+		<bean class="converters.StringToPositionConverter" />
+		<bean class="converters.PositionAuxToStringConverter" /> 
+		<bean class="converters.StringToPositionAuxConverter" />
+		<bean class="converters.FloatBroToStringConverter" /> 
+		<bean class="converters.StringToFloatBroConverter" />   
 	</util:list>
 	
 </beans>

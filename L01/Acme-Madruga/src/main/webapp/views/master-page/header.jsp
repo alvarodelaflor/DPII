@@ -42,9 +42,10 @@
 			<li><a class="fNiv"><spring:message	code="master.page.brotherhood" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
 					<li><a href="floatBro/brotherhood/list.do"><spring:message code="master.page.brotherhood.floatBro.list" /></a></li>
+					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
 					<li><a href="enrolled/brotherhood/list.do"><spring:message code="master.page.brotherhood.enrolled.list" /></a></li>
+					<li><a href="request/brotherhood/list.do"><spring:message code="master.page.brotherhood.request.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

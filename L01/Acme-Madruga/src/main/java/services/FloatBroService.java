@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -23,7 +22,6 @@ import domain.FloatBro;
  */
 
 @Service
-@Transactional
 public class FloatBroService {
 
 	//Managed Repository -------------------	
@@ -113,14 +111,18 @@ public class FloatBroService {
 	public FloatBro reconstruct(final FloatBro floatBro, final BindingResult binding) {
 		FloatBro result;
 
-		if (floatBro.getId() == 0)
+		if (floatBro.getId() == 0) {
+			floatBro.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 			result = floatBro;
-		else {
+		} else {
 			result = this.floatBroRepository.findOne(floatBro.getId());
 			result.setTitle(floatBro.getTitle());
 			result.setDescription(floatBro.getDescription());
-			this.validator.validate(floatBro, binding);
+			result.setPictures(floatBro.getPictures());
+			if (result.getBrotherhood() == null)
+				result.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 		}
+		this.validator.validate(floatBro, binding);
 		return result;
 	}
 }
