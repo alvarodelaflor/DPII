@@ -138,8 +138,6 @@ public class RequestService {
 			final Request req = this.requestRepository.findOne(request.getId());
 			// Check if request's procession is owned by the brotherhood
 			Assert.isTrue(req.getPositionAux().getProcession().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal()));
-			// Check if request is "pending"
-			Assert.isNull(req.getStatus());
 			res = this.requestRepository.save(req);
 		}
 		return res;

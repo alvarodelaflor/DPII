@@ -22,22 +22,22 @@
 <tiles-definitions>
 
 	<definition name="floatBro/brotherhood/list" extends="master.page">	
-		<put-attribute name="title" value="Brotherhood: List of floatBro" />
+		<put-attribute name="title" value="Brotherhood: List of floats" />
 		<put-attribute name="body" value="/views/floatBro/list_brotherhood.jsp" />
 	</definition>
 	
 	<definition name="floatBro/brotherhood/create" extends="master.page">	
-		<put-attribute name="title" value="Brotherhood: Create floatBro" />
+		<put-attribute name="title" value="Brotherhood: Create float" />
 		<put-attribute name="body" value="/views/floatBro/edit.jsp" />
 	</definition>
 	
 	<definition name="floatBro/brotherhood/edit" extends="master.page">	
-		<put-attribute name="title" value="Brotherhood: Edit floatBro" />
+		<put-attribute name="title" value="Brotherhood: Edit float" />
 		<put-attribute name="body" value="/views/floatBro/edit.jsp" />
 	</definition>
 	
 	<definition name="floatBro/brotherhood/show" extends="master.page">	
-		<put-attribute name="title" value="Brotherhood: Show floatBro" />
+		<put-attribute name="title" value="Brotherhood: Show float" />
 		<put-attribute name="body" value="/views/floatBro/show_brotherhood.jsp" />
 	</definition>
 	
