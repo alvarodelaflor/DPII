@@ -41,11 +41,10 @@
 		<put-attribute name="body" value="/views/request/show_brotherhood.jsp" />
 	</definition>
 	
-</tiles-definitions>
 	<definition name="request/list" extends="master.page">	
 		<put-attribute name="title" value="List requests" />
-	</definition>
 		<put-attribute name="body" value="/views/request/list.jsp" />
+	</definition>
 	
 	<definition name="request/edit" extends="master.page">	
 		<put-attribute name="title" value="Create request" />
@@ -56,3 +55,4 @@
 		<put-attribute name="title" value="Show request" />
 		<put-attribute name="body" value="/views/request/show.jsp" />
 	</definition>
+</tiles-definitions>
