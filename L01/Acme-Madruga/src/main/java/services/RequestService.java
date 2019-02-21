@@ -56,7 +56,6 @@ public class RequestService {
 	}
 
 	public Request findOne(final int id) {
-		// To display a request we must be logged as a member or brotherhood
 		final Request req = this.requestRepository.findOne(id);
 
 		// We are either the brotherhood who owns the procession or the owner of the request
@@ -71,7 +70,7 @@ public class RequestService {
 		Request res;
 		if (request.getId() == 0) {
 			// Creating, we want to check member authority
-			this.checkAuthority("MEMBER");
+			Assert.isTrue(this.checkAuthority("MEMBER"));
 			res = this.requestRepository.save(request);
 		} else {
 			final Request req = this.requestRepository.findOne(request.getId());

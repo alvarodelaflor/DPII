@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,11 +17,15 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
+import domain.Enrolled;
+import domain.Member;
 
 /*
  * CONTROL DE CAMBIOS BrotherhoodService.java
  * 
  * ALVARO 17/02/2019 11:51 CREACIÓN DE LA CLASE
+ * HIPONA 21/02/2019 18:10 findFromLoggedMember
+ * HIPONA 21/02/2019 18:27 drop
  */
 
 @Service
@@ -30,6 +35,12 @@ public class BrotherhoodService {
 	//Managed Repository -------------------	
 	@Autowired
 	private BrotherhoodRepository	brotherhoodRepository;
+
+	@Autowired
+	private MemberService			memberService;
+
+	@Autowired
+	private EnrolledService			enrollmentService;
 
 
 	//Supporting services ------------------
@@ -70,5 +81,24 @@ public class BrotherhoodService {
 		Brotherhood res;
 		res = this.brotherhoodRepository.findByUserAccountId(userAccountId);
 		return res;
+	}
+
+	public Collection<Brotherhood> findFromLoggedMember() {
+		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+		return this.brotherhoodRepository.findFromMember(member.getId());
+	}
+
+	public void dropMember(final int memberId, final int brotherhoodId) {
+		System.out.println("Dropping member");
+		final Enrolled enrollment = this.enrollmentService.getBrotherhoodActiveEnrollment(memberId, brotherhoodId);
+		// We have to check if we are an active member
+		Assert.notNull(enrollment);
+		enrollment.setDropMoment(new Date());
+		this.enrollmentService.save(enrollment);
+	}
+
+	public void dropLogged(final int brotherhoodId) {
+		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+		this.dropMember(member.getId(), brotherhoodId);
 	}
 }

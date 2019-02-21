@@ -76,4 +76,5 @@ public class MemberService {
 	public Boolean isBrotherhoodActiveMember(final int memberId, final int brotherHoodId) {
 		return this.memberRepository.isBrotherhoodActiveMember(memberId, brotherHoodId) > 0;
 	}
+
 }

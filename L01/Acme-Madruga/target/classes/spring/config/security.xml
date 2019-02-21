@@ -14,6 +14,9 @@
   
 	ALVARO 17/02/2019 12:38 Añadido value de procession brotherhood
 	HIPONA 19/02/2019 11:52 Añadidas acceso para request/member/
+	HIPONA 21/02/2019 16:52 Añadidas acceso para enroll/member/
+	HIPONA 21/02/2019 18:18 Añadidas acceso para brotherhood/member/list
+	HIPONA 21/02/2019 18:37 Añadidas acceso para brotherhood/member/drop
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -88,6 +91,10 @@
 		<security:intercept-url pattern="/request/member/create.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/request/member/delete.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/request/member/show.do" access="hasRole('MEMBER')" />
+		
+		<security:intercept-url pattern="/enroll/member/create.do" access="hasRole('MEMBER')" />
+		<security:intercept-url pattern="/brotherhood/member/list.do" access="hasRole('MEMBER')" />
+		<security:intercept-url pattern="/brotherhood/member/drop.do" access="hasRole('MEMBER')" />
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 		

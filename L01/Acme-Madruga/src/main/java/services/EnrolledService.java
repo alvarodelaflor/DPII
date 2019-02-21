@@ -12,9 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.EnrolledRepository;
+import security.Authority;
 import security.LoginService;
+import security.UserAccount;
 import domain.Brotherhood;
 import domain.Enrolled;
+import domain.Member;
 
 /*
  * CONTROL DE CAMBIOS EnrolledService.java
@@ -41,9 +44,22 @@ public class EnrolledService {
 
 	//Simple CRUD Methods ------------------
 
-	public Enrolled create() {
-
+	public Enrolled create(final int brotherhoodId) {
+		// We have to check member authority
+		Assert.isTrue(this.checkAuthority("MEMBER"));
 		final Enrolled enrolled = new Enrolled();
+		final Brotherhood brotherhood = this.brotherhoodService.findOne(brotherhoodId);
+		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+
+		// We check if we are not an active member of the brotherhood
+		Assert.isTrue(this.memberService.isBrotherhoodActiveMember(owner.getId(), brotherhood.getId()) == false);
+
+		// We check if we don't have any pending enroll request
+		Assert.isTrue(this.hasPendingEnrollRequest(owner.getId(), brotherhood.getId()) == false);
+
+		enrolled.setBrotherhood(brotherhood);
+		enrolled.setMember(owner);
+
 		return enrolled;
 	}
 
@@ -94,4 +110,20 @@ public class EnrolledService {
 		}
 		return result;
 	}
+
+	private boolean checkAuthority(final String authority) {
+		final UserAccount acc = LoginService.getPrincipal();
+		final Authority member = new Authority();
+		member.setAuthority(authority);
+		return acc.getAuthorities().contains(member);
+	}
+
+	public Boolean hasPendingEnrollRequest(final int memberId, final int brotherHoodId) {
+		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId) != null;
+	}
+
+	public Enrolled getBrotherhoodActiveEnrollment(final int memberId, final int brotherHoodId) {
+		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId);
+	}
+
 }

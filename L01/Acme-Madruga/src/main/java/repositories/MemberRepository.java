@@ -20,6 +20,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	@Query("select m from Member m join m.userAccount mua where mua.id=?1")
 	Member findByUserAccountId(int userAccountId);
 
-	@Query("select count(m) from Member m join m.enrolleds e where m.id=?1 and e.brotherhood.id=?2 and e.state=true")
+	@Query("select count(m) from Member m join m.enrolleds e where m.id=?1 and e.brotherhood.id=?2 and e.dropMoment=null and e.state=true")
 	int isBrotherhoodActiveMember(int memberId, int brotherHoodId);
+
 }
