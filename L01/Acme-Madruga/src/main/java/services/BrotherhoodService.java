@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
+import domain.Enrolled;
+import domain.Member;
 import forms.RegistrationForm;
 
 @Service
@@ -33,6 +36,12 @@ public class BrotherhoodService {
 
 	@Autowired
 	private WelcomeService	welcomeService;
+
+	@Autowired
+	private EnrolledService	enrollmentService;
+
+	@Autowired
+	private MemberService	memberService;
 
 
 	public Brotherhood reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {

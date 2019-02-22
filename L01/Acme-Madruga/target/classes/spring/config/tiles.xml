@@ -33,6 +33,7 @@
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/member/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
+		<value>/views/brotherhood/tiles.xml</value>
 		<!-- ALVARO -->
 		<value>/views/procession/tiles.xml</value>
 		<value>/views/floatBro/tiles.xml</value>
@@ -54,7 +55,6 @@
 		<!-- ANTONIO SALVAT -->
 		
 		<!-- ANTONIO SALVAT -->
-		<value>/views/brotherhood/tiles.xml</value>
 	</util:list>
 
 </beans>
