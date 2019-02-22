@@ -9,7 +9,6 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  -->
-
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
@@ -31,12 +30,12 @@
 	</bean>
 
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="username" value="brotherhood" />
+		<property name="password" value="44843b89fec33a1c48bbb3967b65abce" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="BROTHERHOOD" />
 				</bean>
 			</list>
 		</property>
@@ -51,12 +50,95 @@
 					<property name="authority" value="ADMIN" />
 				</bean>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="BROTHERHOOD" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="member" />
+		<property name="password" value="aa08769cdcb26674c6706093503ff0a3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MEMBER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="carmen" />
+		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="authorities">
+				<bean class="security.Authority">
+					<property name="authority" value="BROTHERHOOD" />
+				</bean>
+		</property>
+	</bean>
+	
 	<!-- Other domain beans come here -->	
 	
+
+	
+	<!-- MEMBER -->
+	
+    <bean id="member01" class="domain.Member">
+    	<property name="name" value="Manuel" />
+    	<property name="middleName" value="Boss" />
+    	<property name="surname" value="Ruiz de Lopera" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="donManuel@alum" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount4"/>	
+    </bean>
+    
+    <!-- MEMBER -->
+	<!-- BROTHERHOOD -->
+	
+    <bean id="brotherhood01" class="domain.Brotherhood">
+    	<property name="name" value="Alvaro" />
+    	<property name="middleName" value="Dogran" />
+    	<property name="surname" value="de la Flor Bonilla" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="alvdebon@alum" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount2"/>
+        
+        <property name="title" value= "Hermandad de la VERA CRUZ"/>
+        <property name="establishmentDate" value="2018/11/10 08:00" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://i.pinimg.com/originals/6a/70/b6/6a70b667c73da647bb1807b4fe29888b.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>		
+    </bean>
+    
+    
+    <bean id="brotherhood02" class="domain.Brotherhood">
+    	<property name="name" value="Alvaro" />
+    	<property name="middleName" value="Dogran" />
+    	<property name="surname" value="de la Flor Bonilla" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="alvdebon@alum1" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount4"/>
+        
+        <property name="title" value= "Hermandad de la VERA CRUZ"/>
+        <property name="establishmentDate" value="2018/11/10 08:00" />
+        <property name="pictures">
+			<list value-type="java.lang.String">
+           		<value>https://i.pinimg.com/originals/6a/70/b6/6a70b667c73da647bb1807b4fe29888b.jpg</value>
+            	<value>https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG</value>
+			</list>
+        </property>		
+    </bean>
+    
+    <!-- BROTHERHOOD -->
+   
 </beans>
