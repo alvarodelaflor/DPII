@@ -39,6 +39,7 @@ public class Procession extends DomainEntity {
 	private FloatBro	floatBro;
 
 
+	@NotNull
 	public Integer getMaxRow() {
 		return this.maxRow;
 	}

@@ -147,16 +147,21 @@ public class ProcessionService {
 			result = procession;
 		} else {
 			result = this.processionRepository.findOne(procession.getId());
-			result.setTitle(procession.getTitle());
-			result.setDescription(procession.getDescription());
-			result.setMoment(procession.getMoment());
-			result.setIsFinal(procession.getIsFinal());
-			result.setMaxRow(procession.getMaxRow());
-			result.setFloatBro(procession.getFloatBro());
-			if (procession.getMoment() != null && result.getTicker() == null)
-				result.setTicker(this.randomTicker(procession));
-			if (result.getBrotherhood() == null)
-				result.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			//			result.setTitle(procession.getTitle());
+			//			result.setDescription(procession.getDescription());
+			//			result.setMoment(procession.getMoment());
+			//			result.setIsFinal(procession.getIsFinal());
+			//			result.setMaxRow(procession.getMaxRow());
+			//			result.setFloatBro(procession.getFloatBro());
+			//			if (procession.getMoment() != null && result.getTicker() == null)
+			//				result.setTicker(this.randomTicker(procession));
+			//			if (result.getBrotherhood() == null)
+			procession.setId(result.getId());
+			procession.setVersion(result.getVersion());
+			procession.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			procession.setMoment(result.getMoment());
+			procession.setTicker(result.getTicker());
+			result = procession;
 		}
 		this.validator.validate(result, binding);
 		return result;

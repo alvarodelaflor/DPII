@@ -116,11 +116,14 @@ public class FloatBroService {
 			result = floatBro;
 		} else {
 			result = this.floatBroRepository.findOne(floatBro.getId());
-			result.setTitle(floatBro.getTitle());
-			result.setDescription(floatBro.getDescription());
-			result.setPictures(floatBro.getPictures());
-			if (result.getBrotherhood() == null)
-				result.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			//			result.setTitle(floatBro.getTitle());
+			//			result.setDescription(floatBro.getDescription());
+			//			result.setPictures(floatBro.getPictures());
+			//			if (result.getBrotherhood() == null)
+			//				result.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			floatBro.setId(result.getId());
+			floatBro.setVersion(result.getVersion());
+			result = floatBro;
 		}
 		this.validator.validate(floatBro, binding);
 		return result;

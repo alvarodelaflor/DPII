@@ -3,8 +3,6 @@ package services;
 
 import java.util.Collection;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -26,7 +24,6 @@ import domain.Request;
  * ALVARO 18/02/2019 09:22 CREACI�N DE LA CLASE
  */
 
-@Transactional
 @Service
 public class RequestService {
 
@@ -121,11 +118,11 @@ public class RequestService {
 	public Request findOne(final int id) {
 		final Request req = this.requestRepository.findOne(id);
 		// We are either the brotherhood who owns the procession or the owner of the request
-
-		final boolean processionOwner = req.getPositionAux().getProcession().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal());
-		final boolean requestOwner = req.getMember().getUserAccount().equals(LoginService.getPrincipal());
-
-		Assert.isTrue(processionOwner || requestOwner);
+		if (req != null) {
+			final boolean processionOwner = req.getPositionAux().getProcession().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal());
+			final boolean requestOwner = req.getMember().getUserAccount().equals(LoginService.getPrincipal());
+			Assert.isTrue(processionOwner || requestOwner);
+		}
 		return req;
 	}
 	public Request save(final Request request) {
