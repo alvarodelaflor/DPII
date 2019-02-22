@@ -147,4 +147,21 @@ public class BrotherhoodService {
 		this.brotherhoodRepository.save(logger);
 		return pictures;
 	}
+	public Collection<Brotherhood> findFromLoggedMember() {
+		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+		return this.brotherhoodRepository.findFromMember(member.getId());
+	}
+
+	public void dropMember(final int memberId, final int brotherhoodId) {
+		final Enrolled enrollment = this.enrollmentService.getBrotherhoodActiveEnrollment(memberId, brotherhoodId);
+		System.out.println("Dropping member");
+		Assert.notNull(enrollment);
+		// We have to check if we are an active member
+		enrollment.setDropMoment(new Date());
+		this.enrollmentService.save(enrollment);
+	}
+	public void dropLogged(final int brotherhoodId) {
+		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+		this.dropMember(member.getId(), brotherhoodId);
+	}
 }

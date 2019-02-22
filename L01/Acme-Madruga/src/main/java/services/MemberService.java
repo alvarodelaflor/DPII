@@ -124,4 +124,8 @@ public class MemberService {
 		res = this.memberRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
+	public Boolean isBrotherhoodActiveMember(final int memberId, final int brotherHoodId) {
+		return this.memberRepository.isBrotherhoodActiveMember(memberId, brotherHoodId) > 0;
+	}
+
 }

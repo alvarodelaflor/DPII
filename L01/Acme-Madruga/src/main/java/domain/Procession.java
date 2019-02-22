@@ -14,7 +14,15 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+
+/*
+ * CONTROL DE CAMBIOS Procession.java
+ * 
+ * ALVARO 17/02/2019 11:30 CREACI�N DE LA CLASE
+ * ALVARO 17/02/2019 12:06 A�ADIDO ATRIBUTO TICKER
+ */
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -27,8 +35,20 @@ public class Procession extends DomainEntity {
 	private Brotherhood	brotherhood;
 	private String		ticker;
 	private Boolean		isFinal;
+	private Integer		maxRow;
+	private FloatBro	floatBro;
 
 
+	@NotNull
+	public Integer getMaxRow() {
+		return this.maxRow;
+	}
+
+	public void setMaxRow(final Integer maxRow) {
+		this.maxRow = maxRow;
+	}
+
+	@NotBlank
 	public String getTitle() {
 		return this.title;
 	}
@@ -37,6 +57,7 @@ public class Procession extends DomainEntity {
 		this.title = title;
 	}
 
+	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
@@ -80,5 +101,14 @@ public class Procession extends DomainEntity {
 
 	public void setIsFinal(final Boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+
+	@ManyToOne(optional = false)
+	public FloatBro getFloatBro() {
+		return this.floatBro;
+	}
+
+	public void setFloatBro(final FloatBro floatBro) {
+		this.floatBro = floatBro;
 	}
 }

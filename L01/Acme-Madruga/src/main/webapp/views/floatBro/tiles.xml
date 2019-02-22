@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+<!--
+	CONTROL DE CAMBIOS tiles.xml FLOATBRO
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="floatBro/brotherhood/list" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: List of floats" />
+		<put-attribute name="body" value="/views/floatBro/list_brotherhood.jsp" />
+	</definition>
+	
+	<definition name="floatBro/brotherhood/create" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Create float" />
+		<put-attribute name="body" value="/views/floatBro/edit.jsp" />
+	</definition>
+	
+	<definition name="floatBro/brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Edit float" />
+		<put-attribute name="body" value="/views/floatBro/edit.jsp" />
+	</definition>
+	
+	<definition name="floatBro/brotherhood/show" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Show float" />
+		<put-attribute name="body" value="/views/floatBro/show_brotherhood.jsp" />
+	</definition>
+	
+</tiles-definitions>

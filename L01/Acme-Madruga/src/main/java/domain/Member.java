@@ -1,36 +1,34 @@
-/*
- * DomainEntity.java
- * 
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the
- * TDG Licence, a copy of which you may download from
- * http://www.tdg-seville.info/License.html
- */
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+
+/*
+ * CONTROL DE CAMBIOS Member.java
+ * 
+ * ALVARO 17/02/2019 19:55 CREACI�N DE LA CLASE
+ */
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Member extends Actor {
 
-	//	private Collection<Enrolled>	enrolleds;
-	//
-	//
-	//	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-	//	public Collection<Enrolled> getEnrolleds() {
-	//		return this.enrolleds;
-	//	}
-	//
-	//	public void setEnrolleds(final Collection<Enrolled> enrolleds) {
-	//		this.enrolleds = enrolleds;
-	//	}
+	private Collection<Enrolled>	enrolleds;
+
+
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+	public Collection<Enrolled> getEnrolleds() {
+		return this.enrolleds;
+	}
+
+	public void setEnrolleds(final Collection<Enrolled> enrolleds) {
+		this.enrolleds = enrolleds;
+	}
 
 }

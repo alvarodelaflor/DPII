@@ -9,6 +9,13 @@
   * TDG Licence, a copy of which you may download from 
   * http://www.tdg-seville.info/License.html 
 -->
+<!--
+	CONTROL DE CAMBIOS tiles.xml
+  
+	ALVARO 17/02/2019 12:38 Añadido value de procession
+	ALVARO 17/02/2019 19:30 Añadido value de floatBro
+	ALVARO 17/02/2019 21:41 Añadido value de enrolled
+-->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -27,7 +34,27 @@
 		<value>/views/member/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
 		<value>/views/brotherhood/tiles.xml</value>
+		<!-- ALVARO -->
+		<value>/views/procession/tiles.xml</value>
+		<value>/views/floatBro/tiles.xml</value>
+		<value>/views/enrolled/tiles.xml</value>
+		<value>/views/request/tiles.xml</value>
+		<!-- ALVARO -->
+		<!-- FRAN -->
 		
+		<!-- FRAN -->
+		<!-- CARMEN -->
+		
+		<!-- CARMEN -->
+		<!-- FERRETE -->
+		
+		<!-- FERRETE -->
+		<!-- ANTONIO SANCHEZ -->
+		<value>/views/request/tiles.xml</value>
+		<!-- ANTONIO SANCHEZ -->
+		<!-- ANTONIO SALVAT -->
+		
+		<!-- ANTONIO SALVAT -->
 	</util:list>
 
 </beans>

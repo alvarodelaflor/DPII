@@ -9,6 +9,12 @@ import javax.persistence.InheritanceType;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/*
+ * CONTROL DE CAMBIOS Position.java
+ * 
+ * ALVARO 18/02/2019 09:00 CREACI�N DE LA CLASE
+ */
+
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
