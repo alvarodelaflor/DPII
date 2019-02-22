@@ -28,17 +28,10 @@
 	<display:column titleKey="brotherhood.title"><a href="brotherhood/showBrotherhood.do?id=${row.id}"><jstl:out value="${row.title}"/></a></display:column>
 	<display:column property="surname" titleKey="brotherhood.surname"></display:column>
 	<display:column property="name" titleKey="brotherhood.name"></display:column>
-	<!-- Esta parte hay que unirla con los shows que tiene álvaro echo -->
-	<display:column titleKey="showProcessions" >
-		<a href="processions/show.do?id=${row.id}"><spring:message code="Processions" /></a>
-	</display:column>
-	<display:column titleKey="showFloatBro" >
-		<a href="floatBro/show.do?id=${row.id}"><spring:message code="FloatBro" /></a>
-	</display:column>
-	<display:column titleKey="showEnrolleds" >
-		<a href="enrolleds/show.do?id=${row.id}"><spring:message code="Enrolleds" /></a>
-	</display:column>
-	<!-- Esta parte hay que unirla con los shows que tiene álvaro echo -->
+
+	<display:column titleKey="showProcessions" ><a href="brotherhood/listProcessions.do?id=${row.id}"><jstl:out value="${row.}"/></a></display:column>
+	<display:column titleKey="showFloatBro" ><a href="brotherhood/listFloat.do?id=${row.id}"><jstl:out value="${row.}"/></a></display:column>
+	<display:column titleKey="showEnrolleds" ><a href="brotherhood/listMembers.do?id=${row.id}"><jstl:out value="${row.}"/></a></display:column>
 </display:table>
 
 <acme:cancel url=" " code="cancel"/>

@@ -43,4 +43,5 @@
 		<put-attribute name="body" value="/views/procession/show_brotherhood.jsp" />
 	</definition>
 	
+
 </tiles-definitions>

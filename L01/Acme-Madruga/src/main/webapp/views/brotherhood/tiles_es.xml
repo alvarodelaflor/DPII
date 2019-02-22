@@ -46,6 +46,22 @@
 		<put-attribute name="body" value="/views/brotherhood/showBrotherhood.jsp" /> 
 	</definition>
 	
+	<definition name="brotherhood/listProcessions" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Procesiones" />
+		<put-attribute name="body" value="/views/brotherhood/listProcessions.jsp" /> 
+	</definition>
+	
+	<definition name="brotherhood/listFloat" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Pasos" />
+		<put-attribute name="body" value="/views/brotherhood/listFloat.jsp" /> 
+	</definition>
+	
+	<definition name="brotherhood/listMembers" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Miembros" />
+		<put-attribute name="body" value="/views/brotherhood/listMembers.jsp" /> 
+	</definition>
+	
+	
 
 	
 </tiles-definitions>

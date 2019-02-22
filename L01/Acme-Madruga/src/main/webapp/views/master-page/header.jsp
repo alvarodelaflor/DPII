@@ -48,7 +48,7 @@
 					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
 					<li><a href="enrolled/brotherhood/list.do"><spring:message code="master.page.brotherhood.enrolled.list" /></a></li>
 					<li><a href="request/brotherhood/list.do"><spring:message code="master.page.brotherhood.request.list" /></a></li>
-					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood" /></a></li>					
+					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>
@@ -59,7 +59,7 @@
 					<li class="arrow"></li>
 					<li><a href="request/member/list.do"><spring:message code="master.page.request.list" /></a></li>
 		
-					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood" /></a></li>									
+					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>									
 				</ul>
 			</li>
 		</security:authorize>
@@ -76,7 +76,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.brotherhood" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood" /></a></li>					
+					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>

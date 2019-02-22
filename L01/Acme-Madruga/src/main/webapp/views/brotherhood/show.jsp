@@ -21,7 +21,7 @@
 <div class="content">
 	<table>
 		<tr><td><spring:message code="brotherhood.photo" /><br>
-		<img width="95" src="${brotherhood.photo}" alt=<jstl:out value="${brotherhood.photo}"></jstl:out> /></td></tr>
+		<img width="95" src="${brotherhood.photo}" alt="Error" width="400" height="300"/></td></tr>
 		<tr><td><spring:message code="brotherhood.name" /> <jstl:out value="${brotherhood.name}"></jstl:out></td></tr>
 		<tr><td><spring:message code="brotherhood.middleName" /> <jstl:out value="${brotherhood.middleName}"></jstl:out></td></tr>
 		<tr><td><spring:message code="brotherhood.surname" /> <jstl:out value="${brotherhood.surname}"></jstl:out></td></tr>
@@ -38,19 +38,20 @@
 		<acme:picture code="brotherhood.pictures" path="${picture}"/>
 		<input type="submit" value=<spring:message code="save" /> />
 </form:form>
+</security:authorize>
 
 <br>
 
 <display:table pagesize="5" name="${pictures}" id="picture"
 	requestURI="${requestURI}">
 	<display:column titleKey="brotherhood.pictures">
-		<img width="300" src="${picture.trim()}" alt=<jstl:out value="${picture.trim()}" ></jstl:out> />
+		<img width="300" src="${picture.trim()}" alt="Error" width="400" height="300">
 		<a href="brotherhood/delete.do?url=${picture}"><spring:message code="brotherhood.delete" /> </a>
 	</display:column>
 </display:table>
 	
-<br>
+	<br>
+	<br>
 <acme:cancel url=" " code="cancel"/>
-</security:authorize>
 
 
