@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.BrotherhoodService;
+import services.FloatBroService;
+import services.MemberService;
 import domain.Brotherhood;
 import forms.RegistrationForm;
 
@@ -32,6 +34,12 @@ public class BrotherhoodController extends AbstractController {
 
 	@Autowired
 	BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	MemberService		memberService;
+
+	@Autowired
+	FloatBroService		floatBroService;
 
 
 	// Constructors -----------------------------------------------------------

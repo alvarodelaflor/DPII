@@ -10,16 +10,21 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.BrotherhoodService;
 import services.MemberService;
+import domain.Brotherhood;
 import domain.Member;
 import forms.RegistrationForm;
 
@@ -28,7 +33,10 @@ import forms.RegistrationForm;
 public class MemberController extends AbstractController {
 
 	@Autowired
-	MemberService	memberService;
+	MemberService		memberService;
+
+	@Autowired
+	BrotherhoodService	brotherhoodService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -145,4 +153,16 @@ public class MemberController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/listMembers", method = RequestMethod.GET)
+	public ModelAndView listMembers(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		ModelAndView result;
+
+		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
+		final Collection<Member> member = this.memberService.findAll();
+		result = new ModelAndView("member/listMembers");
+		result.addObject("brotherhood", brotherhood);
+		result.addObject("member", member);
+		result.addObject("requestURI", "member/listMembers.do");
+		return result;
+	}
 }

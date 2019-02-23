@@ -43,5 +43,9 @@
 		<put-attribute name="body" value="/views/procession/show_brotherhood.jsp" />
 	</definition>
 	
-
+	<definition name="procession/listProcessions" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Procesiones" />
+		<put-attribute name="body" value="/views/procession/listProcessions.jsp" /> 
+	</definition>
+	
 </tiles-definitions>

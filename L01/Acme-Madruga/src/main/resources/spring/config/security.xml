@@ -58,9 +58,10 @@
 		<security:intercept-url pattern="/member/save.do" access="permitAll" /> 
 		<security:intercept-url pattern="/brotherhood/show.do" access="permitAll" /> 
 		<security:intercept-url pattern="/brotherhood/showBrotherhood.do" access="permitAll" /> 
-		<security:intercept-url pattern="/brotherhood/listProcessions.do" access="permitAll" /> 
-		<security:intercept-url pattern="/brotherhood/listFloat.do.do" access="permitAll" /> 
-		<security:intercept-url pattern="/brotherhood/listMembers.do" access="permitAll" /> 
+		<security:intercept-url pattern="/procession/listProcessions.do" access="permitAll" /> 
+		<security:intercept-url pattern="/floatBro/listFloat.do" access="permitAll" /> 
+		<security:intercept-url pattern="/member/listMembers.do" access="permitAll" /> 
+		<security:intercept-url pattern="/floatBro/showPictureFloat.do" access="permitAll" />
 		<security:intercept-url pattern="/member/saveE.do" access="hasRole('MEMBER')" /> 
 		<security:intercept-url pattern="/member/edit.do" access="hasRole('MEMBER')"/>
 		<security:intercept-url pattern="/member/show.do" access="hasRole('MEMBER')"/>  

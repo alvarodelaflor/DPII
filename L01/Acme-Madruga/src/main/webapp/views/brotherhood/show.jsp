@@ -21,7 +21,7 @@
 <div class="content">
 	<table>
 		<tr><td><spring:message code="brotherhood.photo" /><br>
-		<img width="95" src="${brotherhood.photo}" alt="Error" width="400" height="300"/></td></tr>
+		<img width="95" src="${brotherhood.photo}" alt="Error" /></td></tr>
 		<tr><td><spring:message code="brotherhood.name" /> <jstl:out value="${brotherhood.name}"></jstl:out></td></tr>
 		<tr><td><spring:message code="brotherhood.middleName" /> <jstl:out value="${brotherhood.middleName}"></jstl:out></td></tr>
 		<tr><td><spring:message code="brotherhood.surname" /> <jstl:out value="${brotherhood.surname}"></jstl:out></td></tr>
@@ -45,7 +45,7 @@
 <display:table pagesize="5" name="${pictures}" id="picture"
 	requestURI="${requestURI}">
 	<display:column titleKey="brotherhood.pictures">
-		<img width="300" src="${picture.trim()}" alt="Error" width="400" height="300">
+		<img width="300" src="${picture.trim()}" alt="Error" >
 		<a href="brotherhood/delete.do?url=${picture}"><spring:message code="brotherhood.delete" /> </a>
 	</display:column>
 </display:table>

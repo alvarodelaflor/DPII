@@ -41,4 +41,16 @@
 		<put-attribute name="body" value="/views/floatBro/show_brotherhood.jsp" />
 	</definition>
 	
+	<definition name="floatBro/listFloat" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Floats" />
+		<put-attribute name="body" value="/views/floatBro/listFloat.jsp" /> 
+	</definition>
+	
+	<definition name="floatBro/showPictureFloat" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Pictures aboy float" />
+		<put-attribute name="body" value="/views/floatBro/showPictureFloat.jsp" /> 
+	</definition>
+	
+	
+	
 </tiles-definitions>

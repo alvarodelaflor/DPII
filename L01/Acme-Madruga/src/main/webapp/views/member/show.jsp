@@ -21,7 +21,7 @@
 <div class="content">
 	<table>
 		<tr><td><spring:message code="member.photo" /><br>
-		<img width="95" src="${member.photo}" alt="Error" width="400" height="300"/></td></tr>
+		<img width="95" src="${member.photo}" alt="Error" /></td></tr>
 		<tr><td><spring:message code="member.name" /> <jstl:out	value="${member.name}"></jstl:out></td></tr>
 		<tr><td><spring:message code="member.middleName" /> <jstl:out	value="${member.middleName}"></jstl:out></td></tr>
 		<tr><td><spring:message code="member.surname" /> <jstl:out value="${member.surname}"></jstl:out></td></tr>

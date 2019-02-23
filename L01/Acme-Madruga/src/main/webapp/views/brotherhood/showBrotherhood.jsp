@@ -35,13 +35,15 @@
 
 <br>
 
+<p>
 <display:table pagesize="5" name="${pictures}" id="pictures"
 	requestURI="${requestURI}">
 	<display:column titleKey="brotherhood.pictures">
-		<img width="300" src="${pictures.trim()}" alt=<jstl:out value="${pictures.trim()}" ></jstl:out> />
+		<img width="300" src="${picture.trim()}" alt="Error" >
 	</display:column>
 </display:table>
-	
+
+<br>	
 <br>
 <acme:cancel url=" " code="cancel"/>
 
