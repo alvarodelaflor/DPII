@@ -51,7 +51,7 @@
 				</display:column>
 				<display:column titleKey="floatBro.delete">
 					<c:choose>
-						<c:when test="${language == false}">
+						<c:when test="${language == true}">
 							<a onclick="return preguntaEN()" href="floatBro/brotherhood/delete.do?id=${row.id}"><spring:message code="floatBro.delete"></spring:message></a>
 						</c:when>
 						<c:otherwise>

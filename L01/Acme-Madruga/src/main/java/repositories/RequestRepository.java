@@ -18,6 +18,9 @@ import domain.Request;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
+	@Query("select e from Request e where e.positionAux.procession.id=?1")
+	Collection<Request> findAllByProcessionByProcession(int processionId);
+
 	@Query("select e from Request e where e.positionAux.procession.id=?1 and e.status=?2")
 	Collection<Request> findAllByProcession(int processionId, Boolean status);
 

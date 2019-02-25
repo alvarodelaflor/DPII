@@ -153,4 +153,15 @@ public class RequestService {
 		member.setAuthority(authority);
 		return acc.getAuthorities().contains(member);
 	}
+
+	public Collection<Request> findRequestByProcessionId(final int processionId) {
+		return this.requestRepository.findAllByProcessionByProcession(processionId);
+	}
+
+	public void deleteAllRequestByProcession(final int processionId) {
+		final Collection<Request> requests = this.findRequestByProcessionId(processionId);
+		if (!requests.isEmpty())
+			for (final Request request : requests)
+				this.delete(request);
+	}
 }

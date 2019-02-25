@@ -44,6 +44,9 @@ public class ProcessionService {
 	@Autowired
 	PositionAuxService				positionAuxService;
 
+	@Autowired
+	RequestService					requestService;
+
 
 	//Simple CRUD Methods ------------------
 
@@ -98,6 +101,7 @@ public class ProcessionService {
 	public void delete(final Procession procession) {
 		Assert.notNull(this.processionRepository.findOne(procession.getId()), "La procession no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == procession.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
+		this.requestService.deleteAllRequestByProcession(procession.getId());
 		this.positionAuxService.deleteAllPositionByProcession(procession.getId());
 		this.processionRepository.delete(procession);
 	}
