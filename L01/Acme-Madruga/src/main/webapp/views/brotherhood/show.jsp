@@ -52,6 +52,6 @@
 	
 	<br>
 	<br>
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url=" " code="back"/>
 
 

@@ -10,7 +10,10 @@
 
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -145,8 +148,9 @@ public class BrotherhoodController extends AbstractController {
 		final int userLoggin = LoginService.getPrincipal().getId();
 		final Brotherhood brotherhood;
 		brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(userLoggin);
-		Collection<String> pictures;
-		pictures = brotherhood.getPictures();
+		List<String> pictures = new ArrayList<>();
+		if (brotherhood.getPictures() != null)
+			pictures = Arrays.asList(brotherhood.getPictures().split("'"));
 		result = new ModelAndView("brotherhood/show");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("pictures", pictures);
@@ -161,8 +165,9 @@ public class BrotherhoodController extends AbstractController {
 
 		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
 
-		Collection<String> pictures;
-		pictures = brotherhood.getPictures();
+		List<String> pictures = new ArrayList<>();
+		if (brotherhood.getPictures() != null)
+			pictures = Arrays.asList(brotherhood.getPictures().split("'"));
 		result = new ModelAndView("brotherhood/showBrotherhood");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("pictures", pictures);
@@ -183,12 +188,16 @@ public class BrotherhoodController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/addPhoto", method = RequestMethod.GET)
-	public ModelAndView newSpamWord(@RequestParam("picture") final String picture) {
+	public ModelAndView addPhoto(@RequestParam("picture") final String picture) {
 		ModelAndView result;
 
 		final Brotherhood logger = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		final Collection<String> pictures = logger.getPictures();
-		pictures.add(picture);
+
+		if (logger.getPictures() == null)
+			logger.setPictures(picture);
+		else
+			logger.setPictures(logger.getPictures() + "'" + picture);
+
 		this.brotherhoodService.save(logger);
 		result = new ModelAndView("redirect:show.do");
 
@@ -200,11 +209,18 @@ public class BrotherhoodController extends AbstractController {
 		ModelAndView result;
 
 		final Brotherhood logger = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		final Collection<String> pictures = logger.getPictures();
-		pictures.remove(url);
-		this.brotherhoodService.deletePicture(url);
+		if (logger.getPictures() != null)
+			this.brotherhoodService.deletePicture(url);
+
 		result = new ModelAndView("redirect:show.do");
 
+		return result;
+	}
+
+	@RequestMapping(value = "/conditions", method = RequestMethod.GET)
+	public ModelAndView conditions() {
+		ModelAndView result;
+		result = new ModelAndView("brotherhood/conditions");
 		return result;
 	}
 

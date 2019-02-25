@@ -43,6 +43,12 @@
 				<acme:textbox code="member.photo" path="photo" />
 				<acme:phonebox code="member.phone" path="phone"/>
 				
+				<br>
+
+				<spring:message code="conditions" /><a href="member/conditions.do"><spring:message code="conditions1" /></a>
+
+				<br>
+				<br>	
 				<acme:submit name="save" code="save"/>
 				<acme:cancel url=" " code="cancel"/>
 			</form:form>

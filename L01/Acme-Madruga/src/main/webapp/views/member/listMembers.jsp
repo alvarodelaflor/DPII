@@ -26,4 +26,4 @@
 	<display:column property="phone" titleKey="member.phone"></display:column>
 </display:table>
 
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url="brotherhood/list.do" code="back"/>

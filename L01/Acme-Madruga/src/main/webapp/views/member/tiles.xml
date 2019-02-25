@@ -35,6 +35,11 @@
 		<put-attribute name="title" value="Brotherhood: Members" />
 		<put-attribute name="body" value="/views/member/listMembers.jsp" /> 
 	</definition>
+	
+	<definition name="member/conditions" extends="master.page">	
+		<put-attribute name="title" value="Member: Térms and Conditions" />
+		<put-attribute name="body" value="/views/member/conditions.jsp" /> 
+	</definition>
 
 	
 </tiles-definitions>

@@ -155,14 +155,20 @@ public class MemberController extends AbstractController {
 
 	@RequestMapping(value = "/listMembers", method = RequestMethod.GET)
 	public ModelAndView listMembers(@RequestParam(value = "id", defaultValue = "-1") final int id) {
-		ModelAndView result;
+		final ModelAndView result;
 
 		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-		final Collection<Member> member = this.memberService.findAll();
+		final Collection<Member> member = this.memberService.brotherhoodAllMember(brotherhood.getId());
 		result = new ModelAndView("member/listMembers");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("member", member);
 		result.addObject("requestURI", "member/listMembers.do");
+		return result;
+	}
+	@RequestMapping(value = "/conditions", method = RequestMethod.GET)
+	public ModelAndView conditions() {
+		ModelAndView result;
+		result = new ModelAndView("member/conditions");
 		return result;
 	}
 }

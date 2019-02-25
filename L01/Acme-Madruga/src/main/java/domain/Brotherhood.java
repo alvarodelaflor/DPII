@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -32,7 +31,7 @@ public class Brotherhood extends Actor {
 
 	private String					title;
 	private Date					establishmentDate;
-	private Collection<String>		pictures;
+	private String					pictures;
 	private Collection<Procession>	processions;
 	private Collection<FloatBro>	floatBro;
 	private Collection<Enrolled>	enrolleds;
@@ -59,12 +58,11 @@ public class Brotherhood extends Actor {
 		this.establishmentDate = establishmentDate;
 	}
 
-	@ElementCollection(targetClass = String.class)
-	public Collection<String> getPictures() {
+	public String getPictures() {
 		return this.pictures;
 	}
 
-	public void setPictures(final Collection<String> pictures) {
+	public void setPictures(final String pictures) {
 		this.pictures = pictures;
 	}
 

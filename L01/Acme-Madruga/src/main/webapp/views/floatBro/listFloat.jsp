@@ -23,4 +23,4 @@
 	<display:column titleKey="floatbro.pictures"><a href="floatBro/showPictureFloat.do?id=${row.id}"><spring:message code="float.pictures" /></a></display:column>
 </display:table>
 
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url="brotherhood/list.do" code="back"/>

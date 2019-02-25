@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +61,6 @@ public class BrotherhoodService {
 		result.setMiddleName(registrationForm.getMiddleName());
 		result.setPhone(registrationForm.getPhone());
 		final Collection<String> pictures = new ArrayList<>();
-		result.setPictures(pictures);
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
 
@@ -101,8 +101,6 @@ public class BrotherhoodService {
 		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
-		final Collection<String> pictures = new ArrayList<>();
-		brotherhood.setPictures(pictures);
 		authority.setAuthority(Authority.BROTHERHOOD);
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
@@ -143,19 +141,27 @@ public class BrotherhoodService {
 		return res;
 	}
 
-	public Collection<String> deletePicture(final String picture) {
+	public String deletePicture(final String url) {
 		final Brotherhood logger = this.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		final List<String> pictures = new ArrayList<>();
-		pictures.addAll(logger.getPictures());
-		for (int i = 0; i < pictures.size(); i++)
-			if (pictures.get(i).equals(picture)) {
-				System.out.println(pictures.get(i));
-				pictures.remove(picture);
-			}
-		logger.setPictures(pictures);
+
+		String newPicture = null;
+
+		if (logger.getPictures() != null) {
+
+			List<String> pictures = new ArrayList<>();
+			pictures = Arrays.asList(logger.getPictures().split("'"));
+
+			for (int i = 0; i < pictures.size(); i++)
+				if (!pictures.get(i).equals(url))
+					newPicture = newPicture + pictures.get(i) + "'";
+		}
+
+		logger.setPictures(newPicture);
 		this.brotherhoodRepository.save(logger);
-		return pictures;
+
+		return newPicture;
 	}
+
 	public Collection<Brotherhood> findFromLoggedMember() {
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 		return this.brotherhoodRepository.findFromMember(member.getId());

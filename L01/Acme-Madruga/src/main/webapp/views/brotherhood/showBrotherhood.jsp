@@ -45,6 +45,6 @@
 
 <br>	
 <br>
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url="brotherhood/list.do" code="back"/>
 
 

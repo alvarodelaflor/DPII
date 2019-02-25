@@ -23,4 +23,4 @@
 	<display:column property="description" titleKey="procession.description"></display:column>
 </display:table>
 
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url="brotherhood/list.do" code="back"/>

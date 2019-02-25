@@ -128,4 +128,8 @@ public class MemberService {
 		return this.memberRepository.isBrotherhoodActiveMember(memberId, brotherHoodId) > 0;
 	}
 
+	public Collection<Member> brotherhoodAllMember(final int brotherHoodId) {
+		return this.memberRepository.brotherhoodAllMember(brotherHoodId);
+	}
+
 }

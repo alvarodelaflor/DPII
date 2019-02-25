@@ -61,13 +61,15 @@
 		<security:intercept-url pattern="/procession/listProcessions.do" access="permitAll" /> 
 		<security:intercept-url pattern="/floatBro/listFloat.do" access="permitAll" /> 
 		<security:intercept-url pattern="/member/listMembers.do" access="permitAll" /> 
+		<security:intercept-url pattern="/brotherhood/save.do" access="permitAll" /> 
 		<security:intercept-url pattern="/floatBro/showPictureFloat.do" access="permitAll" />
 		<security:intercept-url pattern="/member/saveE.do" access="hasRole('MEMBER')" /> 
 		<security:intercept-url pattern="/member/edit.do" access="hasRole('MEMBER')"/>
-		<security:intercept-url pattern="/member/show.do" access="hasRole('MEMBER')"/>  
+		<security:intercept-url pattern="/member/show.do" access="hasRole('MEMBER')"/> 
+		<security:intercept-url pattern="/member/conditions.do" access="permitAll"/>  
 		<security:intercept-url pattern="/brotherhood/create.do" access="permitAll" /> 
-		<security:intercept-url pattern="/brotherhood/save.do" access="permitAll" /> 
 		<security:intercept-url pattern="/brotherhood/saveE.do" access="hasRole('BROTHERHOOD')" /> 
+		<security:intercept-url pattern="/brotherhood/conditions.do" access="permitAll"/> 
 		<security:intercept-url pattern="/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" /> 
 		<security:intercept-url pattern="/brotherhood/edit.do" access="hasRole('BROTHERHOOD')"/>
 		<security:intercept-url pattern="/brotherhood/addPhoto.do" access="hasRole('BROTHERHOOD')"/> 
