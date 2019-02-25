@@ -14,6 +14,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
 import domain.FloatBro;
+import domain.Procession;
 
 /*
  * CONTROL DE CAMBIOS FloatBroService.java
@@ -32,6 +33,9 @@ public class FloatBroService {
 	//Supporting services ------------------
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	private ProcessionService	processionService;
 
 	@Autowired
 	Validator					validator;
@@ -69,6 +73,9 @@ public class FloatBroService {
 	public void delete(final FloatBro floatBro) {
 		Assert.notNull(this.floatBroRepository.findOne(floatBro.getId()), "La floatBro no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == floatBro.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
+		final Collection<Procession> processions = this.processionService.getProcessionByFloatId(floatBro.getId());
+		for (final Procession procession : processions)
+			this.processionService.delete(procession);
 		this.floatBroRepository.delete(floatBro);
 	}
 

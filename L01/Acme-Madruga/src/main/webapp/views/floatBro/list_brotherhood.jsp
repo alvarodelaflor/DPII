@@ -23,6 +23,25 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <body>
+	<script type= "text/javascript">
+		function preguntaES(){
+    		if (confirm('Si tiene una procesión asociada será eliminada ¿Estas seguro de que desea borrar este paso?')){
+    			return true;
+    		} else {
+    			return false;
+    		}
+		}
+	</script>
+	<script type= "text/javascript">
+		function preguntaEN(){
+    		if (confirm('If you have an associated procession it will be deleted. Are you sure you want to delete this float?')){
+    			return true;
+    		} else {
+    			return false;
+    		}
+		}
+	</script>  
+
 	<div>
 		<security:authorize access="hasRole('BROTHERHOOD')"> 
 			<p class="create"><input type="button" value=<spring:message code="brotherhood.createFloatBro" /> id="buttonCreateFloatBro" name="buttonCreateFloatBro"  onclick="location.href='floatBro/brotherhood/create.do';"/></p>
@@ -30,8 +49,15 @@
 				<display:column titleKey="floatBro.edit"> 
 					<a href="floatBro/brotherhood/edit.do?id=${row.id}"><spring:message code="floatBro.edit"></spring:message></a>
 				</display:column>
-				<display:column titleKey="floatBro.delete"> 
-					<a href="floatBro/brotherhood/delete.do?id=${row.id}"><spring:message code="floatBro.delete"></spring:message></a>
+				<display:column titleKey="floatBro.delete">
+					<c:choose>
+						<c:when test="${language == false}">
+							<a onclick="return preguntaEN()" href="floatBro/brotherhood/delete.do?id=${row.id}"><spring:message code="floatBro.delete"></spring:message></a>
+						</c:when>
+						<c:otherwise>
+							<a onclick="return preguntaES()" href="floatBro/brotherhood/delete.do?id=${row.id}"><spring:message code="floatBro.delete"></spring:message></a>
+						</c:otherwise>
+					</c:choose>
 				</display:column>
 				<display:column titleKey="floatBro.show"> 
 					<a href="floatBro/brotherhood/show.do?floatBroId=${row.id}">${row.title}</a>

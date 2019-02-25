@@ -26,7 +26,14 @@
 <body>
 	<div>
 		<security:authorize access="hasRole('BROTHERHOOD')"> 
-			<p class="create"><input type="button" value=<spring:message code="brotherhood.createProcession" /> id="buttonCreateProcession" name="buttonCreateProcession"  onclick="location.href='procession/brotherhood/create.do';"/></p>
+			<c:choose>
+				<c:when test="${checkEmptyFloats==false}">
+					<p class="create"><input type="button" value=<spring:message code="brotherhood.createProcession" /> id="buttonCreateProcession" name="buttonCreateProcession"  onclick="location.href='procession/brotherhood/create.do';"/></p>
+				</c:when>
+				<c:otherwise>
+					<p><spring:message code="procession.float.empty"/></p>
+				</c:otherwise>
+			</c:choose>
 			<display:table name="processions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 				<c:choose>
 					<c:when test="${row.isFinal==true}">

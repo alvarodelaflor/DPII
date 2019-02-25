@@ -63,9 +63,14 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
+		final Collection<FloatBro> floats = this.floatBroService.findAll();
+		Boolean checkEmptyFloats = false;
+		if (floats.isEmpty())
+			checkEmptyFloats = true;
 
 		result = new ModelAndView("procession/brotherhood/list");
 		result.addObject("processions", processions);
+		result.addObject("checkEmptyFloats", checkEmptyFloats);
 		result.addObject("requestURI", "procession/brotherhood/list.do");
 
 		return result;

@@ -56,4 +56,15 @@ public class PositionAuxService {
 	public Collection<PositionAux> findFreePositionByProcesion(final int processionId) {
 		return this.positionAuxRepository.findAllPositionAuxFreeByProcessionId(processionId);
 	}
+
+	public Collection<PositionAux> findPositionByProcesion(final int processionId) {
+		return this.positionAuxRepository.findAllPositionAuxByProcessionId(processionId);
+	}
+
+	public void deleteAllPositionByProcession(final int processionId) {
+		final Collection<PositionAux> possitionAux = this.findFreePositionByProcesion(processionId);
+		if (!possitionAux.isEmpty())
+			for (final PositionAux positionAux : possitionAux)
+				this.positionAuxRepository.delete(positionAux);
+	}
 }

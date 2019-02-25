@@ -98,6 +98,7 @@ public class ProcessionService {
 	public void delete(final Procession procession) {
 		Assert.notNull(this.processionRepository.findOne(procession.getId()), "La procession no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == procession.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
+		this.positionAuxService.deleteAllPositionByProcession(procession.getId());
 		this.processionRepository.delete(procession);
 	}
 
@@ -116,6 +117,10 @@ public class ProcessionService {
 
 	public Collection<Procession> getProcessionByBrotherhoodId(final int brotherhoodId) {
 		return this.processionRepository.findProcessionsByBrotherhood(brotherhoodId);
+	}
+
+	public Collection<Procession> getProcessionByFloatId(final int floatId) {
+		return this.processionRepository.findProcessionsByFloat(floatId);
 	}
 
 	public Collection<Procession> findAllBrotherhoodLogged() {

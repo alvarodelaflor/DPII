@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,10 +58,21 @@ public class FloatBroController extends AbstractController {
 		final FloatBro floatBro = this.floatBroService.findOne(id);
 
 		List<String> pictures = new ArrayList<>();
-		if (floatBro.getPictures() != null)
+		if (floatBro.getPictures() != null && floatBro.getPictures().contains("'"))
 			pictures = Arrays.asList(floatBro.getPictures().split("'"));
 
+		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
+		Boolean language;
+		if (actuallanguage.equals("English")) {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = true;
+		} else {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = false;
+		}
+
 		result = new ModelAndView("floatBro/showPictureFloat");
+		result.addObject("language", language);
 		result.addObject("pictures", pictures);
 		result.addObject("floatBro", floatBro);
 		result.addObject("requestURI", "floatBro/showPictureFloat.do");
