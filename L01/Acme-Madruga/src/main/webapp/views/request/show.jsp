@@ -13,14 +13,14 @@
 	<div>
 		<p>
 			<label class="strong"><spring:message code="request.brotherhood"/>: </label>
-			<jstl:out value="${request.procession.brotherhood.title}"/>
+			<jstl:out value="${request.positionAux.procession.brotherhood.title}"/>
 		</p>
 	</div>
 
 	<div>
 		<p>
 			<label class="strong"><spring:message code="request.procession"/>: </label>
-			<jstl:out value="${request.procession.title}"/>
+			<jstl:out value="${request.positionAux.procession.title}"/>
 		</p>
 	</div>
 
@@ -36,12 +36,12 @@
 	<jstl:if test="${request.status eq true }">
 	<div>
 		<p>
-			<label class="strong"><spring:message code="request.row"/>: </label>
-			<jstl:out value="${request.row}"/>
+			<label class="strong"><spring:message code="request.rowF"/></label>
+			<jstl:out value="${request.positionAux.row}"/>
 		</p>
 		<p>
-			<label class="strong"><spring:message code="request.col"/>: </label>
-			<jstl:out value="${request.col}"/>
+			<label class="strong"><spring:message code="request.columF"/></label>
+			<jstl:out value="${request.positionAux.colum}"/>
 		</p>
 	</div>
 	</jstl:if>
@@ -49,8 +49,8 @@
 	<jstl:if test="${request.status eq false }">
 	<div>
 		<p>
-			<label class="strong"><spring:message code="request.rejectionReason"/>: </label>
-			<jstl:out value="${request.rejectionReason}"/>
+			<label class="strong"><spring:message code="request.comment"/> </label>
+			<jstl:out value="${request.comment}"/>
 		</p>		
 	</div>
 	</jstl:if>

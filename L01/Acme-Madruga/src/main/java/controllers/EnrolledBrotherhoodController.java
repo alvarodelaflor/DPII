@@ -12,6 +12,7 @@ package controllers;
 
 import java.util.Collection;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -57,11 +58,13 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		System.out.println("EnrolledsAccepted: " + enrolledsAccepted);
 		final Collection<Enrolled> enrolledsRejected = this.enrolledService.findAllByBrotherhoodLoggedRejected();
 		final Collection<Enrolled> enrolledsPending = this.enrolledService.findAllByBrotherhoodLoggedPending();
+		final Collection<Enrolled> dropOutMembers = this.enrolledService.findAllDropOutMemberByBrotherhoodLogged();
 
 		result = new ModelAndView("enrolled/brotherhood/list");
 		result.addObject("enrolledsAccepted", enrolledsAccepted);
 		result.addObject("enrolledsRejected", enrolledsRejected);
 		result.addObject("enrolledsPending", enrolledsPending);
+		result.addObject("dropOutMembers", dropOutMembers);
 		result.addObject("requestURI", "enrolled/brotherhood/list.do");
 
 		return result;
@@ -95,6 +98,26 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		else {
 			Assert.notNull(enrolled);
 			result = this.createEditModelAndView(enrolled);
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/dropOut", method = RequestMethod.GET)
+	public ModelAndView dropOut(@RequestParam(value = "id", defaultValue = "-1") final int enrolledId) {
+		ModelAndView result;
+		Enrolled enrolled;
+		enrolled = this.enrolledService.findOne(enrolledId);
+		if (this.enrolledService.findOne(enrolledId) == null || LoginService.getPrincipal().getId() != enrolled.getBrotherhood().getUserAccount().getId() || !enrolled.getState().equals(true))
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(enrolled);
+			try {
+				enrolled.setDropMoment(LocalDateTime.now().toDate());
+				this.enrolledService.save(enrolled);
+				result = new ModelAndView("redirect:list.do");
+			} catch (final Exception e) {
+				result = this.createEditModelAndView(enrolled, "enrolled.commit.error");
+			}
 		}
 		return result;
 	}
