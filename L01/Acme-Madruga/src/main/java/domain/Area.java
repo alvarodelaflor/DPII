@@ -7,7 +7,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
 /*
  * CONTROL DE CAMBIOS Area.java
@@ -20,8 +19,6 @@ public class Area extends DomainEntity {
 
 	String				name;
 	Collection<String>	pictures;
-	//=========================================
-	Brotherhood			brotherhood;
 
 
 	public String getName() {
@@ -41,12 +38,4 @@ public class Area extends DomainEntity {
 		this.pictures = pictures;
 	}
 
-	@OneToOne(optional = true)
-	public Brotherhood getBrotherhood() {
-		return this.brotherhood;
-	}
-
-	public void setBrotherhood(final Brotherhood brotherhood) {
-		this.brotherhood = brotherhood;
-	}
 }

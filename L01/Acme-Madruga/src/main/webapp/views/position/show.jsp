@@ -22,15 +22,17 @@
 					<display:column titleKey="currentlyUsed">
 						<jstl:out value="${currentlyUsed}"></jstl:out>
 					</display:column>
+					<jstl:if test="${currentlyUsed == 0}">
 					<display:column titleKey="delete">
-						<a href="position/administrator/delete.do?positionId=${row.id}">
-							<spring:message code='delete' />
+						<a href="position/administrator/delete.do?positionId=${row.id}"> <spring:message
+								code='delete' />
 						</a>
 					</display:column>
+					</jstl:if>
 				</display:table>
 			</div>
 			<div>
-				<acme:cancel url=" " code="Back" />
+				<acme:cancel url="position/administrator/list.do" code="Back" />
 			</div>
 		</security:authorize>
 	</div>

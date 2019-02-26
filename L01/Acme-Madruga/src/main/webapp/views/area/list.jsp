@@ -23,12 +23,15 @@
 						<a href="area/administrator/show.do?areaId=${row.id}"><jstl:out
 								value="${row.name}"></jstl:out> </a>
 					</display:column>
-					<display:column property="brotherhood.title"
-						titleKey="brotherhood.title"></display:column>
+					<display:column titleKey="edit">
+						<a href="area/administrator/edit.do?areaId=${row.id}">
+						<spring:message code="edit"></spring:message> </a>
+					</display:column>
 				</display:table>
 			</div>
 			<div>
-				<acme:cancel url=" " code="Back"/>
+				<acme:cancel url="area/administrator/create.do" code="create" />
+				<acme:cancel url=" " code="Back" />
 			</div>
 		</security:authorize>
 	</div>

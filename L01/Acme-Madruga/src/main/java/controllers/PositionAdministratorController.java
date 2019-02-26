@@ -72,6 +72,7 @@ public class PositionAdministratorController extends AbstractController {
 
 		return res;
 	}
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 

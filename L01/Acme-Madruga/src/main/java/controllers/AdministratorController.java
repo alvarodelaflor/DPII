@@ -9,6 +9,7 @@ package controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,6 +68,11 @@ public class AdministratorController extends AbstractController {
 
 		ModelAndView res;
 
+		if (adminForm.getPassword() == adminForm.getConfirmPass()) {
+			final ObjectError error = new ObjectError("error", "cpass.error");
+			binding.addError(error);
+		}
+
 		final Administrator admin = this.administratorService.reconstruct(adminForm, binding);
 
 		if (binding.hasErrors()) {
@@ -88,6 +94,8 @@ public class AdministratorController extends AbstractController {
 					res = this.createEditModelAndView(admin, "email.error");
 				else if (oops.getMessage().equals("username.error"))
 					res = this.createEditModelAndView(admin, "username.error");
+				else if (oops.getMessage().equals("cpass.error"))
+					res = this.createEditModelAndView(admin, "cpass.error");
 				else
 					res = this.createEditModelAndView(admin, "commit.error");
 			}

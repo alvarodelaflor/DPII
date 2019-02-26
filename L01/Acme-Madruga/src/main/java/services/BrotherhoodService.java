@@ -71,4 +71,9 @@ public class BrotherhoodService {
 		res = this.brotherhoodRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
+
+	public Collection<Brotherhood> findByAreaId(final int areaId) {
+
+		return this.brotherhoodRepository.findByAreaId(areaId);
+	}
 }

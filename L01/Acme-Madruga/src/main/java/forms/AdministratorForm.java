@@ -1,6 +1,9 @@
 
 package forms;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 public class AdministratorForm {
 
 	String	photo, name, middleName, surname, email, phone, address, username, password, confirmPass;
@@ -22,6 +25,7 @@ public class AdministratorForm {
 		this.photo = photo;
 	}
 
+	@NotBlank
 	public String getName() {
 		return this.name;
 	}
@@ -38,6 +42,7 @@ public class AdministratorForm {
 		this.middleName = middleName;
 	}
 
+	@NotBlank
 	public String getSurname() {
 		return this.surname;
 	}
@@ -46,6 +51,7 @@ public class AdministratorForm {
 		this.surname = surname;
 	}
 
+	@Email
 	public String getEmail() {
 		return this.email;
 	}
@@ -70,6 +76,7 @@ public class AdministratorForm {
 		this.address = address;
 	}
 
+	@NotBlank
 	public String getUsername() {
 		return this.username;
 	}

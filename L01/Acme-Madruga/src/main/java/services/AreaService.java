@@ -6,6 +6,8 @@ package services;
  * FRAN 19/02/2019 11:36 CREACIÓN DE LA CLASE
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class AreaService {
 	//Supporting services ------------------
 	@Autowired
 	private AdministratorService	adminService;
+	@Autowired
+	private BrotherhoodService		brotherhoodService;
 
 
 	//Simple CRUD Methods ------------------
@@ -39,7 +43,7 @@ public class AreaService {
 
 		// "Check that an Admin is creating the new Area"
 		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
-		Assert.notNull(creatorAdmin, "User creating area is not an ADMIN");
+		Assert.notNull(creatorAdmin, "user.error");
 		// "New Area Creation"
 		final Area area = new Area();
 		// "Return new Area"
@@ -48,6 +52,11 @@ public class AreaService {
 
 	public Area save(final Area area) {
 
+		final List<String> s = new ArrayList<String>(area.getPictures());
+		final String[] pictures = s.get(0).split("'");
+		final List<String> s2 = Arrays.asList(pictures);
+
+		area.setPictures(s2);
 		return this.areaRepository.save(area);
 	}
 
@@ -55,12 +64,10 @@ public class AreaService {
 
 		// "Check that an Admin is updating the Area"
 		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
-		Assert.notNull(creatorAdmin, "User updating area is not an ADMIN");
+		Assert.notNull(creatorAdmin, "user.error");
 		// "Return new Area"
 		return this.update(area);
 	}
-
-	// DELETE en el controlador.
 
 	//Other Methods ------------------
 
@@ -80,9 +87,9 @@ public class AreaService {
 
 		// findOne Area with areaId and check it for null
 		final Area area = this.findOne(areaId);
-		Assert.notNull(area, "Trying to delete an Area which does not exists. Correct areaId?");
+		Assert.notNull(area, "areaExist.error");
 		// check if Area has a Brotherhood settled
-		Assert.isTrue(area.getBrotherhood() != null, "Trying to delete an Area with a Brotherhood settled");
+		Assert.isTrue(this.brotherhoodService.findByAreaId(areaId).size() == 0, "areaUsed.error");
 		// delete the Area
 		this.areaRepository.delete(areaId);
 	}

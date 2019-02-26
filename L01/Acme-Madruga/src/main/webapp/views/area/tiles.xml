@@ -16,4 +16,14 @@
 		<put-attribute name="body" value="/views/area/show.jsp" />
 	</definition>
 	
+	<definition name="area/administrator/create" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Creating Area" />
+		<put-attribute name="body" value="/views/area/create.jsp" />
+	</definition>
+	
+	<definition name="area/administrator/edit" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Editing Area" />
+		<put-attribute name="body" value="/views/area/create.jsp" />
+	</definition>
+	
 </tiles-definitions>

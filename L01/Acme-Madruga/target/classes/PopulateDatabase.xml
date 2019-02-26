@@ -141,7 +141,6 @@
 				</value>
 			</list>
 		</property>
-		<property name="brotherhood" ref="brotherhood01"></property>
 	</bean>
 	<!-- AREA -->
 	<!-- PROCESSION -->
@@ -199,6 +198,8 @@
 			<null></null>
 		</property>
 		<property name="brotherhood" ref="brotherhood01" />
+		<property name="position" ref="position03" />
+		
 	</bean>
 	<!-- ENROLLED -->
 	<!-- POSITION -->

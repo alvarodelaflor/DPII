@@ -19,16 +19,29 @@
 			<div>
 				<display:table name="area" id="row" requestURI="${requestURI}"
 					pagesize="5" class="displaytag">
-					<display:column property="name"
-						titleKey="area.name"></display:column>
-					<display:column property="brotherhood.title"
-						titleKey="brotherhood.title"></display:column>
-					<display:column property="pictures"
-						titleKey="area.pictures"></display:column>
+					<display:column property="name" titleKey="area.name"></display:column>
+					<display:column titleKey="currentlyUsed">
+						<jstl:out value="${currentlyUsed}"></jstl:out>
+					</display:column>
+					<jstl:if test="${currentlyUsed == 0}">
+					<display:column titleKey="delete">
+						<a href="area/administrator/delete.do?areaId=${row.id}"> <spring:message
+								code='delete' />
+						</a>
+					</display:column>
+					</jstl:if>
 				</display:table>
 			</div>
 			<div>
-				<acme:cancel url="area/administrator/list.do" code="Back"/>
+				<display:table pagesize="5" name="${pictures}" id="picture"
+					requestURI="${requestURI}">
+					<display:column titleKey="pictures">
+						<img width="300" src="${picture.trim()}" alt="<spring:message code='nopictures' />" />
+					</display:column>
+				</display:table>
+			</div>
+			<div>
+				<acme:cancel url="area/administrator/list.do" code="Back" />
 			</div>
 		</security:authorize>
 	</div>
