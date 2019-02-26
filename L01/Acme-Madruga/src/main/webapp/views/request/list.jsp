@@ -27,3 +27,6 @@
 		</jstl:if>
 	</display:column>
 </display:table>
+<form method="get">
+	<button formaction="#"><spring:message code="back"/></button>
+</form>
