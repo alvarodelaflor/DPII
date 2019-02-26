@@ -29,19 +29,19 @@
 	<article>
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="registrationForm" onsubmit="return phonenumberval();" action="member/create.do">
+				modelAttribute="registrationForm" onsubmit="return phonenumberval();" action="administrator/create.do">
 
 				
-				<acme:textbox code="member.name" path="name" />
-				<acme:textbox code="member.middleName" path="middleName" />
-				<acme:textbox code="member.surname" path="surname" />
-				<acme:textbox code="member.username" path="userName" />
-				<acme:password code="member.password" path="password" />
-				<acme:password code="member.passwordC" path="confirmPassword" />
-				<acme:textbox code="member.address" path="address" />
-				<acme:textbox code="member.email" path="email" />
-				<acme:textbox code="member.photo" path="photo" />
-				<acme:phonebox code="member.phone" path="phone"/>
+				<acme:textbox code="admin.name" path="name" />
+				<acme:textbox code="admin.middleName" path="middleName" />
+				<acme:textbox code="admin.surname" path="surname" />
+				<acme:textbox code="admin.username" path="userName" />
+				<acme:password code="admin.password" path="password" />
+				<acme:password code="admin.passwordC" path="confirmPassword" />
+				<acme:textbox code="admin.address" path="address" />
+				<acme:textbox code="admin.email" path="email" />
+				<acme:textbox code="admin.photo" path="photo" />
+				<acme:phonebox code="admin.phone" path="phone"/>
 				
 				<br>
 

@@ -28,8 +28,8 @@
 <section id="main-content">
 	<article>
 		<div class="content">
-			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="registrationForm" onsubmit="return validar() && phonenumberval();"  action="brotherhood/create.do">
+				<form:form class="formularioEdicion" method="POST"
+				modelAttribute="registrationForm" onsubmit="return phonenumberval();"  action="brotherhood/create.do">
 
 				<acme:textbox code="brotherhood.name" path="name" />
 				<acme:textbox code="brotherhood.surname" path="surname" />
@@ -42,7 +42,7 @@
 				<acme:textbox code="brotherhood.establishmentDate" path="estableshmentDate" />
 				<acme:textbox code="brotherhood.photo" path="photo" />
 				<acme:textbox code="brotherhood.title" path="title" />
-				<acme:phonebox code="brotherhood.phone" path="phone"/>
+				<acme:phonebox code="member.phone" path="phone"/>
 				
 				<br>
 				

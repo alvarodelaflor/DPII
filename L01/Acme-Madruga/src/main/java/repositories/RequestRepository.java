@@ -26,4 +26,8 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select r from Request r where r.member.id = ?1 order by r.status desc")
 	Collection<Request> getMemberRequests(int idMember);
+
+	// 12.3.4 --> 
+	//select ((select count(e) from Request e where count(e.positionAux.) > 0)/count(e))*1.0 from Request e;
+
 }

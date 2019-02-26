@@ -28,6 +28,7 @@ import security.LoginService;
 import services.BrotherhoodService;
 import services.FloatBroService;
 import services.MemberService;
+import services.UserAccountService;
 import domain.Brotherhood;
 import forms.RegistrationForm;
 
@@ -43,6 +44,9 @@ public class BrotherhoodController extends AbstractController {
 
 	@Autowired
 	FloatBroService		floatBroService;
+
+	@Autowired
+	UserAccountService	userAccountService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -66,9 +70,11 @@ public class BrotherhoodController extends AbstractController {
 	public ModelAndView save(final RegistrationForm registration, final BindingResult binding) {
 		ModelAndView result;
 
-		final Brotherhood brotherhood;
+		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.reconstructR(registration, binding);
+
+		System.out.println(binding);
 
 		if (binding.hasErrors())
 			result = new ModelAndView("brotherhood/create");
@@ -84,7 +90,6 @@ public class BrotherhoodController extends AbstractController {
 			}
 		return result;
 	}
-
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		ModelAndView result;

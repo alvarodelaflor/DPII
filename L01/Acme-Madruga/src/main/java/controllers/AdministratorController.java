@@ -10,41 +10,77 @@
 
 package controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
-import services.ActorService;
 import services.AdministratorService;
-import services.WelcomeService;
+import services.BrotherhoodService;
 import domain.Administrator;
+import forms.RegistrationForm;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
 
 	@Autowired
-	private AdministratorService	administratorService;
+	AdministratorService	administratorService;
 
 	@Autowired
-	private WelcomeService			welcomeService;
-
-	@Autowired
-	private ActorService			actorService;
+	BrotherhoodService		brotherhoodService;
 
 
 	// Constructors -----------------------------------------------------------
 
 	public AdministratorController() {
 		super();
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		final RegistrationForm registrationForm = new RegistrationForm();
+		result = new ModelAndView("administrator/create");
+		result.addObject("registrationForm", registrationForm);
+		return result;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(final RegistrationForm registrationForm, final BindingResult binding) {
+		ModelAndView result;
+
+		final Administrator administrator;
+
+		administrator = this.administratorService.reconstructR(registrationForm, binding);
+
+		if (binding.hasErrors())
+			result = new ModelAndView("administrator/create");
+		else
+			try {
+				this.administratorService.save(administrator);
+				result = new ModelAndView("welcome/index");
+			} catch (final Throwable oops) {
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.creatCreateModelAndView(administrator, "email.wrong");
+				else
+					result = new ModelAndView("administrator/create");
+			}
+		return result;
+	}
+
+	private ModelAndView creatCreateModelAndView(final Administrator administrator, final String string) {
+		ModelAndView result;
+		result = new ModelAndView("administrator/create");
+
+		result.addObject("message", string);
+		result.addObject("administrator", administrator);
+
+		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -58,8 +94,6 @@ public class AdministratorController extends AbstractController {
 		administrator = this.administratorService.getAdministratorByUserAccountId(idUserAccount);
 		Assert.notNull(administrator);
 
-		System.out.println(administrator.getName());
-
 		result = new ModelAndView("administrator/edit");
 
 		result.addObject("administrator", administrator);
@@ -67,34 +101,33 @@ public class AdministratorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveE(@Valid final Administrator administrator, final BindingResult binding) {
+	public ModelAndView saveE(Administrator admin, final BindingResult binding) {
 		ModelAndView result;
-		if (administrator.getEmail() != null
-			&& this.actorService.getActorByEmail(administrator.getEmail()) != null
-			&& this.administratorService.getAdministratorByUserAccountId(LoginService.getPrincipal().getId()).getId() != this.actorService.getActorByEmail(administrator.getEmail()).getId()
-			|| !(administrator.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || (administrator.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || (administrator.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || (administrator
-				.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
-			final ObjectError error = new ObjectError("actor.email", "An account already exists for this email.");
-			binding.addError(error);
-			binding.rejectValue("email", "error.actor.email.exits");
-		}
-		if (binding.hasErrors()) {
-			System.out.println(binding);
+
+		admin = this.administratorService.reconstruct(admin, binding);
+
+		if (binding.hasErrors())
 			result = new ModelAndView("administrator/edit");
-		} else
+		else
 			try {
-				Assert.isTrue(this.administratorService.findOne(administrator.getId()) != null);
-				if (administrator.getPhone().matches("^([0-9]{4,})$"))
-					administrator.setPhone("+" + this.welcomeService.getPhone() + " " + administrator.getPhone());
-				this.administratorService.save(administrator);
+				this.administratorService.save(admin);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
-				System.out.println("El error es en administratorController: ");
-				System.out.println(oops);
-				System.out.println(binding);
-				result = new ModelAndView("administrator/edit");
-
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.createEditModelAndView(admin, "email.wrong");
+				else
+					result = new ModelAndView("administrator/edit");
 			}
+		return result;
+	}
+
+	private ModelAndView createEditModelAndView(final Administrator administrator, final String string) {
+		ModelAndView result;
+		result = new ModelAndView("administrator/edit");
+
+		result.addObject("message", string);
+		result.addObject("administrator", administrator);
+
 		return result;
 	}
 

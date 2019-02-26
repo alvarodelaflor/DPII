@@ -32,10 +32,8 @@
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
-					<li class="arrow"></li>
-					<li><a href="administrator/show.do"><spring:message code="master.page.administrator.show" /></a></li>
-					<li><a href="administrator/edit.do"><spring:message code="master.page.administrator.edit" /></a></li>
-					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood" /></a></li>															
+					<li class="arrow"></li>																												
+					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>	
 				</ul>
 			</li>
 		</security:authorize>
@@ -99,7 +97,10 @@
 						<li><a href="member/edit.do"><spring:message code="master.page.member.edit" /></a></li>					
 						<li><a href="member/show.do"><spring:message code="master.page.member.show" /></a></li>	
 					</security:authorize>
-					<security:authorize access="hasRole('ADMIN')">			
+					<security:authorize access="hasRole('ADMIN')">	
+						<li><a href="administrator/show.do"><spring:message code="master.page.administrator.show" /></a></li>
+						<li><a href="administrator/edit.do"><spring:message code="master.page.administrator.edit" /></a></li>
+						<li><a href="administrator/create.do"><spring:message code="master.page.administrator.create" /></a></li>			
 					</security:authorize>
 				</ul>
 			</li>

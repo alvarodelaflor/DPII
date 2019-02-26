@@ -32,13 +32,6 @@
 			<form:form class="formularioEdicion" method="POST"
 				modelAttribute="administrator" onsubmit="return phonenumberval()" action="administrator/edit.do">
 				<form:hidden path="id" />
-				<form:hidden path="version" />
-				<form:hidden path="userAccount" />
-				<form:hidden path="userAccount.id" />
-				<form:hidden path="userAccount.version" />
-				<form:hidden path="userAccount.authorities" />
-				<form:hidden path="userAccount.username" />
-				<form:hidden path="userAccount.password" />
 			
 				<acme:textbox code="admin.name" path="name" />
 				<acme:textbox code="admin.surname" path="surname" />
@@ -49,7 +42,7 @@
 				<acme:textbox code="admin.photo" path="photo" />
 				
 				<acme:submit name="save" code="save"/>
-				<acme:cancel url=" " code="cancel"/>
+				<acme:cancel url="administrator/show" code="back"/>
 			</form:form>
 		</div>
 </security:authorize>

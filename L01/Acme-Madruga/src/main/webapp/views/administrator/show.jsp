@@ -32,6 +32,6 @@
 	</table>
 </div>
 </security:authorize>
-<acme:cancel url=" " code="cancel"/> 
+<acme:cancel url=" " code="back"/> 
 
 

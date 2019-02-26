@@ -62,18 +62,36 @@ public class BrotherhoodService {
 		result.setMiddleName(registrationForm.getMiddleName());
 		result.setPhone(registrationForm.getPhone());
 
+		if (registrationForm.getAccept() == false) {
+			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
+			binding.addError(error);
+			binding.rejectValue("accept", "error.termsAndConditions");
+		}
+
+		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userAcount");
+		}
+
+		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.userAcount");
+		}
+
+		if (!registrationForm.getConfirmPassword().equals(registrationForm.getPassword())) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.password");
+		}
+
 		result.getUserAccount().setUsername(registrationForm.getUserName());
 
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
-
-		if (registrationForm.getAccept() == false) {
-			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
-			binding.addError(error);
-			binding.rejectValue("accept", "error.termsAndConditions");
-		}
 
 		this.validator.validate(result, binding);
 		return result;
@@ -136,6 +154,7 @@ public class BrotherhoodService {
 			res = false;
 		return res;
 	}
+
 	public Brotherhood update(final Brotherhood brotherhood) {
 		Assert.isTrue(LoginService.getPrincipal().getId() == brotherhood.getUserAccount().getId());
 		return this.brotherhoodRepository.save(brotherhood);
@@ -185,4 +204,5 @@ public class BrotherhoodService {
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 		this.dropMember(member.getId(), brotherhoodId);
 	}
+
 }

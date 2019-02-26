@@ -3,6 +3,8 @@ package forms;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
 public class RegistrationForm {
 
 	private String	password, confirmPassword, address, email, middleName, name, phone, photo, surname, title, userName;
@@ -46,6 +48,7 @@ public class RegistrationForm {
 		this.title = title;
 	}
 
+	@Size(min = 5, max = 32)
 	public String getPassword() {
 		return this.password;
 	}

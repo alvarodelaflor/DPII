@@ -61,6 +61,24 @@ public class MemberService {
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
 
+		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userAcount");
+		}
+
+		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.userAcount");
+		}
+
+		if (!registrationForm.getConfirmPassword().equals(registrationForm.getPassword())) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.password");
+		}
+
 		result.setVersion(0);
 
 		this.validator.validate(result, binding);

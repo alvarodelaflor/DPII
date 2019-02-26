@@ -24,4 +24,12 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 
 	@Query("select b from Brotherhood b join b.enrolleds e where e.member.id=?1 and e.state=true")
 	Collection<Brotherhood> findFromMember(int member);
+
+	//12.3.2 
+	@Query("select b.title,max(p.maxRow) from Brotherhood b join b.processions p")
+	String brotherhoodMaxRow();
+
+	//12.3.3 
+	@Query("select b.title,min(p.maxRow) from Brotherhood b join b.processions p")
+	String brotherhoodMinRow();
 }
