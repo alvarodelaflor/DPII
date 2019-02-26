@@ -13,7 +13,7 @@ import auxiliar.PositionAux;
 /*
  * CONTROL DE CAMBIOS PositionService.java
  * 
- * ALVARO 18/02/2019 09:22 CREACIÓN DE LA CLASE
+ * ALVARO 18/02/2019 09:22 CREACIï¿½N DE LA CLASE
  */
 
 @Service

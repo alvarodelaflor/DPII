@@ -31,7 +31,7 @@ import domain.FloatBro;
 /*
  * CONTROL DE CAMBIOS FloatBroBrotherhoodController.java
  * 
- * ALVARO 17/02/2019 19:18 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 19:18 CREACIï¿½N DE LA CLASE
  */
 
 @Controller

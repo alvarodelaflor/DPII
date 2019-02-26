@@ -49,7 +49,7 @@
 	<jstl:if test="${request.status eq false }">
 	<div>
 		<p>
-			<label class="strong"><spring:message code="request.comment"/> </label>
+			<label class="strong"><spring:message code="request.rejectionReason"/>: </label>
 			<jstl:out value="${request.comment}"/>
 		</p>		
 	</div>

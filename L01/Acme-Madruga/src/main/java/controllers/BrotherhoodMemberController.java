@@ -21,14 +21,20 @@ public class BrotherhoodMemberController extends AbstractController {
 	private BrotherhoodService	brotherhoodService;
 
 
+	// HIPONA 25-02-19 9:48
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-		final Collection<Brotherhood> brotherhoods;
+		final Collection<Brotherhood> memberActiveBrotherhoods;
+		final Collection<Brotherhood> memberInactiveBrotherhoods;
 		try {
-			brotherhoods = this.brotherhoodService.findFromLoggedMember();
-			result = new ModelAndView("brotherhood/list");
-			result.addObject("brotherhoods", brotherhoods);
+			memberActiveBrotherhoods = this.brotherhoodService.findActiveFromLoggedMember();
+			memberInactiveBrotherhoods = this.brotherhoodService.findInactiveFromLoggedMember();
+
+			result = new ModelAndView("brotherhood/memberlist");
+			result.addObject("memberActiveBrotherhoods", memberActiveBrotherhoods);
+			result.addObject("memberInactiveBrotherhoods", memberInactiveBrotherhoods);
+			result.addObject("requestURI", "/brotherhood/member/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -48,4 +54,5 @@ public class BrotherhoodMemberController extends AbstractController {
 
 		return result;
 	}
+
 }

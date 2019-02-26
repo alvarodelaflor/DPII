@@ -58,7 +58,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="request/member/list.do"><spring:message code="master.page.request.list" /></a></li>
-		
+					<li><a href="brotherhood/member/list.do"><spring:message code="master.page.myBrotherhoods" /></a></li>
 					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>									
 				</ul>
 			</li>

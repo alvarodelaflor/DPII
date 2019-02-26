@@ -1,13 +1,6 @@
-<%--
- * action-1.jsp
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
+<!-- 
+	HIPONA 25-02-19 9:27 Creado
+ -->
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 
@@ -24,7 +17,18 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table name="brotherhood" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+<h2><spring:message code="member.activeBrotherhoods" /></h2>
+<display:table name="memberActiveBrotherhoods" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	<display:column titleKey="brotherhood.title"><a href="brotherhood/showBrotherhood.do?id=${row.id}"><jstl:out value="${row.title}"/></a></display:column>
+	<display:column property="surname" titleKey="brotherhood.surname"></display:column>
+	<display:column property="name" titleKey="brotherhood.name"></display:column>
+	<display:column titleKey="showFloatBro" ><a href="floatBro/listFloat.do?id=${row.id}"><spring:message code="floats" /></a></display:column>
+	<display:column titleKey="showProcessions" ><a href="procession/listProcessions.do?id=${row.id}"><spring:message code="procession" /></a></display:column>
+	<display:column titleKey="showEnrolleds" ><a href="member/listMembers.do?id=${row.id}"><spring:message code="memebers" /></a></display:column>
+</display:table>
+
+<h2><spring:message code="member.inactiveBrotherhoods" /></h2>
+<display:table name="memberInactiveBrotherhoods" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<display:column titleKey="brotherhood.title"><a href="brotherhood/showBrotherhood.do?id=${row.id}"><jstl:out value="${row.title}"/></a></display:column>
 	<display:column property="surname" titleKey="brotherhood.surname"></display:column>
 	<display:column property="name" titleKey="brotherhood.name"></display:column>

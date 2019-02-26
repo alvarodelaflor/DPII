@@ -12,7 +12,7 @@ import auxiliar.PositionAux;
 /*
  * CONTROL DE CAMBIOS PosRepository.java
  * 
- * ALVARO 18/02/2019 09:23 CREACIÓN DE LA CLASE
+ * ALVARO 18/02/2019 09:23 CREACIï¿½N DE LA CLASE
  */
 
 @Repository
