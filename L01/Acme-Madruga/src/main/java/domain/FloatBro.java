@@ -1,11 +1,8 @@
 
 package domain;
 
-import java.util.Collection;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,7 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 /*
  * CONTROL DE CAMBIOS FloatBro.java
  * 
- * ALVARO 17/02/2019 19:12 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 19:12 CREACIï¿½N DE LA CLASE
  */
 
 @Entity
@@ -24,10 +21,10 @@ import org.hibernate.validator.constraints.NotBlank;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class FloatBro extends DomainEntity {
 
-	private String				title;
-	private String				description;
-	private Collection<String>	pictures;
-	private Brotherhood			brotherhood;
+	private String		title;
+	private String		description;
+	private String		pictures;
+	private Brotherhood	brotherhood;
 
 
 	@NotBlank
@@ -48,15 +45,6 @@ public class FloatBro extends DomainEntity {
 		this.description = description;
 	}
 
-	@ElementCollection(targetClass = String.class)
-	public Collection<String> getPictures() {
-		return this.pictures;
-	}
-
-	public void setPictures(final Collection<String> pictures) {
-		this.pictures = pictures;
-	}
-
 	@ManyToOne()
 	public Brotherhood getBrotherhood() {
 		return this.brotherhood;
@@ -64,5 +52,13 @@ public class FloatBro extends DomainEntity {
 
 	public void setBrotherhood(final Brotherhood brotherhood) {
 		this.brotherhood = brotherhood;
+	}
+
+	public String getPictures() {
+		return this.pictures;
+	}
+
+	public void setPictures(final String pictures) {
+		this.pictures = pictures;
 	}
 }

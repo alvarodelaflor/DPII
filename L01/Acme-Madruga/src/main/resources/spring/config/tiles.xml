@@ -31,11 +31,14 @@
 		<value>/views/welcome/tiles.xml</value>
 		
 		<value>/views/administrator/tiles.xml</value>
+		<value>/views/member/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
+		<value>/views/brotherhood/tiles.xml</value>
 		<!-- ALVARO -->
 		<value>/views/procession/tiles.xml</value>
 		<value>/views/floatBro/tiles.xml</value>
 		<value>/views/enrolled/tiles.xml</value>
+		<value>/views/request/tiles.xml</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		

@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 /*
  * CONTROL DE CAMBIOS Member.java
  * 
- * ALVARO 17/02/2019 19:57 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 19:57 CREACIï¿½N DE LA CLASE
  */
 
 @Entity

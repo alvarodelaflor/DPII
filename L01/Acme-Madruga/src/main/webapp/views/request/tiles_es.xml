@@ -1,17 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
 <!--
-	CONTROL DE CAMBIOS tiles_es.xml REQUEST
+	CONTROL DE CAMBIOS tiles.xml FLOATBRO
   
-	HIPONA 197/02/2019 11:42 CREACIÓN
+	ALVARO 17/02/2019 19:29 CREACIÓN
 -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+       
 <tiles-definitions>
 
+	<definition name="request/brotherhood/list" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Peticiones para salir en procesión" />
+		<put-attribute name="body" value="/views/request/list_brotherhood.jsp" />
+	</definition>
+		
+	<definition name="request/brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: valorar petición" />
+		<put-attribute name="body" value="/views/request/edit.jsp" />
+	</definition>
+	
+	<definition name="request/brotherhood/show" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: ver petición" />
+		<put-attribute name="body" value="/views/request/show_brotherhood.jsp" />
+	</definition>
+	
 	<definition name="request/list" extends="master.page">	
-		<put-attribute name="title" value="Listar peticiones" />
+		<put-attribute name="title" value="Peticiones para salir en procesión" />
 		<put-attribute name="body" value="/views/request/list.jsp" />
 	</definition>
 	
@@ -24,5 +50,4 @@
 		<put-attribute name="title" value="Mostrar petición" />
 		<put-attribute name="body" value="/views/request/show.jsp" />
 	</definition>
-	
 </tiles-definitions>

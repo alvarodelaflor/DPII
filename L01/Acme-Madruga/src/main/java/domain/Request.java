@@ -4,20 +4,38 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import auxiliar.PositionAux;
+
+/*
+ * CONTROL DE CAMBIOS Position.java
+ * 
+ * ALVARO 18/02/2019 09:00 CREACI�N DE LA CLASE
+ */
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Request extends DomainEntity {
 
 	private Boolean		status;
-	private Integer		row;
-	private Integer		col;
-	private String		rejectionReason;
-
-	private Procession	procession;
 	private Member		member;
+	private PositionAux	positionAux;
+	private String		comment;
 
+
+	@OneToOne(optional = true)
+	public PositionAux getPositionAux() {
+		return this.positionAux;
+	}
+
+	public void setPositionAux(final PositionAux positionAux) {
+		this.positionAux = positionAux;
+	}
 
 	public Boolean getStatus() {
 		return this.status;
@@ -25,39 +43,6 @@ public class Request extends DomainEntity {
 
 	public void setStatus(final Boolean status) {
 		this.status = status;
-	}
-
-	public Integer getRow() {
-		return this.row;
-	}
-
-	public void setRow(final Integer row) {
-		this.row = row;
-	}
-
-	public Integer getCol() {
-		return this.col;
-	}
-
-	public void setCol(final Integer col) {
-		this.col = col;
-	}
-
-	public String getRejectionReason() {
-		return this.rejectionReason;
-	}
-
-	public void setRejectionReason(final String rejectionReason) {
-		this.rejectionReason = rejectionReason;
-	}
-
-	@ManyToOne(optional = false)
-	public Procession getProcession() {
-		return this.procession;
-	}
-
-	public void setProcession(final Procession procession) {
-		this.procession = procession;
 	}
 
 	@ManyToOne(optional = false)
@@ -69,4 +54,11 @@ public class Request extends DomainEntity {
 		this.member = member;
 	}
 
+	public String getComment() {
+		return this.comment;
+	}
+
+	public void setComment(final String comment) {
+		this.comment = comment;
+	}
 }

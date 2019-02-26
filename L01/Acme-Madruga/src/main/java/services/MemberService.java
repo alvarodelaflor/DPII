@@ -5,48 +5,88 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.MemberRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Member;
-
-/*
- * CONTROL DE CAMBIOS MemberService.java
- * 
- * ALVARO 17/02/2019 11:51 CREACIÓN DE LA CLASE
- * HIPONA 21/02/2019 9:57 isBrotherhoodActiveMember
- */
+import forms.RegistrationForm;
 
 @Service
-@Transactional
 public class MemberService {
 
-	//Managed Repository -------------------	
 	@Autowired
 	private MemberRepository	memberRepository;
 
+	@Autowired
+	private ActorService		actorService;
 
-	//Supporting services ------------------
+	@Autowired
+	private Validator			validator;
 
-	//Simple CRUD Methods ------------------
+	@Autowired
+	private WelcomeService		welcomeService;
+
+
+	public Member reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
+		final Member result = this.create();
+
+		result.setId(0);
+		result.setName(registrationForm.getName());
+		result.setSurname(registrationForm.getSurname());
+		result.setPhoto(registrationForm.getPhoto());
+		result.setEmail(registrationForm.getEmail());
+		result.setAddress(registrationForm.getAddress());
+		result.setMiddleName(registrationForm.getMiddleName());
+		result.setPhone(registrationForm.getPhone());
+
+		result.getUserAccount().setUsername(registrationForm.getUserName());
+
+		final String password = registrationForm.getPassword();
+		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		final String hashPassword = encoder.encodePassword(password, null);
+		result.getUserAccount().setPassword(hashPassword);
+
+		result.setVersion(0);
+
+		this.validator.validate(result, binding);
+		return result;
+	}
+
+	public Member reconstruct(final Member member, final BindingResult binding) {
+		Member result;
+
+		if (member.getId() == 0)
+			result = member;
+		else {
+			result = this.memberRepository.findOne(member.getId());
+
+			result.setName(member.getName());
+			result.setSurname(member.getSurname());
+			result.setPhoto(member.getPhoto());
+			result.setEmail(member.getEmail());
+
+			this.validator.validate(result, binding);
+		}
+		return result;
+	}
 
 	public Member create() {
-
 		final Member member = new Member();
-		final UserAccount cuenta = new UserAccount();
+		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
-		authority.setAuthority(Authority.BROTHERHOOD);
+		authority.setAuthority(Authority.MEMBER);
 		autoridades.add(authority);
-		cuenta.setAuthorities(autoridades);
-		member.setUserAccount(cuenta);
+		user.setAuthorities(autoridades);
+		member.setUserAccount(user);
 		return member;
 	}
 
@@ -55,24 +95,35 @@ public class MemberService {
 	}
 
 	public Member findOne(final int id) {
-		final Member result = this.memberRepository.findOne(id);
-		return result;
+		final Member member = this.memberRepository.findOne(id);
+		return member;
 	}
 
 	public Member save(final Member member) {
+		Assert.isTrue(!this.checkEmail(member), "email.wrong");
+		if (member.getPhone().matches("^([0-9]{4,})$"))
+			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.memberRepository.save(member);
 	}
 
+	private Boolean checkEmail(final Member member) {
+		Boolean res = true;
+		if ((member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || (member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || (member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || (member.getEmail().matches(
+			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)") || this.actorService.getActorByEmail(member.getEmail()) != null)))))
+			res = false;
+		return res;
+	}
+
 	public Member update(final Member member) {
-		Assert.isTrue(member.getUserAccount().getId() == LoginService.getPrincipal().getId(), "userAccountLoggerNotSame");
+		Assert.isTrue(LoginService.getPrincipal().getId() == member.getUserAccount().getId());
 		return this.memberRepository.save(member);
 	}
+
 	public Member getMemberByUserAccountId(final int userAccountId) {
 		Member res;
 		res = this.memberRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
-
 	public Boolean isBrotherhoodActiveMember(final int memberId, final int brotherHoodId) {
 		return this.memberRepository.isBrotherhoodActiveMember(memberId, brotherHoodId) > 0;
 	}

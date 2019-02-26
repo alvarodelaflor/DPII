@@ -8,7 +8,6 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -16,6 +15,7 @@ import org.springframework.validation.Validator;
 import repositories.ProcessionRepository;
 import security.LoginService;
 import security.UserAccount;
+import auxiliar.PositionAux;
 import domain.Brotherhood;
 import domain.Procession;
 
@@ -27,7 +27,6 @@ import domain.Procession;
  */
 
 @Service
-@Transactional
 public class ProcessionService {
 
 	//Managed Repository -------------------	
@@ -42,15 +41,15 @@ public class ProcessionService {
 	@Autowired
 	Validator						validator;
 
+	@Autowired
+	PositionAuxService				positionAuxService;
+
 
 	//Simple CRUD Methods ------------------
 
 	public Procession create() {
 
 		final Procession procession = new Procession();
-		final UserAccount login = LoginService.getPrincipal();
-		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId());
-		procession.setBrotherhood(brotherhood);
 		return procession;
 
 	}
@@ -76,17 +75,24 @@ public class ProcessionService {
 		return this.processionRepository.findOne(id);
 	}
 	public Procession save(final Procession procession) {
-		if (procession.getTicker() != null && procession.getTicker().length() > 0) {
-			// CONSERVO SU ANTERIOR TICKER
-		} else
-			procession.setTicker(this.randomTicker(procession));
-		/*
-		 * Ya que no le podemos pasar nada al create porque el reconstruidor hace que se lo cargue decidimos colocar
-		 * aquí la asignación del brotherhood y será en el controlador donde se vigile que la edición la realiza el creador
-		 * de esa procession
-		 */
-		procession.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
-		return this.processionRepository.save(procession);
+		final Procession processionUpdate = this.processionRepository.save(procession);
+		if (procession.getIsFinal().equals(true))
+			for (int i = 0; i < procession.getMaxRow() - 1; i++) {
+				final PositionAux positionAux1 = this.positionAuxService.create();
+				positionAux1.setColum(1);
+				positionAux1.setRow(i);
+				positionAux1.setProcession(processionUpdate);
+				positionAux1.setStatus(false);
+				this.positionAuxService.save(positionAux1);
+
+				final PositionAux positionAux2 = this.positionAuxService.create();
+				positionAux2.setColum(2);
+				positionAux2.setRow(i);
+				positionAux2.setProcession(processionUpdate);
+				positionAux2.setStatus(false);
+				this.positionAuxService.save(positionAux2);
+			}
+		return processionUpdate;
 	}
 
 	public void delete(final Procession procession) {
@@ -134,16 +140,30 @@ public class ProcessionService {
 	public Procession reconstruct(final Procession procession, final BindingResult binding) {
 		Procession result;
 
-		if (procession.getId() == 0)
+		if (procession.getId() == 0) {
+			procession.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			if (procession.getMoment() != null)
+				procession.setTicker(this.randomTicker(procession));
 			result = procession;
-		else {
+		} else {
 			result = this.processionRepository.findOne(procession.getId());
-			result.setTitle(procession.getTitle());
-			result.setDescription(procession.getDescription());
-			result.setMoment(procession.getMoment());
-			result.setIsFinal(procession.getIsFinal());
-			this.validator.validate(procession, binding);
+			//			result.setTitle(procession.getTitle());
+			//			result.setDescription(procession.getDescription());
+			//			result.setMoment(procession.getMoment());
+			//			result.setIsFinal(procession.getIsFinal());
+			//			result.setMaxRow(procession.getMaxRow());
+			//			result.setFloatBro(procession.getFloatBro());
+			//			if (procession.getMoment() != null && result.getTicker() == null)
+			//				result.setTicker(this.randomTicker(procession));
+			//			if (result.getBrotherhood() == null)
+			procession.setId(result.getId());
+			procession.setVersion(result.getVersion());
+			procession.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			procession.setMoment(result.getMoment());
+			procession.setTicker(result.getTicker());
+			result = procession;
 		}
+		this.validator.validate(result, binding);
 		return result;
 	}
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="brotherhood/create" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Create" />
+		<put-attribute name="body" value="/views/brotherhood/create.jsp" />
+	</definition>
+	
+	<definition name="brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Edit" />
+		<put-attribute name="body" value="/views/brotherhood/edit.jsp" />
+	</definition>
+	
+	<definition name="brotherhood/show" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Show" />
+		<put-attribute name="body" value="/views/brotherhood/show.jsp" />
+	</definition>
+
+	<definition name="brotherhood/list" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: List" />
+		<put-attribute name="body" value="/views/brotherhood/list.jsp" />
+	</definition>
+	
+	<definition name="brotherhood/addPhoto" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood Add picture" />
+		<put-attribute name="body" value="/views/brotherhood/addPhoto.jsp" />
+	</definition>
+	
+	<definition name="brotherhood/showBrotherhood" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Show" />
+		<put-attribute name="body" value="/views/brotherhood/showBrotherhood.jsp" /> 
+	</definition>
+	
+		<!-- HIPONA 25-02-19 10:00 -->
+	<definition name="brotherhood/memberlist" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: My brotherhoods" />
+		<put-attribute name="body" value="/views/brotherhood/memberlist.jsp" /> 
+	</definition>
+</tiles-definitions>

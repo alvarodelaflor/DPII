@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 /*
  * CONTROL DE CAMBIOS Member.java
  * 
- * ALVARO 17/02/2019 19:55 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 19:55 CREACIï¿½N DE LA CLASE
  */
 
 @Entity

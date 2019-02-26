@@ -17,7 +17,7 @@
 		<jstl:if test="${row.status eq false }"><span class="rejected"><spring:message code="request.rejected"/></span></jstl:if>
 		<jstl:if test="${row.status eq null}"><span class="pending"><spring:message code="request.pending"/></span></jstl:if>
 	</display:column>
-	<display:column property="procession.title" titleKey="procession.title"/>
+	<display:column property="positionAux.procession.title" titleKey="procession.title"/>
 	<display:column	titleKey="request.show">
 		<a href="/Acme-Madruga/request/member/show.do?requestId=${row.id}"><spring:message code="request.show"/></a>
 	</display:column>

@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,9 +21,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 /*
  * CONTROL DE CAMBIOS Brotherhoods.java
  * 
- * ALVARO 17/02/2019 11:23 CREACIÓN DE LA CLASE
- * ALVARO 17/02/2019 17:10 AÑADIDO PROCESIONES Y FLOAT
- * ALVARO 17/02/2019 20:03 AÑADIDO ENROLLED
+ * ALVARO 17/02/2019 11:23 CREACIï¿½N DE LA CLASE
+ * ALVARO 17/02/2019 17:10 Aï¿½ADIDO PROCESIONES Y FLOAT
+ * ALVARO 17/02/2019 20:03 Aï¿½ADIDO ENROLLED
  */
 
 @Entity
@@ -49,6 +50,7 @@ public class Brotherhood extends Actor {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	@NotNull
+	@Past
 	public Date getEstablishmentDate() {
 		return this.establishmentDate;
 	}

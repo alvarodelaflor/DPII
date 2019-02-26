@@ -28,7 +28,7 @@
           	
           	<acme:textbox code="floatBro.title" path="title"/>
           	<acme:textbox code="floatBro.description" path="description"/>
-          	
+          	<acme:textbox code="floatBro.pictures" path="pictures"/>
           	<acme:cancel url="floatBro/brotherhood/list.do" code="cancel"/>
           	<acme:submit name="save" code="send"/>
 		</form:form>

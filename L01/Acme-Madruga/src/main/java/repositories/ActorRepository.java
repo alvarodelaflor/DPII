@@ -2,17 +2,14 @@
 package repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Actor;
 
-/*
- * CONTROL DE CAMBIOS ActorRepository.java
- * 
- * ALVARO 17/02/2019 11:41 CREACIÓN DE LA CLASE
- */
-
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
+	@Query("select a from Actor a where a.email = ?1")
+	Actor getActorByEmail(String email);
 }
