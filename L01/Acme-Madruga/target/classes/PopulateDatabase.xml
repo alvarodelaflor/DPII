@@ -121,6 +121,7 @@
 		<property name="ticker" value="20200403-ABCDE" />
 		<property name="isFinal" value= "true"/>
 		<property name="maxRow" value= "10"/>
+		<property name="maxColum" value= "1"/>
 		<property name="floatBro" ref= "floatBro01"/>
     </bean>
     
@@ -132,6 +133,7 @@
 		<property name="ticker" value="200403-FGHIJ" />
 		<property name="isFinal" value= "false"/>
 		<property name="maxRow" value= "9"/>
+		<property name="maxColum" value= "1"/>
 		<property name="floatBro" ref= "floatBro02"/>
     </bean>
     <!-- PROCESSION -->

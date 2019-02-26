@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.EnrolledService;
 import services.PositionService;
+import services.RequestService;
 import domain.Enrolled;
 import domain.Position;
 
@@ -43,6 +44,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 	private EnrolledService	enrolledService;
 	@Autowired
 	private PositionService	positionService;
+	@Autowired
+	private RequestService	requestService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -93,7 +96,7 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		Enrolled enrolled;
 		enrolled = this.enrolledService.findOne(enrolledId);
-		if (this.enrolledService.findOne(enrolledId) == null || LoginService.getPrincipal().getId() != enrolled.getBrotherhood().getUserAccount().getId())
+		if (this.enrolledService.findOne(enrolledId) == null || LoginService.getPrincipal().getId() != enrolled.getBrotherhood().getUserAccount().getId() || enrolled.getState() != null)
 			result = new ModelAndView("redirect:list.do");
 		else {
 			Assert.notNull(enrolled);
@@ -113,6 +116,7 @@ public class EnrolledBrotherhoodController extends AbstractController {
 			Assert.notNull(enrolled);
 			try {
 				enrolled.setDropMoment(LocalDateTime.now().toDate());
+				this.requestService.deleteAllRequestPendingByMember(enrolled.getMember());
 				this.enrolledService.save(enrolled);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Exception e) {
@@ -121,7 +125,6 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		}
 		return result;
 	}
-
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int enrolledId) {
 		ModelAndView result;

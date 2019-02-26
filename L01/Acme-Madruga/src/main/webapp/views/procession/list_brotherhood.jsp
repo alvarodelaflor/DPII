@@ -41,7 +41,7 @@
 							
 						</display:column>
 						<display:column titleKey="procession.delete" style="background-color: #58FA58" > 
-							
+							<a href="procession/brotherhood/delete.do?id=${row.id}"><spring:message code="procession.delete"></spring:message></a>
 						</display:column>
 						<display:column titleKey="procession.ticker" style="background-color: #58FA58" > 
 							<a href="procession/brotherhood/show.do?processionId=${row.id}">${row.ticker}</a>

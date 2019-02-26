@@ -164,4 +164,16 @@ public class RequestService {
 			for (final Request request : requests)
 				this.delete(request);
 	}
+
+	public Collection<Request> findAllByMemberAndStatusPending(final Member member) {
+		Assert.notNull(member, "request.member.isNull");
+		return this.requestRepository.findAllByMemberAndStatusPending(member.getId());
+	}
+
+	public void deleteAllRequestPendingByMember(final Member member) {
+		final Collection<Request> requests = this.findAllByMemberAndStatusPending(member);
+		if (!requests.isEmpty())
+			for (final Request request : requests)
+				this.requestRepository.delete(request);
+	}
 }

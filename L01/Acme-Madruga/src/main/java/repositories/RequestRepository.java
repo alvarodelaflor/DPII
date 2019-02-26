@@ -29,4 +29,7 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select r from Request r where r.member.id = ?1 order by r.status desc")
 	Collection<Request> getMemberRequests(int idMember);
+
+	@Query("select e from Request e where e.member.id=?1 and e.status is null")
+	Collection<Request> findAllByMemberAndStatusPending(int memberId);
 }

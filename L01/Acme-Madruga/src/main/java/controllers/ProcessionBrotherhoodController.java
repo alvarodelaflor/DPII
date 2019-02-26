@@ -108,7 +108,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		Procession procession;
 		procession = this.processionService.findOne(processionId);
-		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId())
+		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId() || procession.getIsFinal().equals(true))
 			result = new ModelAndView("redirect:list.do");
 		else {
 			Assert.notNull(procession);

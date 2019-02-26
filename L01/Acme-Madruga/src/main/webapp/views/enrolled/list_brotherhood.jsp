@@ -28,9 +28,6 @@
 			<div>
 				<strong><p><spring:message code="enrolled.details.accepted"></spring:message></p></strong>
 				<display:table name="enrolledsAccepted" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">				
-					<display:column titleKey="enrolled.edit"> 
-						<a href="enrolled/brotherhood/edit.do?id=${row.id}"><spring:message code="enrolled.edit"></spring:message></a>
-					</display:column>
 					<display:column titleKey="enrolled.delete"> 
 						<a href="enrolled/brotherhood/dropOut.do?id=${row.id}"><spring:message code="enrolled.dropOut"></spring:message></a>
 					</display:column>
@@ -42,9 +39,6 @@
 			<div>
 				<strong><p><spring:message code="enrolled.details.rejected"></spring:message></p></strong>
 				<display:table name="enrolledsRejected" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">				
-					<display:column titleKey="enrolled.edit"> 
-						<a href="enrolled/brotherhood/edit.do?id=${row.id}"><spring:message code="enrolled.edit"></spring:message></a>
-					</display:column>
 					<display:column titleKey="enrolled.delete"> 
 						<a href="enrolled/brotherhood/delete.do?id=${row.id}"><spring:message code="enrolled.delete"></spring:message></a>
 					</display:column>
