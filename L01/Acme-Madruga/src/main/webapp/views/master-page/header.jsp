@@ -14,6 +14,8 @@
 	ALVARO 17/02/2019 15:06 Cambiado logo
 	ALVARO 17/02/2019 19:32 Añadido floatBro
 	ALVARO 17/02/2019 21:43 Añadido enrolled
+	FRAN   19/02/2019 16:19 access="hasRole('ADMIN'); Quito las "action" y meto el registrarse como admin
+	FRAN   21/02/2019 13:39 access="hasRole('ADMIN'); Añado areas
 -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
@@ -32,8 +34,9 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
+					<li><a href="administrator/create.do"><spring:message code="master.page.administrator.registration" /></a></li>
+					<li><a href="area/administrator/list.do"><spring:message code="master.page.administrator.areaList" /></a></li>
+					<li><a href="position/administrator/list.do"><spring:message code="master.page.administrator.adminList" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

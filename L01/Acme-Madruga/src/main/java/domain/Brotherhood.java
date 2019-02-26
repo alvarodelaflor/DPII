@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * ALVARO 17/02/2019 11:23 CREACIÓN DE LA CLASE
  * ALVARO 17/02/2019 17:10 AÑADIDO PROCESIONES Y FLOAT
  * ALVARO 17/02/2019 20:03 AÑADIDO ENROLLED
+ * FRAN 20/02/2019 16:21 Añadido Area
  */
 
 @Entity
@@ -35,7 +37,17 @@ public class Brotherhood extends Actor {
 	private Collection<Procession>	processions;
 	private Collection<FloatBro>	floatBro;
 	private Collection<Enrolled>	enrolleds;
+	private Area					area;
 
+
+	@OneToOne(optional = false)
+	public Area getArea() {
+		return this.area;
+	}
+
+	public void setArea(final Area area) {
+		this.area = area;
+	}
 
 	@NotBlank
 	public String getTitle() {

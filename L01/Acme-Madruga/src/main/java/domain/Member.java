@@ -22,6 +22,17 @@ public class Member extends Actor {
 	private Collection<Enrolled>	enrolleds;
 
 
+	//	private Position				position;
+	//
+	//
+	//	public Position getPosition() {
+	//		return this.position;
+	//	}
+	//
+	//	public void setPosition(final Position position) {
+	//		this.position = position;
+	//	}
+
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	public Collection<Enrolled> getEnrolleds() {
 		return this.enrolleds;

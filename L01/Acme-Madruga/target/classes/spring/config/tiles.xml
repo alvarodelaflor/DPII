@@ -15,6 +15,7 @@
 	ALVARO 17/02/2019 12:38 Añadido value de procession
 	ALVARO 17/02/2019 19:30 Añadido value de floatBro
 	ALVARO 17/02/2019 21:41 Añadido value de enrolled
+	FRAN 21/02/2019 13:08 Añadido value de area
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -29,7 +30,6 @@
 		<value>/views/misc/tiles.xml</value>		
 		<value>/views/security/tiles.xml</value>
 		<value>/views/welcome/tiles.xml</value>
-		
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
 		<!-- ALVARO -->
@@ -38,7 +38,8 @@
 		<value>/views/enrolled/tiles.xml</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
-		
+		<value>/views/area/tiles.xml</value>
+		<value>/views/position/tiles.xml</value>
 		<!-- FRAN -->
 		<!-- CARMEN -->
 		

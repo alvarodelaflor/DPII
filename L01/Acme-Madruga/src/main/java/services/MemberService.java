@@ -71,4 +71,10 @@ public class MemberService {
 		res = this.memberRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
+
+	public List<Member> findMemberByPositionId(final int positionId) {
+
+		final List<Member> res = this.findMemberByPositionId(positionId);
+		return res;
+	}
 }

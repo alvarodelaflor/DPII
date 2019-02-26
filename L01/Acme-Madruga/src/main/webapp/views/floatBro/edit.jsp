@@ -23,14 +23,15 @@
 
 <body>
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="floatBro" action="floatBro/brotherhood/edit.do">
-          	<form:hidden path="id"/>
-          	
-          	<acme:textbox code="floatBro.title" path="title"/>
-          	<acme:textbox code="floatBro.description" path="description"/>
-          	
-          	<acme:cancel url="floatBro/brotherhood/list.do" code="cancel"/>
-          	<acme:submit name="save" code="send"/>
+		<form:form class="formularioEdicion" method="POST"
+			modelAttribute="floatBro" action="floatBro/brotherhood/edit.do">
+			<form:hidden path="id" />
+
+			<acme:textbox code="floatBro.title" path="title" />
+			<acme:textbox code="floatBro.description" path="description" />
+
+			<acme:cancel url="floatBro/brotherhood/list.do" code="cancel" />
+			<acme:submit name="save" code="send" />
 		</form:form>
 	</div>
 </body>

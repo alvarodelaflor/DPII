@@ -23,4 +23,7 @@ public interface EnrolledRepository extends JpaRepository<Enrolled, Integer> {
 
 	@Query("select e from Enrolled e where e.brotherhood.id=?1 and e.state is null")
 	Collection<Enrolled> findAllByBrotherhoodLoggedPending(int brotherhoodId);
+
+	@Query("select e from Enrolled e where e.position.id=?1")
+	Collection<Enrolled> findAllByPositionId(int positionId);
 }

@@ -13,6 +13,8 @@
 	CONTROL DE CAMBIOS security.xml
   
 	ALVARO 17/02/2019 12:38 Añadido value de procession brotherhood
+	FRAN 21/02/2019 13:09 Añadido security:intercept admin
+	FRAN 21/02/2019 13:09 Añadido security:intercept area
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -73,7 +75,14 @@
 		<security:intercept-url pattern="/enrolled/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />
 		<!-- ALVARO -->
 		<!-- FRAN -->
-		
+		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/area/administrator/list.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/area/administrator/show.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/list.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/show.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/delete.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/create.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/edit.do" access="hasRole('ADMIN')"/>
 		<!-- FRAN -->
 		<!-- CARMEN -->
 		

@@ -65,6 +65,11 @@ public class EnrolledService {
 		this.enrolledRepository.delete(enrolled);
 	}
 
+	public Collection<Enrolled> findAllByPositionId(final int positionId) {
+
+		return this.enrolledRepository.findAllByPositionId(positionId);
+	}
+
 	public Collection<Enrolled> findAllByBrotherhoodLoggedAccepted() {
 		System.out.println("IdLogged:" + LoginService.getPrincipal().getId());
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
