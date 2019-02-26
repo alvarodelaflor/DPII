@@ -155,10 +155,9 @@
     <!-- ENROLLED -->
     <bean id="enrolled01" class="domain.Enrolled">
     	<property name="member" ref= "member01"/>
-    	<property name="state">
-    		<null></null>
-    	</property>
+    	<property name="state" value="true"/>
     	<property name="brotherhood" ref= "brotherhood01"/>
+    	<property name="position" ref= "position01"/>
     </bean>
     <!-- ENROLLED -->
     <!-- POSITION -->

@@ -27,7 +27,7 @@ public class EnrollmentMemberController extends AbstractController {
 		try {
 			enrollment = this.enrollmentService.create(brotherhoodId);
 			this.enrollmentService.save(enrollment);
-			result = new ModelAndView("redirect:/brotherhood/list.do");
+			result = new ModelAndView("redirect:/brotherhood/showBrotherhood.do?id=" + brotherhoodId);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

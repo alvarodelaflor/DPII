@@ -17,7 +17,17 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<body>      
+<body>
+	<security:authorize access="hasRole('MEMBER')">
+		<jstl:if test="${validMember}">
+			<form method="get" action="/Acme-Madruga/request/member/create.do">
+				<button name="processionId" value="${procession.id}"><spring:message code="createRequest"/></button>
+			</form>	
+		</jstl:if>
+	</security:authorize>
+	<div>
+	
+	</div>
 	<div>
 		<table>
     		<tr><td><spring:message code="procession.title" /><jstl:out value="${procession.title}"></jstl:out></td></tr>

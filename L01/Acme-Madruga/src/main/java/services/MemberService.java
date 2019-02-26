@@ -128,4 +128,17 @@ public class MemberService {
 		return this.memberRepository.isBrotherhoodActiveMember(memberId, brotherHoodId) > 0;
 	}
 
+	public Boolean checkAlreadyInProcession(final int memberId) {
+		Boolean res = false;
+		if (this.memberRepository.membersOfProcession(memberId) > 0)
+			res = true;
+		return res;
+	}
+
+	public Boolean checkIsInBrotherhood(final int memberId) {
+		Boolean res = false;
+		if (this.memberRepository.membersOfBrotherhood(memberId) > 0)
+			res = true;
+		return res;
+	}
 }

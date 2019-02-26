@@ -32,4 +32,10 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select e from Request e where e.member.id=?1 and e.status is null")
 	Collection<Request> findAllByMemberAndStatusPending(int memberId);
+
+	@Query("select r from Request r where r.positionAux.procession.id=?1 and r.member.id=?2 and r.status is null")
+	Collection<Request> findAllByMemberProcessionPending(int idProcession, int memberId);
+
+	@Query("select r from Request r where r.positionAux.procession.id=?1 and r.member.id=?2 and r.status=true")
+	Collection<Request> findAllByMemberProcessionAccepted(int idProcession, int memberId);
 }

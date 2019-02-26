@@ -27,6 +27,9 @@ public interface EnrolledRepository extends JpaRepository<Enrolled, Integer> {
 	@Query("select e from Member m join m.enrolleds e where m.id=?1 and e.brotherhood.id=?2 and e.dropMoment=null and e.state=true")
 	Enrolled getBrotherhoodActiveEnrollment(int memberId, int brotherHoodId);
 
+	@Query("select e from Member m join m.enrolleds e where m.id=?1 and e.brotherhood.id=?2 and e.dropMoment is null and e.state is null")
+	Enrolled getBrotherhoodPendingEnrollment(int memberId, int brotherHoodId);
+
 	@Query("select e from Enrolled e where e.brotherhood.id=?1 and e.state=true and e.dropMoment is not null")
 	Collection<Enrolled> getDropOutMember(int brotherHoodId);
 }

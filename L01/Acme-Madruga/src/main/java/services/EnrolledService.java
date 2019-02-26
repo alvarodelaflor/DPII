@@ -122,7 +122,7 @@ public class EnrolledService {
 	}
 
 	public Boolean hasPendingEnrollRequest(final int memberId, final int brotherHoodId) {
-		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId) != null;
+		return this.enrolledRepository.getBrotherhoodPendingEnrollment(memberId, brotherHoodId) != null;
 	}
 
 	public Enrolled getBrotherhoodActiveEnrollment(final int memberId, final int brotherHoodId) {

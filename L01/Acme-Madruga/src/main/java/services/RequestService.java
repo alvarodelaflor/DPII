@@ -93,11 +93,23 @@ public class RequestService {
 		return result;
 	}
 
+	public Boolean validMemberToCreateRequest(final int idProcession) {
+		Boolean res = true;
+		final int idMember = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		if (!this.requestRepository.findAllByMemberProcessionPending(idMember, idProcession).isEmpty() || !this.requestRepository.findAllByMemberProcessionAccepted(idMember, idProcession).isEmpty())
+			res = false;
+		return res;
+	}
+
 	public Request create(final int processionId) {
+
+		Assert.isTrue(this.validMemberToCreateRequest(processionId), "request.notValidMember");
 		final Request r = new Request();
 		final Procession procession = this.processionService.findOne(processionId);
 		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
-
+		final Collection<PositionAux> positionAuxs = this.positionAuxService.findFreePositionByProcesion(processionId);
+		if (!positionAuxs.isEmpty())
+			r.setPositionAux(positionAuxs.iterator().next());
 		// We have to check if the procession is in final mode
 		Assert.isTrue(procession.getIsFinal());
 		// We have to check if we are an active member of the brotherhood
