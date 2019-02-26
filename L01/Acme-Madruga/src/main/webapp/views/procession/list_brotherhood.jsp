@@ -51,6 +51,7 @@
 							<spring:message code="procession.${row.isFinal}"/>
 						</display:column>
 						<display:column property="maxRow" titleKey="procession.maxRow" style="background-color: #58FA58"></display:column>
+						<display:column property="maxColum" titleKey="procession.maxColum" style="background-color: #58FA58"></display:column>
 						<display:column property="floatBro.title" titleKey="procession.floatBro" style="background-color: #58FA58"></display:column>
 					</c:when>
 					<c:otherwise>
@@ -68,6 +69,7 @@
 							<spring:message code="procession.${row.isFinal}"/>
 						</display:column>
 						<display:column property="maxRow" titleKey="procession.maxRow" style="background-color: #FA5858"></display:column>
+						<display:column property="maxColum" titleKey="procession.maxColum" style="background-color: #FA5858"></display:column>
 						<display:column property="floatBro.title" titleKey="procession.floatBro" style="background-color: #FA5858"></display:column>					
 					</c:otherwise>
 				</c:choose>

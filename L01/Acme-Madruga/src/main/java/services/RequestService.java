@@ -96,7 +96,9 @@ public class RequestService {
 	public Boolean validMemberToCreateRequest(final int idProcession) {
 		Boolean res = true;
 		final int idMember = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		if (!this.requestRepository.findAllByMemberProcessionPending(idMember, idProcession).isEmpty() || !this.requestRepository.findAllByMemberProcessionAccepted(idMember, idProcession).isEmpty())
+		System.out.println("Request pendientes: " + this.requestRepository.findAllByMemberProcessionPending(idProcession, idMember));
+		System.out.println("Request Aceptadas: " + this.requestRepository.findAllByMemberProcessionAccepted(idProcession, idMember));
+		if (this.requestRepository.findAllByMemberProcessionPending(idProcession, idMember).size() > 0 || this.requestRepository.findAllByMemberProcessionAccepted(idProcession, idMember).size() > 0)
 			res = false;
 		return res;
 	}

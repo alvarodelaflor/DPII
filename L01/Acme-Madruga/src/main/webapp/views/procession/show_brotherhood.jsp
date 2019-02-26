@@ -36,6 +36,7 @@
     		<tr><td><spring:message code="procession.brotherhood" /><jstl:out value="${procession.brotherhood.name} ${procession.brotherhood.surname}"></jstl:out></td></tr>
     		<tr><td><spring:message code="procession.ticker" /><jstl:out value="${procession.ticker}"></jstl:out></td></tr>
     		<tr><td><spring:message code="procession.maxRow" /><jstl:out value="${procession.maxRow}"></jstl:out></td></tr>
+    		<tr><td><spring:message code="procession.maxColum" /><jstl:out value="${procession.maxColum}"></jstl:out></td></tr>
     		<tr><td><spring:message code="procession.floatBro" /><jstl:out value="${procession.floatBro.title}"></jstl:out></td></tr>
 		</table>
 	</div>

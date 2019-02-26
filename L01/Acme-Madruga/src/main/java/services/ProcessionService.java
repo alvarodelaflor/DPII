@@ -87,8 +87,8 @@ public class ProcessionService {
 	public Procession save(final Procession procession) {
 		final Procession processionUpdate = this.processionRepository.save(procession);
 		if (procession.getIsFinal().equals(true))
-			for (int i = 0; i < procession.getMaxRow() - 1; i++)
-				for (int j = 0; j < procession.getMaxColum() - 1; j++) {
+			for (int i = 0; i < procession.getMaxRow(); i++)
+				for (int j = 0; j < procession.getMaxColum(); j++) {
 					final PositionAux positionAux = this.positionAuxService.create();
 					positionAux.setRow(i);
 					positionAux.setColum(j);

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
 import services.BrotherhoodService;
 import services.FloatBroService;
 import services.MemberService;
@@ -97,8 +96,8 @@ public class ProcessionController extends AbstractController {
 	}
 	public Boolean validMember(final int processionId) {
 		Boolean res = true;
-		final int idMember = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		if (!this.requestService.validMemberToCreateRequest(processionId) || !this.memberService.checkIsInBrotherhood(idMember))
+		final int brotherhoodId = this.processionService.findOne(processionId).getBrotherhood().getId();
+		if (!this.requestService.validMemberToCreateRequest(processionId) || !this.memberService.checkIsInBrotherhood(brotherhoodId))
 			res = false;
 		return res;
 	}

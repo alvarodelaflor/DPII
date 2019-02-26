@@ -135,9 +135,10 @@ public class MemberService {
 		return res;
 	}
 
-	public Boolean checkIsInBrotherhood(final int memberId) {
+	public Boolean checkIsInBrotherhood(final int brotherhoodId) {
 		Boolean res = false;
-		if (this.memberRepository.membersOfBrotherhood(memberId) > 0)
+		final int memberId = this.memberRepository.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		if (this.memberRepository.membersOfBrotherhood(memberId, brotherhoodId) > 0)
 			res = true;
 		return res;
 	}

@@ -26,6 +26,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	@Query("select count(r) from Request r where r.member.id=?1 and r.status=true")
 	int membersOfProcession(int memberId);
 
-	@Query("select count(e) from Enrolled e where e.member.id=?1 and e.state=true and e.dropMoment is null")
-	int membersOfBrotherhood(int memberId);
+	@Query("select count(e) from Enrolled e where e.member.id=?1 and e.state=true and e.dropMoment is null and e.brotherhood.id=?2")
+	int membersOfBrotherhood(int memberId, int brotherhoodId);
 }
