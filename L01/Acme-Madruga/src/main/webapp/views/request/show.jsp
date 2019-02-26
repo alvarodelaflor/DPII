@@ -55,8 +55,11 @@
 	</div>
 	</jstl:if>
 	
-	<jstl:if test="${request.status eq null}">
-		<div>
-			<a href="/Acme-Madruga/request/member/delete.do?requestId=${request.id}"><spring:message code="request.delete"/></a>
-		</div>
-	</jstl:if>
+	<div>
+		<jstl:if test="${request.status eq null}">
+			<form method="get">
+				<button formaction="/Acme-Madruga/request/member/delete.do" name="requestId" value="${request.id }"><spring:message code="request.delete"/></button>
+				<button formaction="/Acme-Madruga/request/member/list.do"><spring:message code="back"/></button>
+			</form>
+		</jstl:if>
+	</div>
