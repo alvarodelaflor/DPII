@@ -162,6 +162,12 @@ public class BrotherhoodService {
 	}
 
 	// Hipona 25-02-19 9:51
+
+	public Collection<Brotherhood> findActiveFromLoggedMember() {
+		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+		return this.brotherhoodRepository.findActiveFromMember(member.getId());
+	}
+
 	public Collection<Brotherhood> findInactiveFromLoggedMember() {
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 		return this.brotherhoodRepository.findInactiveFromMember(member.getId());
