@@ -7,6 +7,16 @@ public class RegistrationForm {
 
 	private String	password, confirmPassword, address, email, middleName, name, phone, photo, surname, title, userName;
 
+	private Boolean	accept;
+
+
+	public Boolean getAccept() {
+		return this.accept;
+	}
+
+	public void setAccept(final Boolean accept) {
+		this.accept = accept;
+	}
 
 	public String getUserName() {
 		return this.userName;

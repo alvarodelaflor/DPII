@@ -10,6 +10,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 import repositories.MemberRepository;
@@ -53,6 +54,12 @@ public class MemberService {
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
+
+		if (registrationForm.getAccept() == false) {
+			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
+			binding.addError(error);
+			binding.rejectValue("accept", "error.termsAndConditions");
+		}
 
 		result.setVersion(0);
 

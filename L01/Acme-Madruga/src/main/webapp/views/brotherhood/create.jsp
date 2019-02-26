@@ -46,9 +46,11 @@
 				
 				<br>
 				
+				<spring:message code="conditions" var="termsAndConditions"/>
+				<form:checkbox path="accept" label="${termsAndConditions}"/>
+				<a href="brotherhood/conditions.do" target="_blank"><spring:message code="conditions1" /></a>
+				<form:errors path="${accept}" cssClass="error" />
 				
-				<input type="checkbox" id="cbox1" value="first_checkbox" required="required"><spring:message code="conditions" /><a href="brotherhood/conditions.do"><spring:message code="conditions1" /></a>
-
 				<br>
 				<br>												
 				<acme:submit name="save" code="save"/>
