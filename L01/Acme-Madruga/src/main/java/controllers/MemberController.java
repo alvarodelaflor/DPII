@@ -69,21 +69,9 @@ public class MemberController extends AbstractController {
 				this.memberService.save(member);
 				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("email.wrong"))
-					result = this.creatCreateModelAndView(member, "email.wrong");
-				else
-					result = new ModelAndView("member/create");
+
+				result = new ModelAndView("member/create");
 			}
-		return result;
-	}
-
-	private ModelAndView creatCreateModelAndView(final Member member, final String string) {
-		ModelAndView result;
-		result = new ModelAndView("member/create");
-
-		result.addObject("message", string);
-		result.addObject("member", member);
-
 		return result;
 	}
 
@@ -117,21 +105,8 @@ public class MemberController extends AbstractController {
 				this.memberService.save(member);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("email.wrong"))
-					result = this.createEditModelAndView(member, "email.wrong");
-				else
-					result = new ModelAndView("member/edit");
+				result = new ModelAndView("member/edit");
 			}
-		return result;
-	}
-
-	private ModelAndView createEditModelAndView(final Member member, final String string) {
-		ModelAndView result;
-		result = new ModelAndView("member/edit");
-
-		result.addObject("message", string);
-		result.addObject("member", member);
-
 		return result;
 	}
 

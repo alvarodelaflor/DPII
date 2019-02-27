@@ -83,10 +83,7 @@ public class BrotherhoodController extends AbstractController {
 				this.brotherhoodService.save(brotherhood);
 				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("email.wrong"))
-					result = this.creatCreateModelAndView(brotherhood, "email.wrong");
-				else
-					result = new ModelAndView("brotherhood/create");
+				result = new ModelAndView("brotherhood/create");
 			}
 		return result;
 	}
@@ -118,31 +115,9 @@ public class BrotherhoodController extends AbstractController {
 				this.brotherhoodService.save(brotherhood);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("email.wrong"))
-					result = this.createEditModelAndView(brotherhood, "email.wrong");
-				else
-					result = new ModelAndView("brotherhood/edit");
+
+				result = new ModelAndView("brotherhood/edit");
 			}
-		return result;
-	}
-
-	private ModelAndView createEditModelAndView(final Brotherhood brotherhood, final String string) {
-		ModelAndView result;
-
-		result = new ModelAndView("brotherhood/edit");
-		result.addObject("message", string);
-		result.addObject("brotherhood", brotherhood);
-
-		return result;
-	}
-
-	private ModelAndView creatCreateModelAndView(final Brotherhood brotherhood, final String string) {
-		ModelAndView result;
-
-		result = new ModelAndView("brotherhood/create");
-		result.addObject("message", string);
-		result.addObject("brotherhood", brotherhood);
-
 		return result;
 	}
 

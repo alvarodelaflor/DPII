@@ -31,4 +31,9 @@
 		<put-attribute name="body" value="/views/administrator/create.jsp" />
 	</definition>
 	
+	<definition name="administrator/dashboard" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Dashboard" />
+		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
+	</definition>
+	
 </tiles-definitions>

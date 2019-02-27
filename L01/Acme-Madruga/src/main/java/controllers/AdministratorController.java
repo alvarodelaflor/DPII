@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -21,7 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.AdministratorService;
 import services.BrotherhoodService;
+import services.MemberService;
+import services.ProcessionService;
+import services.RequestService;
 import domain.Administrator;
+import domain.Member;
+import domain.Procession;
 import forms.RegistrationForm;
 
 @Controller
@@ -33,6 +40,15 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	BrotherhoodService		brotherhoodService;
+
+	@Autowired
+	ProcessionService		processionService;
+
+	@Autowired
+	RequestService			requestService;
+
+	@Autowired
+	MemberService			memberService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -65,21 +81,8 @@ public class AdministratorController extends AbstractController {
 				this.administratorService.save(administrator);
 				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("email.wrong"))
-					result = this.creatCreateModelAndView(administrator, "email.wrong");
-				else
-					result = new ModelAndView("administrator/create");
+				result = new ModelAndView("administrator/create");
 			}
-		return result;
-	}
-
-	private ModelAndView creatCreateModelAndView(final Administrator administrator, final String string) {
-		ModelAndView result;
-		result = new ModelAndView("administrator/create");
-
-		result.addObject("message", string);
-		result.addObject("administrator", administrator);
-
 		return result;
 	}
 
@@ -113,21 +116,9 @@ public class AdministratorController extends AbstractController {
 				this.administratorService.save(admin);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("email.wrong"))
-					result = this.createEditModelAndView(admin, "email.wrong");
-				else
-					result = new ModelAndView("administrator/edit");
+
+				result = new ModelAndView("administrator/edit");
 			}
-		return result;
-	}
-
-	private ModelAndView createEditModelAndView(final Administrator administrator, final String string) {
-		ModelAndView result;
-		result = new ModelAndView("administrator/edit");
-
-		result.addObject("message", string);
-		result.addObject("administrator", administrator);
-
 		return result;
 	}
 
@@ -149,4 +140,41 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard() {
+		final ModelAndView result;
+
+		final int userLoggin = LoginService.getPrincipal().getId();
+		final Administrator administrator;
+		administrator = this.administratorService.getAdministratorByUserAccountId(userLoggin);
+		Assert.isTrue(administrator != null);
+
+		final String largestBrotherhood = this.brotherhoodService.largestBrotherhood();
+		final String smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
+		final Collection<Procession> processionOrganised = this.processionService.processionOrganised();
+		final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
+		final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();
+		final Double getRatioRequestStatusNull = this.requestService.getRatioRequestStatusNull();
+		final Collection<Member> lisMemberAccept = this.memberService.lisMemberAccept();
+		final Double getRatioRequestProcessionStatusTrue = this.requestService.getRatioRequestProcessionStatusTrue();
+		final Double getRatioRequestProcessionStatusFalse = this.requestService.getRatioRequestProcessionStatusFalse();
+		final Double getRatioRequestProcessionStatusNull = this.requestService.getRatioRequestProcessionStatusNull();
+
+		result = new ModelAndView("administrator/dashboard");
+		result.addObject("largestBrotherhood", largestBrotherhood);
+		result.addObject("getRatioRequestProcessionStatusTrue", getRatioRequestProcessionStatusTrue);
+		result.addObject("getRatioRequestProcessionStatusFalse", getRatioRequestProcessionStatusFalse);
+		result.addObject("getRatioRequestProcessionStatusNull", getRatioRequestProcessionStatusNull);
+
+		result.addObject("smallestBrotherhood", smallestBrotherhood);
+		result.addObject("processionOrganised", processionOrganised);
+		result.addObject("lisMemberAccept", lisMemberAccept);
+		result.addObject("getRatioRequestStatusTrue", getRatioRequestStatusTrue);
+		result.addObject("getRatioRequestStatusFalse", getRatioRequestStatusFalse);
+		result.addObject("getRatioRequestStatusNull", getRatioRequestStatusNull);
+
+		result.addObject("requestURI", "administrator/dashboard.do");
+
+		return result;
+	}
 }

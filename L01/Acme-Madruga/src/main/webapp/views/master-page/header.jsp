@@ -33,7 +33,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>																												
-					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>	
+					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>
+					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>		
 				</ul>
 			</li>
 		</security:authorize>

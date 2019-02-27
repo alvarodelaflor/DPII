@@ -67,6 +67,18 @@ public class AdministratorService {
 			binding.rejectValue("userName", "error.userAcount");
 		}
 
+		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
+		}
+
+		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "error.email");
+		}
+
 		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
 			final ObjectError error = new ObjectError("password", "");
 			binding.addError(error);
@@ -77,6 +89,13 @@ public class AdministratorService {
 			final ObjectError error = new ObjectError("password", "");
 			binding.addError(error);
 			binding.rejectValue("password", "error.password");
+		}
+
+		if (!(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(registrationForm.getEmail().matches(
+			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "email.wrong");
 		}
 
 		result.setVersion(0);
@@ -97,6 +116,19 @@ public class AdministratorService {
 			result.setSurname(admin.getSurname());
 			result.setPhoto(admin.getPhoto());
 			result.setEmail(admin.getEmail());
+
+			if (!(admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(admin.getEmail()
+				.matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+				final ObjectError error = new ObjectError("email", "");
+				binding.addError(error);
+				binding.rejectValue("email", "email.wrong");
+			}
+
+			if (this.actorService.getActorByUser(admin.getUserAccount().getUsername()) != null) {
+				final ObjectError error = new ObjectError("email", "");
+				binding.addError(error);
+				binding.rejectValue("email", "error.email");
+			}
 
 			this.validator.validate(result, binding);
 		}
@@ -125,18 +157,9 @@ public class AdministratorService {
 	}
 
 	public Administrator save(final Administrator member) {
-		Assert.isTrue(!this.checkEmail(member), "email.wrong");
 		if (member.getPhone().matches("^([0-9]{4,})$"))
 			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.administratorRepository.save(member);
-	}
-
-	private Boolean checkEmail(final Administrator member) {
-		Boolean res = true;
-		if ((member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || (member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || (member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || (member.getEmail().matches(
-			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)") || this.actorService.getActorByEmail(member.getEmail()) != null)))))
-			res = false;
-		return res;
 	}
 
 	public Administrator update(final Administrator member) {

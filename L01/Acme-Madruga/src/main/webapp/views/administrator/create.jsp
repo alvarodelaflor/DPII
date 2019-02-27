@@ -25,6 +25,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <section id="main-content">
+<security:authorize access="hasRole('ADMIN')"> 
 
 	<article>
 		<div class="content">
@@ -57,5 +58,6 @@
 			</form:form>
 		</div>
 	</article>
+</security:authorize>
 </section>
 

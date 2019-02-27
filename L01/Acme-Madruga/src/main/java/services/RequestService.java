@@ -153,4 +153,28 @@ public class RequestService {
 		member.setAuthority(authority);
 		return acc.getAuthorities().contains(member);
 	}
+
+	public Double getRatioRequestStatusTrue() {
+		return this.requestRepository.getRatioRequestStatusTrue();
+	}
+
+	public Double getRatioRequestStatusFalse() {
+		return this.requestRepository.getRatioRequestStatusFalse();
+	}
+
+	public Double getRatioRequestStatusNull() {
+		return this.requestRepository.getRatioRequestStatusNull();
+	}
+
+	public Double getRatioRequestProcessionStatusTrue() {
+		return this.requestRepository.getRatioRequestProcessionStatusTrue();
+	}
+
+	public Double getRatioRequestProcessionStatusFalse() {
+		return this.requestRepository.getRatioRequestProcessionStatusFalse();
+	}
+
+	public Double getRatioRequestProcessionStatusNull() {
+		return this.requestRepository.getRatioRequestProcessionStatusNull();
+	}
 }

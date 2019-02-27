@@ -26,10 +26,10 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	Collection<Brotherhood> findFromMember(int member);
 
 	//12.3.2 
-	@Query("select b.title,max(p.maxRow) from Brotherhood b join b.processions p")
+	@Query("select b.title, max(p.maxRow) from Brotherhood b join b.processions p")
 	String brotherhoodMaxRow();
 
 	//12.3.3 
-	@Query("select b.title,min(p.maxRow) from Brotherhood b join b.processions p")
+	@Query("select b.title, min(p.maxRow) from Brotherhood b join b.processions p")
 	String brotherhoodMinRow();
 }

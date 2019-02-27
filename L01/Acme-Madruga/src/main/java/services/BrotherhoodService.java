@@ -74,6 +74,18 @@ public class BrotherhoodService {
 			binding.rejectValue("userName", "error.userAcount");
 		}
 
+		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
+		}
+
+		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "error.email");
+		}
+
 		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
 			final ObjectError error = new ObjectError("password", "");
 			binding.addError(error);
@@ -86,6 +98,19 @@ public class BrotherhoodService {
 			binding.rejectValue("password", "error.password");
 		}
 
+		//		if (registrationForm.getEstableshmentDate().after(LocalDateTime.now().toDate())) {
+		//			final ObjectError error = new ObjectError("estableshmentDate", "");
+		//			binding.addError(error);
+		//			binding.rejectValue("estableshmentDate", "error.estableshmentDate");
+		//		}
+
+		if (!(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(registrationForm.getEmail().matches(
+			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "email.wrong");
+		}
+
 		result.getUserAccount().setUsername(registrationForm.getUserName());
 
 		final String password = registrationForm.getPassword();
@@ -96,7 +121,6 @@ public class BrotherhoodService {
 		this.validator.validate(result, binding);
 		return result;
 	}
-
 	public Brotherhood reconstruct(final Brotherhood brotherhood, final BindingResult binding) {
 		Brotherhood result;
 
@@ -114,6 +138,19 @@ public class BrotherhoodService {
 			result.setTitle(brotherhood.getTitle());
 			result.setEstablishmentDate(brotherhood.getEstablishmentDate());
 			result.setPictures(brotherhood.getPictures());
+
+			if (!(brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(brotherhood
+				.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+				final ObjectError error = new ObjectError("email", "");
+				binding.addError(error);
+				binding.rejectValue("email", "email.wrong");
+			}
+
+			if (this.actorService.getActorByUser(brotherhood.getUserAccount().getUsername()) != null) {
+				final ObjectError error = new ObjectError("email", "");
+				binding.addError(error);
+				binding.rejectValue("email", "error.email");
+			}
 
 			this.validator.validate(result, binding);
 		}
@@ -141,18 +178,9 @@ public class BrotherhoodService {
 	}
 
 	public Brotherhood save(final Brotherhood brotherhood) {
-		Assert.isTrue(!this.checkEmail(brotherhood), "email.wrong");
 		if (brotherhood.getPhone().matches("^([0-9]{4,})$"))
 			brotherhood.setPhone("+" + this.welcomeService.getPhone() + " " + brotherhood.getPhone());
 		return this.brotherhoodRepository.save(brotherhood);
-	}
-
-	private Boolean checkEmail(final Brotherhood brotherhood) {
-		Boolean res = true;
-		if ((brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || (brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || (brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || (brotherhood
-			.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)") || this.actorService.getActorByEmail(brotherhood.getEmail()) != null)))))
-			res = false;
-		return res;
 	}
 
 	public Brotherhood update(final Brotherhood brotherhood) {
@@ -203,6 +231,14 @@ public class BrotherhoodService {
 	public void dropLogged(final int brotherhoodId) {
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 		this.dropMember(member.getId(), brotherhoodId);
+	}
+
+	public String largestBrotherhood() {
+		return this.brotherhoodRepository.brotherhoodMaxRow();
+	}
+
+	public String smallestBrotherhood() {
+		return this.brotherhoodRepository.brotherhoodMinRow();
 	}
 
 }

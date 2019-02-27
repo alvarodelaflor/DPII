@@ -28,6 +28,18 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	Collection<Request> getMemberRequests(int idMember);
 
 	// 12.3.4 --> 
-	//select ((select count(e) from Request e where count(e.positionAux.) > 0)/count(e))*1.0 from Request e;
+	@Query("select (count(r1)/(select count(p) from Procession p))*1.0 from Request r1 where r1.status = true")
+	Double getRatioRequestProcessionStatusTrue();
+	@Query("select (count(r1)/(select count(p) from Procession p))*1.0 from Request r1 where r1.status = false")
+	Double getRatioRequestProcessionStatusFalse();
+	@Query("select (count(r1)/(select count(p) from Procession p))*1.0 from Request r1 where r1.status = null")
+	Double getRatioRequestProcessionStatusNull();
 
+	// 12.3.6 -->
+	@Query("select (count(r1)/(select count(r) from Request r))*1.0 from Request r1 where r1.status = true")
+	Double getRatioRequestStatusTrue();
+	@Query("select (count(r1)/(select count(r) from Request r))*1.0 from Request r1 where r1.status = false")
+	Double getRatioRequestStatusFalse();
+	@Query("select (count(r1)/(select count(r) from Request r))*1.0 from Request r1 where r1.status = null")
+	Double getRatioRequestStatusNull();
 }

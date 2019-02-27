@@ -278,17 +278,19 @@
     <!-- REQUEST -->
     <bean id="request01" class="domain.Request">
     	<property name="member" ref= "member01"/>
-    	<property name="status">
-    		<null></null>
-    	</property>
+    	<property name="status" value="true" />
     	<property name="positionAux" ref= "positionaux01"/>
     </bean>
     
      <bean id="request02" class="domain.Request">
     	<property name="member" ref= "member02"/>
-    	<property name="status">
-    		<null></null>
-    	</property>
+    	 <property name="status" value="true" />
+    	<property name="positionAux" ref= "positionaux05"/>
+    </bean>
+    
+    <bean id="request03" class="domain.Request">
+    	<property name="member" ref= "member02"/>
+    	 <property name="status" value="false" />
     	<property name="positionAux" ref= "positionaux05"/>
     </bean>
     
@@ -315,20 +317,20 @@
     <bean id="positionaux04" class="auxiliar.PositionAux">
     	<property name="row" value= "1"/>
     	<property name="colum" value= "1"/>
-    	<property name="status" value= "false"/>
+    	<property name="status" value= "true"/>
     	<property name="procession" ref= "procession01"/>
     </bean>
     
      <bean id="positionaux05" class="auxiliar.PositionAux">
     	<property name="row" value= "0"/>
     	<property name="colum" value= "0"/>
-    	<property name="status" value= "false"/>
+    	<property name="status" value= "true"/>
     	<property name="procession" ref= "procession04"/>
     </bean>
     <bean id="positionaux06" class="auxiliar.PositionAux">
     	<property name="row" value= "0"/>
     	<property name="colum" value= "1"/>
-    	<property name="status" value= "false"/>
+    	<property name="status" value= "true"/>
     	<property name="procession" ref= "procession04"/>
     </bean>
 

@@ -67,6 +67,18 @@ public class MemberService {
 			binding.rejectValue("userName", "error.userAcount");
 		}
 
+		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
+		}
+
+		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "error.email");
+		}
+
 		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
 			final ObjectError error = new ObjectError("password", "");
 			binding.addError(error);
@@ -79,12 +91,18 @@ public class MemberService {
 			binding.rejectValue("password", "error.password");
 		}
 
+		if (!(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(registrationForm.getEmail().matches(
+			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "email.wrong");
+		}
+
 		result.setVersion(0);
 
 		this.validator.validate(result, binding);
 		return result;
 	}
-
 	public Member reconstruct(final Member member, final BindingResult binding) {
 		Member result;
 
@@ -97,6 +115,19 @@ public class MemberService {
 			result.setSurname(member.getSurname());
 			result.setPhoto(member.getPhoto());
 			result.setEmail(member.getEmail());
+
+			if (!(member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(member.getEmail()
+				.matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+				final ObjectError error = new ObjectError("email", "");
+				binding.addError(error);
+				binding.rejectValue("email", "email.wrong");
+			}
+
+			if (this.actorService.getActorByUser(member.getUserAccount().getUsername()) != null) {
+				final ObjectError error = new ObjectError("email", "");
+				binding.addError(error);
+				binding.rejectValue("email", "error.email");
+			}
 
 			this.validator.validate(result, binding);
 		}
@@ -125,18 +156,9 @@ public class MemberService {
 	}
 
 	public Member save(final Member member) {
-		Assert.isTrue(!this.checkEmail(member), "email.wrong");
 		if (member.getPhone().matches("^([0-9]{4,})$"))
 			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.memberRepository.save(member);
-	}
-
-	private Boolean checkEmail(final Member member) {
-		Boolean res = true;
-		if ((member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || (member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || (member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || (member.getEmail().matches(
-			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)") || this.actorService.getActorByEmail(member.getEmail()) != null)))))
-			res = false;
-		return res;
 	}
 
 	public Member update(final Member member) {
@@ -155,6 +177,10 @@ public class MemberService {
 
 	public Collection<Member> brotherhoodAllMember(final int brotherHoodId) {
 		return this.memberRepository.brotherhoodAllMember(brotherHoodId);
+	}
+
+	public Collection<Member> lisMemberAccept() {
+		return this.memberRepository.memberAccept();
 	}
 
 }

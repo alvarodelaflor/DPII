@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -165,5 +166,22 @@ public class ProcessionService {
 		}
 		this.validator.validate(result, binding);
 		return result;
+	}
+
+	public Collection<Procession> processionOrganised() {
+		return this.processionRepository.findAllWithCreationDateTimeBeforeI(LocalDateTime.now().toDate(), this.sumarMes(LocalDateTime.now().toDate()));
+	}
+
+	@SuppressWarnings("deprecation")
+	private Date sumarMes(final Date fecha) {
+		final Date res = LocalDateTime.now().toDate();
+		if (res.getMonth() == 11) {
+			res.setYear(res.getYear() + 1);
+			res.setMonth(1);
+		} else
+			res.setMonth(res.getMonth() + 1);
+
+		System.out.println(res);
+		return res;
 	}
 }
