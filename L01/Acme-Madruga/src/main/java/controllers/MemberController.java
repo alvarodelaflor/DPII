@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.ActorService;
 import services.BrotherhoodService;
 import services.MemberService;
 import domain.Brotherhood;
@@ -37,6 +38,9 @@ public class MemberController extends AbstractController {
 
 	@Autowired
 	BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	ActorService		actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -105,8 +109,21 @@ public class MemberController extends AbstractController {
 				this.memberService.save(member);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
-				result = new ModelAndView("member/edit");
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.createEditModelAndView(member, "email.wrong");
+				else
+					result = this.createEditModelAndView(member, "error.email");
 			}
+		return result;
+	}
+
+	private ModelAndView createEditModelAndView(final Member member, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("member/edit");
+		result.addObject("message", string);
+		result.addObject("member", member);
+
 		return result;
 	}
 

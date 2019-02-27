@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.ActorService;
 import services.AdministratorService;
 import services.BrotherhoodService;
 import services.MemberService;
@@ -49,6 +50,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	MemberService			memberService;
+
+	@Autowired
+	ActorService			actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -116,9 +120,21 @@ public class AdministratorController extends AbstractController {
 				this.administratorService.save(admin);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
-
-				result = new ModelAndView("administrator/edit");
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.createEditModelAndView(admin, "email.wrong");
+				else
+					result = this.createEditModelAndView(admin, "error.email");
 			}
+		return result;
+	}
+
+	private ModelAndView createEditModelAndView(final Administrator administrator, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("administrator/edit");
+		result.addObject("message", string);
+		result.addObject("administrator", administrator);
+
 		return result;
 	}
 

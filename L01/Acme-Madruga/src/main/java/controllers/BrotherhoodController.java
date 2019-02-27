@@ -19,17 +19,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.ActorService;
 import services.BrotherhoodService;
 import services.EnrolledService;
 import services.FloatBroService;
 import services.MemberService;
-import services.UserAccountService;
 import domain.Brotherhood;
 import forms.RegistrationForm;
 
@@ -48,6 +49,9 @@ public class BrotherhoodController extends AbstractController {
 
 	@Autowired
 	EnrolledService		enrolledService;
+
+	@Autowired
+	ActorService		actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -88,6 +92,16 @@ public class BrotherhoodController extends AbstractController {
 			}
 		return result;
 	}
+	private ModelAndView createEditModelAndView(final Brotherhood brotherhood, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("brotherhood/edit");
+		result.addObject("message", string);
+		result.addObject("brotherhood", brotherhood);
+
+		return result;
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		ModelAndView result;
@@ -104,9 +118,22 @@ public class BrotherhoodController extends AbstractController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveE(Brotherhood brotherhood, final BindingResult binding) {
-		ModelAndView result;
+		ModelAndView result = null;
 
 		brotherhood = this.brotherhoodService.reconstruct(brotherhood, binding);
+
+		if (!(brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
+			|| brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}"))) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "email.wrong");
+		}
+
+		if (this.actorService.getActorByEmail(brotherhood.getEmail()) != null) {
+			final ObjectError error = new ObjectError("email", "");
+			binding.addError(error);
+			binding.rejectValue("email", "error.email");
+		}
 
 		if (binding.hasErrors()) {
 			System.out.println(binding);
@@ -116,12 +143,16 @@ public class BrotherhoodController extends AbstractController {
 				this.brotherhoodService.save(brotherhood);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
-
-				result = new ModelAndView("brotherhood/edit");
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.createEditModelAndView(brotherhood, "email.wrong");
+				else if (oops.getMessage().equals("error.email"))
+					if (oops.getMessage().equals("email.wrong"))
+						result = this.createEditModelAndView(brotherhood, "email.wrong");
+					else
+						result = this.createEditModelAndView(brotherhood, "error.email");
 			}
 		return result;
 	}
-
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;

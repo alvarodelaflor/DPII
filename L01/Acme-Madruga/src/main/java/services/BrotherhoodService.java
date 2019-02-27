@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,20 +49,6 @@ public class BrotherhoodService {
 
 	public Brotherhood reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Brotherhood result = this.create();
-
-		result.setId(0);
-		result.setVersion(0);
-
-		result.setName(registrationForm.getName());
-		result.setSurname(registrationForm.getSurname());
-		result.setPhoto(registrationForm.getPhoto());
-		result.setEmail(registrationForm.getEmail());
-		result.setTitle(registrationForm.getTitle());
-		result.setEstablishmentDate(registrationForm.getEstableshmentDate());
-		result.setAddress(registrationForm.getAddress());
-		result.setMiddleName(registrationForm.getMiddleName());
-		result.setPhone(registrationForm.getPhone());
-
 		if (registrationForm.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
 			binding.addError(error);
@@ -75,15 +62,15 @@ public class BrotherhoodService {
 		}
 
 		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
-			final ObjectError error = new ObjectError("userName", "");
-			binding.addError(error);
-			binding.rejectValue("userName", "error.userName");
-		}
-
-		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
 			final ObjectError error = new ObjectError("email", "");
 			binding.addError(error);
 			binding.rejectValue("email", "error.email");
+		}
+
+		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
 		}
 
 		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
@@ -98,14 +85,27 @@ public class BrotherhoodService {
 			binding.rejectValue("password", "error.password");
 		}
 
-		//		if (registrationForm.getEstableshmentDate().after(LocalDateTime.now().toDate())) {
-		//			final ObjectError error = new ObjectError("estableshmentDate", "");
-		//			binding.addError(error);
-		//			binding.rejectValue("estableshmentDate", "error.estableshmentDate");
-		//		}
+		if (registrationForm.getEstableshmentDate().after(LocalDateTime.now().toDate())) {
+			final ObjectError error = new ObjectError("estableshmentDate", "");
+			binding.addError(error);
+			binding.rejectValue("estableshmentDate", "error.estableshmentDate");
+		}
 
-		if (!(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(registrationForm.getEmail().matches(
-			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+		result.setId(0);
+		result.setVersion(0);
+
+		result.setName(registrationForm.getName());
+		result.setSurname(registrationForm.getSurname());
+		result.setPhoto(registrationForm.getPhoto());
+		result.setEmail(registrationForm.getEmail());
+		result.setTitle(registrationForm.getTitle());
+		result.setEstablishmentDate(registrationForm.getEstableshmentDate());
+		result.setAddress(registrationForm.getAddress());
+		result.setMiddleName(registrationForm.getMiddleName());
+		result.setPhone(registrationForm.getPhone());
+
+		if (!(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
+			|| registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}"))) {
 			final ObjectError error = new ObjectError("email", "");
 			binding.addError(error);
 			binding.rejectValue("email", "email.wrong");
@@ -131,32 +131,18 @@ public class BrotherhoodService {
 		} else {
 			result = this.brotherhoodRepository.findOne(brotherhood.getId());
 
+			result.setPictures(brotherhood.getPictures());
 			result.setName(brotherhood.getName());
 			result.setSurname(brotherhood.getSurname());
 			result.setPhoto(brotherhood.getPhoto());
 			result.setEmail(brotherhood.getEmail());
 			result.setTitle(brotherhood.getTitle());
 			result.setEstablishmentDate(brotherhood.getEstablishmentDate());
-			result.setPictures(brotherhood.getPictures());
-
-			if (!(brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(brotherhood
-				.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
-				final ObjectError error = new ObjectError("email", "");
-				binding.addError(error);
-				binding.rejectValue("email", "email.wrong");
-			}
-
-			if (this.actorService.getActorByUser(brotherhood.getUserAccount().getUsername()) != null) {
-				final ObjectError error = new ObjectError("email", "");
-				binding.addError(error);
-				binding.rejectValue("email", "error.email");
-			}
 
 			this.validator.validate(result, binding);
 		}
 		return result;
 	}
-
 	public Brotherhood create() {
 		final Brotherhood brotherhood = new Brotherhood();
 		final UserAccount user = new UserAccount();
@@ -178,9 +164,25 @@ public class BrotherhoodService {
 	}
 
 	public Brotherhood save(final Brotherhood brotherhood) {
+		Assert.isTrue(!this.checkEmailFormatter(brotherhood), "email.wrong");
+		Assert.isTrue(!this.checkEmail(brotherhood), "error.email");
 		if (brotherhood.getPhone().matches("^([0-9]{4,})$"))
 			brotherhood.setPhone("+" + this.welcomeService.getPhone() + " " + brotherhood.getPhone());
 		return this.brotherhoodRepository.save(brotherhood);
+	}
+	private Boolean checkEmailFormatter(final Brotherhood brotherhood) {
+		Boolean res = true;
+		if ((brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
+			|| brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}")))
+			res = false;
+		return res;
+	}
+
+	private Boolean checkEmail(final Brotherhood brotherhood) {
+		Boolean res = false;
+		if (this.actorService.getActorByEmail(brotherhood.getEmail()) != null)
+			res = true;
+		return res;
 	}
 
 	public Brotherhood update(final Brotherhood brotherhood) {

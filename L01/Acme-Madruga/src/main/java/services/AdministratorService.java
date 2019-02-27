@@ -68,15 +68,15 @@ public class AdministratorService {
 		}
 
 		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
-			final ObjectError error = new ObjectError("userName", "");
-			binding.addError(error);
-			binding.rejectValue("userName", "error.userName");
-		}
-
-		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
 			final ObjectError error = new ObjectError("email", "");
 			binding.addError(error);
 			binding.rejectValue("email", "error.email");
+		}
+
+		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
 		}
 
 		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
@@ -91,8 +91,9 @@ public class AdministratorService {
 			binding.rejectValue("password", "error.password");
 		}
 
-		if (!(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(registrationForm.getEmail().matches(
-			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
+		if (!(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
+			|| registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)") || registrationForm.getEmail()
+			.matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)(>)"))) {
 			final ObjectError error = new ObjectError("email", "");
 			binding.addError(error);
 			binding.rejectValue("email", "email.wrong");
@@ -116,19 +117,6 @@ public class AdministratorService {
 			result.setSurname(admin.getSurname());
 			result.setPhoto(admin.getPhoto());
 			result.setEmail(admin.getEmail());
-
-			if (!(admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || !(admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || !(admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || !(admin.getEmail()
-				.matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)")))))) {
-				final ObjectError error = new ObjectError("email", "");
-				binding.addError(error);
-				binding.rejectValue("email", "email.wrong");
-			}
-
-			if (this.actorService.getActorByUser(admin.getUserAccount().getUsername()) != null) {
-				final ObjectError error = new ObjectError("email", "");
-				binding.addError(error);
-				binding.rejectValue("email", "error.email");
-			}
 
 			this.validator.validate(result, binding);
 		}
@@ -156,10 +144,26 @@ public class AdministratorService {
 		return member;
 	}
 
-	public Administrator save(final Administrator member) {
-		if (member.getPhone().matches("^([0-9]{4,})$"))
-			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
-		return this.administratorRepository.save(member);
+	public Administrator save(final Administrator admin) {
+		Assert.isTrue(!this.checkEmailFormatter(admin), "email.wrong");
+		Assert.isTrue(this.checkEmail(admin), "error.email");
+		if (admin.getPhone().matches("^([0-9]{4,})$"))
+			admin.setPhone("+" + this.welcomeService.getPhone() + " " + admin.getPhone());
+		return this.administratorRepository.save(admin);
+	}
+
+	private Boolean checkEmailFormatter(final Administrator admin) {
+		Boolean res = true;
+		if ((admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}")
+			|| admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)") || admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)(>)")))
+			res = false;
+		return res;
+	}
+	private Boolean checkEmail(final Administrator admin) {
+		Boolean res = true;
+		if (this.actorService.getActorByEmail(admin.getEmail()) == null)
+			res = false;
+		return res;
 	}
 
 	public Administrator update(final Administrator member) {
