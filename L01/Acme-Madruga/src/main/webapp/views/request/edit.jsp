@@ -76,7 +76,6 @@
         			<label class="oculta" id="capa1">
         				<br>
         				<acme:select2 items="${positionsAux}" code="request.positionAux"  path="positionAux"/>
-        				<acme:textarea code="request.comment" path="comment"/>
         			</label>
     				</fieldset>
 	        </div>

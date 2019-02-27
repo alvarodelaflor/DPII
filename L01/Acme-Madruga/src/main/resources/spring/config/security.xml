@@ -104,13 +104,16 @@
 		<security:intercept-url pattern="/enrolled/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/enrolled/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/enrolled/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/enrolled/brotherhood/dropOut.do" access="hasRole('BROTHERHOOD')" />
 
 
 		<security:intercept-url pattern="/request/brotherhood/list.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/request/brotherhood/show.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/request/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/request/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/request/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />		
+		<security:intercept-url pattern="/request/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />	
+		
+		<security:intercept-url pattern="/procession/show.do" access="hasRole('MEMBER')" />
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		

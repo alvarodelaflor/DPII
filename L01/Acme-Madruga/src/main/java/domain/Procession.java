@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -36,16 +37,28 @@ public class Procession extends DomainEntity {
 	private String		ticker;
 	private Boolean		isFinal;
 	private Integer		maxRow;
+	private Integer		maxColum;
 	private FloatBro	floatBro;
 
 
 	@NotNull
+	@Min(1)
 	public Integer getMaxRow() {
 		return this.maxRow;
 	}
 
 	public void setMaxRow(final Integer maxRow) {
 		this.maxRow = maxRow;
+	}
+
+	@Min(1)
+	@NotNull
+	public Integer getMaxColum() {
+		return this.maxColum;
+	}
+
+	public void setMaxColum(final Integer maxColum) {
+		this.maxColum = maxColum;
 	}
 
 	@NotBlank

@@ -31,6 +31,7 @@
           	<acme:textbox code="procession.moment" path="moment"/>
           	<acme:selectTrueFalse code="procession" path="isFinal"/>
           	<acme:numberbox code="procession.maxRow" path="maxRow"/>
+          	<acme:numberbox code="procession.maxColum" path="maxColum"/>
           	<acme:select items="${floatBros}" itemLabel="title" code="procession.floatBro" path="floatBro"/>
           	
           	<acme:cancel url="procession/brotherhood/list.do" code="cancel"/>

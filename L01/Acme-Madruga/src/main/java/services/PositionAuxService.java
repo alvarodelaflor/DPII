@@ -13,7 +13,7 @@ import auxiliar.PositionAux;
 /*
  * CONTROL DE CAMBIOS PositionService.java
  * 
- * ALVARO 18/02/2019 09:22 CREACIÓN DE LA CLASE
+ * ALVARO 18/02/2019 09:22 CREACIï¿½N DE LA CLASE
  */
 
 @Service
@@ -55,5 +55,16 @@ public class PositionAuxService {
 
 	public Collection<PositionAux> findFreePositionByProcesion(final int processionId) {
 		return this.positionAuxRepository.findAllPositionAuxFreeByProcessionId(processionId);
+	}
+
+	public Collection<PositionAux> findPositionByProcesion(final int processionId) {
+		return this.positionAuxRepository.findAllPositionAuxByProcessionId(processionId);
+	}
+
+	public void deleteAllPositionByProcession(final int processionId) {
+		final Collection<PositionAux> possitionAux = this.findFreePositionByProcesion(processionId);
+		if (!possitionAux.isEmpty())
+			for (final PositionAux positionAux : possitionAux)
+				this.positionAuxRepository.delete(positionAux);
 	}
 }

@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.BrotherhoodService;
+import services.EnrolledService;
 import services.FloatBroService;
 import services.MemberService;
 import services.UserAccountService;
@@ -46,7 +47,7 @@ public class BrotherhoodController extends AbstractController {
 	FloatBroService		floatBroService;
 
 	@Autowired
-	UserAccountService	userAccountService;
+	EnrolledService		enrolledService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -139,6 +140,15 @@ public class BrotherhoodController extends AbstractController {
 		return result;
 	}
 
+	private Boolean validMember(final int idBrotherhood) {
+		Boolean res = false;
+		final int memberId = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		System.out.println("ChekckIsInBrotherhood: " + this.memberService.checkIsInBrotherhood(memberId));
+		if (!this.enrolledService.hasPendingEnrollRequest(memberId, idBrotherhood) && this.enrolledService.getBrotherhoodActiveEnrollment(memberId, idBrotherhood) == null)
+			res = true;
+		return res;
+	}
+
 	@RequestMapping(value = "/showBrotherhood", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
@@ -151,6 +161,8 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/showBrotherhood");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("pictures", pictures);
+		if (this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()) == null)
+			result.addObject("validMember", this.validMember(brotherhood.getId()));
 		result.addObject("requestURI", "brotherhood/showBrotherhood.do");
 		return result;
 	}

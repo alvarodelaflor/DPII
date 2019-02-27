@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
 import services.FloatBroService;
+import services.MemberService;
 import services.PositionAuxService;
+import services.ProcessionService;
+import services.RequestService;
 import domain.Brotherhood;
 import domain.Procession;
 
@@ -45,6 +49,15 @@ public class ProcessionController extends AbstractController {
 	@Autowired
 	FloatBroService		floatBroService;
 
+	@Autowired
+	ProcessionService	processionService;
+
+	@Autowired
+	MemberService		memberService;
+
+	@Autowired
+	RequestService		requestService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -63,5 +76,29 @@ public class ProcessionController extends AbstractController {
 		result.addObject("procession", procession);
 		result.addObject("requestURI", "procession/listProcessions.do");
 		return result;
+	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "processionId", defaultValue = "-1") final int processionId) {
+		ModelAndView result;
+		final Procession procession = this.processionService.findOne(processionId);
+
+		if (this.processionService.findOne(processionId) == null)
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(procession, "procession.nul");
+			result = new ModelAndView("procession/brotherhood/show");
+			result.addObject("procession", procession);
+			result.addObject("validMember", this.validMember(processionId));
+			result.addObject("requestURI", "procession/brotherhood/show.do");
+		}
+		return result;
+	}
+	public Boolean validMember(final int processionId) {
+		Boolean res = true;
+		final int brotherhoodId = this.processionService.findOne(processionId).getBrotherhood().getId();
+		if (!this.requestService.validMemberToCreateRequest(processionId) || !this.memberService.checkIsInBrotherhood(brotherhoodId))
+			res = false;
+		return res;
 	}
 }

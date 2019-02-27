@@ -78,6 +78,12 @@ public class EnrolledService {
 		this.enrolledRepository.delete(enrolled);
 	}
 
+	public Collection<Enrolled> findAllDropOutMemberByBrotherhoodLogged() {
+		System.out.println("IdLogged:" + LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		return this.enrolledRepository.getDropOutMember(brotherhood.getId());
+	}
+
 	public Collection<Enrolled> findAllByBrotherhoodLoggedAccepted() {
 		System.out.println("IdLogged:" + LoginService.getPrincipal().getId());
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
@@ -116,7 +122,7 @@ public class EnrolledService {
 	}
 
 	public Boolean hasPendingEnrollRequest(final int memberId, final int brotherHoodId) {
-		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId) != null;
+		return this.enrolledRepository.getBrotherhoodPendingEnrollment(memberId, brotherHoodId) != null;
 	}
 
 	public Enrolled getBrotherhoodActiveEnrollment(final int memberId, final int brotherHoodId) {

@@ -183,4 +183,18 @@ public class MemberService {
 		return this.memberRepository.memberAccept();
 	}
 
+	public Boolean checkAlreadyInProcession(final int memberId) {
+		Boolean res = false;
+		if (this.memberRepository.membersOfProcession(memberId) > 0)
+			res = true;
+		return res;
+	}
+
+	public Boolean checkIsInBrotherhood(final int brotherhoodId) {
+		Boolean res = false;
+		final int memberId = this.memberRepository.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		if (this.memberRepository.membersOfBrotherhood(memberId, brotherhoodId) > 0)
+			res = true;
+		return res;
+	}
 }

@@ -22,6 +22,13 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	@Query("select b from Brotherhood b join b.userAccount bua where bua.id=?1")
 	Brotherhood findByUserAccountId(int userAccountId);
 
+	// HIPONA 25/02/19 10:05
+	@Query("select b from Brotherhood b join b.enrolleds e where e.member.id=?1 and e.state=true and e.dropMoment=null")
+	Collection<Brotherhood> findActiveFromMember(int member);
+
+	// HIPONA 25/02/19 10:05
+	@Query("select b from Brotherhood b join b.enrolleds e where e.member.id=?1 and e.state=true and e.dropMoment!=null group by b")
+	Collection<Brotherhood> findInactiveFromMember(int member);
 	@Query("select b from Brotherhood b join b.enrolleds e where e.member.id=?1 and e.state=true")
 	Collection<Brotherhood> findFromMember(int member);
 

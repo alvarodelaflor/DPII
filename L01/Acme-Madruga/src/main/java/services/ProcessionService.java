@@ -23,8 +23,8 @@ import domain.Procession;
 /*
  * CONTROL DE CAMBIOS ProcessionService.java
  * 
- * ALVARO 17/02/2019 12:02 CREACIÓN DE LA CLASE
- * ALVARO 17/02/2019 16:35 AÑADIDO RECONSTRUIDOR PROCESSION Y REPARADO GENERADOR DE TICKETS
+ * ALVARO 17/02/2019 12:02 CREACIï¿½N DE LA CLASE
+ * ALVARO 17/02/2019 16:35 Aï¿½ADIDO RECONSTRUIDOR PROCESSION Y REPARADO GENERADOR DE TICKETS
  */
 
 @Service
@@ -45,6 +45,9 @@ public class ProcessionService {
 	@Autowired
 	PositionAuxService				positionAuxService;
 
+	@Autowired
+	RequestService					requestService;
+
 
 	//Simple CRUD Methods ------------------
 
@@ -56,17 +59,24 @@ public class ProcessionService {
 	}
 
 	public String randomTicker(final Procession procession) {
-		final String characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < 5; i++) {
-			final int randomInt = new SecureRandom().nextInt(characterSet.length());
-			sb.append(characterSet.substring(randomInt, randomInt + 1));
+		String ticker = "";
+		Boolean res = true;
+		while (res) {
+			ticker = "";
+			final String characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			final StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < 6; i++) {
+				final int randomInt = new SecureRandom().nextInt(characterSet.length());
+				sb.append(characterSet.substring(randomInt, randomInt + 1));
+			}
+			final Date date = procession.getMoment();
+			final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+			final String dateConvert = sdf.format(date);
+			ticker = dateConvert.replaceAll("-", "") + "-" + sb.toString();
+			if (this.processionRepository.findProcessionsByTicker(ticker).isEmpty())
+				res = false;
 		}
-		final Date date = procession.getMoment();
-		final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-		final String dateConvert = sdf.format(date);
-
-		return dateConvert.replaceAll("-", "") + "-" + sb.toString();
+		return ticker;
 	}
 	public Collection<Procession> findAll() {
 		return this.processionRepository.findAll();
@@ -78,27 +88,23 @@ public class ProcessionService {
 	public Procession save(final Procession procession) {
 		final Procession processionUpdate = this.processionRepository.save(procession);
 		if (procession.getIsFinal().equals(true))
-			for (int i = 0; i < procession.getMaxRow() - 1; i++) {
-				final PositionAux positionAux1 = this.positionAuxService.create();
-				positionAux1.setColum(1);
-				positionAux1.setRow(i);
-				positionAux1.setProcession(processionUpdate);
-				positionAux1.setStatus(false);
-				this.positionAuxService.save(positionAux1);
-
-				final PositionAux positionAux2 = this.positionAuxService.create();
-				positionAux2.setColum(2);
-				positionAux2.setRow(i);
-				positionAux2.setProcession(processionUpdate);
-				positionAux2.setStatus(false);
-				this.positionAuxService.save(positionAux2);
-			}
+			for (int i = 0; i < procession.getMaxRow(); i++)
+				for (int j = 0; j < procession.getMaxColum(); j++) {
+					final PositionAux positionAux = this.positionAuxService.create();
+					positionAux.setRow(i);
+					positionAux.setColum(j);
+					positionAux.setProcession(processionUpdate);
+					positionAux.setStatus(false);
+					this.positionAuxService.save(positionAux);
+				}
 		return processionUpdate;
 	}
 
 	public void delete(final Procession procession) {
 		Assert.notNull(this.processionRepository.findOne(procession.getId()), "La procession no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == procession.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
+		this.requestService.deleteAllRequestByProcession(procession.getId());
+		this.positionAuxService.deleteAllPositionByProcession(procession.getId());
 		this.processionRepository.delete(procession);
 	}
 
@@ -117,6 +123,10 @@ public class ProcessionService {
 
 	public Collection<Procession> getProcessionByBrotherhoodId(final int brotherhoodId) {
 		return this.processionRepository.findProcessionsByBrotherhood(brotherhoodId);
+	}
+
+	public Collection<Procession> getProcessionByFloatId(final int floatId) {
+		return this.processionRepository.findProcessionsByFloat(floatId);
 	}
 
 	public Collection<Procession> findAllBrotherhoodLogged() {
@@ -166,6 +176,10 @@ public class ProcessionService {
 		}
 		this.validator.validate(result, binding);
 		return result;
+	}
+
+	public Collection<Procession> findProcessionsByTicker(final String ticker) {
+		return this.processionRepository.findProcessionsByTicker(ticker);
 	}
 
 	public Collection<Procession> processionOrganised() {

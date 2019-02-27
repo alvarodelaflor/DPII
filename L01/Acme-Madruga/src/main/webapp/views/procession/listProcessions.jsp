@@ -21,6 +21,9 @@
 	<display:column property="title" titleKey="procession.title"></display:column>
 	<display:column property="moment" titleKey="procession.moment"></display:column>
 	<display:column property="description" titleKey="procession.description"></display:column>
+	<display:column titleKey="procession.ticker"> 
+		<a href="procession/show.do?processionId=${row.id}">${row.ticker}</a>
+	</display:column>
 </display:table>
 
 <acme:cancel url="brotherhood/list.do" code="back"/>

@@ -170,6 +170,7 @@
 		<property name="ticker" value="20200403-ABCDE" />
 		<property name="isFinal" value= "true"/>
 		<property name="maxRow" value= "10"/>
+		<property name="maxColum" value= "1"/>
 		<property name="floatBro" ref= "floatBro01"/>
     </bean>
     
@@ -181,6 +182,7 @@
 		<property name="ticker" value="200403-FGHIJ" />
 		<property name="isFinal" value= "false"/>
 		<property name="maxRow" value= "9"/>
+		<property name="maxColum" value= "1"/>
 		<property name="floatBro" ref= "floatBro02"/>
     </bean>
     
@@ -225,10 +227,9 @@
     <!-- ENROLLED -->
     <bean id="enrolled01" class="domain.Enrolled">
     	<property name="member" ref= "member01"/>
-    	<property name="state">
-    		<null></null>
-    	</property>
+    	<property name="state" value="true"/>
     	<property name="brotherhood" ref= "brotherhood01"/>
+    	<property name="position" ref= "position01"/>
     </bean>
     
       <bean id="enrolled02" class="domain.Enrolled">
