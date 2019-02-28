@@ -34,6 +34,14 @@
 					<display:column titleKey="enrolled.show"> 
 						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
 					</display:column>
+					<c:choose>
+						<c:when test="${language == true}">
+							<display:column property="position.nameEn" titleKey="enrolled.position"></display:column>
+						</c:when>
+						<c:otherwise>
+							<display:column property="position.nameEs" titleKey="enrolled.position"></display:column>
+						</c:otherwise>
+					</c:choose>
 				</display:table>
 			</div>
 			<div>
