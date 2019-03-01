@@ -64,6 +64,18 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		final Collection<Enrolled> dropOutMembers = this.enrolledService.findAllDropOutMemberByBrotherhoodLogged();
 
 		result = new ModelAndView("enrolled/brotherhood/list");
+
+		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
+		Boolean language;
+		if (actuallanguage.equals("English")) {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = true;
+		} else {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = false;
+		}
+
+		result.addObject("language", language);
 		result.addObject("enrolledsAccepted", enrolledsAccepted);
 		result.addObject("enrolledsRejected", enrolledsRejected);
 		result.addObject("enrolledsPending", enrolledsPending);

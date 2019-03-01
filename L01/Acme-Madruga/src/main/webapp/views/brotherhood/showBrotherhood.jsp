@@ -27,7 +27,16 @@
 				</form>				
 			</c:when>
 			<c:otherwise>
-				<spring:message code="enrolled.alreadySend"/>
+				<c:choose>
+					<c:when test="${activeMember==true}">
+						<form method="get" action="/Acme-Madruga/brotherhood/member/drop.do">
+							<button name="brotherhoodId" value="${brotherhood.id}"><spring:message code="dropEnrolled"/></button>
+						</form>				
+					</c:when>
+					<c:otherwise>
+						<spring:message code="enrolled.alreadySend"/>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</security:authorize>

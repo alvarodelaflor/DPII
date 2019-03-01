@@ -47,7 +47,7 @@
           	
           	<acme:selectTrueFalse code="enrolled" path="state" onchange="mostrar(this.value);"/>
 			<div class="oculta" id="capa0" >
-				<acme:selectItemEsEn items="${positions}" code="enrolled" path="state"/>	
+				<acme:selectItemEsEn items="${positions}" code="enrolled" path="position"/>	
           	</div>
           	<acme:cancel url="enrolled/brotherhood/list.do" code="cancel"/>
           	<acme:submit name="save" code="send"/>

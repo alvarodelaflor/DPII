@@ -103,15 +103,17 @@ public class EnrolledService {
 		Enrolled result;
 
 		if (enrolled.getId() == 0)
-			result = enrolled;
+			System.out.println("ErolledService.java no paso por aqui");
 		else {
 			result = this.enrolledRepository.findOne(enrolled.getId());
-			result.setState(enrolled.getState());
-			if (enrolled.getPosition() != null)
-				result.setPosition(enrolled.getPosition());
-			this.validator.validate(enrolled, binding);
+			enrolled.setId(result.getId());
+			enrolled.setVersion(result.getVersion());
+			enrolled.setBrotherhood(result.getBrotherhood());
+			enrolled.setDropMoment(result.getDropMoment());
+			enrolled.setMember(result.getMember());
 		}
-		return result;
+		this.validator.validate(enrolled, binding);
+		return enrolled;
 	}
 
 	private boolean checkAuthority(final String authority) {
