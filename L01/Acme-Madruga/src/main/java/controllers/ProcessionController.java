@@ -96,8 +96,9 @@ public class ProcessionController extends AbstractController {
 	}
 	public Boolean validMember(final int processionId) {
 		Boolean res = true;
+		final Procession procession = this.processionService.findOne(processionId);
 		final int brotherhoodId = this.processionService.findOne(processionId).getBrotherhood().getId();
-		if (!this.requestService.validMemberToCreateRequest(processionId) || !this.memberService.checkIsInBrotherhood(brotherhoodId))
+		if (procession == null || !this.requestService.validMemberToCreateRequest(processionId) || !this.memberService.checkIsInBrotherhood(brotherhoodId) || procession.getIsFinal().equals(false))
 			res = false;
 		return res;
 	}
