@@ -39,4 +39,8 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	//12.3.3 
 	@Query("select b.title, min(p.maxRow) from Brotherhood b join b.processions p")
 	String brotherhoodMinRow();
+
+	//12.3.1
+	@Query("select count(b) from Brotherhood b")
+	Integer numberOfBrotherhood();
 }

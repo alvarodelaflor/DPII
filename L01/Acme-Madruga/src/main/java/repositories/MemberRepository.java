@@ -37,4 +37,17 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	@Query("select m from Member m where 0.1*(select count(e) from Enrolled e where e.member=m.id) < (select count(e1) from Enrolled  e1 where e1.state=true and e1.member = m.id))")
 	Collection<Member> memberAccept();
 
+	//12.3.1 -->	
+	@Query("select min(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = true) as float)) from Brotherhood b")
+	Float minNumberOfMembersPerBrotherhood();
+
+	@Query("select max(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = true) as float)) from Brotherhood b")
+	Float maxNumberOfMembersPerBrotherhood();
+
+	@Query("select avg(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = true ) as float)) from Brotherhood b")
+	Float avgNumberOfMembersPerBrotherhood();
+
+	@Query("select stddev(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = true) as float)) from Brotherhood b")
+	Float stddevNumberOfMembersPerBrotherhood();
+
 }

@@ -33,4 +33,20 @@ public interface ProcessionRepository extends JpaRepository<Procession, Integer>
 	@Query("select p from Procession p where p.moment between ?1 and ?2")
 	Collection<Procession> findAllWithCreationDateTimeBeforeI(Date dateNow, Date dateFinish);
 
+	//12.3.6 --> 
+	@Query("select p,max(p.maxRow * p.maxColum) from Procession p")
+	Procession minProcession();
+
+	//12.3.6 --> 
+	@Query("select p,max(p.maxRow * p.maxColum) from Procession p")
+	Procession maxProcession();
+
+	//12.3.6 --> 
+	@Query("select max(p.maxRow * p.maxColum) from Procession p")
+	Integer minProcessionN();
+
+	//12.3.6 --> 
+	@Query("select min(p.maxRow * p.maxColum) from Procession p")
+	Integer maxProcessionN();
+
 }

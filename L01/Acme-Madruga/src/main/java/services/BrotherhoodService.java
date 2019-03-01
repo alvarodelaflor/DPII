@@ -255,4 +255,8 @@ public class BrotherhoodService {
 		return this.brotherhoodRepository.brotherhoodMinRow();
 	}
 
+	public Integer numberBrotherhood() {
+		return this.brotherhoodRepository.numberOfBrotherhood();
+	}
+
 }

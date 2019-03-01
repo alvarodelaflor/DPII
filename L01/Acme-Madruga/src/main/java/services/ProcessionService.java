@@ -198,4 +198,19 @@ public class ProcessionService {
 		System.out.println(res);
 		return res;
 	}
+
+	public String minProcession() {
+		final Procession p = this.processionRepository.minProcession();
+		return p.getTitle();
+	}
+	public String maxProcession() {
+		final Procession p = this.processionRepository.maxProcession();
+		return p.getTitle();
+	}
+	public Integer minProcessionN() {
+		return this.processionRepository.minProcessionN();
+	}
+	public Integer maxProcessionN() {
+		return this.processionRepository.maxProcessionN();
+	}
 }

@@ -35,6 +35,9 @@ public class MemberService {
 	@Autowired
 	private WelcomeService		welcomeService;
 
+	@Autowired
+	private BrotherhoodService	brotherhoodService;
+
 
 	public Member reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Member result = this.create();
@@ -199,5 +202,20 @@ public class MemberService {
 		if (this.memberRepository.membersOfBrotherhood(memberId, brotherhoodId) > 0)
 			res = true;
 		return res;
+	}
+
+	public Float maxNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.maxNumberOfMembersPerBrotherhood();
+	}
+
+	public Float minNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.minNumberOfMembersPerBrotherhood();
+	}
+	public Float avgNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.avgNumberOfMembersPerBrotherhood();
+	}
+
+	public Float desviationOfNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.stddevNumberOfMembersPerBrotherhood();
 	}
 }

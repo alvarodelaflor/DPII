@@ -176,11 +176,30 @@ public class AdministratorController extends AbstractController {
 		final Double getRatioRequestProcessionStatusFalse = this.requestService.getRatioRequestProcessionStatusFalse();
 		final Double getRatioRequestProcessionStatusNull = this.requestService.getRatioRequestProcessionStatusNull();
 
+		final Float maxNumberOfMemberPerBrotherhood = this.memberService.maxNumberOfMemberPerBrotherhood();
+		final Float minNumberOfMemberPerBrotherhood = this.memberService.minNumberOfMemberPerBrotherhood();
+		final Float avgNumberOfMemberPerBrotherhood = this.memberService.avgNumberOfMemberPerBrotherhood();
+		final Float desviationOfNumberOfMemberPerBrotherhood = this.memberService.desviationOfNumberOfMemberPerBrotherhood();
+		final String minProcession = this.processionService.minProcession();
+		final String maxProcession = this.processionService.maxProcession();
+		final Integer minProcessionN = this.processionService.minProcessionN();
+		final Integer maxProcessionN = this.processionService.maxProcessionN();
+
 		result = new ModelAndView("administrator/dashboard");
 		result.addObject("largestBrotherhood", largestBrotherhood);
 		result.addObject("getRatioRequestProcessionStatusTrue", getRatioRequestProcessionStatusTrue);
 		result.addObject("getRatioRequestProcessionStatusFalse", getRatioRequestProcessionStatusFalse);
 		result.addObject("getRatioRequestProcessionStatusNull", getRatioRequestProcessionStatusNull);
+
+		result.addObject("maxNumberOfMemberPerBrotherhood", maxNumberOfMemberPerBrotherhood);
+		result.addObject("minNumberOfMemberPerBrotherhood", minNumberOfMemberPerBrotherhood);
+		result.addObject("avgNumberOfMemberPerBrotherhood", avgNumberOfMemberPerBrotherhood);
+		result.addObject("desviationOfNumberOfMemberPerBrotherhood", desviationOfNumberOfMemberPerBrotherhood);
+
+		result.addObject("minProcession", minProcession);
+		result.addObject("maxProcession", maxProcession);
+		result.addObject("minProcessionN", minProcessionN);
+		result.addObject("maxProcessionN", maxProcessionN);
 
 		result.addObject("smallestBrotherhood", smallestBrotherhood);
 		result.addObject("processionOrganised", processionOrganised);
