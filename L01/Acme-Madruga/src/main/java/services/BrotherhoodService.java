@@ -222,6 +222,14 @@ public class BrotherhoodService {
 		return this.brotherhoodRepository.findActiveFromMember(member.getId());
 	}
 
+	public Boolean isActiveFromMemberAndBrotherhood(final int brotherhood) {
+		Boolean res = false;
+		final int memberId = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		if (this.brotherhoodRepository.isActiveFromMemberAndBrotherhood(memberId, brotherhood) > 0)
+			res = true;
+		return res;
+	}
+
 	// Hipona 25-02-19 9:51
 
 	public Collection<Brotherhood> findActiveFromLoggedMember() {
