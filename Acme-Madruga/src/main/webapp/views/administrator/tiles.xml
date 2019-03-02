@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="administrator/create" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Register New Administrator" />
+		<put-attribute name="body" value="/views/administrator/create.jsp" />
+	</definition>
+	
+	<definition name="administrator/action-2" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Action 2" />
+		<put-attribute name="body" value="/views/administrator/action-2.jsp" />
+	</definition>
+	
+</tiles-definitions>
