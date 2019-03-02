@@ -192,9 +192,13 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/showBrotherhood");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("pictures", pictures);
-		if (this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()) == null) {
-			result.addObject("validMember", this.validMember(brotherhood.getId()));
-			result.addObject("activeMember", this.brotherhoodService.isActiveFromMemberAndBrotherhood(brotherhood.getId()));
+		try {
+			if (this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()) == null) {
+				result.addObject("validMember", this.validMember(brotherhood.getId()));
+				result.addObject("activeMember", this.brotherhoodService.isActiveFromMemberAndBrotherhood(brotherhood.getId()));
+			}
+		} catch (final Throwable oops) {
+			System.out.println("Usuario no está logueado");
 		}
 		result.addObject("requestURI", "brotherhood/showBrotherhood.do");
 		return result;

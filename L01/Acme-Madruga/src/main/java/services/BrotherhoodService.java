@@ -46,6 +46,9 @@ public class BrotherhoodService {
 	@Autowired
 	private MemberService	memberService;
 
+	@Autowired
+	private RequestService	requestService;
+
 
 	public Brotherhood reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Brotherhood result = this.create();
@@ -244,6 +247,7 @@ public class BrotherhoodService {
 
 	public void dropMember(final int memberId, final int brotherhoodId) {
 		final Enrolled enrollment = this.enrollmentService.getBrotherhoodActiveEnrollment(memberId, brotherhoodId);
+		this.requestService.deleteAllRequestPendingByMember(enrollment.getMember());
 		System.out.println("Dropping member");
 		Assert.notNull(enrollment);
 		// We have to check if we are an active member
