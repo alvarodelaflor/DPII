@@ -7,10 +7,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -21,10 +19,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 /*
  * CONTROL DE CAMBIOS Brotherhoods.java
  * 
- * ALVARO 17/02/2019 11:23 CREACIÓN DE LA CLASE
- * ALVARO 17/02/2019 17:10 AÑADIDO PROCESIONES Y FLOAT
- * ALVARO 17/02/2019 20:03 AÑADIDO ENROLLED
- * FRAN 20/02/2019 16:21 Añadido Area
+ * ALVARO 17/02/2019 11:23 CREACIï¿½N DE LA CLASE
+ * ALVARO 17/02/2019 17:10 Aï¿½ADIDO PROCESIONES Y FLOAT
+ * ALVARO 17/02/2019 20:03 Aï¿½ADIDO ENROLLED
  */
 
 @Entity
@@ -33,21 +30,11 @@ public class Brotherhood extends Actor {
 
 	private String					title;
 	private Date					establishmentDate;
-	private Collection<String>		pictures;
+	private String					pictures;
 	private Collection<Procession>	processions;
 	private Collection<FloatBro>	floatBro;
 	private Collection<Enrolled>	enrolleds;
-	private Area					area;
 
-
-	@OneToOne(optional = false)
-	public Area getArea() {
-		return this.area;
-	}
-
-	public void setArea(final Area area) {
-		this.area = area;
-	}
 
 	@NotBlank
 	public String getTitle() {
@@ -69,12 +56,11 @@ public class Brotherhood extends Actor {
 		this.establishmentDate = establishmentDate;
 	}
 
-	@ElementCollection(targetClass = String.class)
-	public Collection<String> getPictures() {
+	public String getPictures() {
 		return this.pictures;
 	}
 
-	public void setPictures(final Collection<String> pictures) {
+	public void setPictures(final String pictures) {
 		this.pictures = pictures;
 	}
 

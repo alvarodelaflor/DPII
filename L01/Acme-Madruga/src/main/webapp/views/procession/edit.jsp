@@ -29,15 +29,10 @@
           	<acme:textbox code="procession.title" path="title"/>
           	<acme:textbox code="procession.description" path="description"/>
           	<acme:textbox code="procession.moment" path="moment"/>
-          	<form:label path="isFinal">
-				<spring:message code="procession.isFinal" />:
-			</form:label>
-			<form:select path="isFinal" >
-				<form:option value="false"><spring:message code="procession.false"/></form:option>
-				<form:option value="true"><spring:message code="procession.true"/></form:option>
-			</form:select>
-			<form:errors cssClass="error" path="isFinal" />
-			<br/>
+          	<acme:selectTrueFalse code="procession" path="isFinal"/>
+          	<acme:numberbox code="procession.maxRow" path="maxRow"/>
+          	<acme:numberbox code="procession.maxColum" path="maxColum"/>
+          	<acme:select items="${floatBros}" itemLabel="title" code="procession.floatBro" path="floatBro"/>
           	
           	<acme:cancel url="procession/brotherhood/list.do" code="cancel"/>
           	<acme:submit name="save" code="send"/>

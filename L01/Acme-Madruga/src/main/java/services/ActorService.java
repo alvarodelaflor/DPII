@@ -38,8 +38,8 @@ public class ActorService {
 		return this.actorRepository.getActorByEmail(email);
 	}
 
-	public Actor getActorByUsername(final String username) {
-		return this.actorRepository.getActorByUsername(username);
+	public Object getActorByUser(final String userName) {
+		return this.actorRepository.getActorByUser(userName);
 	}
 
 }

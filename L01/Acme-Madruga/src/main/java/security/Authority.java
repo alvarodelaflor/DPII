@@ -38,8 +38,8 @@ public class Authority implements GrantedAuthority {
 	// Values -----------------------------------------------------------------
 
 	public static final String	ADMIN		= "ADMIN";
-	public static final String	BROTHERHOOD	= "BROTHERHOOD";
 	public static final String	MEMBER		= "MEMBER";
+	public static final String	BROTHERHOOD	= "BROTHERHOOD";
 
 	// Attributes -------------------------------------------------------------
 
@@ -68,11 +68,11 @@ public class Authority implements GrantedAuthority {
 		result.add(authority);
 
 		authority = new Authority();
-		authority.setAuthority(Authority.BROTHERHOOD);
+		authority.setAuthority(Authority.MEMBER);
 		result.add(authority);
 
 		authority = new Authority();
-		authority.setAuthority(Authority.MEMBER);
+		authority.setAuthority(Authority.BROTHERHOOD);
 		result.add(authority);
 
 		return result;

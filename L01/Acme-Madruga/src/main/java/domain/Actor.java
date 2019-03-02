@@ -1,3 +1,12 @@
+/*
+ * DomainEntity.java
+ * 
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
 
 package domain;
 
@@ -9,40 +18,32 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 import security.UserAccount;
 
-/*
- * CONTROL DE CAMBIOS Actor.java
- * 
- * ALVARO 17/02/2019 11:11 CREACIÓN DE LA CLASE
- */
-
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Actor extends DomainEntity {
+public abstract class Actor extends DomainEntity {
 
 	private String		name;
-	private String		middleName;	// OPTIONAL
 	private String		surname;
-	private String		photo;			// OPTIONAL, URL
-	private String		email;			// EMAIL
-	private String		phone;			// OPTIONAL
-	private String		address;		// OPTIONAL
+	private String		photo;
+	private String		email;
+	private String		phone;
+	private String		address;
 	private UserAccount	userAccount;
+	private String		middleName;
 
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	public UserAccount getUserAccount() {
-		return this.userAccount;
+	public String getMiddleName() {
+		return this.middleName;
 	}
 
-	public void setUserAccount(final UserAccount userAccount) {
-		this.userAccount = userAccount;
+	public void setMiddleName(final String middleName) {
+		this.middleName = middleName;
 	}
 
 	@NotBlank
@@ -52,14 +53,6 @@ public class Actor extends DomainEntity {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	public String getMiddleName() {
-		return this.middleName;
-	}
-
-	public void setMiddleName(final String middleName) {
-		this.middleName = middleName;
 	}
 
 	@NotBlank
@@ -80,7 +73,6 @@ public class Actor extends DomainEntity {
 		this.photo = photo;
 	}
 
-	@Email
 	public String getEmail() {
 		return this.email;
 	}
@@ -104,4 +96,14 @@ public class Actor extends DomainEntity {
 	public void setAddress(final String address) {
 		this.address = address;
 	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	public UserAccount getUserAccount() {
+		return this.userAccount;
+	}
+
+	public void setUserAccount(final UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
+
 }

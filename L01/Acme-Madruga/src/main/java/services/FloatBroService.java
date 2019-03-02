@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -15,6 +14,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
 import domain.FloatBro;
+import domain.Procession;
 
 /*
  * CONTROL DE CAMBIOS FloatBroService.java
@@ -23,7 +23,6 @@ import domain.FloatBro;
  */
 
 @Service
-@Transactional
 public class FloatBroService {
 
 	//Managed Repository -------------------	
@@ -34,6 +33,9 @@ public class FloatBroService {
 	//Supporting services ------------------
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	private ProcessionService	processionService;
 
 	@Autowired
 	Validator					validator;
@@ -71,6 +73,9 @@ public class FloatBroService {
 	public void delete(final FloatBro floatBro) {
 		Assert.notNull(this.floatBroRepository.findOne(floatBro.getId()), "La floatBro no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == floatBro.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
+		final Collection<Procession> processions = this.processionService.getProcessionByFloatId(floatBro.getId());
+		for (final Procession procession : processions)
+			this.processionService.delete(procession);
 		this.floatBroRepository.delete(floatBro);
 	}
 
@@ -113,14 +118,21 @@ public class FloatBroService {
 	public FloatBro reconstruct(final FloatBro floatBro, final BindingResult binding) {
 		FloatBro result;
 
-		if (floatBro.getId() == 0)
+		if (floatBro.getId() == 0) {
+			floatBro.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 			result = floatBro;
-		else {
+		} else {
 			result = this.floatBroRepository.findOne(floatBro.getId());
-			result.setTitle(floatBro.getTitle());
-			result.setDescription(floatBro.getDescription());
-			this.validator.validate(floatBro, binding);
+			//			result.setTitle(floatBro.getTitle());
+			//			result.setDescription(floatBro.getDescription());
+			//			result.setPictures(floatBro.getPictures());
+			//			if (result.getBrotherhood() == null)
+			//				result.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			floatBro.setId(result.getId());
+			floatBro.setVersion(result.getVersion());
+			result = floatBro;
 		}
+		this.validator.validate(floatBro, binding);
 		return result;
 	}
 }

@@ -22,7 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.BrotherhoodService;
+import services.FloatBroService;
+import services.PositionAuxService;
 import services.ProcessionService;
+import domain.FloatBro;
 import domain.Procession;
 
 /*
@@ -39,6 +43,15 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@Autowired
 	private ProcessionService	processionService;
 
+	@Autowired
+	BrotherhoodService			brotherhoodService;
+
+	@Autowired
+	PositionAuxService			positionAuxService;
+
+	@Autowired
+	FloatBroService				floatBroService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,9 +63,14 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
+		final Collection<FloatBro> floats = this.floatBroService.findAll();
+		Boolean checkEmptyFloats = false;
+		if (floats.isEmpty())
+			checkEmptyFloats = true;
 
 		result = new ModelAndView("procession/brotherhood/list");
 		result.addObject("processions", processions);
+		result.addObject("checkEmptyFloats", checkEmptyFloats);
 		result.addObject("requestURI", "procession/brotherhood/list.do");
 
 		return result;
@@ -90,7 +108,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		Procession procession;
 		procession = this.processionService.findOne(processionId);
-		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId())
+		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId() || procession.getIsFinal().equals(true))
 			result = new ModelAndView("redirect:list.do");
 		else {
 			Assert.notNull(procession);
@@ -120,14 +138,19 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		return result;
 	}
 
+	//	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	//	public void saveInitial(final Procession procession, final BindingResult binding) {
+	//		final Procession toSendProcession = this.processionService.reconstruct(procession, binding);
+	//		this.save(toSendProcession, binding);
+	//	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Procession procession, final BindingResult binding) {
 		ModelAndView result;
 
 		procession = this.processionService.reconstruct(procession, binding);
 		if (binding.hasErrors()) {
-			System.out.println("El error pasa por aquí alvaro (IF de save())");
-			System.out.println(binding);
+			System.out.println("Binding con errores: " + binding.getAllErrors());
 			result = this.createEditModelAndView(procession);
 		} else
 			try {
@@ -139,25 +162,22 @@ public class ProcessionBrotherhoodController extends AbstractController {
 				System.out.println("El error: ");
 				System.out.println(oops);
 				System.out.println(binding);
-				if (oops.getMessage().equals("procession.wrongDate"))
-					result = this.createEditModelAndView(procession, "procession.wrongDate");
-				else if (oops.getMessage().equals("procession.wrongMomentDate"))
-					result = this.createEditModelAndView(procession, "procession.wrongMomentDate");
-				else
-					result = this.createEditModelAndView(procession, "procession.commit.error");
+				result = this.createEditModelAndView(procession, "procession.commit.error");
 			}
 		return result;
 	}
-	private ModelAndView createEditModelAndView(final Procession procession) {
+	public ModelAndView createEditModelAndView(final Procession procession) {
 		ModelAndView result;
 
 		result = new ModelAndView("procession/brotherhood/edit");
 
+		final Collection<FloatBro> floatBros = this.floatBroService.findAllBrotherhoodLogged();
+
 		result.addObject("procession", procession);
+		result.addObject("floatBros", floatBros);
 
 		return result;
 	}
-
 	private ModelAndView createEditModelAndView(final Procession procession, final String messageCode) {
 		ModelAndView result;
 

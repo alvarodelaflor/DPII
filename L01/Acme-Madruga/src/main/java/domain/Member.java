@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 /*
  * CONTROL DE CAMBIOS Member.java
  * 
- * ALVARO 17/02/2019 19:55 CREACIÓN DE LA CLASE
+ * ALVARO 17/02/2019 19:55 CREACIï¿½N DE LA CLASE
  */
 
 @Entity
@@ -21,17 +21,6 @@ public class Member extends Actor {
 
 	private Collection<Enrolled>	enrolleds;
 
-
-	//	private Position				position;
-	//
-	//
-	//	public Position getPosition() {
-	//		return this.position;
-	//	}
-	//
-	//	public void setPosition(final Position position) {
-	//		this.position = position;
-	//	}
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	public Collection<Enrolled> getEnrolleds() {

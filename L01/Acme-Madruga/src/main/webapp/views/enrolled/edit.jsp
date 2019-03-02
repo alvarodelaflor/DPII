@@ -45,28 +45,9 @@
     	<form:form class="formularioEdicion" method="POST" modelAttribute="enrolled" action="enrolled/brotherhood/edit.do">
           	<form:hidden path="id"/>
           	
-          	<form:label path="state">
-			<spring:message code="enrolled.state" />:
-			</form:label>
-			<form:select path="state" onchange="mostrar(this.value);">
-				<form:option value="false"><spring:message code="enrolled.false"/></form:option>
-				<form:option value="true"><spring:message code="enrolled.true"/></form:option>
-			</form:select>
-			<form:errors cssClass="error" path="state" />
-			<br/>
+          	<acme:selectTrueFalse code="enrolled" path="state" onchange="mostrar(this.value);"/>
 			<div class="oculta" id="capa0" >
-				<form:label path="position"><spring:message code="enrolled.position" /></form:label>
-				<form:select path="position" >
-					<c:choose>
-						<c:when test="${language == true}">
-							<form:options items="${positions}" itemLabel="nameEn" itemValue="id"/>
-						</c:when>
-						<c:otherwise>
-							<form:options items="${positions}" itemLabel="nameEs" itemValue="id"/>
-						</c:otherwise>
-					</c:choose>
-				</form:select>
-				<form:errors cssClass="error" path="position"/><br>
+				<acme:selectItemEsEn items="${positions}" code="enrolled" path="position"/>	
           	</div>
           	<acme:cancel url="enrolled/brotherhood/list.do" code="cancel"/>
           	<acme:submit name="save" code="send"/>

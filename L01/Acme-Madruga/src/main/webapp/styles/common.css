@@ -6,6 +6,7 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  * 
+ *	HIPONA 21/02/2019 9:25 Añadidos colores y strong
  */
 
 .error {
@@ -16,4 +17,20 @@
 .message {
 	color: red;
 	font-weight: bolder;
+}
+
+.approved {
+	color: green;
+}
+
+.rejected {
+	color: orange;
+}
+
+.pending {
+	color: gray;
+}
+
+.strong {
+	font-weight: bold;
 }

@@ -3,8 +3,6 @@ package services;
 
 import java.util.Collection;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -12,9 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.EnrolledRepository;
+import security.Authority;
 import security.LoginService;
+import security.UserAccount;
 import domain.Brotherhood;
 import domain.Enrolled;
+import domain.Member;
 
 /*
  * CONTROL DE CAMBIOS EnrolledService.java
@@ -23,7 +24,6 @@ import domain.Enrolled;
  */
 
 @Service
-@Transactional
 public class EnrolledService {
 
 	//Managed Repository -------------------	
@@ -41,9 +41,22 @@ public class EnrolledService {
 
 	//Simple CRUD Methods ------------------
 
-	public Enrolled create() {
-
+	public Enrolled create(final int brotherhoodId) {
+		// We have to check member authority
+		Assert.isTrue(this.checkAuthority("MEMBER"));
 		final Enrolled enrolled = new Enrolled();
+		final Brotherhood brotherhood = this.brotherhoodService.findOne(brotherhoodId);
+		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+
+		// We check if we are not an active member of the brotherhood
+		Assert.isTrue(this.memberService.isBrotherhoodActiveMember(owner.getId(), brotherhood.getId()) == false);
+
+		// We check if we don't have any pending enroll request
+		Assert.isTrue(this.hasPendingEnrollRequest(owner.getId(), brotherhood.getId()) == false);
+
+		enrolled.setBrotherhood(brotherhood);
+		enrolled.setMember(owner);
+
 		return enrolled;
 	}
 
@@ -65,9 +78,10 @@ public class EnrolledService {
 		this.enrolledRepository.delete(enrolled);
 	}
 
-	public Collection<Enrolled> findAllByPositionId(final int positionId) {
-
-		return this.enrolledRepository.findAllByPositionId(positionId);
+	public Collection<Enrolled> findAllDropOutMemberByBrotherhoodLogged() {
+		System.out.println("IdLogged:" + LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		return this.enrolledRepository.getDropOutMember(brotherhood.getId());
 	}
 
 	public Collection<Enrolled> findAllByBrotherhoodLoggedAccepted() {
@@ -89,14 +103,32 @@ public class EnrolledService {
 		Enrolled result;
 
 		if (enrolled.getId() == 0)
-			result = enrolled;
+			System.out.println("ErolledService.java no paso por aqui");
 		else {
 			result = this.enrolledRepository.findOne(enrolled.getId());
-			result.setState(enrolled.getState());
-			if (enrolled.getPosition() != null)
-				result.setPosition(enrolled.getPosition());
-			this.validator.validate(enrolled, binding);
+			enrolled.setId(result.getId());
+			enrolled.setVersion(result.getVersion());
+			enrolled.setBrotherhood(result.getBrotherhood());
+			enrolled.setDropMoment(result.getDropMoment());
+			enrolled.setMember(result.getMember());
 		}
-		return result;
+		this.validator.validate(enrolled, binding);
+		return enrolled;
 	}
+
+	private boolean checkAuthority(final String authority) {
+		final UserAccount acc = LoginService.getPrincipal();
+		final Authority member = new Authority();
+		member.setAuthority(authority);
+		return acc.getAuthorities().contains(member);
+	}
+
+	public Boolean hasPendingEnrollRequest(final int memberId, final int brotherHoodId) {
+		return this.enrolledRepository.getBrotherhoodPendingEnrollment(memberId, brotherHoodId) != null;
+	}
+
+	public Enrolled getBrotherhoodActiveEnrollment(final int memberId, final int brotherHoodId) {
+		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId);
+	}
+
 }

@@ -32,15 +32,17 @@
 		<value>/views/welcome/messages</value>
 		
 		<value>/views/administrator/messages</value>
+		<value>/views/member/messages</value>
+		<value>/views/brotherhood/messages</value>
 		<value>/views/profile/messages</value>
 		<!-- ALVARO -->
 		<value>/views/procession/messages</value>
 		<value>/views/floatBro/messages</value>
 		<value>/views/enrolled/messages</value>
+		<value>/views/request/messages</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
-		<value>/views/area/messages</value>
-		<value>/views/position/messages</value>
+		
 		<!-- FRAN -->
 		<!-- CARMEN -->
 		
@@ -49,7 +51,7 @@
 		
 		<!-- FERRETE -->
 		<!-- ANTONIO SANCHEZ -->
-		
+		<value>/views/request/messages</value>
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 		
