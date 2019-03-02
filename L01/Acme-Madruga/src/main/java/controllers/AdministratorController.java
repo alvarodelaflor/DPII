@@ -18,6 +18,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -27,7 +28,9 @@ import services.BrotherhoodService;
 import services.MemberService;
 import services.ProcessionService;
 import services.RequestService;
+import domain.Actor;
 import domain.Administrator;
+import domain.Brotherhood;
 import domain.Member;
 import domain.Procession;
 import forms.RegistrationForm;
@@ -213,4 +216,71 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/actorList", method = RequestMethod.GET)
+	public ModelAndView actorList() {
+
+		final ModelAndView res;
+
+		final Collection<Member> members = this.memberService.findAll();
+
+		final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+
+		res = new ModelAndView("administrator/actorList");
+
+		res.addObject("members", members);
+		res.addObject("brotherhoods", brotherhoods);
+		res.addObject("requestURI", "administrator/actorList.do");
+
+		return res;
+	}
+
+	@RequestMapping(value = "/banMember", method = RequestMethod.GET)
+	public ModelAndView banMember(@RequestParam(value = "actorId", defaultValue = "-1") final int actorId) {
+
+		ModelAndView res;
+
+		try {
+			final Actor actor = this.memberService.findOne(actorId);
+
+			if (actor.getUserAccount().getBanned() == false) {
+
+				this.actorService.banByActorId(actor);
+				res = new ModelAndView("redirect:actorList.do");
+			} else {
+
+				this.actorService.unbanByActorId(actor);
+				res = new ModelAndView("redirect:actorList.do");
+			}
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:../#");
+		}
+
+		return res;
+	}
+
+	@RequestMapping(value = "/banBrotherhood", method = RequestMethod.GET)
+	public ModelAndView banBrotherhood(@RequestParam(value = "actorId", defaultValue = "-1") final int actorId) {
+
+		ModelAndView res;
+
+		try {
+			final Actor actor = this.brotherhoodService.findOne(actorId);
+
+			if (actor.getUserAccount().getBanned() == false) {
+
+				this.actorService.banByActorId(actor);
+				res = new ModelAndView("redirect:actorList.do");
+			} else {
+
+				this.actorService.unbanByActorId(actor);
+				res = new ModelAndView("redirect:actorList.do");
+			}
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:../#");
+		}
+
+		return res;
+	}
 }

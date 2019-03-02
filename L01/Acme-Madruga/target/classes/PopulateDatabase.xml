@@ -40,8 +40,23 @@
 		</property>
 	</bean>
 
-	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="brotherhood" />
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="super" />
+		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+				<bean class="security.Authority">
+					<property name="authority" value="BROTHERHOOD" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="brotherhood2" />
 		<property name="password" value="44843b89fec33a1c48bbb3967b65abce" />
 		<property name="authorities">
 			<list>
@@ -51,15 +66,12 @@
 			</list>
 		</property>
 	</bean>
-
-	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+	
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="brotherhood" />
+		<property name="password" value="44843b89fec33a1c48bbb3967b65abce" />
 		<property name="authorities">
 			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
-				</bean>
 				<bean class="security.Authority">
 					<property name="authority" value="BROTHERHOOD" />
 				</bean>
@@ -78,6 +90,19 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="member2" />
+		<property name="password" value="aa08769cdcb26674c6706093503ff0a3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MEMBER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	
 	<!-- Other domain beans come here -->	
 	
@@ -107,6 +132,17 @@
         <property name="userAccount" ref= "userAccount4"/>	
     </bean>
     
+    <bean id="member02" class="domain.Member">
+    	<property name="name" value="Sebas" />
+    	<property name="middleName" value="Boss" />
+    	<property name="surname" value="Ruiz de Lopera" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="donManuel@alum.us.es" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount5"/>	
+    </bean>
+    
     <!-- MEMBER -->
 	<!-- BROTHERHOOD -->
 	
@@ -119,6 +155,20 @@
         <property name="phone" value="+34665381121" />
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
         <property name="userAccount" ref= "userAccount2"/>
+        
+        <property name="title" value= "Hermandad de la VERA CRUZ"/>
+        <property name="establishmentDate" value="2018/11/10 08:00" />		
+    </bean>
+    
+    <bean id="brotherhood02" class="domain.Brotherhood">
+    	<property name="name" value="Brotherhood02" />
+    	<property name="middleName" value="Dogran" />
+    	<property name="surname" value="de la Flor Bonilla" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="alvdebon@alum.us.es" />
+        <property name="phone" value="+34665381121" />
+        <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
+        <property name="userAccount" ref= "userAccount6"/>
         
         <property name="title" value= "Hermandad de la VERA CRUZ"/>
         <property name="establishmentDate" value="2018/11/10 08:00" />		
