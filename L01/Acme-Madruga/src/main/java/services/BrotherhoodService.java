@@ -253,6 +253,7 @@ public class BrotherhoodService {
 	public void dropMember(final int memberId, final int brotherhoodId) {
 		final Enrolled enrollment = this.enrollmentService.getBrotherhoodActiveEnrollment(memberId, brotherhoodId);
 		this.requestService.deleteAllRequestPendingByMember(enrollment.getMember());
+		this.requestService.deleteAllRequestAcceptedByMember(enrollment.getMember());
 		System.out.println("Dropping member");
 		Assert.notNull(enrollment);
 		// We have to check if we are an active member

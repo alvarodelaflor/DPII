@@ -184,11 +184,27 @@ public class RequestService {
 		return this.requestRepository.findAllByMemberAndStatusPending(member.getId());
 	}
 
+	public Collection<Request> findAllByMemberAndStatusAccepted(final Member member) {
+		Assert.notNull(member, "request.member.isNull");
+		return this.requestRepository.findAllByMemberAndStatusAccepted(member.getId());
+	}
+
 	public void deleteAllRequestPendingByMember(final Member member) {
 		final Collection<Request> requests = this.findAllByMemberAndStatusPending(member);
 		if (!requests.isEmpty())
 			for (final Request request : requests)
 				this.requestRepository.delete(request);
+	}
+
+	public void deleteAllRequestAcceptedByMember(final Member member) {
+		final Collection<Request> requests = this.findAllByMemberAndStatusAccepted(member);
+		if (!requests.isEmpty())
+			for (final Request request : requests) {
+				final PositionAux positionAux = request.getPositionAux();
+				positionAux.setStatus(false);
+				this.positionAuxService.save(positionAux);
+				this.requestRepository.delete(request);
+			}
 	}
 
 	public Double getRatioRequestStatusTrue() {

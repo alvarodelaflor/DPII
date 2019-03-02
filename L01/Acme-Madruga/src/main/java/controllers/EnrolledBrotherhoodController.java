@@ -129,6 +129,7 @@ public class EnrolledBrotherhoodController extends AbstractController {
 			try {
 				enrolled.setDropMoment(LocalDateTime.now().toDate());
 				this.requestService.deleteAllRequestPendingByMember(enrolled.getMember());
+				this.requestService.deleteAllRequestAcceptedByMember(enrolled.getMember());
 				this.enrolledService.save(enrolled);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Exception e) {
