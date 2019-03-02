@@ -50,6 +50,11 @@ public class BrotherhoodService {
 	private RequestService	requestService;
 
 
+	public Collection<Brotherhood> findByAreaId(final int areaId) {
+
+		return this.brotherhoodRepository.findByAreaId(areaId);
+	}
+
 	public Brotherhood reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Brotherhood result = this.create();
 		if (registrationForm.getAccept() == false) {

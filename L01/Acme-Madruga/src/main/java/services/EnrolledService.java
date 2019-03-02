@@ -131,4 +131,9 @@ public class EnrolledService {
 		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId);
 	}
 
+	public Collection<Enrolled> findAllByPositionId(final int positionId) {
+
+		return this.enrolledRepository.findAllByPositionId(positionId);
+	}
+
 }

@@ -116,7 +116,18 @@
 		<security:intercept-url pattern="/procession/show.do" access="hasRole('MEMBER')" />
 		<!-- ALVARO -->
 		<!-- FRAN -->
-		
+		<!-- 	<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')"/>
+		 -->
+		<security:intercept-url pattern="/area/administrator/list.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/area/administrator/show.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/area/administrator/delete.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/area/administrator/create.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/area/administrator/edit.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/list.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/show.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/delete.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/create.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/position/administrator/edit.do" access="hasRole('ADMIN')"/>
 		<!-- FRAN -->
 		<!-- CARMEN -->
 		

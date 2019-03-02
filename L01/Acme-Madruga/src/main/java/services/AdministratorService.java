@@ -36,6 +36,11 @@ public class AdministratorService {
 	private WelcomeService			welcomeService;
 
 
+	Administrator findByUserAccountId(final int userAccountId) {
+
+		return this.administratorRepository.findByUserAccountId(userAccountId);
+	}
+
 	public Administrator reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Administrator result = this.create();
 

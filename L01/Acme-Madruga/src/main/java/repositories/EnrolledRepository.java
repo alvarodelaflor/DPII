@@ -32,4 +32,7 @@ public interface EnrolledRepository extends JpaRepository<Enrolled, Integer> {
 
 	@Query("select e from Enrolled e where e.brotherhood.id=?1 and e.state=true and e.dropMoment is not null")
 	Collection<Enrolled> getDropOutMember(int brotherHoodId);
+	
+	@Query("select e from Enrolled e where e.position.id=?1")
+	Collection<Enrolled> findAllByPositionId(int positionId);
 }

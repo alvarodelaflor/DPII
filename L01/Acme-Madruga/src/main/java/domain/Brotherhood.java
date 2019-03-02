@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -34,7 +35,17 @@ public class Brotherhood extends Actor {
 	private Collection<Procession>	processions;
 	private Collection<FloatBro>	floatBro;
 	private Collection<Enrolled>	enrolleds;
+	private Area					area;
 
+
+	@OneToOne(optional = true)
+	public Area getArea() {
+		return this.area;
+	}
+
+	public void setArea(final Area area) {
+		this.area = area;
+	}
 
 	@NotBlank
 	public String getTitle() {
