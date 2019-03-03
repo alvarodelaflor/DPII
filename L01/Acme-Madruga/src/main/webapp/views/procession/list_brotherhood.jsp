@@ -27,7 +27,7 @@
 	<div>
 		<security:authorize access="hasRole('BROTHERHOOD')"> 
 			<c:choose>
-				<c:when test="${checkEmptyFloats==false}">
+				<c:when test="${checkValid==false}">
 					<p class="create"><input type="button" value=<spring:message code="brotherhood.createProcession" /> id="buttonCreateProcession" name="buttonCreateProcession"  onclick="location.href='procession/brotherhood/create.do';"/></p>
 				</c:when>
 				<c:otherwise>

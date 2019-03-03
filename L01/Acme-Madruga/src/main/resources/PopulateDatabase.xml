@@ -155,9 +155,9 @@
         <property name="phone" value="+34665381121" />
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
         <property name="userAccount" ref= "userAccount2"/>
-        
         <property name="title" value= "Hermandad de la VERA CRUZ"/>
-        <property name="establishmentDate" value="2018/11/10 08:00" />		
+        <property name="establishmentDate" value="2018/11/10 08:00" />
+        <property name="area" ref= "area01"/>		
     </bean>
     
     <bean id="brotherhood02" class="domain.Brotherhood">
@@ -168,10 +168,10 @@
 		<property name="email" value="alvdebon@alum.us.es" />
         <property name="phone" value="+34665381121" />
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
-        <property name="userAccount" ref= "userAccount6"/>
-        
-        <property name="title" value= "Hermandad de la VERA CRUZ"/>
-        <property name="establishmentDate" value="2018/11/10 08:00" />		
+        <property name="userAccount" ref= "userAccount6"/>        
+        <property name="title" value= "Hermandad del Rosario"/>
+        <property name="establishmentDate" value="2018/11/10 08:00" />
+        <property name="area" ref= "area01"/>		
     </bean>
     
     <!-- BROTHERHOOD -->
@@ -294,6 +294,14 @@
     	<property name="procession" ref= "procession01"/>
     </bean>
 <!-- REQUEST -->
+	<!-- AREA -->
+    <bean id="area01" class="domain.Area">
+    	<property name="name" value= "Pregonar"/>
+    	<property name="pictures">
+    		<null></null>
+    	</property>
+    </bean>	
+	<!-- AREA -->
 </beans>
 
 

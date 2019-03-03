@@ -174,8 +174,9 @@ public class BrotherhoodController extends AbstractController {
 	private Boolean validMember(final int idBrotherhood) {
 		Boolean res = false;
 		final int memberId = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		Brotherhood brotherhood = this.brotherhoodService.findOne(idBrotherhood);
 		System.out.println("ChekckIsInBrotherhood: " + this.memberService.checkIsInBrotherhood(memberId));
-		if (!this.enrolledService.hasPendingEnrollRequest(memberId, idBrotherhood) && this.enrolledService.getBrotherhoodActiveEnrollment(memberId, idBrotherhood) == null)
+		if (brotherhood!=null && brotherhood.getArea()!=null && !this.enrolledService.hasPendingEnrollRequest(memberId, idBrotherhood) && this.enrolledService.getBrotherhoodActiveEnrollment(memberId, idBrotherhood) == null)
 			res = true;
 		return res;
 	}

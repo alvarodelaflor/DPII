@@ -114,6 +114,8 @@
 		<security:intercept-url pattern="/request/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />	
 		
 		<security:intercept-url pattern="/procession/show.do" access="hasRole('MEMBER')" />
+		
+		<security:intercept-url pattern="/area/brotherhood/edit.do" access="hasRole('BROTHERHOOD')"/>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<security:intercept-url pattern="/administrator/actorList.do" access="hasRole('ADMIN')"/>
