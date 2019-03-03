@@ -57,6 +57,24 @@ public class BrotherhoodService {
 
 	public Brotherhood reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Brotherhood result = this.create();
+
+		result.setName(registrationForm.getName());
+		result.setSurname(registrationForm.getSurname());
+		result.setPhoto(registrationForm.getPhoto());
+		result.setEmail(registrationForm.getEmail());
+		result.setTitle(registrationForm.getTitle());
+		result.setEstablishmentDate(registrationForm.getEstableshmentDate());
+		result.setAddress(registrationForm.getAddress());
+		result.setMiddleName(registrationForm.getMiddleName());
+		result.setPhone(registrationForm.getPhone());
+
+		result.getUserAccount().setUsername(registrationForm.getUserName());
+
+		final String password = registrationForm.getPassword();
+		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		final String hashPassword = encoder.encodePassword(password, null);
+		result.getUserAccount().setPassword(hashPassword);
+
 		if (registrationForm.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
 			binding.addError(error);
@@ -67,12 +85,6 @@ public class BrotherhoodService {
 			final ObjectError error = new ObjectError("userName", "");
 			binding.addError(error);
 			binding.rejectValue("userName", "error.userAcount");
-		}
-
-		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
-			final ObjectError error = new ObjectError("email", "");
-			binding.addError(error);
-			binding.rejectValue("email", "error.email");
 		}
 
 		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
@@ -93,42 +105,11 @@ public class BrotherhoodService {
 			binding.rejectValue("password", "error.password");
 		}
 
-		if (registrationForm.getEstableshmentDate().after(LocalDateTime.now().toDate())) {
-			final ObjectError error = new ObjectError("estableshmentDate", "");
-			binding.addError(error);
-			binding.rejectValue("estableshmentDate", "error.estableshmentDate");
-		}
-
-		result.setId(0);
-		result.setVersion(0);
-
-		result.setName(registrationForm.getName());
-		result.setSurname(registrationForm.getSurname());
-		result.setPhoto(registrationForm.getPhoto());
-		result.setEmail(registrationForm.getEmail());
-		result.setTitle(registrationForm.getTitle());
-		result.setEstablishmentDate(registrationForm.getEstableshmentDate());
-		result.setAddress(registrationForm.getAddress());
-		result.setMiddleName(registrationForm.getMiddleName());
-		result.setPhone(registrationForm.getPhone());
-
-		if (!(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
-			|| registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}"))) {
-			final ObjectError error = new ObjectError("email", "");
-			binding.addError(error);
-			binding.rejectValue("email", "email.wrong");
-		}
-
-		result.getUserAccount().setUsername(registrationForm.getUserName());
-
-		final String password = registrationForm.getPassword();
-		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-		final String hashPassword = encoder.encodePassword(password, null);
-		result.getUserAccount().setPassword(hashPassword);
-
 		this.validator.validate(result, binding);
+
 		return result;
 	}
+
 	public Brotherhood reconstruct(final Brotherhood brotherhood, final BindingResult binding) {
 		Brotherhood result;
 
@@ -145,7 +126,6 @@ public class BrotherhoodService {
 			result.setPhoto(brotherhood.getPhoto());
 			result.setEmail(brotherhood.getEmail());
 			result.setTitle(brotherhood.getTitle());
-			result.setEstablishmentDate(brotherhood.getEstablishmentDate());
 
 			this.validator.validate(result, binding);
 		}
@@ -171,13 +151,26 @@ public class BrotherhoodService {
 		return brotherhood;
 	}
 
-	public Brotherhood save(final Brotherhood brotherhood) {
+	public Brotherhood saveR(final Brotherhood brotherhood) {
+		Assert.isTrue(!this.checkEmailR(brotherhood), "error.email");
 		Assert.isTrue(!this.checkEmailFormatter(brotherhood), "email.wrong");
-		Assert.isTrue(!this.checkEmail(brotherhood), "error.email");
+		Assert.isTrue(this.checkDate(brotherhood), "error.estableshmentDate");
+
 		if (brotherhood.getPhone().matches("^([0-9]{4,})$"))
 			brotherhood.setPhone("+" + this.welcomeService.getPhone() + " " + brotherhood.getPhone());
 		return this.brotherhoodRepository.save(brotherhood);
 	}
+
+	public Brotherhood save(final Brotherhood brotherhood) {
+		Assert.isTrue(!this.checkEmail(brotherhood), "error.email");
+		Assert.isTrue(!this.checkEmailFormatter(brotherhood), "email.wrong");
+		Assert.isTrue(this.checkDate(brotherhood), "error.estableshmentDate");
+
+		if (brotherhood.getPhone().matches("^([0-9]{4,})$"))
+			brotherhood.setPhone("+" + this.welcomeService.getPhone() + " " + brotherhood.getPhone());
+		return this.brotherhoodRepository.save(brotherhood);
+	}
+
 	private Boolean checkEmailFormatter(final Brotherhood brotherhood) {
 		Boolean res = true;
 		if ((brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
@@ -186,9 +179,22 @@ public class BrotherhoodService {
 		return res;
 	}
 
-	private Boolean checkEmail(final Brotherhood brotherhood) {
+	private Boolean checkDate(final Brotherhood brotherhood) {
+		Boolean res = true;
+		if (brotherhood.getEstablishmentDate().after(LocalDateTime.now().toDate()))
+			res = false;
+		return res;
+	}
+
+	private Boolean checkEmailR(final Brotherhood brotherhood) {
 		Boolean res = false;
 		if (this.actorService.getActorByEmail(brotherhood.getEmail()) != null)
+			res = true;
+		return res;
+	}
+	private Boolean checkEmail(final Brotherhood brotherhood) {
+		Boolean res = false;
+		if (this.actorService.getActorByEmail(brotherhood.getEmail()) != null && (brotherhood.getEmail() != null && this.actorService.getActorByEmail(brotherhood.getEmail()).equals(brotherhood.getEmail())))
 			res = true;
 		return res;
 	}
@@ -266,11 +272,13 @@ public class BrotherhoodService {
 	}
 
 	public String largestBrotherhood() {
-		return this.brotherhoodRepository.brotherhoodMaxRow();
+		final Brotherhood b = this.brotherhoodRepository.brotherhoodMaxRow();
+		return b.getTitle();
 	}
 
 	public String smallestBrotherhood() {
-		return this.brotherhoodRepository.brotherhoodMinRow();
+		final Brotherhood b = this.brotherhoodRepository.brotherhoodMinRow();
+		return b.getTitle();
 	}
 
 	public Integer numberBrotherhood() {

@@ -70,11 +70,13 @@ public class MemberController extends AbstractController {
 			result = new ModelAndView("member/create");
 		else
 			try {
-				this.memberService.save(member);
+				this.memberService.saveR(member);
 				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
-
-				result = new ModelAndView("member/create");
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.createModelAndView(member, "email.wrong");
+				else
+					result = this.createModelAndView(member, "error.email");
 			}
 		return result;
 	}
@@ -121,6 +123,16 @@ public class MemberController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("member/edit");
+		result.addObject("message", string);
+		result.addObject("member", member);
+
+		return result;
+	}
+
+	private ModelAndView createModelAndView(final Member member, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("member/create");
 		result.addObject("message", string);
 		result.addObject("member", member);
 

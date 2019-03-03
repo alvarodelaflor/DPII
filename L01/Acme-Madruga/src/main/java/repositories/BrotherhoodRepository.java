@@ -21,7 +21,7 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 
 	@Query("select b from Brotherhood b join b.userAccount bua where bua.id=?1")
 	Brotherhood findByUserAccountId(int userAccountId);
-	
+
 	@Query("select b from Brotherhood b where b.area.id=?1")
 	Collection<Brotherhood> findByAreaId(int areaId);
 
@@ -40,12 +40,12 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	Collection<Brotherhood> findFromMember(int member);
 
 	//12.3.2 
-	@Query("select b.title, max(p.maxRow) from Brotherhood b join b.processions p")
-	String brotherhoodMaxRow();
+	@Query("select b,max(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state=true and e.dropMoment=null ) as float)) from Brotherhood b")
+	Brotherhood brotherhoodMaxRow();
 
 	//12.3.3 
-	@Query("select b.title, min(p.maxRow) from Brotherhood b join b.processions p")
-	String brotherhoodMinRow();
+	@Query("select b,min(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state=true and e.dropMoment=null ) as float)) from Brotherhood b")
+	Brotherhood brotherhoodMinRow();
 
 	//12.3.1
 	@Query("select count(b) from Brotherhood b")

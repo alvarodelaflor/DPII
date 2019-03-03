@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class RegistrationForm {
 
 	private String	password, confirmPassword, address, email, middleName, name, phone, photo, surname, title, userName;
@@ -19,7 +21,6 @@ public class RegistrationForm {
 	public void setAccept(final Boolean accept) {
 		this.accept = accept;
 	}
-
 	public String getUserName() {
 		return this.userName;
 	}
@@ -73,6 +74,7 @@ public class RegistrationForm {
 		this.address = address;
 	}
 
+	@NotBlank
 	public String getEmail() {
 		return this.email;
 	}

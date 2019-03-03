@@ -213,4 +213,8 @@ public class ProcessionService {
 	public Integer maxProcessionN() {
 		return this.processionRepository.maxProcessionN();
 	}
+
+	public Collection<Procession> findProcessionsBrotherhoodFinal(final Integer brotherhood) {
+		return this.processionRepository.findProcessionsBrotherhoodFinal(brotherhood);
+	}
 }

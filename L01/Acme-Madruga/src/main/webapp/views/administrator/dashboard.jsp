@@ -19,8 +19,8 @@
 
 <security:authorize access="hasRole('ADMIN')"> 
 
-		<p><spring:message code="admin.TheLargestBrotherhoods" /> <jstl:out	value="${largestBrotherhood}"></jstl:out><spring:message code="admin.row" /></p>
-		<p><spring:message code="admin.TheSmallestBrotherhoods" /> <jstl:out value="${smallestBrotherhood}"></jstl:out><spring:message code="admin.row" /></p>		
+		<p><spring:message code="admin.TheLargestBrotherhoods" /> <jstl:out	value="${largestBrotherhood}"></jstl:out></p>
+		<p><spring:message code="admin.TheSmallestBrotherhoods" /> <jstl:out value="${smallestBrotherhood}"></jstl:out></p>		
 		<p><spring:message code="admin.TheRatioRequestsTrue" /> <jstl:out value="${getRatioRequestStatusTrue}"></jstl:out></p>
 		<p><spring:message code="admin.TheRatioRequestsFalse" /> <jstl:out value="${getRatioRequestStatusFalse}"></jstl:out></p>
 		<p><spring:message code="admin.TheRatioRequestsNull" /> <jstl:out value="${getRatioRequestStatusNull}"></jstl:out></p>

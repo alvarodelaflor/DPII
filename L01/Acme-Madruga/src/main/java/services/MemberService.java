@@ -42,7 +42,6 @@ public class MemberService {
 	public Member reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Member result = this.create();
 
-		result.setId(0);
 		result.setName(registrationForm.getName());
 		result.setSurname(registrationForm.getSurname());
 		result.setPhoto(registrationForm.getPhoto());
@@ -70,12 +69,6 @@ public class MemberService {
 			binding.rejectValue("userName", "error.userAcount");
 		}
 
-		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
-			final ObjectError error = new ObjectError("email", "");
-			binding.addError(error);
-			binding.rejectValue("email", "error.email");
-		}
-
 		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
 			final ObjectError error = new ObjectError("userName", "");
 			binding.addError(error);
@@ -93,15 +86,6 @@ public class MemberService {
 			binding.addError(error);
 			binding.rejectValue("password", "error.password");
 		}
-
-		if (!(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
-			|| registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}"))) {
-			final ObjectError error = new ObjectError("email", "");
-			binding.addError(error);
-			binding.rejectValue("email", "email.wrong");
-		}
-
-		result.setVersion(0);
 
 		this.validator.validate(result, binding);
 		return result;
@@ -145,13 +129,21 @@ public class MemberService {
 		return member;
 	}
 
-	public Member save(final Member member) {
+	public Member saveR(final Member member) {
 		Assert.isTrue(!this.checkEmailFormatter(member), "email.wrong");
-		Assert.isTrue(this.checkEmail(member), "error.email");
+		Assert.isTrue(!this.checkEmailR(member), "error.email");
 		if (member.getPhone().matches("^([0-9]{4,})$"))
 			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.memberRepository.save(member);
 	}
+	public Member save(final Member member) {
+		Assert.isTrue(!this.checkEmailFormatter(member), "email.wrong");
+		Assert.isTrue(!this.checkEmail(member), "error.email");
+		if (member.getPhone().matches("^([0-9]{4,})$"))
+			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
+		return this.memberRepository.save(member);
+	}
+
 	private Boolean checkEmailFormatter(final Member member) {
 		Boolean res = true;
 		if ((member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || member
@@ -161,6 +153,13 @@ public class MemberService {
 	}
 
 	private Boolean checkEmail(final Member member) {
+		Boolean res = false;
+		if (this.actorService.getActorByEmail(member.getEmail()) != null && (member.getEmail() != null && this.actorService.getActorByEmail(member.getEmail()).equals(member.getEmail())))
+			res = true;
+		return res;
+	}
+
+	private Boolean checkEmailR(final Member member) {
 		Boolean res = true;
 		if (this.actorService.getActorByEmail(member.getEmail()) == null)
 			res = false;

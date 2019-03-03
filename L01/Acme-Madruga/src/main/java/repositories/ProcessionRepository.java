@@ -29,6 +29,9 @@ public interface ProcessionRepository extends JpaRepository<Procession, Integer>
 	@Query("select p from Procession p where p.ticker=?1")
 	Collection<Procession> findProcessionsByTicker(String ticker);
 
+	@Query("select p from Procession p where p.brotherhood.id=?1 and p.isFinal=true")
+	Collection<Procession> findProcessionsBrotherhoodFinal(int brotherhoodId);
+
 	//12.3.5 --> The processions that are going to be organised in 30 days or less. 
 	@Query("select p from Procession p where p.moment between ?1 and ?2")
 	Collection<Procession> findAllWithCreationDateTimeBeforeI(Date dateNow, Date dateFinish);

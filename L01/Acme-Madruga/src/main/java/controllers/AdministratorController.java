@@ -82,10 +82,13 @@ public class AdministratorController extends AbstractController {
 			result = new ModelAndView("administrator/create");
 		else
 			try {
-				this.administratorService.save(administrator);
+				this.administratorService.saveR(administrator);
 				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
-				result = new ModelAndView("administrator/create");
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.createModelAndView(administrator, "email.wrong");
+				else
+					result = this.createModelAndView(administrator, "error.email");
 			}
 		return result;
 	}
@@ -132,6 +135,16 @@ public class AdministratorController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("administrator/edit");
+		result.addObject("message", string);
+		result.addObject("administrator", administrator);
+
+		return result;
+	}
+
+	private ModelAndView createModelAndView(final Administrator administrator, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("administrator/create");
 		result.addObject("message", string);
 		result.addObject("administrator", administrator);
 

@@ -70,7 +70,9 @@ public class ProcessionController extends AbstractController {
 		ModelAndView result;
 
 		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-		final Collection<Procession> procession = brotherhood.getProcessions();
+		System.out.println(brotherhood.getId());
+		final Collection<Procession> procession = this.processionService.findProcessionsBrotherhoodFinal(brotherhood.getId());
+		System.out.println(procession);
 		result = new ModelAndView("procession/listProcessions");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("procession", procession);

@@ -44,7 +44,6 @@ public class AdministratorService {
 	public Administrator reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Administrator result = this.create();
 
-		result.setId(0);
 		result.setName(registrationForm.getName());
 		result.setSurname(registrationForm.getSurname());
 		result.setPhoto(registrationForm.getPhoto());
@@ -72,12 +71,6 @@ public class AdministratorService {
 			binding.rejectValue("userName", "error.userAcount");
 		}
 
-		if (this.actorService.getActorByEmail(registrationForm.getEmail()) != null) {
-			final ObjectError error = new ObjectError("email", "");
-			binding.addError(error);
-			binding.rejectValue("email", "error.email");
-		}
-
 		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
 			final ObjectError error = new ObjectError("userName", "");
 			binding.addError(error);
@@ -95,16 +88,6 @@ public class AdministratorService {
 			binding.addError(error);
 			binding.rejectValue("password", "error.password");
 		}
-
-		if (!(registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || registrationForm.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
-			|| registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || registrationForm.getEmail().matches("[\\w\\.\\w]{1,}(@)") || registrationForm.getEmail()
-			.matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)(>)"))) {
-			final ObjectError error = new ObjectError("email", "");
-			binding.addError(error);
-			binding.rejectValue("email", "email.wrong");
-		}
-
-		result.setVersion(0);
 
 		this.validator.validate(result, binding);
 		return result;
@@ -149,9 +132,17 @@ public class AdministratorService {
 		return member;
 	}
 
+	public Administrator saveR(final Administrator admin) {
+		Assert.isTrue(!this.checkEmailFormatter(admin), "email.wrong");
+		Assert.isTrue(!this.checkEmailR(admin), "error.email");
+		if (admin.getPhone().matches("^([0-9]{4,})$"))
+			admin.setPhone("+" + this.welcomeService.getPhone() + " " + admin.getPhone());
+		return this.administratorRepository.save(admin);
+	}
+
 	public Administrator save(final Administrator admin) {
 		Assert.isTrue(!this.checkEmailFormatter(admin), "email.wrong");
-		Assert.isTrue(this.checkEmail(admin), "error.email");
+		Assert.isTrue(!this.checkEmail(admin), "error.email");
 		if (admin.getPhone().matches("^([0-9]{4,})$"))
 			admin.setPhone("+" + this.welcomeService.getPhone() + " " + admin.getPhone());
 		return this.administratorRepository.save(admin);
@@ -164,7 +155,15 @@ public class AdministratorService {
 			res = false;
 		return res;
 	}
+
 	private Boolean checkEmail(final Administrator admin) {
+		Boolean res = false;
+		if (this.actorService.getActorByEmail(admin.getEmail()) != null && (admin.getEmail() != null && this.actorService.getActorByEmail(admin.getEmail()).equals(admin.getEmail())))
+			res = true;
+		return res;
+	}
+
+	private Boolean checkEmailR(final Administrator admin) {
 		Boolean res = true;
 		if (this.actorService.getActorByEmail(admin.getEmail()) == null)
 			res = false;
