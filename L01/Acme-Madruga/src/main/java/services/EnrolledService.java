@@ -57,7 +57,6 @@ public class EnrolledService {
 
 		enrolled.setBrotherhood(brotherhood);
 		enrolled.setMember(owner);
-		enrolled.setCreateMoment(DateTime.now().toDate());
 
 		return enrolled;
 	}
@@ -72,6 +71,9 @@ public class EnrolledService {
 	}
 
 	public Enrolled save(final Enrolled enrolled) {
+		if (enrolled.getState()!=null && enrolled.getState().equals(true) && enrolled.getDropMoment()==null) {
+			enrolled.setCreateMoment(DateTime.now().toDate());
+		}
 		return this.enrolledRepository.save(enrolled);
 	}
 
