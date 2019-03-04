@@ -129,7 +129,8 @@
 		<property name="email" value="donManuel@alum.us.es" />
         <property name="phone" value="+34665381121" />
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
-        <property name="userAccount" ref= "userAccount4"/>	
+        <property name="userAccount" ref= "userAccount4"/>
+        <property name="finder" ref="finder01"/>
     </bean>
     
     <bean id="member02" class="domain.Member">
@@ -140,7 +141,8 @@
 		<property name="email" value="donManuel@alum.us.es" />
         <property name="phone" value="+34665381121" />
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
-        <property name="userAccount" ref= "userAccount5"/>	
+        <property name="userAccount" ref= "userAccount5"/>
+        <property name="finder" ref="finder02"/>
     </bean>
     
     <!-- MEMBER -->
@@ -303,6 +305,12 @@
     	</property>
     </bean>	
 	<!-- AREA -->
+	<!-- FINDER -->
+    <bean id="finder01" class="domain.Finder">
+    </bean>
+    <bean id="finder02" class="domain.Finder">
+    </bean>
+	<!-- FINDER -->
 </beans>
 
 
