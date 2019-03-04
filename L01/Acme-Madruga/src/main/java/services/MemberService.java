@@ -56,7 +56,6 @@ public class MemberService {
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
-
 		if (registrationForm.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
 			binding.addError(error);
