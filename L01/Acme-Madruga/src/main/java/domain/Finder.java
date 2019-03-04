@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Finder {
+public class Finder extends DomainEntity {
 
 	//======== Atributos de la clase
 	private String					keyword;
@@ -21,7 +21,7 @@ public class Finder {
 	private Date					expirationDate;
 	//======== Relaciones
 	private Area					area;
-	private Collection<Brotherhood>	brotherhoods;
+	private Collection<Procession>	processions;
 
 
 	public String getKeyword() {
@@ -66,12 +66,12 @@ public class Finder {
 	}
 
 	@ManyToMany
-	public Collection<Brotherhood> getBrotherhoods() {
-		return this.brotherhoods;
+	public Collection<Procession> getProcessions() {
+		return this.processions;
 	}
 
-	public void setBrotherhoods(final Collection<Brotherhood> brotherhoods) {
-		this.brotherhoods = brotherhoods;
+	public void setProcessions(final Collection<Procession> processions) {
+		this.processions = processions;
 	}
 
 }
