@@ -22,6 +22,7 @@
 		<table>
     		<tr><td><spring:message code="enrolled.member" /><jstl:out value="${enrolled.member.name} ${enrolled.member.surname}"></jstl:out></td></tr>
     		<tr><td><spring:message code="enrolled.brotherhood" /><jstl:out value="${enrolled.brotherhood.name} ${enrolled.brotherhood.surname}"></jstl:out></td></tr>
+    		<tr><td><spring:message code="enrolled.createMomemnt" /><jstl:out value="${enrolled.createMoment}"></jstl:out></td></tr>
     		<c:choose>
     			<c:when test="${not empty enrolled.dropMoment}">
 		    		<tr><td><spring:message code="enrolled.dropMoment" /><jstl:out value="${enrolled.dropMoment}"></jstl:out></td></tr>    		

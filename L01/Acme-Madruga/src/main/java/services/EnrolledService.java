@@ -3,19 +3,20 @@ package services;
 
 import java.util.Collection;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Brotherhood;
+import domain.Enrolled;
+import domain.Member;
 import repositories.EnrolledRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Brotherhood;
-import domain.Enrolled;
-import domain.Member;
 
 /*
  * CONTROL DE CAMBIOS EnrolledService.java
@@ -56,6 +57,7 @@ public class EnrolledService {
 
 		enrolled.setBrotherhood(brotherhood);
 		enrolled.setMember(owner);
+		enrolled.setCreateMoment(DateTime.now().toDate());
 
 		return enrolled;
 	}

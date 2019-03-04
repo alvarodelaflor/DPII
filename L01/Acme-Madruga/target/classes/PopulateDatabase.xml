@@ -219,6 +219,7 @@
     <bean id="enrolled01" class="domain.Enrolled">
     	<property name="member" ref= "member01"/>
     	<property name="state" value="true"/>
+    	<property name="createMoment" value="2019/02/02 21:00"/>
     	<property name="brotherhood" ref= "brotherhood01"/>
     	<property name="position" ref= "position01"/>
     </bean>
