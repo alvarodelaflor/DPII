@@ -8,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /*
  * CONTROL DE CAMBIOS Member.java
@@ -21,6 +22,8 @@ public class Member extends Actor {
 
 	private Collection<Enrolled>	enrolleds;
 
+	private Finder					finder;
+
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	public Collection<Enrolled> getEnrolleds() {
@@ -29,6 +32,15 @@ public class Member extends Actor {
 
 	public void setEnrolleds(final Collection<Enrolled> enrolleds) {
 		this.enrolleds = enrolleds;
+	}
+
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	public Finder getFinder() {
+		return this.finder;
+	}
+
+	public void setFinder(final Finder finder) {
+		this.finder = finder;
 	}
 
 }
