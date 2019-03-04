@@ -63,3 +63,5 @@ nb-configuration.xml
 *.map
 
 *.MF
+
+L01/Acme-Madruga/src/main/resources/META-INF/BrotherhoodService\.java

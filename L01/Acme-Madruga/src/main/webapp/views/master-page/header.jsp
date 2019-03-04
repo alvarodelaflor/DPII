@@ -57,7 +57,7 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('MEMBER')">
-			<li><a class="fNiv"><spring:message	code="master.page.request" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.member" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="request/member/list.do"><spring:message code="master.page.request.list" /></a></li>
