@@ -49,6 +49,9 @@ public class BrotherhoodService {
 	@Autowired
 	private RequestService	requestService;
 
+	@Autowired
+	AreaService				areaService;
+
 
 	public Collection<Brotherhood> findByAreaId(final int areaId) {
 
@@ -285,4 +288,32 @@ public class BrotherhoodService {
 		return this.brotherhoodRepository.numberOfBrotherhood();
 	}
 
+	public Float minBrotherhoodPerArea() {
+		return this.brotherhoodRepository.minBrotherhoodPerArea();
+	}
+
+	public Float maxBrotherhoodPerArea() {
+		return this.brotherhoodRepository.maxBrotherhoodPerArea();
+	}
+
+	public Float avgBrotherhoodPerArea() {
+		return this.brotherhoodRepository.avgBrotherhoodPerArea();
+	}
+
+	public Float stddevBrotherhoodPerArea() {
+		return this.brotherhoodRepository.stddevBrotherhoodPerArea();
+	}
+
+	//	public Collection<String> countBrotherhoodPerArea() {
+	//		final List<String> count = new ArrayList<>();
+	//		count.addAll(this.brotherhoodRepository.countBrotherhoodPerArea());
+	//		final List<Area> area = new ArrayList<>();
+	//		area.addAll(this.areaService.findAll());
+	//		final Collection<String> res = new ArrayList<>();
+	//		for (int i = 0; i < count.size(); i++) {
+	//			res.add(area.get(i).getName());
+	//			res.add(count.get(i));
+	//		}
+	//		return count;
+	//	}
 }

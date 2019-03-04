@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.AdministratorService;
+import services.AreaService;
 import services.BrotherhoodService;
 import services.MemberService;
 import services.ProcessionService;
@@ -53,6 +54,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	ActorService			actorService;
+
+	@Autowired
+	AreaService				areaService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -198,7 +202,23 @@ public class AdministratorController extends AbstractController {
 		final Integer minProcessionN = this.processionService.minProcessionN();
 		final Integer maxProcessionN = this.processionService.maxProcessionN();
 
+		final Float avgBrotherhoodPerArea = this.brotherhoodService.avgBrotherhoodPerArea();
+		final Float minBrotherhoodPerArea = this.brotherhoodService.minBrotherhoodPerArea();
+		final Float maxBrotherhoodPerArea = this.brotherhoodService.maxBrotherhoodPerArea();
+		final Float stddevBrotherhoodPerArea = this.brotherhoodService.stddevBrotherhoodPerArea();
+		//		final Collection<String> countBrotherhoodPerArea = this.brotherhoodService.countBrotherhoodPerArea();
+		//		final Collection<Area> area = this.areaService.findAll();
+
 		result = new ModelAndView("administrator/dashboard");
+
+		//		result.addObject("area", area);
+
+		result.addObject("avgBrotherhoodPerArea", avgBrotherhoodPerArea);
+		result.addObject("minBrotherhoodPerArea", minBrotherhoodPerArea);
+		result.addObject("maxBrotherhoodPerArea", maxBrotherhoodPerArea);
+		result.addObject("stddevBrotherhoodPerArea", stddevBrotherhoodPerArea);
+		//		result.addObject("countBrotherhoodPerArea", countBrotherhoodPerArea);
+
 		result.addObject("largestBrotherhood", largestBrotherhood);
 		result.addObject("getRatioRequestProcessionStatusTrue", getRatioRequestProcessionStatusTrue);
 		result.addObject("getRatioRequestProcessionStatusFalse", getRatioRequestProcessionStatusFalse);

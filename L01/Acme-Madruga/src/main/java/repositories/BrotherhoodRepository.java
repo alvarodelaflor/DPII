@@ -39,15 +39,40 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	@Query("select b from Brotherhood b join b.enrolleds e where e.member.id=?1 and e.state=true")
 	Collection<Brotherhood> findFromMember(int member);
 
-	//12.3.2 
+	//12.3.2 CARMEN
 	@Query("select b,max(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state=true and e.dropMoment=null ) as float)) from Brotherhood b")
 	Brotherhood brotherhoodMaxRow();
 
-	//12.3.3 
+	//12.3.3 CARMEN
 	@Query("select b,min(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state=true and e.dropMoment=null ) as float)) from Brotherhood b")
 	Brotherhood brotherhoodMinRow();
 
-	//12.3.1
+	//12.3.1 CARMEN
 	@Query("select count(b) from Brotherhood b")
 	Integer numberOfBrotherhood();
+
+	//22.2.1 CARMEN
+	@Query("select min(cast((select count(b) from Brotherhood b where b.area = a) as float)) from Area a")
+	Float minBrotherhoodPerArea();
+
+	//22.2.1 CARMEN
+	@Query("select max(cast((select count(b) from Brotherhood b where b.area = a) as float)) from Area a")
+	Float maxBrotherhoodPerArea();
+
+	//22.2.1 CARMEN
+	@Query("select avg(cast((select count(b) from Brotherhood b where b.area = a) as float)) from Area a")
+	Float avgBrotherhoodPerArea();
+
+	//22.2.1 CARMEN
+	@Query("select stddev(cast((select count(b) from Brotherhood b where b.area = a) as float)) from Area a")
+	Float stddevBrotherhoodPerArea();
+
+	//22.2.1 CARMEN
+	@Query("select (select count(b) from Brotherhood b where b.area = a) from Area a")
+	Collection<String> countBrotherhoodPerArea();
+
+	//22.2.1 CARMEN
+	@Query("select (cast((select count(b) from Brotherhood b where b.area = a) as float)/(select count(a1) from Area a1)) from Area a")
+	Float ratioBrotherhoodPerArea();
+
 }

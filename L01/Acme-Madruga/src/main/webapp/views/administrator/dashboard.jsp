@@ -30,7 +30,11 @@
 		<p><spring:message code="admin.maxNumberOfMemberPerBrotherhood" /> <jstl:out value="${maxNumberOfMemberPerBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.minNumberOfMemberPerBrotherhood" /> <jstl:out value="${minNumberOfMemberPerBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.avgNumberOfMemberPerBrotherhood" /> <jstl:out value="${avgNumberOfMemberPerBrotherhood}"></jstl:out></p>
-		<p><spring:message code="admin.desviationOfNumberOfMemberPerBrotherhood" /> <jstl:out value="${desviationOfNumberOfMemberPerBrotherhood}"></jstl:out></p>		
+		<p><spring:message code="admin.avgBrotherhoodPerArea" /> <jstl:out value="${avgBrotherhoodPerArea}"></jstl:out></p>		
+		<p><spring:message code="admin.minBrotherhoodPerArea" /> <jstl:out value="${minBrotherhoodPerArea}"></jstl:out></p>		
+		<p><spring:message code="admin.maxBrotherhoodPerArea" /> <jstl:out value="${maxBrotherhoodPerArea}"></jstl:out></p>		
+		<p><spring:message code="admin.stddevBrotherhoodPerArea" /> <jstl:out value="${stddevBrotherhoodPerArea}"></jstl:out></p>		
+		
 		
 <p><spring:message code="admin.lisMemberAccept" /> </p>	
 <display:table pagesize="5" name="${lisMemberAccept}" id="lisMemberAccept"
