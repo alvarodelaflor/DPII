@@ -2,7 +2,7 @@
 ## Java
 ##########################
 *.class
-.mtj.tmp/
+*.mtj.tmp/
 *.jar
 *.war
 *.ear
@@ -31,10 +31,10 @@ out/
 ##########################
 ## Eclipse
 ##########################
-.metadata
-.classpath
-.project
-.settings/
+*.metadata
+*.classpath
+*.project
+*.settings/
 bin/
 tmp/
 *.tmp
@@ -42,7 +42,7 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.loadpath
+*.loadpath
 
 ##########################
 ## NetBeans
