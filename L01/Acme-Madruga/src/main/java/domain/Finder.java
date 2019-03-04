@@ -18,7 +18,7 @@ public class Finder {
 	private String					keyword;
 	private Date					minDate;
 	private Date					maxDate;
-
+	private Date					expirationDate;
 	//======== Relaciones
 	private Area					area;
 	private Collection<Brotherhood>	brotherhoods;
@@ -46,6 +46,14 @@ public class Finder {
 
 	public void setMaxDate(final Date maxDate) {
 		this.maxDate = maxDate;
+	}
+
+	public Date getExpirationDate() {
+		return this.expirationDate;
+	}
+
+	public void setExpirationDate(final Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
 	@ManyToOne(optional = true)
