@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Brotherhood;
+import domain.FloatBro;
+import domain.Procession;
 import security.LoginService;
 import services.BrotherhoodService;
 import services.FloatBroService;
 import services.PositionAuxService;
 import services.ProcessionService;
-import domain.FloatBro;
-import domain.Procession;
 
 /*
  * CONTROL DE CAMBIOS ProcessionBrotherhoodController.java
@@ -64,13 +65,14 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
 		final Collection<FloatBro> floats = this.floatBroService.findAll();
-		Boolean checkEmptyFloats = false;
-		if (floats.isEmpty())
-			checkEmptyFloats = true;
+		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Boolean checkValid = false;
+		if (floats.isEmpty() || brotherhood.getArea()==null)
+			checkValid = true;
 
 		result = new ModelAndView("procession/brotherhood/list");
 		result.addObject("processions", processions);
-		result.addObject("checkEmptyFloats", checkEmptyFloats);
+		result.addObject("checkValid", checkValid);
 		result.addObject("requestURI", "procession/brotherhood/list.do");
 
 		return result;

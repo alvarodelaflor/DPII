@@ -26,6 +26,7 @@ public class Enrolled extends DomainEntity {
 	private Boolean		state;
 	private Brotherhood	brotherhood;
 	private Position	position;
+	private Date		createMoment;
 	private Date		dropMoment;
 
 
@@ -70,6 +71,14 @@ public class Enrolled extends DomainEntity {
 
 	public void setDropMoment(final Date dropMoment) {
 		this.dropMoment = dropMoment;
+	}
+
+	public Date getCreateMoment() {
+		return createMoment;
+	}
+
+	public void setCreateMoment(Date createMoment) {
+		this.createMoment = createMoment;
 	}
 
 }

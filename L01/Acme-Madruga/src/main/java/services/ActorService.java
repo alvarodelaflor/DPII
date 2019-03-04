@@ -10,14 +10,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
+import security.LoginService;
 import domain.Actor;
+import domain.Administrator;
 
 @Service
 @Transactional
 public class ActorService {
 
 	@Autowired
-	private ActorRepository	actorRepository;
+	private ActorRepository			actorRepository;
+
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	public Collection<Actor> findAll() {
@@ -42,4 +47,28 @@ public class ActorService {
 		return this.actorRepository.getActorByUser(userName);
 	}
 
+	public Actor findByUserAccountId(final int userAccountId) {
+
+		return this.actorRepository.findByUserAccountId(userAccountId);
+	}
+
+	public Actor banByActorId(final Actor actor) {
+
+		// "Check that an Admin is creating the new Admin´s Acc"
+		final Administrator creatorAdmin = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(creatorAdmin, "user.logged.error");
+
+		actor.getUserAccount().setBanned(true);
+		return this.actorRepository.save(actor);
+	}
+
+	public Actor unbanByActorId(final Actor actor) {
+
+		// "Check that an Admin is creating the new Admin´s Acc"
+		final Administrator creatorAdmin = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(creatorAdmin, "user.logged.error");
+
+		actor.getUserAccount().setBanned(false);
+		return this.actorRepository.save(actor);
+	}
 }

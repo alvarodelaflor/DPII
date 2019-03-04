@@ -52,6 +52,25 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private String					password;
 	private Collection<Authority>	authorities;
 
+	private Boolean					spammerFlag	= false;
+	private Boolean					banned		= false;
+
+
+	public Boolean getSpammerFlag() {
+		return this.spammerFlag;
+	}
+
+	public void setSpammerFlag(final Boolean spammerFlag) {
+		this.spammerFlag = spammerFlag;
+	}
+
+	public Boolean getBanned() {
+		return this.banned;
+	}
+
+	public void setBanned(final Boolean banned) {
+		this.banned = banned;
+	}
 
 	@Size(min = 5, max = 32)
 	@Column(unique = true)
@@ -110,7 +129,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Transient
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return !this.banned;
 	}
 
 	@Transient

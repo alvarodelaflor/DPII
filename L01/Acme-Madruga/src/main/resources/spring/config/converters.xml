@@ -32,6 +32,8 @@
 		<bean class="converters.StringToUserAccountConverter"></bean>
 		<bean class="converters.StringToAuthorityConverter"></bean>
 		<bean class="converters.AuthorityToStringConverter" />
+		<bean class="converters.AreaToStringConverter" />
+		<bean class="converters.StringToAreaConverter" />
 	</util:list>
 	
 </beans>

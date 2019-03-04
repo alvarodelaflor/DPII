@@ -7,20 +7,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import repositories.BrotherhoodRepository;
-import domain.Brotherhood;
+import repositories.AreaRepository;
+import domain.Area;
 
 @Component
 @Transactional
-public class StringToBrotherhoodConverter implements Converter<String, Brotherhood> {
+public class StringToAreaConverter implements Converter<String, Area> {
 
 	@Autowired
-	BrotherhoodRepository	brotherhoodRepository;
+	AreaRepository	areaRepository;
 
 
 	@Override
-	public Brotherhood convert(final String text) {
-		Brotherhood result;
+	public Area convert(final String text) {
+		Area result;
 		int id;
 
 		try {
@@ -28,10 +28,10 @@ public class StringToBrotherhoodConverter implements Converter<String, Brotherho
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.brotherhoodRepository.findOne(id);
+				result = this.areaRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
-			System.out.println("Error en StringToPositionConverter CATCH: " + oops);
+			System.out.println("Error en StringToAreaConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;
