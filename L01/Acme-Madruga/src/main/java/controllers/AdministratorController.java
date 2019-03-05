@@ -141,10 +141,8 @@ public class AdministratorController extends AbstractController {
 				System.out.println("hola2");
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createEditModelAndView(admin, "email.wrong");
-				else if (oops.getMessage().equals("error.email"))
-					result = this.createEditModelAndView(admin, "error.email");
 				else
-					result = new ModelAndView("administrator/edit");
+					result = this.createEditModelAndView(admin, "error.email");
 			}
 		return result;
 	}
@@ -196,8 +194,8 @@ public class AdministratorController extends AbstractController {
 			result = new ModelAndView("welcome/index");
 		else {
 
-			final String largestBrotherhood = this.brotherhoodService.largestBrotherhood();
-			final String smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
+			final Collection<String> largestBrotherhood = this.brotherhoodService.largestBrotherhood();
+			final Collection<String> smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
 			final Collection<Procession> processionOrganised = this.processionService.processionOrganised();
 			final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
 			final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();
