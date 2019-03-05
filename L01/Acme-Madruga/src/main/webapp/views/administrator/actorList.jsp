@@ -41,18 +41,31 @@
 				</display:table>
 				<br />
 			</div>
-			<div>
+			<%-- <div>
 			<p><h1><spring:message code="wordList"></spring:message></h1></p>
 			<div>
 			<p><h2><spring:message code="positives"></spring:message></h2></p>
+				<display:table name="wordList" id="row" requestURI="${requestURI}" 
+					pagesize="5" class="displaytag">
+					<display:column property="posWords" titleKey="enWords"></display:column>
+					<display:column property="posWordsEs" titleKey="esWords"></display:column>
+					<display:column titleKey="edit">
+						<a href="administrator/editWords.do"><spring:message code="edit"/></a>
+					</display:column>
+				</display:table>
 			</div>
 			<div>
 			<p><h2><spring:message code="negatives"></spring:message></h2></p>
+				<display:table name="wordList" id="row" requestURI="${requestURI}" 
+					pagesize="5" class="displaytag">
+					<display:column property="negWords" titleKey="enWords"></display:column>
+					<display:column property="negWordsEs" titleKey="esWords"></display:column>
+				</display:table>
 			</div>
 			</div>
 			<div>
 				<acme:cancel url=" " code="Back" />
-			</div>
+			</div> --%>
 		</security:authorize>
 	</div>
 </body>
