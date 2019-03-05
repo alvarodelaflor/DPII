@@ -95,6 +95,8 @@
 				<ul>
 					<li class="arrow"></li>				
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
+					<li><a href="messageBox/list.do"><spring:message code="master.page.messageBox.list" /></a></li>	
+					<li><a href="socialProfile/list.do"><spring:message code="master.page.socialProfile.list" /></a></li>					
 					<security:authorize access="hasRole('BROTHERHOOD')">
 						<li><a href="brotherhood/edit.do"><spring:message code="master.page.brotherhood.edit" /></a></li>
 						<li><a href="brotherhood/show.do"><spring:message code="master.page.brotherhood.show" /></a></li>

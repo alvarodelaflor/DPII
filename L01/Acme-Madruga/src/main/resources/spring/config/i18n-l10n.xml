@@ -56,7 +56,9 @@
 		<value>/views/finder/messages</value>
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
-		
+		<value>/views/message/messages</value>
+		<value>/views/messageBox/messages</value>
+		<value>/views/socialProfile/messages</value>
 		<!-- ANTONIO SALVAT -->
 	</util:list>
 

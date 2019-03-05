@@ -55,7 +55,9 @@
 		<value>/views/finder/tiles.xml</value>
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
-		
+		<value>/views/message/tiles.xml</value>
+		<value>/views/messageBox/tiles.xml</value>
+		<value>/views/socialProfile/tiles.xml</value>
 		<!-- ANTONIO SALVAT -->
 	</util:list>
 

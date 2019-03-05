@@ -34,6 +34,10 @@
 		<bean class="converters.AuthorityToStringConverter" />
 		<bean class="converters.AreaToStringConverter" />
 		<bean class="converters.StringToAreaConverter" />
+		<bean class="converters.MessageToStringConverter" /> 
+		<bean class="converters.StringToMessageConverter" />
+		<bean class="converters.MessageBoxToStringConverter" /> 
+		<bean class="converters.StringToMessageBoxConverter" />
 	</util:list>
 	
 </beans>

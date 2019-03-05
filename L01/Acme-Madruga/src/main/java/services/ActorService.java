@@ -54,7 +54,7 @@ public class ActorService {
 
 	public Actor banByActorId(final Actor actor) {
 
-		// "Check that an Admin is creating the new Admin´s Acc"
+		// "Check that an Admin is creating the new Adminï¿½s Acc"
 		final Administrator creatorAdmin = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(creatorAdmin, "user.logged.error");
 
@@ -64,11 +64,24 @@ public class ActorService {
 
 	public Actor unbanByActorId(final Actor actor) {
 
-		// "Check that an Admin is creating the new Admin´s Acc"
+		// "Check that an Admin is creating the new Adminï¿½s Acc"
 		final Administrator creatorAdmin = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(creatorAdmin, "user.logged.error");
 
 		actor.getUserAccount().setBanned(false);
 		return this.actorRepository.save(actor);
 	}
+	public Actor getActorByUserId(final Integer id) {
+		final Actor a = this.actorRepository.getActorByUserId(id);
+		return a;
+	}
+
+	public Collection<String> getEmailofActors() {
+		return this.actorRepository.getEmailofActors();
+	}
+
+	public Actor getActorMessageBox(final Integer id) {
+		return this.actorRepository.getActorByMessageBox(id);
+	}
+
 }
