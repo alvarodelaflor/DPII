@@ -117,7 +117,7 @@ public class FinderService {
 			processions = this.finderRepository.findByFilterNoArea(keyword, minDate, maxDate);
 		else
 			processions = this.finderRepository.findByFilterWithArea(keyword, minDate, maxDate, area);
-		return null;
+		return processions;
 	}
 
 	public void delete(final Finder finder) {
