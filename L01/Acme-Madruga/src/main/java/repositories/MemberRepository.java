@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,5 +24,14 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 
 	@Query("select count(m) from Member m join m.enrolleds e where m.id=?1 and e.brotherhood.id=?2 and e.dropMoment=null and e.state=true")
 	int isBrotherhoodActiveMember(int memberId, int brotherHoodId);
+
+	@Query("select count(e) from Enrolled e join e.member m join e.brotherhood b where e.state=true and e.dropMoment=null group by b order by b desc")
+	Integer minNumberOfMembersPerBrotherhood();
+
+	@Query("select count(e) from Enrolled e join e.member m join e.brotherhood b where e.state=true and e.dropMoment=null group by b order by b asc")
+	Collection<Integer> listNumberOfMembersPerBrotherhood();
+
+	@Query("select count(e) from Enrolled e where e.state=true and e.dropMoment=null")
+	Integer numberOfMemberAccepted();
 
 }

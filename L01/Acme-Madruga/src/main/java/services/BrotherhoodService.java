@@ -20,28 +20,38 @@ import security.UserAccount;
 import domain.Brotherhood;
 import domain.Enrolled;
 import domain.Member;
+import domain.MessageBox;
 import forms.RegistrationForm;
+
+/*
+ * CONTROL DE CAMBIOS BrotherhoodService.java
+ * 
+ * Antonio Salvat 23/02/2019 19:49 Modifico create
+ */
 
 @Service
 public class BrotherhoodService {
 
 	@Autowired
-	BrotherhoodRepository	brotherhoodRepository;
+	BrotherhoodRepository		brotherhoodRepository;
 
 	@Autowired
-	private Validator		validator;
+	private Validator			validator;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private WelcomeService	welcomeService;
+	private WelcomeService		welcomeService;
 
 	@Autowired
-	private EnrolledService	enrollmentService;
+	private EnrolledService		enrollmentService;
 
 	@Autowired
-	private MemberService	memberService;
+	private MemberService		memberService;
+
+	@Autowired
+	private MessageBoxService	messageBoxService;
 
 
 	public Brotherhood reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
@@ -107,6 +117,43 @@ public class BrotherhoodService {
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
 		brotherhood.setUserAccount(user);
+
+		final MessageBox inBox = this.messageBoxService.create();
+		final MessageBox outBox = this.messageBoxService.create();
+		final MessageBox trashBox = this.messageBoxService.create();
+		final MessageBox notificationBox = this.messageBoxService.create();
+		final MessageBox spamBox = this.messageBoxService.create();
+
+		inBox.setName("in box");
+		outBox.setName("out box");
+		trashBox.setName("trash box");
+		notificationBox.setName("notification box");
+		spamBox.setName("spam box");
+
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		trashBox.setIsDefault(true);
+		notificationBox.setIsDefault(true);
+		spamBox.setIsDefault(true);
+
+		final MessageBox inBoxSave = this.messageBoxService.save(inBox);
+		final MessageBox outBoxSave = this.messageBoxService.save(outBox);
+		final MessageBox trashBoxSave = this.messageBoxService.save(trashBox);
+		final MessageBox notificationBoxSave = this.messageBoxService.save(notificationBox);
+		final MessageBox spamBoxSave = this.messageBoxService.save(spamBox);
+
+		final Collection<MessageBox> boxesDefault = new ArrayList<>();
+
+		boxesDefault.add(inBoxSave);
+		boxesDefault.add(outBoxSave);
+		boxesDefault.add(trashBoxSave);
+		boxesDefault.add(notificationBoxSave);
+		boxesDefault.add(spamBoxSave);
+
+		brotherhood.setMessageBoxes(boxesDefault);
+		brotherhood.setIsBanned(false);
+		brotherhood.setIsSuspicious(false);
+
 		return brotherhood;
 	}
 	public List<Brotherhood> findAll() {
@@ -172,5 +219,9 @@ public class BrotherhoodService {
 	public void dropLogged(final int brotherhoodId) {
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 		this.dropMember(member.getId(), brotherhoodId);
+	}
+
+	public Integer numberBrotherhood() {
+		return this.brotherhoodRepository.numberOfBrotherhood();
 	}
 }

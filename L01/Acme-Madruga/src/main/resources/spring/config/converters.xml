@@ -32,6 +32,10 @@
 		<bean class="converters.StringToUserAccountConverter"></bean>
 		<bean class="converters.StringToAuthorityConverter"></bean>
 		<bean class="converters.AuthorityToStringConverter" />
+		<bean class="converters.MessageToStringConverter" /> 
+		<bean class="converters.StringToMessageConverter" />
+		<bean class="converters.MessageBoxToStringConverter" /> 
+		<bean class="converters.StringToMessageBoxConverter" />
 	</util:list>
 	
 </beans>

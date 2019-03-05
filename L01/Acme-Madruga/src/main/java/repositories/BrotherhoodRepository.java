@@ -24,4 +24,7 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 
 	@Query("select b from Brotherhood b join b.enrolleds e where e.member.id=?1 and e.state=true")
 	Collection<Brotherhood> findFromMember(int member);
+
+	@Query("select count(b) from Brotherhood b")
+	Integer numberOfBrotherhood();
 }

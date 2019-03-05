@@ -127,7 +127,24 @@
 		<security:intercept-url pattern="/brotherhood/member/drop.do" access="hasRole('MEMBER')" />
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
+			<security:intercept-url pattern="/messageBox/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/messageBox/create.do" access="permitAll" />
+		<security:intercept-url pattern="/messageBox/createFolder.do" access="permitAll" /> 
+		<security:intercept-url pattern="/messageBox/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/messageBox/show.do" access="permitAll" />
+		<security:intercept-url pattern="/messageBox/delete.do" access="permitAll" />
+
+		<security:intercept-url pattern="/message/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/createMessageBox.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/message/show.do" access="permitAll" />
+		<security:intercept-url pattern="/message/delete.do" access="permitAll" />
+		<security:intercept-url pattern="/message/editMessageBox.do" access="permitAll" />
+		<security:intercept-url pattern="/message/createNotification.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/message/editNotification.do" access="hasRole('ADMIN')" />
 		
+		<security:intercept-url pattern="/socialProfile/list.do" access="permitAll" />
 		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

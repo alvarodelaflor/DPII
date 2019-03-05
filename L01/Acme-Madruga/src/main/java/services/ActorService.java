@@ -38,4 +38,17 @@ public class ActorService {
 		return this.actorRepository.getActorByEmail(email);
 	}
 
+	public Actor getActorByUserId(final Integer id) {
+		final Actor a = this.actorRepository.getActorByUserId(id);
+		return a;
+	}
+
+	public Collection<String> getEmailofActors() {
+		return this.actorRepository.getEmailofActors();
+	}
+
+	public Actor getActorMessageBox(final Integer id) {
+		return this.actorRepository.getActorByMessageBox(id);
+	}
+
 }
