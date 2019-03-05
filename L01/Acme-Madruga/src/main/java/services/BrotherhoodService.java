@@ -155,7 +155,7 @@ public class BrotherhoodService {
 	}
 
 	public Brotherhood saveR(final Brotherhood brotherhood) {
-		Assert.isTrue(!this.checkEmailR(brotherhood), "error.email");
+		Assert.isTrue(this.checkEmailR(brotherhood), "error.email");
 		Assert.isTrue(!this.checkEmailFormatter(brotherhood), "email.wrong");
 		Assert.isTrue(this.checkDate(brotherhood), "error.estableshmentDate");
 
@@ -191,13 +191,13 @@ public class BrotherhoodService {
 
 	private Boolean checkEmailR(final Brotherhood brotherhood) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmail(brotherhood.getEmail()) != null)
+		if (this.actorService.getActorByEmail(brotherhood.getEmail()) == null)
 			res = true;
 		return res;
 	}
 	private Boolean checkEmail(final Brotherhood brotherhood) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmailE(brotherhood.getEmail()) != null && (brotherhood.getEmail() != null && this.actorService.getActorByEmail(brotherhood.getEmail()).equals(brotherhood.getEmail())))
+		if (this.actorService.getActorByEmailE(brotherhood.getEmail()) == null && (brotherhood.getEmail() != null && this.actorService.getActorByEmail(brotherhood.getEmail()).equals(brotherhood.getEmail())))
 			res = true;
 		return res;
 	}

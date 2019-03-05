@@ -136,7 +136,7 @@ public class AdministratorService {
 
 	public Administrator saveR(final Administrator admin) {
 		Assert.isTrue(!this.checkEmailFormatter(admin), "email.wrong");
-		Assert.isTrue(!this.checkEmailR(admin), "error.email");
+		Assert.isTrue(this.checkEmailR(admin), "error.email");
 		if (admin.getPhone().matches("^([0-9]{4,})$"))
 			admin.setPhone("+" + this.welcomeService.getPhone() + " " + admin.getPhone());
 		return this.administratorRepository.save(admin);
@@ -150,24 +150,24 @@ public class AdministratorService {
 		return this.administratorRepository.save(admin);
 	}
 
-	private Boolean checkEmailFormatter(final Administrator brotherhood) {
+	private Boolean checkEmailFormatter(final Administrator admin) {
 		Boolean res = true;
-		if ((brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
-			|| brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}")))
+		if ((admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}")
+			|| admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)") || (admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)(>)"))))
 			res = false;
 		return res;
 	}
 
 	private Boolean checkEmail(final Administrator admin) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmailE(admin.getEmail()) != null && (admin.getEmail() != null && this.actorService.getActorByEmail(admin.getEmail()).equals(admin.getEmail())))
+		if (this.actorService.getActorByEmailE(admin.getEmail()) == null && (admin.getEmail() != null && this.actorService.getActorByEmail(admin.getEmail()).equals(admin.getEmail())))
 			res = true;
 		return res;
 	}
 
 	private Boolean checkEmailR(final Administrator admin) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmail(admin.getEmail()) != null)
+		if (this.actorService.getActorByEmail(admin.getEmail()) == null)
 			res = true;
 		return res;
 	}

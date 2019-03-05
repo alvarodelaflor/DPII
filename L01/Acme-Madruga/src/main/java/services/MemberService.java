@@ -115,6 +115,9 @@ public class MemberService {
 			result.setSurname(member.getSurname());
 			result.setPhoto(member.getPhoto());
 			result.setEmail(member.getEmail());
+			result.setPhone(member.getPhone());
+			result.setAddress(member.getAddress());
+			result.setMiddleName(member.getMiddleName());
 
 			this.validator.validate(result, binding);
 		}
@@ -144,7 +147,7 @@ public class MemberService {
 
 	public Member saveR(final Member member) {
 		Assert.isTrue(!this.checkEmailFormatter(member), "email.wrong");
-		Assert.isTrue(!this.checkEmailR(member), "error.email");
+		Assert.isTrue(this.checkEmailR(member), "error.email");
 		if (member.getPhone().matches("^([0-9]{4,})$"))
 			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.memberRepository.save(member);
@@ -167,14 +170,14 @@ public class MemberService {
 
 	private Boolean checkEmail(final Member member) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmailE(member.getEmail()) != null && (member.getEmail() != null && this.actorService.getActorByEmail(member.getEmail()).equals(member.getEmail())))
+		if (this.actorService.getActorByEmailE(member.getEmail()) == null && (member.getEmail() != null && this.actorService.getActorByEmail(member.getEmail()).equals(member.getEmail())))
 			res = true;
 		return res;
 	}
 
 	private Boolean checkEmailR(final Member member) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmail(member.getEmail()) != null)
+		if (this.actorService.getActorByEmail(member.getEmail()) == null)
 			res = true;
 		return res;
 	}
