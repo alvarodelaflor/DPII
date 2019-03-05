@@ -64,7 +64,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
-		final Collection<FloatBro> floats = this.floatBroService.findAll();
+		final Collection<FloatBro> floats = this.floatBroService.findAllBrotherhoodLogged();
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Boolean checkValid = false;
 		if (floats.isEmpty() || brotherhood.getArea()==null)
