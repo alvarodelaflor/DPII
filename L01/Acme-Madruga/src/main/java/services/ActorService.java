@@ -61,7 +61,7 @@ public class ActorService {
 
 	public Actor banByActorId(final Actor actor) {
 
-		// "Check that an Admin is creating the new Admin�s Acc"
+		// "Check that an Admin is logged"
 		final Administrator creatorAdmin = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(creatorAdmin, "user.logged.error");
 
@@ -71,9 +71,11 @@ public class ActorService {
 
 	public Actor unbanByActorId(final Actor actor) {
 
-		// "Check that an Admin is creating the new Admin�s Acc"
+		// "Check that an Admin is logged"
 		final Administrator creatorAdmin = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(creatorAdmin, "user.logged.error");
+
+		Assert.isTrue(actor.getUserAccount().getSpammerFlag() != false, "ban.error");
 
 		actor.getUserAccount().setBanned(false);
 		return this.actorRepository.save(actor);

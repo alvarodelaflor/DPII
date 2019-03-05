@@ -364,9 +364,12 @@ public class AdministratorController extends AbstractController {
 			}
 		} catch (final Throwable oops) {
 
-			res = new ModelAndView("redirect:../#");
-		}
-
+			final Actor actor = this.memberService.findOne(actorId);
+			if (oops.getMessage() == "ban.error")
+				res = this.createEditModelAndView2(actor, "ban.error");
+			else
+				res = new ModelAndView("redirect:../#");
+		
 		return res;
 	}
 
@@ -389,7 +392,11 @@ public class AdministratorController extends AbstractController {
 			}
 		} catch (final Throwable oops) {
 
-			res = new ModelAndView("redirect:../#");
+			final Actor actor = this.brotherhoodService.findOne(actorId);
+			if (oops.getMessage() == "ban.error")
+				res = this.createEditModelAndView2(actor, "ban.error");
+			else
+				res = new ModelAndView("redirect:../#");
 		}
 
 		return res;
