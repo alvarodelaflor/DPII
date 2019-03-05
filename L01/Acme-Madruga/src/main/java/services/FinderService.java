@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -59,7 +60,7 @@ public class FinderService {
 		// Si la caché ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
 			final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
-			res.setProcessions(processions);
+			res.setProcessions(this.getProcessionAmount(processions));
 
 			final Calendar c = Calendar.getInstance();
 			c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
@@ -79,7 +80,8 @@ public class FinderService {
 
 		final Finder res = this.finderRepository.findOne(member.getId());
 		final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
-		res.setProcessions(processions);
+
+		res.setProcessions(this.getProcessionAmount(processions));
 		final Calendar c = Calendar.getInstance();
 		c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
 		res.setExpirationDate(c.getTime());
@@ -129,5 +131,15 @@ public class FinderService {
 		final Authority au = new Authority();
 		au.setAuthority(authority);
 		return LoginService.getPrincipal().getAuthorities().contains(au);
+	}
+
+	private Collection<Procession> getProcessionAmount(final Collection<Procession> processions) {
+		final Collection<Procession> amount = new HashSet<>();
+		for (int i = 0; i < this.configurationService.getConfiguration().getCacheAmount(); i++) {
+			if (processions.iterator().hasNext() == false)
+				break;
+			amount.add(processions.iterator().next());
+		}
+		return amount;
 	}
 }
