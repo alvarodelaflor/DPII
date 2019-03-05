@@ -27,13 +27,16 @@ import domain.Procession;
 public class FinderService {
 
 	@Autowired
-	private FinderRepository	finderRepository;
+	private FinderRepository		finderRepository;
 
 	@Autowired
-	private MemberService		memberService;
+	private MemberService			memberService;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	public Finder create() {
@@ -57,11 +60,13 @@ public class FinderService {
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
 			final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
 			res.setProcessions(processions);
-			// TODO: Actualizar fecha de expiración
+
+			final Calendar c = Calendar.getInstance();
+			c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
+			res.setExpirationDate(c.getTime());
 		}
 		return res;
 	}
-
 	/**
 	 * Vuelve a buscar procesiones y actualiza el finder
 	 * 
@@ -75,7 +80,9 @@ public class FinderService {
 		final Finder res = this.finderRepository.findOne(member.getId());
 		final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
 		res.setProcessions(processions);
-		// TODO: Actualizar fecha de expiración
+		final Calendar c = Calendar.getInstance();
+		c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
+		res.setExpirationDate(c.getTime());
 		return res;
 	}
 
@@ -111,6 +118,11 @@ public class FinderService {
 		else
 			processions = this.finderRepository.findByFilterWithArea(keyword, minDate, maxDate, area);
 		return null;
+	}
+
+	public void delete(final Finder finder) {
+		// We don't have to check any authority because this won't be called on the client side
+		this.finderRepository.delete(finder);
 	}
 
 	private boolean checkAuthority(final String authority) {
