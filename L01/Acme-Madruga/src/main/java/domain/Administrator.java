@@ -25,7 +25,7 @@ public class Administrator extends Actor {
 	private Configuration	configuration;
 
 
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	public Configuration getConfiguration() {
 		return this.configuration;
 	}
