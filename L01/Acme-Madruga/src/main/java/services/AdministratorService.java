@@ -35,6 +35,9 @@ public class AdministratorService {
 	@Autowired
 	private WelcomeService			welcomeService;
 
+	@Autowired
+	private ConfigurationService	configurationService;
+
 
 	Administrator findByUserAccountId(final int userAccountId) {
 
@@ -53,7 +56,7 @@ public class AdministratorService {
 		result.setPhone(registrationForm.getPhone());
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
-
+		result.setConfiguration(this.configurationService.getConfiguration());
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
@@ -92,7 +95,6 @@ public class AdministratorService {
 		this.validator.validate(result, binding);
 		return result;
 	}
-
 	public Administrator reconstruct(final Administrator admin, final BindingResult binding) {
 		Administrator result;
 
