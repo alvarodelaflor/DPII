@@ -16,12 +16,21 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 
 <security:authorize access="hasRole('ADMIN')"> 
 <div class="content">
 	<table>
-		<tr><td><spring:message code="admin.photo" /><br>
-		<img width="95" src="${administrator.photo}" alt=<jstl:out value="${administrator.photo}"></jstl:out> /></td></tr>
+			<c:choose>
+    		<c:when test="${administrator.photo==''}">
+				<tr><td><spring:message code="admin.photo" /><br>
+    		</c:when>    
+    		<c:otherwise>
+				<tr><td><spring:message code="admin.photo" /><br>
+				<img width="95" src="${administrator.photo}" alt="ERROR"/></td></tr>
+    		</c:otherwise>
+		</c:choose>
 		<tr><td><spring:message code="admin.name" /> <jstl:out	value="${administrator.name}"></jstl:out></td></tr>
 		<tr><td><spring:message code="admin.middleName" /> <jstl:out	value="${administrator.middleName}"></jstl:out></td></tr>		
 		<tr><td><spring:message code="admin.surname" /> <jstl:out value="${administrator.surname}"></jstl:out></td></tr>

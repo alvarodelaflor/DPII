@@ -112,7 +112,7 @@
     	<property name="middleName" value="Boss" />
     	<property name="surname" value="Fernández Benjumea" />
     	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
-		<property name="email" value="doñaCarmen@alum.us.es" />
+		<property name="email" value="Carmen@alum.us.es" />
         <property name="phone" value="+34625381121" />
         <property name="address" value="Lora del río, nº5" />
         <property name="userAccount" ref= "userAccount1"/>	

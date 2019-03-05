@@ -197,7 +197,7 @@ public class BrotherhoodService {
 	}
 	private Boolean checkEmail(final Brotherhood brotherhood) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmail(brotherhood.getEmail()) != null && (brotherhood.getEmail() != null && this.actorService.getActorByEmail(brotherhood.getEmail()).equals(brotherhood.getEmail())))
+		if (this.actorService.getActorByEmailE(brotherhood.getEmail()) != null && (brotherhood.getEmail() != null && this.actorService.getActorByEmail(brotherhood.getEmail()).equals(brotherhood.getEmail())))
 			res = true;
 		return res;
 	}
@@ -276,12 +276,12 @@ public class BrotherhoodService {
 
 	public String largestBrotherhood() {
 		final Brotherhood b = this.brotherhoodRepository.brotherhoodMaxRow();
-		return b.getTitle();
+		return b == null ? null : b.getTitle();
 	}
 
 	public String smallestBrotherhood() {
 		final Brotherhood b = this.brotherhoodRepository.brotherhoodMinRow();
-		return b.getTitle();
+		return b == null ? null : b.getTitle();
 	}
 
 	public Integer numberBrotherhood() {
@@ -304,16 +304,8 @@ public class BrotherhoodService {
 		return this.brotherhoodRepository.stddevBrotherhoodPerArea();
 	}
 
-	//	public Collection<String> countBrotherhoodPerArea() {
-	//		final List<String> count = new ArrayList<>();
-	//		count.addAll(this.brotherhoodRepository.countBrotherhoodPerArea());
-	//		final List<Area> area = new ArrayList<>();
-	//		area.addAll(this.areaService.findAll());
-	//		final Collection<String> res = new ArrayList<>();
-	//		for (int i = 0; i < count.size(); i++) {
-	//			res.add(area.get(i).getName());
-	//			res.add(count.get(i));
-	//		}
-	//		return count;
-	//	}
+	public Collection<Object[]> countBrotherhoodPerArea() {
+		return this.brotherhoodRepository.countBrotherhoodPerArea();
+	}
+
 }

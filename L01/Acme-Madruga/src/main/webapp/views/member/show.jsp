@@ -15,13 +15,21 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <security:authorize access="hasRole('MEMBER')"> 
 <div class="content">
 	<table>
-		<tr><td><spring:message code="member.photo" /><br>
-		<img width="95" src="${member.photo}" alt="Error" /></td></tr>
+		<c:choose>
+    		<c:when test="${member.photo==''}">
+				<tr><td><spring:message code="member.photo" /><br>
+    		</c:when>    
+    		<c:otherwise>
+				<tr><td><spring:message code="member.photo" /><br>
+				<img width="95" src="${member.photo}" alt="ERROR"/></td></tr>
+    		</c:otherwise>
+		</c:choose>
 		<tr><td><spring:message code="member.name" /> <jstl:out	value="${member.name}"></jstl:out></td></tr>
 		<tr><td><spring:message code="member.middleName" /> <jstl:out	value="${member.middleName}"></jstl:out></td></tr>
 		<tr><td><spring:message code="member.surname" /> <jstl:out value="${member.surname}"></jstl:out></td></tr>

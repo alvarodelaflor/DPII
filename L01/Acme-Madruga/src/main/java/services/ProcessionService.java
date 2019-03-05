@@ -201,11 +201,11 @@ public class ProcessionService {
 
 	public String minProcession() {
 		final Procession p = this.processionRepository.minProcession();
-		return p.getTitle();
+		return p == null ? null : p.getTitle();
 	}
 	public String maxProcession() {
 		final Procession p = this.processionRepository.maxProcession();
-		return p.getTitle();
+		return p == null ? null : p.getTitle();
 	}
 	public Integer minProcessionN() {
 		return this.processionRepository.minProcessionN();

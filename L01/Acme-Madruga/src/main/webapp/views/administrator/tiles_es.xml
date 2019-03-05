@@ -27,7 +27,7 @@
 	</definition>
 	
 	<definition name="administrator/create" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Mostrar" />
+		<put-attribute name="title" value="Administrador: Crear" />
 		<put-attribute name="body" value="/views/administrator/create.jsp" />
 	</definition>
 	

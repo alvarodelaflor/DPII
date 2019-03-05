@@ -11,6 +11,8 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.AreaService;
 import services.BrotherhoodService;
+import services.FinderService;
 import services.MemberService;
 import services.ProcessionService;
 import services.RequestService;
@@ -60,6 +63,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	AreaService				areaService;
+
+	@Autowired
+	FinderService			finderService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -109,7 +115,7 @@ public class AdministratorController extends AbstractController {
 		final int idUserAccount = LoginService.getPrincipal().getId();
 
 		administrator = this.administratorService.getAdministratorByUserAccountId(idUserAccount);
-		Assert.notNull(administrator);
+		Assert.notNull(administrator != null);
 
 		result = new ModelAndView("administrator/edit");
 
@@ -123,21 +129,25 @@ public class AdministratorController extends AbstractController {
 
 		admin = this.administratorService.reconstruct(admin, binding);
 
+		System.out.println(binding);
 		if (binding.hasErrors())
 			result = new ModelAndView("administrator/edit");
 		else
 			try {
+				System.out.println("hola");
 				this.administratorService.save(admin);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
+				System.out.println("hola2");
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createEditModelAndView(admin, "email.wrong");
-				else
+				else if (oops.getMessage().equals("error.email"))
 					result = this.createEditModelAndView(admin, "error.email");
+				else
+					result = new ModelAndView("administrator/edit");
 			}
 		return result;
 	}
-
 	private ModelAndView createEditModelAndView(final Administrator administrator, final String string) {
 		ModelAndView result;
 
@@ -181,70 +191,85 @@ public class AdministratorController extends AbstractController {
 		final ModelAndView result;
 
 		final int userLoggin = LoginService.getPrincipal().getId();
-		final Administrator administrator;
-		administrator = this.administratorService.getAdministratorByUserAccountId(userLoggin);
-		Assert.isTrue(administrator != null);
 
-		final String largestBrotherhood = this.brotherhoodService.largestBrotherhood();
-		final String smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
-		final Collection<Procession> processionOrganised = this.processionService.processionOrganised();
-		final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
-		final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();
-		final Double getRatioRequestStatusNull = this.requestService.getRatioRequestStatusNull();
-		final Collection<Member> lisMemberAccept = this.memberService.lisMemberAccept();
-		final Double getRatioRequestProcessionStatusTrue = this.requestService.getRatioRequestProcessionStatusTrue();
-		final Double getRatioRequestProcessionStatusFalse = this.requestService.getRatioRequestProcessionStatusFalse();
-		final Double getRatioRequestProcessionStatusNull = this.requestService.getRatioRequestProcessionStatusNull();
+		if (this.administratorService.findOne(userLoggin) != null)
+			result = new ModelAndView("welcome/index");
+		else {
 
-		final Float maxNumberOfMemberPerBrotherhood = this.memberService.maxNumberOfMemberPerBrotherhood();
-		final Float minNumberOfMemberPerBrotherhood = this.memberService.minNumberOfMemberPerBrotherhood();
-		final Float avgNumberOfMemberPerBrotherhood = this.memberService.avgNumberOfMemberPerBrotherhood();
-		final Float desviationOfNumberOfMemberPerBrotherhood = this.memberService.desviationOfNumberOfMemberPerBrotherhood();
-		final String minProcession = this.processionService.minProcession();
-		final String maxProcession = this.processionService.maxProcession();
-		final Integer minProcessionN = this.processionService.minProcessionN();
-		final Integer maxProcessionN = this.processionService.maxProcessionN();
+			final String largestBrotherhood = this.brotherhoodService.largestBrotherhood();
+			final String smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
+			final Collection<Procession> processionOrganised = this.processionService.processionOrganised();
+			final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
+			final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();
+			final Double getRatioRequestStatusNull = this.requestService.getRatioRequestStatusNull();
+			final Collection<Member> lisMemberAccept = this.memberService.lisMemberAccept();
+			final Double getRatioRequestProcessionStatusTrue = this.requestService.getRatioRequestProcessionStatusTrue();
+			final Double getRatioRequestProcessionStatusFalse = this.requestService.getRatioRequestProcessionStatusFalse();
+			final Double getRatioRequestProcessionStatusNull = this.requestService.getRatioRequestProcessionStatusNull();
 
-		final Float avgBrotherhoodPerArea = this.brotherhoodService.avgBrotherhoodPerArea();
-		final Float minBrotherhoodPerArea = this.brotherhoodService.minBrotherhoodPerArea();
-		final Float maxBrotherhoodPerArea = this.brotherhoodService.maxBrotherhoodPerArea();
-		final Float stddevBrotherhoodPerArea = this.brotherhoodService.stddevBrotherhoodPerArea();
-		//		final Collection<String> countBrotherhoodPerArea = this.brotherhoodService.countBrotherhoodPerArea();
-		//		final Collection<Area> area = this.areaService.findAll();
+			final Float maxNumberOfMemberPerBrotherhood = this.memberService.maxNumberOfMemberPerBrotherhood();
+			final Float minNumberOfMemberPerBrotherhood = this.memberService.minNumberOfMemberPerBrotherhood();
+			final Float avgNumberOfMemberPerBrotherhood = this.memberService.avgNumberOfMemberPerBrotherhood();
+			final Float desviationOfNumberOfMemberPerBrotherhood = this.memberService.desviationOfNumberOfMemberPerBrotherhood();
+			final String minProcession = this.processionService.minProcession();
+			final String maxProcession = this.processionService.maxProcession();
+			final Integer minProcessionN = this.processionService.minProcessionN();
+			final Integer maxProcessionN = this.processionService.maxProcessionN();
+			final Collection<Object[]> countBrotherhoodPerArea = this.brotherhoodService.countBrotherhoodPerArea();
 
-		result = new ModelAndView("administrator/dashboard");
+			final Map<String, Long> map = new HashMap<>();
+			for (final Object[] o : countBrotherhoodPerArea)
+				map.put((String) o[0], (Long) o[1]);
 
-		//		result.addObject("area", area);
+			final Float avgBrotherhoodPerArea = this.brotherhoodService.avgBrotherhoodPerArea();
+			final Float minBrotherhoodPerArea = this.brotherhoodService.minBrotherhoodPerArea();
+			final Float maxBrotherhoodPerArea = this.brotherhoodService.maxBrotherhoodPerArea();
+			final Float stddevBrotherhoodPerArea = this.brotherhoodService.stddevBrotherhoodPerArea();
 
-		result.addObject("avgBrotherhoodPerArea", avgBrotherhoodPerArea);
-		result.addObject("minBrotherhoodPerArea", minBrotherhoodPerArea);
-		result.addObject("maxBrotherhoodPerArea", maxBrotherhoodPerArea);
-		result.addObject("stddevBrotherhoodPerArea", stddevBrotherhoodPerArea);
-		//		result.addObject("countBrotherhoodPerArea", countBrotherhoodPerArea);
+			final Float minNumberOfResult = this.finderService.minNumberOfResult();
+			final Float maxNumberOfResult = this.finderService.maxNumberOfResult();
+			final Float avgNumberOfResult = this.finderService.avgNumberOfResult();
+			final Float stddevNumberOfResult = this.finderService.stddevNumberOfResult();
+			final Float ratioFinder = this.finderService.ratioResult();
+			result = new ModelAndView("administrator/dashboard");
 
-		result.addObject("largestBrotherhood", largestBrotherhood);
-		result.addObject("getRatioRequestProcessionStatusTrue", getRatioRequestProcessionStatusTrue);
-		result.addObject("getRatioRequestProcessionStatusFalse", getRatioRequestProcessionStatusFalse);
-		result.addObject("getRatioRequestProcessionStatusNull", getRatioRequestProcessionStatusNull);
+			result.addObject("minNumberOfResult", minNumberOfResult);
+			result.addObject("maxNumberOfResult", maxNumberOfResult);
+			result.addObject("avgNumberOfResult", avgNumberOfResult);
+			result.addObject("stddevNumberOfResult", stddevNumberOfResult);
+			result.addObject("ratioFinder", ratioFinder);
 
-		result.addObject("maxNumberOfMemberPerBrotherhood", maxNumberOfMemberPerBrotherhood);
-		result.addObject("minNumberOfMemberPerBrotherhood", minNumberOfMemberPerBrotherhood);
-		result.addObject("avgNumberOfMemberPerBrotherhood", avgNumberOfMemberPerBrotherhood);
-		result.addObject("desviationOfNumberOfMemberPerBrotherhood", desviationOfNumberOfMemberPerBrotherhood);
+			result.addObject("map", map);
 
-		result.addObject("minProcession", minProcession);
-		result.addObject("maxProcession", maxProcession);
-		result.addObject("minProcessionN", minProcessionN);
-		result.addObject("maxProcessionN", maxProcessionN);
+			result.addObject("avgBrotherhoodPerArea", avgBrotherhoodPerArea);
+			result.addObject("minBrotherhoodPerArea", minBrotherhoodPerArea);
+			result.addObject("maxBrotherhoodPerArea", maxBrotherhoodPerArea);
+			result.addObject("stddevBrotherhoodPerArea", stddevBrotherhoodPerArea);
 
-		result.addObject("smallestBrotherhood", smallestBrotherhood);
-		result.addObject("processionOrganised", processionOrganised);
-		result.addObject("lisMemberAccept", lisMemberAccept);
-		result.addObject("getRatioRequestStatusTrue", getRatioRequestStatusTrue);
-		result.addObject("getRatioRequestStatusFalse", getRatioRequestStatusFalse);
-		result.addObject("getRatioRequestStatusNull", getRatioRequestStatusNull);
+			result.addObject("largestBrotherhood", largestBrotherhood);
+			result.addObject("getRatioRequestProcessionStatusTrue", getRatioRequestProcessionStatusTrue);
+			result.addObject("getRatioRequestProcessionStatusFalse", getRatioRequestProcessionStatusFalse);
+			result.addObject("getRatioRequestProcessionStatusNull", getRatioRequestProcessionStatusNull);
 
-		result.addObject("requestURI", "administrator/dashboard.do");
+			result.addObject("maxNumberOfMemberPerBrotherhood", maxNumberOfMemberPerBrotherhood);
+			result.addObject("minNumberOfMemberPerBrotherhood", minNumberOfMemberPerBrotherhood);
+			result.addObject("avgNumberOfMemberPerBrotherhood", avgNumberOfMemberPerBrotherhood);
+			result.addObject("desviationOfNumberOfMemberPerBrotherhood", desviationOfNumberOfMemberPerBrotherhood);
+
+			result.addObject("minProcession", minProcession);
+			result.addObject("maxProcession", maxProcession);
+			result.addObject("minProcessionN", minProcessionN);
+			result.addObject("maxProcessionN", maxProcessionN);
+
+			result.addObject("smallestBrotherhood", smallestBrotherhood);
+			result.addObject("processionOrganised", processionOrganised);
+			result.addObject("lisMemberAccept", lisMemberAccept);
+			result.addObject("getRatioRequestStatusTrue", getRatioRequestStatusTrue);
+			result.addObject("getRatioRequestStatusFalse", getRatioRequestStatusFalse);
+			result.addObject("getRatioRequestStatusNull", getRatioRequestStatusNull);
+
+			result.addObject("requestURI", "administrator/dashboard.do");
+		}
 
 		return result;
 	}

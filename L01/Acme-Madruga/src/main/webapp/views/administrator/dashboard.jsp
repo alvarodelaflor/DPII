@@ -34,8 +34,14 @@
 		<p><spring:message code="admin.minBrotherhoodPerArea" /> <jstl:out value="${minBrotherhoodPerArea}"></jstl:out></p>		
 		<p><spring:message code="admin.maxBrotherhoodPerArea" /> <jstl:out value="${maxBrotherhoodPerArea}"></jstl:out></p>		
 		<p><spring:message code="admin.stddevBrotherhoodPerArea" /> <jstl:out value="${stddevBrotherhoodPerArea}"></jstl:out></p>		
+		<p><spring:message code="admin.countBrotherhoodPerArea" /> <jstl:out value="${map}"></jstl:out></p>		
+		<p><spring:message code="admin.minNumberOfResult" /> <jstl:out value="${minNumberOfResult}"></jstl:out></p>		
+		<p><spring:message code="admin.maxNumberOfResult" /> <jstl:out value="${maxNumberOfResult}"></jstl:out></p>		
+		<p><spring:message code="admin.avgNumberOfResult" /> <jstl:out value="${avgNumberOfResult}"></jstl:out></p>		
+		<p><spring:message code="admin.stddevNumberOfResult" /> <jstl:out value="${stddevNumberOfResult}"></jstl:out></p>	
 		
 		
+				
 <p><spring:message code="admin.lisMemberAccept" /> </p>	
 <display:table pagesize="5" name="${lisMemberAccept}" id="lisMemberAccept"
 	requestURI="${requestURI}">

@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
 import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 import domain.Administrator;
 
@@ -41,6 +42,12 @@ public class ActorService {
 
 	public Actor getActorByEmail(final String email) {
 		return this.actorRepository.getActorByEmail(email);
+	}
+
+	public Actor getActorByEmailE(final String email) {
+		final UserAccount user = LoginService.getPrincipal();
+		final String emailA = this.actorRepository.findByUserAccountId(user.getId()).getEmail();
+		return this.actorRepository.getActorByEmail(email, emailA);
 	}
 
 	public Object getActorByUser(final String userName) {

@@ -17,6 +17,7 @@ import repositories.MemberRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Finder;
 import domain.Member;
 import forms.RegistrationForm;
 
@@ -38,6 +39,9 @@ public class MemberService {
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
 
+	@Autowired
+	private FinderService		finderService;
+
 
 	public Member reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Member result = this.create();
@@ -56,6 +60,11 @@ public class MemberService {
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
+
+		final Finder finder = this.finderService.create();
+		// We save a finder in the database to associate it with the member
+		final Finder f = this.finderService.save(finder);
+		result.setFinder(f);
 
 		if (registrationForm.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
@@ -154,15 +163,15 @@ public class MemberService {
 
 	private Boolean checkEmail(final Member member) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmail(member.getEmail()) != null && (member.getEmail() != null && this.actorService.getActorByEmail(member.getEmail()).equals(member.getEmail())))
+		if (this.actorService.getActorByEmailE(member.getEmail()) != null && (member.getEmail() != null && this.actorService.getActorByEmail(member.getEmail()).equals(member.getEmail())))
 			res = true;
 		return res;
 	}
 
 	private Boolean checkEmailR(final Member member) {
-		Boolean res = true;
-		if (this.actorService.getActorByEmail(member.getEmail()) == null)
-			res = false;
+		Boolean res = false;
+		if (this.actorService.getActorByEmail(member.getEmail()) != null)
+			res = true;
 		return res;
 	}
 

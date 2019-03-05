@@ -10,6 +10,9 @@ import domain.Actor;
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
+	@Query("select a from Actor a where a.email = ?1 and a.email != ?2")
+	Actor getActorByEmail(String email, String emailA);
+
 	@Query("select a from Actor a where a.email = ?1")
 	Actor getActorByEmail(String email);
 

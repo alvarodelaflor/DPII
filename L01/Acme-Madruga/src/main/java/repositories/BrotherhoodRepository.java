@@ -68,8 +68,8 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	Float stddevBrotherhoodPerArea();
 
 	//22.2.1 CARMEN
-	@Query("select (select count(b) from Brotherhood b where b.area = a) from Area a")
-	Collection<String> countBrotherhoodPerArea();
+	@Query("select a.name,(select count(b) from Brotherhood b where b.area = a) from Area a")
+	Collection<Object[]> countBrotherhoodPerArea();
 
 	//22.2.1 CARMEN
 	@Query("select (cast((select count(b) from Brotherhood b where b.area = a) as float)/(select count(a1) from Area a1)) from Area a")

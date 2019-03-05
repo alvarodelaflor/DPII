@@ -16,12 +16,21 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <security:authorize access="hasRole('BROTHERHOOD')"> 
 
 <div class="content">
 	<table>
-		<tr><td><spring:message code="brotherhood.photo" /><br>
-		<img width="95" src="${brotherhood.photo}" alt="Error" /></td></tr>
+		
+		<c:choose>
+    		<c:when test="${brotherhood.photo==''}">
+				<tr><td><spring:message code="brotherhood.photo" /><br>
+    		</c:when>    
+    		<c:otherwise>
+				<tr><td><spring:message code="brotherhood.photo" /><br>
+				<img width="95" src="${brotherhood.photo}" alt="ERROR"/></td></tr>
+    		</c:otherwise>
+		</c:choose>
 		<tr><td><spring:message code="brotherhood.name" /> <jstl:out value="${brotherhood.name}"></jstl:out></td></tr>
 		<tr><td><spring:message code="brotherhood.middleName" /> <jstl:out value="${brotherhood.middleName}"></jstl:out></td></tr>
 		<tr><td><spring:message code="brotherhood.surname" /> <jstl:out value="${brotherhood.surname}"></jstl:out></td></tr>

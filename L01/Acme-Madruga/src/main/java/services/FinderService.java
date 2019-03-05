@@ -80,7 +80,6 @@ public class FinderService {
 	}
 
 	public Finder save(final Finder finder) {
-		Assert.isTrue(this.checkAuthority("MEMBER"));
 		return this.finderRepository.save(finder);
 	}
 
@@ -118,4 +117,25 @@ public class FinderService {
 		au.setAuthority(authority);
 		return LoginService.getPrincipal().getAuthorities().contains(au);
 	}
+
+	public Float minNumberOfResult() {
+		return this.finderRepository.minNumberOfResult();
+	}
+
+	public Float maxNumberOfResult() {
+		return this.finderRepository.maxNumberOfResult();
+	}
+
+	public Float avgNumberOfResult() {
+		return this.finderRepository.avgNumberOfResult();
+	}
+
+	public Float stddevNumberOfResult() {
+		return this.finderRepository.stddevNumberOfResult();
+	}
+
+	public Float ratioResult() {
+		return this.finderRepository.ratioFinder();
+	}
+
 }

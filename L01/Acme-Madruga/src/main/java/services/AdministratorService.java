@@ -148,25 +148,25 @@ public class AdministratorService {
 		return this.administratorRepository.save(admin);
 	}
 
-	private Boolean checkEmailFormatter(final Administrator admin) {
+	private Boolean checkEmailFormatter(final Administrator brotherhood) {
 		Boolean res = true;
-		if ((admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}")
-			|| admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)") || admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)(>)")))
+		if ((brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
+			|| brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}")))
 			res = false;
 		return res;
 	}
 
 	private Boolean checkEmail(final Administrator admin) {
 		Boolean res = false;
-		if (this.actorService.getActorByEmail(admin.getEmail()) != null && (admin.getEmail() != null && this.actorService.getActorByEmail(admin.getEmail()).equals(admin.getEmail())))
+		if (this.actorService.getActorByEmailE(admin.getEmail()) != null && (admin.getEmail() != null && this.actorService.getActorByEmail(admin.getEmail()).equals(admin.getEmail())))
 			res = true;
 		return res;
 	}
 
 	private Boolean checkEmailR(final Administrator admin) {
-		Boolean res = true;
-		if (this.actorService.getActorByEmail(admin.getEmail()) == null)
-			res = false;
+		Boolean res = false;
+		if (this.actorService.getActorByEmail(admin.getEmail()) != null)
+			res = true;
 		return res;
 	}
 
