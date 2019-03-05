@@ -7,20 +7,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import repositories.FloatBroRepository;
-import domain.FloatBro;
+import domain.Float;
+import repositories.FloatRepository;
 
 @Component
 @Transactional
-public class StringToFloatBroConverter implements Converter<String, FloatBro> {
+public class StringToFloatConverter implements Converter<String, domain.Float> {
 
 	@Autowired
-	FloatBroRepository	floatBroRepository;
+	FloatRepository	floatRepository;
 
 
 	@Override
-	public FloatBro convert(final String text) {
-		FloatBro result;
+	public Float convert(final String text) {
+		Float result;
 		int id;
 
 		try {
@@ -28,10 +28,10 @@ public class StringToFloatBroConverter implements Converter<String, FloatBro> {
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.floatBroRepository.findOne(id);
+				result = this.floatRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
-			System.out.println("Error en StringToFloatBroConverter CATCH: " + oops);
+			System.out.println("Error en StringToFloatConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;

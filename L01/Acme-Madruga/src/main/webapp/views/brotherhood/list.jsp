@@ -29,7 +29,7 @@
 	<display:column property="surname" titleKey="brotherhood.surname"></display:column>
 	<display:column property="name" titleKey="brotherhood.name"></display:column>
 
-	<display:column titleKey="showFloatBro" ><a href="floatBro/listFloat.do?id=${row.id}"><spring:message code="floats" /></a></display:column>
+	<display:column titleKey="showFloat" ><a href="float/listFloat.do?id=${row.id}"><spring:message code="floats" /></a></display:column>
 	<display:column titleKey="showProcessions" ><a href="procession/listProcessions.do?id=${row.id}"><spring:message code="procession" /></a></display:column>
 	<display:column titleKey="showEnrolleds" ><a href="member/listMembers.do?id=${row.id}"><spring:message code="memebers" /></a></display:column>
 </display:table>

@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  --%>
 <!--
-	CONTROL DE CAMBIOS list_customer.jsp FLOATBRO
+	CONTROL DE CAMBIOS list_customer.jsp FLOAT
   
 	ALVARO 17/02/2019 19:28 CREACIÓN
 -->

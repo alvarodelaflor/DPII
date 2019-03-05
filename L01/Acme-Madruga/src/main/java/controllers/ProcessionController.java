@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.BrotherhoodService;
-import services.FloatBroService;
 import services.MemberService;
 import services.PositionAuxService;
 import services.ProcessionService;
@@ -45,9 +45,6 @@ public class ProcessionController extends AbstractController {
 
 	@Autowired
 	PositionAuxService	positionAuxService;
-
-	@Autowired
-	FloatBroService		floatBroService;
 
 	@Autowired
 	ProcessionService	processionService;
@@ -91,7 +88,8 @@ public class ProcessionController extends AbstractController {
 			Assert.notNull(procession, "procession.nul");
 			result = new ModelAndView("procession/brotherhood/show");
 			result.addObject("procession", procession);
-			result.addObject("validMember", this.validMember(processionId));
+			if (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null)
+				result.addObject("validMember", this.validMember(processionId));
 			result.addObject("requestURI", "procession/brotherhood/show.do");
 		}
 		return result;

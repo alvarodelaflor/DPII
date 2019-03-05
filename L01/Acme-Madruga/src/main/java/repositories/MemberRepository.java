@@ -50,4 +50,9 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	@Query("select stddev(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = true) as float)) from Brotherhood b")
 	Float stddevNumberOfMembersPerBrotherhood();
 
+	@Query("select count(e) from Enrolled e join e.member m join e.brotherhood b where e.state=true and e.dropMoment=null group by b order by b asc")
+	Collection<Integer> listNumberOfMembersPerBrotherhood();
+	@Query("select count(e) from Enrolled e where e.state=true and e.dropMoment=null")
+	Integer numberOfMemberAccepted();
+
 }

@@ -32,7 +32,7 @@
           	<acme:selectTrueFalse code="procession" path="isFinal"/>
           	<acme:numberbox code="procession.maxRow" path="maxRow"/>
           	<acme:numberbox code="procession.maxColum" path="maxColum"/>
-          	<acme:select items="${floatBros}" itemLabel="title" code="procession.floatBro" path="floatBro"/>
+          	<acme:select items="${floats}" itemLabel="title" code="procession.float" path="floatt"/>
           	
           	<acme:cancel url="procession/brotherhood/list.do" code="cancel"/>
           	<acme:submit name="save" code="send"/>

@@ -24,22 +24,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
-import services.FloatBroService;
+import services.FloatService;
 import domain.Brotherhood;
-import domain.FloatBro;
+import domain.Float;
 
 /*
- * CONTROL DE CAMBIOS FloatBroBrotherhoodController.java
+ * CONTROL DE CAMBIOS FloatBrotherhoodController.java
  * 
  * ALVARO 17/02/2019 19:18 CREACI�N DE LA CLASE
  */
 
 @Controller
-@RequestMapping("/floatBro")
-public class FloatBroController extends AbstractController {
+@RequestMapping("/float")
+public class FloatController extends AbstractController {
 
 	@Autowired
-	private FloatBroService		floatBroService;
+	private FloatService		floatService;
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
@@ -47,7 +47,7 @@ public class FloatBroController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public FloatBroController() {
+	public FloatController() {
 		super();
 	}
 
@@ -55,11 +55,11 @@ public class FloatBroController extends AbstractController {
 	public ModelAndView showPictureFloat(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
 
-		final FloatBro floatBro = this.floatBroService.findOne(id);
+		final domain.Float floatt = this.floatService.findOne(id);
 
 		List<String> pictures = new ArrayList<>();
-		if (floatBro.getPictures() != null && floatBro.getPictures().contains("'"))
-			pictures = Arrays.asList(floatBro.getPictures().split("'"));
+		if (floatt.getPictures() != null && floatt.getPictures().contains("'"))
+			pictures = Arrays.asList(floatt.getPictures().split("'"));
 
 		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
 		Boolean language;
@@ -71,11 +71,11 @@ public class FloatBroController extends AbstractController {
 			language = false;
 		}
 
-		result = new ModelAndView("floatBro/showPictureFloat");
+		result = new ModelAndView("float/showPictureFloat");
 		result.addObject("language", language);
 		result.addObject("pictures", pictures);
-		result.addObject("floatBro", floatBro);
-		result.addObject("requestURI", "floatBro/showPictureFloat.do");
+		result.addObject("float", floatt);
+		result.addObject("requestURI", "float/showPictureFloat.do");
 		return result;
 	}
 
@@ -84,11 +84,11 @@ public class FloatBroController extends AbstractController {
 		ModelAndView result;
 
 		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-		final Collection<FloatBro> floatbro = brotherhood.getFloatBro();
-		result = new ModelAndView("floatBro/listFloat");
+		final Collection<Float> floatt = brotherhood.getFloats();
+		result = new ModelAndView("float/listFloat");
 		result.addObject("brotherhood", brotherhood);
-		result.addObject("floatbro", floatbro);
-		result.addObject("requestURI", "floatBro/listFloat.do");
+		result.addObject("float", floatt);
+		result.addObject("requestURI", "float/listFloat.do");
 		return result;
 	}
 

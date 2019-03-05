@@ -6,9 +6,15 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -32,6 +38,8 @@ public class Finder extends DomainEntity {
 		this.keyword = keyword;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getMinDate() {
 		return this.minDate;
 	}
@@ -40,6 +48,8 @@ public class Finder extends DomainEntity {
 		this.minDate = minDate;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getMaxDate() {
 		return this.maxDate;
 	}
@@ -48,6 +58,8 @@ public class Finder extends DomainEntity {
 		this.maxDate = maxDate;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getExpirationDate() {
 		return this.expirationDate;
 	}
@@ -65,7 +77,9 @@ public class Finder extends DomainEntity {
 		this.area = area;
 	}
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {
+		CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST
+	}, targetEntity = Procession.class)
 	public Collection<Procession> getProcessions() {
 		return this.processions;
 	}

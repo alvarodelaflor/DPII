@@ -18,6 +18,7 @@
 	ALVARO 17/02/2019 19:35 Añadidos 2 floats
 	ALVARO 17/02/2019 20:29 Añadidos member y enrolled
 	ALVARO 18/02/2019 09:02 Añadidos positions por defecto
+	Antonio Salvat 24/02/2019 09:02 Añadidos messageBox por defecto
  -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -117,6 +118,15 @@
         <property name="address" value="Lora del río, nº5" />
         <property name="userAccount" ref= "userAccount1"/>
         <property name="configuration" ref= "configuration"/>
+         <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox01"/>
+                <ref bean="messageBox02"/>
+                <ref bean="messageBox03"/>
+                <ref bean="messageBox04"/>
+                <ref bean="messageBox05"/>
+        	</list>
+        </property>
     </bean>
 	<!-- ADMIN -->
 	
@@ -132,6 +142,15 @@
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
         <property name="userAccount" ref= "userAccount4"/>
         <property name="finder" ref="finder01"/>
+        <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox06"/>
+                <ref bean="messageBox07"/>
+                <ref bean="messageBox08"/>
+                <ref bean="messageBox09"/>
+                <ref bean="messageBox10"/>
+        	</list>
+        </property>	
     </bean>
     
     <bean id="member02" class="domain.Member">
@@ -139,11 +158,20 @@
     	<property name="middleName" value="Boss" />
     	<property name="surname" value="Ruiz de Lopera" />
     	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
-		<property name="email" value="donManuel@alum.us.es" />
+		<property name="email" value="donManuel2@alum.us.es" />
         <property name="phone" value="+34665381121" />
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
         <property name="userAccount" ref= "userAccount5"/>
         <property name="finder" ref="finder02"/>
+        <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox11"/>
+                <ref bean="messageBox12"/>
+                <ref bean="messageBox13"/>
+                <ref bean="messageBox14"/>
+                <ref bean="messageBox15"/>
+        	</list>
+        </property>	
     </bean>
     
     <!-- MEMBER -->
@@ -160,7 +188,16 @@
         <property name="userAccount" ref= "userAccount2"/>
         <property name="title" value= "Hermandad de la VERA CRUZ"/>
         <property name="establishmentDate" value="2018/11/10 08:00" />
-        <property name="area" ref= "area01"/>		
+        <property name="area" ref= "area01"/>	
+         <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox16"/>
+                <ref bean="messageBox17"/>
+                <ref bean="messageBox18"/>
+                <ref bean="messageBox19"/>
+                <ref bean="messageBox20"/>
+        	</list>
+        </property>	
     </bean>
     
     <bean id="brotherhood02" class="domain.Brotherhood">
@@ -168,16 +205,29 @@
     	<property name="middleName" value="Dogran" />
     	<property name="surname" value="de la Flor Bonilla" />
     	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
-		<property name="email" value="alvdebon@alum.us.es" />
+		<property name="email" value="alvdebon2@alum.us.es" />
         <property name="phone" value="+34665381121" />
         <property name="address" value="Calle Rodrigo de Triana 14, El Viso del Alcor, Sevilla, Spain" />
         <property name="userAccount" ref= "userAccount6"/>        
         <property name="title" value= "Hermandad del Rosario"/>
         <property name="establishmentDate" value="2018/11/10 08:00" />
-        <property name="area" ref= "area01"/>		
+        <property name="area" ref= "area01"/>	
+         <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox21"/>
+                <ref bean="messageBox22"/>
+                <ref bean="messageBox23"/>
+                <ref bean="messageBox24"/>
+                <ref bean="messageBox25"/>
+        	</list>
+        </property>	
     </bean>
     
     <!-- BROTHERHOOD -->
+    <!-- ADMIN -->
+	 
+    <!-- ADMIN -->
+    
     <!-- PROCESSION -->
     <bean id="procession01" class="domain.Procession">
     	<property name="title" value="Virgen del Rosario" />
@@ -188,7 +238,7 @@
 		<property name="isFinal" value= "true"/>
 		<property name="maxRow" value= "10"/>
 		<property name="maxColum" value= "1"/>
-		<property name="floatBro" ref= "floatBro01"/>
+		<property name="floatt" ref= "float01"/>
     </bean>
     
     <bean id="procession02" class="domain.Procession">
@@ -200,18 +250,18 @@
 		<property name="isFinal" value= "false"/>
 		<property name="maxRow" value= "9"/>
 		<property name="maxColum" value= "1"/>
-		<property name="floatBro" ref= "floatBro02"/>
+		<property name="floatt" ref= "float02"/>
     </bean>
     <!-- PROCESSION -->
     <!-- FLOAT -->
-	<bean id="floatBro01" class="domain.FloatBro">
+	<bean id="float01" class="domain.Float">
     	<property name="title" value="Old Float" />
         <property name="description" value="The bigger float" />
 		<property name="pictures" value="https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg'https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG" />
         <property name="brotherhood" ref= "brotherhood01"/>
     </bean>
     
-    <bean id="floatBro02" class="domain.FloatBro">
+    <bean id="float02" class="domain.Float">
     	<property name="title" value="New Float" />
         <property name="description" value="The tiny float" />
 		<property name="pictures" value="https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg'https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG" />
@@ -226,6 +276,8 @@
     	<property name="brotherhood" ref= "brotherhood01"/>
     	<property name="position" ref= "position01"/>
     </bean>
+   
+    
     <!-- ENROLLED -->
     <!-- POSITION -->
     <bean id="position01" class="domain.Position">
@@ -308,8 +360,28 @@
 	<!-- AREA -->
 	<!-- FINDER -->
     <bean id="finder01" class="domain.Finder">
+    	<property name="keyword" value=""/>
+    	<property name="expirationDate">
+    		<null/>
+    	</property>
+    	<property name="minDate">
+    		<null/>
+    	</property>
+    	<property name="maxDate">
+    		<null/>
+    	</property>
     </bean>
     <bean id="finder02" class="domain.Finder">
+    	<property name="keyword" value=""/>
+    	<property name="expirationDate">
+    		<null/>
+    	</property>
+    	<property name="minDate">
+    		<null/>
+    	</property>
+    	<property name="maxDate">
+    		<null/>
+    	</property>
     </bean>
 	<!-- FINDER -->
 	<!-- CONFIGURATION -->
@@ -378,6 +450,181 @@
     	<property name="cacheAmount" value="10"/>
     </bean>
 	<!-- CONFIGURATION -->
+	
+	 <bean id="messageBox01" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox02" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox03" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>   	
+    </bean>
+    
+     <bean id="messageBox04" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>    	
+    </bean>
+    
+     <bean id="messageBox05" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox06" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>   	
+    </bean>
+    
+     <bean id="messageBox07" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+       	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox08" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox09" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox10" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+        <bean id="messageBox11" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox12" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox13" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox14" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox15" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+          <bean id="messageBox16" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox17" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox18" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox19" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox20" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+          <bean id="messageBox21" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox22" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox23" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox24" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox25" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
 </beans>
 
 

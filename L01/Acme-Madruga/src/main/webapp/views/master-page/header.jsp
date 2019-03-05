@@ -12,7 +12,7 @@
   
 	ALVARO 17/02/2019 12:38 A�adido valores para brotherhood procession
 	ALVARO 17/02/2019 15:06 Cambiado logo
-	ALVARO 17/02/2019 19:32 A�adido floatBro
+	ALVARO 17/02/2019 19:32 A�adido float
 	ALVARO 17/02/2019 21:43 A�adido enrolled
 	HIPONA 19/02/2019 11:55 A�adido acceso a request/member/list
 -->
@@ -46,7 +46,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.brotherhood" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="floatBro/brotherhood/list.do"><spring:message code="master.page.brotherhood.floatBro.list" /></a></li>
+					<li><a href="float/brotherhood/list.do"><spring:message code="master.page.brotherhood.float.list" /></a></li>
 					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
 					<li><a href="enrolled/brotherhood/list.do"><spring:message code="master.page.brotherhood.enrolled.list" /></a></li>
 					<li><a href="request/brotherhood/list.do"><spring:message code="master.page.brotherhood.request.list" /></a></li>
@@ -62,7 +62,8 @@
 					<li class="arrow"></li>
 					<li><a href="request/member/list.do"><spring:message code="master.page.request.list" /></a></li>
 					<li><a href="brotherhood/member/list.do"><spring:message code="master.page.myBrotherhoods" /></a></li>
-					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>									
+					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>
+					<li><a href="finder/member/show.do"><spring:message code="master.page.finder" /></a></li>									
 				</ul>
 			</li>
 		</security:authorize>
@@ -94,6 +95,8 @@
 				<ul>
 					<li class="arrow"></li>				
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
+					<li><a href="messageBox/list.do"><spring:message code="master.page.messageBox.list" /></a></li>	
+					<li><a href="socialProfile/list.do"><spring:message code="master.page.socialProfile.list" /></a></li>					
 					<security:authorize access="hasRole('BROTHERHOOD')">
 						<li><a href="brotherhood/edit.do"><spring:message code="master.page.brotherhood.edit" /></a></li>
 						<li><a href="brotherhood/show.do"><spring:message code="master.page.brotherhood.show" /></a></li>

@@ -175,8 +175,12 @@ public class RequestService {
 	public void deleteAllRequestByProcession(final int processionId) {
 		final Collection<Request> requests = this.findRequestByProcessionId(processionId);
 		if (!requests.isEmpty())
-			for (final Request request : requests)
+			for (final Request request : requests) {
+				PositionAux positionAux = request.getPositionAux();
+				positionAux.setStatus(false);
+				this.positionAuxService.save(positionAux);
 				this.delete(request);
+			}
 	}
 
 	public Collection<Request> findAllByMemberAndStatusPending(final Member member) {

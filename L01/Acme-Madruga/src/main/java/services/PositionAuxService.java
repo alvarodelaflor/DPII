@@ -62,7 +62,7 @@ public class PositionAuxService {
 	}
 
 	public void deleteAllPositionByProcession(final int processionId) {
-		final Collection<PositionAux> possitionAux = this.findFreePositionByProcesion(processionId);
+		final Collection<PositionAux> possitionAux = this.findPositionByProcesion(processionId);
 		if (!possitionAux.isEmpty())
 			for (final PositionAux positionAux : possitionAux)
 				this.positionAuxRepository.delete(positionAux);

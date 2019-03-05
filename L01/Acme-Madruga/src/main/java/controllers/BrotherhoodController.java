@@ -28,7 +28,6 @@ import security.LoginService;
 import services.ActorService;
 import services.BrotherhoodService;
 import services.EnrolledService;
-import services.FloatBroService;
 import services.MemberService;
 import domain.Brotherhood;
 import forms.RegistrationForm;
@@ -42,9 +41,6 @@ public class BrotherhoodController extends AbstractController {
 
 	@Autowired
 	MemberService		memberService;
-
-	@Autowired
-	FloatBroService		floatBroService;
 
 	@Autowired
 	EnrolledService		enrolledService;

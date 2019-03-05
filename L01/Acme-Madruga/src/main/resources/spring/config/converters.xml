@@ -26,14 +26,18 @@
 		<bean class="converters.StringToPositionConverter" />
 		<bean class="converters.PositionAuxToStringConverter" /> 
 		<bean class="converters.StringToPositionAuxConverter" />
-		<bean class="converters.FloatBroToStringConverter" /> 
-		<bean class="converters.StringToFloatBroConverter" />   
+		<bean class="converters.FloatToStringConverter" /> 
+		<bean class="converters.StringToFloatConverter" />   
 		<bean class="converters.UserAccountToStringConverter"></bean>
 		<bean class="converters.StringToUserAccountConverter"></bean>
 		<bean class="converters.StringToAuthorityConverter"></bean>
 		<bean class="converters.AuthorityToStringConverter" />
 		<bean class="converters.AreaToStringConverter" />
 		<bean class="converters.StringToAreaConverter" />
+		<bean class="converters.MessageToStringConverter" /> 
+		<bean class="converters.StringToMessageConverter" />
+		<bean class="converters.MessageBoxToStringConverter" /> 
+		<bean class="converters.StringToMessageBoxConverter" />
 	</util:list>
 	
 </beans>

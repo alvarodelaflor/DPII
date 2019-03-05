@@ -55,8 +55,7 @@ public class FinderService {
 		Assert.isTrue(this.checkAuthority("MEMBER"));
 
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
-		final Finder res = this.finderRepository.findOne(member.getId());
-
+		final Finder res = this.finderRepository.getByMember(member.getId());
 		// Si la cach� ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
 			final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
@@ -73,22 +72,20 @@ public class FinderService {
 	 * 
 	 * @return Finder con los datos nuevos
 	 */
-	public Finder findByLoggedMemberNoCache() {
+	public Finder findNoCache(final Finder finder) {
 		// We have to check member authority
 		Assert.isTrue(this.checkAuthority("MEMBER"));
-		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
-
-		final Finder res = this.finderRepository.findOne(member.getId());
-		final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
-
-		res.setProcessions(this.getProcessionAmount(processions));
+		final Collection<Procession> processions = this.findByFilter(finder.getKeyword(), finder.getMinDate(), finder.getMaxDate(), finder.getArea());
+		finder.setProcessions(this.getProcessionAmount(processions));
 		final Calendar c = Calendar.getInstance();
 		c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
-		res.setExpirationDate(c.getTime());
-		return res;
+		finder.setExpirationDate(c.getTime());
+		return finder;
 	}
 
 	public Finder save(final Finder finder) {
+		if (finder.getId() != 0)
+			Assert.isTrue(this.checkAuthority("MEMBER"));
 		return this.finderRepository.save(finder);
 	}
 
@@ -102,7 +99,8 @@ public class FinderService {
 	}
 
 	public Finder reconstructNoCache(final Finder finder, final BindingResult binding) {
-		final Finder aux = this.findByLoggedMemberNoCache();
+		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
+		final Finder aux = this.finderRepository.getByMember(member.getId());
 		finder.setId(aux.getId());
 		finder.setVersion(aux.getVersion());
 		finder.setExpirationDate(aux.getExpirationDate());
@@ -111,7 +109,8 @@ public class FinderService {
 	}
 
 	public Collection<Procession> findByFilter(final String keyword, Date minDate, Date maxDate, final Area area) {
-		final Collection<Procession> processions;
+		Collection<Procession> processions;
+
 		minDate = minDate == null ? new GregorianCalendar(0, Calendar.JANUARY, 1).getTime() : minDate;
 		maxDate = maxDate == null ? new GregorianCalendar(9999, Calendar.DECEMBER, 31).getTime() : maxDate;
 		if (area == null)
@@ -155,10 +154,13 @@ public class FinderService {
 
 	private Collection<Procession> getProcessionAmount(final Collection<Procession> processions) {
 		final Collection<Procession> amount = new HashSet<>();
-		for (int i = 0; i < this.configurationService.getConfiguration().getCacheAmount(); i++) {
-			if (processions.iterator().hasNext() == false)
+		int i = 0;
+		for (final Procession p : processions) {
+			if (i >= this.configurationService.getConfiguration().getCacheAmount())
 				break;
-			amount.add(processions.iterator().next());
+			else
+				amount.add(p);
+			i++;
 		}
 		return amount;
 	}

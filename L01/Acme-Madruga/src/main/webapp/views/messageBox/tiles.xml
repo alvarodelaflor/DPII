@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+	
+	<definition name="messageBox/create" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Create messageBox" />
+		<put-attribute name="body" value="/views/messageBox/edit.jsp" />
+	</definition>
+	
+	<definition name="messageBox/list" extends="master.page">	
+		<put-attribute name="title" value="List of messageBoxes" />
+		<put-attribute name="body" value="/views/messageBox/list.jsp" />
+	</definition>
+	
+	<definition name="messageBox/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit messageBox" />
+		<put-attribute name="body" value="/views/messageBox/edit.jsp" />
+	</definition>
+	
+	<definition name="messageBox/show" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Show messageBox" />
+		<put-attribute name="body" value="/views/messageBox/show.jsp" />
+	</definition>
+	
+	<definition name="messageBox/createFolder" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Create messageBox" />
+		<put-attribute name="body" value="/views/messageBox/edit.jsp" />
+	</definition>
+	
+	
+</tiles-definitions>

@@ -41,4 +41,6 @@ public interface FinderRepository extends JpaRepository<Finder, Integer> {
 	@Query("select (select count(f) from Finder f where f.processions.size = 0 and f = f2) /(select count(f1) from Finder f1 where f1.processions.size > 0 and f1 = f2) from Finder f2")
 	Float ratioFinder();
 
+	@Query("select m.finder from Member m where m.id=?1")
+	Finder getByMember(int id);
 }
