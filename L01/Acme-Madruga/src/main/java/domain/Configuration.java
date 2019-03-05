@@ -1,84 +1,84 @@
 
 package domain;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
 
-	private Collection<String>	posWords	= Arrays.asList();
-	private Collection<String>	negWords	= Arrays.asList();
+	private Collection<String>	posWords;
+	private Collection<String>	negWords;
 
-	private Collection<String>	posWordsEs	= Arrays.asList();
-	private Collection<String>	negWordsEs	= Arrays.asList();
+	private Collection<String>	posWordsEs;
+	private Collection<String>	negWordsEs;
 
-	private Date				expirationDate;
-
-	// NºResults + Cache
-	private Integer				hour;
-	private Integer				cant;
+	// Cache
+	private Integer				cacheHours;
+	private Integer				cacheAmount;
 
 
-	public Integer getHour() {
-		return this.hour;
+	@Min(1)
+	@Max(24)
+	public Integer getCacheHours() {
+		return this.cacheHours;
 	}
 
-	public void setHour(final Integer hour) {
-		this.hour = hour;
+	public void setCacheHours(final Integer cacheHours) {
+		this.cacheHours = cacheHours;
 	}
 
-	public Integer getCant() {
-		return this.cant;
+	@Min(0)
+	@Max(100)
+	public Integer getCacheAmount() {
+		return this.cacheAmount;
 	}
 
-	public void setCant(final Integer cant) {
-		this.cant = cant;
+	public void setCacheAmount(final Integer cacheAmount) {
+		this.cacheAmount = cacheAmount;
 	}
 
+	@ElementCollection
 	public Collection<String> getPosWords() {
 		return this.posWords;
-	}
-
-	public Collection<String> getNegWords() {
-		return this.negWords;
-	}
-
-	public Collection<String> getPosWordsEs() {
-		return this.posWordsEs;
-	}
-
-	public Collection<String> getNegWordsEs() {
-		return this.negWordsEs;
 	}
 
 	public void setPosWords(final Collection<String> posWords) {
 		this.posWords = posWords;
 	}
 
+	@ElementCollection
+	public Collection<String> getNegWords() {
+		return this.negWords;
+	}
+
 	public void setNegWords(final Collection<String> negWords) {
 		this.negWords = negWords;
+	}
+
+	@ElementCollection
+	public Collection<String> getPosWordsEs() {
+		return this.posWordsEs;
 	}
 
 	public void setPosWordsEs(final Collection<String> posWordsEs) {
 		this.posWordsEs = posWordsEs;
 	}
 
+	@ElementCollection
+	public Collection<String> getNegWordsEs() {
+		return this.negWordsEs;
+	}
+
 	public void setNegWordsEs(final Collection<String> negWordsEs) {
 		this.negWordsEs = negWordsEs;
 	}
 
-	public Date getExpirationDate() {
-		return this.expirationDate;
-	}
-
-	public void setExpirationDate(final Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
 }
