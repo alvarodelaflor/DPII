@@ -63,3 +63,10 @@
 			</form>
 		</jstl:if>
 	</div>
+	<div>
+		<form method="get" action="request/member/list.do">
+			<button type="submit">
+				<spring:message code="back" />
+			</button>
+		</form>
+	</div>

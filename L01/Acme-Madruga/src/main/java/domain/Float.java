@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 /*
- * CONTROL DE CAMBIOS FloatBro.java
+ * CONTROL DE CAMBIOS Float.java
  * 
  * ALVARO 17/02/2019 19:12 CREACI�N DE LA CLASE
  */
@@ -19,7 +20,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class FloatBro extends DomainEntity {
+@Table(name = "`float`")
+public class Float extends DomainEntity {
 
 	private String		title;
 	private String		description;

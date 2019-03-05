@@ -238,7 +238,7 @@
 		<property name="isFinal" value= "true"/>
 		<property name="maxRow" value= "10"/>
 		<property name="maxColum" value= "1"/>
-		<property name="floatBro" ref= "floatBro01"/>
+		<property name="floatt" ref= "float01"/>
     </bean>
     
     <bean id="procession02" class="domain.Procession">
@@ -250,18 +250,18 @@
 		<property name="isFinal" value= "false"/>
 		<property name="maxRow" value= "9"/>
 		<property name="maxColum" value= "1"/>
-		<property name="floatBro" ref= "floatBro02"/>
+		<property name="floatt" ref= "float02"/>
     </bean>
     <!-- PROCESSION -->
     <!-- FLOAT -->
-	<bean id="floatBro01" class="domain.FloatBro">
+	<bean id="float01" class="domain.Float">
     	<property name="title" value="Old Float" />
         <property name="description" value="The bigger float" />
 		<property name="pictures" value="https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg'https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG" />
         <property name="brotherhood" ref= "brotherhood01"/>
     </bean>
     
-    <bean id="floatBro02" class="domain.FloatBro">
+    <bean id="float02" class="domain.Float">
     	<property name="title" value="New Float" />
         <property name="description" value="The tiny float" />
 		<property name="pictures" value="https://3.bp.blogspot.com/-7KjUjmWXO6E/UW57NSHS1zI/AAAAAAAACs0/KRWMiJCj1DI/s1600/VeraCruz+y+Rosario+11.jpg'https://1.bp.blogspot.com/-lyTf5UUNC5A/VvAv-Cw5RrI/AAAAAAAAMV4/cTePxp6AM4odlCTxIZqHQsrJT1et-gcfw/s1600/amargura.JPG" />

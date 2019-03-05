@@ -163,7 +163,7 @@ public class ProcessionService {
 			//			result.setMoment(procession.getMoment());
 			//			result.setIsFinal(procession.getIsFinal());
 			//			result.setMaxRow(procession.getMaxRow());
-			//			result.setFloatBro(procession.getFloatBro());
+			//			result.setFloat(procession.getFloat());
 			//			if (procession.getMoment() != null && result.getTicker() == null)
 			//				result.setTicker(this.randomTicker(procession));
 			//			if (result.getBrotherhood() == null)
