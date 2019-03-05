@@ -55,10 +55,7 @@ public class MemberService {
 		result.setPhone(registrationForm.getPhone());
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
-		final Finder finder = this.finderService.create();
-		// We save a finder in the database to associate it with the member
-		final Finder f = this.finderService.save(finder);
-		result.setFinder(f);
+
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
