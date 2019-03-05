@@ -87,7 +87,8 @@ public class FinderService {
 	}
 
 	public Finder save(final Finder finder) {
-		Assert.isTrue(this.checkAuthority("MEMBER"));
+		if (finder.getId() != 0)
+			Assert.isTrue(this.checkAuthority("MEMBER"));
 		return this.finderRepository.save(finder);
 	}
 

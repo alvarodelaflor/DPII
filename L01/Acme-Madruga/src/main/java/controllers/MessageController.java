@@ -327,14 +327,19 @@ public class MessageController extends AbstractController {
 		final List<String> listEmail = new ArrayList<>();
 		listEmail.addAll(emails);
 		for (int i = 0; i < listEmail.size(); i++) {
+			System.out.println("Comienza la segunda iteracción");
+			System.out.println(listEmail.get(i));
 			final Actor a = this.actorService.getActorByEmail(listEmail.get(i));
+			System.out.println("Pasa el a");
 			final MessageBox inbox = this.messageBoxService.getInBoxActor(a.getId());
 			System.out.println("inbox y actor");
 			System.out.println(inbox);
 			System.out.println(a);
+			System.out.println(listEmail.get(i));
 			if (inbox == null)
 				emails.remove(listEmail.get(i));
 		}
+		System.out.println(emails);
 		result = new ModelAndView("message/edit");
 		result.addObject("msg", msg);
 		result.addObject("emails", emails);

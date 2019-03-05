@@ -63,6 +63,43 @@ public class MemberService {
 		result.setMiddleName(registrationForm.getMiddleName());
 		result.setPhone(registrationForm.getPhone());
 
+		//MailBox
+		final MessageBox inBox = this.messageBoxService.create();
+		final MessageBox outBox = this.messageBoxService.create();
+		final MessageBox trashBox = this.messageBoxService.create();
+		final MessageBox notificationBox = this.messageBoxService.create();
+		final MessageBox spamBox = this.messageBoxService.create();
+
+		inBox.setName("in box");
+		outBox.setName("out box");
+		trashBox.setName("trash box");
+		notificationBox.setName("notification box");
+		spamBox.setName("spam box");
+
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		trashBox.setIsDefault(true);
+		notificationBox.setIsDefault(true);
+		spamBox.setIsDefault(true);
+
+		final MessageBox inBoxSave = this.messageBoxService.save(inBox);
+		final MessageBox outBoxSave = this.messageBoxService.save(outBox);
+		final MessageBox trashBoxSave = this.messageBoxService.save(trashBox);
+		final MessageBox notificationBoxSave = this.messageBoxService.save(notificationBox);
+		final MessageBox spamBoxSave = this.messageBoxService.save(spamBox);
+
+		final Collection<MessageBox> boxesDefault = new ArrayList<>();
+
+		boxesDefault.add(inBoxSave);
+		boxesDefault.add(outBoxSave);
+		boxesDefault.add(trashBoxSave);
+		boxesDefault.add(notificationBoxSave);
+		boxesDefault.add(spamBoxSave);
+
+		result.setMessageBoxes(boxesDefault);
+		result.setIsBanned(false);
+		result.setIsSuspicious(false);
+
 		result.getUserAccount().setUsername(registrationForm.getUserName());
 		final Finder finder = this.finderService.create();
 		// We save a finder in the database to associate it with the member
@@ -113,9 +150,45 @@ public class MemberService {
 	public Member reconstruct(final Member member, final BindingResult binding) {
 		Member result;
 
-		if (member.getId() == 0)
+		if (member.getId() == 0) {
 			result = member;
-		else {
+			//MailBox
+			final MessageBox inBox = this.messageBoxService.create();
+			final MessageBox outBox = this.messageBoxService.create();
+			final MessageBox trashBox = this.messageBoxService.create();
+			final MessageBox notificationBox = this.messageBoxService.create();
+			final MessageBox spamBox = this.messageBoxService.create();
+
+			inBox.setName("in box");
+			outBox.setName("out box");
+			trashBox.setName("trash box");
+			notificationBox.setName("notification box");
+			spamBox.setName("spam box");
+
+			inBox.setIsDefault(true);
+			outBox.setIsDefault(true);
+			trashBox.setIsDefault(true);
+			notificationBox.setIsDefault(true);
+			spamBox.setIsDefault(true);
+
+			final MessageBox inBoxSave = this.messageBoxService.save(inBox);
+			final MessageBox outBoxSave = this.messageBoxService.save(outBox);
+			final MessageBox trashBoxSave = this.messageBoxService.save(trashBox);
+			final MessageBox notificationBoxSave = this.messageBoxService.save(notificationBox);
+			final MessageBox spamBoxSave = this.messageBoxService.save(spamBox);
+
+			final Collection<MessageBox> boxesDefault = new ArrayList<>();
+
+			boxesDefault.add(inBoxSave);
+			boxesDefault.add(outBoxSave);
+			boxesDefault.add(trashBoxSave);
+			boxesDefault.add(notificationBoxSave);
+			boxesDefault.add(spamBoxSave);
+
+			result.setMessageBoxes(boxesDefault);
+			result.setIsBanned(false);
+			result.setIsSuspicious(false);
+		} else {
 			result = this.memberRepository.findOne(member.getId());
 
 			result.setName(member.getName());

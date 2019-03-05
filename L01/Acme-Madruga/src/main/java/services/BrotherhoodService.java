@@ -54,19 +54,18 @@ public class BrotherhoodService {
 	private MemberService		memberService;
 
 	@Autowired
-	private RequestService	requestService;
+	private RequestService		requestService;
 	@Autowired
 	private MessageBoxService	messageBoxService;
 
 	@Autowired
-	AreaService				areaService;
+	AreaService					areaService;
 
 
 	public Collection<Brotherhood> findByAreaId(final int areaId) {
 
 		return this.brotherhoodRepository.findByAreaId(areaId);
 	}
-
 
 	public Brotherhood reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Brotherhood result = this.create();
@@ -82,6 +81,43 @@ public class BrotherhoodService {
 		result.setPhone(registrationForm.getPhone());
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
+
+		//MailBox
+		final MessageBox inBox = this.messageBoxService.create();
+		final MessageBox outBox = this.messageBoxService.create();
+		final MessageBox trashBox = this.messageBoxService.create();
+		final MessageBox notificationBox = this.messageBoxService.create();
+		final MessageBox spamBox = this.messageBoxService.create();
+
+		inBox.setName("in box");
+		outBox.setName("out box");
+		trashBox.setName("trash box");
+		notificationBox.setName("notification box");
+		spamBox.setName("spam box");
+
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		trashBox.setIsDefault(true);
+		notificationBox.setIsDefault(true);
+		spamBox.setIsDefault(true);
+
+		final MessageBox inBoxSave = this.messageBoxService.save(inBox);
+		final MessageBox outBoxSave = this.messageBoxService.save(outBox);
+		final MessageBox trashBoxSave = this.messageBoxService.save(trashBox);
+		final MessageBox notificationBoxSave = this.messageBoxService.save(notificationBox);
+		final MessageBox spamBoxSave = this.messageBoxService.save(spamBox);
+
+		final Collection<MessageBox> boxesDefault = new ArrayList<>();
+
+		boxesDefault.add(inBoxSave);
+		boxesDefault.add(outBoxSave);
+		boxesDefault.add(trashBoxSave);
+		boxesDefault.add(notificationBoxSave);
+		boxesDefault.add(spamBoxSave);
+
+		result.setMessageBoxes(boxesDefault);
+		result.setIsBanned(false);
+		result.setIsSuspicious(false);
 
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -128,6 +164,42 @@ public class BrotherhoodService {
 
 		if (brotherhood.getId() == 0) {
 			result = brotherhood;
+			//MailBox
+			final MessageBox inBox = this.messageBoxService.create();
+			final MessageBox outBox = this.messageBoxService.create();
+			final MessageBox trashBox = this.messageBoxService.create();
+			final MessageBox notificationBox = this.messageBoxService.create();
+			final MessageBox spamBox = this.messageBoxService.create();
+
+			inBox.setName("in box");
+			outBox.setName("out box");
+			trashBox.setName("trash box");
+			notificationBox.setName("notification box");
+			spamBox.setName("spam box");
+
+			inBox.setIsDefault(true);
+			outBox.setIsDefault(true);
+			trashBox.setIsDefault(true);
+			notificationBox.setIsDefault(true);
+			spamBox.setIsDefault(true);
+
+			final MessageBox inBoxSave = this.messageBoxService.save(inBox);
+			final MessageBox outBoxSave = this.messageBoxService.save(outBox);
+			final MessageBox trashBoxSave = this.messageBoxService.save(trashBox);
+			final MessageBox notificationBoxSave = this.messageBoxService.save(notificationBox);
+			final MessageBox spamBoxSave = this.messageBoxService.save(spamBox);
+
+			final Collection<MessageBox> boxesDefault = new ArrayList<>();
+
+			boxesDefault.add(inBoxSave);
+			boxesDefault.add(outBoxSave);
+			boxesDefault.add(trashBoxSave);
+			boxesDefault.add(notificationBoxSave);
+			boxesDefault.add(spamBoxSave);
+
+			result.setMessageBoxes(boxesDefault);
+			result.setIsBanned(false);
+			result.setIsSuspicious(false);
 			this.validator.validate(result, binding);
 
 		} else {
@@ -364,7 +436,4 @@ public class BrotherhoodService {
 	//		return count;
 	//	}
 
-	public Integer numberBrotherhood() {
-		return this.brotherhoodRepository.numberOfBrotherhood();
-	}
 }
