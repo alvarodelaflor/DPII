@@ -17,13 +17,12 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table name="procession" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<display:column property="title" titleKey="procession.title"></display:column>
-	<display:column property="moment" titleKey="procession.moment"></display:column>
-	<display:column property="description" titleKey="procession.description"></display:column> 
-	<display:column titleKey="procession.ticker">
-		<a href="procession/show.do?processionId=${row.id}">${row.ticker}</a>
+
+<display:table pagesize="5" name="${pictures}" id="picture"
+	requestURI="${requestURI}">
+	<display:column titleKey="float.pictures">
+		<img width="300" src="${picture.trim()}" alt="Error" >
 	</display:column>
 </display:table>
 
-<acme:cancel url="brotherhood/list.do" code="back"/>
+<input type="button" value="back" name="back" onclick="history.back()" />

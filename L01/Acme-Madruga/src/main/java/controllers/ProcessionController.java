@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import services.BrotherhoodService;
-import services.FloatBroService;
 import services.MemberService;
 import services.PositionAuxService;
 import services.ProcessionService;
@@ -45,9 +43,6 @@ public class ProcessionController extends AbstractController {
 
 	@Autowired
 	PositionAuxService	positionAuxService;
-
-	@Autowired
-	FloatBroService		floatBroService;
 
 	@Autowired
 	ProcessionService	processionService;

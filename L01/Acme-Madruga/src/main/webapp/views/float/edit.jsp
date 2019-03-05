@@ -23,18 +23,13 @@
 
 <body>
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="procession" action="procession/brotherhood/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="float" action="float/brotherhood/edit.do">
           	<form:hidden path="id"/>
           	
-          	<acme:textbox code="procession.title" path="title"/>
-          	<acme:textbox code="procession.description" path="description"/>
-          	<acme:textbox code="procession.moment" path="moment"/>
-          	<acme:selectTrueFalse code="procession" path="isFinal"/>
-          	<acme:numberbox code="procession.maxRow" path="maxRow"/>
-          	<acme:numberbox code="procession.maxColum" path="maxColum"/>
-          	<acme:select items="${floats}" itemLabel="title" code="procession.float" path="floatt"/>
-          	
-          	<acme:cancel url="procession/brotherhood/list.do" code="cancel"/>
+          	<acme:textbox code="float.title" path="title"/>
+          	<acme:textbox code="float.description" path="description"/>
+          	<acme:textbox code="float.pictures" path="pictures"/>
+          	<acme:cancel url="float/brotherhood/list.do" code="cancel"/>
           	<acme:submit name="save" code="send"/>
 		</form:form>
 	</div>
