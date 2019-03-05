@@ -136,7 +136,27 @@
 		
 		<!-- CARMEN -->
 		<!-- FERRETE -->
+		<security:intercept-url pattern="/administrator/list.do" access="hasRole('ADMIN')"/> 
+		<security:intercept-url pattern="/administrator/spamWords.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" /> 		
+		<security:intercept-url pattern="/administrator/header.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/administrator/newSpamWord.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newIVA.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newWelcome.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newSystem.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newResult.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newTime.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newPhone.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newLogo.do" access="hasRole('ADMIN')" />  		  				  
+		<security:intercept-url pattern="/administrator/newBrand.do" access="hasRole('ADMIN')" />  	
+		<security:intercept-url pattern="/administrator/newPhoneCountry.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/deleteSpamWord.do" access="hasRole('ADMIN')" />  
+		
+		<security:intercept-url pattern="/administrator/newScoreWord.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/deleteScoreWord.do" access="hasRole('ADMIN')" />  	  				  
+		
+		<security:intercept-url pattern="/administrator/editA.do" access="hasRole('ADMIN')" />
 		<!-- FERRETE -->
 		<!-- ANTONIO SANCHEZ -->
 		<security:intercept-url pattern="/request/member/list.do" access="hasRole('MEMBER')" />

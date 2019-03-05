@@ -265,5 +265,39 @@ public class AdministratorService {
 		res = this.administratorRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
+	
+	// FERRETE
+	
+	// Método para mostrar las score words
+	public HashSet<String> listScoreWords() {
+
+		final List<String> enP = Arrays.asList("good", "fantastic", "excellent", "great", "amazing", "terrific", "beautiful");
+		this.scoreWords.addAll(enP);
+		final List<String> esP = Arrays.asList("bueno", "fantástico", "excelente", "genial", "increíble", "excelente", "hermoso");
+		this.scoreWords.addAll(esP);
+		final List<String> enN = Arrays.asList("not", "bad", "horrible", "average", "disaster");
+		this.scoreWords.addAll(enN);
+		final List<String> esN = Arrays.asList("no", "malo", "horrible", "promedio", "desastre");
+		this.scoreWords.addAll(esN);
+
+		return this.scoreWords;
+	}
+
+	public HashSet<String> getScoreWords() {
+		return this.scoreWords;
+	}
+	
+	// Método para añadir
+	public HashSet<String> newScoreWords(final String newWord) {
+		this.scoreWords.add(newWord);
+		return this.getScoreWords();
+	}
+
+	// Método para borrar
+	public HashSet<String> deleteScoreWords(final String word) {
+		this.scoreWords.remove(word);
+		Assert.isTrue(this.getScoreWords().contains(word), "noScoreWord.error");
+		return this.getScoreWords();
+	}
 
 }

@@ -38,7 +38,7 @@
 					<li><a href="position/administrator/list.do"><spring:message code="master.page.administrator.adminList" /></a></li>
 					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>		
 					<li><a href="administrator/actorList.do"><spring:message code="master.page.administrator.actorList" /></a></li>		
-					<li><a href="configuration/administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>
+					<li><a href="administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -119,9 +119,46 @@
 		
 		
 	</ul>
+<div class=language>
+	<img width="20px" src="images/uk.png" alt="en" onClick="changeLangEn()"/><img width="20px" src="images/spain.png" alt="es" onClick="changeLangEs()"/>
 </div>
 
-<div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
-</div>
+<script type="text/javascript">
+function changeLangEs(){
+	var cpage=window.location.href;
+		if(cpage.includes("language=en")){
+			cpage=cpage.replace("language=en", "language=es");
+		}else if(cpage.includes("language=es")){
+			
+		}else if(cpage.includes("?")){
+			cpage=window.location.href+"&language=es";
+		}else{
+			cpage=window.location.href+"?language=es";
+		}
+		window.location.href = cpage;
+		
+	
+	
+	}
 
+</script>
+
+<script type="text/javascript">
+function changeLangEn(){
+	var cpage=window.location.href;
+		if(cpage.includes("language=es")){
+			cpage=cpage.replace("language=es", "language=en");
+		}else if(cpage.includes("language=en")){
+			
+		}else if(cpage.includes("?")){
+			cpage=window.location.href+"&language=en";
+			
+		}else{
+			cpage=window.location.href+"?language=en";
+		}
+		window.location.href = cpage;
+		
+	
+	
+	}
+</script>
