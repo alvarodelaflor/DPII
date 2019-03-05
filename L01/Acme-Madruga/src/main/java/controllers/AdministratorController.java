@@ -292,6 +292,61 @@ public class AdministratorController extends AbstractController {
 		return res;
 	}
 
+	//	@RequestMapping(value = "/editWords", method = RequestMethod.GET)
+	//	public ModelAndView editWords() {
+	//
+	//		final ModelAndView res;
+	//
+	//		final WordList wordList = new WordList();
+	//
+	//		res = new ModelAndView("administrator/editWords");
+	//		res.addObject("wordList", wordList);
+	//		return res;
+	//	}
+	//
+	//	@RequestMapping(value = "/editWords", method = RequestMethod.POST, params = "save")
+	//	public ModelAndView editWords(final String posWords, final String posWordsEs) {
+	//
+	//		System.out.println(posWords);
+	//		System.out.println(posWordsEs);
+	//
+	//		final ModelAndView res;
+	//
+	//		final WordList wordList = new WordList();
+	//
+	//		final String[] spliten = posWords.split(",");
+	//		final List<String> wl = Arrays.asList(spliten);
+	//
+	//		final String[] splites = posWordsEs.split(",");
+	//		final List<String> wle = Arrays.asList(splites);
+	//
+	//		wordList.setPosWords(wl);
+	//		wordList.setPosWordsEs(wle);
+	//
+	//		res = this.actorList(wordList);
+	//
+	//		return res;
+	//	}
+	//
+	//	// This will be used if wordlist is edited
+	//	@RequestMapping(value = "/actorList2", method = RequestMethod.GET)
+	//	public ModelAndView actorList(final WordList wordList) {
+	//
+	//		final ModelAndView res;
+	//
+	//		final Collection<Member> members = this.memberService.findAll();
+	//		final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+	//
+	//		res = new ModelAndView("administrator/actorList");
+	//
+	//		res.addObject("members", members);
+	//		res.addObject("brotherhoods", brotherhoods);
+	//		res.addObject("wordList", wordList);
+	//		res.addObject("requestURI", "administrator/actorList.do");
+	//
+	//		return res;
+	//	}
+
 	@RequestMapping(value = "/banMember", method = RequestMethod.GET)
 	public ModelAndView banMember(@RequestParam(value = "actorId", defaultValue = "-1") final int actorId) {
 

@@ -55,7 +55,10 @@ public class MemberService {
 		result.setPhone(registrationForm.getPhone());
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
-
+		final Finder finder = this.finderService.create();
+		// We save a finder in the database to associate it with the member
+		final Finder f = this.finderService.save(finder);
+		result.setFinder(f);
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
@@ -97,6 +100,10 @@ public class MemberService {
 		}
 
 		this.validator.validate(result, binding);
+		// In case we have any errors we have to delete the finder, otherwise we'll drop
+		// junk to the database
+		if (binding.hasErrors())
+			this.finderService.delete(f);
 		return result;
 	}
 	public Member reconstruct(final Member member, final BindingResult binding) {

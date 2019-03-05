@@ -58,6 +58,11 @@ public class AreaService {
 			final List<String> s2 = Arrays.asList(pictures);
 			area.setPictures(s2);
 		}
+		
+		// "Check that an Admin is saving the new Area"
+		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(creatorAdmin, "user.error");
+		
 		return this.areaRepository.save(area);
 	}
 

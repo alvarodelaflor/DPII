@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -27,13 +28,16 @@ import domain.Procession;
 public class FinderService {
 
 	@Autowired
-	private FinderRepository	finderRepository;
+	private FinderRepository		finderRepository;
 
 	@Autowired
-	private MemberService		memberService;
+	private MemberService			memberService;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	public Finder create() {
@@ -42,9 +46,9 @@ public class FinderService {
 	}
 
 	/**
-	 * Comprueba si la caché ha expirado, vuelve a buscar procesiones en caso afirmativo y actualiza el finder
+	 * Comprueba si la cachï¿½ ha expirado, vuelve a buscar procesiones en caso afirmativo y actualiza el finder
 	 * 
-	 * @return Finder con los datos de la caché o nuevos si ha expirado
+	 * @return Finder con los datos de la cachï¿½ o nuevos si ha expirado
 	 */
 	public Finder findByLoggedMemberWithCache() {
 		// We have to check member authority
@@ -53,15 +57,17 @@ public class FinderService {
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 		final Finder res = this.finderRepository.findOne(member.getId());
 
-		// Si la caché ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
+		// Si la cachï¿½ ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
 			final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
-			res.setProcessions(processions);
-			// TODO: Actualizar fecha de expiración
+			res.setProcessions(this.getProcessionAmount(processions));
+
+			final Calendar c = Calendar.getInstance();
+			c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
+			res.setExpirationDate(c.getTime());
 		}
 		return res;
 	}
-
 	/**
 	 * Vuelve a buscar procesiones y actualiza el finder
 	 * 
@@ -74,8 +80,11 @@ public class FinderService {
 
 		final Finder res = this.finderRepository.findOne(member.getId());
 		final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
-		res.setProcessions(processions);
-		// TODO: Actualizar fecha de expiración
+
+		res.setProcessions(this.getProcessionAmount(processions));
+		final Calendar c = Calendar.getInstance();
+		c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
+		res.setExpirationDate(c.getTime());
 		return res;
 	}
 
@@ -109,7 +118,12 @@ public class FinderService {
 			processions = this.finderRepository.findByFilterNoArea(keyword, minDate, maxDate);
 		else
 			processions = this.finderRepository.findByFilterWithArea(keyword, minDate, maxDate, area);
-		return null;
+		return processions;
+	}
+
+	public void delete(final Finder finder) {
+		// We don't have to check any authority because this won't be called on the client side
+		this.finderRepository.delete(finder);
 	}
 
 	private boolean checkAuthority(final String authority) {
@@ -138,4 +152,14 @@ public class FinderService {
 		return this.finderRepository.ratioFinder();
 	}
 
+
+	private Collection<Procession> getProcessionAmount(final Collection<Procession> processions) {
+		final Collection<Procession> amount = new HashSet<>();
+		for (int i = 0; i < this.configurationService.getConfiguration().getCacheAmount(); i++) {
+			if (processions.iterator().hasNext() == false)
+				break;
+			amount.add(processions.iterator().next());
+		}
+		return amount;
+	}
 }
