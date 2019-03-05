@@ -393,14 +393,13 @@ public class BrotherhoodService {
 		this.dropMember(member.getId(), brotherhoodId);
 	}
 
-	public String largestBrotherhood() {
-		final Brotherhood b = this.brotherhoodRepository.brotherhoodMaxRow();
-		return b == null ? null : b.getTitle();
+	public Collection<String> largestBrotherhood() {
+		return this.brotherhoodRepository.brotherhoodMaxRow();
 	}
 
-	public String smallestBrotherhood() {
-		final Brotherhood b = this.brotherhoodRepository.brotherhoodMinRow();
-		return b == null ? null : b.getTitle();
+	public Collection<String> smallestBrotherhood() {
+		return this.brotherhoodRepository.brotherhoodMinRow();
+
 	}
 
 	public Integer numberBrotherhood() {

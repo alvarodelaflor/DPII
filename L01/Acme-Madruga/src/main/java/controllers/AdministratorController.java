@@ -66,7 +66,7 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	FinderService			finderService;
-	
+
 	@Autowired
 	WelcomeService			welcomeService;
 
@@ -375,7 +375,6 @@ public class AdministratorController extends AbstractController {
 		
 		return res;
 	}
-
 	@RequestMapping(value = "/banBrotherhood", method = RequestMethod.GET)
 	public ModelAndView banBrotherhood(@RequestParam(value = "actorId", defaultValue = "-1") final int actorId) {
 
@@ -404,8 +403,7 @@ public class AdministratorController extends AbstractController {
 
 		return res;
 	}
-	
-	
+
 	//FERRETE
 	//CONFIGURATION
 	@RequestMapping(value = "/list")

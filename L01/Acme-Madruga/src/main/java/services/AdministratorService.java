@@ -2,7 +2,9 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -265,9 +267,9 @@ public class AdministratorService {
 		res = this.administratorRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
-	
+
 	// FERRETE
-	
+
 	// Método para mostrar las score words
 	public HashSet<String> listScoreWords() {
 
@@ -286,7 +288,7 @@ public class AdministratorService {
 	public HashSet<String> getScoreWords() {
 		return this.scoreWords;
 	}
-	
+
 	// Método para añadir
 	public HashSet<String> newScoreWords(final String newWord) {
 		this.scoreWords.add(newWord);

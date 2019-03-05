@@ -40,12 +40,12 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	Collection<Brotherhood> findFromMember(int member);
 
 	//12.3.2 CARMEN
-	@Query("select b from Brotherhood b where cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float) = (select max(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float)) from Brotherhood b)")
-	Brotherhood brotherhoodMaxRow();
+	@Query("select b.title from Brotherhood b where cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float) = (select max(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float)) from Brotherhood b)")
+	Collection<String> brotherhoodMaxRow();
 
 	//12.3.3 CARMEN
-	@Query("select b from Brotherhood b where cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float) = (select min(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float)) from Brotherhood b)")
-	Brotherhood brotherhoodMinRow();
+	@Query("select b.title from Brotherhood b where cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float) = (select min(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float)) from Brotherhood b)")
+	Collection<String> brotherhoodMinRow();
 
 	//12.3.1 CARMEN
 	@Query("select count(b) from Brotherhood b")
