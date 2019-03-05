@@ -308,8 +308,28 @@
 	<!-- AREA -->
 	<!-- FINDER -->
     <bean id="finder01" class="domain.Finder">
+    	<property name="keyword" value=""/>
+    	<property name="expirationDate">
+    		<null/>
+    	</property>
+    	<property name="minDate">
+    		<null/>
+    	</property>
+    	<property name="maxDate">
+    		<null/>
+    	</property>
     </bean>
     <bean id="finder02" class="domain.Finder">
+    	<property name="keyword" value=""/>
+    	<property name="expirationDate">
+    		<null/>
+    	</property>
+    	<property name="minDate">
+    		<null/>
+    	</property>
+    	<property name="maxDate">
+    		<null/>
+    	</property>
     </bean>
 	<!-- FINDER -->
 	<!-- CONFIGURATION -->

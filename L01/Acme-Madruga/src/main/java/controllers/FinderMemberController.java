@@ -27,8 +27,10 @@ public class FinderMemberController extends AbstractController {
 			final Finder finder = this.finderService.findByLoggedMemberWithCache();
 			result = new ModelAndView("finder/show");
 			result.addObject("finder", finder);
+			result.addObject("requestURI", "finder/member/show.do");
 		} catch (final Exception e) {
-			result = new ModelAndView("redirect: /welcome/index.do");
+			e.printStackTrace();
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;
@@ -45,8 +47,10 @@ public class FinderMemberController extends AbstractController {
 			try {
 				result = new ModelAndView("finder/show");
 				result.addObject("finder", res);
+				result.addObject("requestURI", "finder/member/show.do");
 			} catch (final Exception e) {
-				result = new ModelAndView("redirect: /welcome/index.do");
+				e.printStackTrace();
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		return result;

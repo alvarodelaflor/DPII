@@ -21,4 +21,6 @@ public interface FinderRepository extends JpaRepository<Finder, Integer> {
 	@Query("select p from Procession p join p.brotherhood b where (p.title like %?1% or p.description like %?1%) and p.moment between ?2 and ?3 and b.area=?4")
 	Collection<Procession> findByFilterWithArea(final String keyword, final Date minDate, final Date maxDate, final Area area);
 
+	@Query("select m.finder from Member m where m.id=?1")
+	Finder getByMember(int id);
 }

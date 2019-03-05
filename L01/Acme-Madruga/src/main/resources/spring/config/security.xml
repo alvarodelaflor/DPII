@@ -147,6 +147,9 @@
 		<security:intercept-url pattern="/enroll/member/create.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/brotherhood/member/list.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/brotherhood/member/drop.do" access="hasRole('MEMBER')" />
+		
+		<security:intercept-url pattern="/finder/member/show.do" access="hasRole('MEMBER')" />
+		<security:intercept-url pattern="/finder/member/refresh.do" access="hasRole('MEMBER')" />
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 		

@@ -55,8 +55,7 @@ public class FinderService {
 		Assert.isTrue(this.checkAuthority("MEMBER"));
 
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
-		final Finder res = this.finderRepository.findOne(member.getId());
-
+		final Finder res = this.finderRepository.getByMember(member.getId());
 		// Si la caché ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
 			final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
@@ -78,7 +77,7 @@ public class FinderService {
 		Assert.isTrue(this.checkAuthority("MEMBER"));
 		final Member member = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 
-		final Finder res = this.finderRepository.findOne(member.getId());
+		final Finder res = this.finderRepository.getByMember(member.getId());
 		final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
 
 		res.setProcessions(this.getProcessionAmount(processions));
@@ -89,7 +88,8 @@ public class FinderService {
 	}
 
 	public Finder save(final Finder finder) {
-		Assert.isTrue(this.checkAuthority("MEMBER"));
+		if (finder.getId() != 0)
+			Assert.isTrue(this.checkAuthority("MEMBER"));
 		return this.finderRepository.save(finder);
 	}
 
@@ -135,10 +135,13 @@ public class FinderService {
 
 	private Collection<Procession> getProcessionAmount(final Collection<Procession> processions) {
 		final Collection<Procession> amount = new HashSet<>();
-		for (int i = 0; i < this.configurationService.getConfiguration().getCacheAmount(); i++) {
-			if (processions.iterator().hasNext() == false)
+		int i = 0;
+		for (final Procession p : processions) {
+			if (i >= this.configurationService.getConfiguration().getCacheAmount())
 				break;
-			amount.add(processions.iterator().next());
+			else
+				amount.add(p);
+			i++;
 		}
 		return amount;
 	}
