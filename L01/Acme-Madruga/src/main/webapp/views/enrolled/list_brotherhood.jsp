@@ -28,23 +28,25 @@
 			<div>
 				<strong><p><spring:message code="enrolled.details.accepted"></spring:message></p></strong>
 				<display:table name="enrolledsAccepted" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">				
-					<display:column titleKey="enrolled.edit"> 
-						<a href="enrolled/brotherhood/edit.do?id=${row.id}"><spring:message code="enrolled.edit"></spring:message></a>
-					</display:column>
 					<display:column titleKey="enrolled.delete"> 
-						<a href="enrolled/brotherhood/delete.do?id=${row.id}"><spring:message code="enrolled.delete"></spring:message></a>
+						<a href="enrolled/brotherhood/dropOut.do?id=${row.id}"><spring:message code="enrolled.dropOut"></spring:message></a>
 					</display:column>
 					<display:column titleKey="enrolled.show"> 
 						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
 					</display:column>
+					<c:choose>
+						<c:when test="${language == true}">
+							<display:column property="position.nameEn" titleKey="enrolled.position"></display:column>
+						</c:when>
+						<c:otherwise>
+							<display:column property="position.nameEs" titleKey="enrolled.position"></display:column>
+						</c:otherwise>
+					</c:choose>
 				</display:table>
 			</div>
 			<div>
 				<strong><p><spring:message code="enrolled.details.rejected"></spring:message></p></strong>
 				<display:table name="enrolledsRejected" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">				
-					<display:column titleKey="enrolled.edit"> 
-						<a href="enrolled/brotherhood/edit.do?id=${row.id}"><spring:message code="enrolled.edit"></spring:message></a>
-					</display:column>
 					<display:column titleKey="enrolled.delete"> 
 						<a href="enrolled/brotherhood/delete.do?id=${row.id}"><spring:message code="enrolled.delete"></spring:message></a>
 					</display:column>
@@ -64,6 +66,17 @@
 					</display:column>
 					<display:column titleKey="enrolled.show"> 
 						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
+					</display:column>
+				</display:table>
+			</div>
+			<div>
+				<strong><p><spring:message code="enrolled.details.dropOut"></spring:message></p></strong>
+				<display:table name="dropOutMembers" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">				
+					<display:column titleKey="enrolled.show"> 
+						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
+					</display:column>
+					<display:column titleKey="enrolled.delete"> 
+						<a href="enrolled/brotherhood/delete.do?id=${row.id}"><spring:message code="enrolled.delete"></spring:message></a>
 					</display:column>
 				</display:table>
 			</div>

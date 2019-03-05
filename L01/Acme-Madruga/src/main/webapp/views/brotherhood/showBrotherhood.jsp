@@ -16,8 +16,30 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="content">
+	<security:authorize access="hasRole('MEMBER')">
+		<c:choose>
+			<c:when test="${validMember==true}">
+				<form method="get" action="/Acme-Madruga/enroll/member/create.do">
+					<button name="brotherhoodId" value="${brotherhood.id}"><spring:message code="createEnrolled"/></button>
+				</form>				
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${activeMember==true}">
+						<form method="get" action="/Acme-Madruga/brotherhood/member/drop.do">
+							<button name="brotherhoodId" value="${brotherhood.id}"><spring:message code="dropEnrolled"/></button>
+						</form>				
+					</c:when>
+					<c:otherwise>
+						<spring:message code="enrolled.alreadySend"/>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+	</security:authorize>
 	<table>
 		<tr><td><spring:message code="brotherhood.photo" /><br>
 		<img width="95" src="${brotherhood.photo}" alt=<jstl:out value="${brotherhood.photo}"></jstl:out> /></td></tr>
@@ -45,6 +67,6 @@
 
 <br>	
 <br>
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url="brotherhood/list.do" code="back"/>
 
 

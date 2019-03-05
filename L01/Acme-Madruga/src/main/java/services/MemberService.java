@@ -10,12 +10,14 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 import repositories.MemberRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Finder;
 import domain.Member;
 import domain.MessageBox;
 import forms.RegistrationForm;
@@ -42,16 +44,17 @@ public class MemberService {
 	private WelcomeService		welcomeService;
 
 	@Autowired
+	private BrotherhoodService	brotherhoodService;
+	@Autowired
 	private MessageBoxService	messageBoxService;
 
 	@Autowired
-	private BrotherhoodService	brotherhoodService;
+	private FinderService		finderService;
 
 
 	public Member reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Member result = this.create();
 
-		result.setId(0);
 		result.setName(registrationForm.getName());
 		result.setSurname(registrationForm.getSurname());
 		result.setPhoto(registrationForm.getPhoto());
@@ -61,18 +64,52 @@ public class MemberService {
 		result.setPhone(registrationForm.getPhone());
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
-
+		final Finder finder = this.finderService.create();
+		// We save a finder in the database to associate it with the member
+		final Finder f = this.finderService.save(finder);
+		result.setFinder(f);
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
 
-		result.setVersion(0);
+		if (registrationForm.getAccept() == false) {
+			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
+			binding.addError(error);
+			binding.rejectValue("accept", "error.termsAndConditions");
+		}
+
+		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userAcount");
+		}
+
+		if (this.actorService.getActorByUser(registrationForm.getUserName()) != null) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
+		}
+
+		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.userAcount");
+		}
+
+		if (!registrationForm.getConfirmPassword().equals(registrationForm.getPassword())) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.password");
+		}
 
 		this.validator.validate(result, binding);
+		// In case we have any errors we have to delete the finder, otherwise we'll drop
+		// junk to the database
+		if (binding.hasErrors())
+			this.finderService.delete(f);
 		return result;
 	}
-
 	public Member reconstruct(final Member member, final BindingResult binding) {
 		Member result;
 
@@ -149,17 +186,39 @@ public class MemberService {
 		return member;
 	}
 
+	public Member saveR(final Member member) {
+		Assert.isTrue(!this.checkEmailFormatter(member), "email.wrong");
+		Assert.isTrue(!this.checkEmailR(member), "error.email");
+		if (member.getPhone().matches("^([0-9]{4,})$"))
+			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
+		return this.memberRepository.save(member);
+	}
 	public Member save(final Member member) {
-		Assert.isTrue(!this.checkEmail(member), "email.wrong");
+		Assert.isTrue(!this.checkEmailFormatter(member), "email.wrong");
+		Assert.isTrue(!this.checkEmail(member), "error.email");
 		if (member.getPhone().matches("^([0-9]{4,})$"))
 			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.memberRepository.save(member);
 	}
 
-	private Boolean checkEmail(final Member member) {
+	private Boolean checkEmailFormatter(final Member member) {
 		Boolean res = true;
-		if ((member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || (member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}") || (member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || (member.getEmail().matches(
-			"[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}\\.[\\w]{1,}(>)") || this.actorService.getActorByEmail(member.getEmail()) != null)))))
+		if ((member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || member
+			.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}")))
+			res = false;
+		return res;
+	}
+
+	private Boolean checkEmail(final Member member) {
+		Boolean res = false;
+		if (this.actorService.getActorByEmail(member.getEmail()) != null && (member.getEmail() != null && this.actorService.getActorByEmail(member.getEmail()).equals(member.getEmail())))
+			res = true;
+		return res;
+	}
+
+	private Boolean checkEmailR(final Member member) {
+		Boolean res = true;
+		if (this.actorService.getActorByEmail(member.getEmail()) == null)
 			res = false;
 		return res;
 	}
@@ -178,33 +237,41 @@ public class MemberService {
 		return this.memberRepository.isBrotherhoodActiveMember(memberId, brotherHoodId) > 0;
 	}
 
-	public Integer maxNumberOfMemberPerBrotherhood() {
-		final Collection<Integer> numbers = this.memberRepository.listNumberOfMembersPerBrotherhood();
-		final List<Integer> numberList = new ArrayList<>();
-		numberList.addAll(numbers);
-		final Integer res = numberList.get(0);
+	public Collection<Member> brotherhoodAllMember(final int brotherHoodId) {
+		return this.memberRepository.brotherhoodAllMember(brotherHoodId);
+	}
+
+	public Collection<Member> lisMemberAccept() {
+		return this.memberRepository.memberAccept();
+	}
+
+	public Boolean checkAlreadyInProcession(final int memberId) {
+		Boolean res = false;
+		if (this.memberRepository.membersOfProcession(memberId) > 0)
+			res = true;
 		return res;
 	}
 
-	public Integer minNumberOfMemberPerBrotherhood() {
-		final Collection<Integer> numbers = this.memberRepository.listNumberOfMembersPerBrotherhood();
-		final List<Integer> numberList = new ArrayList<>();
-		numberList.addAll(numbers);
-		final Integer res = numberList.get(numberList.size() - 1);
+	public Boolean checkIsInBrotherhood(final int brotherhoodId) {
+		Boolean res = false;
+		final int memberId = this.memberRepository.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		if (this.memberRepository.membersOfBrotherhood(memberId, brotherhoodId) > 0)
+			res = true;
 		return res;
 	}
 
-	public Integer avgNumberOfMemberPerBrotherhood() {
-		final Integer numberMember = this.memberRepository.numberOfMemberAccepted();
-		final Integer numberBrotherhood = this.brotherhoodService.numberBrotherhood();
-		final Integer res = numberMember / numberBrotherhood;
-		return res;
+	public Float maxNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.maxNumberOfMembersPerBrotherhood();
 	}
 
-	//	public Integer desviationOfNumberOfMemberPerBrotherhood() {
-	//		final Integer numberMember = this.memberRepository.numberOfMemberAccepted();
-	//		final Integer numberMemberSqrt = numberMember * numberMember;
-	//
-	//		return res;
-	//	}
+	public Float minNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.minNumberOfMembersPerBrotherhood();
+	}
+	public Float avgNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.avgNumberOfMembersPerBrotherhood();
+	}
+
+	public Float desviationOfNumberOfMemberPerBrotherhood() {
+		return this.memberRepository.stddevNumberOfMembersPerBrotherhood();
+	}
 }

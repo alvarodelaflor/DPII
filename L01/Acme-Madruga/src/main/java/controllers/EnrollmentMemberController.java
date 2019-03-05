@@ -1,6 +1,7 @@
 
 package controllers;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,9 @@ public class EnrollmentMemberController extends AbstractController {
 		try {
 			enrollment = this.enrollmentService.create(brotherhoodId);
 			this.enrollmentService.save(enrollment);
-			result = new ModelAndView("redirect:/Acme-Madruga/brotherhood/list.do");
+			result = new ModelAndView("redirect:/brotherhood/showBrotherhood.do?id=" + brotherhoodId);
 		} catch (final Exception e) {
-			result = new ModelAndView("redirect:/Acme-Madruga/welcome/index.do");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;

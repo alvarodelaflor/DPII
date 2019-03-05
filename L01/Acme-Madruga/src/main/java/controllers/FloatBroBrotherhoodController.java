@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -53,8 +54,17 @@ public class FloatBroBrotherhoodController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<FloatBro> floatBros = this.floatBroService.findAllBrotherhoodLogged();
-
+		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
+		Boolean language;
+		if (actuallanguage.equals("English")) {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = true;
+		} else {
+			System.out.println("Actual languge: " + actuallanguage);
+			language = false;
+		}
 		result = new ModelAndView("floatBro/brotherhood/list");
+		result.addObject("language", language);
 		result.addObject("floatBros", floatBros);
 		result.addObject("requestURI", "floatBro/brotherhood/list.do");
 

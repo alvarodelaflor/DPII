@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.ActorService;
 import services.BrotherhoodService;
 import services.MemberService;
 import domain.Brotherhood;
@@ -37,6 +38,9 @@ public class MemberController extends AbstractController {
 
 	@Autowired
 	BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	ActorService		actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -66,24 +70,14 @@ public class MemberController extends AbstractController {
 			result = new ModelAndView("member/create");
 		else
 			try {
-				this.memberService.save(member);
+				this.memberService.saveR(member);
 				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
-					result = this.creatCreateModelAndView(member, "email.wrong");
+					result = this.createModelAndView(member, "email.wrong");
 				else
-					result = new ModelAndView("member/create");
+					result = this.createModelAndView(member, "error.email");
 			}
-		return result;
-	}
-
-	private ModelAndView creatCreateModelAndView(final Member member, final String string) {
-		ModelAndView result;
-		result = new ModelAndView("member/create");
-
-		result.addObject("message", string);
-		result.addObject("member", member);
-
 		return result;
 	}
 
@@ -120,15 +114,25 @@ public class MemberController extends AbstractController {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createEditModelAndView(member, "email.wrong");
 				else
-					result = new ModelAndView("member/edit");
+					result = this.createEditModelAndView(member, "error.email");
 			}
 		return result;
 	}
 
 	private ModelAndView createEditModelAndView(final Member member, final String string) {
 		ModelAndView result;
-		result = new ModelAndView("member/edit");
 
+		result = new ModelAndView("member/edit");
+		result.addObject("message", string);
+		result.addObject("member", member);
+
+		return result;
+	}
+
+	private ModelAndView createModelAndView(final Member member, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("member/create");
 		result.addObject("message", string);
 		result.addObject("member", member);
 
@@ -155,14 +159,20 @@ public class MemberController extends AbstractController {
 
 	@RequestMapping(value = "/listMembers", method = RequestMethod.GET)
 	public ModelAndView listMembers(@RequestParam(value = "id", defaultValue = "-1") final int id) {
-		ModelAndView result;
+		final ModelAndView result;
 
 		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-		final Collection<Member> member = this.memberService.findAll();
+		final Collection<Member> member = this.memberService.brotherhoodAllMember(brotherhood.getId());
 		result = new ModelAndView("member/listMembers");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("member", member);
 		result.addObject("requestURI", "member/listMembers.do");
+		return result;
+	}
+	@RequestMapping(value = "/conditions", method = RequestMethod.GET)
+	public ModelAndView conditions() {
+		ModelAndView result;
+		result = new ModelAndView("member/conditions");
 		return result;
 	}
 }

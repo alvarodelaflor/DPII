@@ -93,11 +93,25 @@ public class RequestService {
 		return result;
 	}
 
+	public Boolean validMemberToCreateRequest(final int idProcession) {
+		Boolean res = true;
+		final int idMember = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		System.out.println("Request pendientes: " + this.requestRepository.findAllByMemberProcessionPending(idProcession, idMember));
+		System.out.println("Request Aceptadas: " + this.requestRepository.findAllByMemberProcessionAccepted(idProcession, idMember));
+		if (this.requestRepository.findAllByMemberProcessionPending(idProcession, idMember).size() > 0 || this.requestRepository.findAllByMemberProcessionAccepted(idProcession, idMember).size() > 0)
+			res = false;
+		return res;
+	}
+
 	public Request create(final int processionId) {
+
+		Assert.isTrue(this.validMemberToCreateRequest(processionId), "request.notValidMember");
 		final Request r = new Request();
 		final Procession procession = this.processionService.findOne(processionId);
 		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
-
+		final Collection<PositionAux> positionAuxs = this.positionAuxService.findFreePositionByProcesion(processionId);
+		if (!positionAuxs.isEmpty())
+			r.setPositionAux(positionAuxs.iterator().next());
 		// We have to check if the procession is in final mode
 		Assert.isTrue(procession.getIsFinal());
 		// We have to check if we are an active member of the brotherhood
@@ -152,5 +166,68 @@ public class RequestService {
 		final Authority member = new Authority();
 		member.setAuthority(authority);
 		return acc.getAuthorities().contains(member);
+	}
+
+	public Collection<Request> findRequestByProcessionId(final int processionId) {
+		return this.requestRepository.findAllByProcessionByProcession(processionId);
+	}
+
+	public void deleteAllRequestByProcession(final int processionId) {
+		final Collection<Request> requests = this.findRequestByProcessionId(processionId);
+		if (!requests.isEmpty())
+			for (final Request request : requests)
+				this.delete(request);
+	}
+
+	public Collection<Request> findAllByMemberAndStatusPending(final Member member) {
+		Assert.notNull(member, "request.member.isNull");
+		return this.requestRepository.findAllByMemberAndStatusPending(member.getId());
+	}
+
+	public Collection<Request> findAllByMemberAndStatusAccepted(final Member member) {
+		Assert.notNull(member, "request.member.isNull");
+		return this.requestRepository.findAllByMemberAndStatusAccepted(member.getId());
+	}
+
+	public void deleteAllRequestPendingByMember(final Member member) {
+		final Collection<Request> requests = this.findAllByMemberAndStatusPending(member);
+		if (!requests.isEmpty())
+			for (final Request request : requests)
+				this.requestRepository.delete(request);
+	}
+
+	public void deleteAllRequestAcceptedByMember(final Member member) {
+		final Collection<Request> requests = this.findAllByMemberAndStatusAccepted(member);
+		if (!requests.isEmpty())
+			for (final Request request : requests) {
+				final PositionAux positionAux = request.getPositionAux();
+				positionAux.setStatus(false);
+				this.positionAuxService.save(positionAux);
+				this.requestRepository.delete(request);
+			}
+	}
+
+	public Double getRatioRequestStatusTrue() {
+		return this.requestRepository.getRatioRequestStatusTrue();
+	}
+
+	public Double getRatioRequestStatusFalse() {
+		return this.requestRepository.getRatioRequestStatusFalse();
+	}
+
+	public Double getRatioRequestStatusNull() {
+		return this.requestRepository.getRatioRequestStatusNull();
+	}
+
+	public Double getRatioRequestProcessionStatusTrue() {
+		return this.requestRepository.getRatioRequestProcessionStatusTrue();
+	}
+
+	public Double getRatioRequestProcessionStatusFalse() {
+		return this.requestRepository.getRatioRequestProcessionStatusFalse();
+	}
+
+	public Double getRatioRequestProcessionStatusNull() {
+		return this.requestRepository.getRatioRequestProcessionStatusNull();
 	}
 }

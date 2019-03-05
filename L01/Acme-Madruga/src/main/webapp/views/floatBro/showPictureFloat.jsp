@@ -25,4 +25,4 @@
 	</display:column>
 </display:table>
 
-<acme:cancel url=" " code="cancel"/>
+<input type="button" value="back" name="back" onclick="history.back()" />

@@ -29,7 +29,7 @@
 	<article>
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="registrationForm" onsubmit="return phonenumberval()" action="member/create.do">
+				modelAttribute="registrationForm" onsubmit="return phonenumberval();" action="member/create.do">
 
 				
 				<acme:textbox code="member.name" path="name" />
@@ -43,6 +43,15 @@
 				<acme:textbox code="member.photo" path="photo" />
 				<acme:phonebox code="member.phone" path="phone"/>
 				
+				<br>
+
+				<spring:message code="conditions" var="termsAndConditions"/>
+				<form:checkbox path="accept" label="${termsAndConditions}"/>
+				<a href="brotherhood/conditions.do" target="_blank"><spring:message code="conditions1" /></a>
+				<form:errors path="${accept}" cssClass="error" />
+				
+				<br>
+				<br>	
 				<acme:submit name="save" code="save"/>
 				<acme:cancel url=" " code="cancel"/>
 			</form:form>

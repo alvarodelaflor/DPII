@@ -45,5 +45,16 @@
 		<put-attribute name="title" value="Hermandad: Mostrar" />
 		<put-attribute name="body" value="/views/brotherhood/showBrotherhood.jsp" /> 
 	</definition>
+	
+	<!-- HIPONA 25-02-19 10:00 -->
+	<definition name="brotherhood/memberlist" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Mis hermandades" />
+		<put-attribute name="body" value="/views/brotherhood/memberlist.jsp" /> 
+	</definition>
+	
+	<definition name="brotherhood/conditions" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Terminos y condiciones" />
+		<put-attribute name="body" value="/views/brotherhood/conditions.jsp" /> 
+	</definition>
 
 </tiles-definitions>

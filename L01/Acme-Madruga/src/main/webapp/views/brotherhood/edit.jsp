@@ -38,7 +38,6 @@
 				<acme:textbox code="brotherhood.address" path="address" />
 				<acme:phonebox code="brotherhood.phone" path="phone" />
 				<acme:textbox code="brotherhood.email" path="email" />
-				<acme:textbox code="brotherhood.establishmentDate" path="establishmentDate" />
 				<acme:textbox code="brotherhood.photo" path="photo" />
 				<acme:textbox code="brotherhood.title" path="title" />
 				

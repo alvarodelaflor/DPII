@@ -32,10 +32,12 @@
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
-					<li class="arrow"></li>
-					<li><a href="administrator/show.do"><spring:message code="master.page.administrator.show" /></a></li>
-					<li><a href="administrator/edit.do"><spring:message code="master.page.administrator.edit" /></a></li>
-					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood" /></a></li>															
+					<li class="arrow"></li>																												
+					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>
+					<li><a href="area/administrator/list.do"><spring:message code="master.page.administrator.areaList" /></a></li>
+					<li><a href="position/administrator/list.do"><spring:message code="master.page.administrator.adminList" /></a></li>
+					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>		
+					<li><a href="administrator/actorList.do"><spring:message code="master.page.administrator.actorList" /></a></li>		
 				</ul>
 			</li>
 		</security:authorize>
@@ -48,17 +50,18 @@
 					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
 					<li><a href="enrolled/brotherhood/list.do"><spring:message code="master.page.brotherhood.enrolled.list" /></a></li>
 					<li><a href="request/brotherhood/list.do"><spring:message code="master.page.brotherhood.request.list" /></a></li>
+					<li><a href="area/brotherhood/edit.do"><spring:message code="master.page.brotherhood.area.edit" /></a></li>
 					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('MEMBER')">
-			<li><a class="fNiv"><spring:message	code="master.page.request" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.member" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="request/member/list.do"><spring:message code="master.page.request.list" /></a></li>
-		
+					<li><a href="brotherhood/member/list.do"><spring:message code="master.page.myBrotherhoods" /></a></li>
 					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>									
 				</ul>
 			</li>
@@ -101,7 +104,10 @@
 						<li><a href="member/edit.do"><spring:message code="master.page.member.edit" /></a></li>					
 						<li><a href="member/show.do"><spring:message code="master.page.member.show" /></a></li>	
 					</security:authorize>
-					<security:authorize access="hasRole('ADMIN')">			
+					<security:authorize access="hasRole('ADMIN')">	
+						<li><a href="administrator/show.do"><spring:message code="master.page.administrator.show" /></a></li>
+						<li><a href="administrator/edit.do"><spring:message code="master.page.administrator.edit" /></a></li>
+						<li><a href="administrator/create.do"><spring:message code="master.page.administrator.create" /></a></li>			
 					</security:authorize>
 				</ul>
 			</li>

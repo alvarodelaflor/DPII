@@ -34,5 +34,5 @@
 	<display:column titleKey="showEnrolleds" ><a href="member/listMembers.do?id=${row.id}"><spring:message code="memebers" /></a></display:column>
 </display:table>
 
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url=" " code="back"/>
 

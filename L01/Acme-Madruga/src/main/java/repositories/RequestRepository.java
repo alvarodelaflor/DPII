@@ -18,6 +18,9 @@ import domain.Request;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
+	@Query("select e from Request e where e.positionAux.procession.id=?1")
+	Collection<Request> findAllByProcessionByProcession(int processionId);
+
 	@Query("select e from Request e where e.positionAux.procession.id=?1 and e.status=?2")
 	Collection<Request> findAllByProcession(int processionId, Boolean status);
 
@@ -26,4 +29,32 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select r from Request r where r.member.id = ?1 order by r.status desc")
 	Collection<Request> getMemberRequests(int idMember);
+
+	@Query("select e from Request e where e.member.id=?1 and e.status is null")
+	Collection<Request> findAllByMemberAndStatusPending(int memberId);
+
+	@Query("select e from Request e where e.member.id=?1 and e.status is true")
+	Collection<Request> findAllByMemberAndStatusAccepted(int memberId);
+
+	@Query("select r from Request r where r.positionAux.procession.id=?1 and r.member.id=?2 and r.status is null")
+	Collection<Request> findAllByMemberProcessionPending(int idProcession, int memberId);
+
+	@Query("select r from Request r where r.positionAux.procession.id=?1 and r.member.id=?2 and r.status=true")
+	Collection<Request> findAllByMemberProcessionAccepted(int idProcession, int memberId);
+
+	// 12.3.4 --> 
+	@Query("select (count(r1)/(select count(p) from Procession p))*1.0 from Request r1 where r1.status = true")
+	Double getRatioRequestProcessionStatusTrue();
+	@Query("select (count(r1)/(select count(p) from Procession p))*1.0 from Request r1 where r1.status = false")
+	Double getRatioRequestProcessionStatusFalse();
+	@Query("select (count(r1)/(select count(p) from Procession p))*1.0 from Request r1 where r1.status = null")
+	Double getRatioRequestProcessionStatusNull();
+
+	// 12.3.6 -->
+	@Query("select (count(r1)/(select count(r) from Request r))*1.0 from Request r1 where r1.status = true")
+	Double getRatioRequestStatusTrue();
+	@Query("select (count(r1)/(select count(r) from Request r))*1.0 from Request r1 where r1.status = false")
+	Double getRatioRequestStatusFalse();
+	@Query("select (count(r1)/(select count(r) from Request r))*1.0 from Request r1 where r1.status = null")
+	Double getRatioRequestStatusNull();
 }

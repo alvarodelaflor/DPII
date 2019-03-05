@@ -15,7 +15,6 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -98,7 +97,6 @@ public abstract class Actor extends DomainEntity {
 		this.photo = photo;
 	}
 
-	@Column(unique = true)
 	@NotBlank
 	public String getEmail() {
 		return this.email;

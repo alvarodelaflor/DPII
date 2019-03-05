@@ -51,6 +51,7 @@ public class RequestMemberController extends AbstractController {
 			result = new ModelAndView("request/show");
 			result.addObject("request", request);
 		} catch (final Exception e) {
+			System.out.println("Exception e en Show request: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
@@ -64,9 +65,10 @@ public class RequestMemberController extends AbstractController {
 		Request request;
 		try {
 			request = this.requestService.create(processionId);
-			request = this.requestService.save(request);
-			result = new ModelAndView("redirect:/request/member/show.do?requestId=" + request.getId());
+			final Request saveRequest = this.requestService.save(request);
+			result = new ModelAndView("redirect:/request/member/show.do?requestId=" + saveRequest.getId());
 		} catch (final Exception e) {
+			System.out.println("Exception e en request create:" + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 

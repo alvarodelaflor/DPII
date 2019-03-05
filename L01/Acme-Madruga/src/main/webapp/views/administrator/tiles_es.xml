@@ -26,4 +26,31 @@
 		<put-attribute name="body" value="/views/administrator/show.jsp" />
 	</definition>
 	
+	<definition name="administrator/create" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Mostrar" />
+		<put-attribute name="body" value="/views/administrator/create.jsp" />
+	</definition>
+	
+	
+	<definition name="administrator/dashboard" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Estadísticas" />
+		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
+	</definition>
+	
+	<definition name="administrator/actorList" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Lista de Actores" />
+		<put-attribute name="body" value="/views/administrator/actorList.jsp" />
+	</definition>
+	
+	<definition name="administrator/actorList2" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Lista de Actores" />
+		<put-attribute name="body" value="/views/administrator/actorList.jsp" />
+	</definition>
+	
+	<definition name="administrator/editWords" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Editando Palabras" />
+		<put-attribute name="body" value="/views/administrator/editWords.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

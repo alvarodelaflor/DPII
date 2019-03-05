@@ -41,7 +41,8 @@
 		<value>/views/request/tiles.xml</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
-		
+		<value>/views/area/tiles.xml</value>
+		<value>/views/position/tiles.xml</value>
 		<!-- FRAN -->
 		<!-- CARMEN -->
 		

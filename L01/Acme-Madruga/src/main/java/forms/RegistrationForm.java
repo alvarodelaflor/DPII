@@ -3,11 +3,24 @@ package forms;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class RegistrationForm {
 
 	private String	password, confirmPassword, address, email, middleName, name, phone, photo, surname, title, userName;
 
+	private Boolean	accept;
 
+
+	public Boolean getAccept() {
+		return this.accept;
+	}
+
+	public void setAccept(final Boolean accept) {
+		this.accept = accept;
+	}
 	public String getUserName() {
 		return this.userName;
 	}
@@ -36,6 +49,7 @@ public class RegistrationForm {
 		this.title = title;
 	}
 
+	@Size(min = 5, max = 32)
 	public String getPassword() {
 		return this.password;
 	}
@@ -60,6 +74,7 @@ public class RegistrationForm {
 		this.address = address;
 	}
 
+	@NotBlank
 	public String getEmail() {
 		return this.email;
 	}

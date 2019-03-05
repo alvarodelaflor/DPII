@@ -24,11 +24,12 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+
 <section id="main-content">
 	<article>
 		<div class="content">
-			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="registrationForm" onsubmit="return phonenumberval()" action="brotherhood/create.do">
+				<form:form class="formularioEdicion" method="POST"
+				modelAttribute="registrationForm" onsubmit="return phonenumberval();"  action="brotherhood/create.do">
 
 				<acme:textbox code="brotherhood.name" path="name" />
 				<acme:textbox code="brotherhood.surname" path="surname" />
@@ -41,10 +42,21 @@
 				<acme:textbox code="brotherhood.establishmentDate" path="estableshmentDate" />
 				<acme:textbox code="brotherhood.photo" path="photo" />
 				<acme:textbox code="brotherhood.title" path="title" />
-				<acme:phonebox code="brotherhood.phone" path="phone"/>
-								
+				<acme:phonebox code="member.phone" path="phone"/>
+				
+				<br>
+				
+				<spring:message code="conditions" var="termsAndConditions"/>
+				<form:checkbox path="accept" label="${termsAndConditions}"/>
+				<a href="brotherhood/conditions.do" target="_blank"><spring:message code="conditions1" /></a>
+				<form:errors path="${accept}" cssClass="error" />
+				
+				<br>
+				<br>												
 				<acme:submit name="save" code="save"/>
 				<acme:cancel url=" " code="cancel"/>
+				
+				
 			</form:form>
 		</div>
 	</article>

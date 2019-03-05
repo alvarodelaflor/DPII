@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Brotherhood;
+import domain.FloatBro;
+import domain.Procession;
 import security.LoginService;
 import services.BrotherhoodService;
 import services.FloatBroService;
 import services.PositionAuxService;
 import services.ProcessionService;
-import domain.FloatBro;
-import domain.Procession;
 
 /*
  * CONTROL DE CAMBIOS ProcessionBrotherhoodController.java
@@ -63,9 +64,15 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
+		final Collection<FloatBro> floats = this.floatBroService.findAllBrotherhoodLogged();
+		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Boolean checkValid = false;
+		if (floats.isEmpty() || brotherhood.getArea()==null)
+			checkValid = true;
 
 		result = new ModelAndView("procession/brotherhood/list");
 		result.addObject("processions", processions);
+		result.addObject("checkValid", checkValid);
 		result.addObject("requestURI", "procession/brotherhood/list.do");
 
 		return result;
@@ -103,7 +110,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		Procession procession;
 		procession = this.processionService.findOne(processionId);
-		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId())
+		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId() || procession.getIsFinal().equals(true))
 			result = new ModelAndView("redirect:list.do");
 		else {
 			Assert.notNull(procession);

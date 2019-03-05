@@ -3,19 +3,20 @@ package services;
 
 import java.util.Collection;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Brotherhood;
+import domain.Enrolled;
+import domain.Member;
 import repositories.EnrolledRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Brotherhood;
-import domain.Enrolled;
-import domain.Member;
 
 /*
  * CONTROL DE CAMBIOS EnrolledService.java
@@ -70,12 +71,21 @@ public class EnrolledService {
 	}
 
 	public Enrolled save(final Enrolled enrolled) {
+		if (enrolled.getState()!=null && enrolled.getState().equals(true) && enrolled.getDropMoment()==null) {
+			enrolled.setCreateMoment(DateTime.now().toDate());
+		}
 		return this.enrolledRepository.save(enrolled);
 	}
 
 	public void delete(final Enrolled enrolled) {
 		Assert.notNull(enrolled, "enrrolled.null");
 		this.enrolledRepository.delete(enrolled);
+	}
+
+	public Collection<Enrolled> findAllDropOutMemberByBrotherhoodLogged() {
+		System.out.println("IdLogged:" + LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		return this.enrolledRepository.getDropOutMember(brotherhood.getId());
 	}
 
 	public Collection<Enrolled> findAllByBrotherhoodLoggedAccepted() {
@@ -97,15 +107,17 @@ public class EnrolledService {
 		Enrolled result;
 
 		if (enrolled.getId() == 0)
-			result = enrolled;
+			System.out.println("ErolledService.java no paso por aqui");
 		else {
 			result = this.enrolledRepository.findOne(enrolled.getId());
-			result.setState(enrolled.getState());
-			if (enrolled.getPosition() != null)
-				result.setPosition(enrolled.getPosition());
-			this.validator.validate(enrolled, binding);
+			enrolled.setId(result.getId());
+			enrolled.setVersion(result.getVersion());
+			enrolled.setBrotherhood(result.getBrotherhood());
+			enrolled.setDropMoment(result.getDropMoment());
+			enrolled.setMember(result.getMember());
 		}
-		return result;
+		this.validator.validate(enrolled, binding);
+		return enrolled;
 	}
 
 	private boolean checkAuthority(final String authority) {
@@ -116,11 +128,16 @@ public class EnrolledService {
 	}
 
 	public Boolean hasPendingEnrollRequest(final int memberId, final int brotherHoodId) {
-		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId) != null;
+		return this.enrolledRepository.getBrotherhoodPendingEnrollment(memberId, brotherHoodId) != null;
 	}
 
 	public Enrolled getBrotherhoodActiveEnrollment(final int memberId, final int brotherHoodId) {
 		return this.enrolledRepository.getBrotherhoodActiveEnrollment(memberId, brotherHoodId);
+	}
+
+	public Collection<Enrolled> findAllByPositionId(final int positionId) {
+
+		return this.enrolledRepository.findAllByPositionId(positionId);
 	}
 
 }
