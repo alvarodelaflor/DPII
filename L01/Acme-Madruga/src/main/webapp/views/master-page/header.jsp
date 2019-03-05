@@ -12,7 +12,7 @@
   
 	ALVARO 17/02/2019 12:38 A�adido valores para brotherhood procession
 	ALVARO 17/02/2019 15:06 Cambiado logo
-	ALVARO 17/02/2019 19:32 A�adido floatBro
+	ALVARO 17/02/2019 19:32 A�adido float
 	ALVARO 17/02/2019 21:43 A�adido enrolled
 	HIPONA 19/02/2019 11:55 A�adido acceso a request/member/list
 -->
@@ -46,7 +46,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.brotherhood" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="floatBro/brotherhood/list.do"><spring:message code="master.page.brotherhood.floatBro.list" /></a></li>
+					<li><a href="float/brotherhood/list.do"><spring:message code="master.page.brotherhood.float.list" /></a></li>
 					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
 					<li><a href="enrolled/brotherhood/list.do"><spring:message code="master.page.brotherhood.enrolled.list" /></a></li>
 					<li><a href="request/brotherhood/list.do"><spring:message code="master.page.brotherhood.request.list" /></a></li>

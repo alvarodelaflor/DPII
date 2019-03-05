@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Brotherhood;
-import domain.FloatBro;
+import domain.Float;
 import domain.Procession;
 import security.LoginService;
 import services.BrotherhoodService;
-import services.FloatBroService;
+import services.FloatService;
 import services.PositionAuxService;
 import services.ProcessionService;
 
@@ -51,7 +51,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	PositionAuxService			positionAuxService;
 
 	@Autowired
-	FloatBroService				floatBroService;
+	FloatService				floatService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -64,7 +64,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
-		final Collection<FloatBro> floats = this.floatBroService.findAllBrotherhoodLogged();
+		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Boolean checkValid = false;
 		if (floats.isEmpty() || brotherhood.getArea()==null)
@@ -173,10 +173,10 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("procession/brotherhood/edit");
 
-		final Collection<FloatBro> floatBros = this.floatBroService.findAllBrotherhoodLogged();
+		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
 
 		result.addObject("procession", procession);
-		result.addObject("floatBros", floatBros);
+		result.addObject("floats", floats);
 
 		return result;
 	}
@@ -185,6 +185,9 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("procession/brotherhood/edit");
 
+		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
+
+		result.addObject("floats", floats);
 		result.addObject("procession", procession);
 		result.addObject("message", messageCode);
 

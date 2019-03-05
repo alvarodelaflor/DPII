@@ -38,7 +38,7 @@ public class Procession extends DomainEntity {
 	private Boolean		isFinal;
 	private Integer		maxRow;
 	private Integer		maxColum;
-	private FloatBro	floatBro;
+	private domain.Float	floatt;
 
 
 	@NotNull
@@ -117,11 +117,11 @@ public class Procession extends DomainEntity {
 	}
 
 	@ManyToOne(optional = false)
-	public FloatBro getFloatBro() {
-		return this.floatBro;
+	public Float getFloatt() {
+		return this.floatt;
 	}
 
-	public void setFloatBro(final FloatBro floatBro) {
-		this.floatBro = floatBro;
+	public void setFloatt(final Float floatt) {
+		this.floatt = floatt;
 	}
 }

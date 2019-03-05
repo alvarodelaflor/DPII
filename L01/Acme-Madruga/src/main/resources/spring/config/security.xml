@@ -59,10 +59,10 @@
 		<security:intercept-url pattern="/brotherhood/show.do" access="permitAll" /> 
 		<security:intercept-url pattern="/brotherhood/showBrotherhood.do" access="permitAll" /> 
 		<security:intercept-url pattern="/procession/listProcessions.do" access="permitAll" /> 
-		<security:intercept-url pattern="/floatBro/listFloat.do" access="permitAll" /> 
+		<security:intercept-url pattern="/float/listFloat.do" access="permitAll" /> 
 		<security:intercept-url pattern="/member/listMembers.do" access="permitAll" /> 
 		<security:intercept-url pattern="/brotherhood/save.do" access="permitAll" /> 
-		<security:intercept-url pattern="/floatBro/showPictureFloat.do" access="permitAll" />
+		<security:intercept-url pattern="/float/showPictureFloat.do" access="permitAll" />
 		<security:intercept-url pattern="/member/saveE.do" access="hasRole('MEMBER')" /> 
 		<security:intercept-url pattern="/member/edit.do" access="hasRole('MEMBER')"/>
 		<security:intercept-url pattern="/member/show.do" access="hasRole('MEMBER')"/> 
@@ -93,11 +93,11 @@
 		<security:intercept-url pattern="/procession/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/procession/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />
 		
-		<security:intercept-url pattern="/floatBro/brotherhood/list.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/floatBro/brotherhood/show.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/floatBro/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/floatBro/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/floatBro/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/float/brotherhood/list.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/float/brotherhood/show.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/float/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/float/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/float/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />
 		
 		<security:intercept-url pattern="/enrolled/brotherhood/list.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/enrolled/brotherhood/show.do" access="hasRole('BROTHERHOOD')" />
