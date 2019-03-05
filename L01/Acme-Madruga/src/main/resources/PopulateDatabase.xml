@@ -115,7 +115,8 @@
 		<property name="email" value="doñaCarmen@alum.us.es" />
         <property name="phone" value="+34625381121" />
         <property name="address" value="Lora del río, nº5" />
-        <property name="userAccount" ref= "userAccount1"/>	
+        <property name="userAccount" ref= "userAccount1"/>
+        <property name="configuration" ref= "configuration"/>
     </bean>
 	<!-- ADMIN -->
 	
@@ -311,6 +312,60 @@
     <bean id="finder02" class="domain.Finder">
     </bean>
 	<!-- FINDER -->
+	<!-- CONFIGURATION -->
+	<bean id="configuration" class="domain.Configuration">
+		<property name="posWords">
+    		<value>good</value>
+    		<value>fantastic</value>
+    		<value>excellent</value>
+    		<value>great</value>
+    		<value>amazing</value>
+    		<value>terrific</value>
+    		<value>beautiful</value>
+    	</property>
+    	<property name="negWords">
+    		<value>not</value>
+    		<value>bad</value>
+    		<value>horrible</value>
+    		<value>average</value>
+    		<value>disaster</value>
+    	</property>
+    	<property name="posWordsEs">
+    		<value>bueno</value>
+    		<value>fabuloso</value>
+    		<value>excelente</value>
+    		<value>gran</value>
+    		<value>increible</value>
+    		<value>estupendo</value>
+    		<value>hermoso</value>
+    	</property>
+    	<property name="negWordsEs">
+    		<value>no</value>
+    		<value>malo</value>
+    		<value>horrible</value>
+    		<value>mediocre</value>
+    		<value>desastre</value>
+    	</property>
+    	<property name="spamWords">
+    		<value>sex</value>
+    		<value>viagra</value>
+    		<value>cialis</value>
+    		<value>one million</value>
+    		<value>you've been selected</value>
+    		<value>Nigeria</value>
+    	</property>
+    	<property name="spamWordsEs">
+    		<value>sexo</value>
+    		<value>viagra</value>
+    		<value>cialis</value>
+    		<value>un millon</value>
+    		<value>has sido seleccionado</value>
+    		<value>Nigeria</value>
+    	</property>
+    	<property name="cacheHours" value="1">
+    	<property name="cacheAmount" value="10">
+    </bean>
+	<!-- CONFIGURATION -->
 </beans>
 
 

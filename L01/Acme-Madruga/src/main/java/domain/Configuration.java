@@ -20,6 +20,9 @@ public class Configuration extends DomainEntity {
 	private Collection<String>	posWordsEs;
 	private Collection<String>	negWordsEs;
 
+	private Collection<String>	spamWords;
+	private Collection<String>	spamWordsEs;
+
 	// Cache
 	private Integer				cacheHours;
 	private Integer				cacheAmount;
@@ -79,6 +82,24 @@ public class Configuration extends DomainEntity {
 
 	public void setNegWordsEs(final Collection<String> negWordsEs) {
 		this.negWordsEs = negWordsEs;
+	}
+
+	@ElementCollection
+	public Collection<String> getSpamWords() {
+		return this.spamWords;
+	}
+
+	public void setSpamWords(final Collection<String> spamWords) {
+		this.spamWords = spamWords;
+	}
+
+	@ElementCollection
+	public Collection<String> getSpamWordsEs() {
+		return this.spamWordsEs;
+	}
+
+	public void setSpamWordsEs(final Collection<String> spamWordsEs) {
+		this.spamWordsEs = spamWordsEs;
 	}
 
 }
