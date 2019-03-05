@@ -42,5 +42,15 @@
 		<put-attribute name="body" value="/views/administrator/actorList.jsp" />
 	</definition>
 	
+	<definition name="administrator/actorList2" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Lista de Actores" />
+		<put-attribute name="body" value="/views/administrator/actorList.jsp" />
+	</definition>
+	
+	<definition name="administrator/editWords" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Editando Palabras" />
+		<put-attribute name="body" value="/views/administrator/editWords.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>

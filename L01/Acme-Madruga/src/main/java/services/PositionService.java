@@ -61,6 +61,10 @@ public class PositionService {
 		final Position posCheck = this.positionRepository.findByNames(position.getNameEs(), position.getNameEn());
 		Assert.isTrue(posCheck == null, "name.error");
 
+		// "Check that an Admin is saving the new Area"
+		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(creatorAdmin, "user.error");
+
 		return this.positionRepository.save(position);
 	}
 
