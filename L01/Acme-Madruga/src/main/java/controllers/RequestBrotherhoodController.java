@@ -149,11 +149,13 @@ public class RequestBrotherhoodController extends AbstractController {
 			result = this.createEditModelAndView(request);
 		} else
 			try {
+				PositionAux positionAux = this.positionAuxService.findOne(request.getPositionAux().getId());
+				Assert.isTrue(!positionAux.getStatus().equals(true));
 				System.out.println("El error pasa por aquí alvaro (TRY de save())");
 				System.out.println(binding);
 				if (request.getStatus().equals(false))
 					request.getPositionAux().setStatus(false);
-				else if (request.getStatus().equals(true))
+				else if (request.getStatus().equals(true) && !this.positionAuxService.findOne(request.getPositionAux().getId()).getStatus().equals(true))
 					request.getPositionAux().setStatus(true);
 				this.positionAuxService.save(request.getPositionAux());
 				this.requestService.save(request);

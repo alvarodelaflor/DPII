@@ -86,8 +86,11 @@ public class RequestService {
 			result = request;
 		else {
 			result = this.requestRepository.findOne(request.getId());
+			Boolean cacheStatus = result.getStatus();
 			result.setStatus(request.getStatus());
-			if (request.getPositionAux() != null && result.getPositionAux() != null && !request.getPositionAux().equals(result.getPositionAux())) {
+			if (this.positionAuxService.findOne(request.getPositionAux().getId()).getStatus().equals(true) && cacheStatus==null) {
+				result.setStatus(null);
+			} else if (request.getPositionAux() != null && result.getPositionAux() != null && !request.getPositionAux().equals(result.getPositionAux())) {
 				final PositionAux positionAux = result.getPositionAux();
 				positionAux.setStatus(false);
 				this.positionAuxService.save(positionAux);
