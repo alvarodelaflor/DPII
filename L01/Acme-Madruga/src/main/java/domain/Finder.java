@@ -6,9 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -77,9 +75,7 @@ public class Finder extends DomainEntity {
 		this.area = area;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {
-		CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST
-	}, targetEntity = Procession.class)
+	@ManyToMany
 	public Collection<Procession> getProcessions() {
 		return this.processions;
 	}

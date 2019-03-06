@@ -125,6 +125,12 @@ public class FinderService {
 		this.finderRepository.delete(finder);
 	}
 
+	public void updateProcessions(final Procession p) {
+		final Collection<Finder> finders = this.finderRepository.getFindersWithProcession(p.getId());
+		for (final Finder f : finders)
+			f.getProcessions().remove(p);
+	}
+
 	private boolean checkAuthority(final String authority) {
 		final Authority au = new Authority();
 		au.setAuthority(authority);
