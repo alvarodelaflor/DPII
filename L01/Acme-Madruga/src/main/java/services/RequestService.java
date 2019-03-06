@@ -141,6 +141,12 @@ public class RequestService {
 	}
 	public Request save(final Request request) {
 		Request res;
+
+		final Request noti = this.findOne(request.getId());
+		System.out.println("Comprobación cambio del status");
+		System.out.println(request.getStatus());
+		System.out.println(noti.getStatus());
+
 		if (request.getId() == 0) {
 			// Creating, we want to check member authority
 			Assert.isTrue(this.checkAuthority("MEMBER"));
@@ -176,7 +182,7 @@ public class RequestService {
 		final Collection<Request> requests = this.findRequestByProcessionId(processionId);
 		if (!requests.isEmpty())
 			for (final Request request : requests) {
-				PositionAux positionAux = request.getPositionAux();
+				final PositionAux positionAux = request.getPositionAux();
 				positionAux.setStatus(false);
 				this.positionAuxService.save(positionAux);
 				this.delete(request);

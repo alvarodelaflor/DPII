@@ -21,14 +21,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Brotherhood;
-import domain.Float;
-import domain.Procession;
 import security.LoginService;
 import services.BrotherhoodService;
 import services.FloatService;
+import services.MemberService;
+import services.MessageService;
 import services.PositionAuxService;
 import services.ProcessionService;
+import domain.Brotherhood;
+import domain.Message;
+import domain.Procession;
 
 /*
  * CONTROL DE CAMBIOS ProcessionBrotherhoodController.java
@@ -53,6 +55,12 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@Autowired
 	FloatService				floatService;
 
+	@Autowired
+	MessageService				messageService;
+
+	@Autowired
+	MemberService				memberService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -65,9 +73,9 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
 		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Boolean checkValid = false;
-		if (floats.isEmpty() || brotherhood.getArea()==null)
+		if (floats.isEmpty() || brotherhood.getArea() == null)
 			checkValid = true;
 
 		result = new ModelAndView("procession/brotherhood/list");
@@ -159,6 +167,17 @@ public class ProcessionBrotherhoodController extends AbstractController {
 				System.out.println("El error pasa por aquí alvaro (TRY de save())");
 				System.out.println(binding);
 				this.processionService.save(procession);
+				System.out.println("Error despues del save");
+				final Message msg = this.messageService.create();
+				final Collection<String> membersEmails = this.memberService.brotherhoodAllMemberEmail(procession.getBrotherhood().getId());
+				System.out.println(membersEmails);
+				msg.setBody("La procesión " + procession.getTitle() + " ha sido publicada");
+				msg.setSubject("Notifación sobre publicación de procesión");
+				msg.setEmailReceiver(membersEmails);
+				System.out.println("llega al send");
+				final Message notification = this.messageService.sendNotificationByEmails(msg);
+				this.messageService.save(notification);
+				System.out.println("Error despues de message");
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println("El error: ");

@@ -18,9 +18,13 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <display:table name="socialProfiles" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<display:column property="link" titleKey="socialProfile.link"></display:column>
-	<display:column property="name" titleKey="socialProfile.name"></display:column>
-	<display:column property="nick" titleKey="socialProfile.nick"></display:column>
+<display:column titleKey="socialProfile.name">
+						<a href="socialProfile/show.do?socialProfileId=${row.id}"><jstl:out
+								value="${row.name}"></jstl:out> </a>
+					</display:column>	<display:column titleKey="socialProfile.delete"><a href="socialProfile/delete.do?socialProfileId=${row.id}"><spring:message code="socialProfile.delete" /></a></display:column>
+	<display:column titleKey="socialProfile.edit"><a href="socialProfile/edit.do?socialProfileId=${row.id}"><spring:message code="socialProfile.edit" /></a></display:column>
 </display:table>
+
+<p class="create"><input type="button" value=<spring:message code="createSocialProfile" /> id="buttonSocialProfile" name="buttonSocialProfile"  onclick="location.href='socialProfile/create.do';"/></p>
 
 <acme:cancel url=" " code="cancel"/>
