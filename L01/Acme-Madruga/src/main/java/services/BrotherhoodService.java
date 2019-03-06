@@ -395,11 +395,11 @@ public class BrotherhoodService {
 
 	public Collection<String> largestBrotherhood() {
 		return this.brotherhoodRepository.brotherhoodMaxRow();
+
 	}
 
 	public Collection<String> smallestBrotherhood() {
 		return this.brotherhoodRepository.brotherhoodMinRow();
-
 	}
 
 	public Integer numberBrotherhood() {

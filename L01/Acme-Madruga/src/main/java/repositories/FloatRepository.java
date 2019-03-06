@@ -19,6 +19,6 @@ import domain.Float;
 @Repository
 public interface FloatRepository extends JpaRepository<Float, Integer> {
 
-	@Query("select f from domain.float f where f.brotherhood.id=?1")
+	@Query("select f from domain.Float f where f.brotherhood.id=?1")
 	Collection<domain.Float> findFloatByBrotherhood(int brotherhoodId);
 }
