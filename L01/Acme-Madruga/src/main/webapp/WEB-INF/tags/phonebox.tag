@@ -28,14 +28,11 @@
 					var phoneNumber;
 					phoneNumber = document.getElementById("phoneNumber").value;
 					var res = false;
-					if ((phoneNumber)==null) {
-						res = true;
-					}
 					if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumber)) {
 						res = true;
 					}
 					if (/(\+[0-9]{1,3})\s([0-9]{4,})$/.test(phoneNumber)) {
-						res = true;
+				res = true;
 					}
 					if (/^([0-9]{4,})\:(\+[0-9]{1,3})$/.test(phoneNumber)) {
 						res = true;

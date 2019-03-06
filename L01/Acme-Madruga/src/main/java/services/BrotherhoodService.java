@@ -116,8 +116,6 @@ public class BrotherhoodService {
 		boxesDefault.add(spamBoxSave);
 
 		result.setMessageBoxes(boxesDefault);
-		result.setIsBanned(false);
-		result.setIsSuspicious(false);
 
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -198,8 +196,6 @@ public class BrotherhoodService {
 			boxesDefault.add(spamBoxSave);
 
 			result.setMessageBoxes(boxesDefault);
-			result.setIsBanned(false);
-			result.setIsSuspicious(false);
 			this.validator.validate(result, binding);
 
 		} else {
@@ -259,8 +255,6 @@ public class BrotherhoodService {
 		boxesDefault.add(spamBoxSave);
 
 		brotherhood.setMessageBoxes(boxesDefault);
-		brotherhood.setIsBanned(false);
-		brotherhood.setIsSuspicious(false);
 
 		return brotherhood;
 	}
@@ -393,13 +387,14 @@ public class BrotherhoodService {
 		this.dropMember(member.getId(), brotherhoodId);
 	}
 
-	public Collection<String> largestBrotherhood() {
-		return this.brotherhoodRepository.brotherhoodMaxRow();
-
+	public String largestBrotherhood() {
+		final Brotherhood b = this.brotherhoodRepository.brotherhoodMaxRow();
+		return b == null ? null : b.getTitle();
 	}
 
-	public Collection<String> smallestBrotherhood() {
-		return this.brotherhoodRepository.brotherhoodMinRow();
+	public String smallestBrotherhood() {
+		final Brotherhood b = this.brotherhoodRepository.brotherhoodMinRow();
+		return b == null ? null : b.getTitle();
 	}
 
 	public Integer numberBrotherhood() {

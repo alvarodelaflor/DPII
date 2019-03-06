@@ -47,8 +47,8 @@ public abstract class Actor extends DomainEntity {
 	private UserAccount					userAccount;
 	private String						middleName;
 	private Collection<MessageBox>		messageBoxes;
-	private Boolean						isBanned;
-	private Boolean						isSuspicious;
+	//	private Boolean						isBanned;
+	//	private Boolean						isSuspicious;
 	private Collection<SocialProfile>	socialProfiles;
 
 
@@ -141,20 +141,20 @@ public abstract class Actor extends DomainEntity {
 		this.messageBoxes = messageBoxes;
 	}
 
-	public Boolean getIsBanned() {
-		return this.isBanned;
-	}
-
-	public void setIsBanned(final Boolean isBanned) {
-		this.isBanned = isBanned;
-	}
-
-	public Boolean getIsSuspicious() {
-		return this.isSuspicious;
-	}
-
-	public void setIsSuspicious(final Boolean isSuspicious) {
-		this.isSuspicious = isSuspicious;
-	}
+	//	public Boolean getIsBanned() {
+	//		return this.isBanned;
+	//	}
+	//
+	//	public void setIsBanned(final Boolean isBanned) {
+	//		this.isBanned = isBanned;
+	//	}
+	//
+	//	public Boolean getIsSuspicious() {
+	//		return this.isSuspicious;
+	//	}
+	//
+	//	public void setIsSuspicious(final Boolean isSuspicious) {
+	//		this.isSuspicious = isSuspicious;
+	//	}
 
 }

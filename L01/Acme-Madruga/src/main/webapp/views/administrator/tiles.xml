@@ -51,4 +51,12 @@
 		<put-attribute name="body" value="/views/administrator/editWords.jsp" />
 	</definition>
 	
+	
+	<!-- FERRETE -->
+	<definition name="administrator/list" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Configuration" />
+		<put-attribute name="body" value="/views/administrator/list.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

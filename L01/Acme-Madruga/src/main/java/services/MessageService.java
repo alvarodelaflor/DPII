@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -45,12 +44,12 @@ public class MessageService {
 	@Autowired
 	ActorService				actorService;
 	@Autowired
+	WelcomeService				welcomeService;
+	@Autowired
 	private Validator			validator;
 
+
 	//private final List<String>	spamWords	= Arrays.asList("sex", "viagra", "cialis", "ferrete", "one million", "you've been selected", "Nigeria", "queryfonsiponsypaferrete", "sexo", "un millón", "ha sido seleccionado");
-
-	public HashSet<String>		spamWords;
-
 
 	//Carmen: Método para añadir spam words (adm)
 	//	public HashSet<String> newSpamWords(final String newWord) {
@@ -91,7 +90,6 @@ public class MessageService {
 	}
 
 	public Message exchangeMessage(final Message message, final Integer receiverId) {
-		//this.checkSuspicious(message);
 		final Boolean suspicious = this.checkSuspiciousWithBoolean(message);
 		System.out.println("suspicious" + suspicious);
 
@@ -210,37 +208,64 @@ public class MessageService {
 	}
 
 	public Message save(final Message message) {
+
+		//Capturo actor logeado según su UserAcc.Id
+		final UserAccount uacc = LoginService.getPrincipal();
+		final Actor actor = this.actorService.findByUserAccountId(uacc.getId());
+		//Actualizo contador total de msg
+		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1);
+		//Actualizo contador de msg de spam
+		if (this.checkSuspiciousWithBoolean(message) == true)
+			actor.getUserAccount().setSpamMsgCounter(uacc.getSpamMsgCounter() + 1);
+		//Calculo el spammerFlag del UserAcc
+		actor.getUserAccount().setSpammerFlag(this.spammerFlagCheck());
+		//Guardo Actor con el UserAcc modificado
+		this.actorService.save(actor);
+		//Guardo el Msg
 		return this.messageRepository.save(message);
 	}
-
+	// Check for spam: return true if the msg contains an spam word
 	private Boolean checkSuspiciousWithBoolean(final Message msg) {
-		System.out.println("Entra en suspicious");
+		System.out.println("check suspicious");
 		Boolean res = false;
-		this.listSpamWords();
-		for (final String word : this.spamWords)
+
+		final Collection<String> spamWords = this.initializeSpamWordsMsg();
+
+		for (final String word : spamWords)
 			if (msg.getBody().contains(word)) {
+				System.out.println("es spam");
 				res = true;
-				this.actorService.getActorByUserId(LoginService.getPrincipal().getId()).setIsSuspicious(true);
+				//break;
 			}
 		return res;
 	}
+	private Collection<String> initializeSpamWordsMsg() {
 
-	public HashSet<String> listSpamWords() {
-		System.out.println("Entra en el list");
-		System.out.println(this.spamWords);
-		this.spamWords = new HashSet<String>();
-		this.spamWords.add("sex");
-		System.out.println("falla el add");
-		this.spamWords.add("viagra");
-		this.spamWords.add("cialis");
-		this.spamWords.add("one millon");
-		this.spamWords.add("you've been selected");
-		this.spamWords.add("Nigeria");
-		this.spamWords.add("sexo");
-		this.spamWords.add("un millón");
-		this.spamWords.add("ha sido seleccionado");
-		System.out.println(this.spamWords);
-		return this.spamWords;
+		Collection<String> res;
+
+		if (this.welcomeService.getSpamWords().size() == 0)
+			res = this.welcomeService.listSpamWords();
+		else
+			res = this.welcomeService.getSpamWords();
+		return res;
+	}
+
+	// spammerFlag = true if condition is fulfilled
+	private Boolean spammerFlagCheck() {
+
+		final UserAccount uacc = LoginService.getPrincipal();
+		Boolean res = false;
+
+		if (uacc.getMsgCounter() != 0) {
+
+			final Double ratiospam = uacc.getSpamMsgCounter() / uacc.getMsgCounter();
+			System.out.println(ratiospam);
+			final Double percentage = uacc.getMsgCounter() * 0.1;
+			System.out.println(percentage);
+			res = ratiospam > percentage;
+		}
+
+		return res;
 	}
 
 }
