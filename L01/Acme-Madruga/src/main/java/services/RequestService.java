@@ -59,6 +59,12 @@ public class RequestService {
 	}
 
 	public void delete(final Request request) {
+		Assert.isTrue(request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId()==LoginService.getPrincipal().getId());
+		PositionAux positionAux = request.getPositionAux();
+		if (positionAux!=null) {
+			positionAux.setStatus(false);
+			this.positionAuxService.save(positionAux);
+		}
 		this.requestRepository.delete(request);
 	}
 
@@ -158,6 +164,13 @@ public class RequestService {
 		// To delete a request we must be the owner and it must be 'PENDING'
 		Assert.isTrue(req.getMember().getUserAccount().equals(LoginService.getPrincipal()));
 		Assert.isNull(req.getStatus());
+		System.out.println("RequestService.java -> delete");
+		PositionAux positionAux = req.getPositionAux();
+		if (positionAux!=null) {
+			positionAux.setStatus(false);
+			this.positionAuxService.save(positionAux);
+		}
+
 		this.requestRepository.delete(id);
 	}
 

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -43,6 +44,7 @@ public class Procession extends DomainEntity {
 
 	@NotNull
 	@Min(1)
+	@Max(1200)
 	public Integer getMaxRow() {
 		return this.maxRow;
 	}
@@ -52,6 +54,7 @@ public class Procession extends DomainEntity {
 	}
 
 	@Min(1)
+	@Max(4)
 	@NotNull
 	public Integer getMaxColum() {
 		return this.maxColum;

@@ -23,4 +23,7 @@ public interface PositionAuxRepository extends JpaRepository<PositionAux, Intege
 
 	@Query("select p from PositionAux p where p.procession.id=?1")
 	Collection<PositionAux> findAllPositionAuxByProcessionId(int processionId);
+	
+	@Query("select p from PositionAux p where p.procession.id=?1 and p.row=?2 and p.colum=?3")
+	PositionAux findAllPositionAuxByProcessionIdRowAndColum(int processionId, int row, int colum);
 }

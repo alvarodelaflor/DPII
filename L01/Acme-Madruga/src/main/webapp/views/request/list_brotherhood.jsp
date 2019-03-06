@@ -26,10 +26,10 @@
 	<div>
 		<security:authorize access="hasRole('BROTHERHOOD')"> 
 			<div>
-				<strong><p><spring:message code="request.details.accepted"></spring:message></p></strong>
+				<p><strong><spring:message code="request.details.accepted"/></strong></p>
 				<display:table name="requestsAccepted" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">				
 					<display:column titleKey="request.edit"> 
-						<a href="request/brotherhood/edit.do?id=${row.id}"><spring:message code="request.edit"></spring:message></a>
+						
 					</display:column>
 					<display:column titleKey="request.delete"> 
 						<a href="request/brotherhood/delete.do?id=${row.id}"><spring:message code="request.delete"></spring:message></a>

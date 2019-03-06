@@ -109,7 +109,7 @@ public class RequestBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		Request request;
 		request = this.requestService.findOne(requestId);
-		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId())
+		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId() || (request.getStatus()!=null && request.getStatus().equals(true)))
 			result = new ModelAndView("redirect:list.do");
 		else {
 			Assert.notNull(request);
@@ -127,9 +127,8 @@ public class RequestBrotherhoodController extends AbstractController {
 		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
 		else {
-			Assert.notNull(request, "request.null");
-
 			try {
+				Assert.notNull(request, "request.null");
 				this.requestService.delete(request);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Exception e) {
@@ -163,15 +162,11 @@ public class RequestBrotherhoodController extends AbstractController {
 				System.out.println("El error: ");
 				System.out.println(oops);
 				System.out.println(binding);
-				if (oops.getMessage().equals("request.wrongDate"))
-					result = this.createEditModelAndView(request, "request.wrongDate");
-				else if (oops.getMessage().equals("request.wrongMomentDate"))
-					result = this.createEditModelAndView(request, "request.wrongMomentDate");
-				else
-					result = this.createEditModelAndView(request, "request.commit.error");
+				result = this.createEditModelAndView(request, "request.commit.error");
 			}
 		return result;
 	}
+	
 	private ModelAndView createEditModelAndView(final Request request) {
 		ModelAndView result;
 
@@ -198,11 +193,8 @@ public class RequestBrotherhoodController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("request/brotherhood/edit");
-
-		final Collection<Position> positions = this.positionService.findAll();
-
-		result.addObject("request", request);
-		result.addObject("positions", positions);
+		
+		result = createEditModelAndView(request);
 		result.addObject("message", messageCode);
 
 		return result;

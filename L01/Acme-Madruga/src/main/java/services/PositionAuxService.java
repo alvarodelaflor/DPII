@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.Validator;
 
 import repositories.PositionAuxRepository;
@@ -48,6 +49,15 @@ public class PositionAuxService {
 	public PositionAux save(final PositionAux positionAux) {
 		return this.positionAuxRepository.save(positionAux);
 	}
+	
+	public boolean isEmptyPositionAux(int processionId, int row, int column) {
+		PositionAux positionAuxCheck = this.positionAuxRepository.findAllPositionAuxByProcessionIdRowAndColum(processionId, row, column);
+		return !positionAuxCheck.getStatus();
+	}
+	
+	public Collection<PositionAux> saveAll(Collection<PositionAux> positionsAux) {
+		return this.positionAuxRepository.save(positionsAux);
+	}	
 
 	public void delete(final PositionAux positionAux) {
 		this.positionAuxRepository.delete(positionAux);

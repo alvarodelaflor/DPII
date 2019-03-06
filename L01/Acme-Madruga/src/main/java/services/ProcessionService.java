@@ -3,8 +3,11 @@ package services;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +16,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ProcessionRepository;
-import security.LoginService;
-import security.UserAccount;
 import auxiliar.PositionAux;
 import domain.Brotherhood;
 import domain.Procession;
+import repositories.ProcessionRepository;
+import security.LoginService;
+import security.UserAccount;
 
 /*
  * CONTROL DE CAMBIOS ProcessionService.java
@@ -90,6 +93,7 @@ public class ProcessionService {
 	}
 	public Procession save(final Procession procession) {
 		final Procession processionUpdate = this.processionRepository.save(procession);
+		List<PositionAux> positionAuxs = new ArrayList<PositionAux>();
 		if (procession.getIsFinal().equals(true))
 			for (int i = 0; i < procession.getMaxRow(); i++)
 				for (int j = 0; j < procession.getMaxColum(); j++) {
@@ -98,8 +102,9 @@ public class ProcessionService {
 					positionAux.setColum(j);
 					positionAux.setProcession(processionUpdate);
 					positionAux.setStatus(false);
-					this.positionAuxService.save(positionAux);
+					positionAuxs.add(positionAux);
 				}
+		this.positionAuxService.saveAll(positionAuxs);
 		return processionUpdate;
 	}
 
