@@ -48,6 +48,9 @@ public class ProcessionService {
 	@Autowired
 	RequestService					requestService;
 
+	@Autowired
+	FinderService					finderService;
+
 
 	//Simple CRUD Methods ------------------
 
@@ -105,6 +108,7 @@ public class ProcessionService {
 		Assert.isTrue(LoginService.getPrincipal().getId() == procession.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
 		this.requestService.deleteAllRequestByProcession(procession.getId());
 		this.positionAuxService.deleteAllPositionByProcession(procession.getId());
+		this.finderService.updateProcessions(procession);
 		this.processionRepository.delete(procession);
 	}
 

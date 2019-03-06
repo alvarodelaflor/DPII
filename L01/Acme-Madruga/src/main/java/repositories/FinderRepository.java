@@ -43,4 +43,7 @@ public interface FinderRepository extends JpaRepository<Finder, Integer> {
 
 	@Query("select m.finder from Member m where m.id=?1")
 	Finder getByMember(int id);
+
+	@Query("select f from Finder f join f.processions p where p.id=?1")
+	Collection<Finder> getFindersWithProcession(int id);
 }
