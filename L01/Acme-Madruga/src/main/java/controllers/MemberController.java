@@ -144,30 +144,35 @@ public class MemberController extends AbstractController {
 	public ModelAndView list() {
 
 		ModelAndView result;
+		try {
+			final int userLoggin = LoginService.getPrincipal().getId();
+			final Member member;
+			member = this.memberService.getMemberByUserAccountId(userLoggin);
+			Assert.isTrue(member != null);
 
-		final int userLoggin = LoginService.getPrincipal().getId();
-		final Member member;
-		member = this.memberService.getMemberByUserAccountId(userLoggin);
-		Assert.isTrue(member != null);
+			result = new ModelAndView("member/show");
+			result.addObject("member", member);
 
-		result = new ModelAndView("member/show");
-		result.addObject("member", member);
-
-		result.addObject("requestURI", "member/show.do");
-
+			result.addObject("requestURI", "member/show.do");	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 
 	@RequestMapping(value = "/listMembers", method = RequestMethod.GET)
 	public ModelAndView listMembers(@RequestParam(value = "id", defaultValue = "-1") final int id) {
-		final ModelAndView result;
-
-		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-		final Collection<Member> member = this.memberService.brotherhoodAllMember(brotherhood.getId());
-		result = new ModelAndView("member/listMembers");
-		result.addObject("brotherhood", brotherhood);
-		result.addObject("member", member);
-		result.addObject("requestURI", "member/listMembers.do");
+		ModelAndView result;
+		try {
+			final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
+			final Collection<Member> member = this.memberService.brotherhoodAllMember(brotherhood.getId());
+			result = new ModelAndView("member/listMembers");
+			result.addObject("brotherhood", brotherhood);
+			result.addObject("member", member);
+			result.addObject("requestURI", "member/listMembers.do");	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 	@RequestMapping(value = "/conditions", method = RequestMethod.GET)

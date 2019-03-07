@@ -65,15 +65,18 @@ public class ProcessionController extends AbstractController {
 	@RequestMapping(value = "/listProcessions", method = RequestMethod.GET)
 	public ModelAndView listProcessions(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
-
-		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-		System.out.println(brotherhood.getId());
-		final Collection<Procession> procession = this.processionService.findProcessionsBrotherhoodFinal(brotherhood.getId());
-		System.out.println(procession);
-		result = new ModelAndView("procession/listProcessions");
-		result.addObject("brotherhood", brotherhood);
-		result.addObject("procession", procession);
-		result.addObject("requestURI", "procession/listProcessions.do");
+		try {
+			final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
+			System.out.println(brotherhood.getId());
+			final Collection<Procession> procession = this.processionService.findProcessionsBrotherhoodFinal(brotherhood.getId());
+			System.out.println(procession);
+			result = new ModelAndView("procession/listProcessions");
+			result.addObject("brotherhood", brotherhood);
+			result.addObject("procession", procession);
+			result.addObject("requestURI", "procession/listProcessions.do");	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 
@@ -83,7 +86,7 @@ public class ProcessionController extends AbstractController {
 		final Procession procession = this.processionService.findOne(processionId);
 
 		if (this.processionService.findOne(processionId) == null)
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		else {
 			Assert.notNull(procession, "procession.nul");
 			result = new ModelAndView("procession/brotherhood/show");
