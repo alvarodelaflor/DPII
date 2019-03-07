@@ -67,12 +67,16 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Boolean checkValid = false;
-		if (floats.isEmpty() || brotherhood.getArea()==null)
+		Boolean checkArea = false;
+		if (floats.isEmpty())
 			checkValid = true;
-
+		if (brotherhood.getArea()==null) {
+			checkArea = true;
+		}
 		result = new ModelAndView("procession/brotherhood/list");
 		result.addObject("processions", processions);
 		result.addObject("checkValid", checkValid);
+		result.addObject("checkArea", checkArea);
 		result.addObject("requestURI", "procession/brotherhood/list.do");
 
 		return result;

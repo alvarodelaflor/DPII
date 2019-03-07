@@ -27,11 +27,18 @@
 	<div>
 		<security:authorize access="hasRole('BROTHERHOOD')"> 
 			<c:choose>
-				<c:when test="${checkValid==false}">
+				<c:when test="${checkValid==false and checkArea==false}">
 					<p class="create"><input type="button" value=<spring:message code="brotherhood.createProcession" /> id="buttonCreateProcession" name="buttonCreateProcession"  onclick="location.href='procession/brotherhood/create.do';"/></p>
 				</c:when>
 				<c:otherwise>
-					<p><spring:message code="procession.float.empty"/></p>
+					<c:choose>
+						<c:when test="${checkValid==true and checkArea==false}">
+							<p><spring:message code="procession.float.empty"/></p>
+						</c:when>
+						<c:otherwise>
+							<p><spring:message code="procession.area.empty"/></p>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
 			<display:table name="processions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
