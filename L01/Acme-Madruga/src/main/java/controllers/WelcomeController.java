@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,7 @@ public class WelcomeController extends AbstractController {
 		ModelAndView result;
 		SimpleDateFormat formatter;
 		String moment;
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
@@ -50,7 +52,9 @@ public class WelcomeController extends AbstractController {
 		result.addObject("moment", moment);
 		result.addObject("logo", welcomeService.getLogo());
 		result.addObject("system", welcomeService.getSystem());
-
+		result.addObject("e", welcomeService.getE());
+		result.addObject("s", welcomeService.getS());
+		result.addObject("language", language);
 		return result;
 	}
 }

@@ -68,7 +68,8 @@ public class MessageBoxController extends AbstractController {
 		result.addObject("system", welcomeService.getSystem());
 		result.addObject("messageBoxes", messageBoxes);
 		result.addObject("requestURI", "messageBox/list.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
