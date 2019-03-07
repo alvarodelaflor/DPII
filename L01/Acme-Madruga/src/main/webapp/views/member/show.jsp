@@ -41,5 +41,6 @@
 </div>
 </security:authorize>
 <acme:cancel url=" " code="cancel"/>
+<acme:cancel url="/member/export.do?id=${member.id}" code="export"/>
 
 
