@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class RegistrationForm {
 
@@ -33,6 +34,7 @@ public class RegistrationForm {
 	private Date	estableshmentDate;
 
 
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getEstableshmentDate() {
 		return this.estableshmentDate;
 	}
