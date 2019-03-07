@@ -27,7 +27,7 @@
 
 <security:authorize access="hasRole('ADMIN')"> 
 	<div>
-	<div style="width: 50%; float:left;">
+	<div style="width: 48%; float:left;">
 		<p><spring:message code="admin.TheLargestBrotherhoods" /> <jstl:out	value="${largestBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.TheSmallestBrotherhoods" /> <jstl:out value="${smallestBrotherhood}"></jstl:out></p>		
 		<p><spring:message code="admin.TheRatioRequestsTrue" /> <jstl:out value="${getRatioRequestStatusTrue}"></jstl:out></p>
@@ -48,7 +48,8 @@
 		<p><spring:message code="admin.minNumberOfResult" /> <jstl:out value="${minNumberOfResult}"></jstl:out></p>		
 		<p><spring:message code="admin.maxNumberOfResult" /> <jstl:out value="${maxNumberOfResult}"></jstl:out></p>		
 		<p><spring:message code="admin.avgNumberOfResult" /> <jstl:out value="${avgNumberOfResult}"></jstl:out></p>		
-		<p><spring:message code="admin.stddevNumberOfResult" /> <jstl:out value="${stddevNumberOfResult}"></jstl:out></p>	
+		<p><spring:message code="admin.stddevNumberOfResult" /> <jstl:out value="${stddevNumberOfResult}"></jstl:out></p>
+		<p><spring:message code="admin.ratioFinder" /> <jstl:out value="${ratioFinder}"></jstl:out></p>	
 		
 		
 <p><spring:message code="admin.lisMemberAccept" /> </p>	
@@ -70,7 +71,7 @@
 <br>
 <br>
 
-	<div style="width: 50%; float:left;">			
+	<div style="width: 50%; float:left; border-left: 4px dotted blue; padding-left: 10px">			
  
 <p><spring:message code="admin.histogram" /></p>
  
