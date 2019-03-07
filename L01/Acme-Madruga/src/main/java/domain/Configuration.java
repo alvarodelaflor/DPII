@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
@@ -16,6 +18,7 @@ public class Configuration extends DomainEntity {
 	private Integer	cacheAmount;
 
 
+	@NotBlank
 	@Min(1)
 	@Max(24)
 	public Integer getCacheHours() {
@@ -26,6 +29,7 @@ public class Configuration extends DomainEntity {
 		this.cacheHours = cacheHours;
 	}
 
+	@NotBlank
 	@Min(0)
 	@Max(100)
 	public Integer getCacheAmount() {

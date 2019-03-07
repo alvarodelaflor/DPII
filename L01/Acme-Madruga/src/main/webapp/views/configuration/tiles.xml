@@ -16,4 +16,9 @@
 		<put-attribute name="body" value="/views/configuration/editWords.jsp" />
 	</definition>
 	
+	<definition name="configuration/administrator/edit" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Editing Configuration" />
+		<put-attribute name="body" value="/views/configuration/edit.jsp" />
+	</definition>
+	
 </tiles-definitions>
