@@ -17,7 +17,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<p><spring:message code="listMessage"/></p>
 <body>
   
    <display:table name="msgs" id="row"  requestURI="${requestURI}"	pagesize="5" class="displaytag" >
@@ -26,7 +25,7 @@
 		<a href="message/show.do?messageId=${row.id}&messageBoxId=${messageBoxId}"><spring:message code="showMessage" /></a>
 	</display:column>
 		<display:column titleKey="administrator.editMessage"> 
-		<a href="message/editMessageBox.do?msgId=${row.id}"><spring:message code="editMessage" /></a>
+		<a href="message/editMessageBox.do?msgId=${row.id}&messageBoxId=${messageBoxId}"><spring:message code="editMessage" /></a>
 	</display:column>
   	<display:column property="subject" titleKey="msg.subject"/>
   	<display:column property="body" titleKey="msg.body"/>

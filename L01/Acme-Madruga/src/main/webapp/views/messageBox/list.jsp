@@ -17,7 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<p><spring:message code="listMessageBox"/></p>
+
 <body>
   
    <display:table name="messageBoxes" id="row"  requestURI="${requestURI}"	pagesize="5" class="displaytag" >

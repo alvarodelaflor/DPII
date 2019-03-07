@@ -32,7 +32,7 @@
 		<form:label path="messageBoxes">
 			<spring:message code="msg.messageBoxes" />:
 		</form:label>
-		<form:select path="messageBoxes">
+		<form:select required ="required" path="messageBoxes">
    		 	<form:options items="${nameMessageBox}" />
 		</form:select>
 		<form:errors cssClass="error" path="messageBoxes" />

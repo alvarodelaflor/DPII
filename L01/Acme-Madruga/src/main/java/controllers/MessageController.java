@@ -62,36 +62,39 @@ public class MessageController extends AbstractController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView listMessages(@RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
-		final ModelAndView result;
+		ModelAndView result;
+		try {
+			final UserAccount user = LoginService.getPrincipal();
+			final Actor a = this.actorService.getActorByUserId(user.getId());
 
-		final UserAccount user = LoginService.getPrincipal();
-		final Actor a = this.actorService.getActorByUserId(user.getId());
+			final MessageBox m = this.messageBoxService.findOne(messageBoxId);
 
-		final MessageBox m = this.messageBoxService.findOne(messageBoxId);
+			final Collection<Message> msgs = m.getMessages();
 
-		final Collection<Message> msgs = m.getMessages();
+			final Collection<MessageBox> messageBox = this.messageBoxService.getSonBox(m.getId());
 
-		final Collection<MessageBox> messageBox = this.messageBoxService.getSonBox(m.getId());
+			if (!a.getMessageBoxes().contains(m))
+				result = new ModelAndView("welcome/index");
+			else {
 
-		if (!a.getMessageBoxes().contains(m))
+				result = new ModelAndView("message/list");
+				result.addObject("msgs", msgs);
+				result.addObject("messageBoxes", messageBox);
+				//		final String system = this.welcomeService.getSystem();
+				//		result.addObject("system", system);
+				//		final String logo = this.welcomeService.getLogo();
+				//		result.addObject("logo", logo);
+				result.addObject("messageBoxId", messageBoxId);
+				result.addObject("requestURI", "message/list.do");
+			}
+		} catch (final Exception e) {
 			result = new ModelAndView("welcome/index");
-		else {
-
-			result = new ModelAndView("message/list");
-			result.addObject("msgs", msgs);
-			result.addObject("messageBoxes", messageBox);
-			//		final String system = this.welcomeService.getSystem();
-			//		result.addObject("system", system);
-			//		final String logo = this.welcomeService.getLogo();
-			//		result.addObject("logo", logo);
-			result.addObject("messageBoxId", messageBoxId);
-			result.addObject("requestURI", "message/list.do");
 		}
 		return result;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam("messageId") final int messageId, @RequestParam("messageBoxId") final int messageBoxId) {
+	public ModelAndView show(@RequestParam(value = "messageId", defaultValue = "-1") final int messageId, @RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
 		ModelAndView result;
 
 		final UserAccount user = LoginService.getPrincipal();
@@ -101,7 +104,7 @@ public class MessageController extends AbstractController {
 		final Message msg = this.messageService.findOne(messageId);
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
-		if (!a.getMessageBoxes().contains(box))
+		if (!a.getMessageBoxes().contains(box) || messageId == -1 || messageBoxId == -1)
 			result = new ModelAndView("welcome/index");
 		else {
 			result = new ModelAndView("message/show");
@@ -418,14 +421,14 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam("id") final int msgId, @RequestParam("messageBoxId") final int messageBoxId) {
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int id, @RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
 		ModelAndView result;
 
 		final UserAccount login = LoginService.getPrincipal();
 		final Actor sender = this.actorService.getActorByUserId(login.getId());
 
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
-		final Message msg = this.messageService.findOne(msgId);
+		final Message msg = this.messageService.findOne(id);
 		final Collection<MessageBox> boxesSender = sender.getMessageBoxes();
 		final List<MessageBox> boxesListSender = new ArrayList<>();
 		boxesListSender.addAll(boxesSender);
@@ -439,7 +442,7 @@ public class MessageController extends AbstractController {
 		System.out.println(sender);
 		System.out.println(creator);
 
-		if (!this.checkUserOwner(sender, msg)) {
+		if (!this.checkUserOwner(sender, msg) || id == -1 || messageBoxId == -1) {
 			result = new ModelAndView("welcome/index");
 			result = new ModelAndView("welcome/index");
 			//			final String system = this.welcomeService.getSystem();
@@ -476,66 +479,82 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/editMessageBox", method = RequestMethod.GET)
-	public ModelAndView editMessageBox(@RequestParam final int msgId) {
+	public ModelAndView editMessageBox(@RequestParam(value = "msgId", defaultValue = "-1") final int msgId, @RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
 		ModelAndView result;
 		final Message message;
 
-		message = this.messageService.findOne(msgId);
-		System.out.println("Message de editMessageBox");
-		System.out.println(message);
-		Assert.notNull(message);
-		result = this.createEditModelAndViewMessageBox(message);
+		System.out.println("Entro en editMessageBox");
+
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
+
+		final MessageBox box = this.messageBoxService.findOne(messageBoxId);
+
+		if (!a.getMessageBoxes().contains(box) || msgId == -1 || messageBoxId == -1)
+			result = new ModelAndView("welcome/index");
+		else {
+			message = this.messageService.findOne(msgId);
+			System.out.println("Message de editMessageBox");
+			System.out.println(message);
+			Assert.notNull(message);
+			result = this.createEditModelAndViewMessageBox(message);
+		}
 		return result;
 	}
-
 	@RequestMapping(value = "/editMessageBox", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveMessageBox(@ModelAttribute("msg") Message msg, final BindingResult binding) {
 		msg = this.messageService.reconstruct(msg, binding);
 
 		ModelAndView result;
-		System.out.println(msg.getMessageBoxes());
-		System.out.println("Entro en el save");
-		final UserAccount login = LoginService.getPrincipal();
-		final Actor sender = this.actorService.getActorByUserId(login.getId());
+		try {
 
-		final Message oldMessage = this.messageService.findOne(msg.getId());
-		System.out.println(oldMessage.getMessageBoxes());
+			System.out.println(msg.getMessageBoxes());
+			System.out.println("Entro en el save");
+			final UserAccount login = LoginService.getPrincipal();
+			final Actor sender = this.actorService.getActorByUserId(login.getId());
 
-		msg.getMessageBoxes().addAll(oldMessage.getMessageBoxes());
+			final Message oldMessage = this.messageService.findOne(msg.getId());
+			System.out.println(oldMessage.getMessageBoxes());
 
-		System.out.println(msg.getMessageBoxes());
+			final Collection<MessageBox> boxesJsp = msg.getMessageBoxes();
 
-		for (final MessageBox messageBox : oldMessage.getMessageBoxes())
-			if (sender.getMessageBoxes().contains(messageBox))
-				msg.getMessageBoxes().remove(messageBox);
+			msg.getMessageBoxes().addAll(oldMessage.getMessageBoxes());
 
-		System.out.println(sender.getName());
-		System.out.println(sender.getEmail());
+			System.out.println(msg.getMessageBoxes());
 
-		if (binding.hasErrors()) {
-			System.out.println("Entro en el binding messageController");
-			System.out.println(binding.getAllErrors().get(0));
+			for (final MessageBox messageBox : oldMessage.getMessageBoxes())
+				if (sender.getMessageBoxes().contains(messageBox) && !boxesJsp.contains(messageBox))
+					msg.getMessageBoxes().remove(messageBox);
 
-			final Collection<MessageBox> messageBoxes = sender.getMessageBoxes();
-			System.out.println(messageBoxes);
-			result = new ModelAndView("messageBox/list");
-			result.addObject("messageBoxes", messageBoxes);
-		} else
-			try {
-				System.out.println("intenta el list notification");
+			System.out.println(sender.getName());
+			System.out.println(sender.getEmail());
 
-				this.messageService.save(msg);
+			if (binding.hasErrors()) {
+				System.out.println("Entro en el binding messageController");
+				System.out.println(binding.getAllErrors().get(0));
 
 				final Collection<MessageBox> messageBoxes = sender.getMessageBoxes();
 				System.out.println(messageBoxes);
 				result = new ModelAndView("messageBox/list");
 				result.addObject("messageBoxes", messageBoxes);
-			} catch (final Throwable oops) {
-				System.out.println("Es el oops");
-				System.out.println(oops);
-				result = this.createEditModelAndView(msg, "message.commit.error");
-			}
+			} else
+				try {
+					System.out.println("intenta el list notification");
 
+					this.messageService.save(msg);
+
+					final Collection<MessageBox> messageBoxes = sender.getMessageBoxes();
+					System.out.println(messageBoxes);
+					result = new ModelAndView("messageBox/list");
+					result.addObject("messageBoxes", messageBoxes);
+				} catch (final Throwable oops) {
+					System.out.println("Es el oops");
+					System.out.println(oops);
+					result = this.createEditModelAndView(msg, "message.commit.error");
+				}
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 	protected ModelAndView createEditModelAndViewMessageBox(final Message msg) {
