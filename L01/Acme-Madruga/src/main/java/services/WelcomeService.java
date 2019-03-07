@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 @Service
-@Transactional
 public class WelcomeService {
 
 	String					e			= "Welcome to Acme Madrugá¡, the site to organise your processions.";
