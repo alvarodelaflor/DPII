@@ -62,5 +62,6 @@
 	<br>
 	<br>
 <acme:cancel url=" " code="back"/>
+<acme:cancel url="/brotherhood/export.do?id=${brotherhood.id}" code="export"/>
 
 

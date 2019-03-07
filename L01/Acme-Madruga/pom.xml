@@ -124,8 +124,25 @@
 
 	<dependencies>
 
+		<!-- Jackson/JSON parser -->
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
+		<!-- jsoup for SafeHTML -->		
+		
+		<dependency>
+	  		<!-- jsoup HTML parser library @ https://jsoup.org/ -->
+	  		<groupId>org.jsoup</groupId>
+	  		<artifactId>jsoup</artifactId>
+	  		<version>1.11.3</version>
+		</dependency>
+		
 		<!-- Spring Framework -->
-
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>

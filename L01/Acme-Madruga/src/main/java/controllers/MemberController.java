@@ -175,4 +175,14 @@ public class MemberController extends AbstractController {
 		result = new ModelAndView("member/conditions");
 		return result;
 	}
+	
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody
+	Member export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Member result = new Member();
+		result = this.memberService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
 }

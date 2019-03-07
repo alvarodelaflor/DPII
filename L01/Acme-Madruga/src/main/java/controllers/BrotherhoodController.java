@@ -245,5 +245,16 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/conditions");
 		return result;
 	}
+	
+	
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody
+	Brotherhood export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Brotherhood result = new Brotherhood();
+		result = this.brotherhoodService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
 
 }

@@ -9,7 +9,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+
 import org.hibernate.validator.constraints.NotBlank;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /*
  * CONTROL DE CAMBIOS Float.java
@@ -26,10 +30,12 @@ public class Float extends DomainEntity {
 	private String		title;
 	private String		description;
 	private String		pictures;
+	@JsonIgnore
 	private Brotherhood	brotherhood;
 
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
 		return this.title;
 	}
@@ -39,6 +45,7 @@ public class Float extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return this.description;
 	}
@@ -55,7 +62,7 @@ public class Float extends DomainEntity {
 	public void setBrotherhood(final Brotherhood brotherhood) {
 		this.brotherhood = brotherhood;
 	}
-
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPictures() {
 		return this.pictures;
 	}

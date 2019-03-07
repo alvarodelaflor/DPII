@@ -11,6 +11,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /*
  * CONTROL DE CAMBIOS Member.java
  * 
@@ -22,8 +24,10 @@ import javax.persistence.OneToOne;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Enrolled extends DomainEntity {
 
+	@JsonIgnore
 	private Member		member;
 	private Boolean		state;
+	@JsonIgnore
 	private Brotherhood	brotherhood;
 	private Position	position;
 	private Date		createMoment;

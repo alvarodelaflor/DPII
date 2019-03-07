@@ -28,7 +28,7 @@
           	
           	<acme:textbox code="procession.title" path="title"/>
           	<acme:textbox code="procession.description" path="description"/>
-          	<acme:textbox code="procession.moment" path="moment"/>
+          	<acme:textboxMoment code="procession.moment" path="moment"/>
           	<acme:selectTrueFalse code="procession" path="isFinal"/>
           	<acme:numberbox code="procession.maxRow" path="maxRow"/>
           	<acme:numberbox code="procession.maxColum" path="maxColum"/>
