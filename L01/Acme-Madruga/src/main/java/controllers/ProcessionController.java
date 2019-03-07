@@ -88,8 +88,12 @@ public class ProcessionController extends AbstractController {
 			Assert.notNull(procession, "procession.nul");
 			result = new ModelAndView("procession/brotherhood/show");
 			result.addObject("procession", procession);
-			if (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null)
-				result.addObject("validMember", this.validMember(processionId));
+			try {
+				if (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null)
+					result.addObject("validMember", this.validMember(processionId));				
+			} catch (Exception e) {
+
+			}
 			result.addObject("requestURI", "procession/brotherhood/show.do");
 		}
 		return result;

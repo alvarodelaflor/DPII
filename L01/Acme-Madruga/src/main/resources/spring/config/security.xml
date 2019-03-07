@@ -113,7 +113,7 @@
 		<security:intercept-url pattern="/request/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/request/brotherhood/create.do" access="hasRole('BROTHERHOOD')" />	
 		
-		<security:intercept-url pattern="/procession/show.do" access="hasAnyRole('MEMBER','BROTHERHOOD')" />
+		<security:intercept-url pattern="/procession/show.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/area/brotherhood/edit.do" access="hasRole('BROTHERHOOD')"/>
 		<!-- ALVARO -->
