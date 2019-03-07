@@ -208,9 +208,11 @@ public class BrotherhoodService {
 			result.setPictures(brotherhood.getPictures());
 			result.setName(brotherhood.getName());
 			result.setSurname(brotherhood.getSurname());
+			result.setMiddleName(brotherhood.getMiddleName());
 			result.setPhoto(brotherhood.getPhoto());
 			result.setEmail(brotherhood.getEmail());
 			result.setTitle(brotherhood.getTitle());
+			result.setPhone(brotherhood.getPhone());
 
 			this.validator.validate(result, binding);
 		}

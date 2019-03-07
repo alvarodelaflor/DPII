@@ -190,6 +190,9 @@ public class AdministratorService {
 			result.setSurname(admin.getSurname());
 			result.setPhoto(admin.getPhoto());
 			result.setEmail(admin.getEmail());
+			result.setPhone(admin.getPhone());
+			result.setMiddleName(admin.getMiddleName());
+			result.setAddress(admin.getAddress());
 
 			this.validator.validate(result, binding);
 		}

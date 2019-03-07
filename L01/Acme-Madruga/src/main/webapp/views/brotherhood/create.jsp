@@ -25,6 +25,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
+
 <section id="main-content">
 	<article>
 		<div class="content">
@@ -39,7 +40,20 @@
 				<acme:password code="brotherhood.passwordC" path="confirmPassword" />
 				<acme:textbox code="brotherhood.address" path="address" />
 				<acme:textbox code="brotherhood.email" path="email" />
+				
+				<!-- 
+				<div>
+				<fmt:parseDate value="estableshmentDate" pattern="yyyy/MM/dd HH:mm" var="parsedDate" />
+				<form:label path="estableshmentDate">
+					<spring:message code="brotherhood.establishmentDate" />
+				</form:label>	
+					<form:input value="${ parsedDate}" path="estableshmentDate" readonly="${readonly}" />	
+					<form:errors path="estableshmentDate" cssClass="error" />
+				</div>
+				 -->	
+				
 				<acme:textbox code="brotherhood.establishmentDate" path="estableshmentDate" />
+				
 				<acme:textbox code="brotherhood.photo" path="photo" />
 				<acme:textbox code="brotherhood.title" path="title" />
 				<acme:phonebox code="member.phone" path="phone"/>
