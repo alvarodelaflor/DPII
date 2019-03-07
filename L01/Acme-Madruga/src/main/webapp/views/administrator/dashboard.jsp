@@ -71,7 +71,7 @@
 <br>
 <br>
 
-	<div style="width: 50%; float:left; border-left: 4px dotted blue; padding-left: 10px">			
+	<div style="width: 50%; float:left; border-left: 4px dotted lightblue; padding-left: 10px">			
  
 <p><spring:message code="admin.histogram" /></p>
  
