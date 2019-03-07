@@ -200,6 +200,7 @@ public class MemberService {
 			result.setPhone(member.getPhone());
 			result.setAddress(member.getAddress());
 			result.setMiddleName(member.getMiddleName());
+			result.setSocialProfiles(member.getSocialProfiles());
 
 			this.validator.validate(result, binding);
 		}

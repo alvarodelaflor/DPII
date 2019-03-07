@@ -213,6 +213,7 @@ public class BrotherhoodService {
 			result.setEmail(brotherhood.getEmail());
 			result.setTitle(brotherhood.getTitle());
 			result.setPhone(brotherhood.getPhone());
+			result.setSocialProfiles(brotherhood.getSocialProfiles());
 
 			this.validator.validate(result, binding);
 		}

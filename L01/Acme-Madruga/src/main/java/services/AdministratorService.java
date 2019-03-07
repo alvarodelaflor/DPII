@@ -193,6 +193,7 @@ public class AdministratorService {
 			result.setPhone(admin.getPhone());
 			result.setMiddleName(admin.getMiddleName());
 			result.setAddress(admin.getAddress());
+			result.setSocialProfiles(admin.getSocialProfiles());
 
 			this.validator.validate(result, binding);
 		}
