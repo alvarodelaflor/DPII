@@ -234,7 +234,7 @@
     	<property name="description" value="Salida de la virgen del Rosario" />
     	<property name="moment" value="2020/04/03 21:00" />
 		<property name="brotherhood" ref= "brotherhood01"/>
-		<property name="ticker" value="20200403-ABCDE" />
+		<property name="ticker" value="200403-ABCDE8" />
 		<property name="isFinal" value= "true"/>
 		<property name="maxRow" value= "10"/>
 		<property name="maxColum" value= "1"/>
@@ -246,7 +246,7 @@
     	<property name="description" value="Salida del cristo" />
     	<property name="moment" value="2020/04/03 21:00" />
 		<property name="brotherhood" ref= "brotherhood01"/>
-		<property name="ticker" value="200403-FGHIJ" />
+		<property name="ticker" value="200403-FGHIJ9" />
 		<property name="isFinal" value= "false"/>
 		<property name="maxRow" value= "9"/>
 		<property name="maxColum" value= "1"/>

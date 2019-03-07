@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,7 +76,7 @@ public class ProcessionService {
 				final int randomInt = new SecureRandom().nextInt(characterSet.length());
 				sb.append(characterSet.substring(randomInt, randomInt + 1));
 			}
-			final Date date = procession.getMoment();
+			final Date date = DateTime.now().toDate();
 			final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 			final String dateConvert = sdf.format(date);
 			ticker = dateConvert.replaceAll("-", "") + "-" + sb.toString();

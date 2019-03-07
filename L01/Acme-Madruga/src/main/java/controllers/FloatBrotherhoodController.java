@@ -81,8 +81,9 @@ public class FloatBrotherhoodController extends AbstractController {
 		else {
 			Assert.notNull(floatt, "float.null");
 			List<String> pictures = new ArrayList<>();
-			if (floatt.getPictures() != null)
-				pictures = Arrays.asList(floatt.getPictures().split("'"));
+			if (floatt.getPictures() != null && floatt.getPictures().length()>0) {
+				pictures = Arrays.asList(floatt.getPictures().split("'"));	
+			}
 			result = new ModelAndView("float/brotherhood/show");
 
 			result.addObject("pictures", pictures);

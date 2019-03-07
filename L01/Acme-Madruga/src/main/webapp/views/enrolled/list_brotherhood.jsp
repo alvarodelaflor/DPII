@@ -32,7 +32,7 @@
 						<a href="enrolled/brotherhood/dropOut.do?id=${row.id}"><spring:message code="enrolled.dropOut"></spring:message></a>
 					</display:column>
 					<display:column titleKey="enrolled.show"> 
-						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
+						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}"><jstl:out value="${row.member.name}"></jstl:out><jstl:out value="${row.member.surname}"></jstl:out></a>
 					</display:column>
 					<c:choose>
 						<c:when test="${language == true}">
@@ -51,7 +51,7 @@
 						<a href="enrolled/brotherhood/delete.do?id=${row.id}"><spring:message code="enrolled.delete"></spring:message></a>
 					</display:column>
 					<display:column titleKey="enrolled.show"> 
-						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
+						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}"><jstl:out value="${row.member.name}"></jstl:out><jstl:out value="${row.member.surname}"></jstl:out></a>
 					</display:column>
 				</display:table>			
 			</div>
@@ -65,7 +65,7 @@
 						<a href="enrolled/brotherhood/delete.do?id=${row.id}"><spring:message code="enrolled.delete"></spring:message></a>
 					</display:column>
 					<display:column titleKey="enrolled.show"> 
-						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
+						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}"><jstl:out value="${row.member.name}"></jstl:out><jstl:out value="${row.member.surname}"></jstl:out></a>
 					</display:column>
 				</display:table>
 			</div>
@@ -73,7 +73,7 @@
 				<strong><p><spring:message code="enrolled.details.dropOut"></spring:message></p></strong>
 				<display:table name="dropOutMembers" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">				
 					<display:column titleKey="enrolled.show"> 
-						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}">${row.member.name} ${row.member.surname}</a>
+						<a href="enrolled/brotherhood/show.do?enrolledId=${row.id}"><jstl:out value="${row.member.name}"></jstl:out><jstl:out value="${row.member.surname}"></jstl:out></a>
 					</display:column>
 					<display:column titleKey="enrolled.delete"> 
 						<a href="enrolled/brotherhood/delete.do?id=${row.id}"><spring:message code="enrolled.delete"></spring:message></a>

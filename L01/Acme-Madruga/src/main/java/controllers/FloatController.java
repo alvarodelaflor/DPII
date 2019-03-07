@@ -54,42 +54,48 @@ public class FloatController extends AbstractController {
 	@RequestMapping(value = "/showPictureFloat", method = RequestMethod.GET)
 	public ModelAndView showPictureFloat(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
+		try {
+			final domain.Float floatt = this.floatService.findOne(id);
 
-		final domain.Float floatt = this.floatService.findOne(id);
+			List<String> pictures = new ArrayList<>();
+			if (floatt.getPictures() != null && floatt.getPictures().contains("'"))
+				pictures = Arrays.asList(floatt.getPictures().split("'"));
 
-		List<String> pictures = new ArrayList<>();
-		if (floatt.getPictures() != null && floatt.getPictures().contains("'"))
-			pictures = Arrays.asList(floatt.getPictures().split("'"));
+			final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
+			Boolean language;
+			if (actuallanguage.equals("English")) {
+				System.out.println("Actual languge: " + actuallanguage);
+				language = true;
+			} else {
+				System.out.println("Actual languge: " + actuallanguage);
+				language = false;
+			}
 
-		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
-		Boolean language;
-		if (actuallanguage.equals("English")) {
-			System.out.println("Actual languge: " + actuallanguage);
-			language = true;
-		} else {
-			System.out.println("Actual languge: " + actuallanguage);
-			language = false;
+			result = new ModelAndView("float/showPictureFloat");
+			result.addObject("language", language);
+			result.addObject("pictures", pictures);
+			result.addObject("float", floatt);
+			result.addObject("requestURI", "float/showPictureFloat.do");	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
-		result = new ModelAndView("float/showPictureFloat");
-		result.addObject("language", language);
-		result.addObject("pictures", pictures);
-		result.addObject("float", floatt);
-		result.addObject("requestURI", "float/showPictureFloat.do");
 		return result;
 	}
 
 	@RequestMapping(value = "/listFloat", method = RequestMethod.GET)
 	public ModelAndView listFloat(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
-
-		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-		final Collection<Float> floatt = brotherhood.getFloats();
-		result = new ModelAndView("float/listFloat");
-		result.addObject("brotherhood", brotherhood);
-		result.addObject("float", floatt);
-		result.addObject("requestURI", "float/listFloat.do");
-		return result;
+		try {
+			final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
+			final Collection<Float> floatt = brotherhood.getFloats();
+			result = new ModelAndView("float/listFloat");
+			result.addObject("brotherhood", brotherhood);
+			result.addObject("float", floatt);
+			result.addObject("requestURI", "float/listFloat.do");	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;		
 	}
 
 }

@@ -149,18 +149,20 @@ public class BrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-
-		final int userLoggin = LoginService.getPrincipal().getId();
-		final Brotherhood brotherhood;
-		brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(userLoggin);
-		List<String> pictures = new ArrayList<>();
-		if (brotherhood.getPictures() != null)
-			pictures = Arrays.asList(brotherhood.getPictures().split("'"));
-		result = new ModelAndView("brotherhood/show");
-		result.addObject("brotherhood", brotherhood);
-		result.addObject("pictures", pictures);
-		result.addObject("requestURI", "brotherhood/show.do");
-
+		try {
+			final int userLoggin = LoginService.getPrincipal().getId();
+			final Brotherhood brotherhood;
+			brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(userLoggin);
+			List<String> pictures = new ArrayList<>();
+			if (brotherhood.getPictures() != null)
+				pictures = Arrays.asList(brotherhood.getPictures().split("'"));
+			result = new ModelAndView("brotherhood/show");
+			result.addObject("brotherhood", brotherhood);
+			result.addObject("pictures", pictures);
+			result.addObject("requestURI", "brotherhood/show.do");	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 
@@ -177,24 +179,27 @@ public class BrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/showBrotherhood", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
-
-		final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-
-		List<String> pictures = new ArrayList<>();
-		if (brotherhood.getPictures() != null)
-			pictures = Arrays.asList(brotherhood.getPictures().split("'"));
-		result = new ModelAndView("brotherhood/showBrotherhood");
-		result.addObject("brotherhood", brotherhood);
-		result.addObject("pictures", pictures);
 		try {
-			if (this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()) == null) {
-				result.addObject("validMember", this.validMember(brotherhood.getId()));
-				result.addObject("activeMember", this.brotherhoodService.isActiveFromMemberAndBrotherhood(brotherhood.getId()));
+			final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
+
+			List<String> pictures = new ArrayList<>();
+			if (brotherhood.getPictures() != null)
+				pictures = Arrays.asList(brotherhood.getPictures().split("'"));
+			result = new ModelAndView("brotherhood/showBrotherhood");
+			result.addObject("brotherhood", brotherhood);
+			result.addObject("pictures", pictures);
+			try {
+				if (this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()) == null) {
+					result.addObject("validMember", this.validMember(brotherhood.getId()));
+					result.addObject("activeMember", this.brotherhoodService.isActiveFromMemberAndBrotherhood(brotherhood.getId()));
+				}
+			} catch (final Throwable oops) {
+				System.out.println("Usuario no está logueado");
 			}
-		} catch (final Throwable oops) {
-			System.out.println("Usuario no está logueado");
+			result.addObject("requestURI", "brotherhood/showBrotherhood.do");	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("requestURI", "brotherhood/showBrotherhood.do");
 		return result;
 	}
 

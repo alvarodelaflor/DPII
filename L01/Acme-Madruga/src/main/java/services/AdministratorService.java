@@ -239,12 +239,12 @@ public class AdministratorService {
 
 	private Boolean checkEmailFormatter(final Administrator admin) {
 		Boolean res = true;
-		if ((admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}")
-			|| admin.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}") || admin.getEmail().matches("[\\w\\.\\w]{1,}(@)") || (admin.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)(>)"))))
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		final String pattern2 = "(^((([a-zA-Z]|[0-9]){1,}[@])$)|(^(([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]>))$)";
+		if (admin.getEmail().matches(pattern) || admin.getEmail().matches(pattern2))
 			res = false;
 		return res;
 	}
-
 	private Boolean checkEmail(final Administrator admin) {
 		Boolean res = false;
 		if (this.actorService.getActorByEmailE(admin.getEmail()) == null && (admin.getEmail() != null && this.actorService.getActorByEmail(admin.getEmail()).equals(admin.getEmail())))

@@ -19,6 +19,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,8 +50,6 @@ public class RequestBrotherhoodController extends AbstractController {
 
 	@Autowired
 	private RequestService		requestService;
-	@Autowired
-	private PositionService		positionService;
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
 	@Autowired
@@ -145,16 +144,22 @@ public class RequestBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Request request, final BindingResult binding) {
 		ModelAndView result;
-		System.out.println("Comprobación del status en controller");
-		System.out.println(request.getStatus());
-		final Request noti = this.requestService.findOne(request.getId());
-		System.out.println(noti.getStatus());
+		if (request.getStatus()!=null && request.getStatus().equals(false) && request.getComment()!=null && request.getComment().isEmpty()) {
+			final ObjectError error = new ObjectError("comment", "error.comment");
+			binding.addError(error);
+			binding.rejectValue("comment", "error.comment");
+		} else {
+			System.out.println("Comprobación del status en controller");
+			System.out.println(request.getStatus());
+			final Request noti = this.requestService.findOne(request.getId());
+			System.out.println(noti.getStatus());
 
-		request = this.requestService.reconstruct(request, binding);
-		System.out.println("Comprobación del status en controller");
-		System.out.println(request.getStatus());
-		final Request notir = this.requestService.findOne(request.getId());
-		System.out.println(notir.getStatus());
+			request = this.requestService.reconstruct(request, binding);
+			System.out.println("Comprobación del status en controller");
+			System.out.println(request.getStatus());
+			final Request notir = this.requestService.findOne(request.getId());
+			System.out.println(notir.getStatus());
+		}
 		if (binding.hasErrors()) {
 			System.out.println("El error pasa por aquí alvaro (IF de save())");
 			System.out.println(binding);
@@ -192,7 +197,11 @@ public class RequestBrotherhoodController extends AbstractController {
 				System.out.println("El error: ");
 				System.out.println(oops);
 				System.out.println(binding);
-				result = this.createEditModelAndView(request, "request.commit.error");
+				if (oops.getMessage().equals("error.comment")) {
+					result = this.createEditModelAndView(request, "error.comment");
+				} else {
+					result = this.createEditModelAndView(request, "request.commit.error");
+				}
 			}
 		return result;
 	}

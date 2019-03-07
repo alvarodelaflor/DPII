@@ -47,9 +47,12 @@ public class RequestMemberController extends AbstractController {
 		Request request;
 		try {
 			request = this.requestService.findOne(requestId);
-
-			result = new ModelAndView("request/show");
-			result.addObject("request", request);
+			if (request==null) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} else {
+				result = new ModelAndView("request/show");
+				result.addObject("request", request);	
+			}
 		} catch (final Exception e) {
 			System.out.println("Exception e en Show request: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -93,7 +96,7 @@ public class RequestMemberController extends AbstractController {
 	}
 	// ---------------------------------------- Deleting
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int requestId) {
+	public ModelAndView delete(@RequestParam(value = "requestId", defaultValue = "-1") final int requestId) {
 		ModelAndView result;
 		try {
 			this.requestService.delete(requestId);

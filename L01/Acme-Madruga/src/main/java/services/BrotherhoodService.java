@@ -298,12 +298,11 @@ public class BrotherhoodService {
 
 	private Boolean checkEmailFormatter(final Brotherhood brotherhood) {
 		Boolean res = true;
-		if ((brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || brotherhood.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)")
-			|| brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || brotherhood.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}")))
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (brotherhood.getEmail().matches(pattern))
 			res = false;
 		return res;
 	}
-
 	private Boolean checkDate(final Brotherhood brotherhood) {
 		Boolean res = true;
 		if (brotherhood.getEstablishmentDate().after(LocalDateTime.now().toDate()))
