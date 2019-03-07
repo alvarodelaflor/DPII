@@ -16,7 +16,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /*
@@ -34,11 +37,13 @@ public class Procession extends DomainEntity {
 	private String		title;
 	private String		description;
 	private Date		moment;
+	@JsonIgnore
 	private Brotherhood	brotherhood;
 	private String		ticker;
 	private Boolean		isFinal;
 	private Integer		maxRow;
 	private Integer		maxColum;
+	@JsonIgnore
 	private domain.Float	floatt;
 
 
@@ -65,6 +70,7 @@ public class Procession extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
 		return this.title;
 	}
@@ -74,6 +80,7 @@ public class Procession extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return this.description;
 	}
