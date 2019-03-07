@@ -21,4 +21,9 @@ public class ConfigurationService {
 	public Configuration getConfiguration() {
 		return this.configurationRepository.findAll().iterator().next();
 	}
+
+	public Configuration save(final Configuration configuration) {
+
+		return this.configurationRepository.save(configuration);
+	}
 }

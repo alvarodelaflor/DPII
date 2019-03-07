@@ -41,6 +41,7 @@
 		<value>/views/request/tiles.xml</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
+		<value>/views/configuration/tiles.xml</value>
 		<value>/views/area/tiles.xml</value>
 		<value>/views/position/tiles.xml</value>
 		<!-- FRAN -->

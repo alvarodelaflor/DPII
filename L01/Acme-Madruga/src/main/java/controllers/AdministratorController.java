@@ -30,6 +30,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.AreaService;
 import services.BrotherhoodService;
+import services.ConfigurationService;
 import services.FinderService;
 import services.MemberService;
 import services.ProcessionService;
@@ -38,6 +39,7 @@ import services.WelcomeService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Brotherhood;
+import domain.Configuration;
 import domain.Member;
 import domain.Procession;
 import forms.RegistrationForm;
@@ -72,6 +74,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	WelcomeService			welcomeService;
+
+	@Autowired
+	ConfigurationService	configurationService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -470,6 +475,8 @@ public class AdministratorController extends AbstractController {
 		HashSet<String> scoreWordsPos = new HashSet<>();
 		HashSet<String> scoreWordsNeg = new HashSet<>();
 		HashSet<String> priorities = new HashSet<>();
+		//Configuration (FINDER)
+		final Configuration configuration = this.configurationService.getConfiguration();
 		//Priorities
 		if (this.welcomeService.getPriorities().isEmpty())
 			priorities = this.welcomeService.defaultPriorities();
@@ -521,6 +528,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("scoreWordsPos", scoreWordsPos);
 		result.addObject("scoreWordsNeg", scoreWordsNeg);
 		result.addObject("priorities", priorities);
+		result.addObject("configuration", configuration);
 
 		//Finder
 
