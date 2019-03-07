@@ -213,17 +213,19 @@ public class MessageService {
 		final UserAccount uacc = LoginService.getPrincipal();
 		final Actor actor = this.actorService.findByUserAccountId(uacc.getId());
 		//Actualizo contador total de msg
-		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1);
+		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1.);
 		//Actualizo contador de msg de spam
 		if (this.checkSuspiciousWithBoolean(message) == true)
-			actor.getUserAccount().setSpamMsgCounter(uacc.getSpamMsgCounter() + 1);
+			actor.getUserAccount().setSpamMsgCounter(uacc.getSpamMsgCounter() + 1.);
 		//Calculo el spammerFlag del UserAcc
-		actor.getUserAccount().setSpammerFlag(this.spammerFlagCheck());
+		actor.getUserAccount().setSpammerFlag(this.spammerFlagCheck(actor.getUserAccount()));
+		System.out.println("====================================" + "se ha ejecutado spammerFlagCheck con resultado: " + this.spammerFlagCheck(actor.getUserAccount()));
 		//Guardo Actor con el UserAcc modificado
 		this.actorService.save(actor);
 		//Guardo el Msg
 		return this.messageRepository.save(message);
 	}
+
 	// Check for spam: return true if the msg contains an spam word
 	private Boolean checkSuspiciousWithBoolean(final Message msg) {
 		System.out.println("check suspicious");
@@ -237,8 +239,10 @@ public class MessageService {
 				res = true;
 				//break;
 			}
+
 		return res;
 	}
+
 	private Collection<String> initializeSpamWordsMsg() {
 
 		Collection<String> res;
@@ -251,17 +255,16 @@ public class MessageService {
 	}
 
 	// spammerFlag = true if condition is fulfilled
-	private Boolean spammerFlagCheck() {
+	private Boolean spammerFlagCheck(final UserAccount uacc) {
 
-		final UserAccount uacc = LoginService.getPrincipal();
 		Boolean res = false;
 
 		if (uacc.getMsgCounter() != 0) {
 
 			final Double ratiospam = uacc.getSpamMsgCounter() / uacc.getMsgCounter();
-			System.out.println(ratiospam);
+			System.out.println("----------------------------" + ratiospam);
 			final Double percentage = uacc.getMsgCounter() * 0.1;
-			System.out.println(percentage);
+			System.out.println("----------------------------" + percentage);
 			res = ratiospam > percentage;
 		}
 
