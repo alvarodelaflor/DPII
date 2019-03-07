@@ -42,6 +42,9 @@ public class MessageBoxService {
 	private ActorService			actorService;
 
 	@Autowired
+	private MessageService			messageService;
+
+	@Autowired
 	private Validator				validator;
 
 
@@ -130,6 +133,13 @@ public class MessageBoxService {
 		final Collection<MessageBox> sonBoxes = this.getSonBox(messageBox.getId());
 		final List<MessageBox> listSonBoxes = new ArrayList<>();
 		listSonBoxes.addAll(sonBoxes);
+
+		final List<Message> messages = new ArrayList<>();
+		messages.addAll(messageBox.getMessages());
+
+		for (int i = 0; i < messages.size(); i++)
+			this.messageService.delete(messages.get(i), messageBox.getId());
+
 		for (int i = 0; i < listSonBoxes.size(); i++)
 			this.delete(listSonBoxes.get(i));
 

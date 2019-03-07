@@ -6,10 +6,12 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -22,6 +24,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(indexes = {
+	@Index(columnList = "dropMoment, state")
+})
 public class Enrolled extends DomainEntity {
 
 	@JsonIgnore
@@ -78,10 +83,10 @@ public class Enrolled extends DomainEntity {
 	}
 
 	public Date getCreateMoment() {
-		return createMoment;
+		return this.createMoment;
 	}
 
-	public void setCreateMoment(Date createMoment) {
+	public void setCreateMoment(final Date createMoment) {
 		this.createMoment = createMoment;
 	}
 
