@@ -65,6 +65,8 @@ public class SocialProfileController extends AbstractController {
 		result = new ModelAndView("socialProfile/list");
 		result.addObject("socialProfiles", socialProfiles);
 		result.addObject("requestURI", "socialProfile/list.do");
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -90,7 +92,8 @@ public class SocialProfileController extends AbstractController {
 			result.addObject("language", language);
 			result.addObject("requestURI", "socialProfile/show.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -108,7 +111,8 @@ public class SocialProfileController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 		result.addObject("socialProfile", socialProfile);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -130,6 +134,8 @@ public class SocialProfileController extends AbstractController {
 			//			result.addObject("logo", logo);
 			result.addObject("socialProfile", socialProfile);
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -165,6 +171,8 @@ public class SocialProfileController extends AbstractController {
 				System.out.println(binding);
 				result = new ModelAndView("socialProfile/edit");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -218,6 +226,8 @@ public class SocialProfileController extends AbstractController {
 				//				result.addObject("logo", logo);
 				result.addObject("socialProfiles", actor.getSocialProfiles());
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 

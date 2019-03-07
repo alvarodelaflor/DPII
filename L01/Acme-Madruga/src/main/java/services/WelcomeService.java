@@ -13,11 +13,11 @@ import org.springframework.util.Assert;
 @Transactional
 public class WelcomeService {
 
-	String					e			= "Welcome to Acme Madrug√°, the site to organise your processions.";
+	String					e			= "Welcome to Acme Madrug·°, the site to organise your processions.";
 
-	String					s			= "ÀáBienvenidos a Acme Madrug√°! Tu sitio para organizar procesiones.";
+	String					s			= "°Bienvenidos a Acme Madrug·°! Tu sitio para organizar procesiones.";
 
-	String					system		= "Acme Madrug√°";
+	String					system		= "Acme Madrug·°";
 
 	String					phone		= "34";
 

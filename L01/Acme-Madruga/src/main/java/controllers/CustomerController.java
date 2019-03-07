@@ -10,13 +10,19 @@
 
 package controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.WelcomeService;
+
 @Controller
 @RequestMapping("/customer")
 public class CustomerController extends AbstractController {
+	
+	@Autowired
+	WelcomeService welcomeService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -31,7 +37,8 @@ public class CustomerController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("customer/action-1");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -42,7 +49,8 @@ public class CustomerController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("customer/action-2");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

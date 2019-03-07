@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ConfigurationService;
 import domain.Configuration;
+import services.ConfigurationService;
+import services.WelcomeService;
 
 @Controller
 @RequestMapping("/configuration/administrator")
@@ -16,6 +17,9 @@ public class ConfigurationAdministratorController {
 
 	@Autowired
 	ConfigurationService	configService;
+	
+	@Autowired
+	WelcomeService welcomeService;
 
 
 	@RequestMapping(value = "/editWords", method = RequestMethod.GET)
@@ -27,6 +31,8 @@ public class ConfigurationAdministratorController {
 
 		res = new ModelAndView("configuration/administrator/editWords");
 		res.addObject("configuration", config);
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -40,7 +46,8 @@ public class ConfigurationAdministratorController {
 		result = new ModelAndView("configuration/edit");
 		result.addObject("message", string);
 		result.addObject("configuration", configuration);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 

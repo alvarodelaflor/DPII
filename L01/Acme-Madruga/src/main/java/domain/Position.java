@@ -8,6 +8,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 /*
  * CONTROL DE CAMBIOS Position.java
@@ -25,6 +27,7 @@ public class Position extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getNameEs() {
 		return this.nameEs;
 	}
@@ -34,6 +37,7 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getNameEn() {
 		return this.nameEn;
 	}

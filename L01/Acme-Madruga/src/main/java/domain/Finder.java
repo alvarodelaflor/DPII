@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -27,7 +29,7 @@ public class Finder extends DomainEntity {
 	private Area					area;
 	private Collection<Procession>	processions;
 
-
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getKeyword() {
 		return this.keyword;
 	}

@@ -26,6 +26,7 @@ import services.MemberService;
 import services.PositionAuxService;
 import services.ProcessionService;
 import services.RequestService;
+import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Procession;
 
@@ -54,6 +55,9 @@ public class ProcessionController extends AbstractController {
 
 	@Autowired
 	RequestService		requestService;
+	
+	@Autowired
+	WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -77,6 +81,8 @@ public class ProcessionController extends AbstractController {
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -99,6 +105,8 @@ public class ProcessionController extends AbstractController {
 			}
 			result.addObject("requestURI", "procession/brotherhood/show.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	public Boolean validMember(final int processionId) {

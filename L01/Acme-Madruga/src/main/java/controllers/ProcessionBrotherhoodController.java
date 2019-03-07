@@ -28,6 +28,7 @@ import services.MemberService;
 import services.MessageService;
 import services.PositionAuxService;
 import services.ProcessionService;
+import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Message;
 import domain.Procession;
@@ -60,6 +61,9 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 	@Autowired
 	MemberService				memberService;
+	
+	@Autowired
+	WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -86,7 +90,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		result.addObject("checkValid", checkValid);
 		result.addObject("checkArea", checkArea);
 		result.addObject("requestURI", "procession/brotherhood/list.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -104,7 +109,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 			result.addObject("procession", procession);
 			result.addObject("requestURI", "procession/brotherhood/show.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -114,6 +120,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		Procession procession;
 		procession = this.processionService.create();
 		result = this.createEditModelAndView(procession);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -128,6 +136,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 			Assert.notNull(procession);
 			result = this.createEditModelAndView(procession);
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -149,6 +159,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 				result = this.createEditModelAndView(procession, "procession.commit.error");
 			}
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -189,6 +201,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 				System.out.println(binding);
 				result = this.createEditModelAndView(procession, "procession.commit.error");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	public ModelAndView createEditModelAndView(final Procession procession) {
@@ -200,7 +214,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 		result.addObject("procession", procession);
 		result.addObject("floats", floats);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Procession procession, final String messageCode) {
@@ -213,7 +228,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		result.addObject("floats", floats);
 		result.addObject("procession", procession);
 		result.addObject("message", messageCode);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

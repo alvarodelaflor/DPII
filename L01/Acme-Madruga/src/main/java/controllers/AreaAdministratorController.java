@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AreaService;
 import services.BrotherhoodService;
+import services.WelcomeService;
 import domain.Area;
 
 @Controller
@@ -25,6 +26,8 @@ public class AreaAdministratorController {
 	private AreaService			areaService;
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -41,7 +44,8 @@ public class AreaAdministratorController {
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -64,7 +68,8 @@ public class AreaAdministratorController {
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -78,7 +83,8 @@ public class AreaAdministratorController {
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:show.do?areaId=" + areaId);
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -92,7 +98,8 @@ public class AreaAdministratorController {
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -116,7 +123,8 @@ public class AreaAdministratorController {
 				res = new ModelAndView("redirect:index.do");
 			}
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -145,7 +153,8 @@ public class AreaAdministratorController {
 
 				res = this.createEditModelAndView(area);
 			}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -159,7 +168,8 @@ public class AreaAdministratorController {
 		result = new ModelAndView("area/administrator/create");
 		result.addObject("area", area);
 		result.addObject("message", messageCode);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

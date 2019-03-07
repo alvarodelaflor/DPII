@@ -26,6 +26,7 @@ import domain.Brotherhood;
 import security.LoginService;
 import services.AreaService;
 import services.BrotherhoodService;
+import services.WelcomeService;
 
 
 /*
@@ -44,6 +45,9 @@ public class AreaBrotherhoodController extends AbstractController {
 	
 	@Autowired
 	BrotherhoodService brotherhoodService;
+	
+	@Autowired
+	WelcomeService welcomeService;
 	
 	// Constructors -----------------------------------------------------------
 
@@ -85,6 +89,8 @@ public class AreaBrotherhoodController extends AbstractController {
 				System.out.println("Error en catch AreaBrotherhoodController.java: " + oops);
 				result = this.createEditModelAndView("area.commit.error");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	
@@ -101,12 +107,15 @@ public class AreaBrotherhoodController extends AbstractController {
 		if (brotherhood.getArea()!=null) {
 			res.addObject("areaSelected", brotherhood.getArea().getName());
 		}
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 	private ModelAndView createEditModelAndView(final String messageCode) {
 		ModelAndView res = createEditModelAndView();
 		res.addObject("message", messageCode);
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
+import services.WelcomeService;
 
 @Controller
 @RequestMapping("/security")
@@ -30,6 +31,9 @@ public class LoginController extends AbstractController {
 
 	@Autowired
 	LoginService	service;
+	
+	@Autowired
+	WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -50,7 +54,8 @@ public class LoginController extends AbstractController {
 		result = new ModelAndView("security/login");
 		result.addObject("credentials", credentials);
 		result.addObject("showError", showError);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -61,7 +66,8 @@ public class LoginController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("redirect:login.do?showError=true");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 

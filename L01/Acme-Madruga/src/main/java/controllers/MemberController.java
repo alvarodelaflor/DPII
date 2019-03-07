@@ -29,6 +29,7 @@ import security.LoginService;
 import services.ActorService;
 import services.BrotherhoodService;
 import services.MemberService;
+import services.WelcomeService;
 
 @Controller
 @RequestMapping("/member")
@@ -42,6 +43,9 @@ public class MemberController extends AbstractController {
 
 	@Autowired
 	ActorService		actorService;
+	
+	@Autowired
+	WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -56,6 +60,8 @@ public class MemberController extends AbstractController {
 		final RegistrationForm registrationForm = new RegistrationForm();
 		result = new ModelAndView("member/create");
 		result.addObject("registrationForm", registrationForm);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -79,6 +85,8 @@ public class MemberController extends AbstractController {
 				else
 					result = this.createModelAndView(member, "error.email");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -96,6 +104,8 @@ public class MemberController extends AbstractController {
 		result = new ModelAndView("member/edit");
 
 		result.addObject("member", member);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -117,6 +127,8 @@ public class MemberController extends AbstractController {
 				else
 					result = this.createEditModelAndView(member, "error.email");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -126,7 +138,8 @@ public class MemberController extends AbstractController {
 		result = new ModelAndView("member/edit");
 		result.addObject("message", string);
 		result.addObject("member", member);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -136,7 +149,8 @@ public class MemberController extends AbstractController {
 		result = new ModelAndView("member/create");
 		result.addObject("message", string);
 		result.addObject("member", member);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -157,6 +171,8 @@ public class MemberController extends AbstractController {
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -173,12 +189,16 @@ public class MemberController extends AbstractController {
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/conditions", method = RequestMethod.GET)
 	public ModelAndView conditions() {
 		ModelAndView result;
 		result = new ModelAndView("member/conditions");
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	

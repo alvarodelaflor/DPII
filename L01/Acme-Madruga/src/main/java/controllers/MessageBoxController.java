@@ -64,13 +64,12 @@ public class MessageBoxController extends AbstractController {
 		System.out.println(messageBoxes);
 
 		result = new ModelAndView("messageBox/list");
-		//		final String system = this.welcomeService.getSystem();
-		//		result.addObject("system", system);
-		//		final String logo = this.welcomeService.getLogo();
-		//		result.addObject("logo", logo);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		result.addObject("messageBoxes", messageBoxes);
 		result.addObject("requestURI", "messageBox/list.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -88,10 +87,8 @@ public class MessageBoxController extends AbstractController {
 		else {
 			result = new ModelAndView("messageBox/show");
 			result.addObject("messageBox", messageBox);
-			//		final String system = this.welcomeService.getSystem();
-			//		result.addObject("system", system);
-			//		final String logo = this.welcomeService.getLogo();
-			//		result.addObject("logo", logo);
+			result.addObject("logo", welcomeService.getLogo());
+			result.addObject("system", welcomeService.getSystem());
 			result.addObject("language", language);
 			result.addObject("requestURI", "messageBox/show.do");
 		}
@@ -106,6 +103,8 @@ public class MessageBoxController extends AbstractController {
 
 		messageBox = this.messageBoxService.create();
 		result = this.createEditModelAndView(messageBox);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -122,8 +121,8 @@ public class MessageBoxController extends AbstractController {
 		if (messageBoxId == -1) {
 			result = new ModelAndView("messageBox/list");
 			result.addObject("messageBoxes", a.getMessageBoxes());
-			//			final String logo = this.welcomeService.getLogo();
-			//			result.addObject("logo", logo);
+			result.addObject("logo", welcomeService.getLogo());
+			result.addObject("system", welcomeService.getSystem());
 		} else {
 
 			messageBox = this.messageBoxService.findOne(messageBoxId);
@@ -132,6 +131,8 @@ public class MessageBoxController extends AbstractController {
 			//	final String logo = this.welcomeService.getLogo();
 			//result.addObject("logo", logo);
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -197,7 +198,8 @@ public class MessageBoxController extends AbstractController {
 				System.out.println(oops);
 				result = this.createEditModelAndView(messageBox, "messageBox.commit.error");
 			}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	protected ModelAndView createEditModelAndView(final MessageBox messageBox) {
@@ -208,7 +210,8 @@ public class MessageBoxController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -245,7 +248,8 @@ public class MessageBoxController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 		result.addObject("message", messageCode);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -281,6 +285,8 @@ public class MessageBoxController extends AbstractController {
 		}
 
 		result.addObject("language", language);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -303,6 +309,8 @@ public class MessageBoxController extends AbstractController {
 
 		result = this.createEditModelAndView(messageBox);
 		result.addObject("idParent", messageBox.getParentBox().getId());
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

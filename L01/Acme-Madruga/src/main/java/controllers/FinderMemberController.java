@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AreaService;
 import services.FinderService;
+import services.WelcomeService;
 import domain.Area;
 import domain.Finder;
 
@@ -23,6 +24,9 @@ public class FinderMemberController extends AbstractController {
 	private FinderService	finderService;
 	@Autowired
 	private AreaService		areaService;
+	
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -41,7 +45,8 @@ public class FinderMemberController extends AbstractController {
 			e.printStackTrace();
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -69,7 +74,8 @@ public class FinderMemberController extends AbstractController {
 				e.printStackTrace();
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }
