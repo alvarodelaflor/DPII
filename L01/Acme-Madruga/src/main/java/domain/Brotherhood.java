@@ -70,6 +70,7 @@ public class Brotherhood extends Actor {
 		this.establishmentDate = establishmentDate;
 	}
 
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPictures() {
 		return this.pictures;
 	}

@@ -23,6 +23,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
@@ -100,6 +102,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		this.banned = banned;
 	}
 
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@Size(min = 5, max = 32)
 	@Column(unique = true)
 	@Override
@@ -111,6 +114,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		this.username = username;
 	}
 
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@Size(min = 5, max = 32)
 	@Override
 	public String getPassword() {

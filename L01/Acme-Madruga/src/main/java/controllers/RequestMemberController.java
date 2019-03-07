@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.RequestService;
+import services.WelcomeService;
 import domain.Request;
 
 @Controller
@@ -20,6 +21,9 @@ public class RequestMemberController extends AbstractController {
 
 	@Autowired
 	private RequestService	requestService;
+	
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// ---------------------------------------- Listing
@@ -36,13 +40,14 @@ public class RequestMemberController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
 	// ---------------------------------------- Showing
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam final int requestId) {
+	public ModelAndView show(@RequestParam(value = "requestId", defaultValue = "-1") final int requestId) {
 		ModelAndView result;
 		Request request;
 		try {
@@ -57,7 +62,8 @@ public class RequestMemberController extends AbstractController {
 			System.out.println("Exception e en Show request: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -74,7 +80,8 @@ public class RequestMemberController extends AbstractController {
 			System.out.println("Exception e en request create:" + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -92,6 +99,8 @@ public class RequestMemberController extends AbstractController {
 			} catch (final Exception e) {
 				result = this.createEditModelAndView(req, "request.commit.error");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	// ---------------------------------------- Deleting
@@ -105,13 +114,16 @@ public class RequestMemberController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	// ---------------------------------------- Private methods
 	private ModelAndView createEditModelAndView(final Request request) {
 		final ModelAndView res = new ModelAndView("request/edit");
 		res.addObject("request", request);
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -119,6 +131,8 @@ public class RequestMemberController extends AbstractController {
 		final ModelAndView res = new ModelAndView("request/edit");
 		res.addObject("request", request);
 		res.addObject("message", message);
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 }

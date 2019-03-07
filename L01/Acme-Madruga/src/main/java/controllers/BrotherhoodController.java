@@ -32,6 +32,7 @@ import services.ActorService;
 import services.BrotherhoodService;
 import services.EnrolledService;
 import services.MemberService;
+import services.WelcomeService;
 
 @Controller
 @RequestMapping("/brotherhood")
@@ -48,6 +49,9 @@ public class BrotherhoodController extends AbstractController {
 
 	@Autowired
 	ActorService		actorService;
+	
+	@Autowired
+	WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -64,6 +68,8 @@ public class BrotherhoodController extends AbstractController {
 		registrationForm = new RegistrationForm();
 		result = new ModelAndView("brotherhood/create");
 		result.addObject("registrationForm", registrationForm);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -89,6 +95,8 @@ public class BrotherhoodController extends AbstractController {
 				else
 					result = this.createModelAndView(brotherhood, "error.email");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Brotherhood brotherhood, final String string) {
@@ -97,7 +105,8 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/edit");
 		result.addObject("message", string);
 		result.addObject("brotherhood", brotherhood);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -107,7 +116,8 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/create");
 		result.addObject("message", string);
 		result.addObject("brotherhood", brotherhood);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -121,7 +131,8 @@ public class BrotherhoodController extends AbstractController {
 		Assert.notNull(brotherhood);
 		result = new ModelAndView("brotherhood/edit");
 		result.addObject("brotherhood", brotherhood);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -144,6 +155,8 @@ public class BrotherhoodController extends AbstractController {
 				else
 					result = this.createEditModelAndView(brotherhood, "error.email");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -163,6 +176,8 @@ public class BrotherhoodController extends AbstractController {
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -210,6 +225,8 @@ public class BrotherhoodController extends AbstractController {
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -221,7 +238,8 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/list");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("requestURI", "brotherhood/list.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -238,7 +256,8 @@ public class BrotherhoodController extends AbstractController {
 
 		this.brotherhoodService.save(logger);
 		result = new ModelAndView("redirect:show.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -251,7 +270,8 @@ public class BrotherhoodController extends AbstractController {
 			this.brotherhoodService.deletePicture(url);
 
 		result = new ModelAndView("redirect:show.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -259,6 +279,8 @@ public class BrotherhoodController extends AbstractController {
 	public ModelAndView conditions() {
 		ModelAndView result;
 		result = new ModelAndView("brotherhood/conditions");
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	

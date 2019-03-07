@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.EnrolledService;
+import services.WelcomeService;
 import domain.Enrolled;
 
 @Controller
@@ -18,6 +19,9 @@ public class EnrollmentMemberController extends AbstractController {
 
 	@Autowired
 	private EnrolledService	enrollmentService;
+	
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// ---------------------------------------- Listing
@@ -32,7 +36,8 @@ public class EnrollmentMemberController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

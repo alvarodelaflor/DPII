@@ -24,14 +24,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Enrolled;
+import domain.Message;
+import domain.Position;
 import security.LoginService;
 import services.EnrolledService;
 import services.MessageService;
 import services.PositionService;
 import services.RequestService;
-import domain.Enrolled;
-import domain.Message;
-import domain.Position;
+import services.WelcomeService;
 
 /*
  * CONTROL DE CAMBIOS EnrolledBrotherhoodController.java
@@ -51,6 +52,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 	private RequestService	requestService;
 	@Autowired
 	private MessageService	messageService;
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -86,7 +89,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		result.addObject("enrolledsPending", enrolledsPending);
 		result.addObject("dropOutMembers", dropOutMembers);
 		result.addObject("requestURI", "enrolled/brotherhood/list.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -104,7 +108,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 			result.addObject("enrolled", enrolled);
 			result.addObject("requestURI", "enrolled/brotherhood/show.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -119,6 +124,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 			Assert.notNull(enrolled);
 			result = this.createEditModelAndView(enrolled);
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -141,6 +148,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 				result = this.createEditModelAndView(enrolled, "enrolled.commit.error");
 			}
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -161,6 +170,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 				result = this.createEditModelAndView(enrolled, "enrolled.commit.error");
 			}
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -202,6 +213,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 				else
 					result = this.createEditModelAndView(enrolled, "enrolled.commit.error");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Enrolled enrolled) {
@@ -223,7 +236,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		result.addObject("language", language);
 		result.addObject("enrolled", enrolled);
 		result.addObject("positions", positions);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Enrolled enrolled, final String messageCode) {
@@ -236,7 +250,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 		result.addObject("enrolled", enrolled);
 		result.addObject("positions", positions);
 		result.addObject("message", messageCode);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

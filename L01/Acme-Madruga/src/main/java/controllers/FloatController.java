@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
 import services.FloatService;
+import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Float;
 
@@ -43,6 +44,9 @@ public class FloatController extends AbstractController {
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
+	
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -79,6 +83,8 @@ public class FloatController extends AbstractController {
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -95,6 +101,8 @@ public class FloatController extends AbstractController {
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;		
 	}
 

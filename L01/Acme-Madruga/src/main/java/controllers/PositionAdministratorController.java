@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.EnrolledService;
 import services.PositionService;
+import services.WelcomeService;
 import domain.Position;
 
 @Controller
@@ -25,6 +26,8 @@ public class PositionAdministratorController extends AbstractController {
 	private PositionService	positionService;
 	@Autowired
 	private EnrolledService	enrolledService;
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// Constructors:
@@ -49,7 +52,8 @@ public class PositionAdministratorController extends AbstractController {
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -57,19 +61,19 @@ public class PositionAdministratorController extends AbstractController {
 	public ModelAndView show(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
 
 		ModelAndView res;
-		res = new ModelAndView("position/administrator/show");
 
 		try {
-
+			res = new ModelAndView("position/administrator/show");
 			final Integer currentlyUsed = this.enrolledService.findAllByPositionId(positionId).size();
 			final Position position = this.positionService.findOne(positionId);
 			res.addObject("position", position);
 			res.addObject("currentlyUsed", currentlyUsed);
 			res.addObject("requestURI", "position/administrator/show.do");
 		} catch (final Exception e) {
-			res = new ModelAndView("redirect:index.do");
+			res = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -77,14 +81,15 @@ public class PositionAdministratorController extends AbstractController {
 	public ModelAndView create() {
 
 		ModelAndView res;
-		res = new ModelAndView("position/administrator/create");
 		try {
+			res = new ModelAndView("position/administrator/create");
 			final Position position = this.positionService.create();
 			res.addObject("position", position);
 		} catch (final Exception e) {
-			res = new ModelAndView("redirect:index.do");
+			res = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -92,13 +97,15 @@ public class PositionAdministratorController extends AbstractController {
 	public ModelAndView update(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
 
 		ModelAndView res;
-		res = new ModelAndView("position/administrator/edit");
 		try {
+			res = new ModelAndView("position/administrator/edit");
 			final Position pos = this.positionService.findOne(positionId);
 			res.addObject("position", pos);
 		} catch (final Exception e) {
-			res = new ModelAndView("redirect:index.do");
+			res = new ModelAndView("redirect:/welcome/index.do");
 		}
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -112,6 +119,7 @@ public class PositionAdministratorController extends AbstractController {
 			System.out.println("El error pasa por PositionAdministratorController");
 			System.out.println(binding);
 			res = new ModelAndView("position/administrator/create");
+			res.addObject("position", position);
 		} else
 			try {
 
@@ -130,7 +138,8 @@ public class PositionAdministratorController extends AbstractController {
 				else
 					res = this.createEditModelAndView(position, "commit.error");
 			}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -152,7 +161,8 @@ public class PositionAdministratorController extends AbstractController {
 			final Position position = this.positionService.findOne(positionId);
 			res = this.createEditModelAndView(position, "commit.error");
 		}
-
+		res.addObject("logo", welcomeService.getLogo());
+		res.addObject("system", welcomeService.getSystem());
 		return res;
 	}
 
@@ -166,7 +176,8 @@ public class PositionAdministratorController extends AbstractController {
 		result = new ModelAndView("position/administrator/create");
 		result.addObject("position", pos);
 		result.addObject("message", messageCode);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

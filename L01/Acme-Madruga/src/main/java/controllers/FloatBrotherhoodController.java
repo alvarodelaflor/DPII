@@ -26,9 +26,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Float;
 import security.LoginService;
 import services.FloatService;
-import domain.Float;
+import services.WelcomeService;
 
 /*
  * CONTROL DE CAMBIOS domain.FloatBrotherhoodController.java
@@ -42,6 +43,9 @@ public class FloatBrotherhoodController extends AbstractController {
 
 	@Autowired
 	private FloatService	floatService;
+	
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -67,7 +71,8 @@ public class FloatBrotherhoodController extends AbstractController {
 		result.addObject("language", language);
 		result.addObject("floats", floats);
 		result.addObject("requestURI", "float/brotherhood/list.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -90,7 +95,8 @@ public class FloatBrotherhoodController extends AbstractController {
 			result.addObject("floatt", floatt);
 			result.addObject("requestURI", "float/brotherhood/show.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -100,6 +106,8 @@ public class FloatBrotherhoodController extends AbstractController {
 		Float floatt;
 		floatt = this.floatService.create();
 		result = this.createEditModelAndView(floatt);
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -114,6 +122,8 @@ public class FloatBrotherhoodController extends AbstractController {
 			Assert.notNull(floatt);
 			result = this.createEditModelAndView(floatt);
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -135,6 +145,8 @@ public class FloatBrotherhoodController extends AbstractController {
 				result = this.createEditModelAndView(floatt, "float.commit.error");
 			}
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -172,6 +184,8 @@ public class FloatBrotherhoodController extends AbstractController {
 				else
 					result = this.createEditModelAndView(floatt, "float.commit.error");
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final domain.Float floatt) {
@@ -180,7 +194,8 @@ public class FloatBrotherhoodController extends AbstractController {
 		result = new ModelAndView("float/brotherhood/edit");
 
 		result.addObject("float", floatt);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -191,7 +206,8 @@ public class FloatBrotherhoodController extends AbstractController {
 
 		result.addObject("float", floatt);
 		result.addObject("message", messageCode);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

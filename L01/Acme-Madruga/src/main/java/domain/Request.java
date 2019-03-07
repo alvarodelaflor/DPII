@@ -10,6 +10,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+
 import auxiliar.PositionAux;
 
 /*
@@ -55,6 +58,7 @@ public class Request extends DomainEntity {
 		this.member = member;
 	}
 
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getComment() {
 		return this.comment;
 	}

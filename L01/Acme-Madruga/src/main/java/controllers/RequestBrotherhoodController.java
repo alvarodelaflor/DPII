@@ -31,6 +31,7 @@ import services.MessageService;
 import services.PositionAuxService;
 import services.PositionService;
 import services.RequestService;
+import services.WelcomeService;
 import auxiliar.PositionAux;
 import domain.Brotherhood;
 import domain.Message;
@@ -56,6 +57,8 @@ public class RequestBrotherhoodController extends AbstractController {
 	private PositionAuxService	positionAuxService;
 	@Autowired
 	private MessageService		messageService;
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -85,24 +88,31 @@ public class RequestBrotherhoodController extends AbstractController {
 		result.addObject("requestsRejected", requestsRejected);
 		result.addObject("requestsPending", requestsPending);
 		result.addObject("requestURI", "request/brotherhood/list.do");
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "requestId", defaultValue = "-1") final int requestId) {
 		ModelAndView result;
-		final Request request = this.requestService.findOne(requestId);
+		try {
+			final Request request = this.requestService.findOne(requestId);
 
-		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId())
-			result = new ModelAndView("redirect:list.do");
-		else {
-			Assert.notNull(request, "request.nul");
+			if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId())
+				result = new ModelAndView("redirect:list.do");
+			else {
+				Assert.notNull(request, "request.nul");
 
-			result = new ModelAndView("request/brotherhood/show");
-			result.addObject("request", request);
-			result.addObject("requestURI", "request/brotherhood/show.do");
+				result = new ModelAndView("request/brotherhood/show");
+				result.addObject("request", request);
+				result.addObject("requestURI", "request/brotherhood/show.do");
+			}			
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 
 		return result;
 	}
@@ -118,6 +128,8 @@ public class RequestBrotherhoodController extends AbstractController {
 			Assert.notNull(request);
 			result = this.createEditModelAndView(request);
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -138,6 +150,8 @@ public class RequestBrotherhoodController extends AbstractController {
 				result = this.createEditModelAndView(request, "request.commit.error");
 			}
 		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -203,6 +217,8 @@ public class RequestBrotherhoodController extends AbstractController {
 					result = this.createEditModelAndView(request, "request.commit.error");
 				}
 			}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	
@@ -225,7 +241,8 @@ public class RequestBrotherhoodController extends AbstractController {
 		result.addObject("language", language);
 		result.addObject("request", request);
 		result.addObject("positionsAux", positionsAux);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Request request, final String messageCode) {
@@ -235,7 +252,8 @@ public class RequestBrotherhoodController extends AbstractController {
 		
 		result = createEditModelAndView(request);
 		result.addObject("message", messageCode);
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 

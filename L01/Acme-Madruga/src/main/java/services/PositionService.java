@@ -53,8 +53,9 @@ public class PositionService {
 	}
 
 	public Position findOne(final int id) {
-
-		return this.positionRepository.findOne(id);
+		Position position = this.positionRepository.findOne(id);
+		Assert.notNull(position, "position.null");
+		return position;
 	}
 	public Position save(final Position position) {
 		// "Check if the new position already exists"

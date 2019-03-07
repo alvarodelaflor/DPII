@@ -16,6 +16,7 @@ import security.UserAccount;
 import services.BrotherhoodService;
 import services.MemberService;
 import services.MessageService;
+import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Member;
 import domain.Message;
@@ -30,6 +31,8 @@ public class BrotherhoodMemberController extends AbstractController {
 	private MessageService		messageService;
 	@Autowired
 	private MemberService		memberService;
+	@Autowired
+	private WelcomeService welcomeService;
 
 
 	// HIPONA 25-02-19 9:48
@@ -49,7 +52,8 @@ public class BrotherhoodMemberController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 
@@ -73,7 +77,8 @@ public class BrotherhoodMemberController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
 }

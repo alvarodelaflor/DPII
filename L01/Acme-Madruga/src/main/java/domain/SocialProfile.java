@@ -6,7 +6,9 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -18,6 +20,7 @@ public class SocialProfile extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getNick() {
 		return this.nick;
 	}
@@ -27,6 +30,7 @@ public class SocialProfile extends DomainEntity {
 	}
 	@NotBlank
 	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getLink() {
 		return this.link;
 	}
@@ -35,6 +39,7 @@ public class SocialProfile extends DomainEntity {
 		this.link = link;
 	}
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
