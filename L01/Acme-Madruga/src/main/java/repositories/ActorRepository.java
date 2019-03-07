@@ -32,4 +32,13 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
 	@Query("select a from Actor a join a.userAccount aua where aua.id=?1")
 	Actor findByUserAccountId(int userAccountId);
+
+	//Carmen --> A+
+
+	@Query("select distinct 100*(cast((select count(u.spammerFlag) from UserAccount u where u.spammerFlag = 1)as float)/ cast((select count(a) from UserAccount a) as float)) from UserAccount u")
+	public Float spammersRation();
+
+	@Query("select distinct 100*(cast((select count(u.spammerFlag) from UserAccount u where u.spammerFlag = 0)as float)/ cast((select count(a) from UserAccount a) as float)) from UserAccount u")
+	public Float noSpammersRation();
+
 }

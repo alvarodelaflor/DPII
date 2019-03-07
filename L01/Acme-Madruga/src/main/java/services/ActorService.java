@@ -91,4 +91,12 @@ public class ActorService {
 		return this.actorRepository.getActorByMessageBox(id);
 	}
 
+	// CARMEN --> A+
+	public Float spammersRation() {
+		return this.actorRepository.spammersRation();
+	}
+
+	public Float noSpammersRation() {
+		return this.actorRepository.noSpammersRation();
+	}
 }

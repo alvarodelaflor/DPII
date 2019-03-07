@@ -229,7 +229,15 @@ public class AdministratorController extends AbstractController {
 			final Float avgNumberOfResult = this.finderService.avgNumberOfResult();
 			final Float stddevNumberOfResult = this.finderService.stddevNumberOfResult();
 			final Float ratioFinder = this.finderService.ratioResult();
+
+			//CARMEN --> A+
+			final Float noSpammersRation = this.actorService.noSpammersRation();
+			final Float spammersRation = this.actorService.spammersRation();
+			//CARMEN --> A+
 			result = new ModelAndView("administrator/dashboard");
+
+			result.addObject("noSpammersRation", noSpammersRation);
+			result.addObject("spammersRation", spammersRation);
 
 			result.addObject("minNumberOfResult", minNumberOfResult);
 			result.addObject("maxNumberOfResult", maxNumberOfResult);
