@@ -26,7 +26,8 @@
 </style>
 
 <security:authorize access="hasRole('ADMIN')"> 
-
+	<div>
+	<div style="width: 50%; float:left;">
 		<p><spring:message code="admin.TheLargestBrotherhoods" /> <jstl:out	value="${largestBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.TheSmallestBrotherhoods" /> <jstl:out value="${smallestBrotherhood}"></jstl:out></p>		
 		<p><spring:message code="admin.TheRatioRequestsTrue" /> <jstl:out value="${getRatioRequestStatusTrue}"></jstl:out></p>
@@ -38,7 +39,7 @@
 		<p><spring:message code="admin.maxNumberOfMemberPerBrotherhood" /> <jstl:out value="${maxNumberOfMemberPerBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.minNumberOfMemberPerBrotherhood" /> <jstl:out value="${minNumberOfMemberPerBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.avgNumberOfMemberPerBrotherhood" /> <jstl:out value="${avgNumberOfMemberPerBrotherhood}"></jstl:out></p>
-		<p><spring:message code="admin.desviationOfNumberOfMemberPerBrotherhood" /> <jstl:out value="${stddevNumberOfMemberPerBrotherhood}"></jstl:out></p>
+		<p><spring:message code="admin.desviationOfNumberOfMemberPerBrotherhood" /> <jstl:out value="${desviationOfNumberOfMemberPerBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.avgBrotherhoodPerArea" /> <jstl:out value="${avgBrotherhoodPerArea}"></jstl:out></p>		
 		<p><spring:message code="admin.minBrotherhoodPerArea" /> <jstl:out value="${minBrotherhoodPerArea}"></jstl:out></p>		
 		<p><spring:message code="admin.maxBrotherhoodPerArea" /> <jstl:out value="${maxBrotherhoodPerArea}"></jstl:out></p>		
@@ -50,7 +51,6 @@
 		<p><spring:message code="admin.stddevNumberOfResult" /> <jstl:out value="${stddevNumberOfResult}"></jstl:out></p>	
 		
 		
-				
 <p><spring:message code="admin.lisMemberAccept" /> </p>	
 <display:table pagesize="5" name="${lisMemberAccept}" id="lisMemberAccept"
 	requestURI="${requestURI}">
@@ -66,15 +66,16 @@
 	<display:column property="moment" titleKey="procession.moment"></display:column>
 	<display:column property="description" titleKey="procession.description"></display:column>
 </display:table>
+	</div>
+<br>
+<br>
 
-<br>
-<br>
+	<div style="width: 50%; float:left;">			
  
 <p><spring:message code="admin.histogram" /></p>
  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" ></script> 
-<div style="width: 50%;">	
-	<canvas id="myChart" height="60" width="400"></canvas>myChartB
+	<canvas id="myChart" height="150" width="450"></canvas>
 	<br>
 	<br>
 	<p><spring:message code="admin.spammer" /></p>
@@ -88,14 +89,16 @@
 	<p><spring:message code="admin.MemberBro" /></p>
 	<canvas id="myChartBM" height="200" width="400"></canvas>
 </div>
-
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     
     data: {
-        labels: ["${maxProcession}","${minProcession}"],
+        labels: [
+				"<spring:message code="admin.minBrotherhoodPerAreaH"/>",
+				"<spring:message code="admin.maxBrotherhoodPerAreaH"/>"
+				],
         datasets: [{
             label: ["<spring:message code="admin.positions"/>"],
             data: ["${maxProcessionN}","${minProcessionN}"],
@@ -203,7 +206,7 @@ var myChart = new Chart(ctx, {
                  ],
         datasets: [{
             label: ["<spring:message code="admin.MemberBrotherhood"/>"],
-            data: ["${avgNumberOfMemberPerBrotherhood}","${minNumberOfMemberPerBrotherhood}","${maxNumberOfMemberPerBrotherhood}","${stddevNumberOfMemberPerBrotherhood}"],
+            data: ["${avgNumberOfMemberPerBrotherhood}","${minNumberOfMemberPerBrotherhood}","${maxNumberOfMemberPerBrotherhood}","${desviationOfNumberOfMemberPerBrotherhood}"],
             backgroundColor: [
                 'rgba(255, 40, 132, 0.2)',
                 'rgba(255, 255, 132, 0.2)',
@@ -225,6 +228,9 @@ var myChart = new Chart(ctx, {
         type: 'bar',
 });
 </script> 
+
+
+</div>
 
 
 </security:authorize>
