@@ -44,8 +44,6 @@ public class MemberService {
 	private WelcomeService		welcomeService;
 
 	@Autowired
-	private BrotherhoodService	brotherhoodService;
-	@Autowired
 	private MessageBoxService	messageBoxService;
 
 	@Autowired
@@ -282,8 +280,8 @@ public class MemberService {
 
 	private Boolean checkEmailFormatter(final Member member) {
 		Boolean res = true;
-		if ((member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}(>)") || member.getEmail().matches("[\\w\\s\\w]{1,}(<)[\\w\\.\\w]{1,}(@)[\\w]{1,}(>)") || member.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w\\.\\w]{1,}") || member
-			.getEmail().matches("[\\w\\.\\w]{1,}(@)[\\w]{1,}")))
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (member.getEmail().matches(pattern))
 			res = false;
 		return res;
 	}
