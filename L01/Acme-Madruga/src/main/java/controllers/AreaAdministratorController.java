@@ -100,13 +100,23 @@ public class AreaAdministratorController {
 	public ModelAndView update(@RequestParam(value = "areaId", defaultValue = "-1") final int areaId) {
 
 		ModelAndView res;
-		res = new ModelAndView("area/administrator/edit");
-		try {
-			final Area area = this.areaService.findOne(areaId);
-			res.addObject("area", area);
-		} catch (final Exception e) {
-			res = new ModelAndView("redirect:index.do");
+
+		final Area areaTry = this.areaService.findOne(areaId);
+		System.out.println("¿Existe área?");
+		System.out.println(areaTry);
+		if (areaTry == null)
+			res = new ModelAndView("welcome/index");
+		else {
+
+			res = new ModelAndView("area/administrator/edit");
+			try {
+				final Area area = this.areaService.findOne(areaId);
+				res.addObject("area", area);
+			} catch (final Exception e) {
+				res = new ModelAndView("redirect:index.do");
+			}
 		}
+
 		return res;
 	}
 
