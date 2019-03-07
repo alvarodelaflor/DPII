@@ -175,6 +175,15 @@ public class BrotherhoodController extends AbstractController {
 			res = true;
 		return res;
 	}
+	
+	private Boolean checkAreaNull(final int idBrotherhood) {
+		Boolean res = false;
+		Brotherhood brotherhood = this.brotherhoodService.findOne(idBrotherhood);
+		if (brotherhood!=null && brotherhood.getArea()==null) {
+			res=true;
+		}
+		return res;
+	}
 
 	@RequestMapping(value = "/showBrotherhood", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
@@ -192,6 +201,7 @@ public class BrotherhoodController extends AbstractController {
 				if (this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()) == null) {
 					result.addObject("validMember", this.validMember(brotherhood.getId()));
 					result.addObject("activeMember", this.brotherhoodService.isActiveFromMemberAndBrotherhood(brotherhood.getId()));
+					result.addObject("checkAreaNull", this.checkAreaNull(brotherhood.getId()));
 				}
 			} catch (final Throwable oops) {
 				System.out.println("Usuario no está logueado");

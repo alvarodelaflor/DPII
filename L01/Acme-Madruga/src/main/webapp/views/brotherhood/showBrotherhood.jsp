@@ -34,7 +34,14 @@
 						</form>				
 					</c:when>
 					<c:otherwise>
-						<spring:message code="enrolled.alreadySend"/>
+						<c:choose>
+							<c:when test="${checkAreaNull==true}">
+								<spring:message code="area.null"/>
+							</c:when>
+							<c:otherwise>
+								<spring:message code="enrolled.alreadySend"/>
+							</c:otherwise>						
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
