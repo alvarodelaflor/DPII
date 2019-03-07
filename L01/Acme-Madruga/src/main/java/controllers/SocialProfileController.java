@@ -71,18 +71,25 @@ public class SocialProfileController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam("socialProfileId") final int socialProfileId) {
 		ModelAndView result;
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
 
 		final SocialProfile socialProfile = this.socialProfileService.findOne(socialProfileId);
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
-		result = new ModelAndView("socialProfile/show");
-		result.addObject("socialProfile", socialProfile);
-		//		final String system = this.welcomeService.getSystem();
-		//		result.addObject("system", system);
-		//		final String logo = this.welcomeService.getLogo();
-		//		result.addObject("logo", logo);
-		result.addObject("language", language);
-		result.addObject("requestURI", "socialProfile/show.do");
+		if (!a.getSocialProfiles().contains(socialProfile))
+			result = new ModelAndView("welcome/index");
+
+		else {
+			result = new ModelAndView("socialProfile/show");
+			result.addObject("socialProfile", socialProfile);
+			//		final String system = this.welcomeService.getSystem();
+			//		result.addObject("system", system);
+			//		final String logo = this.welcomeService.getLogo();
+			//		result.addObject("logo", logo);
+			result.addObject("language", language);
+			result.addObject("requestURI", "socialProfile/show.do");
+		}
 
 		return result;
 	}
@@ -146,7 +153,7 @@ public class SocialProfileController extends AbstractController {
 					actor.getSocialProfiles().remove(savedSocialProfile);
 					actor.getSocialProfiles().add(savedSocialProfile);
 				} else
-					actor.getSocialProfiles().add(socialProfile);
+					actor.getSocialProfiles().add(savedSocialProfile);
 				final Actor savedActor = this.actorService.save(actor);
 
 				result = new ModelAndView("socialProfile/list");
@@ -169,6 +176,9 @@ public class SocialProfileController extends AbstractController {
 		System.out.println("socialProfileId encontrado: " + socialProfileId);
 		Assert.notNull(socialProfileId, "socialProfile.null");
 
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
+
 		if (this.socialProfileService.findOne(socialProfileId) == null || !this.actorService.getActorByUserId(LoginService.getPrincipal().getId()).getSocialProfiles().contains(this.socialProfileService.findOne(socialProfileId))) {
 			result = new ModelAndView("socialProfile/list");
 			//			final String system = this.welcomeService.getSystem();
@@ -177,7 +187,9 @@ public class SocialProfileController extends AbstractController {
 			//			result.addObject("logo", logo);
 			result.addObject("socialProfiles", this.actorService.getActorByUserId(LoginService.getPrincipal().getId()).getSocialProfiles());
 			result.addObject("requestURI", "socialProfile/list.do");
-		} else
+		} else if (!a.getSocialProfiles().contains(socialProfile))
+			result = new ModelAndView("welcome/index");
+		else
 			try {
 				Assert.isTrue(socialProfile != null);
 
