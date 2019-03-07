@@ -22,6 +22,27 @@
 
 <br>
 
+<!-- PRIORITIES -->
+<h3><i><spring:message code="priorities" /></i></h3>
+<p>${priorities}</p>
+
+<security:authorize access="hasRole('ADMIN')">
+	<form:form class="formularioEdicion" method="GET"  action="administrator/newPriority.do?newPriority='${newPriority}'.do">		
+		<spring:message code="newPriority" />
+		<input type=text name="newPriority" required="required"/>
+		<acme:submit name="save" code="saveNewPriority"/>
+	</form:form>
+</security:authorize>
+
+<security:authorize access="hasRole('ADMIN')">
+	<form:form class="formularioEdicion" method="GET"  action="administrator/deletePriority.do?deletePriority='${deletePriority}'.do">		
+		<spring:message code="deletePriority" />
+		<input type=text name="deletePriority" required="required"/>
+		<acme:submit name="save" code="deletePriority"/>
+	</form:form>
+</security:authorize>
+<!-- PRIORITIES -->
+
 <!--SPAM WORDS-->	
 <h3><i><spring:message code="spamWords" /></i></h3>
 <p>${spamWords}</p>
@@ -140,12 +161,12 @@
 <c:choose>
     		<c:when test="${language=='English'}">
         		<form>
-      				<input type="button" value="Back" name="volver atrás2" onclick="history.back()" />
+      				<input type="button" value="Back" name="volver atrï¿½s2" onclick="history.back()" />
 	  			</form> 
     		</c:when>    
     		<c:otherwise>
 		 		<form>
-      				<input type="button" value="Volver" name="volver atrás2" onclick="history.back()" />
+      				<input type="button" value="Volver" name="volver atrï¿½s2" onclick="history.back()" />
 	  			</form>        		
     		</c:otherwise>
 		</c:choose>

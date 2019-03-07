@@ -28,6 +28,34 @@ public class WelcomeService {
 
 	public HashSet<String>	spamWords	= new HashSet<>();
 
+	public HashSet<String>	priorities	= new HashSet<>();
+
+
+	//Método para ańadir prioridades
+	public HashSet<String> addPriority(final String priority) {
+		this.priorities.add(priority);
+		return this.priorities;
+	}
+
+	//Metodo para quitar las prioridades
+	public HashSet<String> deletePriority(final String priority) {
+		this.priorities.remove(priority);
+		Assert.isTrue(this.getPriorities().contains(priority), "noPriority.error");
+		return this.priorities;
+	}
+	//Metodo prioridades 
+	public HashSet<String> defaultPriorities() {
+
+		this.priorities.add("HIGH");
+		this.priorities.add("NEUTRAL");
+		this.priorities.add("LOW");
+
+		return this.priorities;
+	}
+
+	public HashSet<String> getPriorities() {
+		return this.priorities;
+	}
 
 	//Carmen: Método para ańadir spam words (adm)
 	public HashSet<String> newSpamWords(final String newWord) {

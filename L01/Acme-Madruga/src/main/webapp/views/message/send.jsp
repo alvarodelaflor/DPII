@@ -16,6 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <body>
 	<form:form action="message/edit.do" method="POST"	modelAttribute="msg">
@@ -40,7 +41,7 @@
 		
 		<br />
 		
-		<form:label path="priority.value">
+		<%-- <form:label path="priority.value">
 			<spring:message code="msg.priority" />:
 		</form:label>
 		<form:select path="priority.value" >
@@ -49,7 +50,15 @@
 			<form:option value="LOW"><spring:message code="low" /></form:option>
 		</form:select>		
 		<form:errors cssClass="error" path="priority.value" />
-		
+		 --%>
+		<%-- <acme:select items="${priorities}" itemLabel="priority" code="priorities" path="priority.value"/>
+		 --%>
+		<form:label path="priority.value">
+			<spring:message code="priorities" />:
+		</form:label>
+		<form:select  path="priority.value">
+   		 	<form:options items="${priorities}" />
+		</form:select>
 		<br />
 		
 		<form:label path="emailReceiver">

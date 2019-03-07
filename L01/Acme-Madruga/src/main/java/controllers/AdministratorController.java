@@ -432,6 +432,13 @@ public class AdministratorController extends AbstractController {
 		final String logo = this.welcomeService.getLogo();
 		HashSet<String> spamWords = new HashSet<>();
 		HashSet<String> scoreWords = new HashSet<>();
+		HashSet<String> priorities = new HashSet<>();
+		//Priorities
+		if (this.welcomeService.getPriorities().isEmpty())
+			priorities = this.welcomeService.defaultPriorities();
+		else
+			priorities = this.welcomeService.getPriorities();
+
 		//Spam words
 		if (this.welcomeService.getSpamWords().isEmpty())
 			spamWords = this.welcomeService.listSpamWords();
@@ -470,6 +477,7 @@ public class AdministratorController extends AbstractController {
 
 		result.addObject("spamWords", spamWords);
 		result.addObject("scoreWords", scoreWords);
+		result.addObject("priorities", priorities);
 
 		//Finder
 
@@ -483,6 +491,36 @@ public class AdministratorController extends AbstractController {
 
 		return result;
 	}
+
+	// PRIORITIES
+	@RequestMapping(value = "/newPriority", method = RequestMethod.GET)
+	public ModelAndView addPriority(@RequestParam("newPriority") final String newPriority) {
+		ModelAndView result;
+
+		this.welcomeService.addPriority(newPriority);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/deletePriority", method = RequestMethod.GET)
+	public ModelAndView deletePriority(@RequestParam("deletePriority") final String deletePriority) {
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			System.out.println("Carmen: Voy a intentar guardar");
+			this.welcomeService.deletePriority(deletePriority);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noPriority.error") {
+				result = this.list2();
+				result.addObject("message", "noPriority.error");
+			}
+		}
+
+		return result;
+	}
+	// PRIORITIES
 	@RequestMapping(value = "/newSpamWord", method = RequestMethod.GET)
 	public ModelAndView newSpamWord(@RequestParam("newSpamWord") final String newSpamWord) {
 		ModelAndView result;
@@ -614,6 +652,9 @@ public class AdministratorController extends AbstractController {
 		//Logo
 		final String logo = this.welcomeService.getLogo();
 
+		//Priorities
+		final HashSet<String> priorities = this.welcomeService.defaultPriorities();
+
 		//Spam words
 		final HashSet<String> spamWords = this.welcomeService.listSpamWords();
 
@@ -640,6 +681,8 @@ public class AdministratorController extends AbstractController {
 
 		result.addObject("ingles", ingles);
 		result.addObject("spanish", spanish);
+
+		result.addObject("priorities", priorities);
 
 		result.addObject("spamWords", spamWords);
 
