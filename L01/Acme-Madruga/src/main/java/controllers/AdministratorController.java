@@ -12,9 +12,11 @@ package controllers;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -32,6 +34,7 @@ import services.FinderService;
 import services.MemberService;
 import services.ProcessionService;
 import services.RequestService;
+import services.WelcomeService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Brotherhood;
@@ -66,6 +69,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	FinderService			finderService;
+
+	@Autowired
+	WelcomeService			welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -372,12 +378,14 @@ public class AdministratorController extends AbstractController {
 			}
 		} catch (final Throwable oops) {
 
-			res = new ModelAndView("redirect:../#");
+			final Actor actor = this.memberService.findOne(actorId);
+			if (oops.getMessage() == "ban.error")
+				res = this.createEditModelAndView2(actor, "ban.error");
+			else
+				res = new ModelAndView("redirect:../#");
 		}
-
 		return res;
 	}
-
 	@RequestMapping(value = "/banBrotherhood", method = RequestMethod.GET)
 	public ModelAndView banBrotherhood(@RequestParam(value = "actorId", defaultValue = "-1") final int actorId) {
 
@@ -397,9 +405,363 @@ public class AdministratorController extends AbstractController {
 			}
 		} catch (final Throwable oops) {
 
-			res = new ModelAndView("redirect:../#");
+			final Actor actor = this.brotherhoodService.findOne(actorId);
+			if (oops.getMessage() == "ban.error")
+				res = this.createEditModelAndView2(actor, "ban.error");
+			else
+				res = new ModelAndView("redirect:../#");
 		}
 
 		return res;
+	}
+
+	private ModelAndView createEditModelAndView2(final Actor actor, final String string) {
+		ModelAndView result;
+
+		final Collection<Member> members = this.memberService.findAll();
+		final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+
+		result = new ModelAndView("administrator/actorList");
+		result.addObject("message", string);
+		result.addObject("actor", actor);
+		result.addObject("members", members);
+		result.addObject("brotherhoods", brotherhoods);
+
+		return result;
+	}
+
+	//FERRETE
+	//CONFIGURATION
+	@RequestMapping(value = "/list")
+	public ModelAndView list2() {
+		ModelAndView result;
+
+		//Logo
+		final String logo = this.welcomeService.getLogo();
+		HashSet<String> spamWords = new HashSet<>();
+		HashSet<String> scoreWordsPos = new HashSet<>();
+		HashSet<String> scoreWordsNeg = new HashSet<>();
+		HashSet<String> priorities = new HashSet<>();
+		//Priorities
+		if (this.welcomeService.getPriorities().isEmpty())
+			priorities = this.welcomeService.defaultPriorities();
+		else
+			priorities = this.welcomeService.getPriorities();
+
+		//Spam words
+		if (this.welcomeService.getSpamWords().isEmpty())
+			spamWords = this.welcomeService.listSpamWords();
+		else
+			spamWords = this.welcomeService.getSpamWords();
+
+		//Score Words
+		if (this.administratorService.getScoreWordsPos().isEmpty())
+			scoreWordsPos = this.administratorService.listScoreWordsPos();
+		else
+			scoreWordsPos = this.administratorService.getScoreWordsPos();
+
+		if (this.administratorService.getScoreWordsNeg().isEmpty())
+			scoreWordsNeg = this.administratorService.listScoreWordsNeg();
+		else
+			scoreWordsNeg = this.administratorService.getScoreWordsNeg();
+
+		//Welcome page
+		final String ingles = this.welcomeService.getS();
+		final String spanish = this.welcomeService.getE();
+
+		//System
+		final String system = this.welcomeService.getSystem();
+
+		//Phone
+		final String phone = this.welcomeService.getPhone();
+
+		//Country´s Phone
+		final String phoneCountry = this.welcomeService.getCountry();
+
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+
+		System.out.println("Carmen: Entro en el list");
+
+		result = new ModelAndView("administrator/list");
+
+		result.addObject("logo", logo);
+
+		result.addObject("ingles", ingles);
+		result.addObject("spanish", spanish);
+
+		result.addObject("spamWords", spamWords);
+		result.addObject("scoreWordsPos", scoreWordsPos);
+		result.addObject("scoreWordsNeg", scoreWordsNeg);
+		result.addObject("priorities", priorities);
+
+		//Finder
+
+		result.addObject("system", system);
+
+		result.addObject("phone", phone);
+		result.addObject("phoneCountry", phoneCountry);
+
+		result.addObject("language", language);
+		result.addObject("requestURI", "administrator/list.do");
+
+		return result;
+	}
+
+	// PRIORITIES
+	@RequestMapping(value = "/newPriority", method = RequestMethod.GET)
+	public ModelAndView addPriority(@RequestParam("newPriority") final String newPriority) {
+		ModelAndView result;
+
+		this.welcomeService.addPriority(newPriority);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/deletePriority", method = RequestMethod.GET)
+	public ModelAndView deletePriority(@RequestParam("deletePriority") final String deletePriority) {
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			System.out.println("Carmen: Voy a intentar guardar");
+			this.welcomeService.deletePriority(deletePriority);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noPriority.error") {
+				result = this.list2();
+				result.addObject("message", "noPriority.error");
+			}
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/newSpamWord", method = RequestMethod.GET)
+	public ModelAndView newSpamWord(@RequestParam("newSpamWord") final String newSpamWord) {
+		ModelAndView result;
+
+		System.out.println("Carmen: Voy a intentar guardar");
+		this.welcomeService.newSpamWords(newSpamWord);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/deleteSpamWord", method = RequestMethod.GET)
+	public ModelAndView deleteSpamWord(@RequestParam("deleteSpamWord") final String spamWord) {
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			System.out.println("Carmen: Voy a intentar guardar");
+			this.welcomeService.deleteSpamWords(spamWord);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noSpamWord.error") {
+				result = this.list2();
+				result.addObject("message", "noSpamWord.error");
+			}
+		}
+
+		return result;
+	}
+
+	//SCORE WORDS
+	@RequestMapping(value = "/newScoreWordPos", method = RequestMethod.GET)
+	public ModelAndView newScoreWordPos(@RequestParam("newScoreWord") final String newScoreWord) {
+		ModelAndView result;
+
+		this.administratorService.newScoreWordsPos(newScoreWord);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/deleteScoreWordPos", method = RequestMethod.GET)
+	public ModelAndView deleteScoreWordPos(@RequestParam("deleteScoreWord") final String scoreWord) {
+
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			this.administratorService.deleteScoreWordsPos(scoreWord);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noScoreWord.error") {
+				result = this.list2();
+				result.addObject("message", "noScoreWord.error");
+			}
+		}
+
+		return result;
+	}
+
+	//SCORE WORDS NEG
+	@RequestMapping(value = "/newScoreWordNeg", method = RequestMethod.GET)
+	public ModelAndView newScoreWord(@RequestParam("newScoreWord") final String newScoreWord) {
+		ModelAndView result;
+
+		this.administratorService.newScoreWordsNeg(newScoreWord);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/deleteScoreWordNeg", method = RequestMethod.GET)
+	public ModelAndView deleteScoreWord(@RequestParam("deleteScoreWord") final String scoreWord) {
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			System.out.println("Carmen: Voy a intentar guardar");
+			this.administratorService.deleteScoreWordsNeg(scoreWord);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noScoreWord.error") {
+				result = this.list2();
+				result.addObject("message", "noScoreWord.error");
+			}
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/newWelcome", method = RequestMethod.GET)
+	public ModelAndView newWelcome(@RequestParam("newIngles") final String newIngles, @RequestParam("newSpanish") final String newSpanish) {
+		ModelAndView result;
+
+		System.out.println(newIngles);
+		System.out.println(newSpanish);
+
+		System.out.println("Carmen: Voy a intentar guardar");
+
+		final String ingles = this.welcomeService.newE(newIngles);
+		System.out.println(ingles);
+
+		final String spanish = this.welcomeService.newS(newSpanish);
+		System.out.println(spanish);
+
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/newSystem", method = RequestMethod.GET)
+	public ModelAndView newSystem(@RequestParam("newSystem") final String newSystem) {
+		ModelAndView result;
+
+		System.out.println(newSystem);
+
+		System.out.println("Carmen: Voy a intentar guardar");
+
+		final String system = this.welcomeService.newSystem(newSystem);
+		System.out.println(system);
+
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/header", method = RequestMethod.GET)
+	public ModelAndView header() {
+		ModelAndView result;
+
+		final String system = this.welcomeService.getSystem();
+
+		result = new ModelAndView("master-page/header");
+
+		result.addObject("requestURI", "master-page/header.do");
+		result.addObject("system", system);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/newLogo", method = RequestMethod.GET)
+	public ModelAndView newLogo(@RequestParam("newLogo") final String newLogo) {
+		ModelAndView result;
+		try {
+			final String logo = this.welcomeService.newLogo(newLogo);
+
+			System.out.println("Carmen: Voy a intentar guardar");
+
+			result = new ModelAndView("redirect:list.do");
+
+		} catch (final Exception e) {
+			result = this.createEditModelAndView(newLogo, "logo.bad");
+		}
+
+		return result;
+	}
+
+	private ModelAndView createEditModelAndView(final String newLogo, final String messageCode) {
+		ModelAndView result;
+
+		//Logo
+		final String logo = this.welcomeService.getLogo();
+
+		//Priorities
+		final HashSet<String> priorities = this.welcomeService.defaultPriorities();
+
+		//Spam words
+		final HashSet<String> spamWords = this.welcomeService.listSpamWords();
+
+		System.out.println("Carmen: Esta es la lista de spam words");
+		System.out.println(spamWords);
+
+		//Welcome page
+		final String ingles = this.welcomeService.getS();
+		final String spanish = this.welcomeService.getE();
+
+		//System
+		final String system = this.welcomeService.getSystem();
+
+		//Phone
+		final String phone = this.welcomeService.getPhone();
+
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+
+		System.out.println("Carmen: Entro en el list");
+
+		result = new ModelAndView("administrator/list");
+
+		result.addObject("logo", logo);
+
+		result.addObject("ingles", ingles);
+		result.addObject("spanish", spanish);
+
+		result.addObject("priorities", priorities);
+
+		result.addObject("spamWords", spamWords);
+
+		result.addObject("system", system);
+
+		result.addObject("phone", phone);
+
+		result.addObject("language", language);
+		result.addObject("requestURI", "administrator/list.do");
+
+		result.addObject("message", messageCode);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/newPhone", method = RequestMethod.GET)
+	public ModelAndView newPhone(@RequestParam("newPhone") final String newPhone) {
+		ModelAndView result;
+
+		final String phone = this.welcomeService.newPhone(newPhone);
+
+		System.out.println("Carmen: Voy a intentar guardar");
+
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/newPhoneCountry", method = RequestMethod.GET)
+	public ModelAndView newPhoneCountry(@RequestParam("newPhoneCountry") final String newPhoneCountry) {
+		ModelAndView result;
+
+		this.welcomeService.newCountry(newPhoneCountry);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
 	}
 }

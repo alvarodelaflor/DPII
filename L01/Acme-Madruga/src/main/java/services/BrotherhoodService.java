@@ -116,8 +116,6 @@ public class BrotherhoodService {
 		boxesDefault.add(spamBoxSave);
 
 		result.setMessageBoxes(boxesDefault);
-		result.setIsBanned(false);
-		result.setIsSuspicious(false);
 
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -198,8 +196,6 @@ public class BrotherhoodService {
 			boxesDefault.add(spamBoxSave);
 
 			result.setMessageBoxes(boxesDefault);
-			result.setIsBanned(false);
-			result.setIsSuspicious(false);
 			this.validator.validate(result, binding);
 
 		} else {
@@ -262,8 +258,6 @@ public class BrotherhoodService {
 		boxesDefault.add(spamBoxSave);
 
 		brotherhood.setMessageBoxes(boxesDefault);
-		brotherhood.setIsBanned(false);
-		brotherhood.setIsSuspicious(false);
 
 		return brotherhood;
 	}

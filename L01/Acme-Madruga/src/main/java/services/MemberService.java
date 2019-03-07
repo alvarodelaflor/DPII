@@ -95,8 +95,6 @@ public class MemberService {
 		boxesDefault.add(spamBoxSave);
 
 		result.setMessageBoxes(boxesDefault);
-		result.setIsBanned(false);
-		result.setIsSuspicious(false);
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
 
@@ -186,8 +184,6 @@ public class MemberService {
 			boxesDefault.add(spamBoxSave);
 
 			result.setMessageBoxes(boxesDefault);
-			result.setIsBanned(false);
-			result.setIsSuspicious(false);
 		} else {
 			result = this.memberRepository.findOne(member.getId());
 
@@ -248,8 +244,6 @@ public class MemberService {
 		boxesDefault.add(spamBoxSave);
 
 		member.setMessageBoxes(boxesDefault);
-		member.setIsBanned(false);
-		member.setIsSuspicious(false);
 
 		return member;
 	}

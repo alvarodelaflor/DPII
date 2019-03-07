@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +163,7 @@ public class MessageController extends AbstractController {
 		final UserAccount login = LoginService.getPrincipal();
 		final Actor sender = this.actorService.getActorByUserId(login.getId());
 		final List<String> emails = new ArrayList<>(msg.getEmailReceiver());
+
 		if (emails.get(0) == "FfalsoF@gmail.com") {
 			final ObjectError error = new ObjectError("emailReceiver", "An account already exists for this email.");
 			binding.addError(error);
@@ -171,12 +173,21 @@ public class MessageController extends AbstractController {
 			System.out.println("Entro en el binding messageController");
 			System.out.println(binding.getAllErrors().get(0));
 
+			final HashSet<String> priorities;
+			if (this.welcomeService.getPriorities().size() != 0)
+				priorities = this.welcomeService.getPriorities();
+			else
+				priorities = this.welcomeService.defaultPriorities();
+			final List<String> lisEmailReceiver = new ArrayList<>();
+			lisEmailReceiver.addAll(msg.getEmailReceiver());
+
 			final Collection<MessageBox> messageBoxes = sender.getMessageBoxes();
 			System.out.println(messageBoxes);
 			result = new ModelAndView("message/edit");
 			result.addObject("messageId", msg.getId());
 			result.addObject("messageId", msg.getId());
 			result.addObject("messageBoxes", messageBoxes);
+			result.addObject("priorities", priorities);
 			final Collection<String> emails2 = this.actorService.getEmailofActors();
 			System.out.println(emails2);
 			final List<String> listEmail = new ArrayList<>();
@@ -195,6 +206,11 @@ public class MessageController extends AbstractController {
 			try {
 				System.out.println(msg.getEmailReceiver());
 				System.out.println("antes de exchangeMessage");
+				final HashSet<String> priorities;
+				if (this.welcomeService.getPriorities().size() != 0)
+					priorities = this.welcomeService.getPriorities();
+				else
+					priorities = this.welcomeService.defaultPriorities();
 				final List<String> lisEmailReceiver = new ArrayList<>();
 				lisEmailReceiver.addAll(msg.getEmailReceiver());
 				for (int i = 0; i < msg.getEmailReceiver().size(); i++) {
@@ -219,13 +235,14 @@ public class MessageController extends AbstractController {
 
 				System.out.println("intenta el list de exchange message");
 				this.messageService.save(msg);
-
+				System.out.println("pasa el save");
 				result = new ModelAndView("messageBox/list");
 				//		final String system = this.welcomeService.getSystem();
 				//		result.addObject("system", system);
 				//		final String logo = this.welcomeService.getLogo();
 				//		result.addObject("logo", logo);
 				result.addObject("messageBoxes", sender.getMessageBoxes());
+				result.addObject("priorities", priorities);
 				result.addObject("requestURI", "messageBox/list.do");
 
 			} catch (final Throwable oops) {
@@ -322,6 +339,11 @@ public class MessageController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Message msg, final String msgCode) {
 		ModelAndView result;
+		final HashSet<String> priorities;
+		if (this.welcomeService.getPriorities().size() != 0)
+			priorities = this.welcomeService.getPriorities();
+		else
+			priorities = this.welcomeService.defaultPriorities();
 		final Collection<String> emails = this.actorService.getEmailofActors();
 		System.out.println(emails);
 		final List<String> listEmail = new ArrayList<>();
@@ -343,6 +365,7 @@ public class MessageController extends AbstractController {
 		result = new ModelAndView("message/edit");
 		result.addObject("msg", msg);
 		result.addObject("emails", emails);
+		result.addObject("priorities", priorities);
 		result.addObject("msgCode", msgCode);
 		//		final String system = this.welcomeService.getSystem();
 		//		result.addObject("system", system);

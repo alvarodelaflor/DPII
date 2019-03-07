@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +28,7 @@ import domain.MessageBox;
 /*
  * CONTROL DE CAMBIOS MessageService.java
  * 
- * Antonio Salvat 23/02/2019 19:49 CREACIÓN DE LA CLASE
+ * Antonio Salvat 23/02/2019 19:49 CREACIï¿½N DE LA CLASE
  */
 
 @Service
@@ -45,14 +46,14 @@ public class MessageService {
 	@Autowired
 	ActorService				actorService;
 	@Autowired
+	WelcomeService				welcomeService;
+	@Autowired
 	private Validator			validator;
 
-	//private final List<String>	spamWords	= Arrays.asList("sex", "viagra", "cialis", "ferrete", "one million", "you've been selected", "Nigeria", "queryfonsiponsypaferrete", "sexo", "un millón", "ha sido seleccionado");
 
-	public HashSet<String>		spamWords;
+	//private final List<String>	spamWords	= Arrays.asList("sex", "viagra", "cialis", "ferrete", "one million", "you've been selected", "Nigeria", "queryfonsiponsypaferrete", "sexo", "un millï¿½n", "ha sido seleccionado");
 
-
-	//Carmen: Método para añadir spam words (adm)
+	//Carmen: Mï¿½todo para aï¿½adir spam words (adm)
 	//	public HashSet<String> newSpamWords(final String newWord) {
 	//		this.listSpamWords().add(newWord);
 	//		return this.listSpamWords();
@@ -78,6 +79,7 @@ public class MessageService {
 
 			result = message;
 		}
+		System.out.println(message.getMoment());
 		this.validator.validate(message, binding);
 		return result;
 	}
@@ -91,7 +93,6 @@ public class MessageService {
 	}
 
 	public Message exchangeMessage(final Message message, final Integer receiverId) {
-		//this.checkSuspicious(message);
 		final Boolean suspicious = this.checkSuspiciousWithBoolean(message);
 		System.out.println("suspicious" + suspicious);
 
@@ -210,39 +211,129 @@ public class MessageService {
 	}
 
 	public Message save(final Message message) {
+
+		System.out.println("======> Esto es el moment de message en el msgService.save" + message.getMoment());
+		//Capturo actor logeado segï¿½n su UserAcc.Id
+		final UserAccount uacc = LoginService.getPrincipal();
+		final Actor actor = this.actorService.findByUserAccountId(uacc.getId());
+		//Actualizo contador total de msg
+		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1.);
+		//Actualizo contador de msg de spam
+		if (this.checkSuspiciousWithBoolean(message) == true)
+			actor.getUserAccount().setSpamMsgCounter(uacc.getSpamMsgCounter() + 1.);
+		//Calculo el spammerFlag del UserAcc
+		actor.getUserAccount().setSpammerFlag(this.spammerFlagCheck(actor.getUserAccount()));
+		System.out.println("====================================" + "se ha ejecutado spammerFlagCheck con resultado: " + this.spammerFlagCheck(actor.getUserAccount()));
+		//Guardo Actor con el UserAcc modificado
+		this.actorService.save(actor);
+		System.out.println("Hace el save");
+		//Calculo la nueva polaridad segun el msg
+		final Double newPolarity = this.polarityScoreCalculation(message, uacc);
+		System.out.println("<<<<<<<<<<<<<<<<<Calcula la polarity");
+		actor.getUserAccount().setPolarity(newPolarity);
+		//Guardo Actor con el UserAcc modificado 2
+		this.actorService.save(actor);
+		//Guardo el Msg
+		System.out.println("=======--------LLEGA AL RETURN DE MSG SAVE----------======");
 		return this.messageRepository.save(message);
 	}
 
+	// Check for spam: return true if the msg contains an spam word
 	private Boolean checkSuspiciousWithBoolean(final Message msg) {
-		System.out.println("Entra en suspicious");
+		System.out.println("check suspicious");
 		Boolean res = false;
-		this.listSpamWords();
-		for (final String word : this.spamWords)
+
+		final Collection<String> spamWords = this.initializeSpamWordsMsg();
+
+		for (final String word : spamWords)
 			if (msg.getBody().contains(word)) {
+				System.out.println("es spam");
 				res = true;
-				this.actorService.getActorByUserId(LoginService.getPrincipal().getId()).setIsSuspicious(true);
+				//break;
 			}
+
 		return res;
 	}
 
-	public HashSet<String> listSpamWords() {
-		System.out.println("Entra en el list");
-		System.out.println(this.spamWords);
-		this.spamWords = new HashSet<String>();
-		this.spamWords.add("sex");
-		System.out.println("falla el add");
-		this.spamWords.add("viagra");
-		this.spamWords.add("cialis");
-		this.spamWords.add("one millon");
-		this.spamWords.add("you've been selected");
-		this.spamWords.add("Nigeria");
-		this.spamWords.add("sexo");
-		this.spamWords.add("un millón");
-		this.spamWords.add("ha sido seleccionado");
-		System.out.println(this.spamWords);
-		return this.spamWords;
+	private Collection<String> initializeSpamWordsMsg() {
+
+		Collection<String> res;
+
+		if (this.welcomeService.getSpamWords().size() == 0)
+			res = this.welcomeService.listSpamWords();
+		else
+			res = this.welcomeService.getSpamWords();
+		return res;
 	}
 
+	// spammerFlag = true if condition is fulfilled
+	private Boolean spammerFlagCheck(final UserAccount uacc) {
+
+		Boolean res = false;
+
+		if (uacc.getMsgCounter() != 0) {
+
+			final Double ratiospam = uacc.getSpamMsgCounter() / uacc.getMsgCounter();
+			System.out.println("----------------------------" + ratiospam);
+			final Double percentage = uacc.getMsgCounter() * 0.1;
+			System.out.println("----------------------------" + percentage);
+			res = ratiospam > percentage;
+		}
+
+		return res;
+	}
+
+	// polarityScore calculation whenever a msg is saved
+	private Double polarityScoreCalculation(final Message message, final UserAccount uacc) {
+
+		final Message msg = message;
+		// Traigo la polarity de la cuenta
+		final Double res = uacc.getPolarity();
+		// Traigo la lista de scoring words positivas de adminService
+		final HashSet<String> scoringWordsPos;
+		System.out.println("se queda aqui 0");
+		if (this.administratorService.getScoreWordsPos().size() != 0)
+			scoringWordsPos = this.administratorService.getScoreWordsPos();
+		else
+			scoringWordsPos = this.administratorService.listScoreWordsPos();
+		// Traigo la lista de scoring words negativas de adminService
+		final HashSet<String> scoringWordsNeg;
+		System.out.println("se queda aqui 1");
+		if (this.administratorService.getScoreWordsNeg().size() != 0)
+			scoringWordsNeg = this.administratorService.getScoreWordsNeg();
+		else
+			scoringWordsNeg = this.administratorService.listScoreWordsNeg();
+		// Paso el body del msg a una lista de string
+		String[] msgWords;
+		System.out.println("se queda aqui 2");
+
+		final String msgBody = msg.getBody();
+		msgBody.trim();
+		msgBody.replace(",", "");
+		msgBody.replace(".", "");
+		msgBody.replace(":", "");
+		msgBody.replace(";", "");
+		msgWords = msgBody.split(" ");
+		final List<String> msgWordsList = Arrays.asList(msgWords);
+		// Guardo el tamaï¿½o inicial de la lista
+		final Double msgWordsSize = (double) msgWordsList.size();
+		// Calculo score positivo
+		final List<String> copia = new ArrayList<String>(msgWordsList);
+		final List<String> scoringWordPosList = new ArrayList<String>(scoringWordsPos);
+		copia.removeAll(scoringWordPosList);
+		System.out.println("se queda aqui 1");
+		final Double posCount = (msgWordsSize - copia.size());
+		// Calculo score negativo
+		final List<String> copia2 = new ArrayList<String>(msgWordsList);
+		final List<String> scoringWordNegList = new ArrayList<String>(scoringWordsNeg);
+		copia2.removeAll(scoringWordNegList);
+		final Double negCount = (msgWordsSize - copia2.size());
+		// Calculo nuevo score total
+		final Double count = ((posCount / msgWordsSize) - (negCount / msgWordsSize));
+		// Devuelvo la polarityScore nueva (media de las antiguas, podria cambiarse la ponderacion de la media para que la nueva polarity afectara mas o menos)
+		// LA PONDERACION NO ESTA DEFINIDA EN LOS REQUISITOS, ASI QUE POR DEFECTO SERA UNA MEDIA NORMAL
+		return (res + count) / 2;
+	}
 	public Message sendNotification(final Message message, final Actor a) {
 		//this.checkSuspicious(message);
 		final Boolean suspicious = this.checkSuspiciousWithBoolean(message);

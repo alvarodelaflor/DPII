@@ -36,6 +36,8 @@
 					</c:otherwise>
 					</c:choose>
 					
+					<display:column property="userAccount.polarity" titleKey="polarityScore" />
+					
 					<c:choose>
 					<c:when test="${row.userAccount.banned == false}">
 						<display:column  titleKey="banned">						
@@ -82,6 +84,8 @@
 						</display:column>
 					</c:otherwise>
 					</c:choose>
+					
+					<display:column property="userAccount.polarity" titleKey="polarityScore" />
 					
 					<c:choose>
 					<c:when test="${row.userAccount.banned == false}">

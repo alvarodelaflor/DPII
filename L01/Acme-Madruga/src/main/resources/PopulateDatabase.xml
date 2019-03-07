@@ -386,66 +386,6 @@
 	<!-- FINDER -->
 	<!-- CONFIGURATION -->
 	<bean id="configuration" class="domain.Configuration">
-		<property name="posWords">
-			<list>
-	    		<value>good</value>
-	    		<value>fantastic</value>
-	    		<value>excellent</value>
-	    		<value>great</value>
-	    		<value>amazing</value>
-	    		<value>terrific</value>
-	    		<value>beautiful</value>
-    		</list>
-    	</property>
-    	<property name="negWords">
-	    	<list>
-	    		<value>not</value>
-	    		<value>bad</value>
-	    		<value>horrible</value>
-	    		<value>average</value>
-	    		<value>disaster</value>
-    		</list>
-    	</property>
-    	<property name="posWordsEs">
-	    	<list>
-	    		<value>bueno</value>
-	    		<value>fabuloso</value>
-	    		<value>excelente</value>
-	    		<value>gran</value>
-	    		<value>increible</value>
-	    		<value>estupendo</value>
-	    		<value>hermoso</value>
-    		</list>
-    	</property>
-    	<property name="negWordsEs">
-	    	<list>
-	    		<value>no</value>
-	    		<value>malo</value>
-	    		<value>horrible</value>
-	    		<value>mediocre</value>
-	    		<value>desastre</value>
-    		</list>
-    	</property>
-    	<property name="spamWords">
-	    	<list>
-	    		<value>sex</value>
-	    		<value>viagra</value>
-	    		<value>cialis</value>
-	    		<value>one million</value>
-	    		<value>you've been selected</value>
-	    		<value>Nigeria</value>
-    		</list>
-    	</property>
-    	<property name="spamWordsEs">
-	    	<list>
-	    		<value>sexo</value>
-	    		<value>viagra</value>
-	    		<value>cialis</value>
-	    		<value>un millon</value>
-	    		<value>has sido seleccionado</value>
-    			<value>Nigeria</value>
-    		</list>
-    	</property>
     	<property name="cacheHours" value="1"/>
     	<property name="cacheAmount" value="10"/>
     </bean>

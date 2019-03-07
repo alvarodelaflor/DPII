@@ -2,7 +2,9 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,25 @@ public class AdministratorService {
 	@Autowired
 	private MessageBoxService		messageBoxService;
 
+	private HashSet<String>			scoreWordsPos	= new HashSet<>();
+	private HashSet<String>			scoreWordsNeg	= new HashSet<>();
+
+
+	public HashSet<String> getScoreWordsPos() {
+		return this.scoreWordsPos;
+	}
+
+	public HashSet<String> getScoreWordsNeg() {
+		return this.scoreWordsNeg;
+	}
+
+	public void setScoreWordsPos(final HashSet<String> scoreWordsPos) {
+		this.scoreWordsPos = scoreWordsPos;
+	}
+
+	public void setScoreWordsNeg(final HashSet<String> scoreWordsNeg) {
+		this.scoreWordsNeg = scoreWordsNeg;
+	}
 
 	Administrator findByUserAccountId(final int userAccountId) {
 
@@ -99,8 +120,6 @@ public class AdministratorService {
 		boxesDefault.add(spamBoxSave);
 
 		result.setMessageBoxes(boxesDefault);
-		result.setIsBanned(false);
-		result.setIsSuspicious(false);
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
 		result.setConfiguration(this.configurationService.getConfiguration());
@@ -181,8 +200,6 @@ public class AdministratorService {
 			boxesDefault.add(spamBoxSave);
 
 			result.setMessageBoxes(boxesDefault);
-			result.setIsBanned(false);
-			result.setIsSuspicious(false);
 		} else {
 			result = this.administratorRepository.findOne(admin.getId());
 
@@ -268,6 +285,55 @@ public class AdministratorService {
 		Administrator res;
 		res = this.administratorRepository.findByUserAccountId(userAccountId);
 		return res;
+	}
+
+	// FERRETE
+
+	// Método para mostrar las score words pos
+	public HashSet<String> listScoreWordsPos() {
+
+		final List<String> enP = Arrays.asList("good", "fantastic", "excellent", "great", "amazing", "terrific", "beautiful");
+		this.scoreWordsPos.addAll(enP);
+		final List<String> esP = Arrays.asList("bueno", "fantástico", "excelente", "genial", "increíble", "excelente", "hermoso");
+		this.scoreWordsPos.addAll(esP);
+
+		return this.scoreWordsPos;
+	}
+
+	public HashSet<String> listScoreWordsNeg() {
+
+		final List<String> enN = Arrays.asList("not", "bad", "horrible", "average", "disaster");
+		this.scoreWordsNeg.addAll(enN);
+		final List<String> esN = Arrays.asList("no", "malo", "horrible", "promedio", "desastre");
+		this.scoreWordsNeg.addAll(esN);
+
+		return this.scoreWordsNeg;
+	}
+
+	// Método para añadir pos
+	public HashSet<String> newScoreWordsPos(final String newWord) {
+		this.scoreWordsPos.add(newWord);
+		return this.getScoreWordsPos();
+	}
+
+	// Método para borrar pos
+	public HashSet<String> deleteScoreWordsPos(final String word) {
+		Assert.isTrue(this.getScoreWordsPos().contains(word), "noScoreWord.error");
+		this.scoreWordsPos.remove(word);
+		return this.getScoreWordsPos();
+	}
+
+	// Método para añadir neg 
+	public HashSet<String> newScoreWordsNeg(final String newWord) {
+		this.scoreWordsNeg.add(newWord);
+		return this.getScoreWordsNeg();
+	}
+
+	// Método para borrar neg
+	public HashSet<String> deleteScoreWordsNeg(final String word) {
+		Assert.isTrue(this.getScoreWordsNeg().contains(word), "noScoreWord.error");
+		this.scoreWordsNeg.remove(word);
+		return this.getScoreWordsNeg();
 	}
 
 }
