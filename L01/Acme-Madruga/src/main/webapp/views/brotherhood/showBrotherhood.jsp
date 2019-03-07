@@ -18,8 +18,12 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
+
 <div class="content">
 	<security:authorize access="hasRole('MEMBER')">
+	<jstl:if test="${checkAreaNull==true}"><spring:message code="area.null"/></jstl:if>
+	<jstl:if test="${checkAreaNull==false}">
 		<c:choose>
 			<c:when test="${validMember==true}">
 				<form method="get" action="/Acme-Madruga/enroll/member/create.do">
@@ -39,6 +43,7 @@
 				</c:choose>
 			</c:otherwise>
 		</c:choose>
+	</jstl:if>
 	</security:authorize>
 	<table>
 		<tr><td><spring:message code="brotherhood.photo" /><br>
