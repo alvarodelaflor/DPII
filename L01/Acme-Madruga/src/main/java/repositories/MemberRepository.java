@@ -33,6 +33,9 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	@Query("select m from Member m join m.enrolleds e where e.brotherhood.id=?1 and e.state=true and e.dropMoment=null")
 	Collection<Member> brotherhoodAllMember(int brotherHoodId);
 
+	@Query("select m.email from Member m join m.enrolleds e where e.brotherhood.id=?1 and e.state=true and e.dropMoment=null")
+	Collection<String> brotherhoodAllMemberEmail(int brotherHoodId);
+
 	//12.3.7 --> 
 	@Query("select m from Member m where (select 1.1*count(e) from Request e where e.member=m.id and e.status=true) > (select count(e1) from Request  e1 where  e1.member = m.id)")
 	Collection<Member> memberAccept();

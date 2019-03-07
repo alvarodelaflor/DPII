@@ -213,6 +213,15 @@ public class MessageBoxService {
 			inbox = inBoxList.get(0);
 		return inbox;
 	}
+
+	public MessageBox getNotificationBoxActor(final Integer id) {
+		final Collection<MessageBox> notiBoxCollection = this.messageBoxRepository.getNotificationBoxActor(id);
+		final List<MessageBox> notiBoxList = (List<MessageBox>) notiBoxCollection;
+		MessageBox notiBox = null;
+		if (notiBoxList.size() > 0)
+			notiBox = notiBoxList.get(0);
+		return notiBox;
+	}
 	public Collection<MessageBox> getInBox() {
 
 		return this.messageBoxRepository.getInBox();

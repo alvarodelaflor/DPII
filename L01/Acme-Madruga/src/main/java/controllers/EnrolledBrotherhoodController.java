@@ -10,6 +10,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.joda.time.LocalDateTime;
@@ -25,9 +26,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.EnrolledService;
+import services.MessageService;
 import services.PositionService;
 import services.RequestService;
 import domain.Enrolled;
+import domain.Message;
 import domain.Position;
 
 /*
@@ -46,6 +49,8 @@ public class EnrolledBrotherhoodController extends AbstractController {
 	private PositionService	positionService;
 	@Autowired
 	private RequestService	requestService;
+	@Autowired
+	private MessageService	messageService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -173,6 +178,18 @@ public class EnrolledBrotherhoodController extends AbstractController {
 				System.out.println("El error pasa por aquí alvaro (TRY de save())");
 				System.out.println(binding);
 				this.enrolledService.save(enrolled);
+				if (enrolled.getState() == true && enrolled.getDropMoment() == null) {
+					final String estado = "aceptada";
+
+					final Message msg = this.messageService.create();
+					msg.setBody("Su inscripción a la hermandad " + enrolled.getBrotherhood().getName() + " ha sido " + estado);
+					msg.setSubject("Notifación sobre aceptación de inscripción");
+					final Collection<String> emails = new ArrayList<>();
+					emails.add(enrolled.getMember().getEmail());
+					msg.setEmailReceiver(emails);
+					final Message notification = this.messageService.sendNotification(msg, enrolled.getMember());
+					this.messageService.save(notification);
+				}
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println("El error: ");

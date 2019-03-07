@@ -26,11 +26,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.BrotherhoodService;
+import services.MessageService;
 import services.PositionAuxService;
 import services.PositionService;
 import services.RequestService;
 import auxiliar.PositionAux;
 import domain.Brotherhood;
+import domain.Message;
 import domain.Position;
 import domain.Procession;
 import domain.Request;
@@ -53,6 +55,8 @@ public class RequestBrotherhoodController extends AbstractController {
 	private BrotherhoodService	brotherhoodService;
 	@Autowired
 	private PositionAuxService	positionAuxService;
+	@Autowired
+	private MessageService		messageService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -141,8 +145,16 @@ public class RequestBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Request request, final BindingResult binding) {
 		ModelAndView result;
+		System.out.println("Comprobación del status en controller");
+		System.out.println(request.getStatus());
+		final Request noti = this.requestService.findOne(request.getId());
+		System.out.println(noti.getStatus());
 
 		request = this.requestService.reconstruct(request, binding);
+		System.out.println("Comprobación del status en controller");
+		System.out.println(request.getStatus());
+		final Request notir = this.requestService.findOne(request.getId());
+		System.out.println(notir.getStatus());
 		if (binding.hasErrors()) {
 			System.out.println("El error pasa por aquí alvaro (IF de save())");
 			System.out.println(binding);
@@ -159,6 +171,22 @@ public class RequestBrotherhoodController extends AbstractController {
 					request.getPositionAux().setStatus(true);
 				this.positionAuxService.save(request.getPositionAux());
 				this.requestService.save(request);
+				if (request.getStatus() == true || request.getStatus() == false) {
+					String estado = null;
+					if (request.getStatus() == true)
+						estado = "aceptada";
+					else
+						estado = "rechazada";
+
+					final Message msg = this.messageService.create();
+					msg.setBody("Su petición a la procesión " + request.getPositionAux().getProcession().getTitle() + " ha sido " + estado);
+					msg.setSubject("Notifación sobre cambio de estado de petición");
+					final Collection<String> emails = new ArrayList<>();
+					emails.add(request.getMember().getEmail());
+					msg.setEmailReceiver(emails);
+					final Message notification = this.messageService.sendNotification(msg, request.getMember());
+					this.messageService.save(notification);
+				}
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				System.out.println("El error: ");

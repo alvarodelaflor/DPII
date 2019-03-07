@@ -243,4 +243,56 @@ public class MessageService {
 		return this.spamWords;
 	}
 
+	public Message sendNotification(final Message message, final Actor a) {
+		//this.checkSuspicious(message);
+		final Boolean suspicious = this.checkSuspiciousWithBoolean(message);
+		System.out.println("suspicious" + suspicious);
+
+		MessageBox boxReceiver = null;
+
+		if (suspicious) {
+			System.out.println("id del exchangeMessafe");
+			System.out.println(a.getId());
+			boxReceiver = this.messageBoxService.getSpamBoxActor(a.getId());
+			System.out.println(boxReceiver);
+			boxReceiver.getMessages().add(message);
+			message.getMessageBoxes().add(boxReceiver);
+		} else {
+			boxReceiver = this.messageBoxService.getNotificationBoxActor(a.getId());
+			boxReceiver.getMessages().add(message);
+			message.getMessageBoxes().add(boxReceiver);
+		}
+
+		return message;
+	}
+
+	public Message sendNotificationByEmails(final Message message) {
+		//this.checkSuspicious(message);
+		final Boolean suspicious = this.checkSuspiciousWithBoolean(message);
+		System.out.println("suspicious" + suspicious);
+
+		final Collection<String> emails = message.getEmailReceiver();
+		final List<String> emailsList = new ArrayList<>();
+		emailsList.addAll(emails);
+
+		for (int i = 0; i < emailsList.size(); i++) {
+			MessageBox boxReceiver = null;
+			final Actor a = this.actorService.getActorByEmail(emailsList.get(i));
+			if (suspicious) {
+				System.out.println("id del exchangeMessafe");
+				System.out.println(a.getId());
+				boxReceiver = this.messageBoxService.getSpamBoxActor(a.getId());
+				System.out.println(boxReceiver);
+				boxReceiver.getMessages().add(message);
+				message.getMessageBoxes().add(boxReceiver);
+			} else {
+				boxReceiver = this.messageBoxService.getNotificationBoxActor(a.getId());
+				boxReceiver.getMessages().add(message);
+				message.getMessageBoxes().add(boxReceiver);
+			}
+		}
+
+		return message;
+	}
+
 }

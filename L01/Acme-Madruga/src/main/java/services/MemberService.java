@@ -319,6 +319,10 @@ public class MemberService {
 		return this.memberRepository.brotherhoodAllMember(brotherHoodId);
 	}
 
+	public Collection<String> brotherhoodAllMemberEmail(final int brotherHoodId) {
+		return this.memberRepository.brotherhoodAllMemberEmail(brotherHoodId);
+	}
+
 	public Collection<Member> lisMemberAccept() {
 		return this.memberRepository.memberAccept();
 	}

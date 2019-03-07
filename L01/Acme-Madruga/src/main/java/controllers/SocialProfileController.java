@@ -15,6 +15,7 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -66,6 +67,26 @@ public class SocialProfileController extends AbstractController {
 		result.addObject("requestURI", "socialProfile/list.do");
 		return result;
 	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam("socialProfileId") final int socialProfileId) {
+		ModelAndView result;
+
+		final SocialProfile socialProfile = this.socialProfileService.findOne(socialProfileId);
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+
+		result = new ModelAndView("socialProfile/show");
+		result.addObject("socialProfile", socialProfile);
+		//		final String system = this.welcomeService.getSystem();
+		//		result.addObject("system", system);
+		//		final String logo = this.welcomeService.getLogo();
+		//		result.addObject("logo", logo);
+		result.addObject("language", language);
+		result.addObject("requestURI", "socialProfile/show.do");
+
+		return result;
+	}
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -74,7 +95,7 @@ public class SocialProfileController extends AbstractController {
 
 		socialProfile = this.socialProfileService.create();
 
-		result = new ModelAndView("socialProfile/actor/create");
+		result = new ModelAndView("socialProfile/create");
 		//		final String system = this.welcomeService.getSystem();
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
@@ -95,7 +116,7 @@ public class SocialProfileController extends AbstractController {
 			Assert.isTrue(this.socialProfileService.findOne(socialProfileId) != null);
 			socialProfile = this.socialProfileService.findOne(socialProfileId);
 
-			result = new ModelAndView("socialProfile/actor/edit");
+			result = new ModelAndView("socialProfile/edit");
 			//			final String system = this.welcomeService.getSystem();
 			//			result.addObject("system", system);
 			//			final String logo = this.welcomeService.getLogo();
@@ -112,7 +133,7 @@ public class SocialProfileController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("El error pasa por aquí alvaro (IF de save())");
 			System.out.println(binding);
-			result = new ModelAndView("socialProfile/actor/edit");
+			result = new ModelAndView("socialProfile/edit");
 		} else
 			try {
 				Assert.isTrue(socialProfile != null);
@@ -128,19 +149,14 @@ public class SocialProfileController extends AbstractController {
 					actor.getSocialProfiles().add(socialProfile);
 				final Actor savedActor = this.actorService.save(actor);
 
-				result = new ModelAndView("actor/show");
-				result.addObject("actor", savedActor);
-				//				final String system = this.welcomeService.getSystem();
-				//				result.addObject("system", system);
-				//				final String logo = this.welcomeService.getLogo();
-				//				result.addObject("logo", logo);
+				result = new ModelAndView("socialProfile/list");
 				result.addObject("socialProfiles", savedActor.getSocialProfiles());
-				result.addObject("requestURI", "actor/show.do");
+				result.addObject("requestURI", "socialProfile/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("El error es en SocialProfileController: ");
 				System.out.println(oops);
 				System.out.println(binding);
-				result = new ModelAndView("socialProfile/actor/edit");
+				result = new ModelAndView("socialProfile/edit");
 			}
 		return result;
 	}
@@ -154,14 +170,13 @@ public class SocialProfileController extends AbstractController {
 		Assert.notNull(socialProfileId, "socialProfile.null");
 
 		if (this.socialProfileService.findOne(socialProfileId) == null || !this.actorService.getActorByUserId(LoginService.getPrincipal().getId()).getSocialProfiles().contains(this.socialProfileService.findOne(socialProfileId))) {
-			result = new ModelAndView("actor/show");
+			result = new ModelAndView("socialProfile/list");
 			//			final String system = this.welcomeService.getSystem();
 			//			result.addObject("system", system);
 			//			final String logo = this.welcomeService.getLogo();
 			//			result.addObject("logo", logo);
-			result.addObject("actor", this.actorService.getActorByUserId(LoginService.getPrincipal().getId()));
 			result.addObject("socialProfiles", this.actorService.getActorByUserId(LoginService.getPrincipal().getId()).getSocialProfiles());
-			result.addObject("requestURI", "actor/show.do");
+			result.addObject("requestURI", "socialProfile/list.do");
 		} else
 			try {
 				Assert.isTrue(socialProfile != null);
@@ -170,23 +185,21 @@ public class SocialProfileController extends AbstractController {
 				final Actor actor = this.actorService.getActorByUserId(userLoggin);
 				Assert.isTrue(actor != null);
 				actor.getSocialProfiles().remove(socialProfile);
-				result = new ModelAndView("actor/show");
+				result = new ModelAndView("socialProfile/list");
 				final Actor savedActor = this.actorService.save(actor);
 				this.socialProfileService.delete(socialProfile);
-				result.addObject("actor", savedActor);
 				//				final String system = this.welcomeService.getSystem();
 				//				result.addObject("system", system);
 				//				final String logo = this.welcomeService.getLogo();
 				//				result.addObject("logo", logo);
 				result.addObject("socialProfiles", savedActor.getSocialProfiles());
-				result.addObject("requestURI", "actor/show.do");
+				result.addObject("requestURI", "socialProfile/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error al borrar socialProfile desde actor: ");
 				System.out.println(oops);
-				result = new ModelAndView("actor/show");
+				result = new ModelAndView("socialProfile/list");
 				final int userLoggin = LoginService.getPrincipal().getId();
 				final Actor actor = this.actorService.getActorByUserId(userLoggin);
-				result.addObject("actor", actor);
 				//				final String system = this.welcomeService.getSystem();
 				//				result.addObject("system", system);
 				//				final String logo = this.welcomeService.getLogo();

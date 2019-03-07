@@ -27,7 +27,6 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	@Query("select a from Actor a join a.messageBoxes m where m.id=?1")
 	Actor getActorByMessageBox(Integer id);
 
-
 	@Query("select a from Actor a where a.userAccount.username = ?1")
 	Actor getActorByUser(String userName);
 

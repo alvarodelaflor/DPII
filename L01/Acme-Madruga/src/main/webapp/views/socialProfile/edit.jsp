@@ -28,7 +28,7 @@
       
       <div class="content">
     		
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="socialProfile" action="socialProfile/actor/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="socialProfile" action="socialProfile/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	
