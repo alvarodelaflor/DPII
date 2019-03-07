@@ -151,10 +151,8 @@ public class RequestService {
 	public Request save(final Request request) {
 		Request res;
 
-		final Request noti = this.findOne(request.getId());
 		System.out.println("Comprobación cambio del status");
 		System.out.println(request.getStatus());
-		System.out.println(noti.getStatus());
 
 		if (request.getId() == 0) {
 			// Creating, we want to check member authority
