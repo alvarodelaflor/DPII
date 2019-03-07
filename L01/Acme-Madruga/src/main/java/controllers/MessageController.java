@@ -235,7 +235,7 @@ public class MessageController extends AbstractController {
 
 				System.out.println("intenta el list de exchange message");
 				this.messageService.save(msg);
-
+				System.out.println("pasa el save");
 				result = new ModelAndView("messageBox/list");
 				//		final String system = this.welcomeService.getSystem();
 				//		result.addObject("system", system);

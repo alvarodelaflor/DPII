@@ -431,7 +431,8 @@ public class AdministratorController extends AbstractController {
 		//Logo
 		final String logo = this.welcomeService.getLogo();
 		HashSet<String> spamWords = new HashSet<>();
-		HashSet<String> scoreWords = new HashSet<>();
+		HashSet<String> scoreWordsPos = new HashSet<>();
+		HashSet<String> scoreWordsNeg = new HashSet<>();
 		HashSet<String> priorities = new HashSet<>();
 		//Priorities
 		if (this.welcomeService.getPriorities().isEmpty())
@@ -446,10 +447,15 @@ public class AdministratorController extends AbstractController {
 			spamWords = this.welcomeService.getSpamWords();
 
 		//Score Words
-		if (this.administratorService.getScoreWords().isEmpty())
-			scoreWords = this.administratorService.listScoreWords();
+		if (this.administratorService.getScoreWordsPos().isEmpty())
+			scoreWordsPos = this.administratorService.listScoreWordsPos();
 		else
-			scoreWords = this.administratorService.getScoreWords();
+			scoreWordsPos = this.administratorService.getScoreWordsPos();
+
+		if (this.administratorService.getScoreWordsNeg().isEmpty())
+			scoreWordsNeg = this.administratorService.listScoreWordsNeg();
+		else
+			scoreWordsNeg = this.administratorService.getScoreWordsNeg();
 
 		//Welcome page
 		final String ingles = this.welcomeService.getS();
@@ -476,7 +482,8 @@ public class AdministratorController extends AbstractController {
 		result.addObject("spanish", spanish);
 
 		result.addObject("spamWords", spamWords);
-		result.addObject("scoreWords", scoreWords);
+		result.addObject("scoreWordsPos", scoreWordsPos);
+		result.addObject("scoreWordsNeg", scoreWordsNeg);
 		result.addObject("priorities", priorities);
 
 		//Finder
@@ -520,7 +527,7 @@ public class AdministratorController extends AbstractController {
 
 		return result;
 	}
-	// PRIORITIES
+
 	@RequestMapping(value = "/newSpamWord", method = RequestMethod.GET)
 	public ModelAndView newSpamWord(@RequestParam("newSpamWord") final String newSpamWord) {
 		ModelAndView result;
@@ -551,23 +558,52 @@ public class AdministratorController extends AbstractController {
 	}
 
 	//SCORE WORDS
-	@RequestMapping(value = "/newScoreWord", method = RequestMethod.GET)
-	public ModelAndView newScoreWord(@RequestParam("newScoreWord") final String newScoreWord) {
+	@RequestMapping(value = "/newScoreWordPos", method = RequestMethod.GET)
+	public ModelAndView newScoreWordPos(@RequestParam("newScoreWord") final String newScoreWord) {
 		ModelAndView result;
 
-		this.administratorService.newScoreWords(newScoreWord);
+		this.administratorService.newScoreWordsPos(newScoreWord);
 		result = new ModelAndView("redirect:list.do");
 
 		return result;
 	}
 
-	@RequestMapping(value = "/deleteScoreWord", method = RequestMethod.GET)
+	@RequestMapping(value = "/deleteScoreWordPos", method = RequestMethod.GET)
+	public ModelAndView deleteScoreWordPos(@RequestParam("deleteScoreWord") final String scoreWord) {
+
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			this.administratorService.deleteScoreWordsPos(scoreWord);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noScoreWord.error") {
+				result = this.list2();
+				result.addObject("message", "noScoreWord.error");
+			}
+		}
+
+		return result;
+	}
+
+	//SCORE WORDS NEG
+	@RequestMapping(value = "/newScoreWordNeg", method = RequestMethod.GET)
+	public ModelAndView newScoreWord(@RequestParam("newScoreWord") final String newScoreWord) {
+		ModelAndView result;
+
+		this.administratorService.newScoreWordsNeg(newScoreWord);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/deleteScoreWordNeg", method = RequestMethod.GET)
 	public ModelAndView deleteScoreWord(@RequestParam("deleteScoreWord") final String scoreWord) {
 		ModelAndView result = new ModelAndView("administrator/list");
 
 		try {
 			System.out.println("Carmen: Voy a intentar guardar");
-			this.administratorService.deleteScoreWords(scoreWord);
+			this.administratorService.deleteScoreWordsNeg(scoreWord);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
 			if (oops.getMessage() == "noScoreWord.error") {

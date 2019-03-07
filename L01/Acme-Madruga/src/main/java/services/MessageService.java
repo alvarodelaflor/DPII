@@ -2,7 +2,9 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -77,6 +79,7 @@ public class MessageService {
 
 			result = message;
 		}
+		System.out.println(message.getMoment());
 		this.validator.validate(message, binding);
 		return result;
 	}
@@ -209,6 +212,7 @@ public class MessageService {
 
 	public Message save(final Message message) {
 
+		System.out.println("======> Esto es el moment de message en el msgService.save" + message.getMoment());
 		//Capturo actor logeado según su UserAcc.Id
 		final UserAccount uacc = LoginService.getPrincipal();
 		final Actor actor = this.actorService.findByUserAccountId(uacc.getId());
@@ -222,7 +226,15 @@ public class MessageService {
 		System.out.println("====================================" + "se ha ejecutado spammerFlagCheck con resultado: " + this.spammerFlagCheck(actor.getUserAccount()));
 		//Guardo Actor con el UserAcc modificado
 		this.actorService.save(actor);
+		System.out.println("Hace el save");
+		//Calculo la nueva polaridad segun el msg
+		final Double newPolarity = this.polarityScoreCalculation(message, uacc);
+		System.out.println("<<<<<<<<<<<<<<<<<Calcula la polarity");
+		actor.getUserAccount().setPolarity(newPolarity);
+		//Guardo Actor con el UserAcc modificado 2
+		this.actorService.save(actor);
 		//Guardo el Msg
+		System.out.println("=======--------LLEGA AL RETURN DE MSG SAVE----------======");
 		return this.messageRepository.save(message);
 	}
 
@@ -271,4 +283,55 @@ public class MessageService {
 		return res;
 	}
 
+	// polarityScore calculation whenever a msg is saved
+	private Double polarityScoreCalculation(final Message message, final UserAccount uacc) {
+
+		final Message msg = message;
+		// Traigo la polarity de la cuenta
+		final Double res = uacc.getPolarity();
+		// Traigo la lista de scoring words positivas de adminService
+		final HashSet<String> scoringWordsPos;
+		System.out.println("se queda aqui 0");
+		if (this.administratorService.getScoreWordsPos().size() != 0)
+			scoringWordsPos = this.administratorService.getScoreWordsPos();
+		else
+			scoringWordsPos = this.administratorService.listScoreWordsPos();
+		// Traigo la lista de scoring words negativas de adminService
+		final HashSet<String> scoringWordsNeg;
+		System.out.println("se queda aqui 1");
+		if (this.administratorService.getScoreWordsNeg().size() != 0)
+			scoringWordsNeg = this.administratorService.getScoreWordsNeg();
+		else
+			scoringWordsNeg = this.administratorService.listScoreWordsNeg();
+		// Paso el body del msg a una lista de string
+		String[] msgWords;
+		System.out.println("se queda aqui 2");
+
+		final String msgBody = msg.getBody();
+		msgBody.trim();
+		msgBody.replace(",", "");
+		msgBody.replace(".", "");
+		msgBody.replace(":", "");
+		msgBody.replace(";", "");
+		msgWords = msgBody.split(" ");
+		final List<String> msgWordsList = Arrays.asList(msgWords);
+		// Guardo el tamaño inicial de la lista
+		final Double msgWordsSize = (double) msgWordsList.size();
+		// Calculo score positivo
+		final List<String> copia = new ArrayList<String>(msgWordsList);
+		final List<String> scoringWordPosList = new ArrayList<String>(scoringWordsPos);
+		copia.removeAll(scoringWordPosList);
+		System.out.println("se queda aqui 1");
+		final Double posCount = (msgWordsSize - copia.size());
+		// Calculo score negativo
+		final List<String> copia2 = new ArrayList<String>(msgWordsList);
+		final List<String> scoringWordNegList = new ArrayList<String>(scoringWordsNeg);
+		copia2.removeAll(scoringWordNegList);
+		final Double negCount = (msgWordsSize - copia2.size());
+		// Calculo nuevo score total
+		final Double count = ((posCount / msgWordsSize) - (negCount / msgWordsSize));
+		// Devuelvo la polarityScore nueva (media de las antiguas, podria cambiarse la ponderacion de la media para que la nueva polarity afectara mas o menos)
+		// LA PONDERACION NO ESTA DEFINIDA EN LOS REQUISITOS, ASI QUE POR DEFECTO SERA UNA MEDIA NORMAL
+		return (res + count) / 2;
+	}
 }

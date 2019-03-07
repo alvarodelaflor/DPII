@@ -68,8 +68,8 @@ public class WelcomeService {
 	}
 
 	public HashSet<String> deleteSpamWords(final String newWord) {
-		this.spamWords.remove(newWord);
 		Assert.isTrue(this.getSpamWords().contains(newWord), "noSpamWord.error");
+		this.spamWords.remove(newWord);
 		return this.spamWords;
 	}
 

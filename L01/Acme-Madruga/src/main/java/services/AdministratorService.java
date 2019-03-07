@@ -50,8 +50,25 @@ public class AdministratorService {
 	@Autowired
 	private MessageBoxService		messageBoxService;
 
-	private final HashSet<String>	scoreWords	= new HashSet<>();
+	private HashSet<String>			scoreWordsPos	= new HashSet<>();
+	private HashSet<String>			scoreWordsNeg	= new HashSet<>();
 
+
+	public HashSet<String> getScoreWordsPos() {
+		return this.scoreWordsPos;
+	}
+
+	public HashSet<String> getScoreWordsNeg() {
+		return this.scoreWordsNeg;
+	}
+
+	public void setScoreWordsPos(final HashSet<String> scoreWordsPos) {
+		this.scoreWordsPos = scoreWordsPos;
+	}
+
+	public void setScoreWordsNeg(final HashSet<String> scoreWordsNeg) {
+		this.scoreWordsNeg = scoreWordsNeg;
+	}
 
 	Administrator findByUserAccountId(final int userAccountId) {
 
@@ -268,36 +285,51 @@ public class AdministratorService {
 
 	// FERRETE
 
-	// Método para mostrar las score words
-	public HashSet<String> listScoreWords() {
+	// Método para mostrar las score words pos
+	public HashSet<String> listScoreWordsPos() {
 
 		final List<String> enP = Arrays.asList("good", "fantastic", "excellent", "great", "amazing", "terrific", "beautiful");
-		this.scoreWords.addAll(enP);
+		this.scoreWordsPos.addAll(enP);
 		final List<String> esP = Arrays.asList("bueno", "fantástico", "excelente", "genial", "increíble", "excelente", "hermoso");
-		this.scoreWords.addAll(esP);
+		this.scoreWordsPos.addAll(esP);
+
+		return this.scoreWordsPos;
+	}
+
+	public HashSet<String> listScoreWordsNeg() {
+
 		final List<String> enN = Arrays.asList("not", "bad", "horrible", "average", "disaster");
-		this.scoreWords.addAll(enN);
+		this.scoreWordsNeg.addAll(enN);
 		final List<String> esN = Arrays.asList("no", "malo", "horrible", "promedio", "desastre");
-		this.scoreWords.addAll(esN);
+		this.scoreWordsNeg.addAll(esN);
 
-		return this.scoreWords;
+		return this.scoreWordsNeg;
 	}
 
-	public HashSet<String> getScoreWords() {
-		return this.scoreWords;
+	// Método para añadir pos
+	public HashSet<String> newScoreWordsPos(final String newWord) {
+		this.scoreWordsPos.add(newWord);
+		return this.getScoreWordsPos();
 	}
 
-	// Método para añadir
-	public HashSet<String> newScoreWords(final String newWord) {
-		this.scoreWords.add(newWord);
-		return this.getScoreWords();
+	// Método para borrar pos
+	public HashSet<String> deleteScoreWordsPos(final String word) {
+		Assert.isTrue(this.getScoreWordsPos().contains(word), "noScoreWord.error");
+		this.scoreWordsPos.remove(word);
+		return this.getScoreWordsPos();
 	}
 
-	// Método para borrar
-	public HashSet<String> deleteScoreWords(final String word) {
-		this.scoreWords.remove(word);
-		Assert.isTrue(this.getScoreWords().contains(word), "noScoreWord.error");
-		return this.getScoreWords();
+	// Método para añadir neg 
+	public HashSet<String> newScoreWordsNeg(final String newWord) {
+		this.scoreWordsNeg.add(newWord);
+		return this.getScoreWordsNeg();
+	}
+
+	// Método para borrar neg
+	public HashSet<String> deleteScoreWordsNeg(final String word) {
+		Assert.isTrue(this.getScoreWordsNeg().contains(word), "noScoreWord.error");
+		this.scoreWordsNeg.remove(word);
+		return this.getScoreWordsNeg();
 	}
 
 }

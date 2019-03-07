@@ -67,11 +67,11 @@
 <!--SPAM WORDS-->	
 
 <!--SCORE WORDS-->	
-<h3><i><spring:message code="scoreWords" /></i></h3>
-<p>${scoreWords}</p>
+<h3><i><spring:message code="scoreWordsPos" /></i></h3>
+<p>${scoreWordsPos}</p>
 
 <security:authorize access="hasRole('ADMIN')">
-	<form:form class="formularioEdicion" method="GET"  action="administrator/newScoreWord.do?newScoreWord='${newScoreWord}'.do">		
+	<form:form class="formularioEdicion" method="GET"  action="administrator/newScoreWordPos.do?newScoreWord='${newScoreWord}'.do">		
 		<spring:message code="newScoreWord" />
 		<input type=text name="newScoreWord" required="required"/>
 		<acme:submit name="save" code="saveNewSpamWord"/>
@@ -79,13 +79,31 @@
 </security:authorize>
 
 <security:authorize access="hasRole('ADMIN')">
-	<form:form class="formularioEdicion" method="GET"  action="administrator/deleteScoreWord.do?deleteScoreWord='${deleteScoreWord}'.do">		
+	<form:form class="formularioEdicion" method="GET"  action="administrator/deleteScoreWordPos.do?deleteScoreWord='${deleteScoreWord}'.do">		
 		<spring:message code="deleteScoreWord" />
 		<input type=text name="deleteScoreWord" required="required"/>
 		<acme:submit name="save" code="saveNewSpamWord"/>
 	</form:form>
 </security:authorize>
 
+<h3><i><spring:message code="scoreWordsNeg" /></i></h3>
+<p>${scoreWordsNeg}</p>
+
+<security:authorize access="hasRole('ADMIN')">
+	<form:form class="formularioEdicion" method="GET"  action="administrator/newScoreWordNeg.do?newScoreWord='${newScoreWord}'.do">		
+		<spring:message code="newScoreWord" />
+		<input type=text name="newScoreWord" required="required"/>
+		<acme:submit name="save" code="saveNewSpamWord"/>
+	</form:form>
+</security:authorize>
+
+<security:authorize access="hasRole('ADMIN')">
+	<form:form class="formularioEdicion" method="GET"  action="administrator/deleteScoreWordNeg.do?deleteScoreWord='${deleteScoreWord}'.do">		
+		<spring:message code="deleteScoreWord" />
+		<input type=text name="deleteScoreWord" required="required"/>
+		<acme:submit name="save" code="saveNewSpamWord"/>
+	</form:form>
+</security:authorize>
 
 <!--SCORE WORDS-->	
 

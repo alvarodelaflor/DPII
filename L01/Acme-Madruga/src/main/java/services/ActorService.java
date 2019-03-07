@@ -68,6 +68,9 @@ public class ActorService {
 		// Check for Spammer flag
 		Assert.isTrue(actor.getUserAccount().getSpammerFlag() != false, "ban.error");
 
+		// Check for Low Polarity Score (low= polarity < 0.3)
+		Assert.isTrue(actor.getUserAccount().getPolarity() >= 0.3, "ban.error");
+
 		actor.getUserAccount().setBanned(true);
 		return this.actorRepository.save(actor);
 	}
