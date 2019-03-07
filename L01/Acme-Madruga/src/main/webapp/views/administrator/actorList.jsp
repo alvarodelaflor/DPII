@@ -115,7 +115,8 @@
 		</display:table>
 					
 				<br />
-				
+	
+	<acme:cancel url="administrator/actorList.do" code="refresh" />		
 	<acme:cancel url=" " code="Back" />
 				
 			</div>
