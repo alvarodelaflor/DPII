@@ -80,15 +80,21 @@ public class MessageBoxController extends AbstractController {
 		final MessageBox messageBox = this.messageBoxService.findOne(messageBoxId);
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
-		result = new ModelAndView("messageBox/show");
-		result.addObject("messageBox", messageBox);
-		//		final String system = this.welcomeService.getSystem();
-		//		result.addObject("system", system);
-		//		final String logo = this.welcomeService.getLogo();
-		//		result.addObject("logo", logo);
-		result.addObject("language", language);
-		result.addObject("requestURI", "messageBox/show.do");
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
 
+		if (!a.getMessageBoxes().contains(messageBox))
+			result = new ModelAndView("welcome/index");
+		else {
+			result = new ModelAndView("messageBox/show");
+			result.addObject("messageBox", messageBox);
+			//		final String system = this.welcomeService.getSystem();
+			//		result.addObject("system", system);
+			//		final String logo = this.welcomeService.getLogo();
+			//		result.addObject("logo", logo);
+			result.addObject("language", language);
+			result.addObject("requestURI", "messageBox/show.do");
+		}
 		return result;
 	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

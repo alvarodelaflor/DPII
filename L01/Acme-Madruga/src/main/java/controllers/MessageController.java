@@ -64,41 +64,56 @@ public class MessageController extends AbstractController {
 	public ModelAndView listMessages(@RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
 		final ModelAndView result;
 
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
+
 		final MessageBox m = this.messageBoxService.findOne(messageBoxId);
 
 		final Collection<Message> msgs = m.getMessages();
 
 		final Collection<MessageBox> messageBox = this.messageBoxService.getSonBox(m.getId());
 
-		result = new ModelAndView("message/list");
-		result.addObject("msgs", msgs);
-		result.addObject("messageBoxes", messageBox);
-		//		final String system = this.welcomeService.getSystem();
-		//		result.addObject("system", system);
-		//		final String logo = this.welcomeService.getLogo();
-		//		result.addObject("logo", logo);
-		result.addObject("messageBoxId", messageBoxId);
-		result.addObject("requestURI", "message/list.do");
+		if (!a.getMessageBoxes().contains(m))
+			result = new ModelAndView("welcome/index");
+		else {
 
+			result = new ModelAndView("message/list");
+			result.addObject("msgs", msgs);
+			result.addObject("messageBoxes", messageBox);
+			//		final String system = this.welcomeService.getSystem();
+			//		result.addObject("system", system);
+			//		final String logo = this.welcomeService.getLogo();
+			//		result.addObject("logo", logo);
+			result.addObject("messageBoxId", messageBoxId);
+			result.addObject("requestURI", "message/list.do");
+		}
 		return result;
 	}
+
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam("messageId") final int messageId, @RequestParam("messageBoxId") final int messageBoxId) {
 		ModelAndView result;
 
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
+
+		final MessageBox box = this.messageBoxService.findOne(messageBoxId);
 		final Message msg = this.messageService.findOne(messageId);
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
-		result = new ModelAndView("message/show");
-		result.addObject("msg", msg);
-		//		final String system = this.welcomeService.getSystem();
-		//		result.addObject("system", system);
-		//		final String logo = this.welcomeService.getLogo();
-		//result.addObject("logo", logo);
-		result.addObject("language", language);
-		result.addObject("messageBoxId", messageBoxId);
-		result.addObject("requestURI", "message/show.do");
-
+		if (!a.getMessageBoxes().contains(box))
+			result = new ModelAndView("welcome/index");
+		else {
+			result = new ModelAndView("message/show");
+			result.addObject("msg", msg);
+			//		final String system = this.welcomeService.getSystem();
+			//		result.addObject("system", system);
+			//		final String logo = this.welcomeService.getLogo();
+			//result.addObject("logo", logo);
+			result.addObject("language", language);
+			result.addObject("messageBoxId", messageBoxId);
+			result.addObject("requestURI", "message/show.do");
+		}
 		return result;
 	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
