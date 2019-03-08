@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	 <bean id="admin01" class="domain.Administrator">
+    	<property name="name" value="Carmen" />
+    	<property name="middleName" value="Boss" />
+    	<property name="surname" value="Fernández Benjumea" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="Carmen@alum.us.es" />
+        <property name="phone" value="+34625381121" />
+        <property name="address" value="Lora del río, nº5" />
+        <property name="userAccount" ref= "userAccount1"/>
+        <property name="configuration" ref= "configuration"/>
+    </bean>
+    
+    <!-- CONFIGURATION -->
+	<bean id="configuration" class="domain.Configuration">
+		<property name="posWords">
+			<list>
+	    		<value>good</value>
+	    		<value>fantastic</value>
+	    		<value>excellent</value>
+	    		<value>great</value>
+	    		<value>amazing</value>
+	    		<value>terrific</value>
+	    		<value>beautiful</value>
+    		</list>
+    	</property>
+    	<property name="negWords">
+	    	<list>
+	    		<value>not</value>
+	    		<value>bad</value>
+	    		<value>horrible</value>
+	    		<value>average</value>
+	    		<value>disaster</value>
+    		</list>
+    	</property>
+    	<property name="posWordsEs">
+	    	<list>
+	    		<value>bueno</value>
+	    		<value>fabuloso</value>
+	    		<value>excelente</value>
+	    		<value>gran</value>
+	    		<value>increible</value>
+	    		<value>estupendo</value>
+	    		<value>hermoso</value>
+    		</list>
+    	</property>
+    	<property name="negWordsEs">
+	    	<list>
+	    		<value>no</value>
+	    		<value>malo</value>
+	    		<value>horrible</value>
+	    		<value>mediocre</value>
+	    		<value>desastre</value>
+    		</list>
+    	</property>
+    	<property name="spamWords">
+	    	<list>
+	    		<value>sex</value>
+	    		<value>viagra</value>
+	    		<value>cialis</value>
+	    		<value>one million</value>
+	    		<value>you've been selected</value>
+	    		<value>Nigeria</value>
+    		</list>
+    	</property>
+    	<property name="spamWordsEs">
+	    	<list>
+	    		<value>sexo</value>
+	    		<value>viagra</value>
+	    		<value>cialis</value>
+	    		<value>un millon</value>
+	    		<value>has sido seleccionado</value>
+    			<value>Nigeria</value>
+    		</list>
+    	</property>
+    	<property name="cacheHours" value="1"/>
+    	<property name="cacheAmount" value="10"/>
+    </bean>
+	<!-- CONFIGURATION -->
+    
+	<!-- Other domain beans come here -->	
+	
+</beans>

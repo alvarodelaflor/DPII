@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+ 
+ <!--
+	CONTROL DE CAMBIOS tiles_es.xml FLOAT
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="float/brotherhood/list" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Lista de pasos" />
+		<put-attribute name="body" value="/views/float/list_brotherhood.jsp" />
+	</definition>
+	
+	<definition name="float/brotherhood/create" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Crear paso" />
+		<put-attribute name="body" value="/views/float/edit.jsp" />
+	</definition>
+	
+	<definition name="float/brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Editar paso" />
+		<put-attribute name="body" value="/views/float/edit.jsp" />
+	</definition>
+	
+	<definition name="float/brotherhood/show" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Mostrar paso" />
+		<put-attribute name="body" value="/views/float/show_brotherhood.jsp" />
+	</definition>
+	
+	<definition name="float/listFloat" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Pasos" />
+		<put-attribute name="body" value="/views/float/listFloat.jsp" /> 
+	</definition>
+	
+	<definition name="float/showPictureFloat" extends="master.page">	
+		<put-attribute name="title" value="Hermandad: Imágenes del paso" />
+		<put-attribute name="body" value="/views/float/showPictureFloat.jsp" /> 
+	</definition>
+	
+</tiles-definitions>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+<!--
+	CONTROL DE CAMBIOS tiles.xml FLOAT
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="enrolled/brotherhood/list" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: List of enrolled" />
+		<put-attribute name="body" value="/views/enrolled/list_brotherhood.jsp" />
+	</definition>
+	
+	<definition name="enrolled/brotherhood/create" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Create enrolled" />
+		<put-attribute name="body" value="/views/enrolled/edit.jsp" />
+	</definition>
+	
+	<definition name="enrolled/brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Edit enrolled" />
+		<put-attribute name="body" value="/views/enrolled/edit.jsp" />
+	</definition>
+	
+	<definition name="enrolled/brotherhood/show" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Show enrolled" />
+		<put-attribute name="body" value="/views/enrolled/show_brotherhood.jsp" />
+	</definition>
+	
+</tiles-definitions>
