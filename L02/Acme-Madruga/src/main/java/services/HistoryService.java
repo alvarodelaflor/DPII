@@ -3,9 +3,7 @@ package services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import domain.History;
-import domain.Procession;
 import repositories.HistoryRepository;
 
 /*
@@ -35,5 +33,13 @@ public class HistoryService {
 	
 	public History findHistoryByBrotherhood(int brotherhoodId) {
 		return this.historyRepository.findHistoryByBrotherhood(brotherhoodId);
+	}
+	
+	public History findHistoryByInceptionRecordId(int inceptionRecordId) {
+		return this.historyRepository.findHistoryByInceptionRecordId(inceptionRecordId);
+	}
+	
+	public History save(History history) {
+		return this.historyRepository.save(history);
 	}
 }

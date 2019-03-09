@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Brotherhood;
+import domain.History;
 
 /*
  * CONTROL DE CAMBIOS BrotherhoodRepository.java
@@ -21,6 +22,9 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 
 	@Query("select b from Brotherhood b join b.userAccount bua where bua.id=?1")
 	Brotherhood findByUserAccountId(int userAccountId);
+	
+	@Query("select b from Brotherhood b join b.history bh where bh.id=?1")
+	Brotherhood findBrotherhoodByHistory(int historyId);
 
 	@Query("select b from Brotherhood b where b.area.id=?1")
 	Collection<Brotherhood> findByAreaId(int areaId);
