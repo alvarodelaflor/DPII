@@ -38,6 +38,7 @@ public class Brotherhood extends Actor {
 	private Collection<domain.Float>	floats;
 	private Collection<Enrolled>	enrolleds;
 	private Area					area;
+	private History history;
 
 
 	@OneToOne(optional = true)
@@ -104,5 +105,14 @@ public class Brotherhood extends Actor {
 
 	public void setEnrolleds(final Collection<Enrolled> enrolleds) {
 		this.enrolleds = enrolleds;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	public History getHistory() {
+		return history;
+	}
+
+	public void setHistory(History history) {
+		this.history = history;
 	}
 }
