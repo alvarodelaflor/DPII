@@ -6,6 +6,11 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Future;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -17,6 +22,8 @@ public class CreditCard {
 	Date	expiration;
 
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getHolder() {
 		return this.holder;
 	}
@@ -25,6 +32,8 @@ public class CreditCard {
 		this.holder = holder;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getMake() {
 		return this.make;
 	}
@@ -33,6 +42,8 @@ public class CreditCard {
 		this.make = make;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getNumber() {
 		return this.number;
 	}
@@ -41,6 +52,8 @@ public class CreditCard {
 		this.number = number;
 	}
 
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getCVV() {
 		return this.CVV;
 	}
@@ -53,6 +66,7 @@ public class CreditCard {
 		return this.expiration;
 	}
 
+	@Future
 	public void setExpiration(final Date expiration) {
 		this.expiration = expiration;
 	}
