@@ -3,34 +3,87 @@ package services;
 
 import java.util.HashSet;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.validator.constraints.URL;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import security.LoginService;
+import domain.Administrator;
 
 @Service
 public class WelcomeService {
 
-	String					e			= "Welcome to Acme Madrug·°, the site to organise your processions.";
+	String							e					= "Welcome to Acme Madrug·!, the site to organise your processions.";
 
-	String					s			= "°Bienvenidos a Acme Madrug·°! Tu sitio para organizar procesiones.";
+	String							s					= "°Bienvenidos a Acme Madrug·! Tu sitio para organizar procesiones.";
 
-	String					system		= "Acme Madrug·°";
+	String							system				= "Acme Madrug·!";
 
-	String					phone		= "34";
+	String							phone				= "34";
 
-	String					country		= "Espa≈Ña/Spain";
+	String							country				= "EspaÒa/Spain";
 
 	@URL
-	String					logo		= "https://tinyurl.com/acme-madruga";
+	String							logo				= "https://tinyurl.com/acme-madruga";
 
-	public HashSet<String>	spamWords	= new HashSet<>();
+	public HashSet<String>			spamWords			= new HashSet<>();
 
-	public HashSet<String>	priorities	= new HashSet<>();
+	public HashSet<String>			priorities			= new HashSet<>();
+
+	public HashSet<String>			creditCardsMakes	= new HashSet<>();
+
+	@Autowired
+	private AdministratorService	adminService;
 
 
-	//M√©todo para a≈Ñadir prioridades
+	// CreditCardMakes:
+	// ------------------------------------------------------------
+	//Metodo para agregar CCMake
+	public HashSet<String> addCCMake(final String make) {
+
+		// "Check for Admin logged"
+		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(creatorAdmin, "user.error");
+
+		this.creditCardsMakes.add(make);
+		return this.creditCardsMakes;
+	}
+	//Metodo para quitar CCMake
+	public HashSet<String> removeCCMake(final String make) {
+
+		// "Check for Admin logged"
+		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(creatorAdmin, "user.error");
+
+		Assert.isTrue(this.getCreditCardsMakes().contains(make), "noCCMake.error");
+		this.creditCardsMakes.remove(make);
+		return this.creditCardsMakes;
+	}
+	//Metodo CCsMakes por defecto
+	public HashSet<String> defaultCCsMakes() {
+
+		this.creditCardsMakes.add("VISA");
+		this.creditCardsMakes.add("MCARD");
+		this.creditCardsMakes.add("AMEX");
+		this.creditCardsMakes.add("DINNERS");
+		this.creditCardsMakes.add("FLY");
+
+		return this.creditCardsMakes;
+	}
+
+	public HashSet<String> getCreditCardsMakes() {
+
+		return this.creditCardsMakes;
+	}
+
+	public void setCreditCardsMakes(final HashSet<String> creditCardsMakes) {
+
+		this.creditCardsMakes = creditCardsMakes;
+	}
+	// ------------------------------------------------------------
+
+	//Metodo para agregar prioridades
 	public HashSet<String> addPriority(final String priority) {
 		this.priorities.add(priority);
 		return this.priorities;
@@ -38,8 +91,8 @@ public class WelcomeService {
 
 	//Metodo para quitar las prioridades
 	public HashSet<String> deletePriority(final String priority) {
-		this.priorities.remove(priority);
 		Assert.isTrue(this.getPriorities().contains(priority), "noPriority.error");
+		this.priorities.remove(priority);
 		return this.priorities;
 	}
 	//Metodo prioridades 
@@ -56,7 +109,7 @@ public class WelcomeService {
 		return this.priorities;
 	}
 
-	//Carmen: M√©todo para a≈Ñadir spam words (adm)
+	//Metodo para agregar spam words (adm)
 	public HashSet<String> newSpamWords(final String newWord) {
 		this.spamWords.add(newWord);
 		return this.spamWords;
@@ -72,7 +125,7 @@ public class WelcomeService {
 		return this.spamWords;
 	}
 
-	//Carmen: M√©todo para mostrar las spam words
+	//Metodo para mostrar las spam words
 	public HashSet<String> listSpamWords() {
 
 		this.spamWords.add("sex");
@@ -93,19 +146,8 @@ public class WelcomeService {
 	}
 
 	public String newLogo(final String newLogo) {
-		//		Assert.isTrue(!this.checkUrl(newLogo), "logo.bad");
 		this.logo = newLogo;
 		return this.logo;
-	}
-
-	private Boolean checkUrl(final String url) {
-		Boolean res = true;
-		final String[] elementos = url.split("://");
-		final String elemento1 = elementos[0];
-		final String elemento2 = elementos[1];
-		if (elemento1 == "https" || elemento1 == "http")
-			res = false;
-		return res;
 	}
 
 	public String newE(final String newE) {

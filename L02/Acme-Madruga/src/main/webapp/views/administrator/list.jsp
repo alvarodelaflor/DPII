@@ -39,6 +39,29 @@
 </security:authorize>
 <!-- FINDER -->
 
+<!-- CREDITCARDSMAKES -->
+<h3>
+	<i><spring:message code="creditCardMakes" /></i>
+</h3>
+<p>${creditCardMakes}</p>
+<security:authorize access="hasRole('ADMIN')">
+	<!-- Add CCMake -->
+	<form:form class="formularioEdicion" method="GET"
+		action="administrator/newCreditCardMake.do?newCreditCardMake='${newCreditCardMake}'.do">
+		<spring:message code="newCreditCardMake" />
+		<input type=text name="newCreditCardMake" required="required"/>
+		<acme:submit name="save" code="newCreditCardMake" />
+	</form:form>
+	<!-- Remove CCMake -->
+	<form:form class="formularioEdicion" method="GET"
+		action="administrator/deleteCreditCardMake.do?deleteCreditCardMake='${deleteCreditCardMake}'.do">
+		<spring:message code="deleteCreditCardMake" />
+		<input type=text name="deleteCreditCardMake" required="required" />
+		<acme:submit name="save" code="deleteCreditCardMake" />
+	</form:form>
+</security:authorize>
+<!-- CREDITCARDSMAKES -->
+
 <!-- PRIORITIES -->
 <h3>
 	<i><spring:message code="priorities" /></i>
