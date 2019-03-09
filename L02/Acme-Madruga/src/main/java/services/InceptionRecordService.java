@@ -60,8 +60,9 @@ public class InceptionRecordService {
 			 *  En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la 
 			 *  misma que la que tiene el brotherhood logueado
 			 */
-			int idInceptionRecordBrotherhoodLogger = brotherhood.getHistory().getId();
-			Assert.isTrue(idInceptionRecordBrotherhoodLogger==inceptionRecord.getId(), "inceptionRecord.brotherhood.diferent");
+			int idHistoryBrotherhoodLogger = brotherhood.getHistory().getId();
+			History history = this.historyService.findHistoryByInceptionRecordId(inceptionRecord.getId());
+			Assert.isTrue(idHistoryBrotherhoodLogger==history.getId(), "inceptionRecord.brotherhood.diferent");
 		} 
 		History history = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
 		inceptionRecordSaved = this.inceptionRecordRepository.save(inceptionRecord);
