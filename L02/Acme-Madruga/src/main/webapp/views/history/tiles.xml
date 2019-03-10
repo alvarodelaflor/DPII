@@ -18,5 +18,10 @@
 	<definition name="history/show" extends="master.page">	
 		<put-attribute name="title" value="Show history" />
 		<put-attribute name="body" value="/views/history/show.jsp" />
-	</definition>	
+	</definition>
+	
+	<definition name="history/list" extends="master.page">	
+		<put-attribute name="title" value="List history" />
+		<put-attribute name="body" value="/views/history/list.jsp" />
+	</definition>		
 </tiles-definitions>

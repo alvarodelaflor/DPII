@@ -1,9 +1,13 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import domain.Brotherhood;
 import domain.History;
 
 /*
@@ -21,4 +25,13 @@ public interface HistoryRepository extends JpaRepository<History, Integer> {
 	
 	@Query("select h from History h join h.inceptionRecord hir where hir.id=?1")
 	History findHistoryByInceptionRecordId(int inceptionRecordId);
+	
+	@Query("select b from Brotherhood b where b.title=?1")
+	Collection<Brotherhood> findHistoryByBrotherhoodTitle(String title);
+	
+	@Query("select b from Brotherhood b where b.name=?1")
+	Collection<Brotherhood> findHistoryByBrotherhoodName(String name);
+	
+	@Query("select b from Brotherhood b where b.title=?1 and b.name=?2")
+	Collection<Brotherhood> findHistoryByBrotherhoodTitleAndName(String title, String name);
 }

@@ -11,16 +11,25 @@
 package controllers;
 
 
+import java.util.Collection;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import domain.Brotherhood;
 import domain.History;
+import forms.HistoryFinderForm;
 import security.LoginService;
 import services.BrotherhoodService;
+import services.HistoryFinderService;
+import services.HistoryService;
 import services.WelcomeService;
 
 /*
@@ -35,6 +44,12 @@ public class HistoryController extends AbstractController {
 	
 	@Autowired
 	private BrotherhoodService brotherhoodService;
+	
+	@Autowired
+	private HistoryService historyService;
+	
+	@Autowired
+	private HistoryFinderService historyFinderService;
 	
 	@Autowired
 	private WelcomeService welcomeService;
@@ -80,5 +95,40 @@ public class HistoryController extends AbstractController {
 			System.out.println("No existe ningún usuario logueado");
 		}
 		return res;
+	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+		try {
+			result = new ModelAndView("history/list");
+			Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			result.addObject("brotherhoods", brotherhoods);
+			result.addObject("requestURI", "history/list.do");
+			result.addObject("system", this.welcomeService.getSystem());
+			result.addObject("logo", this.welcomeService.getLogo());
+		} catch (Exception e) {
+			System.out.println("Error en HistoryController.java LIST GET: " + e);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid final HistoryFinderForm historyFinderForm, final BindingResult binding) {
+		ModelAndView result;
+
+		try {
+			Collection<Brotherhood> brotherhoods = historyFinderService.findByFilter(historyFinderForm.getTitle(), historyFinderForm.getName());
+			result = new ModelAndView("history/list");
+			result.addObject("brotherhoods", brotherhoods);
+			result.addObject("requestURI", "history/list.do");
+		} catch (final Throwable oops) {
+			System.out.println("Error en HistoryController.java LIST GET: " + oops);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", welcomeService.getLogo());
+		result.addObject("system", welcomeService.getSystem());
+		return result;
 	}
 }
