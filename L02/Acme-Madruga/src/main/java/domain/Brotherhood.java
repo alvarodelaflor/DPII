@@ -31,13 +31,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Brotherhood extends Actor {
 
-	private String					title;
-	private Date					establishmentDate;
-	private String					pictures;
-	private Collection<Procession>	processions;
+	private String						title;
+	private Date						establishmentDate;
+	private String						pictures;
+	private Collection<Procession>		processions;
 	private Collection<domain.Float>	floats;
-	private Collection<Enrolled>	enrolleds;
-	private Area					area;
+	private Collection<Enrolled>		enrolleds;
+	private Area						area;
 
 
 	@OneToOne(optional = true)
