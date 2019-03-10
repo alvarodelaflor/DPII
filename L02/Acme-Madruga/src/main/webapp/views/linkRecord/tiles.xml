@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+<!--
+	CONTROL DE CAMBIOS tiles.xml FLOAT
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>	
+	<definition name="history/linkRecord/create" extends="master.page">	
+		<put-attribute name="title" value="Create Link Record" />
+		<put-attribute name="body" value="/views/linkRecord/edit.jsp" />
+	</definition>
+	
+	<definition name="history/linkRecord/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit Link Record" />
+		<put-attribute name="body" value="/views/linkRecord/edit.jsp" />
+	</definition>
+	
+	<definition name="history/linkRecord/show" extends="master.page">	
+		<put-attribute name="title" value="Show Link Record" />
+		<put-attribute name="body" value="/views/linkRecord/show.jsp" />
+	</definition>
+</tiles-definitions>

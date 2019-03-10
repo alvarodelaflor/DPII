@@ -42,6 +42,7 @@
 		<value>/views/request/messages</value>
 		<value>/views/inceptionRecord/messages</value>
 		<value>/views/periodRecord/messages</value>
+		<value>/views/linkRecord/messages</value>
 		<value>/views/history/messages</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->

@@ -121,11 +121,16 @@
 		
 		<security:intercept-url pattern="/history/periodRecord/create.do" access="hasRole('BROTHERHOOD')" />	
 		<security:intercept-url pattern="/history/periodRecord/edit.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/history/periodRecord/delete.do" access="hasRole('BROTHERHOOD')" />		
+		<security:intercept-url pattern="/history/periodRecord/delete.do" access="hasRole('BROTHERHOOD')" />
+		
+		<security:intercept-url pattern="/history/linkRecord/create.do" access="hasRole('BROTHERHOOD')" />	
+		<security:intercept-url pattern="/history/linkRecord/edit.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/history/linkRecord/delete.do" access="hasRole('BROTHERHOOD')" />		
 		
 		<security:intercept-url pattern="/history/show.do" access="permitAll" />
 		<security:intercept-url pattern="/history/inceptionRecord/show.do" access="permitAll" />
 		<security:intercept-url pattern="/history/periodRecord/show.do" access="permitAll" />
+		<security:intercept-url pattern="/history/linkRecord/show.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/procession/show.do" access="permitAll" />
 		

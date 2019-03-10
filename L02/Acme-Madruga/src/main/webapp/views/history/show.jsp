@@ -28,35 +28,35 @@
 		<c:otherwise>
 			<div>
 				<h2><spring:message code="history.inceptionRecord"/></h2>
-				<display:table name="history.inceptionRecord" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<display:table name="history.inceptionRecord" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
 					<c:choose>
 						<c:when test="${ownerBrotherhood==true}">
 							<display:column titleKey="edit">
-								<a href="history/inceptionRecord/edit.do?inceptionRecordId=${row.id}">${row.id}</a>	
+								<a href="history/inceptionRecord/edit.do?inceptionRecordId=${row1.id}">${row1.id}</a>	
 							</display:column>
 						</c:when>
 					</c:choose>
 					<display:column titleKey="show"> 
-						<a href="history/inceptionRecord/show.do?inceptionRecordId=${row.id}">${row.title}</a>
+						<a href="history/inceptionRecord/show.do?inceptionRecordId=${row1.id}">${row1.title}</a>
 					</display:column>
 					<display:column property="description" titleKey="description"></display:column>
 				</display:table>			
 			</div>
 			<div>
 				<h2><spring:message code="history.periodRecord"/></h2>
-				<display:table name="history.periodRecord" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<display:table name="history.periodRecord" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag">
 					<c:choose>
 						<c:when test="${ownerBrotherhood==true}">
 							<display:column titleKey="edit">
-								<a href="history/periodRecord/edit.do?periodRecordId=${row.id}">${row.id}</a>	
+								<a href="history/periodRecord/edit.do?periodRecordId=${row2.id}">${row2.id}</a>	
 							</display:column>
 							<display:column titleKey="delete">
-								<a href="history/periodRecord/delete.do?periodRecordId=${row.id}">${row.id}</a>	
+								<a href="history/periodRecord/delete.do?periodRecordId=${row2.id}">${row2.id}</a>	
 							</display:column>
 						</c:when>
 					</c:choose>
 					<display:column titleKey="show"> 
-						<a href="history/periodRecord/show.do?periodRecordId=${row.id}">${row.title}</a>
+						<a href="history/periodRecord/show.do?periodRecordId=${row2.id}">${row2.title}</a>
 					</display:column>
 					<display:column property="description" titleKey="description"></display:column>
 				</display:table>
@@ -64,6 +64,32 @@
 					<c:when test="${ownerBrotherhood==true}">
 						<form method="get" action="/Acme-Madruga/history/periodRecord/create.do">
 							<button><spring:message code="createPeriodRecord"/></button>
+						</form>
+					</c:when>
+				</c:choose>			
+			</div>
+			<div>
+				<h2><spring:message code="history.linkRecord"/></h2>
+				<display:table name="history.linkRecord" id="row3" requestURI="${requestURI}" pagesize="5" class="displaytag">
+					<c:choose>
+						<c:when test="${ownerBrotherhood==true}">
+							<display:column titleKey="edit">
+								<a href="history/linkRecord/edit.do?linkRecordId=${row3.id}">${row3.id}</a>	
+							</display:column>
+							<display:column titleKey="delete">
+								<a href="history/linkRecord/delete.do?linkRecordId=${row3.id}">${row3.id}</a>	
+							</display:column>
+						</c:when>
+					</c:choose>
+					<display:column titleKey="show"> 
+						<a href="history/linkRecord/show.do?linkRecordId=${row3.id}">${row3.title}</a>
+					</display:column>
+					<display:column property="description" titleKey="description"></display:column>
+				</display:table>
+				<c:choose>
+					<c:when test="${ownerBrotherhood==true}">
+						<form method="get" action="/Acme-Madruga/history/linkRecord/create.do">
+							<button><spring:message code="createLinkRecord"/></button>
 						</form>
 					</c:when>
 				</c:choose>			
