@@ -40,6 +40,7 @@
 		<value>/views/enrolled/tiles.xml</value>
 		<value>/views/request/tiles.xml</value>
 		<value>/views/inceptionRecord/tiles.xml</value>
+		<value>/views/history/tiles.xml</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<value>/views/configuration/tiles.xml</value>

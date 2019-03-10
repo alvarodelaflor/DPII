@@ -67,6 +67,7 @@ public class InceptionRecordService {
 		History history = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
 		inceptionRecordSaved = this.inceptionRecordRepository.save(inceptionRecord);
 		history.setInceptionRecord(inceptionRecordSaved);
+		this.historyService.save(history);
 		return inceptionRecordSaved;
 	}
 

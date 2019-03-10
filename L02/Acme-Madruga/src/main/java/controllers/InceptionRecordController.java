@@ -114,6 +114,7 @@ public class InceptionRecordController extends AbstractController {
 			Assert.isTrue(checkBrotherhoodToEdit(inceptionRecordId));
 			result = new ModelAndView("history/inceptionRecord/edit");
 			result.addObject("inceptionRecord", inceptionRecord);
+			result.addObject("brotherhoodId", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId());
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -123,7 +124,7 @@ public class InceptionRecordController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveEdit(@Valid final InceptionRecord inceptionRecord, final BindingResult binding) {
+	public ModelAndView save(@Valid final InceptionRecord inceptionRecord, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
@@ -132,13 +133,13 @@ public class InceptionRecordController extends AbstractController {
 		} else
 			try {
 				Assert.isTrue(inceptionRecord != null, "inceptionRecord.null");
+				Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 				final InceptionRecord savedInceptionRecord = this.inceptionRecordService.save(inceptionRecord);
-				result = new ModelAndView("history/list");
-				result.addObject("history", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getHistory());
-				result.addObject("requestURI", "socialProfile/list.do");
+				result = new ModelAndView("redirect:/history/show.do?brotherhoodId="+brotherhood.getId());
+				result.addObject("requestURI", "history/show.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en InceptionRecordController.java Throwable: " + oops);
-				result = new ModelAndView("history/inceptionRecord/edit");
+				result = new ModelAndView("redirect:history/inceptionRecord/edit");
 				result.addObject("inceptionRecord", inceptionRecord);
 				result.addObject("message", "inceptionRecord.commit.error");
 			}

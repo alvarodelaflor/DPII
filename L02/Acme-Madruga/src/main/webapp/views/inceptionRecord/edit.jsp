@@ -29,7 +29,7 @@
           	<acme:textbox code="inceptionRecord.title" path="title"/>
           	<acme:textbox code="inceptionRecord.description" path="description"/>
           	<acme:textbox code="inceptionRecord.photos" path="photos"/>
-          	<acme:cancel url="history/list.do" code="cancel"/>
+          	<acme:cancel url="history/show.do?brotherhoodId=${brotherhoodId}" code="cancel"/>
           	<acme:submit name="save" code="send"/>
 		</form:form>
 	</div>

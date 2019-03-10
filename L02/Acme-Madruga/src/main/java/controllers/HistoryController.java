@@ -10,6 +10,7 @@
 
 package controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import domain.Brotherhood;
+import domain.History;
+import security.LoginService;
 import services.BrotherhoodService;
 import services.WelcomeService;
 
@@ -48,8 +51,15 @@ public class HistoryController extends AbstractController {
 		ModelAndView result;
 		try {
 			Brotherhood brotherhood = this.brotherhoodService.findOne(brotherhoodId);
+			History history = brotherhood.getHistory();
 			result = new ModelAndView("history/show");
-			result.addObject("curriculum", brotherhood.getHistory());
+			result.addObject("history", history);
+			result.addObject("ownerBrotherhood", false);
+			// En el caso de que el usuario este logueado compruebo si es el dueño de la inceptionRecord para que puede editarla
+			if (checkAnyUserLogger()) {	
+				System.out.println("Usuario autenticado");
+				result.addObject("ownerBrotherhood", LoginService.getPrincipal().getId()==brotherhood.getUserAccount().getId());
+			}
 			result.addObject("requestURI", "history/show.do");
 			result.addObject("system", this.welcomeService.getSystem());
 			result.addObject("logo", this.welcomeService.getLogo());
@@ -58,5 +68,17 @@ public class HistoryController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
+	}
+	
+	private Boolean checkAnyUserLogger() {
+		Boolean res = false;
+		try {
+			res = LoginService.getPrincipal().getId()>0;
+			System.out.println("El id del usuario logueado es: " + LoginService.getPrincipal().getId());
+		} catch (Exception e) {
+			res = false;
+			System.out.println("No existe ningún usuario logueado");
+		}
+		return res;
 	}
 }

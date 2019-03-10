@@ -26,7 +26,12 @@
 	</definition>
 	
 	<definition name="history/inceptionRecord/edit" extends="master.page">	
-		<put-attribute name="title" value="Brotherhood: Edit float" />
+		<put-attribute name="title" value="Edit Inception Record" />
 		<put-attribute name="body" value="/views/inceptionRecord/edit.jsp" />
+	</definition>
+	
+	<definition name="history/inceptionRecord/show" extends="master.page">	
+		<put-attribute name="title" value="Show Inception Record" />
+		<put-attribute name="body" value="/views/inceptionRecord/show.jsp" />
 	</definition>
 </tiles-definitions>

@@ -41,6 +41,7 @@
 		<value>/views/enrolled/messages</value>
 		<value>/views/request/messages</value>
 		<value>/views/inceptionRecord/messages</value>
+		<value>/views/history/messages</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<value>/views/configuration/messages</value>

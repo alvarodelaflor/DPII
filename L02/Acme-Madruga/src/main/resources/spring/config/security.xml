@@ -119,6 +119,9 @@
 		<security:intercept-url pattern="/history/inceptionRecord/create.do" access="hasRole('BROTHERHOOD')" />	
 		<security:intercept-url pattern="/history/inceptionRecord/edit.do" access="hasRole('BROTHERHOOD')" />		
 		
+		<security:intercept-url pattern="/history/show.do" access="permitAll" />
+		<security:intercept-url pattern="/history/inceptionRecord/show.do" access="permitAll" />
+		
 		<security:intercept-url pattern="/procession/show.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/area/brotherhood/edit.do" access="hasRole('BROTHERHOOD')"/>
