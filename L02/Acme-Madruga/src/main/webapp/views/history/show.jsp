@@ -94,6 +94,32 @@
 					</c:when>
 				</c:choose>			
 			</div>
+			<div>
+				<h2><spring:message code="history.legalRecord"/></h2>
+				<display:table name="history.legalRecord" id="row4" requestURI="${requestURI}" pagesize="5" class="displaytag">
+					<c:choose>
+						<c:when test="${ownerBrotherhood==true}">
+							<display:column titleKey="edit">
+								<a href="history/legalRecord/edit.do?legalRecordId=${row4.id}">${row4.id}</a>	
+							</display:column>
+							<display:column titleKey="delete">
+								<a href="history/legalRecord/delete.do?legalRecordId=${row4.id}">${row4.id}</a>	
+							</display:column>
+						</c:when>
+					</c:choose>
+					<display:column titleKey="show"> 
+						<a href="history/legalRecord/show.do?legalRecordId=${row4.id}">${row4.title}</a>
+					</display:column>
+					<display:column property="description" titleKey="description"></display:column>
+				</display:table>
+				<c:choose>
+					<c:when test="${ownerBrotherhood==true}">
+						<form method="get" action="/Acme-Madruga/history/legalRecord/create.do">
+							<button><spring:message code="createLegalRecord"/></button>
+						</form>
+					</c:when>
+				</c:choose>			
+			</div>
 		</c:otherwise>
 	</c:choose>
 </div>
