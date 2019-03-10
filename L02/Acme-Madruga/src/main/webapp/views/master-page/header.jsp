@@ -76,6 +76,7 @@
 					<li><a href="member/create.do"><spring:message code="master.page.member" /></a></li>
 					<li><a href="brotherhood/create.do"><spring:message code="master.page.brotherhood" /></a></li>	
 					<li><a href="chapter/create.do"><spring:message code="master.page.chapter" /></a></li>								
+					<li><a href="sponsor/create.do"><spring:message code="master.page.sponsor" /></a></li>								
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.brotherhood" /></a>

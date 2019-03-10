@@ -210,6 +210,10 @@
 		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />		
+		
+		<security:intercept-url pattern="/sponsor/create.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/sponsor/save.do" access="permitAll" /> 
+		<security:intercept-url pattern="/sponsor/conditions.do" access="permitAll"/> 
 		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
