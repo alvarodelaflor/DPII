@@ -1,54 +1,45 @@
 
 package services;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
-import repositories.FinderRepository;
-import security.Authority;
-import security.LoginService;
-import domain.Area;
 import domain.Brotherhood;
-import domain.Finder;
-import domain.History;
-import domain.Member;
-import domain.Procession;
+import forms.HistoryFinderForm;
 
 @Service
 @Transactional
 public class HistoryFinderService {
 	
 	@Autowired
-	private HistoryService historyServiceService;
+	private HistoryService historyService;
+	
+	@Autowired
+	private BrotherhoodService brotherhoodService;
+	
 
-	public Finder create() {
-		final Finder res = new Finder();
+	public HistoryFinderForm create() {
+		final HistoryFinderForm res = new HistoryFinderForm();
 		return res;
 	}
-
+	
 	public Collection<Brotherhood> findByFilter(final String title, String name) {
-		Collection<Brotherhood> brotherhoods = new ArrayList<Brotherhood>();
+		Collection<Brotherhood> brotherhoods;
 
-		if (title!=null && name==null) {
-			brotherhoods = historyServiceService.findHistoryByBrotherhoodTitle(title);
-		} else if (title == null && name!=null) {
-			brotherhoods = historyServiceService.findHistoryByBrotherhoodName(name);
+		if (title.toString().length()> 0 && name.toString().length()<=0) {
+			brotherhoods = this.historyService.findHistoryByBrotherhoodTitle(title);
+		} else if (title.toString().length()<= 0 && name.toString().length()>0) {
+			brotherhoods = this.historyService.findHistoryByBrotherhoodName(name);
+		} else if (title.toString().length()>0 && name.toString().length()>0){
+			brotherhoods = this.historyService.findHistoryByBrotherhoodTitleAndName(title, name);
 		} else {
-			brotherhoods = historyServiceService.findHistoryByBrotherhoodTitleAndName(title, name);
+			brotherhoods = this.brotherhoodService.findAll();
 		}
-		
+		System.out.println("Brotherhoods encontrados: " + brotherhoods);
 		return brotherhoods;
 	}
 }

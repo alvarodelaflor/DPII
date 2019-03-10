@@ -11,10 +11,8 @@
 package controllers;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -101,8 +99,10 @@ public class HistoryController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		try {
+			HistoryFinderForm historyFinderForm = this.historyFinderService.create();
 			result = new ModelAndView("history/list");
 			Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			result.addObject("historyFinderForm", historyFinderForm);
 			result.addObject("brotherhoods", brotherhoods);
 			result.addObject("requestURI", "history/list.do");
 			result.addObject("system", this.welcomeService.getSystem());
@@ -115,16 +115,21 @@ public class HistoryController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final HistoryFinderForm historyFinderForm, final BindingResult binding) {
+	public ModelAndView save(HistoryFinderForm historyFinderForm, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			Collection<Brotherhood> brotherhoods = historyFinderService.findByFilter(historyFinderForm.getTitle(), historyFinderForm.getName());
+			System.out.println("Name: " + historyFinderForm.getName());
+			System.out.println("Title: " + historyFinderForm.getTitle());
+			Collection<Brotherhood> brotherhoods = this.historyFinderService.findByFilter(historyFinderForm.getTitle().toLowerCase(), historyFinderForm.getName().toLowerCase());
 			result = new ModelAndView("history/list");
 			result.addObject("brotherhoods", brotherhoods);
+//			result.addObject("brotherhoods", new ArrayList<Brotherhood>());
+			
+			result.addObject("historyFinderForm", historyFinderForm);
 			result.addObject("requestURI", "history/list.do");
 		} catch (final Throwable oops) {
-			System.out.println("Error en HistoryController.java LIST GET: " + oops);
+			System.out.println("Error en HistoryController.java LIST SAVE: " + oops);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		result.addObject("logo", welcomeService.getLogo());

@@ -52,14 +52,14 @@ public class HistoryService {
 	}
 	
 	public Collection<Brotherhood> findHistoryByBrotherhoodTitle(String title) {
-		return this.findHistoryByBrotherhoodTitle(title);
+		return this.historyRepository.findHistoryByBrotherhoodTitle(title);
 	}
 	
 	public Collection<Brotherhood> findHistoryByBrotherhoodName(String name) {
-		return this.findHistoryByBrotherhoodName(name);
+		return this.historyRepository.findHistoryByBrotherhoodName(name);
 	}
 	
 	public Collection<Brotherhood> findHistoryByBrotherhoodTitleAndName(String title, String name) {
-		return this.findHistoryByBrotherhoodTitleAndName(title, name);
+		return this.historyRepository.findHistoryByBrotherhoodTitleAndName(title, name);
 	}
 }

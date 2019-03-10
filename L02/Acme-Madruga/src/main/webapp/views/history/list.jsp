@@ -17,11 +17,28 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
 <div class="content">
+	<div>
+		<form:form class="formularioEdicion" modelAttribute="historyFinderForm" method="POST" action="history/list.do">	
+			<acme:textbox code="history.title" path="title"/>
+			<acme:textbox code="history.name" path="name"/>
+			
+			<acme:submit name="save" code="send"/>
+		</form:form>
+	</div>
 	<display:table name="brotherhoods" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
 		<display:column titleKey="show"> 
 			<a href="history/show.do?brotherhoodId=${row1.id}">${row1.title}</a>
 		</display:column>
 		<display:column property="name" titleKey="brotherhoodName"></display:column>
 	</display:table>
+	<div>
+		<form method="get" action="#">
+			<button type="submit">
+				<spring:message code="back" />
+			</button>
+		</form>
+	</div>
 </div>

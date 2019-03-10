@@ -122,4 +122,11 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
+	<div>
+		<form method="get" action="history/list.do">
+			<button type="submit">
+				<spring:message code="back" />
+			</button>
+		</form>
+	</div>
 </div>
