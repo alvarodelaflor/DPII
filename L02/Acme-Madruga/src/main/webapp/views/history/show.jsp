@@ -26,19 +26,48 @@
 			</form>
 		</c:when>
 		<c:otherwise>
-			<display:table name="history.inceptionRecord" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+			<div>
+				<h2><spring:message code="history.inceptionRecord"/></h2>
+				<display:table name="history.inceptionRecord" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+					<c:choose>
+						<c:when test="${ownerBrotherhood==true}">
+							<display:column titleKey="edit">
+								<a href="history/inceptionRecord/edit.do?inceptionRecordId=${row.id}">${row.id}</a>	
+							</display:column>
+						</c:when>
+					</c:choose>
+					<display:column titleKey="show"> 
+						<a href="history/inceptionRecord/show.do?inceptionRecordId=${row.id}">${row.title}</a>
+					</display:column>
+					<display:column property="description" titleKey="description"></display:column>
+				</display:table>			
+			</div>
+			<div>
+				<h2><spring:message code="history.periodRecord"/></h2>
+				<display:table name="history.periodRecord" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+					<c:choose>
+						<c:when test="${ownerBrotherhood==true}">
+							<display:column titleKey="edit">
+								<a href="history/periodRecord/edit.do?periodRecordId=${row.id}">${row.id}</a>	
+							</display:column>
+							<display:column titleKey="delete">
+								<a href="history/periodRecord/delete.do?periodRecordId=${row.id}">${row.id}</a>	
+							</display:column>
+						</c:when>
+					</c:choose>
+					<display:column titleKey="show"> 
+						<a href="history/periodRecord/show.do?periodRecordId=${row.id}">${row.title}</a>
+					</display:column>
+					<display:column property="description" titleKey="description"></display:column>
+				</display:table>
 				<c:choose>
 					<c:when test="${ownerBrotherhood==true}">
-						<display:column titleKey="inceptionRecord.edit">
-							<a href="history/inceptionRecord/edit.do?inceptionRecordId=${row.id}">${row.id}</a>	
-						</display:column>
+						<form method="get" action="/Acme-Madruga/history/periodRecord/create.do">
+							<button><spring:message code="createPeriodRecord"/></button>
+						</form>
 					</c:when>
-				</c:choose>
-				<display:column titleKey="inceptionRecord.show"> 
-					<a href="history/inceptionRecord/show.do?inceptionRecordId=${row.id}">${row.title}</a>
-				</display:column>
-				<display:column property="description" titleKey="inceptionRecord.description"></display:column>
-			</display:table>
+				</c:choose>			
+			</div>
 		</c:otherwise>
 	</c:choose>
 </div>

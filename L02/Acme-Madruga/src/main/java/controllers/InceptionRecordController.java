@@ -78,13 +78,18 @@ public class InceptionRecordController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
+		try {
+			InceptionRecord inceptionRecord = this.inceptionRecordService.create();
 
-		InceptionRecord inceptionRecord = this.inceptionRecordService.create();
-
-		result = new ModelAndView("history/inceptionRecord/create");
-		result.addObject("inceptionRecord", inceptionRecord);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+			result = new ModelAndView("history/inceptionRecord/create");
+			result.addObject("inceptionRecord", inceptionRecord);
+			result.addObject("logo", welcomeService.getLogo());
+			result.addObject("system", welcomeService.getSystem());	
+			result.addObject("brotherhoodId", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId());
+		} catch (Exception e) {
+			System.out.println("Error en create InceptionRecordController.java: " + e);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 	
@@ -99,7 +104,7 @@ public class InceptionRecordController extends AbstractController {
 				System.out.println("BrotherhoodHistory: " + brotherhood);
 				res = brotherhoodLogger.getId()==brotherhood.getId();
 			} catch (Exception e) {
-				System.out.println("Error e: " + e);
+				System.out.println("Error en checkBrotherhoodToEdit InceptionRecordController.java noValidBrotherhood: " + e);
 				res = false;
 			}
 		}
@@ -130,6 +135,7 @@ public class InceptionRecordController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("Error en InceptionRecordController.java, binding: " + binding);
 			result = new ModelAndView("history/inceptionRecord/edit");
+			result.addObject("brotherhoodId", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId());
 		} else
 			try {
 				Assert.isTrue(inceptionRecord != null, "inceptionRecord.null");

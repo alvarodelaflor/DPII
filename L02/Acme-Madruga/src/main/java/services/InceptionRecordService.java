@@ -70,13 +70,4 @@ public class InceptionRecordService {
 		this.historyService.save(history);
 		return inceptionRecordSaved;
 	}
-
-	public void delete(final InceptionRecord inceptionRecord) {
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		History history = this.historyService.findHistoryByInceptionRecordId(inceptionRecord.getId());
-		History historyBrotherhoodLogger = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
-		Assert.notNull(history, "history.null.inceptionRecordService.null");
-		Assert.isTrue(historyBrotherhoodLogger.equals(history), "diferentBrotherhoodLogger.inceptionRecordService");
-		this.inceptionRecordRepository.delete(inceptionRecord);
-	}
 }

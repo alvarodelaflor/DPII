@@ -6,8 +6,11 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
@@ -21,26 +24,30 @@ import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 @Access(AccessType.PROPERTY)
 public class PeriodRecord extends Record {
 
-	private Date startYear;
-	private Date endYear;
+	private Integer startYear;
+	private Integer endYear;
 	private String photos;
 	
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public Date getStartYear() {
+
+	@NotNull
+	@Min(1500)
+	@Max(3000)
+	public Integer getStartYear() {
 		return startYear;
 	}
-	public void setStartYear(Date startYear) {
+	public void setStartYear(Integer startYear) {
 		this.startYear = startYear;
 	}
 	
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public Date getEndYear() {
+	@NotNull
+	@Min(1500)
+	@Max(3000)
+	public Integer getEndYear() {
 		return endYear;
 	}
-	public void setEndYear(Date endYear) {
+	public void setEndYear(Integer endYear) {
 		this.endYear = endYear;
 	}
-	
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@NotBlank
 	public String getPhotos() {
