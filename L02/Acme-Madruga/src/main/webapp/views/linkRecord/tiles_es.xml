@@ -23,17 +23,17 @@
 <tiles-definitions>
 
 	<definition name="history/linkRecord/create" extends="master.page">	
-		<put-attribute name="title" value="Create Link Record" />
+		<put-attribute name="title" value="Crear registro de enlace" />
 		<put-attribute name="body" value="/views/linkRecord/edit.jsp" />
 	</definition>
 	
 	<definition name="history/linkRecord/edit" extends="master.page">	
-		<put-attribute name="title" value="Edit Link Record" />
+		<put-attribute name="title" value="Editar registro de enlace" />
 		<put-attribute name="body" value="/views/linkRecord/edit.jsp" />
 	</definition>
 	
 	<definition name="history/linkRecord/show" extends="master.page">	
-		<put-attribute name="title" value="Show Link Record" />
+		<put-attribute name="title" value="Mostrar registro de enlace" />
 		<put-attribute name="body" value="/views/linkRecord/show.jsp" />
 	</definition>
 	

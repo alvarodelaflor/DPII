@@ -23,17 +23,17 @@
 <tiles-definitions>
 
 	<definition name="history/legalRecord/create" extends="master.page">	
-		<put-attribute name="title" value="Create Legal Record" />
+		<put-attribute name="title" value="Crear registro legal" />
 		<put-attribute name="body" value="/views/legalRecord/edit.jsp" />
 	</definition>
 	
 	<definition name="history/legalRecord/edit" extends="master.page">	
-		<put-attribute name="title" value="Edit Legal Record" />
+		<put-attribute name="title" value="Editar registro legal" />
 		<put-attribute name="body" value="/views/legalRecord/edit.jsp" />
 	</definition>
 	
 	<definition name="history/legalRecord/show" extends="master.page">	
-		<put-attribute name="title" value="Show Legal Record" />
+		<put-attribute name="title" value="Mostrar registro legal" />
 		<put-attribute name="body" value="/views/legalRecord/show.jsp" />
 	</definition>
 	

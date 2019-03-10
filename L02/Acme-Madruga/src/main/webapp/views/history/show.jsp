@@ -124,6 +124,7 @@
 	</c:choose>
 	<div>
 		<form method="get" action="history/list.do">
+			<br>
 			<button type="submit">
 				<spring:message code="back" />
 			</button>

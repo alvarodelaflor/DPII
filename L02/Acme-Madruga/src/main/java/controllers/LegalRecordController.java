@@ -106,11 +106,13 @@ public class LegalRecordController extends AbstractController {
 		ModelAndView result;
 		try {
 			LegalRecord legalRecord = this.legalRecordService.findOne(legalRecordId);
+			Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+			Assert.isTrue(brotherhood.getHistory().getInceptionRecord()!=null, "brotherhood.null.inceptionRecord");
 			Assert.notNull(legalRecord, "legalRecord.null");
 			Assert.isTrue(checkBrotherhoodToEdit(legalRecordId));
 			result = new ModelAndView("history/legalRecord/edit");
 			result.addObject("legalRecord", legalRecord);
-			result.addObject("brotherhoodId", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId());
+			result.addObject("brotherhoodId", brotherhood.getId());
 		} catch (Exception e) {
 			System.out.println("Error e en GET /edit LegalRecordController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");

@@ -105,6 +105,8 @@ public class PeriodRecordController extends AbstractController {
 	public ModelAndView edit(@RequestParam(value = "periodRecordId", defaultValue = "-1") final int periodRecordId) {
 		ModelAndView result;
 		try {
+			Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+			Assert.isTrue(brotherhood.getHistory().getInceptionRecord()!=null, "brotherhood.null.inceptionRecord");
 			PeriodRecord periodRecord = this.periodRecordService.findOne(periodRecordId);
 			Assert.notNull(periodRecord, "periodRecord.null");
 			Assert.isTrue(checkBrotherhoodToEdit(periodRecordId));

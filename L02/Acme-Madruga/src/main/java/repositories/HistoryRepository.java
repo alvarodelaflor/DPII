@@ -26,12 +26,12 @@ public interface HistoryRepository extends JpaRepository<History, Integer> {
 	@Query("select h from History h join h.inceptionRecord hir where hir.id=?1")
 	History findHistoryByInceptionRecordId(int inceptionRecordId);
 	
-	@Query("select b from Brotherhood b where b.title like ?1%")
+	@Query("select b from Brotherhood b where b.title like %?1%")
 	Collection<Brotherhood> findHistoryByBrotherhoodTitle(String title);
 	
-	@Query("select b from Brotherhood b where b.name like ?1%")
+	@Query("select b from Brotherhood b where b.name like %?1%")
 	Collection<Brotherhood> findHistoryByBrotherhoodName(String name);
 	
-	@Query("select b from Brotherhood b where b.title like ?1% and b.name like ?2%")
+	@Query("select b from Brotherhood b where b.title like %?1% and b.name like %?2%")
 	Collection<Brotherhood> findHistoryByBrotherhoodTitleAndName(String title, String name);
 }

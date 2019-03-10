@@ -21,19 +21,41 @@
 
 <div class="content">
 	<div>
-		<form:form class="formularioEdicion" modelAttribute="historyFinderForm" method="POST" action="history/list.do">	
-			<acme:textbox code="history.title" path="title"/>
-			<acme:textbox code="history.name" path="name"/>
-			
-			<acme:submit name="save" code="send"/>
+		<form:form class="formularioEdicion" modelAttribute="historyFinderForm" method="POST" action="history/list.do">
+			<fieldset>
+				<legend>
+					<strong><spring:message code="searchTerm"/></strong><i><spring:message code="help"/></i>				
+				</legend>
+				<br>
+				<acme:textbox code="history.title" path="title"/>
+				<acme:textbox code="history.name" path="name"/>
+				<br>
+				<acme:submit name="save" code="search"/>
+			</fieldset>
 		</form:form>
 	</div>
-	<display:table name="brotherhoods" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
-		<display:column titleKey="show"> 
-			<a href="history/show.do?brotherhoodId=${row1.id}">${row1.title}</a>
-		</display:column>
-		<display:column property="name" titleKey="brotherhoodName"></display:column>
-	</display:table>
+	<h2><spring:message code="results"/></h2>
+	<c:choose>
+		<c:when test="${empty brotherhoods}">
+			<div>
+				<img alt="Error" src="./images/triste.png" width="50" height="50">
+				<br>
+				<spring:message code="notResults"/>
+				<br>
+				<br>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<display:table name="brotherhoods" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<display:column titleKey="show"> 
+					<a href="history/show.do?brotherhoodId=${row1.id}">${row1.title}</a>
+				</display:column>
+				<display:column property="name" titleKey="brotherhoodName"></display:column>
+			</display:table>	
+		</c:otherwise>	
+	</c:choose>
+
+
 	<div>
 		<form method="get" action="#">
 			<button type="submit">

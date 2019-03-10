@@ -106,10 +106,12 @@ public class LinkRecordController extends AbstractController {
 		ModelAndView result;
 		try {
 			LinkRecord linkRecord = this.linkRecordService.findOne(linkRecordId);
+			Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+			Assert.isTrue(brotherhood.getHistory().getInceptionRecord()!=null, "brotherhood.null.inceptionRecord");
 			Assert.isTrue(checkBrotherhoodToEdit(linkRecordId));
 			result = new ModelAndView("history/linkRecord/edit");
 			result.addObject("linkRecord", linkRecord);
-			result.addObject("brotherhoodId", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId());
+			result.addObject("brotherhoodId", brotherhood.getId());
 		} catch (Exception e) {
 			System.out.println("Error e en GET /edit LinkRecordController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
