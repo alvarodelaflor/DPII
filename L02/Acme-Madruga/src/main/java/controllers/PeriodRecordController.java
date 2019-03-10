@@ -73,14 +73,20 @@ public class PeriodRecordController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-
-		PeriodRecord periodRecord = this.periodRecordService.create();
-
-		result = new ModelAndView("history/periodRecord/create");
-		result.addObject("periodRecord", periodRecord);
-		result.addObject("brotherhoodId", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId());
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		try {
+			PeriodRecord periodRecord = this.periodRecordService.create();
+			Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+			Assert.notNull(brotherhood.getHistory(), "brotherhood.history.null");
+			Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "brotherthood.inceptionRecord.null");
+			result = new ModelAndView("history/periodRecord/create");
+			result.addObject("periodRecord", periodRecord);
+			result.addObject("brotherhoodId", this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId());
+			result.addObject("logo", welcomeService.getLogo());
+			result.addObject("system", welcomeService.getSystem());	
+		} catch (Exception e) {
+			System.out.println("Error e en GET /create LinkRecordController.java: " + e);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 	

@@ -21,19 +21,29 @@
 
 <div class="content">
 	<div>
-		<form:form class="formularioEdicion" modelAttribute="historyFinderForm" method="POST" action="history/list.do">
-			<fieldset>
-				<legend>
-					<strong><spring:message code="searchTerm"/></strong><i><spring:message code="help"/></i>				
-				</legend>
-				<br>
+		<fieldset>
+			<legend>
+				<strong><spring:message code="searchTerm"/></strong><i><spring:message code="help"/></i>				
+			</legend>
+			<br>
+			<form:form class="formularioEdicion" modelAttribute="historyFinderForm" method="POST" action="history/list.do">
 				<acme:textbox code="history.title" path="title"/>
 				<acme:textbox code="history.name" path="name"/>
 				<br>
-				<acme:submit name="save" code="search"/>
-			</fieldset>
-		</form:form>
+				<div style="float:left;">
+					<acme:submit name="save" code="search"/>
+				</div>
+			</form:form>
+			<div style="float:left;">
+				<jstl:if test="${brotherhoodId!=-1}">
+					<form method="get" action="/Acme-Madruga/history/show.do">
+						<button name="brotherhoodId" value="${brotherhoodId}"><spring:message code="showMyHistory"/></button>
+					</form>	
+				</jstl:if>
+			</div>
+		</fieldset>
 	</div>
+	
 	<h2><spring:message code="results"/></h2>
 	<c:choose>
 		<c:when test="${empty brotherhoods}">
@@ -54,7 +64,6 @@
 			</display:table>	
 		</c:otherwise>	
 	</c:choose>
-
 
 	<div>
 		<form method="get" action="#">

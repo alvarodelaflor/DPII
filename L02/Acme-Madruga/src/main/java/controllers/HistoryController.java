@@ -11,7 +11,6 @@
 package controllers;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import domain.Brotherhood;
 import domain.History;
 import forms.HistoryFinderForm;
 import security.LoginService;
 import services.BrotherhoodService;
 import services.HistoryFinderService;
-import services.HistoryService;
 import services.WelcomeService;
 
 /*
@@ -42,10 +39,7 @@ public class HistoryController extends AbstractController {
 	
 	@Autowired
 	private BrotherhoodService brotherhoodService;
-	
-	@Autowired
-	private HistoryService historyService;
-	
+		
 	@Autowired
 	private HistoryFinderService historyFinderService;
 	
@@ -95,6 +89,16 @@ public class HistoryController extends AbstractController {
 		return res;
 	}
 	
+	private Integer getIdBrotherhoodLogger() {
+		Integer res = -1;
+		try {
+			res = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		} catch (Exception e) {
+			System.out.println("El usuario no esta logueado o no es un brotherhood: " + e);
+		}
+		return res;
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -104,6 +108,7 @@ public class HistoryController extends AbstractController {
 			Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
 			result.addObject("historyFinderForm", historyFinderForm);
 			result.addObject("brotherhoods", brotherhoods);
+			result.addObject("brotherhoodId", getIdBrotherhoodLogger());
 			result.addObject("requestURI", "history/list.do");
 			result.addObject("system", this.welcomeService.getSystem());
 			result.addObject("logo", this.welcomeService.getLogo());
