@@ -70,6 +70,7 @@ public class PeriodRecordService {
 	}
 
 	public void delete(final PeriodRecord periodRecord) {
+		Assert.notNull(periodRecord, "periodRecord.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		PeriodRecord periodRecordFromDB = this.periodRecordRepository.findOne(periodRecord.getId());
 		List<PeriodRecord> periodRecordLogger = (List<PeriodRecord>)brotherhood.getHistory().getPeriodRecord();

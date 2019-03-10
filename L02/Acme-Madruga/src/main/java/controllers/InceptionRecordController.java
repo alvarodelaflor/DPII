@@ -1,5 +1,5 @@
 /*
- * handyWorkerController.java
+ * InceptionRecordController.java
  * 
  * Copyright (C) 2018 Universidad de Sevilla
  * 
@@ -20,12 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import domain.Actor;
 import domain.Brotherhood;
 import domain.History;
 import domain.InceptionRecord;
-import domain.SocialProfile;
 import security.LoginService;
 import services.BrotherhoodService;
 import services.HistoryService;
@@ -61,10 +58,11 @@ public class InceptionRecordController extends AbstractController {
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam("inceptionRecordId") final int inceptionRecordId) {
+	public ModelAndView show(@RequestParam(value = "inceptionRecordId", defaultValue = "-1") final int inceptionRecordId) {
 		ModelAndView result;
 		try {
 			InceptionRecord inceptionRecord = this.inceptionRecordService.findOne(inceptionRecordId);
+			Assert.notNull(inceptionRecord, "inceptionRecord.null");
 			result = new ModelAndView("history/inceptionRecord/show");
 			result.addObject("inceptionRecord", inceptionRecord);
 		} catch (Exception e) {
@@ -116,6 +114,7 @@ public class InceptionRecordController extends AbstractController {
 		ModelAndView result;
 		try {
 			InceptionRecord inceptionRecord = this.inceptionRecordService.findOne(inceptionRecordId);
+			Assert.notNull(inceptionRecord, "inceptionRecord.null");
 			Assert.isTrue(checkBrotherhoodToEdit(inceptionRecordId));
 			result = new ModelAndView("history/inceptionRecord/edit");
 			result.addObject("inceptionRecord", inceptionRecord);
@@ -140,7 +139,7 @@ public class InceptionRecordController extends AbstractController {
 			try {
 				Assert.isTrue(inceptionRecord != null, "inceptionRecord.null");
 				Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-				final InceptionRecord savedInceptionRecord = this.inceptionRecordService.save(inceptionRecord);
+				this.inceptionRecordService.save(inceptionRecord);
 				result = new ModelAndView("redirect:/history/show.do?brotherhoodId="+brotherhood.getId());
 				result.addObject("requestURI", "history/show.do");
 			} catch (final Throwable oops) {

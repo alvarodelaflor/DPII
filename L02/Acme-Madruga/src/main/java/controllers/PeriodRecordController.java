@@ -55,10 +55,11 @@ public class PeriodRecordController extends AbstractController {
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam("periodRecordId") final int periodRecordId) {
+	public ModelAndView show(@RequestParam(value = "periodRecordId", defaultValue = "-1") final int periodRecordId) {
 		ModelAndView result;
 		try {
 			PeriodRecord periodRecord = this.periodRecordService.findOne(periodRecordId);
+			Assert.notNull(periodRecord, "periodRecord.null");
 			result = new ModelAndView("history/periodRecord/show");
 			result.addObject("periodRecord", periodRecord);
 		} catch (Exception e) {
@@ -105,6 +106,7 @@ public class PeriodRecordController extends AbstractController {
 		ModelAndView result;
 		try {
 			PeriodRecord periodRecord = this.periodRecordService.findOne(periodRecordId);
+			Assert.notNull(periodRecord, "periodRecord.null");
 			Assert.isTrue(checkBrotherhoodToEdit(periodRecordId));
 			result = new ModelAndView("history/periodRecord/edit");
 			result.addObject("periodRecord", periodRecord);
@@ -151,6 +153,7 @@ public class PeriodRecordController extends AbstractController {
 		
 		try {
 			PeriodRecord periodRecord = this.periodRecordService.findOne(periodRecordId);
+			Assert.notNull(periodRecord, "periodRecord.null");
 			this.periodRecordService.delete(periodRecord);
 			result = new ModelAndView("redirect:/history/show.do?brotherhoodId="+brotherhood.getId());
 		} catch (final Throwable oops) {

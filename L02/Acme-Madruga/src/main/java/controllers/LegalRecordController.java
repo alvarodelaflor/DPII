@@ -55,10 +55,11 @@ public class LegalRecordController extends AbstractController {
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam("legalRecordId") final int legalRecordId) {
+	public ModelAndView show(@RequestParam(value = "legalRecordId", defaultValue = "-1") final int legalRecordId) {
 		ModelAndView result;
 		try {
 			LegalRecord legalRecord = this.legalRecordService.findOne(legalRecordId);
+			Assert.notNull(legalRecord, "legalRecord.null");
 			result = new ModelAndView("history/legalRecord/show");
 			result.addObject("legalRecord", legalRecord);
 		} catch (Exception e) {
@@ -105,6 +106,7 @@ public class LegalRecordController extends AbstractController {
 		ModelAndView result;
 		try {
 			LegalRecord legalRecord = this.legalRecordService.findOne(legalRecordId);
+			Assert.notNull(legalRecord, "legalRecord.null");
 			Assert.isTrue(checkBrotherhoodToEdit(legalRecordId));
 			result = new ModelAndView("history/legalRecord/edit");
 			result.addObject("legalRecord", legalRecord);

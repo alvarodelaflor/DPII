@@ -35,7 +35,7 @@ public class LegalRecord extends Record {
 		this.legalName = legalName;
 	}
 
-	@Pattern(regexp = "^([a-zA-z]{2}[0-9]{8}[a-zA-z]{1})$")
+	@Pattern(regexp = "^([a-zA-z]{2}[0-9]{2,8}[a-zA-z]{1})$")
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@NotBlank
 	public String getVatNumber() {

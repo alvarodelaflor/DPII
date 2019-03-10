@@ -70,6 +70,7 @@ public class LegalRecordService {
 	}
 
 	public void delete(final LegalRecord legalRecord) {
+		Assert.notNull(legalRecord, "legalRecord.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		LegalRecord legalRecordFromDB = this.legalRecordRepository.findOne(legalRecord.getId());
 		List<LegalRecord> legalRecordLogger = (List<LegalRecord>)brotherhood.getHistory().getLegalRecord();

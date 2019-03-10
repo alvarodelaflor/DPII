@@ -55,10 +55,11 @@ public class LinkRecordController extends AbstractController {
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam("linkRecordId") final int linkRecordId) {
+	public ModelAndView show(@RequestParam(value = "linkRecordId", defaultValue = "-1") final int linkRecordId) {
 		ModelAndView result;
 		try {
 			LinkRecord linkRecord = this.linkRecordService.findOne(linkRecordId);
+			Assert.notNull(linkRecord, "linkRecord.null");
 			result = new ModelAndView("history/linkRecord/show");
 			result.addObject("linkRecord", linkRecord);
 		} catch (Exception e) {
