@@ -62,16 +62,16 @@ public class PositionAuxService {
 		this.positionAuxRepository.delete(positionAux);
 	}
 
-	public Collection<PositionAux> findFreePositionByProcesion(final int paradeId) {
+	public Collection<PositionAux> findFreePositionByParade(final int paradeId) {
 		return this.positionAuxRepository.findAllPositionAuxFreeByParadeId(paradeId);
 	}
 
-	public Collection<PositionAux> findPositionByProcesion(final int paradeId) {
+	public Collection<PositionAux> findPositionByParade(final int paradeId) {
 		return this.positionAuxRepository.findAllPositionAuxByParadeId(paradeId);
 	}
 
 	public void deleteAllPositionByParade(final int paradeId) {
-		final Collection<PositionAux> possitionAux = this.findPositionByProcesion(paradeId);
+		final Collection<PositionAux> possitionAux = this.findPositionByParade(paradeId);
 		if (!possitionAux.isEmpty())
 			for (final PositionAux positionAux : possitionAux)
 				this.positionAuxRepository.delete(positionAux);

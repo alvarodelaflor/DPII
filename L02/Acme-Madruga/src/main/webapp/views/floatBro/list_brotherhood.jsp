@@ -25,7 +25,7 @@
 <body>
 	<script type= "text/javascript">
 		function preguntaES(){
-    		if (confirm('Si tiene una procesión asociada será eliminada ¿Estas seguro de que desea borrar este paso?')){
+    		if (confirm('Si tiene un desfile asociado será eliminado ¿Estas seguro de que desea borrar este paso?')){
     			return true;
     		} else {
     			return false;

@@ -46,7 +46,7 @@ public class FinderService {
 	}
 
 	/**
-	 * Comprueba si la cach� ha expirado, vuelve a buscar procesiones en caso afirmativo y actualiza el finder
+	 * Comprueba si la cach� ha expirado, vuelve a buscar desfiles en caso afirmativo y actualiza el finder
 	 * 
 	 * @return Finder con los datos de la cach� o nuevos si ha expirado
 	 */
@@ -68,7 +68,7 @@ public class FinderService {
 		return res;
 	}
 	/**
-	 * Vuelve a buscar procesiones y actualiza el finder
+	 * Vuelve a buscar desfiles y actualiza el finder
 	 * 
 	 * @return Finder con los datos nuevos
 	 */

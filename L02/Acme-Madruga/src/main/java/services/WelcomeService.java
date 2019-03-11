@@ -12,7 +12,7 @@ public class WelcomeService {
 
 	String					e			= "Welcome to Acme Madrugá¡, the site to organise your parades.";
 
-	String					s			= "¡Bienvenidos a Acme Madrugá¡! Tu sitio para organizar procesiones.";
+	String					s			= "¡Bienvenidos a Acme Madrugá¡! Tu sitio para organizar parades.";
 
 	String					system		= "Acme Madrugá¡";
 

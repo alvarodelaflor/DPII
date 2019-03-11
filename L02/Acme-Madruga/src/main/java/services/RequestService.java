@@ -118,7 +118,7 @@ public class RequestService {
 		final Request r = new Request();
 		final Parade parade = this.paradeService.findOne(paradeId);
 		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
-		final Collection<PositionAux> positionAuxs = this.positionAuxService.findFreePositionByProcesion(paradeId);
+		final Collection<PositionAux> positionAuxs = this.positionAuxService.findFreePositionByParade(paradeId);
 		if (!positionAuxs.isEmpty())
 			r.setPositionAux(positionAuxs.iterator().next());
 		// We have to check if the parade is in final mode

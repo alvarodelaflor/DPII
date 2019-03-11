@@ -195,7 +195,7 @@ public class RequestBrotherhoodController extends AbstractController {
 						estado = "rechazada";
 
 					final Message msg = this.messageService.create();
-					msg.setBody("Su petición a la procesión " + request.getPositionAux().getParade().getTitle() + " ha sido " + estado);
+					msg.setBody("Su petición al desfile " + request.getPositionAux().getParade().getTitle() + " ha sido " + estado);
 					msg.setSubject("Notifación sobre cambio de estado de petición");
 					final Collection<String> emails = new ArrayList<>();
 					emails.add(request.getMember().getEmail());
@@ -223,7 +223,7 @@ public class RequestBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("request/brotherhood/edit");
 
-		final Collection<PositionAux> positionsAux = this.positionAuxService.findFreePositionByProcesion(request.getPositionAux().getParade().getId());
+		final Collection<PositionAux> positionsAux = this.positionAuxService.findFreePositionByParade(request.getPositionAux().getParade().getId());
 		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
 		Boolean language;
 		if (actuallanguage.equals("English")) {

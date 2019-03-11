@@ -24,7 +24,7 @@
 <tiles-definitions>
 
 	<definition name="parade/brotherhood/list" extends="master.page">	
-		<put-attribute name="title" value="Hermandad: Lista de procesiones" />
+		<put-attribute name="title" value="Hermandad: Lista de desfiles" />
 		<put-attribute name="body" value="/views/parade/list_brotherhood.jsp" />
 	</definition>
 	
@@ -34,17 +34,17 @@
 	</definition>
 	
 	<definition name="parade/brotherhood/edit" extends="master.page">	
-		<put-attribute name="title" value="Brotherhood: Editar procesión" />
+		<put-attribute name="title" value="Brotherhood: Editar desfile" />
 		<put-attribute name="body" value="/views/parade/edit.jsp" />
 	</definition>
 	
 	<definition name="parade/brotherhood/show" extends="master.page">	
-		<put-attribute name="title" value="Hermandad: Mostrar procesión" />
+		<put-attribute name="title" value="Hermandad: Mostrar desfile" />
 		<put-attribute name="body" value="/views/parade/show_brotherhood.jsp" />
 	</definition>
 	
 	<definition name="parade/listParades" extends="master.page">	
-		<put-attribute name="title" value="Hermandad: Procesiones" />
+		<put-attribute name="title" value="Hermandad: desfiles" />
 		<put-attribute name="body" value="/views/parade/listParades.jsp" /> 
 	</definition>
 	
