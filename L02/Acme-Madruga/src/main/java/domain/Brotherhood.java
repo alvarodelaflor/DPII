@@ -31,13 +31,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Brotherhood extends Actor {
 
-	private String					title;
-	private Date					establishmentDate;
-	private String					pictures;
-	private Collection<Parade>	processions;
+	private String						title;
+	private Date						establishmentDate;
+	private String						pictures;
+	private Collection<Parade>			parades;
 	private Collection<domain.Float>	floats;
-	private Collection<Enrolled>	enrolleds;
-	private Area					area;
+	private Collection<Enrolled>		enrolleds;
+	private Area						area;
 
 
 	@OneToOne(optional = true)
@@ -80,12 +80,12 @@ public class Brotherhood extends Actor {
 	}
 
 	@OneToMany(mappedBy = "brotherhood", cascade = CascadeType.ALL)
-	public Collection<Parade> getProcessions() {
-		return this.processions;
+	public Collection<Parade> getParades() {
+		return this.parades;
 	}
 
-	public void setProcessions(final Collection<Parade> processions) {
-		this.processions = processions;
+	public void setParades(final Collection<Parade> parades) {
+		this.parades = parades;
 	}
 
 	@OneToMany(mappedBy = "brotherhood")

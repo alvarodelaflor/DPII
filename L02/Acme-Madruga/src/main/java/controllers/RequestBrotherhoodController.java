@@ -29,14 +29,12 @@ import security.LoginService;
 import services.BrotherhoodService;
 import services.MessageService;
 import services.PositionAuxService;
-import services.PositionService;
 import services.RequestService;
 import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Message;
-import domain.Position;
-import domain.PositionAux;
 import domain.Parade;
+import domain.PositionAux;
 import domain.Request;
 
 /*
@@ -58,7 +56,7 @@ public class RequestBrotherhoodController extends AbstractController {
 	@Autowired
 	private MessageService		messageService;
 	@Autowired
-	private WelcomeService welcomeService;
+	private WelcomeService		welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -71,14 +69,14 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView list(@RequestParam(value = "requestId", defaultValue = "-1") final int requestId) {
 		ModelAndView result;
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		final List<Parade> listProcessions = new ArrayList<>(brotherhood.getProcessions());
+		final List<Parade> listParades = new ArrayList<>(brotherhood.getParades());
 		final Collection<Request> requestsAccepted = new ArrayList<>();
 		final Collection<Request> requestsRejected = new ArrayList<>();
 		final Collection<Request> requestsPending = new ArrayList<>();
-		for (final Parade procession : listProcessions) {
-			requestsAccepted.addAll(this.requestService.findAllByProcessionAccepted(procession));
-			requestsRejected.addAll(this.requestService.findAllByProcessionRejected(procession));
-			requestsPending.addAll(this.requestService.findAllByProcessionPending(procession));
+		for (final Parade parade : listParades) {
+			requestsAccepted.addAll(this.requestService.findAllByParadeAccepted(parade));
+			requestsRejected.addAll(this.requestService.findAllByParadeRejected(parade));
+			requestsPending.addAll(this.requestService.findAllByParadePending(parade));
 			System.out.println(requestsAccepted);
 			System.out.println(requestsPending);
 			System.out.println(requestsRejected);
@@ -88,8 +86,8 @@ public class RequestBrotherhoodController extends AbstractController {
 		result.addObject("requestsRejected", requestsRejected);
 		result.addObject("requestsPending", requestsPending);
 		result.addObject("requestURI", "request/brotherhood/list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -107,12 +105,12 @@ public class RequestBrotherhoodController extends AbstractController {
 				result = new ModelAndView("request/brotherhood/show");
 				result.addObject("request", request);
 				result.addObject("requestURI", "request/brotherhood/show.do");
-			}			
-		} catch (Exception e) {
+			}
+		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 
 		return result;
 	}
@@ -122,14 +120,14 @@ public class RequestBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		Request request;
 		request = this.requestService.findOne(requestId);
-		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId() || (request.getStatus()!=null && request.getStatus().equals(true)))
+		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId() || (request.getStatus() != null && request.getStatus().equals(true)))
 			result = new ModelAndView("redirect:list.do");
 		else {
 			Assert.notNull(request);
 			result = this.createEditModelAndView(request);
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -141,7 +139,7 @@ public class RequestBrotherhoodController extends AbstractController {
 		System.out.println("Request encontrado: " + request);
 		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
-		else {
+		else
 			try {
 				Assert.notNull(request, "request.null");
 				this.requestService.delete(request);
@@ -149,16 +147,15 @@ public class RequestBrotherhoodController extends AbstractController {
 			} catch (final Exception e) {
 				result = this.createEditModelAndView(request, "request.commit.error");
 			}
-		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Request request, final BindingResult binding) {
 		ModelAndView result;
-		if (request.getStatus()!=null && request.getStatus().equals(false) && request.getComment()!=null && request.getComment().isEmpty()) {
+		if (request.getStatus() != null && request.getStatus().equals(false) && request.getComment() != null && request.getComment().isEmpty()) {
 			final ObjectError error = new ObjectError("comment", "error.comment");
 			binding.addError(error);
 			binding.rejectValue("comment", "error.comment");
@@ -180,7 +177,7 @@ public class RequestBrotherhoodController extends AbstractController {
 			result = this.createEditModelAndView(request);
 		} else
 			try {
-				PositionAux positionAux = this.positionAuxService.findOne(request.getPositionAux().getId());
+				final PositionAux positionAux = this.positionAuxService.findOne(request.getPositionAux().getId());
 				Assert.isTrue(!positionAux.getStatus().equals(true));
 				System.out.println("El error pasa por aquí alvaro (TRY de save())");
 				System.out.println(binding);
@@ -211,17 +208,16 @@ public class RequestBrotherhoodController extends AbstractController {
 				System.out.println("El error: ");
 				System.out.println(oops);
 				System.out.println(binding);
-				if (oops.getMessage().equals("error.comment")) {
+				if (oops.getMessage().equals("error.comment"))
 					result = this.createEditModelAndView(request, "error.comment");
-				} else {
+				else
 					result = this.createEditModelAndView(request, "request.commit.error");
-				}
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
-	
+
 	private ModelAndView createEditModelAndView(final Request request) {
 		ModelAndView result;
 
@@ -241,19 +237,19 @@ public class RequestBrotherhoodController extends AbstractController {
 		result.addObject("language", language);
 		result.addObject("request", request);
 		result.addObject("positionsAux", positionsAux);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Request request, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("request/brotherhood/edit");
-		
-		result = createEditModelAndView(request);
+
+		result = this.createEditModelAndView(request);
 		result.addObject("message", messageCode);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 

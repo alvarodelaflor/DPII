@@ -34,7 +34,7 @@
 	</script>
 	<script type= "text/javascript">
 		function preguntaEN(){
-    		if (confirm('If you have an associated procession it will be deleted. Are you sure you want to delete this float?')){
+    		if (confirm('If you have an associated parade it will be deleted. Are you sure you want to delete this float?')){
     			return true;
     		} else {
     			return false;

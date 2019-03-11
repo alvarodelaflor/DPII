@@ -14,8 +14,8 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Member;
-import domain.PositionAux;
 import domain.Parade;
+import domain.PositionAux;
 import domain.Request;
 
 /*
@@ -40,7 +40,7 @@ public class RequestService {
 	PositionAuxService			positionAuxService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService		paradeService;
 	@Autowired
 	private MemberService		memberService;
 
@@ -59,24 +59,24 @@ public class RequestService {
 	}
 
 	public void delete(final Request request) {
-		Assert.isTrue(request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId()==LoginService.getPrincipal().getId());
-		PositionAux positionAux = request.getPositionAux();
-		if (positionAux!=null) {
+		Assert.isTrue(request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId() == LoginService.getPrincipal().getId());
+		final PositionAux positionAux = request.getPositionAux();
+		if (positionAux != null) {
 			positionAux.setStatus(false);
 			this.positionAuxService.save(positionAux);
 		}
 		this.requestRepository.delete(request);
 	}
 
-	public Collection<Request> findAllByProcessionAccepted(final Parade procession) {
-		return this.requestRepository.findAllByProcession(procession.getId(), true);
+	public Collection<Request> findAllByParadeAccepted(final Parade parade) {
+		return this.requestRepository.findAllByParade(parade.getId(), true);
 	}
-	public Collection<Request> findAllByProcessionRejected(final Parade procession) {
-		return this.requestRepository.findAllByProcession(procession.getId(), false);
+	public Collection<Request> findAllByParadeRejected(final Parade parade) {
+		return this.requestRepository.findAllByParade(parade.getId(), false);
 	}
 
-	public Collection<Request> findAllByProcessionPending(final Parade procession) {
-		return this.requestRepository.findAllByProcessionPending(procession.getId());
+	public Collection<Request> findAllByParadePending(final Parade parade) {
+		return this.requestRepository.findAllByParadePending(parade.getId());
 	}
 
 	public Request reconstruct(final Request request, final BindingResult binding) {
@@ -86,11 +86,11 @@ public class RequestService {
 			result = request;
 		else {
 			result = this.requestRepository.findOne(request.getId());
-			Boolean cacheStatus = result.getStatus();
+			final Boolean cacheStatus = result.getStatus();
 			result.setStatus(request.getStatus());
-			if (this.positionAuxService.findOne(request.getPositionAux().getId()).getStatus().equals(true) && cacheStatus==null) {
+			if (this.positionAuxService.findOne(request.getPositionAux().getId()).getStatus().equals(true) && cacheStatus == null)
 				result.setStatus(null);
-			} else if (request.getPositionAux() != null && result.getPositionAux() != null && !request.getPositionAux().equals(result.getPositionAux())) {
+			else if (request.getPositionAux() != null && result.getPositionAux() != null && !request.getPositionAux().equals(result.getPositionAux())) {
 				final PositionAux positionAux = result.getPositionAux();
 				positionAux.setStatus(false);
 				this.positionAuxService.save(positionAux);
@@ -102,31 +102,31 @@ public class RequestService {
 		return result;
 	}
 
-	public Boolean validMemberToCreateRequest(final int idProcession) {
+	public Boolean validMemberToCreateRequest(final int idParade) {
 		Boolean res = true;
 		final int idMember = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		System.out.println("Request pendientes: " + this.requestRepository.findAllByMemberProcessionPending(idProcession, idMember));
-		System.out.println("Request Aceptadas: " + this.requestRepository.findAllByMemberProcessionAccepted(idProcession, idMember));
-		if (this.requestRepository.findAllByMemberProcessionPending(idProcession, idMember).size() > 0 || this.requestRepository.findAllByMemberProcessionAccepted(idProcession, idMember).size() > 0)
+		System.out.println("Request pendientes: " + this.requestRepository.findAllByMemberParadePending(idParade, idMember));
+		System.out.println("Request Aceptadas: " + this.requestRepository.findAllByMemberParadeAccepted(idParade, idMember));
+		if (this.requestRepository.findAllByMemberParadePending(idParade, idMember).size() > 0 || this.requestRepository.findAllByMemberParadeAccepted(idParade, idMember).size() > 0)
 			res = false;
 		return res;
 	}
 
-	public Request create(final int processionId) {
+	public Request create(final int paradeId) {
 
-		Assert.isTrue(this.validMemberToCreateRequest(processionId), "request.notValidMember");
+		Assert.isTrue(this.validMemberToCreateRequest(paradeId), "request.notValidMember");
 		final Request r = new Request();
-		final Parade procession = this.processionService.findOne(processionId);
+		final Parade parade = this.paradeService.findOne(paradeId);
 		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
-		final Collection<PositionAux> positionAuxs = this.positionAuxService.findFreePositionByProcesion(processionId);
+		final Collection<PositionAux> positionAuxs = this.positionAuxService.findFreePositionByProcesion(paradeId);
 		if (!positionAuxs.isEmpty())
 			r.setPositionAux(positionAuxs.iterator().next());
-		// We have to check if the procession is in final mode
-		Assert.isTrue(procession.getIsFinal());
+		// We have to check if the parade is in final mode
+		Assert.isTrue(parade.getIsFinal());
 		// We have to check if we are an active member of the brotherhood
-		Assert.isTrue(this.memberService.isBrotherhoodActiveMember(owner.getId(), procession.getBrotherhood().getId()));
+		Assert.isTrue(this.memberService.isBrotherhoodActiveMember(owner.getId(), parade.getBrotherhood().getId()));
 
-		//		r.setProcession(procession);
+		//		r.setParade(parade);
 		r.setMember(owner);
 
 		return r;
@@ -140,11 +140,11 @@ public class RequestService {
 
 	public Request findOne(final int id) {
 		final Request req = this.requestRepository.findOne(id);
-		// We are either the brotherhood who owns the procession or the owner of the request
+		// We are either the brotherhood who owns the parade or the owner of the request
 		if (req != null) {
-			final boolean processionOwner = req.getPositionAux().getParade().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal());
+			final boolean paradeOwner = req.getPositionAux().getParade().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal());
 			final boolean requestOwner = req.getMember().getUserAccount().equals(LoginService.getPrincipal());
-			Assert.isTrue(processionOwner || requestOwner);
+			Assert.isTrue(paradeOwner || requestOwner);
 		}
 		return req;
 	}
@@ -160,7 +160,7 @@ public class RequestService {
 			res = this.requestRepository.save(request);
 		} else {
 			final Request req = this.requestRepository.findOne(request.getId());
-			// Check if request's procession is owned by the brotherhood
+			// Check if request's parade is owned by the brotherhood
 			Assert.isTrue(req.getPositionAux().getParade().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal()));
 			res = this.requestRepository.save(req);
 		}
@@ -172,8 +172,8 @@ public class RequestService {
 		Assert.isTrue(req.getMember().getUserAccount().equals(LoginService.getPrincipal()));
 		Assert.isNull(req.getStatus());
 		System.out.println("RequestService.java -> delete");
-		PositionAux positionAux = req.getPositionAux();
-		if (positionAux!=null) {
+		final PositionAux positionAux = req.getPositionAux();
+		if (positionAux != null) {
 			positionAux.setStatus(false);
 			this.positionAuxService.save(positionAux);
 		}
@@ -188,12 +188,12 @@ public class RequestService {
 		return acc.getAuthorities().contains(member);
 	}
 
-	public Collection<Request> findRequestByProcessionId(final int processionId) {
-		return this.requestRepository.findAllByProcessionByProcession(processionId);
+	public Collection<Request> findRequestByParadeId(final int paradeId) {
+		return this.requestRepository.findAllByParadeByParade(paradeId);
 	}
 
-	public void deleteAllRequestByProcession(final int processionId) {
-		final Collection<Request> requests = this.findRequestByProcessionId(processionId);
+	public void deleteAllRequestByParade(final int paradeId) {
+		final Collection<Request> requests = this.findRequestByParadeId(paradeId);
 		if (!requests.isEmpty())
 			for (final Request request : requests) {
 				final PositionAux positionAux = request.getPositionAux();
@@ -243,15 +243,15 @@ public class RequestService {
 		return this.requestRepository.getRatioRequestStatusNull();
 	}
 
-	public Double getRatioRequestProcessionStatusTrue() {
-		return this.requestRepository.getRatioRequestProcessionStatusTrue();
+	public Double getRatioRequestParadeStatusTrue() {
+		return this.requestRepository.getRatioRequestParadeStatusTrue();
 	}
 
-	public Double getRatioRequestProcessionStatusFalse() {
-		return this.requestRepository.getRatioRequestProcessionStatusFalse();
+	public Double getRatioRequestParadeStatusFalse() {
+		return this.requestRepository.getRatioRequestParadeStatusFalse();
 	}
 
-	public Double getRatioRequestProcessionStatusNull() {
-		return this.requestRepository.getRatioRequestProcessionStatusNull();
+	public Double getRatioRequestParadeStatusNull() {
+		return this.requestRepository.getRatioRequestParadeStatusNull();
 	}
 }

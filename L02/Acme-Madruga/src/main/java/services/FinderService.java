@@ -58,8 +58,8 @@ public class FinderService {
 		final Finder res = this.finderRepository.getByMember(member.getId());
 		// Si la cach� ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
-			final Collection<Parade> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
-			res.setProcessions(this.getProcessionAmount(processions));
+			final Collection<Parade> parades = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
+			res.setParades(this.getParadeAmount(parades));
 
 			final Calendar c = Calendar.getInstance();
 			c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
@@ -75,8 +75,8 @@ public class FinderService {
 	public Finder findNoCache(final Finder finder) {
 		// We have to check member authority
 		Assert.isTrue(this.checkAuthority("MEMBER"));
-		final Collection<Parade> processions = this.findByFilter(finder.getKeyword(), finder.getMinDate(), finder.getMaxDate(), finder.getArea());
-		finder.setProcessions(this.getProcessionAmount(processions));
+		final Collection<Parade> parades = this.findByFilter(finder.getKeyword(), finder.getMinDate(), finder.getMaxDate(), finder.getArea());
+		finder.setParades(this.getParadeAmount(parades));
 		final Calendar c = Calendar.getInstance();
 		c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
 		finder.setExpirationDate(c.getTime());
@@ -109,15 +109,15 @@ public class FinderService {
 	}
 
 	public Collection<Parade> findByFilter(final String keyword, Date minDate, Date maxDate, final Area area) {
-		Collection<Parade> processions;
+		Collection<Parade> parades;
 
 		minDate = minDate == null ? new GregorianCalendar(0, Calendar.JANUARY, 1).getTime() : minDate;
 		maxDate = maxDate == null ? new GregorianCalendar(9999, Calendar.DECEMBER, 31).getTime() : maxDate;
 		if (area == null)
-			processions = this.finderRepository.findByFilterNoArea(keyword, minDate, maxDate);
+			parades = this.finderRepository.findByFilterNoArea(keyword, minDate, maxDate);
 		else
-			processions = this.finderRepository.findByFilterWithArea(keyword, minDate, maxDate, area);
-		return processions;
+			parades = this.finderRepository.findByFilterWithArea(keyword, minDate, maxDate, area);
+		return parades;
 	}
 
 	public void delete(final Finder finder) {
@@ -125,10 +125,10 @@ public class FinderService {
 		this.finderRepository.delete(finder);
 	}
 
-	public void updateProcessions(final Parade p) {
-		final Collection<Finder> finders = this.finderRepository.getFindersWithProcession(p.getId());
+	public void updateParades(final Parade p) {
+		final Collection<Finder> finders = this.finderRepository.getFindersWithParade(p.getId());
 		for (final Finder f : finders)
-			f.getProcessions().remove(p);
+			f.getParades().remove(p);
 	}
 
 	private boolean checkAuthority(final String authority) {
@@ -157,11 +157,10 @@ public class FinderService {
 		return this.finderRepository.ratioFinder();
 	}
 
-
-	private Collection<Parade> getProcessionAmount(final Collection<Parade> processions) {
+	private Collection<Parade> getParadeAmount(final Collection<Parade> parades) {
 		final Collection<Parade> amount = new HashSet<>();
 		int i = 0;
-		for (final Parade p : processions) {
+		for (final Parade p : parades) {
 			if (i >= this.configurationService.getConfiguration().getCacheAmount())
 				break;
 			else

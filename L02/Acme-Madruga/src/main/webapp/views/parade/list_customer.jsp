@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  --%>
 <!--
-	CONTROL DE CAMBIOS list_customer.jsp PROCESSION
+	CONTROL DE CAMBIOS list_customer.jsp PARADE
   
 	ALVARO 17/02/2019 12:54 CREACIÓN
 -->
@@ -25,12 +25,12 @@
 <body>
 	<div>
 		<security:authorize access="hasRole('BROTHERHOOD')"> 
-			<p class="create"><input type="button" value=<spring:message code="brotherhood.createProcession" /> id="buttonCreateProcession" name="buttonCreateProcession"  onclick="location.href='procession/brotherhood/create.do';"/></p>
-			<display:table name="processions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-				<display:column titleKey="procession.ticker"> 
-					<a href="procession/brotherhood/show.do?processionId=${row.id}">${row.ticker}</a>
+			<p class="create"><input type="button" value=<spring:message code="brotherhood.createParade" /> id="buttonCreateParade" name="buttonCreateParade"  onclick="location.href='parade/brotherhood/create.do';"/></p>
+			<display:table name="parades" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<display:column titleKey="parade.ticker"> 
+					<a href="parade/brotherhood/show.do?paradeId=${row.id}">${row.ticker}</a>
 				</display:column>
-				<display:column property="title" titleKey="procession.title"></display:column>
+				<display:column property="title" titleKey="parade.title"></display:column>
 			</display:table>
 		</security:authorize>
 	</div>

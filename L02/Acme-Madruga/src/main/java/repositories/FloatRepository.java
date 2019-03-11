@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import domain.Float;
 
 /*
- * CONTROL DE CAMBIOS ProcessionRepository.java
+ * CONTROL DE CAMBIOS ParadeRepository.java
  * 
  * ALVARO 17/02/2019 11:43 CREACIÓN DE LA CLASE
- * ALVARO 17/02/2019 12:17 AÑADIDA QUERY findProcessionsByBrotherhood
+ * ALVARO 17/02/2019 12:17 AÑADIDA QUERY findParadesByBrotherhood
  */
 
 @Repository

@@ -5,12 +5,10 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.validation.Validator;
 
-import domain.PositionAux;
-
 import repositories.PositionAuxRepository;
+import domain.PositionAux;
 
 /*
  * CONTROL DE CAMBIOS PositionService.java
@@ -50,30 +48,30 @@ public class PositionAuxService {
 	public PositionAux save(final PositionAux positionAux) {
 		return this.positionAuxRepository.save(positionAux);
 	}
-	
-	public boolean isEmptyPositionAux(int processionId, int row, int column) {
-		PositionAux positionAuxCheck = this.positionAuxRepository.findAllPositionAuxByProcessionIdRowAndColum(processionId, row, column);
+
+	public boolean isEmptyPositionAux(final int paradeId, final int row, final int column) {
+		final PositionAux positionAuxCheck = this.positionAuxRepository.findAllPositionAuxByParadeIdRowAndColum(paradeId, row, column);
 		return !positionAuxCheck.getStatus();
 	}
-	
-	public Collection<PositionAux> saveAll(Collection<PositionAux> positionsAux) {
+
+	public Collection<PositionAux> saveAll(final Collection<PositionAux> positionsAux) {
 		return this.positionAuxRepository.save(positionsAux);
-	}	
+	}
 
 	public void delete(final PositionAux positionAux) {
 		this.positionAuxRepository.delete(positionAux);
 	}
 
-	public Collection<PositionAux> findFreePositionByProcesion(final int processionId) {
-		return this.positionAuxRepository.findAllPositionAuxFreeByProcessionId(processionId);
+	public Collection<PositionAux> findFreePositionByProcesion(final int paradeId) {
+		return this.positionAuxRepository.findAllPositionAuxFreeByParadeId(paradeId);
 	}
 
-	public Collection<PositionAux> findPositionByProcesion(final int processionId) {
-		return this.positionAuxRepository.findAllPositionAuxByProcessionId(processionId);
+	public Collection<PositionAux> findPositionByProcesion(final int paradeId) {
+		return this.positionAuxRepository.findAllPositionAuxByParadeId(paradeId);
 	}
 
-	public void deleteAllPositionByProcession(final int processionId) {
-		final Collection<PositionAux> possitionAux = this.findPositionByProcesion(processionId);
+	public void deleteAllPositionByParade(final int paradeId) {
+		final Collection<PositionAux> possitionAux = this.findPositionByProcesion(paradeId);
 		if (!possitionAux.isEmpty())
 			for (final PositionAux positionAux : possitionAux)
 				this.positionAuxRepository.delete(positionAux);

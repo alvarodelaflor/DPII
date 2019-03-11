@@ -21,13 +21,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Finder extends DomainEntity {
 
 	//======== Atributos de la clase
-	private String					keyword;
-	private Date					minDate;
-	private Date					maxDate;
-	private Date					expirationDate;
+	private String				keyword;
+	private Date				minDate;
+	private Date				maxDate;
+	private Date				expirationDate;
 	//======== Relaciones
-	private Area					area;
-	private Collection<Parade>	processions;
+	private Area				area;
+	private Collection<Parade>	parades;
+
 
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getKeyword() {
@@ -78,12 +79,12 @@ public class Finder extends DomainEntity {
 	}
 
 	@ManyToMany
-	public Collection<Parade> getProcessions() {
-		return this.processions;
+	public Collection<Parade> getParades() {
+		return this.parades;
 	}
 
-	public void setProcessions(final Collection<Parade> processions) {
-		this.processions = processions;
+	public void setParades(final Collection<Parade> parades) {
+		this.parades = parades;
 	}
 
 }

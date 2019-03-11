@@ -22,7 +22,7 @@
 <tiles-definitions>
 
 	<definition name="request/brotherhood/list" extends="master.page">	
-		<put-attribute name="title" value="Brotherhood: request to march on a procession" />
+		<put-attribute name="title" value="Brotherhood: request to march on a parade" />
 		<put-attribute name="body" value="/views/request/list_brotherhood.jsp" />
 	</definition>
 	

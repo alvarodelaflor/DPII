@@ -24,7 +24,7 @@ import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /*
- * CONTROL DE CAMBIOS Procession.java
+ * CONTROL DE CAMBIOS Parade.java
  * 
  * ALVARO 17/02/2019 11:30 CREACI�N DE LA CLASE
  * ALVARO 17/02/2019 12:06 A�ADIDO ATRIBUTO TICKER

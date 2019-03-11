@@ -11,7 +11,7 @@
  -->
  
  <!--
-	CONTROL DE CAMBIOS tiles_es.xml PROCESSION
+	CONTROL DE CAMBIOS tiles_es.xml PARADE
   
 	ALVARO 17/02/2019 12:38 CREACIÓN
 	ALVARO 17/02/2019 16:47 AÑADIDO CREATE Y EDIT
@@ -23,29 +23,29 @@
       
 <tiles-definitions>
 
-	<definition name="procession/brotherhood/list" extends="master.page">	
+	<definition name="parade/brotherhood/list" extends="master.page">	
 		<put-attribute name="title" value="Hermandad: Lista de procesiones" />
-		<put-attribute name="body" value="/views/procession/list_brotherhood.jsp" />
+		<put-attribute name="body" value="/views/parade/list_brotherhood.jsp" />
 	</definition>
 	
-	<definition name="procession/brotherhood/create" extends="master.page">	
+	<definition name="parade/brotherhood/create" extends="master.page">	
 		<put-attribute name="title" value="Hermandad: Crear procesion" />
-		<put-attribute name="body" value="/views/procession/edit.jsp" />
+		<put-attribute name="body" value="/views/parade/edit.jsp" />
 	</definition>
 	
-	<definition name="procession/brotherhood/edit" extends="master.page">	
+	<definition name="parade/brotherhood/edit" extends="master.page">	
 		<put-attribute name="title" value="Brotherhood: Editar procesión" />
-		<put-attribute name="body" value="/views/procession/edit.jsp" />
+		<put-attribute name="body" value="/views/parade/edit.jsp" />
 	</definition>
 	
-	<definition name="procession/brotherhood/show" extends="master.page">	
+	<definition name="parade/brotherhood/show" extends="master.page">	
 		<put-attribute name="title" value="Hermandad: Mostrar procesión" />
-		<put-attribute name="body" value="/views/procession/show_brotherhood.jsp" />
+		<put-attribute name="body" value="/views/parade/show_brotherhood.jsp" />
 	</definition>
 	
-	<definition name="procession/listProcessions" extends="master.page">	
+	<definition name="parade/listParades" extends="master.page">	
 		<put-attribute name="title" value="Hermandad: Procesiones" />
-		<put-attribute name="body" value="/views/procession/listProcessions.jsp" /> 
+		<put-attribute name="body" value="/views/parade/listParades.jsp" /> 
 	</definition>
 	
 </tiles-definitions>

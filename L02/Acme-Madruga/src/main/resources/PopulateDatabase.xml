@@ -258,7 +258,7 @@
 	 
     <!-- ADMIN -->
     
-    <!-- PROCESSION -->
+    <!-- PARADE -->
     <bean id="parade01" class="domain.Parade">
     	<property name="title" value="Virgen del Rosario" />
     	<property name="description" value="Salida de la virgen del Rosario" />
@@ -282,7 +282,7 @@
 		<property name="maxColum" value= "1"/>
 		<property name="floatt" ref= "float02"/>
     </bean>
-    <!-- PROCESSION -->
+    <!-- PARADE -->
     <!-- FLOAT -->
 	<bean id="float01" class="domain.Float">
     	<property name="title" value="Old Float" />
