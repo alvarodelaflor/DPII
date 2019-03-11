@@ -6,6 +6,10 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Sponsorship extends DomainEntity {
@@ -17,6 +21,8 @@ public class Sponsorship extends DomainEntity {
 	private Parade		parade;
 
 
+	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBanner() {
 		return this.banner;
 	}
@@ -50,7 +56,7 @@ public class Sponsorship extends DomainEntity {
 		this.sponsor = sponsor;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Parade getParade() {
 		return this.parade;
 	}

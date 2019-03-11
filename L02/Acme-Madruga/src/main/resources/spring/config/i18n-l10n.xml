@@ -61,6 +61,7 @@
 		<value>/views/messageBox/messages</value>
 		<value>/views/socialProfile/messages</value>
 		<value>/views/sponsor/messages</value>
+		<value>/views/sponsorship/messages</value>
 		<!-- ANTONIO SALVAT -->
 	</util:list>
 

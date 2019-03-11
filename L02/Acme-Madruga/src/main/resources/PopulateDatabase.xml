@@ -116,6 +116,18 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="sponsor" />
+		<property name="password" value="08391c959fc8bd0b672c596c4d6bcdcd" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	
 	
 	<!-- Other domain beans come here -->	
@@ -134,6 +146,35 @@
         <property name="title" value= "Holi holi"/>
     </bean>
     <!-- CHAPTER -->
+    
+    <!-- SPONSOR -->
+	
+    <bean id="sponsor01" class="domain.Sponsor">
+    	<property name="name" value="Antonio" />
+    	<property name="middleName" value="Holita" />
+    	<property name="surname" value="Salvat" />
+    	<property name="photo" value="https://www.megaidea.net/wp-content/uploads/2018/07/DORAEMON-18.png" />
+		<property name="email" value="salvat@salvat.com" />
+        <property name="phone" value="+3423456789" />
+        <property name="address" value="Lora de Río, Nº7. Torreblanca" />
+        <property name="userAccount" ref= "userAccount8"/>
+         <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox26"/>
+                <ref bean="messageBox27"/>
+                <ref bean="messageBox28"/>
+                <ref bean="messageBox29"/>
+                <ref bean="messageBox30"/>
+        	</list>
+        </property>
+         <property name="sponsorships">
+        	<list>
+                <ref bean="sponsorship01"/>
+                <ref bean="sponsorship02"/>
+        	</list>
+        </property>
+    </bean>
+    <!-- SPONSOR -->
 	
 	
 	
@@ -595,6 +636,74 @@
     	<property name="messages"> <null/> </property>
     	<property name="parentBox"> <null/> </property>
     </bean>
+     
+          <bean id="messageBox26" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox27" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox28" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox29" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox30" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="creditCard01" class="domain.CreditCard">
+    	<property name="holder" value= "Lopera"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1345432Ffeds"/>
+    	<property name="CVV" value= "234"/>
+ 		<property name="expiration" value= "2019/09/02 21:00"/>
+    </bean>
+    
+     <bean id="sponsorship01" class="domain.Sponsorship">
+    	<property name="banner" value= "http://banner.com"/>
+    	<property name="target" value= "target01"/>
+    	<property name="sponsor" ref= "sponsor01"/>
+		<property name="parade" ref= "paradeTry"/>
+		<property name="creditCard" ref= "creditCard01"/>
+    </bean>
+    
+    <bean id="sponsorship02" class="domain.Sponsorship">
+    	<property name="banner" value= "http://banner2.com"/>
+    	<property name="target" value= "target02"/>
+    	<property name="sponsor" ref= "sponsor01"/>
+		<property name="parade" ref= "paradeTry2"/>
+		<property name="creditCard" ref= "creditCard01"/>
+    </bean>
+    
+     <bean id="paradeTry" class="domain.Parade">
+    	<property name="name" value= "paradeTry"/>
+    </bean>
+    
+    <bean id="paradeTry2" class="domain.Parade">
+    	<property name="name" value= "paradeTry2"/>
+    </bean>
+    
 </beans>
 
 

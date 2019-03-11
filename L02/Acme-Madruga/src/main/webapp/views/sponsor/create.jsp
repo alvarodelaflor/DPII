@@ -43,6 +43,7 @@
 				<acme:textbox code="sponsor.photo" path="photo" />
 				<acme:phonebox code="sponsor.phone" path="phone"/>
 				
+				
 				<br>
 				
 				<spring:message code="conditions" var="termsAndConditions"/>

@@ -216,6 +216,12 @@
 		<security:intercept-url pattern="/sponsor/create.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/sponsor/save.do" access="permitAll" /> 
 		<security:intercept-url pattern="/sponsor/conditions.do" access="permitAll"/> 
+		
+		<security:intercept-url pattern="/sponsorship/list.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/show.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/create.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/edit.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/delete.do" access="hasRole('SPONSOR')"/> 	
 		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

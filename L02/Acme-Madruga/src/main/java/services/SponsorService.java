@@ -238,4 +238,9 @@ public class SponsorService {
 		return res;
 	}
 
+	public Sponsor getSponsorByUserId(final Integer id) {
+		final Sponsor a = this.sponsorRepository.getSponsorByUserId(id);
+		return a;
+	}
+
 }
