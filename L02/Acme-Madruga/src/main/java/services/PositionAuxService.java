@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.Validator;
 
+import domain.PositionAux;
+
 import repositories.PositionAuxRepository;
-import auxiliar.PositionAux;
 
 /*
  * CONTROL DE CAMBIOS PositionService.java

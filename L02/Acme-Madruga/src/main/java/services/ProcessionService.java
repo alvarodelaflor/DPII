@@ -17,8 +17,8 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import auxiliar.PositionAux;
 import domain.Brotherhood;
+import domain.PositionAux;
 import domain.Procession;
 import repositories.ProcessionRepository;
 import security.LoginService;

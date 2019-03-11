@@ -13,8 +13,8 @@ import repositories.RequestRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import auxiliar.PositionAux;
 import domain.Member;
+import domain.PositionAux;
 import domain.Procession;
 import domain.Request;
 

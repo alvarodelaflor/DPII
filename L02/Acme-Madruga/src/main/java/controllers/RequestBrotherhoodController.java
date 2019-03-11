@@ -32,10 +32,10 @@ import services.PositionAuxService;
 import services.PositionService;
 import services.RequestService;
 import services.WelcomeService;
-import auxiliar.PositionAux;
 import domain.Brotherhood;
 import domain.Message;
 import domain.Position;
+import domain.PositionAux;
 import domain.Procession;
 import domain.Request;
 

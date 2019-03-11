@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
-import auxiliar.PositionAux;
 
 /*
  * CONTROL DE CAMBIOS Position.java
