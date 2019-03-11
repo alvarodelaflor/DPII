@@ -76,7 +76,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
-		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
+		final Collection<domain.BigDecimal> floats = this.floatService.findAllBrotherhoodLogged();
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Boolean checkValid = false;
 		Boolean checkArea = false;
@@ -210,7 +210,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("procession/brotherhood/edit");
 
-		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
+		final Collection<domain.BigDecimal> floats = this.floatService.findAllBrotherhoodLogged();
 
 		result.addObject("procession", procession);
 		result.addObject("floats", floats);
@@ -223,7 +223,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("procession/brotherhood/edit");
 
-		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
+		final Collection<domain.BigDecimal> floats = this.floatService.findAllBrotherhoodLogged();
 
 		result.addObject("floats", floats);
 		result.addObject("procession", procession);

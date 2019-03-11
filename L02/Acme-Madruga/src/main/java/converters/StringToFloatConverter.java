@@ -7,20 +7,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import domain.Float;
+import domain.BigDecimal;
 import repositories.FloatRepository;
 
 @Component
 @Transactional
-public class StringToFloatConverter implements Converter<String, domain.Float> {
+public class StringToFloatConverter implements Converter<String, domain.BigDecimal> {
 
 	@Autowired
 	FloatRepository	floatRepository;
 
 
 	@Override
-	public Float convert(final String text) {
-		Float result;
+	public BigDecimal convert(final String text) {
+		BigDecimal result;
 		int id;
 
 		try {

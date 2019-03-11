@@ -44,7 +44,7 @@ public class Procession extends DomainEntity {
 	private Integer		maxRow;
 	private Integer		maxColum;
 	@JsonIgnore
-	private domain.Float	floatt;
+	private domain.BigDecimal	floatt;
 
 
 	@NotNull
@@ -127,11 +127,11 @@ public class Procession extends DomainEntity {
 	}
 
 	@ManyToOne(optional = false)
-	public Float getFloatt() {
+	public BigDecimal getFloatt() {
 		return this.floatt;
 	}
 
-	public void setFloatt(final Float floatt) {
+	public void setFloatt(final BigDecimal floatt) {
 		this.floatt = floatt;
 	}
 }

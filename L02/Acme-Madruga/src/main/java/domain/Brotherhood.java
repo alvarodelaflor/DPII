@@ -35,7 +35,7 @@ public class Brotherhood extends Actor {
 	private Date					establishmentDate;
 	private String					pictures;
 	private Collection<Procession>	processions;
-	private Collection<domain.Float>	floats;
+	private Collection<domain.BigDecimal>	floats;
 	private Collection<Enrolled>	enrolleds;
 	private Area					area;
 
@@ -89,11 +89,11 @@ public class Brotherhood extends Actor {
 	}
 
 	@OneToMany(mappedBy = "brotherhood")
-	public Collection<domain.Float> getFloats() {
+	public Collection<domain.BigDecimal> getFloats() {
 		return this.floats;
 	}
 
-	public void setFloats(final Collection<domain.Float> floats) {
+	public void setFloats(final Collection<domain.BigDecimal> floats) {
 		this.floats = floats;
 	}
 
