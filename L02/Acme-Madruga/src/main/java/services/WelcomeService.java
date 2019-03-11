@@ -3,8 +3,6 @@ package services;
 
 import java.util.HashSet;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.validator.constraints.URL;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -12,9 +10,9 @@ import org.springframework.util.Assert;
 @Service
 public class WelcomeService {
 
-	String					e			= "Welcome to Acme Madrugá¡, the site to organise your processions.";
+	String					e			= "Welcome to Acme Madrugá¡, the site to organise your parades.";
 
-	String					s			= "¡Bienvenidos a Acme Madrugá¡! Tu sitio para organizar procesiones.";
+	String					s			= "¡Bienvenidos a Acme Madrugá¡! Tu sitio para organizar parades.";
 
 	String					system		= "Acme Madrugá¡";
 

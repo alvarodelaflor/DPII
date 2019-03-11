@@ -40,8 +40,8 @@
 					<display:column titleKey="request.member"> 
 						${row.member.name} ${row.member.surname}
 					</display:column>
-					<display:column titleKey="request.procession"> 
-						${row.positionAux.procession.title}
+					<display:column titleKey="request.parade"> 
+						${row.positionAux.parade.title}
 					</display:column>
 				</display:table>
 			</div>
@@ -60,8 +60,8 @@
 					<display:column titleKey="request.member"> 
 						${row.member.name} ${row.member.surname}
 					</display:column>
-					<display:column titleKey="request.procession"> 
-						${row.positionAux.procession.title}
+					<display:column titleKey="request.parade"> 
+						${row.positionAux.parade.title}
 					</display:column>
 				</display:table>			
 			</div>
@@ -80,8 +80,8 @@
 					<display:column titleKey="request.member"> 
 						${row.member.name} ${row.member.surname}
 					</display:column>
-					<display:column titleKey="request.procession"> 
-						${row.positionAux.procession.title}
+					<display:column titleKey="request.parade"> 
+						${row.positionAux.parade.title}
 					</display:column>
 				</display:table>
 			</div>

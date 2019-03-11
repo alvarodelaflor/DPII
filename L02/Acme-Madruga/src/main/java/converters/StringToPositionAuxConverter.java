@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import domain.PositionAux;
+
 import repositories.PositionAuxRepository;
-import auxiliar.PositionAux;
 
 @Component
 @Transactional

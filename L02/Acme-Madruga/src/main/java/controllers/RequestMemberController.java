@@ -21,9 +21,9 @@ public class RequestMemberController extends AbstractController {
 
 	@Autowired
 	private RequestService	requestService;
-	
+
 	@Autowired
-	private WelcomeService welcomeService;
+	private WelcomeService	welcomeService;
 
 
 	// ---------------------------------------- Listing
@@ -40,8 +40,8 @@ public class RequestMemberController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -52,36 +52,36 @@ public class RequestMemberController extends AbstractController {
 		Request request;
 		try {
 			request = this.requestService.findOne(requestId);
-			if (request==null) {
+			if (request == null)
 				result = new ModelAndView("redirect:/welcome/index.do");
-			} else {
+			else {
 				result = new ModelAndView("request/show");
-				result.addObject("request", request);	
+				result.addObject("request", request);
 			}
 		} catch (final Exception e) {
 			System.out.println("Exception e en Show request: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
 	// ---------------------------------------- Creating
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView createGET(@RequestParam final int processionId) {
+	public ModelAndView createGET(@RequestParam final int paradeId) {
 		ModelAndView result;
 		Request request;
 		try {
-			request = this.requestService.create(processionId);
+			request = this.requestService.create(paradeId);
 			final Request saveRequest = this.requestService.save(request);
 			result = new ModelAndView("redirect:/request/member/show.do?requestId=" + saveRequest.getId());
 		} catch (final Exception e) {
 			System.out.println("Exception e en request create:" + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -99,8 +99,8 @@ public class RequestMemberController extends AbstractController {
 			} catch (final Exception e) {
 				result = this.createEditModelAndView(req, "request.commit.error");
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	// ---------------------------------------- Deleting
@@ -114,16 +114,16 @@ public class RequestMemberController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	// ---------------------------------------- Private methods
 	private ModelAndView createEditModelAndView(final Request request) {
 		final ModelAndView res = new ModelAndView("request/edit");
 		res.addObject("request", request);
-		res.addObject("logo", welcomeService.getLogo());
-		res.addObject("system", welcomeService.getSystem());
+		res.addObject("logo", this.welcomeService.getLogo());
+		res.addObject("system", this.welcomeService.getSystem());
 		return res;
 	}
 
@@ -131,8 +131,8 @@ public class RequestMemberController extends AbstractController {
 		final ModelAndView res = new ModelAndView("request/edit");
 		res.addObject("request", request);
 		res.addObject("message", message);
-		res.addObject("logo", welcomeService.getLogo());
-		res.addObject("system", welcomeService.getSystem());
+		res.addObject("logo", this.welcomeService.getLogo());
+		res.addObject("system", this.welcomeService.getSystem());
 		return res;
 	}
 }

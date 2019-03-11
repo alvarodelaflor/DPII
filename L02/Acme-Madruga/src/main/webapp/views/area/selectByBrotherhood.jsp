@@ -33,7 +33,7 @@
 			<div>
 				<form:form class="formularioEdicion" method="POST" modelAttribute="brotherhoodInit" action="area/brotherhood/edit.do">
 					<acme:select3 items="${areas}" code="area.select" path="area"/>
-  		        	<acme:cancel url="procession/brotherhood/list.do" code="cancel"/>
+  		        	<acme:cancel url="parade/brotherhood/list.do" code="cancel"/>
         		  	<acme:submit name="save" code="send"/>
 				</form:form>
 			</div>

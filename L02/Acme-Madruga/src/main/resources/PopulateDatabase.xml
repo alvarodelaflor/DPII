@@ -13,8 +13,8 @@
  <!--
 	CONTROL DE CAMBIOS PopulateDatabase.xml
   
-	ALVARO 17/02/2019 13:11 Añadidos valores de brotherhood y procession
-	ALVARO 17/02/2019 17:18 Editados tickets procesiones
+	ALVARO 17/02/2019 13:11 Añadidos valores de brotherhood y parade
+	ALVARO 17/02/2019 17:18 Editados tickets desfiles
 	ALVARO 17/02/2019 19:35 Añadidos 2 floats
 	ALVARO 17/02/2019 20:29 Añadidos member y enrolled
 	ALVARO 18/02/2019 09:02 Añadidos positions por defecto
@@ -258,8 +258,8 @@
 	 
     <!-- ADMIN -->
     
-    <!-- PROCESSION -->
-    <bean id="procession01" class="domain.Procession">
+    <!-- PARADE -->
+    <bean id="parade01" class="domain.Parade">
     	<property name="title" value="Virgen del Rosario" />
     	<property name="description" value="Salida de la virgen del Rosario" />
     	<property name="moment" value="2020/04/03 21:00" />
@@ -271,7 +271,7 @@
 		<property name="floatt" ref= "float01"/>
     </bean>
     
-    <bean id="procession02" class="domain.Procession">
+    <bean id="parade02" class="domain.Parade">
     	<property name="title" value="Cristo de la Vera+Cruz" />
     	<property name="description" value="Salida del cristo" />
     	<property name="moment" value="2020/04/03 21:00" />
@@ -282,7 +282,7 @@
 		<property name="maxColum" value= "1"/>
 		<property name="floatt" ref= "float02"/>
     </bean>
-    <!-- PROCESSION -->
+    <!-- PARADE -->
     <!-- FLOAT -->
 	<bean id="float01" class="domain.Float">
     	<property name="title" value="Old Float" />
@@ -355,29 +355,29 @@
     </bean>
     <!-- REQUEST -->
     <!-- POSITIONAUX -->
-    <bean id="positionaux01" class="auxiliar.PositionAux">
+    <bean id="positionaux01" class="domain.PositionAux">
     	<property name="row" value= "0"/>
     	<property name="colum" value= "0"/>
     	<property name="status" value= "false"/>
-    	<property name="procession" ref= "procession01"/>
+    	<property name="parade" ref= "parade01"/>
     </bean>
-    <bean id="positionaux02" class="auxiliar.PositionAux">
+    <bean id="positionaux02" class="domain.PositionAux">
     	<property name="row" value= "0"/>
     	<property name="colum" value= "1"/>
     	<property name="status" value= "false"/>
-    	<property name="procession" ref= "procession01"/>
+    	<property name="parade" ref= "parade01"/>
     </bean>
-    <bean id="positionaux03" class="auxiliar.PositionAux">
+    <bean id="positionaux03" class="domain.PositionAux">
     	<property name="row" value= "1"/>
     	<property name="colum" value= "0"/>
     	<property name="status" value= "false"/>
-    	<property name="procession" ref= "procession01"/>
+    	<property name="parade" ref= "parade01"/>
     </bean>
-    <bean id="positionaux04" class="auxiliar.PositionAux">
+    <bean id="positionaux04" class="domain.PositionAux">
     	<property name="row" value= "1"/>
     	<property name="colum" value= "1"/>
     	<property name="status" value= "false"/>
-    	<property name="procession" ref= "procession01"/>
+    	<property name="parade" ref= "parade01"/>
     </bean>
 <!-- REQUEST -->
 	<!-- AREA -->

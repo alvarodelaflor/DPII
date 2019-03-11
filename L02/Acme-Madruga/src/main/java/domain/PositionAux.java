@@ -1,5 +1,5 @@
 
-package auxiliar;
+package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -7,9 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
-
-import domain.DomainEntity;
-import domain.Procession;
 
 /*
  * CONTROL DE CAMBIOS Position.java
@@ -22,19 +19,19 @@ import domain.Procession;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class PositionAux extends DomainEntity {
 
-	private Integer		row;
-	private Integer		colum;
-	private Boolean		status;
-	private Procession	procession;
+	private Integer	row;
+	private Integer	colum;
+	private Boolean	status;
+	private Parade	parade;
 
 
 	@OneToOne(optional = true)
-	public Procession getProcession() {
-		return this.procession;
+	public Parade getParade() {
+		return this.parade;
 	}
 
-	public void setProcession(final Procession procession) {
-		this.procession = procession;
+	public void setParade(final Parade parade) {
+		this.parade = parade;
 	}
 
 	public Integer getRow() {

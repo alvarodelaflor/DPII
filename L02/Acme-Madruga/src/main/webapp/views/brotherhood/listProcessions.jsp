@@ -17,10 +17,10 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table name="procession" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<display:column property="title" titleKey="procession.title"></display:column>
-	<display:column property="moment" titleKey="procession.moment"></display:column>
-	<display:column property="description" titleKey="procession.description"></display:column>
+<display:table name="parade" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	<display:column property="title" titleKey="parade.title"></display:column>
+	<display:column property="moment" titleKey="parade.moment"></display:column>
+	<display:column property="description" titleKey="parade.description"></display:column>
 </display:table>
 
 <acme:cancel url=" " code="cancel"/>

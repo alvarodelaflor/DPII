@@ -15,6 +15,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
@@ -23,7 +24,7 @@ import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /*
- * CONTROL DE CAMBIOS Procession.java
+ * CONTROL DE CAMBIOS Parade.java
  * 
  * ALVARO 17/02/2019 11:30 CREACI�N DE LA CLASE
  * ALVARO 17/02/2019 12:06 A�ADIDO ATRIBUTO TICKER
@@ -32,19 +33,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Procession extends DomainEntity {
+public class Parade extends DomainEntity {
 
-	private String		title;
-	private String		description;
-	private Date		moment;
+	private String			title;
+	private String			description;
+	private Date			moment;
 	@JsonIgnore
-	private Brotherhood	brotherhood;
-	private String		ticker;
-	private Boolean		isFinal;
-	private Integer		maxRow;
-	private Integer		maxColum;
+	private Brotherhood		brotherhood;
+	private String			ticker;
+	private Boolean			isFinal;
+	private Integer			maxRow;
+	private Integer			maxColum;
 	@JsonIgnore
 	private domain.Float	floatt;
+
+	private String			status;
 
 
 	@NotNull
@@ -124,6 +127,15 @@ public class Procession extends DomainEntity {
 
 	public void setIsFinal(final Boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+
+	@Pattern(regexp = "(SUBMITTED|ACCEPTED|REJECTED)")
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(final String status) {
+		this.status = status;
 	}
 
 	@ManyToOne(optional = false)

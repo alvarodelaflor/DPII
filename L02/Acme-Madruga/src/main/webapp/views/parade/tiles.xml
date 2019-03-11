@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+<!--
+	CONTROL DE CAMBIOS tiles.xml PARADE
+  
+	ALVARO 17/02/2019 12:38 CREACIÓN
+	ALVARO 17/02/2019 16:47 AÑADIDO CREATE Y EDIT
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="parade/brotherhood/list" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: List of parade" />
+		<put-attribute name="body" value="/views/parade/list_brotherhood.jsp" />
+	</definition>
+	
+	<definition name="parade/brotherhood/create" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Create parade" />
+		<put-attribute name="body" value="/views/parade/edit.jsp" />
+	</definition>
+	
+	<definition name="parade/brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Edit parade" />
+		<put-attribute name="body" value="/views/parade/edit.jsp" />
+	</definition>
+	
+	<definition name="parade/brotherhood/show" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Show parade" />
+		<put-attribute name="body" value="/views/parade/show_brotherhood.jsp" />
+	</definition>
+	
+	<definition name="parade/listParades" extends="master.page">	
+		<put-attribute name="title" value="Brotherhood: Parades" />
+		<put-attribute name="body" value="/views/parade/listParades.jsp" /> 
+	</definition>
+</tiles-definitions>

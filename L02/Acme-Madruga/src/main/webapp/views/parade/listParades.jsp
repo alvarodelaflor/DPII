@@ -17,12 +17,12 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table name="procession" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<display:column property="title" titleKey="procession.title"></display:column>
-	<display:column property="moment" titleKey="procession.moment"></display:column>
-	<display:column property="description" titleKey="procession.description"></display:column> 
-	<display:column titleKey="procession.ticker">
-		<a href="procession/show.do?processionId=${row.id}">${row.ticker}</a>
+<display:table name="parade" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	<display:column property="title" titleKey="parade.title"></display:column>
+	<display:column property="moment" titleKey="parade.moment"></display:column>
+	<display:column property="description" titleKey="parade.description"></display:column> 
+	<display:column titleKey="parade.ticker">
+		<a href="parade/show.do?paradeId=${row.id}">${row.ticker}</a>
 	</display:column>
 </display:table>
 

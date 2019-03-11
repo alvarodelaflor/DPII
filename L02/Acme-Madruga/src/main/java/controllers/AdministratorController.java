@@ -33,7 +33,7 @@ import services.BrotherhoodService;
 import services.ConfigurationService;
 import services.FinderService;
 import services.MemberService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
 import services.WelcomeService;
 import domain.Actor;
@@ -41,7 +41,7 @@ import domain.Administrator;
 import domain.Brotherhood;
 import domain.Configuration;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import forms.RegistrationForm;
 
 @Controller
@@ -55,7 +55,7 @@ public class AdministratorController extends AbstractController {
 	BrotherhoodService		brotherhoodService;
 
 	@Autowired
-	ProcessionService		processionService;
+	ParadeService			paradeService;
 
 	@Autowired
 	RequestService			requestService;
@@ -91,8 +91,8 @@ public class AdministratorController extends AbstractController {
 		final RegistrationForm registrationForm = new RegistrationForm();
 		result = new ModelAndView("administrator/create");
 		result.addObject("registrationForm", registrationForm);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -110,16 +110,15 @@ public class AdministratorController extends AbstractController {
 			try {
 				this.administratorService.saveR(administrator);
 				result = new ModelAndView("welcome/index");
-				result.addObject("logo", welcomeService.getLogo());
-				result.addObject("system", welcomeService.getSystem());
+				result.addObject("logo", this.welcomeService.getLogo());
+				result.addObject("system", this.welcomeService.getSystem());
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("email.wrong")) {
+				if (oops.getMessage().equals("email.wrong"))
 					result = this.createModelAndView(administrator, "email.wrong");
-				
-				}else {
+				else {
 					result = this.createModelAndView(administrator, "error.email");
-					result.addObject("logo", welcomeService.getLogo());
-					result.addObject("system", welcomeService.getSystem());
+					result.addObject("logo", this.welcomeService.getLogo());
+					result.addObject("system", this.welcomeService.getSystem());
 				}
 			}
 		return result;
@@ -139,8 +138,8 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("administrator/edit");
 
 		result.addObject("administrator", administrator);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -151,27 +150,24 @@ public class AdministratorController extends AbstractController {
 		admin = this.administratorService.reconstruct(admin, binding);
 
 		System.out.println(binding);
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			result = new ModelAndView("administrator/edit");
-		} else {
+		else
 			try {
 				System.out.println("hola");
 				this.administratorService.save(admin);
 				result = new ModelAndView("redirect:show.do");
-				result.addObject("logo", welcomeService.getLogo());
-				result.addObject("system", welcomeService.getSystem());
+				result.addObject("logo", this.welcomeService.getLogo());
+				result.addObject("system", this.welcomeService.getSystem());
 			} catch (final Throwable oops) {
 				System.out.println("hola2");
-				if (oops.getMessage().equals("email.wrong")) {
+				if (oops.getMessage().equals("email.wrong"))
 					result = this.createEditModelAndView(admin, "email.wrong");
-					
-				} else {
+				else
 					result = this.createEditModelAndView(admin, "error.email");
-				}
 			}
-		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Administrator administrator, final String string) {
@@ -180,8 +176,8 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("administrator/edit");
 		result.addObject("message", string);
 		result.addObject("administrator", administrator);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -191,10 +187,10 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("administrator/create");
 		result.addObject("message", string);
 		result.addObject("administrator", administrator);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -212,8 +208,8 @@ public class AdministratorController extends AbstractController {
 		result.addObject("administrator", administrator);
 
 		result.addObject("requestURI", "administrator/show.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -229,23 +225,23 @@ public class AdministratorController extends AbstractController {
 
 			final Collection<String> largestBrotherhood = this.brotherhoodService.largestBrotherhood();
 			final Collection<String> smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
-			final Collection<Procession> processionOrganised = this.processionService.processionOrganised();
+			final Collection<Parade> paradeOrganised = this.paradeService.paradeOrganised();
 			final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
 			final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();
 			final Double getRatioRequestStatusNull = this.requestService.getRatioRequestStatusNull();
 			final Collection<Member> lisMemberAccept = this.memberService.lisMemberAccept();
-			final Double getRatioRequestProcessionStatusTrue = this.requestService.getRatioRequestProcessionStatusTrue();
-			final Double getRatioRequestProcessionStatusFalse = this.requestService.getRatioRequestProcessionStatusFalse();
-			final Double getRatioRequestProcessionStatusNull = this.requestService.getRatioRequestProcessionStatusNull();
+			final Double getRatioRequestParadeStatusTrue = this.requestService.getRatioRequestParadeStatusTrue();
+			final Double getRatioRequestParadeStatusFalse = this.requestService.getRatioRequestParadeStatusFalse();
+			final Double getRatioRequestParadeStatusNull = this.requestService.getRatioRequestParadeStatusNull();
 
 			final Float maxNumberOfMemberPerBrotherhood = this.memberService.maxNumberOfMemberPerBrotherhood();
 			final Float minNumberOfMemberPerBrotherhood = this.memberService.minNumberOfMemberPerBrotherhood();
 			final Float avgNumberOfMemberPerBrotherhood = this.memberService.avgNumberOfMemberPerBrotherhood();
 			final Float desviationOfNumberOfMemberPerBrotherhood = this.memberService.desviationOfNumberOfMemberPerBrotherhood();
-			final String minProcession = this.processionService.minProcession();
-			final String maxProcession = this.processionService.maxProcession();
-			final Integer minProcessionN = this.processionService.minProcessionN();
-			final Integer maxProcessionN = this.processionService.maxProcessionN();
+			final String minParade = this.paradeService.minParade();
+			final String maxParade = this.paradeService.maxParade();
+			final Integer minParadeN = this.paradeService.minParadeN();
+			final Integer maxParadeN = this.paradeService.maxParadeN();
 			final Collection<Object[]> countBrotherhoodPerArea = this.brotherhoodService.countBrotherhoodPerArea();
 
 			final Map<String, Long> map = new HashMap<>();
@@ -286,22 +282,22 @@ public class AdministratorController extends AbstractController {
 			result.addObject("stddevBrotherhoodPerArea", stddevBrotherhoodPerArea);
 
 			result.addObject("largestBrotherhood", largestBrotherhood);
-			result.addObject("getRatioRequestProcessionStatusTrue", getRatioRequestProcessionStatusTrue);
-			result.addObject("getRatioRequestProcessionStatusFalse", getRatioRequestProcessionStatusFalse);
-			result.addObject("getRatioRequestProcessionStatusNull", getRatioRequestProcessionStatusNull);
+			result.addObject("getRatioRequestParadeStatusTrue", getRatioRequestParadeStatusTrue);
+			result.addObject("getRatioRequestParadeStatusFalse", getRatioRequestParadeStatusFalse);
+			result.addObject("getRatioRequestParadeStatusNull", getRatioRequestParadeStatusNull);
 
 			result.addObject("maxNumberOfMemberPerBrotherhood", maxNumberOfMemberPerBrotherhood);
 			result.addObject("minNumberOfMemberPerBrotherhood", minNumberOfMemberPerBrotherhood);
 			result.addObject("avgNumberOfMemberPerBrotherhood", avgNumberOfMemberPerBrotherhood);
 			result.addObject("desviationOfNumberOfMemberPerBrotherhood", desviationOfNumberOfMemberPerBrotherhood);
 
-			result.addObject("minProcession", minProcession);
-			result.addObject("maxProcession", maxProcession);
-			result.addObject("minProcessionN", minProcessionN);
-			result.addObject("maxProcessionN", maxProcessionN);
+			result.addObject("minParade", minParade);
+			result.addObject("maxParade", maxParade);
+			result.addObject("minParadeN", minParadeN);
+			result.addObject("maxParadeN", maxParadeN);
 
 			result.addObject("smallestBrotherhood", smallestBrotherhood);
-			result.addObject("processionOrganised", processionOrganised);
+			result.addObject("paradeOrganised", paradeOrganised);
 			result.addObject("lisMemberAccept", lisMemberAccept);
 			result.addObject("getRatioRequestStatusTrue", getRatioRequestStatusTrue);
 			result.addObject("getRatioRequestStatusFalse", getRatioRequestStatusFalse);
@@ -309,8 +305,8 @@ public class AdministratorController extends AbstractController {
 
 			result.addObject("requestURI", "administrator/dashboard.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -328,8 +324,8 @@ public class AdministratorController extends AbstractController {
 		res.addObject("members", members);
 		res.addObject("brotherhoods", brotherhoods);
 		res.addObject("requestURI", "administrator/actorList.do");
-		res.addObject("logo", welcomeService.getLogo());
-		res.addObject("system", welcomeService.getSystem());
+		res.addObject("logo", this.welcomeService.getLogo());
+		res.addObject("system", this.welcomeService.getSystem());
 		return res;
 	}
 
@@ -413,8 +409,8 @@ public class AdministratorController extends AbstractController {
 			else
 				res = new ModelAndView("redirect:../#");
 		}
-		res.addObject("logo", welcomeService.getLogo());
-		res.addObject("system", welcomeService.getSystem());
+		res.addObject("logo", this.welcomeService.getLogo());
+		res.addObject("system", this.welcomeService.getSystem());
 		return res;
 	}
 	@RequestMapping(value = "/banBrotherhood", method = RequestMethod.GET)
@@ -442,8 +438,8 @@ public class AdministratorController extends AbstractController {
 			else
 				res = new ModelAndView("redirect:../#");
 		}
-		res.addObject("logo", welcomeService.getLogo());
-		res.addObject("system", welcomeService.getSystem());
+		res.addObject("logo", this.welcomeService.getLogo());
+		res.addObject("system", this.welcomeService.getSystem());
 		return res;
 	}
 
@@ -458,8 +454,8 @@ public class AdministratorController extends AbstractController {
 		result.addObject("actor", actor);
 		result.addObject("members", members);
 		result.addObject("brotherhoods", brotherhoods);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -539,8 +535,8 @@ public class AdministratorController extends AbstractController {
 
 		result.addObject("language", language);
 		result.addObject("requestURI", "administrator/list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -551,8 +547,8 @@ public class AdministratorController extends AbstractController {
 
 		this.welcomeService.addPriority(newPriority);
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -570,8 +566,8 @@ public class AdministratorController extends AbstractController {
 				result.addObject("message", "noPriority.error");
 			}
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -582,8 +578,8 @@ public class AdministratorController extends AbstractController {
 		System.out.println("Carmen: Voy a intentar guardar");
 		this.welcomeService.newSpamWords(newSpamWord);
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -601,8 +597,8 @@ public class AdministratorController extends AbstractController {
 				result.addObject("message", "noSpamWord.error");
 			}
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -613,8 +609,8 @@ public class AdministratorController extends AbstractController {
 
 		this.administratorService.newScoreWordsPos(newScoreWord);
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -632,8 +628,8 @@ public class AdministratorController extends AbstractController {
 				result.addObject("message", "noScoreWord.error");
 			}
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -644,8 +640,8 @@ public class AdministratorController extends AbstractController {
 
 		this.administratorService.newScoreWordsNeg(newScoreWord);
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -663,8 +659,8 @@ public class AdministratorController extends AbstractController {
 				result.addObject("message", "noScoreWord.error");
 			}
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -684,8 +680,8 @@ public class AdministratorController extends AbstractController {
 		System.out.println(spanish);
 
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -701,8 +697,8 @@ public class AdministratorController extends AbstractController {
 		System.out.println(system);
 
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -716,8 +712,8 @@ public class AdministratorController extends AbstractController {
 
 		result.addObject("requestURI", "master-page/header.do");
 		result.addObject("system", system);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -734,8 +730,8 @@ public class AdministratorController extends AbstractController {
 		} catch (final Exception e) {
 			result = this.createEditModelAndView(newLogo, "logo.bad");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -787,8 +783,8 @@ public class AdministratorController extends AbstractController {
 		result.addObject("requestURI", "administrator/list.do");
 
 		result.addObject("message", messageCode);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -801,8 +797,8 @@ public class AdministratorController extends AbstractController {
 		System.out.println("Carmen: Voy a intentar guardar");
 
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -812,8 +808,8 @@ public class AdministratorController extends AbstractController {
 
 		this.welcomeService.newCountry(newPhoneCountry);
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 }

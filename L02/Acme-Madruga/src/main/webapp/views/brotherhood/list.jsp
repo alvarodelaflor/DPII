@@ -30,7 +30,7 @@
 	<display:column property="name" titleKey="brotherhood.name"></display:column>
 
 	<display:column titleKey="showFloat" ><a href="float/listFloat.do?id=${row.id}"><spring:message code="floats" /></a></display:column>
-	<display:column titleKey="showProcessions" ><a href="procession/listProcessions.do?id=${row.id}"><spring:message code="procession" /></a></display:column>
+	<display:column titleKey="showParades" ><a href="parade/listParades.do?id=${row.id}"><spring:message code="parade" /></a></display:column>
 	<display:column titleKey="showEnrolleds" ><a href="member/listMembers.do?id=${row.id}"><spring:message code="memebers" /></a></display:column>
 </display:table>
 

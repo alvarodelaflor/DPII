@@ -23,18 +23,18 @@
 
 <body>
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="procession" action="procession/brotherhood/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="parade" action="parade/brotherhood/edit.do">
           	<form:hidden path="id"/>
           	
-          	<acme:textbox code="procession.title" path="title"/>
-          	<acme:textbox code="procession.description" path="description"/>
-          	<acme:textboxMoment code="procession.moment" path="moment"/>
-          	<acme:selectTrueFalse code="procession" path="isFinal"/>
-          	<acme:numberbox code="procession.maxRow" path="maxRow"/>
-          	<acme:numberbox code="procession.maxColum" path="maxColum"/>
-          	<acme:select items="${floats}" itemLabel="title" code="procession.float" path="floatt"/>
+          	<acme:textbox code="parade.title" path="title"/>
+          	<acme:textbox code="parade.description" path="description"/>
+          	<acme:textboxMoment code="parade.moment" path="moment"/>
+          	<acme:selectTrueFalse code="parade" path="isFinal"/>
+          	<acme:numberbox code="parade.maxRow" path="maxRow"/>
+          	<acme:numberbox code="parade.maxColum" path="maxColum"/>
+          	<acme:select items="${floats}" itemLabel="title" code="parade.float" path="floatt"/>
           	
-          	<acme:cancel url="procession/brotherhood/list.do" code="cancel"/>
+          	<acme:cancel url="parade/brotherhood/list.do" code="cancel"/>
           	<acme:submit name="save" code="send"/>
 		</form:form>
 	</div>

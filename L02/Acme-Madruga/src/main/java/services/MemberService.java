@@ -320,9 +320,9 @@ public class MemberService {
 		return this.memberRepository.memberAccept();
 	}
 
-	public Boolean checkAlreadyInProcession(final int memberId) {
+	public Boolean checkAlreadyInParade(final int memberId) {
 		Boolean res = false;
-		if (this.memberRepository.membersOfProcession(memberId) > 0)
+		if (this.memberRepository.membersOfParade(memberId) > 0)
 			res = true;
 		return res;
 	}

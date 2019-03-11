@@ -14,7 +14,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 
 /*
  * CONTROL DE CAMBIOS floatt Service.java
@@ -28,14 +28,14 @@ public class FloatService {
 	//Managed Repository -------------------	
 
 	@Autowired
-	private FloatRepository	floatRepository;
+	private FloatRepository		floatRepository;
 
 	//Supporting services ------------------
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService		paradeService;
 
 	@Autowired
 	Validator					validator;
@@ -45,11 +45,11 @@ public class FloatService {
 
 	public domain.Float create() {
 
-		final domain.Float floatt  = new Float();
+		final domain.Float floatt = new Float();
 		final UserAccount login = LoginService.getPrincipal();
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId());
 		floatt.setBrotherhood(brotherhood);
-		return floatt ;
+		return floatt;
 
 	}
 
@@ -60,11 +60,11 @@ public class FloatService {
 	public domain.Float findOne(final int id) {
 		return this.floatRepository.findOne(id);
 	}
-	public domain.Float save(final domain.Float floatt ) {
+	public domain.Float save(final domain.Float floatt) {
 		/*
 		 * Ya que no le podemos pasar nada al create porque el reconstruidor hace que se lo cargue decidimos colocar
 		 * aquí la asignación del brotherhood y será en el controlador donde se vigile que la edición la realiza el creador
-		 * de esa floatt 
+		 * de esa floatt
 		 */
 		floatt.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 		return this.floatRepository.save(floatt);
@@ -72,10 +72,10 @@ public class FloatService {
 
 	public void delete(final domain.Float floatt) {
 		Assert.notNull(this.floatRepository.findOne(floatt.getId()), "La floatt  no existe");
-		Assert.isTrue(LoginService.getPrincipal().getId() == floatt .getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
-		final Collection<Procession> processions = this.processionService.getProcessionByFloatId(floatt.getId());
-		for (final Procession procession : processions)
-			this.processionService.delete(procession);
+		Assert.isTrue(LoginService.getPrincipal().getId() == floatt.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
+		final Collection<Parade> parades = this.paradeService.getParadeByFloatId(floatt.getId());
+		for (final Parade parade : parades)
+			this.paradeService.delete(parade);
 		this.floatRepository.delete(floatt);
 	}
 
@@ -115,12 +115,12 @@ public class FloatService {
 		return this.findOne(floatId);
 	}
 
-	public domain.Float reconstruct(final domain.Float floatt , final BindingResult binding) {
+	public domain.Float reconstruct(final domain.Float floatt, final BindingResult binding) {
 		Float result;
 
 		if (floatt.getId() == 0) {
 			floatt.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
-			result = floatt ;
+			result = floatt;
 		} else {
 			result = this.floatRepository.findOne(floatt.getId());
 			//			result.setTitle(floatt.getTitle());
@@ -130,7 +130,7 @@ public class FloatService {
 			//				result.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 			floatt.setId(result.getId());
 			floatt.setVersion(result.getVersion());
-			result = floatt ;
+			result = floatt;
 		}
 		this.validator.validate(floatt, binding);
 		return result;

@@ -21,7 +21,7 @@
 	<div>
 		<table>
     		<tr><td><spring:message code="request.member" /><jstl:out value="${request.member.name} ${request.member.surname}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="procession.title" /><jstl:out value="${request.positionAux.procession.title}"></jstl:out></td></tr>
+    		<tr><td><spring:message code="parade.title" /><jstl:out value="${request.positionAux.parade.title}"></jstl:out></td></tr>
     		<tr><td><spring:message code="request.position" /><spring:message code="request.rowF" /><jstl:out value="${request.positionAux.row} "></jstl:out><spring:message code="request.columF" /><jstl:out value="${request.positionAux.colum}"></jstl:out></td></tr>
     		<tr><td><spring:message code="request.comment" /><jstl:out value="${request.comment}"></jstl:out></td></tr>
 		</table>
