@@ -13,14 +13,14 @@
 	<div>
 		<p>
 			<label class="strong"><spring:message code="request.brotherhood"/>: </label>
-			<jstl:out value="${request.positionAux.procession.brotherhood.title}"/>
+			<jstl:out value="${request.positionAux.parade.brotherhood.title}"/>
 		</p>
 	</div>
 
 	<div>
 		<p>
-			<label class="strong"><spring:message code="request.procession"/>: </label>
-			<jstl:out value="${request.positionAux.procession.title}"/>
+			<label class="strong"><spring:message code="request.parade"/>: </label>
+			<jstl:out value="${request.positionAux.parade.title}"/>
 		</p>
 	</div>
 

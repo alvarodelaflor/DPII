@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import auxiliar.PositionAux;
+import domain.PositionAux;
 
 /*
  * CONTROL DE CAMBIOS PosRepository.java
@@ -18,12 +18,12 @@ import auxiliar.PositionAux;
 @Repository
 public interface PositionAuxRepository extends JpaRepository<PositionAux, Integer> {
 
-	@Query("select p from PositionAux p where p.status=false and p.procession.id=?1")
-	Collection<PositionAux> findAllPositionAuxFreeByProcessionId(int processionId);
+	@Query("select p from PositionAux p where p.status=false and p.parade.id=?1")
+	Collection<PositionAux> findAllPositionAuxFreeByParadeId(int paradeId);
 
-	@Query("select p from PositionAux p where p.procession.id=?1")
-	Collection<PositionAux> findAllPositionAuxByProcessionId(int processionId);
-	
-	@Query("select p from PositionAux p where p.procession.id=?1 and p.row=?2 and p.colum=?3")
-	PositionAux findAllPositionAuxByProcessionIdRowAndColum(int processionId, int row, int colum);
+	@Query("select p from PositionAux p where p.parade.id=?1")
+	Collection<PositionAux> findAllPositionAuxByParadeId(int paradeId);
+
+	@Query("select p from PositionAux p where p.parade.id=?1 and p.row=?2 and p.colum=?3")
+	PositionAux findAllPositionAuxByParadeIdRowAndColum(int paradeId, int row, int colum);
 }

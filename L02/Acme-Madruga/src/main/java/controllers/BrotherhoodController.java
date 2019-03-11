@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Brotherhood;
+import domain.History;
 import forms.RegistrationForm;
 import security.LoginService;
 import services.ActorService;
 import services.BrotherhoodService;
 import services.EnrolledService;
+import services.HistoryService;
 import services.MemberService;
 import services.WelcomeService;
 
@@ -49,6 +51,9 @@ public class BrotherhoodController extends AbstractController {
 
 	@Autowired
 	ActorService		actorService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	@Autowired
 	WelcomeService welcomeService;
@@ -80,11 +85,15 @@ public class BrotherhoodController extends AbstractController {
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.reconstructR(registration, binding);
+		
 
 		if (binding.hasErrors())
 			result = new ModelAndView("brotherhood/create");
 		else
 			try {
+				History history = this.historyService.create();
+				History savedHistory = this.historyService.save(history);
+				brotherhood.setHistory(savedHistory);
 				this.brotherhoodService.saveR(brotherhood);
 				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {

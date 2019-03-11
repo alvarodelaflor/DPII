@@ -5,34 +5,59 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+/*
+ * CONTROL DE CAMBIOS History.java
+ * 
+ * ALVARO 09/03/2019 11:30 CREACION DE LA CLASE
+ */
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class History extends DomainEntity {
 
-	// Must be exactly 1 Inception Record
-	Collection<Record>	records;
-	Brotherhood			brotherhood;
+	private InceptionRecord inceptionRecord;
+	private Collection<PeriodRecord> periodRecord;
+	private Collection<LegalRecord> legalRecord;
+	private Collection<LinkRecord> linkRecord;
 
-
-	@ElementCollection
-	public Collection<Record> getRecords() {
-		return this.records;
+	@OneToOne(cascade = CascadeType.ALL)
+	public InceptionRecord getInceptionRecord() {
+		return inceptionRecord;
 	}
 
-	public void setRecords(final Collection<Record> records) {
-		this.records = records;
+	public void setInceptionRecord(InceptionRecord inceptionRecord) {
+		this.inceptionRecord = inceptionRecord;
 	}
 
-	@ManyToOne(optional = true)
-	public Brotherhood getBrotherhood() {
-		return this.brotherhood;
+	@OneToMany(cascade = CascadeType.ALL)
+	public Collection<PeriodRecord> getPeriodRecord() {
+		return periodRecord;
 	}
 
-	public void setBrotherhood(final Brotherhood brotherhood) {
-		this.brotherhood = brotherhood;
+	public void setPeriodRecord(Collection<PeriodRecord> periodRecord) {
+		this.periodRecord = periodRecord;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL)
+	public Collection<LegalRecord> getLegalRecord() {
+		return legalRecord;
+	}
+
+	public void setLegalRecord(Collection<LegalRecord> legalRecord) {
+		this.legalRecord = legalRecord;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL)
+	public Collection<LinkRecord> getLinkRecord() {
+		return linkRecord;
+	}
+
+	public void setLinkRecord(Collection<LinkRecord> linkRecord) {
+		this.linkRecord = linkRecord;
 	}
 }

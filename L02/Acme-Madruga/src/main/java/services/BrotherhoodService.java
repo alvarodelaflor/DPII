@@ -421,5 +421,9 @@ public class BrotherhoodService {
 	public Collection<Object[]> countBrotherhoodPerArea() {
 		return this.brotherhoodRepository.countBrotherhoodPerArea();
 	}
+	
+	public Brotherhood findBrotherhoodByHistory(int historyId) {
+		return this.brotherhoodRepository.findBrotherhoodByHistory(historyId);
+	}
 
 }

@@ -33,7 +33,7 @@ import services.BrotherhoodService;
 import services.ConfigurationService;
 import services.FinderService;
 import services.MemberService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
 import services.WelcomeService;
 import domain.Actor;
@@ -41,7 +41,7 @@ import domain.Administrator;
 import domain.Brotherhood;
 import domain.Configuration;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import forms.RegistrationForm;
 
 @Controller
@@ -55,7 +55,7 @@ public class AdministratorController extends AbstractController {
 	BrotherhoodService		brotherhoodService;
 
 	@Autowired
-	ProcessionService		processionService;
+	ParadeService			paradeService;
 
 	@Autowired
 	RequestService			requestService;
@@ -225,23 +225,23 @@ public class AdministratorController extends AbstractController {
 
 			final Collection<String> largestBrotherhood = this.brotherhoodService.largestBrotherhood();
 			final Collection<String> smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
-			final Collection<Procession> processionOrganised = this.processionService.processionOrganised();
+			final Collection<Parade> paradeOrganised = this.paradeService.paradeOrganised();
 			final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
 			final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();
 			final Double getRatioRequestStatusNull = this.requestService.getRatioRequestStatusNull();
 			final Collection<Member> lisMemberAccept = this.memberService.lisMemberAccept();
-			final Double getRatioRequestProcessionStatusTrue = this.requestService.getRatioRequestProcessionStatusTrue();
-			final Double getRatioRequestProcessionStatusFalse = this.requestService.getRatioRequestProcessionStatusFalse();
-			final Double getRatioRequestProcessionStatusNull = this.requestService.getRatioRequestProcessionStatusNull();
+			final Double getRatioRequestParadeStatusTrue = this.requestService.getRatioRequestParadeStatusTrue();
+			final Double getRatioRequestParadeStatusFalse = this.requestService.getRatioRequestParadeStatusFalse();
+			final Double getRatioRequestParadeStatusNull = this.requestService.getRatioRequestParadeStatusNull();
 
 			final Float maxNumberOfMemberPerBrotherhood = this.memberService.maxNumberOfMemberPerBrotherhood();
 			final Float minNumberOfMemberPerBrotherhood = this.memberService.minNumberOfMemberPerBrotherhood();
 			final Float avgNumberOfMemberPerBrotherhood = this.memberService.avgNumberOfMemberPerBrotherhood();
 			final Float desviationOfNumberOfMemberPerBrotherhood = this.memberService.desviationOfNumberOfMemberPerBrotherhood();
-			final String minProcession = this.processionService.minProcession();
-			final String maxProcession = this.processionService.maxProcession();
-			final Integer minProcessionN = this.processionService.minProcessionN();
-			final Integer maxProcessionN = this.processionService.maxProcessionN();
+			final String minParade = this.paradeService.minParade();
+			final String maxParade = this.paradeService.maxParade();
+			final Integer minParadeN = this.paradeService.minParadeN();
+			final Integer maxParadeN = this.paradeService.maxParadeN();
 			final Collection<Object[]> countBrotherhoodPerArea = this.brotherhoodService.countBrotherhoodPerArea();
 
 			final Map<String, Long> map = new HashMap<>();
@@ -282,22 +282,22 @@ public class AdministratorController extends AbstractController {
 			result.addObject("stddevBrotherhoodPerArea", stddevBrotherhoodPerArea);
 
 			result.addObject("largestBrotherhood", largestBrotherhood);
-			result.addObject("getRatioRequestProcessionStatusTrue", getRatioRequestProcessionStatusTrue);
-			result.addObject("getRatioRequestProcessionStatusFalse", getRatioRequestProcessionStatusFalse);
-			result.addObject("getRatioRequestProcessionStatusNull", getRatioRequestProcessionStatusNull);
+			result.addObject("getRatioRequestParadeStatusTrue", getRatioRequestParadeStatusTrue);
+			result.addObject("getRatioRequestParadeStatusFalse", getRatioRequestParadeStatusFalse);
+			result.addObject("getRatioRequestParadeStatusNull", getRatioRequestParadeStatusNull);
 
 			result.addObject("maxNumberOfMemberPerBrotherhood", maxNumberOfMemberPerBrotherhood);
 			result.addObject("minNumberOfMemberPerBrotherhood", minNumberOfMemberPerBrotherhood);
 			result.addObject("avgNumberOfMemberPerBrotherhood", avgNumberOfMemberPerBrotherhood);
 			result.addObject("desviationOfNumberOfMemberPerBrotherhood", desviationOfNumberOfMemberPerBrotherhood);
 
-			result.addObject("minProcession", minProcession);
-			result.addObject("maxProcession", maxProcession);
-			result.addObject("minProcessionN", minProcessionN);
-			result.addObject("maxProcessionN", maxProcessionN);
+			result.addObject("minParade", minParade);
+			result.addObject("maxParade", maxParade);
+			result.addObject("minParadeN", minParadeN);
+			result.addObject("maxParadeN", maxParadeN);
 
 			result.addObject("smallestBrotherhood", smallestBrotherhood);
-			result.addObject("processionOrganised", processionOrganised);
+			result.addObject("paradeOrganised", paradeOrganised);
 			result.addObject("lisMemberAccept", lisMemberAccept);
 			result.addObject("getRatioRequestStatusTrue", getRatioRequestStatusTrue);
 			result.addObject("getRatioRequestStatusFalse", getRatioRequestStatusFalse);

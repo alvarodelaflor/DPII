@@ -13,7 +13,7 @@
  <!--
 	CONTROL DE CAMBIOS i18n-l10n.xml
   
-	ALVARO 17/02/2019 12:38 Añadido value de procession
+	ALVARO 17/02/2019 12:38 Añadido value de parade
 	ALVARO 17/02/2019 19:30 Añadido value de float
 	ALVARO 17/02/2019 21:41 Añadido value de enrolled
  -->
@@ -36,10 +36,15 @@
 		<value>/views/brotherhood/messages</value>
 		<value>/views/profile/messages</value>
 		<!-- ALVARO -->
-		<value>/views/procession/messages</value>
+		<value>/views/parade/messages</value>
 		<value>/views/float/messages</value>
 		<value>/views/enrolled/messages</value>
 		<value>/views/request/messages</value>
+		<value>/views/inceptionRecord/messages</value>
+		<value>/views/periodRecord/messages</value>
+		<value>/views/linkRecord/messages</value>
+		<value>/views/legalRecord/messages</value>
+		<value>/views/history/messages</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<value>/views/configuration/messages</value>

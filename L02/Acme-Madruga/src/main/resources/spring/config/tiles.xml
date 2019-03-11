@@ -12,7 +12,7 @@
 <!--
 	CONTROL DE CAMBIOS tiles.xml
   
-	ALVARO 17/02/2019 12:38 Añadido value de procession
+	ALVARO 17/02/2019 12:38 Añadido value de parade
 	ALVARO 17/02/2019 19:30 Añadido value de float
 	ALVARO 17/02/2019 21:41 Añadido value de enrolled
 -->
@@ -35,10 +35,15 @@
 		<value>/views/profile/tiles.xml</value>
 		<value>/views/brotherhood/tiles.xml</value>
 		<!-- ALVARO -->
-		<value>/views/procession/tiles.xml</value>
+		<value>/views/parade/tiles.xml</value>
 		<value>/views/float/tiles.xml</value>
 		<value>/views/enrolled/tiles.xml</value>
 		<value>/views/request/tiles.xml</value>
+		<value>/views/inceptionRecord/tiles.xml</value>
+		<value>/views/periodRecord/tiles.xml</value>
+		<value>/views/linkRecord/tiles.xml</value>
+		<value>/views/legalRecord/tiles.xml</value>
+		<value>/views/history/tiles.xml</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<value>/views/configuration/tiles.xml</value>

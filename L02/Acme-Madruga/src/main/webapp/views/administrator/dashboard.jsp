@@ -33,9 +33,9 @@
 		<p><spring:message code="admin.TheRatioRequestsTrue" /> <jstl:out value="${getRatioRequestStatusTrue}"></jstl:out></p>
 		<p><spring:message code="admin.TheRatioRequestsFalse" /> <jstl:out value="${getRatioRequestStatusFalse}"></jstl:out></p>
 		<p><spring:message code="admin.TheRatioRequestsNull" /> <jstl:out value="${getRatioRequestStatusNull}"></jstl:out></p>
-		<p><spring:message code="admin.getRatioRequestProcessionStatusTrue" /> <jstl:out value="${getRatioRequestProcessionStatusTrue}"></jstl:out></p>
-		<p><spring:message code="admin.getRatioRequestProcessionStatusFalse" /> <jstl:out value="${getRatioRequestProcessionStatusFalse}"></jstl:out></p>
-		<p><spring:message code="admin.getRatioRequestProcessionStatusNull" /> <jstl:out value="${getRatioRequestProcessionStatusNull}"></jstl:out></p>
+		<p><spring:message code="admin.getRatioRequestParadeStatusTrue" /> <jstl:out value="${getRatioRequestParadeStatusTrue}"></jstl:out></p>
+		<p><spring:message code="admin.getRatioRequestParadeStatusFalse" /> <jstl:out value="${getRatioRequestParadeStatusFalse}"></jstl:out></p>
+		<p><spring:message code="admin.getRatioRequestParadeStatusNull" /> <jstl:out value="${getRatioRequestParadeStatusNull}"></jstl:out></p>
 		<p><spring:message code="admin.maxNumberOfMemberPerBrotherhood" /> <jstl:out value="${maxNumberOfMemberPerBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.minNumberOfMemberPerBrotherhood" /> <jstl:out value="${minNumberOfMemberPerBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.avgNumberOfMemberPerBrotherhood" /> <jstl:out value="${avgNumberOfMemberPerBrotherhood}"></jstl:out></p>
@@ -60,12 +60,12 @@
 		<display:column property="surname" titleKey="admin.member.surname"></display:column>
 </display:table>
 
-<p><spring:message code="admin.processionOrganised" /> </p>	
-<display:table pagesize="5" name="${processionOrganised}" id="processionOrganised"
+<p><spring:message code="admin.paradeOrganised" /> </p>	
+<display:table pagesize="5" name="${paradeOrganised}" id="paradeOrganised"
 	requestURI="${requestURI}">
-		<display:column property="title" titleKey="procession.title"></display:column>
-	<display:column property="moment" titleKey="procession.moment"></display:column>
-	<display:column property="description" titleKey="procession.description"></display:column>
+		<display:column property="title" titleKey="parade.title"></display:column>
+	<display:column property="moment" titleKey="parade.moment"></display:column>
+	<display:column property="description" titleKey="parade.description"></display:column>
 </display:table>
 	</div>
 <br>
@@ -102,7 +102,7 @@ var myChart = new Chart(ctx, {
 				],
         datasets: [{
             label: ["<spring:message code="admin.positions"/>"],
-            data: ["${maxProcessionN}","${minProcessionN}"],
+            data: ["${maxParadeN}","${minParadeN}"],
             backgroundColor: [
                 'rgba(255, 40, 132, 0.2)'
             ],

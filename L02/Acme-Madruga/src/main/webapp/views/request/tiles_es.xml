@@ -22,7 +22,7 @@
 <tiles-definitions>
 
 	<definition name="request/brotherhood/list" extends="master.page">	
-		<put-attribute name="title" value="Hermandad: Peticiones para salir en procesión" />
+		<put-attribute name="title" value="Hermandad: Peticiones para salir en desfile" />
 		<put-attribute name="body" value="/views/request/list_brotherhood.jsp" />
 	</definition>
 		
@@ -37,7 +37,7 @@
 	</definition>
 	
 	<definition name="request/list" extends="master.page">	
-		<put-attribute name="title" value="Peticiones para salir en procesión" />
+		<put-attribute name="title" value="Peticiones para salir en desfile" />
 		<put-attribute name="body" value="/views/request/list.jsp" />
 	</definition>
 	

@@ -10,7 +10,7 @@
 <!--
 	CONTROL DE CAMBIOS header.jsp
   
-	ALVARO 17/02/2019 12:38 A�adido valores para brotherhood procession
+	ALVARO 17/02/2019 12:38 A�adido valores para brotherhood parade
 	ALVARO 17/02/2019 15:06 Cambiado logo
 	ALVARO 17/02/2019 19:32 A�adido float
 	ALVARO 17/02/2019 21:43 A�adido enrolled
@@ -48,7 +48,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="float/brotherhood/list.do"><spring:message code="master.page.brotherhood.float.list" /></a></li>
-					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.brotherhood.procession.list" /></a></li>
+					<li><a href="parade/brotherhood/list.do"><spring:message code="master.page.brotherhood.parade.list" /></a></li>
 					<li><a href="enrolled/brotherhood/list.do"><spring:message code="master.page.brotherhood.enrolled.list" /></a></li>
 					<li><a href="request/brotherhood/list.do"><spring:message code="master.page.brotherhood.request.list" /></a></li>
 					<li><a href="area/brotherhood/edit.do"><spring:message code="master.page.brotherhood.area.edit" /></a></li>
@@ -94,9 +94,21 @@
 					<li><a href="brotherhood/list.do"><spring:message code="master.page.brotherhood1" /></a></li>					
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.utilities" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="history/list.do"><spring:message code="master.page.histories" /></a></li>					
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+			<li><a class="fNiv"><spring:message	code="master.page.utilities" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="history/list.do"><spring:message code="master.page.histories" /></a></li>					
+				</ul>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+ 
+ <!--
+	CONTROL DE CAMBIOS tiles_es.xml FLOAT
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="history/periodRecord/create" extends="master.page">	
+		<put-attribute name="title" value="Crear período de registro" />
+		<put-attribute name="body" value="/views/periodRecord/edit.jsp" />
+	</definition>
+	
+	<definition name="history/periodRecord/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar período de registro" />
+		<put-attribute name="body" value="/views/periodRecord/edit.jsp" />
+	</definition>
+	
+	<definition name="history/periodRecord/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar período de registro" />
+		<put-attribute name="body" value="/views/periodRecord/show.jsp" />
+	</definition>
+	
+</tiles-definitions>

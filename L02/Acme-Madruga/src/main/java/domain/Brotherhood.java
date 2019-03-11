@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * CONTROL DE CAMBIOS Brotherhoods.java
  * 
  * ALVARO 17/02/2019 11:23 CREACI�N DE LA CLASE
- * ALVARO 17/02/2019 17:10 A�ADIDO PROCESIONES Y FLOAT
+ * ALVARO 17/02/2019 17:10 A�ADIDO PARADES Y FLOAT
  * ALVARO 17/02/2019 20:03 A�ADIDO ENROLLED
  */
 
@@ -34,10 +34,11 @@ public class Brotherhood extends Actor {
 	private String						title;
 	private Date						establishmentDate;
 	private String						pictures;
-	private Collection<Procession>		processions;
+	private Collection<Parade>			parades;
 	private Collection<domain.Float>	floats;
-	private Collection<Enrolled>		enrolleds;
-	private Area						area;
+	private Collection<Enrolled>	enrolleds;
+	private Area					area;
+	private History history;
 
 
 	@OneToOne(optional = true)
@@ -80,12 +81,12 @@ public class Brotherhood extends Actor {
 	}
 
 	@OneToMany(mappedBy = "brotherhood", cascade = CascadeType.ALL)
-	public Collection<Procession> getProcessions() {
-		return this.processions;
+	public Collection<Parade> getParades() {
+		return this.parades;
 	}
 
-	public void setProcessions(final Collection<Procession> processions) {
-		this.processions = processions;
+	public void setParades(final Collection<Parade> parades) {
+		this.parades = parades;
 	}
 
 	@OneToMany(mappedBy = "brotherhood")
@@ -104,5 +105,14 @@ public class Brotherhood extends Actor {
 
 	public void setEnrolleds(final Collection<Enrolled> enrolleds) {
 		this.enrolleds = enrolleds;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	public History getHistory() {
+		return history;
+	}
+
+	public void setHistory(History history) {
+		this.history = history;
 	}
 }
