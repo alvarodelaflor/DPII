@@ -15,6 +15,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
@@ -45,6 +46,8 @@ public class Parade extends DomainEntity {
 	private Integer			maxColum;
 	@JsonIgnore
 	private domain.Float	floatt;
+
+	private String			status;
 
 
 	@NotNull
@@ -124,6 +127,15 @@ public class Parade extends DomainEntity {
 
 	public void setIsFinal(final Boolean isFinal) {
 		this.isFinal = isFinal;
+	}
+
+	@Pattern(regexp = "(SUBMITTED|ACCEPTED|REJECTED)")
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(final String status) {
+		this.status = status;
 	}
 
 	@ManyToOne(optional = false)

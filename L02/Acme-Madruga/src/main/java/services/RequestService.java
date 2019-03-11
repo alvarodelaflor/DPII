@@ -59,7 +59,7 @@ public class RequestService {
 	}
 
 	public void delete(final Request request) {
-		Assert.isTrue(request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId()==LoginService.getPrincipal().getId());
+		Assert.isTrue(request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId()==LoginService.getPrincipal().getId());
 		PositionAux positionAux = request.getPositionAux();
 		if (positionAux!=null) {
 			positionAux.setStatus(false);
@@ -142,7 +142,7 @@ public class RequestService {
 		final Request req = this.requestRepository.findOne(id);
 		// We are either the brotherhood who owns the procession or the owner of the request
 		if (req != null) {
-			final boolean processionOwner = req.getPositionAux().getProcession().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal());
+			final boolean processionOwner = req.getPositionAux().getParade().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal());
 			final boolean requestOwner = req.getMember().getUserAccount().equals(LoginService.getPrincipal());
 			Assert.isTrue(processionOwner || requestOwner);
 		}
@@ -161,7 +161,7 @@ public class RequestService {
 		} else {
 			final Request req = this.requestRepository.findOne(request.getId());
 			// Check if request's procession is owned by the brotherhood
-			Assert.isTrue(req.getPositionAux().getProcession().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal()));
+			Assert.isTrue(req.getPositionAux().getParade().getBrotherhood().getUserAccount().equals(LoginService.getPrincipal()));
 			res = this.requestRepository.save(req);
 		}
 		return res;

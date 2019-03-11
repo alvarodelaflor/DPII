@@ -8,7 +8,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
-
 /*
  * CONTROL DE CAMBIOS Position.java
  * 
@@ -20,19 +19,19 @@ import javax.persistence.OneToOne;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class PositionAux extends DomainEntity {
 
-	private Integer		row;
-	private Integer		colum;
-	private Boolean		status;
-	private Parade	procession;
+	private Integer	row;
+	private Integer	colum;
+	private Boolean	status;
+	private Parade	parade;
 
 
 	@OneToOne(optional = true)
-	public Parade getProcession() {
-		return this.procession;
+	public Parade getParade() {
+		return this.parade;
 	}
 
-	public void setProcession(final Parade procession) {
-		this.procession = procession;
+	public void setParade(final Parade parade) {
+		this.parade = parade;
 	}
 
 	public Integer getRow() {

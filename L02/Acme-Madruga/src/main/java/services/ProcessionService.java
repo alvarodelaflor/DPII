@@ -101,7 +101,7 @@ public class ProcessionService {
 					final PositionAux positionAux = this.positionAuxService.create();
 					positionAux.setRow(i);
 					positionAux.setColum(j);
-					positionAux.setProcession(processionUpdate);
+					positionAux.setParade(processionUpdate);
 					positionAux.setStatus(false);
 					positionAuxs.add(positionAux);
 				}

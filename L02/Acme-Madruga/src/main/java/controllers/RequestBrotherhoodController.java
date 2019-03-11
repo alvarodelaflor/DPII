@@ -99,7 +99,7 @@ public class RequestBrotherhoodController extends AbstractController {
 		try {
 			final Request request = this.requestService.findOne(requestId);
 
-			if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId())
+			if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId())
 				result = new ModelAndView("redirect:list.do");
 			else {
 				Assert.notNull(request, "request.nul");
@@ -122,7 +122,7 @@ public class RequestBrotherhoodController extends AbstractController {
 		ModelAndView result;
 		Request request;
 		request = this.requestService.findOne(requestId);
-		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId() || (request.getStatus()!=null && request.getStatus().equals(true)))
+		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId() || (request.getStatus()!=null && request.getStatus().equals(true)))
 			result = new ModelAndView("redirect:list.do");
 		else {
 			Assert.notNull(request);
@@ -139,7 +139,7 @@ public class RequestBrotherhoodController extends AbstractController {
 
 		final Request request = this.requestService.findOne(requestId);
 		System.out.println("Request encontrado: " + request);
-		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getProcession().getBrotherhood().getUserAccount().getId())
+		if (this.requestService.findOne(requestId) == null || LoginService.getPrincipal().getId() != request.getPositionAux().getParade().getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
 		else {
 			try {
@@ -198,7 +198,7 @@ public class RequestBrotherhoodController extends AbstractController {
 						estado = "rechazada";
 
 					final Message msg = this.messageService.create();
-					msg.setBody("Su petición a la procesión " + request.getPositionAux().getProcession().getTitle() + " ha sido " + estado);
+					msg.setBody("Su petición a la procesión " + request.getPositionAux().getParade().getTitle() + " ha sido " + estado);
 					msg.setSubject("Notifación sobre cambio de estado de petición");
 					final Collection<String> emails = new ArrayList<>();
 					emails.add(request.getMember().getEmail());
@@ -227,7 +227,7 @@ public class RequestBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("request/brotherhood/edit");
 
-		final Collection<PositionAux> positionsAux = this.positionAuxService.findFreePositionByProcesion(request.getPositionAux().getProcession().getId());
+		final Collection<PositionAux> positionsAux = this.positionAuxService.findFreePositionByProcesion(request.getPositionAux().getParade().getId());
 		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
 		Boolean language;
 		if (actuallanguage.equals("English")) {
