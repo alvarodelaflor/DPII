@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import domain.BigDecimal;
+import domain.Float;
 
 /*
  * CONTROL DE CAMBIOS ProcessionRepository.java
@@ -17,8 +17,8 @@ import domain.BigDecimal;
  */
 
 @Repository
-public interface FloatRepository extends JpaRepository<BigDecimal, Integer> {
+public interface FloatRepository extends JpaRepository<Float, Integer> {
 
 	@Query("select f from domain.Float f where f.brotherhood.id=?1")
-	Collection<domain.BigDecimal> findFloatByBrotherhood(int brotherhoodId);
+	Collection<domain.Float> findFloatByBrotherhood(int brotherhoodId);
 }

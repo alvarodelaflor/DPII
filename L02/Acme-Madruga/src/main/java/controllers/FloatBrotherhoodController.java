@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.BigDecimal;
+import domain.Float;
 import security.LoginService;
 import services.FloatService;
 import services.WelcomeService;
@@ -57,7 +57,7 @@ public class FloatBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-		final Collection<domain.BigDecimal> floats = this.floatService.findAllBrotherhoodLogged();
+		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
 		final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
 		Boolean language;
 		if (actuallanguage.equals("English")) {
@@ -79,7 +79,7 @@ public class FloatBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "floatId", defaultValue = "-1") final int floatId) {
 		ModelAndView result;
-		final domain.BigDecimal floatt = this.floatService.findOne(floatId);
+		final domain.Float floatt = this.floatService.findOne(floatId);
 
 		if (this.floatService.findOne(floatId) == null || LoginService.getPrincipal().getId() != floatt.getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
@@ -103,7 +103,7 @@ public class FloatBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		BigDecimal floatt;
+		Float floatt;
 		floatt = this.floatService.create();
 		result = this.createEditModelAndView(floatt);
 		result.addObject("logo", welcomeService.getLogo());
@@ -114,7 +114,7 @@ public class FloatBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "id", defaultValue = "-1") final int floatId) {
 		ModelAndView result;
-		domain.BigDecimal floatt;
+		domain.Float floatt;
 		floatt = this.floatService.findOne(floatId);
 		if (this.floatService.findOne(floatId) == null || LoginService.getPrincipal().getId() != floatt.getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
@@ -131,7 +131,7 @@ public class FloatBrotherhoodController extends AbstractController {
 	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int floatId) {
 		ModelAndView result;
 
-		final domain.BigDecimal floatt = this.floatService.findOne(floatId);
+		final domain.Float floatt = this.floatService.findOne(floatId);
 		System.out.println("Float encontrado: " + floatt);
 		if (this.floatService.findOne(floatId) == null || LoginService.getPrincipal().getId() != floatt.getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
@@ -151,7 +151,7 @@ public class FloatBrotherhoodController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(domain.BigDecimal floatt, final BindingResult binding) {
+	public ModelAndView save(domain.Float floatt, final BindingResult binding) {
 		ModelAndView result;
 
 		floatt = this.floatService.reconstruct(floatt, binding);
@@ -188,7 +188,7 @@ public class FloatBrotherhoodController extends AbstractController {
 		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
-	private ModelAndView createEditModelAndView(final domain.BigDecimal floatt) {
+	private ModelAndView createEditModelAndView(final domain.Float floatt) {
 		ModelAndView result;
 
 		result = new ModelAndView("float/brotherhood/edit");
@@ -199,7 +199,7 @@ public class FloatBrotherhoodController extends AbstractController {
 		return result;
 	}
 
-	private ModelAndView createEditModelAndView(final domain.BigDecimal floatt, final String messageCode) {
+	private ModelAndView createEditModelAndView(final domain.Float floatt, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("float/brotherhood/edit");

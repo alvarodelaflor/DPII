@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import domain.Procession;
+import domain.Parade;
 
 /*
  * CONTROL DE CAMBIOS ProcessionRepository.java
@@ -18,31 +18,31 @@ import domain.Procession;
  */
 
 @Repository
-public interface ProcessionRepository extends JpaRepository<Procession, Integer> {
+public interface ProcessionRepository extends JpaRepository<Parade, Integer> {
 
 	@Query("select p from Procession p where p.brotherhood.id=?1")
-	Collection<Procession> findProcessionsByBrotherhood(int brotherhoodId);
+	Collection<Parade> findProcessionsByBrotherhood(int brotherhoodId);
 
 	@Query("select p from Procession p where p.floatt.id=?1")
-	Collection<Procession> findProcessionsByFloat(int floatId);
+	Collection<Parade> findProcessionsByFloat(int floatId);
 
 	@Query("select p from Procession p where p.ticker=?1")
-	Collection<Procession> findProcessionsByTicker(String ticker);
+	Collection<Parade> findProcessionsByTicker(String ticker);
 
 	@Query("select p from Procession p where p.brotherhood.id=?1 and p.isFinal=true")
-	Collection<Procession> findProcessionsBrotherhoodFinal(int brotherhoodId);
+	Collection<Parade> findProcessionsBrotherhoodFinal(int brotherhoodId);
 
 	//12.3.5 --> The processions that are going to be organised in 30 days or less. 
 	@Query("select p from Procession p where p.moment between ?1 and ?2")
-	Collection<Procession> findAllWithCreationDateTimeBeforeI(Date dateNow, Date dateFinish);
+	Collection<Parade> findAllWithCreationDateTimeBeforeI(Date dateNow, Date dateFinish);
 
 	//12.3.6 --> 
 	@Query("select p,max(p.maxRow * p.maxColum) from Procession p")
-	Procession minProcession();
+	Parade minProcession();
 
 	//12.3.6 --> 
 	@Query("select p,max(p.maxRow * p.maxColum) from Procession p")
-	Procession maxProcession();
+	Parade maxProcession();
 
 	//12.3.6 --> 
 	@Query("select max(p.maxRow * p.maxColum) from Procession p")

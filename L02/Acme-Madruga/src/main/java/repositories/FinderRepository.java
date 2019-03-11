@@ -10,16 +10,16 @@ import org.springframework.stereotype.Repository;
 
 import domain.Area;
 import domain.Finder;
-import domain.Procession;
+import domain.Parade;
 
 @Repository
 public interface FinderRepository extends JpaRepository<Finder, Integer> {
 
 	@Query("select p from Procession p where (p.title like %?1% or p.description like %?1%) and p.moment between ?2 and ?3 and p.isFinal=true")
-	Collection<Procession> findByFilterNoArea(final String keyword, final Date minDate, final Date maxDate);
+	Collection<Parade> findByFilterNoArea(final String keyword, final Date minDate, final Date maxDate);
 
 	@Query("select p from Procession p join p.brotherhood b where (p.title like %?1% or p.description like %?1%) and p.moment between ?2 and ?3 and b.area=?4 and p.isFinal=true")
-	Collection<Procession> findByFilterWithArea(final String keyword, final Date minDate, final Date maxDate, final Area area);
+	Collection<Parade> findByFilterWithArea(final String keyword, final Date minDate, final Date maxDate, final Area area);
 
 	//CARMEN DASHBOAR (22.2.2 NIVEL B)
 	@Query("select min(f.processions.size) from Finder f")

@@ -21,7 +21,7 @@ import security.LoginService;
 import domain.Area;
 import domain.Finder;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -58,7 +58,7 @@ public class FinderService {
 		final Finder res = this.finderRepository.getByMember(member.getId());
 		// Si la cach� ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
-			final Collection<Procession> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
+			final Collection<Parade> processions = this.findByFilter(res.getKeyword(), res.getMinDate(), res.getMaxDate(), res.getArea());
 			res.setProcessions(this.getProcessionAmount(processions));
 
 			final Calendar c = Calendar.getInstance();
@@ -75,7 +75,7 @@ public class FinderService {
 	public Finder findNoCache(final Finder finder) {
 		// We have to check member authority
 		Assert.isTrue(this.checkAuthority("MEMBER"));
-		final Collection<Procession> processions = this.findByFilter(finder.getKeyword(), finder.getMinDate(), finder.getMaxDate(), finder.getArea());
+		final Collection<Parade> processions = this.findByFilter(finder.getKeyword(), finder.getMinDate(), finder.getMaxDate(), finder.getArea());
 		finder.setProcessions(this.getProcessionAmount(processions));
 		final Calendar c = Calendar.getInstance();
 		c.add(Calendar.HOUR, this.configurationService.getConfiguration().getCacheHours());
@@ -108,8 +108,8 @@ public class FinderService {
 		return finder;
 	}
 
-	public Collection<Procession> findByFilter(final String keyword, Date minDate, Date maxDate, final Area area) {
-		Collection<Procession> processions;
+	public Collection<Parade> findByFilter(final String keyword, Date minDate, Date maxDate, final Area area) {
+		Collection<Parade> processions;
 
 		minDate = minDate == null ? new GregorianCalendar(0, Calendar.JANUARY, 1).getTime() : minDate;
 		maxDate = maxDate == null ? new GregorianCalendar(9999, Calendar.DECEMBER, 31).getTime() : maxDate;
@@ -125,7 +125,7 @@ public class FinderService {
 		this.finderRepository.delete(finder);
 	}
 
-	public void updateProcessions(final Procession p) {
+	public void updateProcessions(final Parade p) {
 		final Collection<Finder> finders = this.finderRepository.getFindersWithProcession(p.getId());
 		for (final Finder f : finders)
 			f.getProcessions().remove(p);
@@ -158,10 +158,10 @@ public class FinderService {
 	}
 
 
-	private Collection<Procession> getProcessionAmount(final Collection<Procession> processions) {
-		final Collection<Procession> amount = new HashSet<>();
+	private Collection<Parade> getProcessionAmount(final Collection<Parade> processions) {
+		final Collection<Parade> amount = new HashSet<>();
 		int i = 0;
-		for (final Procession p : processions) {
+		for (final Parade p : processions) {
 			if (i >= this.configurationService.getConfiguration().getCacheAmount())
 				break;
 			else

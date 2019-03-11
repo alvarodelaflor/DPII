@@ -13,8 +13,8 @@ import repositories.FloatRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
-import domain.BigDecimal;
-import domain.Procession;
+import domain.Float;
+import domain.Parade;
 
 /*
  * CONTROL DE CAMBIOS floatt Service.java
@@ -43,9 +43,9 @@ public class FloatService {
 
 	//Simple CRUD Methods ------------------
 
-	public domain.BigDecimal create() {
+	public domain.Float create() {
 
-		final domain.BigDecimal floatt  = new BigDecimal();
+		final domain.Float floatt  = new Float();
 		final UserAccount login = LoginService.getPrincipal();
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId());
 		floatt.setBrotherhood(brotherhood);
@@ -53,14 +53,14 @@ public class FloatService {
 
 	}
 
-	public Collection<BigDecimal> findAll() {
+	public Collection<Float> findAll() {
 		return this.floatRepository.findAll();
 	}
 
-	public domain.BigDecimal findOne(final int id) {
+	public domain.Float findOne(final int id) {
 		return this.floatRepository.findOne(id);
 	}
-	public domain.BigDecimal save(final domain.BigDecimal floatt ) {
+	public domain.Float save(final domain.Float floatt ) {
 		/*
 		 * Ya que no le podemos pasar nada al create porque el reconstruidor hace que se lo cargue decidimos colocar
 		 * aquí la asignación del brotherhood y será en el controlador donde se vigile que la edición la realiza el creador
@@ -70,33 +70,33 @@ public class FloatService {
 		return this.floatRepository.save(floatt);
 	}
 
-	public void delete(final domain.BigDecimal floatt) {
+	public void delete(final domain.Float floatt) {
 		Assert.notNull(this.floatRepository.findOne(floatt.getId()), "La floatt  no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == floatt .getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
-		final Collection<Procession> processions = this.processionService.getProcessionByFloatId(floatt.getId());
-		for (final Procession procession : processions)
+		final Collection<Parade> processions = this.processionService.getProcessionByFloatId(floatt.getId());
+		for (final Parade procession : processions)
 			this.processionService.delete(procession);
 		this.floatRepository.delete(floatt);
 	}
 
-	public domain.BigDecimal update(final domain.BigDecimal floatt) {
+	public domain.Float update(final domain.Float floatt) {
 		final UserAccount login = LoginService.getPrincipal();
 		Assert.isTrue(login != null);
 		Assert.isTrue(this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId()) != null);
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId());
 		Assert.isTrue(floatt.getBrotherhood().equals(brotherhood));
 		Assert.isTrue(this.findOne(floatt.getId()) != null);
-		final domain.BigDecimal saveFloat = this.floatRepository.save(floatt);
+		final domain.Float saveFloat = this.floatRepository.save(floatt);
 		return saveFloat;
 	}
 
 	//Other Methods
 
-	public Collection<domain.BigDecimal> getFloatByBrotherhoodId(final int brotherhoodId) {
+	public Collection<domain.Float> getFloatByBrotherhoodId(final int brotherhoodId) {
 		return this.floatRepository.findFloatByBrotherhood(brotherhoodId);
 	}
 
-	public Collection<domain.BigDecimal> findAllBrotherhoodLogged() {
+	public Collection<domain.Float> findAllBrotherhoodLogged() {
 		final UserAccount login = LoginService.getPrincipal();
 		Assert.isTrue(login != null);
 		Assert.isTrue(this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId()) != null);
@@ -104,7 +104,7 @@ public class FloatService {
 		return this.floatRepository.findFloatByBrotherhood(brotherhood.getId());
 	}
 
-	public domain.BigDecimal show(final int floatId) {
+	public domain.Float show(final int floatId) {
 		final UserAccount login = LoginService.getPrincipal();
 		Assert.isTrue(login != null);
 		Assert.isTrue(this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId()) != null);
@@ -115,8 +115,8 @@ public class FloatService {
 		return this.findOne(floatId);
 	}
 
-	public domain.BigDecimal reconstruct(final domain.BigDecimal floatt , final BindingResult binding) {
-		BigDecimal result;
+	public domain.Float reconstruct(final domain.Float floatt , final BindingResult binding) {
+		Float result;
 
 		if (floatt.getId() == 0) {
 			floatt.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));

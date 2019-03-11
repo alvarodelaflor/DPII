@@ -19,7 +19,7 @@ import org.springframework.validation.Validator;
 
 import domain.Brotherhood;
 import domain.PositionAux;
-import domain.Procession;
+import domain.Parade;
 import repositories.ProcessionRepository;
 import security.LoginService;
 import security.UserAccount;
@@ -58,14 +58,14 @@ public class ProcessionService {
 
 	//Simple CRUD Methods ------------------
 
-	public Procession create() {
+	public Parade create() {
 
-		final Procession procession = new Procession();
+		final Parade procession = new Parade();
 		return procession;
 
 	}
 
-	public String randomTicker(final Procession procession) {
+	public String randomTicker(final Parade procession) {
 		String ticker = "";
 		Boolean res = true;
 		while (res) {
@@ -85,15 +85,15 @@ public class ProcessionService {
 		}
 		return ticker;
 	}
-	public Collection<Procession> findAll() {
+	public Collection<Parade> findAll() {
 		return this.processionRepository.findAll();
 	}
 
-	public Procession findOne(final int id) {
+	public Parade findOne(final int id) {
 		return this.processionRepository.findOne(id);
 	}
-	public Procession save(final Procession procession) {
-		final Procession processionUpdate = this.processionRepository.save(procession);
+	public Parade save(final Parade procession) {
+		final Parade processionUpdate = this.processionRepository.save(procession);
 		List<PositionAux> positionAuxs = new ArrayList<PositionAux>();
 		if (procession.getIsFinal().equals(true))
 			for (int i = 0; i < procession.getMaxRow(); i++)
@@ -109,7 +109,7 @@ public class ProcessionService {
 		return processionUpdate;
 	}
 
-	public void delete(final Procession procession) {
+	public void delete(final Parade procession) {
 		Assert.notNull(this.processionRepository.findOne(procession.getId()), "La procession no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == procession.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
 		this.requestService.deleteAllRequestByProcession(procession.getId());
@@ -118,28 +118,28 @@ public class ProcessionService {
 		this.processionRepository.delete(procession);
 	}
 
-	public Procession update(final Procession procession) {
+	public Parade update(final Parade procession) {
 		final UserAccount login = LoginService.getPrincipal();
 		Assert.isTrue(login != null);
 		Assert.isTrue(this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId()) != null);
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId());
 		Assert.isTrue(procession.getBrotherhood().equals(brotherhood));
 		Assert.isTrue(this.findOne(procession.getId()) != null);
-		final Procession saveProcession = this.processionRepository.save(procession);
+		final Parade saveProcession = this.processionRepository.save(procession);
 		return saveProcession;
 	}
 
 	//Other Methods
 
-	public Collection<Procession> getProcessionByBrotherhoodId(final int brotherhoodId) {
+	public Collection<Parade> getProcessionByBrotherhoodId(final int brotherhoodId) {
 		return this.processionRepository.findProcessionsByBrotherhood(brotherhoodId);
 	}
 
-	public Collection<Procession> getProcessionByFloatId(final int floatId) {
+	public Collection<Parade> getProcessionByFloatId(final int floatId) {
 		return this.processionRepository.findProcessionsByFloat(floatId);
 	}
 
-	public Collection<Procession> findAllBrotherhoodLogged() {
+	public Collection<Parade> findAllBrotherhoodLogged() {
 		final UserAccount login = LoginService.getPrincipal();
 		Assert.isTrue(login != null);
 		Assert.isTrue(this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId()) != null);
@@ -147,7 +147,7 @@ public class ProcessionService {
 		return this.processionRepository.findProcessionsByBrotherhood(brotherhood.getId());
 	}
 
-	public Procession show(final int processionId) {
+	public Parade show(final int processionId) {
 		final UserAccount login = LoginService.getPrincipal();
 		Assert.isTrue(login != null);
 		Assert.isTrue(this.brotherhoodService.getBrotherhoodByUserAccountId(login.getId()) != null);
@@ -158,8 +158,8 @@ public class ProcessionService {
 		return this.findOne(processionId);
 	}
 
-	public Procession reconstruct(final Procession procession, final BindingResult binding) {
-		Procession result;
+	public Parade reconstruct(final Parade procession, final BindingResult binding) {
+		Parade result;
 
 		if (procession.getId() == 0) {
 			procession.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
@@ -188,11 +188,11 @@ public class ProcessionService {
 		return result;
 	}
 
-	public Collection<Procession> findProcessionsByTicker(final String ticker) {
+	public Collection<Parade> findProcessionsByTicker(final String ticker) {
 		return this.processionRepository.findProcessionsByTicker(ticker);
 	}
 
-	public Collection<Procession> processionOrganised() {
+	public Collection<Parade> processionOrganised() {
 		return this.processionRepository.findAllWithCreationDateTimeBeforeI(LocalDateTime.now().toDate(), this.sumarMes(LocalDateTime.now().toDate()));
 	}
 
@@ -210,11 +210,11 @@ public class ProcessionService {
 	}
 
 	public String minProcession() {
-		final Procession p = this.processionRepository.minProcession();
+		final Parade p = this.processionRepository.minProcession();
 		return p == null ? null : p.getTitle();
 	}
 	public String maxProcession() {
-		final Procession p = this.processionRepository.maxProcession();
+		final Parade p = this.processionRepository.maxProcession();
 		return p == null ? null : p.getTitle();
 	}
 	public Integer minProcessionN() {
@@ -224,7 +224,7 @@ public class ProcessionService {
 		return this.processionRepository.maxProcessionN();
 	}
 
-	public Collection<Procession> findProcessionsBrotherhoodFinal(final Integer brotherhood) {
+	public Collection<Parade> findProcessionsBrotherhoodFinal(final Integer brotherhood) {
 		return this.processionRepository.findProcessionsBrotherhoodFinal(brotherhood);
 	}
 }

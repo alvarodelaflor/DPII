@@ -28,7 +28,7 @@ import services.ProcessionService;
 import services.RequestService;
 import services.WelcomeService;
 import domain.Brotherhood;
-import domain.Procession;
+import domain.Parade;
 
 /*
  * CONTROL DE CAMBIOS ProcessionBrotherhoodController.java
@@ -72,7 +72,7 @@ public class ProcessionController extends AbstractController {
 		try {
 			final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
 			System.out.println(brotherhood.getId());
-			final Collection<Procession> procession = this.processionService.findProcessionsBrotherhoodFinal(brotherhood.getId());
+			final Collection<Parade> procession = this.processionService.findProcessionsBrotherhoodFinal(brotherhood.getId());
 			System.out.println(procession);
 			result = new ModelAndView("procession/listProcessions");
 			result.addObject("brotherhood", brotherhood);
@@ -89,7 +89,7 @@ public class ProcessionController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "processionId", defaultValue = "-1") final int processionId) {
 		ModelAndView result;
-		final Procession procession = this.processionService.findOne(processionId);
+		final Parade procession = this.processionService.findOne(processionId);
 
 		if (this.processionService.findOne(processionId) == null)
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -111,7 +111,7 @@ public class ProcessionController extends AbstractController {
 	}
 	public Boolean validMember(final int processionId) {
 		Boolean res = true;
-		final Procession procession = this.processionService.findOne(processionId);
+		final Parade procession = this.processionService.findOne(processionId);
 		final int brotherhoodId = this.processionService.findOne(processionId).getBrotherhood().getId();
 		if (procession == null || !this.requestService.validMemberToCreateRequest(processionId) || !this.memberService.checkIsInBrotherhood(brotherhoodId) || procession.getIsFinal().equals(false))
 			res = false;

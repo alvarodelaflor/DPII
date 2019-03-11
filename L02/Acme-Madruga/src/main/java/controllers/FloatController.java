@@ -27,7 +27,7 @@ import services.BrotherhoodService;
 import services.FloatService;
 import services.WelcomeService;
 import domain.Brotherhood;
-import domain.BigDecimal;
+import domain.Float;
 
 /*
  * CONTROL DE CAMBIOS FloatBrotherhoodController.java
@@ -59,7 +59,7 @@ public class FloatController extends AbstractController {
 	public ModelAndView showPictureFloat(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
 		try {
-			final domain.BigDecimal floatt = this.floatService.findOne(id);
+			final domain.Float floatt = this.floatService.findOne(id);
 
 			List<String> pictures = new ArrayList<>();
 			if (floatt.getPictures() != null && floatt.getPictures().contains("'"))
@@ -93,7 +93,7 @@ public class FloatController extends AbstractController {
 		ModelAndView result;
 		try {
 			final Brotherhood brotherhood = this.brotherhoodService.findOne(id);
-			final Collection<BigDecimal> floatt = brotherhood.getFloats();
+			final Collection<Float> floatt = brotherhood.getFloats();
 			result = new ModelAndView("float/listFloat");
 			result.addObject("brotherhood", brotherhood);
 			result.addObject("float", floatt);

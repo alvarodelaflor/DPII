@@ -23,15 +23,15 @@ public class PositionAux extends DomainEntity {
 	private Integer		row;
 	private Integer		colum;
 	private Boolean		status;
-	private Procession	procession;
+	private Parade	procession;
 
 
 	@OneToOne(optional = true)
-	public Procession getProcession() {
+	public Parade getProcession() {
 		return this.procession;
 	}
 
-	public void setProcession(final Procession procession) {
+	public void setProcession(final Parade procession) {
 		this.procession = procession;
 	}
 

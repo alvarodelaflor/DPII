@@ -15,7 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Member;
 import domain.PositionAux;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 /*
@@ -68,14 +68,14 @@ public class RequestService {
 		this.requestRepository.delete(request);
 	}
 
-	public Collection<Request> findAllByProcessionAccepted(final Procession procession) {
+	public Collection<Request> findAllByProcessionAccepted(final Parade procession) {
 		return this.requestRepository.findAllByProcession(procession.getId(), true);
 	}
-	public Collection<Request> findAllByProcessionRejected(final Procession procession) {
+	public Collection<Request> findAllByProcessionRejected(final Parade procession) {
 		return this.requestRepository.findAllByProcession(procession.getId(), false);
 	}
 
-	public Collection<Request> findAllByProcessionPending(final Procession procession) {
+	public Collection<Request> findAllByProcessionPending(final Parade procession) {
 		return this.requestRepository.findAllByProcessionPending(procession.getId());
 	}
 
@@ -116,7 +116,7 @@ public class RequestService {
 
 		Assert.isTrue(this.validMemberToCreateRequest(processionId), "request.notValidMember");
 		final Request r = new Request();
-		final Procession procession = this.processionService.findOne(processionId);
+		final Parade procession = this.processionService.findOne(processionId);
 		final Member owner = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId());
 		final Collection<PositionAux> positionAuxs = this.positionAuxService.findFreePositionByProcesion(processionId);
 		if (!positionAuxs.isEmpty())

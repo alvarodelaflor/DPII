@@ -41,7 +41,7 @@ import domain.Administrator;
 import domain.Brotherhood;
 import domain.Configuration;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import forms.RegistrationForm;
 
 @Controller
@@ -229,7 +229,7 @@ public class AdministratorController extends AbstractController {
 
 			final Collection<String> largestBrotherhood = this.brotherhoodService.largestBrotherhood();
 			final Collection<String> smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
-			final Collection<Procession> processionOrganised = this.processionService.processionOrganised();
+			final Collection<Parade> processionOrganised = this.processionService.processionOrganised();
 			final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
 			final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();
 			final Double getRatioRequestStatusNull = this.requestService.getRatioRequestStatusNull();

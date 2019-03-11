@@ -34,8 +34,8 @@ public class Brotherhood extends Actor {
 	private String					title;
 	private Date					establishmentDate;
 	private String					pictures;
-	private Collection<Procession>	processions;
-	private Collection<domain.BigDecimal>	floats;
+	private Collection<Parade>	processions;
+	private Collection<domain.Float>	floats;
 	private Collection<Enrolled>	enrolleds;
 	private Area					area;
 
@@ -80,20 +80,20 @@ public class Brotherhood extends Actor {
 	}
 
 	@OneToMany(mappedBy = "brotherhood", cascade = CascadeType.ALL)
-	public Collection<Procession> getProcessions() {
+	public Collection<Parade> getProcessions() {
 		return this.processions;
 	}
 
-	public void setProcessions(final Collection<Procession> processions) {
+	public void setProcessions(final Collection<Parade> processions) {
 		this.processions = processions;
 	}
 
 	@OneToMany(mappedBy = "brotherhood")
-	public Collection<domain.BigDecimal> getFloats() {
+	public Collection<domain.Float> getFloats() {
 		return this.floats;
 	}
 
-	public void setFloats(final Collection<domain.BigDecimal> floats) {
+	public void setFloats(final Collection<domain.Float> floats) {
 		this.floats = floats;
 	}
 

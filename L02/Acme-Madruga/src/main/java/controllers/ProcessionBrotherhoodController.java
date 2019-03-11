@@ -31,7 +31,7 @@ import services.ProcessionService;
 import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Message;
-import domain.Procession;
+import domain.Parade;
 
 /*
  * CONTROL DE CAMBIOS ProcessionBrotherhoodController.java
@@ -75,8 +75,8 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-		final Collection<Procession> processions = this.processionService.findAllBrotherhoodLogged();
-		final Collection<domain.BigDecimal> floats = this.floatService.findAllBrotherhoodLogged();
+		final Collection<Parade> processions = this.processionService.findAllBrotherhoodLogged();
+		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Boolean checkValid = false;
 		Boolean checkArea = false;
@@ -98,7 +98,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "processionId", defaultValue = "-1") final int processionId) {
 		ModelAndView result;
-		final Procession procession = this.processionService.findOne(processionId);
+		final Parade procession = this.processionService.findOne(processionId);
 
 		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
@@ -117,7 +117,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		Procession procession;
+		Parade procession;
 		procession = this.processionService.create();
 		result = this.createEditModelAndView(procession);
 		result.addObject("logo", welcomeService.getLogo());
@@ -128,7 +128,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "id", defaultValue = "-1") final int processionId) {
 		ModelAndView result;
-		Procession procession;
+		Parade procession;
 		procession = this.processionService.findOne(processionId);
 		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId() || procession.getIsFinal().equals(true))
 			result = new ModelAndView("redirect:list.do");
@@ -145,7 +145,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int processionId) {
 		ModelAndView result;
 
-		final Procession procession = this.processionService.findOne(processionId);
+		final Parade procession = this.processionService.findOne(processionId);
 		System.out.println("Procession encontrado: " + procession);
 		if (this.processionService.findOne(processionId) == null || LoginService.getPrincipal().getId() != procession.getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
@@ -171,7 +171,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	//	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Procession procession, final BindingResult binding) {
+	public ModelAndView save(Parade procession, final BindingResult binding) {
 		ModelAndView result;
 
 		procession = this.processionService.reconstruct(procession, binding);
@@ -205,12 +205,12 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
-	public ModelAndView createEditModelAndView(final Procession procession) {
+	public ModelAndView createEditModelAndView(final Parade procession) {
 		ModelAndView result;
 
 		result = new ModelAndView("procession/brotherhood/edit");
 
-		final Collection<domain.BigDecimal> floats = this.floatService.findAllBrotherhoodLogged();
+		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
 
 		result.addObject("procession", procession);
 		result.addObject("floats", floats);
@@ -218,12 +218,12 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		result.addObject("system", welcomeService.getSystem());
 		return result;
 	}
-	private ModelAndView createEditModelAndView(final Procession procession, final String messageCode) {
+	private ModelAndView createEditModelAndView(final Parade procession, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("procession/brotherhood/edit");
 
-		final Collection<domain.BigDecimal> floats = this.floatService.findAllBrotherhoodLogged();
+		final Collection<domain.Float> floats = this.floatService.findAllBrotherhoodLogged();
 
 		result.addObject("floats", floats);
 		result.addObject("procession", procession);

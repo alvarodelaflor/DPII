@@ -36,7 +36,7 @@ import domain.Brotherhood;
 import domain.Message;
 import domain.Position;
 import domain.PositionAux;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 /*
@@ -71,11 +71,11 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView list(@RequestParam(value = "requestId", defaultValue = "-1") final int requestId) {
 		ModelAndView result;
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		final List<Procession> listProcessions = new ArrayList<>(brotherhood.getProcessions());
+		final List<Parade> listProcessions = new ArrayList<>(brotherhood.getProcessions());
 		final Collection<Request> requestsAccepted = new ArrayList<>();
 		final Collection<Request> requestsRejected = new ArrayList<>();
 		final Collection<Request> requestsPending = new ArrayList<>();
-		for (final Procession procession : listProcessions) {
+		for (final Parade procession : listProcessions) {
 			requestsAccepted.addAll(this.requestService.findAllByProcessionAccepted(procession));
 			requestsRejected.addAll(this.requestService.findAllByProcessionRejected(procession));
 			requestsPending.addAll(this.requestService.findAllByProcessionPending(procession));

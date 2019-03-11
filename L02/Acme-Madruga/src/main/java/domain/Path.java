@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -14,7 +16,6 @@ import javax.validation.constraints.NotNull;
 public class Path extends DomainEntity {
 
 	// If we create a path these attributes can't be null because this is the destination of the previous path.
-	// We have to use BigDecimal to use @Max and @Min
 	private BigDecimal	latitude;
 	private BigDecimal	longitude;
 

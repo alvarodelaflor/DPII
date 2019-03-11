@@ -27,7 +27,7 @@ public class Finder extends DomainEntity {
 	private Date					expirationDate;
 	//======== Relaciones
 	private Area					area;
-	private Collection<Procession>	processions;
+	private Collection<Parade>	processions;
 
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getKeyword() {
@@ -78,11 +78,11 @@ public class Finder extends DomainEntity {
 	}
 
 	@ManyToMany
-	public Collection<Procession> getProcessions() {
+	public Collection<Parade> getProcessions() {
 		return this.processions;
 	}
 
-	public void setProcessions(final Collection<Procession> processions) {
+	public void setProcessions(final Collection<Parade> processions) {
 		this.processions = processions;
 	}
 
