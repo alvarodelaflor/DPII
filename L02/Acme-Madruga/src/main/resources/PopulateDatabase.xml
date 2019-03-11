@@ -269,6 +269,7 @@
 		<property name="maxRow" value= "10"/>
 		<property name="maxColum" value= "1"/>
 		<property name="floatt" ref= "float01"/>
+		<property name="status" value="SUBMITTED"/>
     </bean>
     
     <bean id="parade02" class="domain.Parade">
