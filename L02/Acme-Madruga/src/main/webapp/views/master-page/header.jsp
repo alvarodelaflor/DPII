@@ -93,6 +93,12 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+			<li><a class="fNiv"><spring:message	code="master.page.utilities" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="history/list.do"><spring:message code="master.page.histories" /></a></li>					
+				</ul>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
@@ -117,12 +123,6 @@
 						<li><a href="administrator/edit.do"><spring:message code="master.page.administrator.edit" /></a></li>
 						<li><a href="administrator/create.do"><spring:message code="master.page.administrator.create" /></a></li>			
 					</security:authorize>
-				</ul>
-			</li>
-			<li><a class="fNiv"><spring:message	code="master.page.utilities" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="history/list.do"><spring:message code="master.page.histories" /></a></li>					
 				</ul>
 			</li>
 </security:authorize>

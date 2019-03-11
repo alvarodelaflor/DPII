@@ -32,13 +32,14 @@
 					<c:choose>
 						<c:when test="${ownerBrotherhood==true}">
 							<display:column titleKey="edit">
-								<a href="history/inceptionRecord/edit.do?inceptionRecordId=${row1.id}">${row1.id}</a>	
+								<a href="history/inceptionRecord/edit.do?inceptionRecordId=${row1.id}"><img width="35" height="35" src="./images/edit.png" alt="${row1.id}" /></a>	
 							</display:column>
 						</c:when>
 					</c:choose>
 					<display:column titleKey="show"> 
-						<a href="history/inceptionRecord/show.do?inceptionRecordId=${row1.id}">${row1.title}</a>
+						<a href="history/inceptionRecord/show.do?inceptionRecordId=${row1.id}"><img width="35" height="35" src="./images/show.png" alt="${row1.id}" /></a>
 					</display:column>
+					<display:column property="title" titleKey="title"></display:column>
 					<display:column property="description" titleKey="description"></display:column>
 				</display:table>			
 			</div>
@@ -48,16 +49,17 @@
 					<c:choose>
 						<c:when test="${ownerBrotherhood==true}">
 							<display:column titleKey="edit">
-								<a href="history/periodRecord/edit.do?periodRecordId=${row2.id}">${row2.id}</a>	
+								<a href="history/periodRecord/edit.do?periodRecordId=${row2.id}"><img width="35" height="35" src="./images/edit.png" alt="${row2.id}" /></a>	
 							</display:column>
 							<display:column titleKey="delete">
-								<a href="history/periodRecord/delete.do?periodRecordId=${row2.id}">${row2.id}</a>	
+								<a href="history/periodRecord/delete.do?periodRecordId=${row2.id}"><img width="35" height="35" src="./images/delete.png" alt="${row2.id}" /></a>	
 							</display:column>
 						</c:when>
 					</c:choose>
 					<display:column titleKey="show"> 
-						<a href="history/periodRecord/show.do?periodRecordId=${row2.id}">${row2.title}</a>
+						<a href="history/periodRecord/show.do?periodRecordId=${row2.id}"><img width="35" height="35" src="./images/show.png" alt="${row2.id}" /></a>
 					</display:column>
+					<display:column property="title" titleKey="title"></display:column>
 					<display:column property="description" titleKey="description"></display:column>
 				</display:table>
 				<c:choose>
@@ -74,16 +76,17 @@
 					<c:choose>
 						<c:when test="${ownerBrotherhood==true}">
 							<display:column titleKey="edit">
-								<a href="history/linkRecord/edit.do?linkRecordId=${row3.id}">${row3.id}</a>	
+								<a href="history/linkRecord/edit.do?linkRecordId=${row3.id}"><img width="35" height="35" src="./images/edit.png" alt="${row3.id}" /></a>	
 							</display:column>
 							<display:column titleKey="delete">
-								<a href="history/linkRecord/delete.do?linkRecordId=${row3.id}">${row3.id}</a>	
+								<a href="history/linkRecord/delete.do?linkRecordId=${row3.id}"><img width="35" height="35" src="./images/delete.png" alt="${row3.id}" /></a>	
 							</display:column>
 						</c:when>
 					</c:choose>
 					<display:column titleKey="show"> 
-						<a href="history/linkRecord/show.do?linkRecordId=${row3.id}">${row3.title}</a>
+						<a href="history/linkRecord/show.do?linkRecordId=${row3.id}"><img width="35" height="35" src="./images/show.png" alt="${row3.id}" /></a>
 					</display:column>
+					<display:column property="title" titleKey="title"></display:column>
 					<display:column property="description" titleKey="description"></display:column>
 				</display:table>
 				<c:choose>
@@ -100,16 +103,17 @@
 					<c:choose>
 						<c:when test="${ownerBrotherhood==true}">
 							<display:column titleKey="edit">
-								<a href="history/legalRecord/edit.do?legalRecordId=${row4.id}">${row4.id}</a>	
+								<a href="history/legalRecord/edit.do?legalRecordId=${row4.id}"><img width="35" height="35" src="./images/edit.png" alt="${row4.id}" /></a>	
 							</display:column>
 							<display:column titleKey="delete">
-								<a href="history/legalRecord/delete.do?legalRecordId=${row4.id}">${row4.id}</a>	
+								<a href="history/legalRecord/delete.do?legalRecordId=${row4.id}"><img width="35" height="35" src="./images/delete.png" alt="${row4.id}" /></a>	
 							</display:column>
 						</c:when>
 					</c:choose>
 					<display:column titleKey="show"> 
-						<a href="history/legalRecord/show.do?legalRecordId=${row4.id}">${row4.title}</a>
+						<a href="history/legalRecord/show.do?legalRecordId=${row4.id}"><img width="35" height="35" src="./images/show.png" alt="${row4.id}" /></a>
 					</display:column>
+					<display:column property="title" titleKey="title"></display:column>
 					<display:column property="description" titleKey="description"></display:column>
 				</display:table>
 				<c:choose>

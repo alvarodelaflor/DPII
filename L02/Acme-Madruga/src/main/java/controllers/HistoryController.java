@@ -129,8 +129,7 @@ public class HistoryController extends AbstractController {
 			Collection<Brotherhood> brotherhoods = this.historyFinderService.findByFilter(historyFinderForm.getTitle().toLowerCase(), historyFinderForm.getName().toLowerCase());
 			result = new ModelAndView("history/list");
 			result.addObject("brotherhoods", brotherhoods);
-//			result.addObject("brotherhoods", new ArrayList<Brotherhood>());
-			
+			result.addObject("brotherhoodId", getIdBrotherhoodLogger());
 			result.addObject("historyFinderForm", historyFinderForm);
 			result.addObject("requestURI", "history/list.do");
 		} catch (final Throwable oops) {
