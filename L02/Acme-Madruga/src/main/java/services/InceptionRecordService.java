@@ -1,7 +1,10 @@
 
 package services;
 
+import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,11 +53,34 @@ public class InceptionRecordService {
 		InceptionRecord inceptionRecord = this.inceptionRecordRepository.findOne(id);
 		return inceptionRecord;
 	}
+	
+	public Boolean checkPhotos(String photos) {
+		Boolean res = true;
+		try {
+			if (photos.contains("'")) {
+				System.out.println("Son multiples fotos");
+				List<String> photosC = Arrays.asList(photos.split("'"));
+				for (String photo : photosC) {
+					new URL(photo).toURI();	
+				}
+			} else {
+				System.out.println("Es una única foto");
+				new URL(photos).toURI();
+			}			
+		} catch (Exception e) {
+			System.out.println("No es una foto");
+			res = false;
+		}
+
+		return res;
+	}
+	
 	public InceptionRecord save(final InceptionRecord inceptionRecord) {
 		Assert.notNull(inceptionRecord, "inceptionRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		InceptionRecord inceptionRecordSaved;
 		// Assert inceptionRecord owner is the same that brotherhood logger
+		
 		if (brotherhood!=null && brotherhood.getHistory()!=null && brotherhood.getHistory().getInceptionRecord()!=null) {
 			/*
 			 *  En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la 

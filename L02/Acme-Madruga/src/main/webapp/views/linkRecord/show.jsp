@@ -18,14 +18,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div>
-	<table>
-    		<tr><td><spring:message code="linkRecord.title" /><jstl:out value="${linkRecord.title}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="linkRecord.description" /><jstl:out value="${linkRecord.description}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="linkRecord.link" /><jstl:out value="${linkRecord.link}"></jstl:out></td></tr>
-	</table>
+	<fieldset>
+		<h3><spring:message code="linkRecord.title" /></h3><jstl:out value="${linkRecord.title}"></jstl:out>
+    	<h3><spring:message code="linkRecord.description" /></h3><jstl:out value="${linkRecord.description}"></jstl:out>
+		<h3><spring:message code="linkRecord.link" /></h3><a href =<jstl:out value="${linkRecord.link}"></jstl:out>><jstl:out value="${linkRecord.link}"></jstl:out></a>
+	</fieldset>
 </div>
 <div>      
 	<form>
+		<br>
 		<input type="button" value=<spring:message code="back" /> name="back" onclick="history.back()" />
 	</form>
 </div>

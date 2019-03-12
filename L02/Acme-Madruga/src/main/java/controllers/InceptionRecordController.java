@@ -10,12 +10,16 @@
 
 package controllers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +69,12 @@ public class InceptionRecordController extends AbstractController {
 			Assert.notNull(inceptionRecord, "inceptionRecord.null");
 			result = new ModelAndView("history/inceptionRecord/show");
 			result.addObject("inceptionRecord", inceptionRecord);
+			if (inceptionRecord.getPhotos().contains("'")) {
+				List<String> photos = Arrays.asList(inceptionRecord.getPhotos().split("'"));
+				result.addObject("photos", photos);
+			} else {
+				result.addObject("photos", inceptionRecord.getPhotos());	
+			}
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");			
 		}
@@ -130,6 +140,12 @@ public class InceptionRecordController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final InceptionRecord inceptionRecord, final BindingResult binding) {
 		ModelAndView result;
+		
+		if (inceptionRecord.getPhotos() != null && inceptionRecord.getPhotos().length() >0 && !this.inceptionRecordService.checkPhotos(inceptionRecord.getPhotos())) {
+			final ObjectError error = new ObjectError("photos", "Must be URL/URLs");
+			binding.addError(error);
+			binding.rejectValue("photos", "error.inceptionRecord.photos");
+		}
 
 		if (binding.hasErrors()) {
 			System.out.println("Error en InceptionRecordController.java, binding: " + binding);

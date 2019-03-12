@@ -26,11 +26,29 @@
     	<form:form class="formularioEdicion" method="POST" modelAttribute="periodRecord" action="history/periodRecord/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox code="periodRecord.title" path="title"/>
-          	<acme:textbox code="periodRecord.description" path="description"/>
-          	<acme:textbox code="periodRecord.photos" path="photos"/>
-          	<acme:numberbox code="periodRecord.startYear" path="startYear"/>
-          	<acme:numberbox code="periodRecord.endYear" path="endYear"/>
+          	<fieldset>
+          	   	<legend>
+          			<spring:message code="periodRecord.dates" />
+          		</legend>
+              	<acme:textbox code="periodRecord.title" path="title"/>
+          		<acme:textbox code="periodRecord.description" path="description"/>
+          	</fieldset>
+          	<fieldset>
+          		<legend>
+          			<spring:message code="periodRecord.fecha" />
+          		</legend>
+               	<acme:numberbox code="periodRecord.startYear" path="startYear"/>
+          		<acme:numberbox code="periodRecord.endYear" path="endYear"/>
+          	</fieldset>
+          	<fieldset>
+          		<legend>
+          			<spring:message code="periodRecord.photos" />
+          		</legend>
+          		<i><spring:message code="periodRecord.photos.info" /></i>
+          		<br>
+          		<br>
+          		<acme:textbox code="periodRecord.photos" path="photos"/>
+          	</fieldset>
           	<acme:cancel url="history/show.do?brotherhoodId=${brotherhoodId}" code="cancel"/>
           	<acme:submit name="save" code="send"/>
 		</form:form>

@@ -18,16 +18,17 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div>
-	<table>
-    		<tr><td><spring:message code="legalRecord.title" /><jstl:out value="${legalRecord.title}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="legalRecord.description" /><jstl:out value=" ${legalRecord.description}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="legalRecord.legalName" /><jstl:out value=" ${legalRecord.legalName}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="legalRecord.vatNumber" /><jstl:out value=" ${legalRecord.vatNumber}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="legalRecord.laws" /><jstl:out value=" ${legalRecord.laws}"></jstl:out></td></tr>
-	</table>
+	<fieldset>
+	    	<h3><spring:message code="legalRecord.title" /></h3><jstl:out value="${legalRecord.title}"></jstl:out>
+    		<h3><spring:message code="legalRecord.description" /></h3><jstl:out value=" ${legalRecord.description}"></jstl:out>
+    		<h3><spring:message code="legalRecord.legalName" /></h3><jstl:out value=" ${legalRecord.legalName}"></jstl:out>
+    		<h3><spring:message code="legalRecord.vatNumber" /></h3><jstl:out value=" ${legalRecord.vatNumber}"></jstl:out>
+    		<h3><spring:message code="legalRecord.laws" /></h3><jstl:out value=" ${legalRecord.laws}"></jstl:out>
+	</fieldset>
 </div>
 <div>      
 	<form>
+		<br>
 		<input type="button" value=<spring:message code="back" /> name="back" onclick="history.back()" />
 	</form>
 </div>

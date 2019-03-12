@@ -1,6 +1,8 @@
 
 package services;
 
+import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,10 +32,10 @@ public class PeriodRecordService {
 
 	//Supporting services ------------------
 	@Autowired
-	BrotherhoodService brotherhoodService;
+	private BrotherhoodService brotherhoodService;
 	
 	@Autowired
-	HistoryService historyService;
+	private HistoryService historyService;
 
 	//Simple CRUD Methods ------------------
 
@@ -51,6 +53,28 @@ public class PeriodRecordService {
 		PeriodRecord periodRecord = this.periodRecordRepository.findOne(id);
 		return periodRecord;
 	}
+	
+	public Boolean checkPhotos(String photos) {
+		Boolean res = true;
+		try {
+			if (photos.contains("'")) {
+				System.out.println("Son multiples fotos");
+				List<String> photosC = Arrays.asList(photos.split("'"));
+				for (String photo : photosC) {
+					new URL(photo).toURI();	
+				}
+			} else {
+				System.out.println("Es una única foto");
+				new URL(photos).toURI();
+			}			
+		} catch (Exception e) {
+			System.out.println("No es una foto");
+			res = false;
+		}
+
+		return res;
+	}
+	
 	public PeriodRecord save(final PeriodRecord periodRecord) {
 		Assert.notNull(periodRecord, "periodRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());

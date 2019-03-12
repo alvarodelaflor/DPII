@@ -26,9 +26,22 @@
     	<form:form class="formularioEdicion" method="POST" modelAttribute="linkRecord" action="history/linkRecord/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox code="linkRecord.title" path="title"/>
-          	<acme:textbox code="linkRecord.description" path="description"/>
-          	<acme:textbox code="linkRecord.link" path="link"/>
+          	<fieldset>
+          		<legend>
+          			<spring:message code="linkRecord.dates" />
+          		</legend>
+               	<acme:textbox code="linkRecord.title" path="title"/>
+          		<acme:textbox code="linkRecord.description" path="description"/>
+          	</fieldset>
+          	<fieldset>
+          		<legend>
+          			<spring:message code="linkRecord.link" />
+          		</legend>
+          		<i><spring:message code="linkRecord.help" /></i>
+          		<br>
+          		<br>
+          		<acme:textbox code="linkRecord.link" path="link"/>
+          	</fieldset>
           	<acme:cancel url="history/show.do?brotherhoodId=${brotherhoodId}" code="cancel"/>
           	<acme:submit name="save" code="send"/>
 		</form:form>
