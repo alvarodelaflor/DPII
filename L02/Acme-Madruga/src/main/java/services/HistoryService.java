@@ -6,9 +6,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import repositories.HistoryRepository;
 import domain.Brotherhood;
 import domain.History;
-import repositories.HistoryRepository;
 
 /*
  * CONTROL DE CAMBIOS HistroyService.java
@@ -24,8 +24,8 @@ public class HistoryService {
 	@Autowired
 	private HistoryRepository	historyRepository;
 
-	//Supporting services ------------------
 
+	//Supporting services ------------------
 
 	//Simple CRUD Methods ------------------
 
@@ -34,32 +34,37 @@ public class HistoryService {
 		final History history = new History();
 		return history;
 	}
-	
+
 	public Collection<History> findAll() {
 		return this.historyRepository.findAll();
 	}
-	
-	public History findHistoryByBrotherhood(int brotherhoodId) {
+
+	public History findHistoryByBrotherhood(final int brotherhoodId) {
 		return this.historyRepository.findHistoryByBrotherhood(brotherhoodId);
 	}
-	
-	public History findHistoryByInceptionRecordId(int inceptionRecordId) {
+
+	public History findHistoryByInceptionRecordId(final int inceptionRecordId) {
 		return this.historyRepository.findHistoryByInceptionRecordId(inceptionRecordId);
 	}
-	
-	public History save(History history) {
+
+	public History save(final History history) {
 		return this.historyRepository.save(history);
 	}
-	
-	public Collection<Brotherhood> findHistoryByBrotherhoodTitle(String title) {
+
+	public Collection<Brotherhood> findHistoryByBrotherhoodTitle(final String title) {
 		return this.historyRepository.findHistoryByBrotherhoodTitle(title);
 	}
-	
-	public Collection<Brotherhood> findHistoryByBrotherhoodName(String name) {
+
+	public Collection<Brotherhood> findHistoryByBrotherhoodName(final String name) {
 		return this.historyRepository.findHistoryByBrotherhoodName(name);
 	}
-	
-	public Collection<Brotherhood> findHistoryByBrotherhoodTitleAndName(String title, String name) {
+
+	public Collection<Brotherhood> findHistoryByBrotherhoodTitleAndName(final String title, final String name) {
 		return this.historyRepository.findHistoryByBrotherhoodTitleAndName(title, name);
 	}
+
+	public History findOne(final int id) {
+		return this.historyRepository.findOne(id);
+	}
+
 }

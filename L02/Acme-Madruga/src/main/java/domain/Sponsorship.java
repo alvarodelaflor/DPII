@@ -56,7 +56,7 @@ public class Sponsorship extends DomainEntity {
 		this.sponsor = sponsor;
 	}
 
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	public Parade getParade() {
 		return this.parade;
 	}

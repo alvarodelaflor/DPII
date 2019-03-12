@@ -684,7 +684,7 @@
     	<property name="banner" value= "http://banner.com"/>
     	<property name="target" value= "target01"/>
     	<property name="sponsor" ref= "sponsor01"/>
-		<property name="parade" ref= "paradeTry"/>
+		<property name="parade" ref= "parade02"/>
 		<property name="creditCard" ref= "creditCard01"/>
     </bean>
     
@@ -692,10 +692,11 @@
     	<property name="banner" value= "http://banner2.com"/>
     	<property name="target" value= "target02"/>
     	<property name="sponsor" ref= "sponsor01"/>
-		<property name="parade" ref= "paradeTry2"/>
+		<property name="parade" ref= "parade01"/>
 		<property name="creditCard" ref= "creditCard01"/>
     </bean>
     
+    <!-- 
      <bean id="paradeTry" class="domain.Parade">
     	<property name="name" value= "paradeTry"/>
     </bean>
@@ -703,7 +704,7 @@
     <bean id="paradeTry2" class="domain.Parade">
     	<property name="name" value= "paradeTry2"/>
     </bean>
-    
+     -->
 </beans>
 
 
