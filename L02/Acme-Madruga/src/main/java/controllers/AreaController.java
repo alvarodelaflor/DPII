@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AreaService;
+import services.BrotherhoodService;
 import services.ChapterService;
 import services.WelcomeService;
 import domain.Area;
+import domain.Brotherhood;
 import domain.Chapter;
 
 /*
@@ -35,13 +39,16 @@ import domain.Chapter;
 public class AreaController extends AbstractController {
 
 	@Autowired
-	WelcomeService	welcomeService;
+	WelcomeService		welcomeService;
 
 	@Autowired
-	AreaService		areaService;
+	AreaService			areaService;
 
 	@Autowired
-	ChapterService	chapterService;
+	ChapterService		chapterService;
+
+	@Autowired
+	BrotherhoodService	brotherhoodService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -51,18 +58,20 @@ public class AreaController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/areaChapter", method = RequestMethod.GET)
-	public ModelAndView listParades(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+	public ModelAndView listArea(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
 		Boolean status = false;
 		try {
 			final Chapter chapter = this.chapterService.findOne(id);
-			System.out.println(this.areaService.findAreaChapter(chapter.getId()));
-			final Area area = this.areaService.findAreaChapter(chapter.getId());
+			System.out.println(chapter);
+			final Area area = this.areaService.findAreaChapter(chapter);
+			final Collection<Brotherhood> brotherhood = this.brotherhoodService.brotherhoodArea(area.getId());
 			System.out.println(area);
 			result = new ModelAndView("area/areaChapter");
 			status = true;
 			result.addObject("chapter", chapter);
 			result.addObject("area", area);
+			result.addObject("brotherhood", brotherhood);
 			result.addObject("requestURI", "area/areaChapter.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("area/areaChapter");

@@ -15,7 +15,7 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
 	 * CARMEN 20/02/2019 17:31 CREACIÓN findAreaChapter
 	 */
 
-	@Query("select a from Area a where a.chapter=?1")
+	@Query("select a from Area a where a.chapter.id=?1")
 	Area findAreaChapter(int id);
 
 }

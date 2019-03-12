@@ -21,6 +21,7 @@ import repositories.AreaRepository;
 import security.LoginService;
 import domain.Administrator;
 import domain.Area;
+import domain.Chapter;
 
 @Service
 @Transactional
@@ -100,10 +101,10 @@ public class AreaService {
 		this.areaRepository.delete(areaId);
 	}
 
-	public Area findAreaChapter(final int id) {
-		System.out.println("hola");
-		final Area a = this.areaRepository.findAreaChapter(id);
-		System.out.println(a);
+	public Area findAreaChapter(final Chapter chapter) {
+		System.out.println("servicio");
+		final Area a = this.areaRepository.findAreaChapter(chapter.getId());
+		System.out.println("area" + a);
 		return a;
 	}
 }

@@ -19,11 +19,25 @@
 
 		<c:choose>
     		<c:when test="${status==false}">
-				<h1>hola</h1>
+				<h3><spring:message code="chapter.no.area"></spring:message></h3>
     		</c:when>    
     		<c:otherwise>
-				<h1>adios</h1>
+				<tr><td><spring:message code="area.name" /> <jstl:out	value="${area.name}"></jstl:out></td></tr>
+				
+				<br>
+				<br>
+				
+				<h3><spring:message code="brotherhoodList"></spring:message></h3>
+				
+				<display:table name="brotherhood" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<display:column titleKey="brotherhood.title"><a href="brotherhood/showBrotherhood.do?id=${row.id}"><jstl:out value="${row.title}"/></a></display:column>
+				<display:column property="surname" titleKey="brotherhood.surname"></display:column>
+				<display:column property="name" titleKey="brotherhood.name"></display:column>
+
+				<display:column titleKey="showParades" ><a href="parade/listParades.do?id=${row.id}"><spring:message code="parade" /></a></display:column>
+				</display:table>
     		</c:otherwise>
 		</c:choose>
 </body>
 
+<input type="button" value="back" name="back" onclick="history.back()" />

@@ -85,7 +85,7 @@
 		<security:intercept-url pattern="/chapter/conditions.do" access="permitAll"/> 
 		<security:intercept-url pattern="/chapter/list.do" access="permitAll"/> 
 		<security:intercept-url pattern="/area/areaChapter.do" access="permitAll"/> 
-		<security:intercept-url pattern="/chapter/show.do" access="permitAll"/> 		
+		<security:intercept-url pattern="/chapter/show.do" access="permitAll"/> 				
 		<!-- CARMEN -->
 
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 

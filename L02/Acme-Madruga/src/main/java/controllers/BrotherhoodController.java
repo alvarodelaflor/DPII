@@ -25,9 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Brotherhood;
-import domain.History;
-import forms.RegistrationForm;
 import security.LoginService;
 import services.ActorService;
 import services.BrotherhoodService;
@@ -35,28 +32,31 @@ import services.EnrolledService;
 import services.HistoryService;
 import services.MemberService;
 import services.WelcomeService;
+import domain.Brotherhood;
+import domain.History;
+import forms.RegistrationForm;
 
 @Controller
 @RequestMapping("/brotherhood")
 public class BrotherhoodController extends AbstractController {
 
 	@Autowired
-	BrotherhoodService	brotherhoodService;
+	BrotherhoodService		brotherhoodService;
 
 	@Autowired
-	MemberService		memberService;
+	MemberService			memberService;
 
 	@Autowired
-	EnrolledService		enrolledService;
+	EnrolledService			enrolledService;
 
 	@Autowired
-	ActorService		actorService;
-	
+	ActorService			actorService;
+
 	@Autowired
-	private HistoryService historyService;
-	
+	private HistoryService	historyService;
+
 	@Autowired
-	WelcomeService welcomeService;
+	WelcomeService			welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -73,8 +73,8 @@ public class BrotherhoodController extends AbstractController {
 		registrationForm = new RegistrationForm();
 		result = new ModelAndView("brotherhood/create");
 		result.addObject("registrationForm", registrationForm);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -85,14 +85,13 @@ public class BrotherhoodController extends AbstractController {
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.reconstructR(registration, binding);
-		
 
 		if (binding.hasErrors())
 			result = new ModelAndView("brotherhood/create");
 		else
 			try {
-				History history = this.historyService.create();
-				History savedHistory = this.historyService.save(history);
+				final History history = this.historyService.create();
+				final History savedHistory = this.historyService.save(history);
 				brotherhood.setHistory(savedHistory);
 				this.brotherhoodService.saveR(brotherhood);
 				result = new ModelAndView("welcome/index");
@@ -104,8 +103,8 @@ public class BrotherhoodController extends AbstractController {
 				else
 					result = this.createModelAndView(brotherhood, "error.email");
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	private ModelAndView createEditModelAndView(final Brotherhood brotherhood, final String string) {
@@ -114,8 +113,8 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/edit");
 		result.addObject("message", string);
 		result.addObject("brotherhood", brotherhood);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -125,8 +124,8 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/create");
 		result.addObject("message", string);
 		result.addObject("brotherhood", brotherhood);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -140,8 +139,8 @@ public class BrotherhoodController extends AbstractController {
 		Assert.notNull(brotherhood);
 		result = new ModelAndView("brotherhood/edit");
 		result.addObject("brotherhood", brotherhood);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -164,8 +163,8 @@ public class BrotherhoodController extends AbstractController {
 				else
 					result = this.createEditModelAndView(brotherhood, "error.email");
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -181,31 +180,30 @@ public class BrotherhoodController extends AbstractController {
 			result = new ModelAndView("brotherhood/show");
 			result.addObject("brotherhood", brotherhood);
 			result.addObject("pictures", pictures);
-			result.addObject("requestURI", "brotherhood/show.do");	
-		} catch (Exception e) {
+			result.addObject("requestURI", "brotherhood/show.do");
+		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
 	private Boolean validMember(final int idBrotherhood) {
 		Boolean res = false;
 		final int memberId = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		Brotherhood brotherhood = this.brotherhoodService.findOne(idBrotherhood);
+		final Brotherhood brotherhood = this.brotherhoodService.findOne(idBrotherhood);
 		System.out.println("ChekckIsInBrotherhood: " + this.memberService.checkIsInBrotherhood(memberId));
-		if (brotherhood!=null && brotherhood.getArea()!=null && !this.enrolledService.hasPendingEnrollRequest(memberId, idBrotherhood) && this.enrolledService.getBrotherhoodActiveEnrollment(memberId, idBrotherhood) == null)
+		if (brotherhood != null && brotherhood.getArea() != null && !this.enrolledService.hasPendingEnrollRequest(memberId, idBrotherhood) && this.enrolledService.getBrotherhoodActiveEnrollment(memberId, idBrotherhood) == null)
 			res = true;
 		return res;
 	}
-	
+
 	private Boolean checkAreaNull(final int idBrotherhood) {
 		Boolean res = false;
-		Brotherhood brotherhood = this.brotherhoodService.findOne(idBrotherhood);
-		if (brotherhood!=null && brotherhood.getArea()==null) {
-			res=true;
-		}
+		final Brotherhood brotherhood = this.brotherhoodService.findOne(idBrotherhood);
+		if (brotherhood != null && brotherhood.getArea() == null)
+			res = true;
 		return res;
 	}
 
@@ -230,12 +228,12 @@ public class BrotherhoodController extends AbstractController {
 			} catch (final Throwable oops) {
 				System.out.println("Usuario no está logueado");
 			}
-			result.addObject("requestURI", "brotherhood/showBrotherhood.do");	
-		} catch (Exception e) {
+			result.addObject("requestURI", "brotherhood/showBrotherhood.do");
+		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -247,8 +245,8 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/list");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("requestURI", "brotherhood/list.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -265,8 +263,8 @@ public class BrotherhoodController extends AbstractController {
 
 		this.brotherhoodService.save(logger);
 		result = new ModelAndView("redirect:show.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -279,8 +277,8 @@ public class BrotherhoodController extends AbstractController {
 			this.brotherhoodService.deletePicture(url);
 
 		result = new ModelAndView("redirect:show.do");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -288,12 +286,11 @@ public class BrotherhoodController extends AbstractController {
 	public ModelAndView conditions() {
 		ModelAndView result;
 		result = new ModelAndView("brotherhood/conditions");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
-	
-	
+
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public @ResponseBody
 	Brotherhood export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
@@ -303,5 +300,4 @@ public class BrotherhoodController extends AbstractController {
 			return null;
 		return result;
 	}
-
 }
