@@ -38,6 +38,8 @@
 		<bean class="converters.StringToMessageConverter" />
 		<bean class="converters.MessageBoxToStringConverter" /> 
 		<bean class="converters.StringToMessageBoxConverter" />
+		<bean class="converters.ParadeToStringConverter" /> 
+		<bean class="converters.StringToParadeConverter" />
 	</util:list>
 	
 </beans>

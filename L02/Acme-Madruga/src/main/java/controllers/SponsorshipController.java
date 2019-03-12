@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.ParadeService;
 import services.SponsorService;
 import services.SponsorshipService;
 import services.WelcomeService;
+import domain.Parade;
 import domain.Sponsor;
 import domain.Sponsorship;
 
@@ -34,6 +38,9 @@ public class SponsorshipController extends AbstractController {
 
 	@Autowired
 	private ActorService		actorService;
+
+	@Autowired
+	private ParadeService		paradeService;
 
 
 	public SponsorshipController() {
@@ -95,13 +102,15 @@ public class SponsorshipController extends AbstractController {
 
 		sponsorship = this.sponsorshipService.create();
 
+		final Collection<Parade> parades = this.paradeService.findAll();
+
 		result = new ModelAndView("sponsorship/create");
 		result.addObject("sponsorship", sponsorship);
 		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("parades", parades);
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
-
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "sponsorshipId", defaultValue = "-1") final int sponsorshipId) {
 		ModelAndView result;
@@ -110,14 +119,12 @@ public class SponsorshipController extends AbstractController {
 			result = new ModelAndView("welcome/index");
 		else {
 			final Sponsorship sponsorship;
+			final Collection<Parade> parades = this.paradeService.findAll();
 			Assert.isTrue(this.sponsorshipService.findOne(sponsorshipId) != null);
 			sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 
 			result = new ModelAndView("sponsorship/edit");
-			//			final String system = this.welcomeService.getSystem();
-			//			result.addObject("system", system);
-			//			final String logo = this.welcomeService.getLogo();
-			//			result.addObject("logo", logo);
+			result.addObject("parades", parades);
 			result.addObject("sponsorship", sponsorship);
 		}
 		result.addObject("logo", this.welcomeService.getLogo());
