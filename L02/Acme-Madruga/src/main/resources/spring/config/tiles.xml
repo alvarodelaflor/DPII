@@ -54,6 +54,7 @@
 		<!-- ANTONIO SANCHEZ -->
 		<value>/views/request/tiles.xml</value>
 		<value>/views/finder/tiles.xml</value>
+		<value>/views/path/tiles.xml</value>
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 		<value>/views/message/tiles.xml</value>

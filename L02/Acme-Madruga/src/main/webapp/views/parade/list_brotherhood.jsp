@@ -76,7 +76,9 @@
 				<display:column property="maxColum" titleKey="parade.maxColum"></display:column>
 				<display:column property="floatt.title" titleKey="parade.float"></display:column>
 				<display:column property="status" titleKey="parade.status" class="parade-${fn:toLowerCase(row.status)}"/>
-				
+				<display:column titleKey="parade.paths">
+					<a href="path/list.do?paradeId=${row.id}"><spring:message code="parade.paths" /></a>
+				</display:column>
 			</display:table>
 		</security:authorize>
 	</div>

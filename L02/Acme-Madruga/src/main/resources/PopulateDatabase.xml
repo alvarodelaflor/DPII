@@ -596,6 +596,20 @@
     	<property name="messages"> <null/> </property>
     	<property name="parentBox"> <null/> </property>
     </bean>
+    
+    <!-- PATHS -->
+    <bean id="path1" class="domain.Path">
+    	<property name="parade" ref="parade01"/>
+    	<property name="origin" ref="segment1"/>
+    </bean>
+    <!-- PATHS -->
+    
+    <!-- SEGMENT -->
+    <bean id="segment1" class="domain.Segment">
+    	<property name="latitude" value="37.358152"/>
+    	<property name="longitude" value="-5.986656"/>
+    </bean>    
+    <!-- SEGMENT -->
 </beans>
 
 
