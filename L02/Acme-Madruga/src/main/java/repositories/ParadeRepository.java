@@ -20,7 +20,7 @@ import domain.Parade;
 @Repository
 public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 
-	@Query("select p from Parade p where p.brotherhood.id=?1")
+	@Query("select p from Parade p where p.brotherhood.id=?1 order by p.status")
 	Collection<Parade> findParadesByBrotherhood(int brotherhoodId);
 
 	@Query("select p from Parade p where p.floatt.id=?1")

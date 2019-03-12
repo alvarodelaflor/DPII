@@ -9,6 +9,10 @@
  *	HIPONA 21/02/2019 9:25 Añadidos colores y strong
  */
 
+body{
+	font-size: 1.2em;
+}
+
 .error {
 	color: red;
 	font-weight: bolder;
@@ -33,4 +37,14 @@
 
 .strong {
 	font-weight: bold;
+}
+
+.parade-submitted{
+	color: gray;
+}
+.parade-accepted{
+	color: green;
+}
+.parade-rejected{
+	color: red;
 }
