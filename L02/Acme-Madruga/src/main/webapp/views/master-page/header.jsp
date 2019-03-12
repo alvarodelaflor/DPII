@@ -100,6 +100,13 @@
 					<li><a href="history/list.do"><spring:message code="master.page.histories" /></a></li>					
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.chapter" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="chapter/list.do"><spring:message code="master.page.chapterL" /></a></li>					
+				</ul>
+			</li>
+			
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

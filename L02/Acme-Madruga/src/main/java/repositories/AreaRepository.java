@@ -2,6 +2,7 @@
 package repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Area;
@@ -11,7 +12,10 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
 
 	/*
 	 * CONTROL DE CAMBIOS AreaRepository.java
-	 * FRAN 20/02/2019 17:31 CREACIÓN DE LA CLASE
+	 * CARMEN 20/02/2019 17:31 CREACIÓN findAreaChapter
 	 */
+
+	@Query("select a from Area a where a.chapter=?1")
+	Area findAreaChapter(int id);
 
 }

@@ -58,11 +58,11 @@ public class AreaService {
 			final List<String> s2 = Arrays.asList(pictures);
 			area.setPictures(s2);
 		}
-		
+
 		// "Check that an Admin is saving the new Area"
 		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(creatorAdmin, "user.error");
-		
+
 		return this.areaRepository.save(area);
 	}
 
@@ -98,5 +98,12 @@ public class AreaService {
 		Assert.isTrue(this.brotherhoodService.findByAreaId(areaId).size() == 0, "areaUsed.error");
 		// delete the Area
 		this.areaRepository.delete(areaId);
+	}
+
+	public Area findAreaChapter(final int id) {
+		System.out.println("hola");
+		final Area a = this.areaRepository.findAreaChapter(id);
+		System.out.println(a);
+		return a;
 	}
 }

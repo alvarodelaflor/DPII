@@ -424,6 +424,7 @@
 	<!-- AREA -->
     <bean id="area01" class="domain.Area">
     	<property name="name" value= "Pregonar"/>
+    	<property name="chapter" ref= "chapter01"/>
     	<property name="pictures">
     		<null></null>
     	</property>
