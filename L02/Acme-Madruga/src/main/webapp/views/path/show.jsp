@@ -10,14 +10,14 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<display:table name="paths" id="row" requestURI="${requestURI}"
-	pagesize="5" class="displaytag">
-	<display:column titleKey="path.parade">
-		<a href="parade/show.do?paradeId=${row.parade.id}"><jstl:out value="${row.parade.title}"/></a>
-	</display:column>
-	<display:column titleKey="path.origin"><jstl:out value="(${row.origin.latitude}, ${row.origin.longitude})"/></display:column>
-</display:table>
+
+<ol>
+<jstl:forEach var="segment" items="${segments}">
+	<li> <jstl:out value=" Origen: (${segment.latitude}, ${segment.longitude}); Destino: (${segment.destination.latitude}, ${segment.destination.longitude})"/> </li>
+</jstl:forEach>
+</ol>
 
 <div>
 	<form method="get" action="#">

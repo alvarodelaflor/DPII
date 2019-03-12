@@ -608,7 +608,22 @@
     <bean id="segment1" class="domain.Segment">
     	<property name="latitude" value="37.358152"/>
     	<property name="longitude" value="-5.986656"/>
-    </bean>    
+    	<property name="destination" ref="segment2"/>
+    </bean>
+    <bean id="segment2" class="domain.Segment">
+    	<property name="latitude" value="37.356200"/>
+    	<property name="longitude" value="-5.986408"/>
+    	<property name="destination" ref="segment3"/>
+    </bean>
+    <bean id="segment3" class="domain.Segment">
+    	<property name="latitude" value="37.356089"/>
+    	<property name="longitude" value="-5.986586"/>
+    	<property name="destination" ref="segment4"/>
+    </bean>
+    <bean id="segment4" class="domain.Segment">
+    	<property name="latitude" value="37.356132"/>
+    	<property name="longitude" value="-5.987670"/>
+    </bean>  
     <!-- SEGMENT -->
 </beans>
 

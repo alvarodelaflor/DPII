@@ -1,10 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -14,7 +10,6 @@ import security.Authority;
 import security.LoginService;
 import domain.Parade;
 import domain.Path;
-import domain.Segment;
 
 @Service
 public class PathService {
@@ -40,28 +35,18 @@ public class PathService {
 		return res;
 	}
 
-	public List<Segment> getAllSegments(final Path path) {
-		final List<Segment> fullPath = new ArrayList<>();
-		Segment next = path.getOrigin();
-		while (next != null) {
-			fullPath.add(next);
-			next = next.getDestination();
-		}
-		return fullPath;
-	}
-
-	public Collection<Path> getParadePaths(final int paradeId) {
+	public Path getParadePath(final int paradeId) {
 		// In case we aren't the parade owner we have to check that the parade is in final mode
 		final Parade parade = this.paradeService.findOne(paradeId);
-		Collection<Path> res = null;
+		Path res = null;
 		try {
 			final int loggedAccountId = LoginService.getPrincipal().getId();
 			if (parade.getIsFinal() || parade.getBrotherhood().getUserAccount().getId() == loggedAccountId)
-				res = this.pathRepository.getParadePaths(paradeId);
+				res = this.pathRepository.getParadePath(paradeId);
 		} catch (final Exception e) {
 			// This is because LoginService.getPrincipal() throws an exception in case none is logged
 			if (parade.getIsFinal())
-				res = this.pathRepository.getParadePaths(paradeId);
+				res = this.pathRepository.getParadePath(paradeId);
 		}
 		return res;
 	}

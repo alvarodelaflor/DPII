@@ -5,10 +5,11 @@ import java.math.BigDecimal;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -26,8 +27,9 @@ public class Segment extends DomainEntity {
 
 
 	@NotNull
-	@Max(90)
-	@Min(-90)
+	@DecimalMax("90.000000")
+	@DecimalMin("-90.000000")
+	@Column(name = "latitude", columnDefinition = "DECIMAL(8,6)")
 	public BigDecimal getLatitude() {
 		return this.latitude;
 	}
@@ -37,8 +39,9 @@ public class Segment extends DomainEntity {
 	}
 
 	@NotNull
-	@Max(180)
-	@Min(-180)
+	@DecimalMax("180.000000")
+	@DecimalMin("-180.000000")
+	@Column(name = "longitude", columnDefinition = "DECIMAL(9,6)")
 	public BigDecimal getLongitude() {
 		return this.longitude;
 	}

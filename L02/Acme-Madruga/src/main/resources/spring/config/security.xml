@@ -211,7 +211,7 @@
 		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
 		
-		<security:intercept-url pattern="/path/list.do" access="permitAll" />
+		<security:intercept-url pattern="/path/show.do" access="permitAll" />
 		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
