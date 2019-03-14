@@ -53,8 +53,12 @@ public class HistoryService {
 	}
 	
 	public History save(History history) {
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		Assert.isTrue(brotherhood.getHistory().getId()==history.getId());
+		try {
+			Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+			Assert.isTrue(brotherhood.getHistory().getId()==history.getId());	
+		} catch (Exception e) {
+			System.out.println("El usuario no esta registrado aún");
+		}
 		return this.historyRepository.save(history);
 	}
 	

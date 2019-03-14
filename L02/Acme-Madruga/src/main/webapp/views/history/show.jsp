@@ -124,6 +124,33 @@
 					</c:when>
 				</c:choose>			
 			</div>
+			<div>
+				<h2><spring:message code="history.miscellaneousRecord"/></h2>
+				<display:table name="history.miscellaneousRecord" id="row5" requestURI="${requestURI}" pagesize="5" class="displaytag">
+					<c:choose>
+						<c:when test="${ownerBrotherhood==true}">
+							<display:column titleKey="edit">
+								<a href="history/miscellaneousRecord/edit.do?miscellaneousRecordId=${row5.id}"><img width="35" height="35" src="./images/edit.png" alt="${row4.id}" /></a>	
+							</display:column>
+							<display:column titleKey="delete">
+								<a href="history/miscellaneousRecord/delete.do?miscellaneousRecordId=${row5.id}"><img width="35" height="35" src="./images/delete.png" alt="${row4.id}" /></a>	
+							</display:column>
+						</c:when>
+					</c:choose>
+					<display:column titleKey="show"> 
+						<a href="history/miscellaneousRecord/show.do?miscellaneousRecordId=${row5.id}"><img width="35" height="35" src="./images/show.png" alt="${row5.id}" /></a>
+					</display:column>
+					<display:column property="title" titleKey="title"></display:column>
+					<display:column property="description" titleKey="description"></display:column>
+				</display:table>
+				<c:choose>
+					<c:when test="${ownerBrotherhood==true}">
+						<form method="get" action="/Acme-Madruga/history/miscellaneousRecord/create.do">
+							<button><spring:message code="createMiscellaneousRecord"/></button>
+						</form>
+					</c:when>
+				</c:choose>			
+			</div>
 		</c:otherwise>
 	</c:choose>
 	<div>

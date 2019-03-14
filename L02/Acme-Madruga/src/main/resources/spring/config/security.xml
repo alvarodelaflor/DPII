@@ -129,7 +129,11 @@
 		
 		<security:intercept-url pattern="/history/legalRecord/create.do" access="hasRole('BROTHERHOOD')" />	
 		<security:intercept-url pattern="/history/legalRecord/edit.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/history/legalRecord/delete.do" access="hasRole('BROTHERHOOD')" />			
+		<security:intercept-url pattern="/history/legalRecord/delete.do" access="hasRole('BROTHERHOOD')" />
+		
+		<security:intercept-url pattern="/history/miscellaneousRecord/create.do" access="hasRole('BROTHERHOOD')" />	
+		<security:intercept-url pattern="/history/miscellaneousRecord/edit.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/history/miscellaneousRecord/delete.do" access="hasRole('BROTHERHOOD')" />
 		
 		<security:intercept-url pattern="/history/list.do" access="permitAll" />
 		<security:intercept-url pattern="/history/show.do" access="permitAll" />
@@ -137,6 +141,7 @@
 		<security:intercept-url pattern="/history/periodRecord/show.do" access="permitAll" />
 		<security:intercept-url pattern="/history/linkRecord/show.do" access="permitAll" />
 		<security:intercept-url pattern="/history/legalRecord/show.do" access="permitAll" />
+		<security:intercept-url pattern="/history/miscellaneousRecord/show.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/parade/show.do" access="permitAll" />
 		
