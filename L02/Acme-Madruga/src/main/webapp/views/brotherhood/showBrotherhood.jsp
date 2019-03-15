@@ -72,6 +72,6 @@
 
 <br>	
 <br>
-<acme:cancel url="brotherhood/list.do" code="back"/>
+<input type="button" value="back" name="back" onclick="history.back()" />
 
 

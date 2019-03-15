@@ -22,8 +22,18 @@
 	</definition>
 	
 	<definition name="chapter/conditions" extends="master.page">	
-		<put-attribute name="title" value="Miebro: Términos y condiciones" />
+		<put-attribute name="title" value="Chapter: Términos y condiciones" />
 		<put-attribute name="body" value="/views/chapter/conditions.jsp" /> 
+	</definition>
+	
+	<definition name="chapter/list" extends="master.page">	
+		<put-attribute name="title" value="Chapter: List" />
+		<put-attribute name="body" value="/views/chapter/list.jsp" /> 
+	</definition>
+	
+		<definition name="chapter/show" extends="master.page">	
+		<put-attribute name="title" value="Chapter: Show" />
+		<put-attribute name="body" value="/views/chapter/show.jsp" /> 
 	</definition>
 	
 </tiles-definitions>

@@ -30,6 +30,7 @@
 		</property>
 	</bean>
 	
+		<!-- ADMIN -->
 	 <bean id="admin01" class="domain.Administrator">
     	<property name="name" value="Carmen" />
     	<property name="middleName" value="Boss" />
@@ -40,74 +41,60 @@
         <property name="address" value="Lora del río, nº5" />
         <property name="userAccount" ref= "userAccount1"/>
         <property name="configuration" ref= "configuration"/>
+         <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox01"/>
+                <ref bean="messageBox02"/>
+                <ref bean="messageBox03"/>
+                <ref bean="messageBox04"/>
+                <ref bean="messageBox05"/>
+        	</list>
+        </property>
     </bean>
+	<!-- ADMIN -->
     
     <!-- CONFIGURATION -->
 	<bean id="configuration" class="domain.Configuration">
-		<property name="posWords">
-			<list>
-	    		<value>good</value>
-	    		<value>fantastic</value>
-	    		<value>excellent</value>
-	    		<value>great</value>
-	    		<value>amazing</value>
-	    		<value>terrific</value>
-	    		<value>beautiful</value>
-    		</list>
-    	</property>
-    	<property name="negWords">
-	    	<list>
-	    		<value>not</value>
-	    		<value>bad</value>
-	    		<value>horrible</value>
-	    		<value>average</value>
-	    		<value>disaster</value>
-    		</list>
-    	</property>
-    	<property name="posWordsEs">
-	    	<list>
-	    		<value>bueno</value>
-	    		<value>fabuloso</value>
-	    		<value>excelente</value>
-	    		<value>gran</value>
-	    		<value>increible</value>
-	    		<value>estupendo</value>
-	    		<value>hermoso</value>
-    		</list>
-    	</property>
-    	<property name="negWordsEs">
-	    	<list>
-	    		<value>no</value>
-	    		<value>malo</value>
-	    		<value>horrible</value>
-	    		<value>mediocre</value>
-	    		<value>desastre</value>
-    		</list>
-    	</property>
-    	<property name="spamWords">
-	    	<list>
-	    		<value>sex</value>
-	    		<value>viagra</value>
-	    		<value>cialis</value>
-	    		<value>one million</value>
-	    		<value>you've been selected</value>
-	    		<value>Nigeria</value>
-    		</list>
-    	</property>
-    	<property name="spamWordsEs">
-	    	<list>
-	    		<value>sexo</value>
-	    		<value>viagra</value>
-	    		<value>cialis</value>
-	    		<value>un millon</value>
-	    		<value>has sido seleccionado</value>
-    			<value>Nigeria</value>
-    		</list>
-    	</property>
     	<property name="cacheHours" value="1"/>
     	<property name="cacheAmount" value="10"/>
     </bean>
 	<!-- CONFIGURATION -->
+    
+    <bean id="messageBox01" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox02" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox03" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>   	
+    </bean>
+    
+     <bean id="messageBox04" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>    	
+    </bean>
+    
+     <bean id="messageBox05" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
     
 	<!-- Other domain beans come here -->	
 	

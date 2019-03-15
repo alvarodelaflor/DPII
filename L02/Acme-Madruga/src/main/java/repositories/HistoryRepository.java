@@ -13,8 +13,8 @@ import domain.History;
 /*
  * CONTROL DE CAMBIOS ProcessionRepository.java
  * 
- * ALVARO 17/02/2019 11:43 CREACIÓN DE LA CLASE
- * ALVARO 17/02/2019 12:17 AÑADIDA QUERY findProcessionsByBrotherhood
+ * ALVARO 17/02/2019 11:43 CREACIï¿½N DE LA CLASE
+ * ALVARO 17/02/2019 12:17 Aï¿½ADIDA QUERY findProcessionsByBrotherhood
  */
 
 @Repository

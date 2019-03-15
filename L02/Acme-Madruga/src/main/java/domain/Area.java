@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -24,6 +25,17 @@ public class Area extends DomainEntity {
 	String				name;
 	Collection<String>	pictures;
 
+	private Chapter		chapter;
+
+
+	@OneToOne(optional = true)
+	public Chapter getChapter() {
+		return this.chapter;
+	}
+
+	public void setChapter(final Chapter chapter) {
+		this.chapter = chapter;
+	}
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)

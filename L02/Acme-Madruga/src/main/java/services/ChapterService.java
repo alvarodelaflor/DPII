@@ -162,4 +162,10 @@ public class ChapterService {
 		return res;
 	}
 
+	public Chapter getChapterByUserAccountId(final int userAccountId) {
+		Chapter res;
+		res = this.chapterRepository.findByUserAccountId(userAccountId);
+		return res;
+	}
+
 }

@@ -464,20 +464,36 @@ public class AdministratorController extends AbstractController {
 	@RequestMapping(value = "/list")
 	public ModelAndView list2() {
 		ModelAndView result;
+		result = new ModelAndView("administrator/list");
 
-		//Logo
-		final String logo = this.welcomeService.getLogo();
 		HashSet<String> spamWords = new HashSet<>();
 		HashSet<String> scoreWordsPos = new HashSet<>();
 		HashSet<String> scoreWordsNeg = new HashSet<>();
-		HashSet<String> priorities = new HashSet<>();
-		//Configuration (FINDER)
-		final Configuration configuration = this.configurationService.getConfiguration();
+
+		//CreditCards'Makes
+		// ------------------------------------------------------------
+		HashSet<String> creditCardMakes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			creditCardMakes = this.welcomeService.defaultCCsMakes();
+		else
+			creditCardMakes = this.welcomeService.getCreditCardsMakes();
+		result.addObject("creditCardMakes", creditCardMakes);
+		// ------------------------------------------------------------
+
 		//Priorities
+		// ------------------------------------------------------------
+		HashSet<String> priorities = new HashSet<>();
 		if (this.welcomeService.getPriorities().isEmpty())
 			priorities = this.welcomeService.defaultPriorities();
 		else
 			priorities = this.welcomeService.getPriorities();
+		result.addObject("priorities", priorities);
+		// ------------------------------------------------------------
+		//Logo
+		final String logo = this.welcomeService.getLogo();
+
+		//Configuration (FINDER)
+		final Configuration configuration = this.configurationService.getConfiguration();
 
 		//Spam words
 		if (this.welcomeService.getSpamWords().isEmpty())
@@ -513,32 +529,53 @@ public class AdministratorController extends AbstractController {
 
 		System.out.println("Carmen: Entro en el list");
 
-		result = new ModelAndView("administrator/list");
-
 		result.addObject("logo", logo);
-
 		result.addObject("ingles", ingles);
 		result.addObject("spanish", spanish);
-
 		result.addObject("spamWords", spamWords);
 		result.addObject("scoreWordsPos", scoreWordsPos);
 		result.addObject("scoreWordsNeg", scoreWordsNeg);
-		result.addObject("priorities", priorities);
 		result.addObject("configuration", configuration);
-
-		//Finder
-
 		result.addObject("system", system);
-
 		result.addObject("phone", phone);
 		result.addObject("phoneCountry", phoneCountry);
-
 		result.addObject("language", language);
 		result.addObject("requestURI", "administrator/list.do");
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
+
+	// CreditCardMakes Methods:
+	// ------------------------------------------------------------
+	@RequestMapping(value = "/newCreditCardMake", method = RequestMethod.GET)
+	public ModelAndView newCreditCardMake(@RequestParam("newCreditCardMake") final String newCreditCardMake) {
+
+		final ModelAndView res = new ModelAndView("redirect:list.do");
+		this.welcomeService.addCCMake(newCreditCardMake);
+		res.addObject("logo", this.welcomeService.getLogo());
+		res.addObject("system", this.welcomeService.getSystem());
+		return res;
+	}
+
+	@RequestMapping(value = "/deleteCreditCardMake", method = RequestMethod.GET)
+	public ModelAndView deleteCreditCardMake(@RequestParam("deleteCreditCardMake") final String deleteCreditCardMake) {
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			this.welcomeService.removeCCMake(deleteCreditCardMake);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noCCMake.error") {
+				result = this.list2();
+				result.addObject("message", "noCCMake.error");
+			}
+		}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
+	// ------------------------------------------------------------
 
 	// PRIORITIES
 	@RequestMapping(value = "/newPriority", method = RequestMethod.GET)
@@ -737,7 +774,7 @@ public class AdministratorController extends AbstractController {
 
 	private ModelAndView createEditModelAndView(final String newLogo, final String messageCode) {
 		ModelAndView result;
-
+		result = new ModelAndView("administrator/list");
 		//Logo
 		final String logo = this.welcomeService.getLogo();
 
@@ -762,9 +799,17 @@ public class AdministratorController extends AbstractController {
 
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
-		System.out.println("Carmen: Entro en el list");
+		//CreditCards'Makes
+		// ------------------------------------------------------------
+		HashSet<String> creditCardMakes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			creditCardMakes = this.welcomeService.defaultCCsMakes();
+		else
+			creditCardMakes = this.welcomeService.getCreditCardsMakes();
+		result.addObject("creditCardMakes", creditCardMakes);
+		// ------------------------------------------------------------
 
-		result = new ModelAndView("administrator/list");
+		System.out.println("Carmen: Entro en el list");
 
 		result.addObject("logo", logo);
 

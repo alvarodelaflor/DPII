@@ -68,6 +68,15 @@
 				</ul>
 			</li>
 		</security:authorize>
+		
+		<security:authorize access="hasRole('SPONSOR')">
+			<li><a class="fNiv"><spring:message	code="master.page.sponsor" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="sponsorship/list.do"><spring:message code="master.page.sponsorship.list" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.createUser" /></a>
@@ -75,7 +84,8 @@
 					<li class="arrow"></li>
 					<li><a href="member/create.do"><spring:message code="master.page.member" /></a></li>
 					<li><a href="brotherhood/create.do"><spring:message code="master.page.brotherhood" /></a></li>	
-					<li><a href="chapter/create.do"><spring:message code="master.page.chapter" /></a></li>								
+					<li><a href="chapter/create.do"><spring:message code="master.page.chapterC" /></a></li>								
+					<li><a href="sponsor/create.do"><spring:message code="master.page.sponsor" /></a></li>								
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.brotherhood" /></a>
@@ -90,6 +100,13 @@
 					<li><a href="history/list.do"><spring:message code="master.page.histories" /></a></li>					
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.chapter" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="chapter/list.do"><spring:message code="master.page.chapterL" /></a></li>					
+				</ul>
+			</li>
+			
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

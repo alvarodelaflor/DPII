@@ -83,6 +83,11 @@
 		<security:intercept-url pattern="/chapter/create.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/chapter/save.do" access="permitAll" /> 
 		<security:intercept-url pattern="/chapter/conditions.do" access="permitAll"/> 
+		<security:intercept-url pattern="/chapter/list.do" access="permitAll"/> 
+		<security:intercept-url pattern="/area/areaChapter.do" access="permitAll"/> 
+		<security:intercept-url pattern="/chapter/show.do" access="permitAll"/> 		
+		<security:intercept-url pattern="/brotherhood/brotherhoodArea.do" access="permitAll"/> 		
+		
 		<!-- CARMEN -->
 
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
@@ -164,6 +169,8 @@
 		<security:intercept-url pattern="/position/administrator/edit.do" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/administrator/deletePriority.do" access="hasRole('ADMIN')" />  
 		<security:intercept-url pattern="/administrator/newPriority.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/deleteCreditCardMake.do" access="hasRole('ADMIN')" />  
+		<security:intercept-url pattern="/administrator/newCreditCardMake.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/configuration/administrator/edit.do" access="hasRole('ADMIN')" /> 
 		<!-- FRAN -->
 		<!-- CARMEN -->
@@ -236,8 +243,17 @@
 		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
-		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />		
 		
+		<security:intercept-url pattern="/sponsor/create.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/sponsor/save.do" access="permitAll" /> 
+		<security:intercept-url pattern="/sponsor/conditions.do" access="permitAll"/> 
+		
+		<security:intercept-url pattern="/sponsorship/list.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/show.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/create.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/edit.do" access="hasRole('SPONSOR')"/> 	
+		<security:intercept-url pattern="/sponsorship/delete.do" access="hasRole('SPONSOR')"/> 	
 		<security:intercept-url pattern="/path/show.do" access="permitAll" />
 		<!-- ANTONIO SALVAT --> 
 	

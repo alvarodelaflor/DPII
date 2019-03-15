@@ -18,7 +18,12 @@
 	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	">
 
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"> <qualifier value="validator"/> </bean>
+
 	<import resource="datasource.xml" />
 	<import resource="config/packages.xml" />
 	
 </beans>
+
+
+
