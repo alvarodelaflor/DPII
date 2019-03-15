@@ -62,19 +62,20 @@ public class AreaController extends AbstractController {
 		ModelAndView result;
 		Boolean status = false;
 		try {
+			result = new ModelAndView("area/areaChapter");
 			final Chapter chapter = this.chapterService.findOne(id);
 			System.out.println(chapter);
-			final Area area = this.areaService.findAreaChapter(chapter);
-			final Collection<Brotherhood> brotherhood = this.brotherhoodService.brotherhoodArea(area.getId());
-			System.out.println(area);
-			result = new ModelAndView("area/areaChapter");
-			status = true;
+			if (this.areaService.findAreaChapter(chapter) != null) {
+				status = true;
+				final Area area = this.areaService.findAreaChapter(chapter);
+				result.addObject("area", area);
+				final Collection<Brotherhood> brotherhood = this.brotherhoodService.brotherhoodArea(area.getId());
+				result.addObject("brotherhood", brotherhood);
+			}
 			result.addObject("chapter", chapter);
-			result.addObject("area", area);
-			result.addObject("brotherhood", brotherhood);
 			result.addObject("requestURI", "area/areaChapter.do");
 		} catch (final Exception e) {
-			result = new ModelAndView("area/areaChapter");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
