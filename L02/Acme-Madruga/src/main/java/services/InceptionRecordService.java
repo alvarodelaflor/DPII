@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import repositories.InceptionRecordRepository;
+import security.LoginService;
 import domain.Brotherhood;
 import domain.History;
 import domain.InceptionRecord;
-import repositories.InceptionRecordRepository;
-import security.LoginService;
 
 /*
  * CONTROL DE CAMBIOS PositionService.java
@@ -25,19 +26,20 @@ public class InceptionRecordService {
 
 	//Managed Repository -------------------	
 	@Autowired
-	private InceptionRecordRepository		inceptionRecordRepository;
+	private InceptionRecordRepository	inceptionRecordRepository;
 
 	//Supporting services ------------------
 	@Autowired
-	BrotherhoodService brotherhoodService;
-	
+	BrotherhoodService					brotherhoodService;
+
 	@Autowired
-	HistoryService historyService;
+	HistoryService						historyService;
+
 
 	//Simple CRUD Methods ------------------
 
 	public InceptionRecord create() {
-		InceptionRecord inceptionRecord = new InceptionRecord();
+		final InceptionRecord inceptionRecord = new InceptionRecord();
 		return inceptionRecord;
 
 	}
@@ -47,27 +49,31 @@ public class InceptionRecordService {
 	}
 
 	public InceptionRecord findOne(final int id) {
-		InceptionRecord inceptionRecord = this.inceptionRecordRepository.findOne(id);
+		final InceptionRecord inceptionRecord = this.inceptionRecordRepository.findOne(id);
 		return inceptionRecord;
 	}
 	public InceptionRecord save(final InceptionRecord inceptionRecord) {
 		Assert.notNull(inceptionRecord, "inceptionRecordSaveService.null");
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		InceptionRecord inceptionRecordSaved;
 		// Assert inceptionRecord owner is the same that brotherhood logger
-		if (brotherhood!=null && brotherhood.getHistory()!=null && brotherhood.getHistory().getInceptionRecord()!=null) {
+		if (brotherhood != null && brotherhood.getHistory() != null && brotherhood.getHistory().getInceptionRecord() != null) {
 			/*
-			 *  En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la 
-			 *  misma que la que tiene el brotherhood logueado
+			 * En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la
+			 * misma que la que tiene el brotherhood logueado
 			 */
-			int idHistoryBrotherhoodLogger = brotherhood.getHistory().getId();
-			History history = this.historyService.findHistoryByInceptionRecordId(inceptionRecord.getId());
-			Assert.isTrue(idHistoryBrotherhoodLogger==history.getId(), "inceptionRecord.brotherhood.diferent");
-		} 
-		History history = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
+			final int idHistoryBrotherhoodLogger = brotherhood.getHistory().getId();
+			final History history = this.historyService.findHistoryByInceptionRecordId(inceptionRecord.getId());
+			Assert.isTrue(idHistoryBrotherhoodLogger == history.getId(), "inceptionRecord.brotherhood.diferent");
+		}
+		final History history = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
 		inceptionRecordSaved = this.inceptionRecordRepository.save(inceptionRecord);
 		history.setInceptionRecord(inceptionRecordSaved);
 		this.historyService.save(history);
 		return inceptionRecordSaved;
+	}
+
+	public void flush() {
+		this.inceptionRecordRepository.flush();
 	}
 }

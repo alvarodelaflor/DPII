@@ -285,6 +285,7 @@
                 <ref bean="messageBox20"/>
         	</list>
         </property>	
+    	<property name="history" ref="history02"></property>
     </bean>
     
     <bean id="brotherhood02" class="domain.Brotherhood">
@@ -308,6 +309,7 @@
                 <ref bean="messageBox25"/>
         	</list>
         </property>	
+        <property name="history" ref="history01"></property>
     </bean>
     
     <!-- BROTHERHOOD -->
@@ -758,6 +760,13 @@
     	<property name="messages"> <null/> </property>
     	<property name="parentBox"> <null/> </property>
     </bean>
+    
+	<bean id="history01" class="domain.History">
+	</bean>    
+    
+    <bean id="history02" class="domain.History">
+	</bean>    
+    
      
 </beans>
 
