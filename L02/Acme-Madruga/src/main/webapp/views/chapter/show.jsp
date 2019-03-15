@@ -31,6 +31,13 @@
 		<tr><td><spring:message code="chapter.username" /> <jstl:out value="${chapter.userAccount.username}"></jstl:out></td></tr>
 		<tr><td><spring:message code="chapter.title" /> <jstl:out value="${chapter.title}"></jstl:out></td></tr>
 	</table>
+	
+	<h3><spring:message code="chapter.proclaims"/></h3>
+<display:table name="proclaims" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	<display:column property="text" titleKey="proclaim.text"></display:column>
+	<display:column property="moment" titleKey="proclaim.moment"></display:column>
+</display:table>
+
 </div>
 
 <br>

@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ import services.ActorService;
 import services.ChapterService;
 import services.WelcomeService;
 import domain.Chapter;
+import domain.Proclaim;
 import forms.RegistrationForm;
 
 @Controller
@@ -119,9 +121,12 @@ public class ChapterController extends AbstractController {
 		ModelAndView result;
 		try {
 			final Chapter chapter = this.chapterService.findOne(id);
+			Assert.notNull(chapter);
+			final Collection<Proclaim> proclaims = this.chapterService.getChapterByUserAccountId(chapter.getUserAccount().getId()).getProclaim();
 			System.out.println(chapter);
 			result = new ModelAndView("chapter/show");
 			result.addObject("chapter", chapter);
+			result.addObject("proclaims", proclaims);
 			result.addObject("requestURI", "chapter/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

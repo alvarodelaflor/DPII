@@ -144,6 +144,13 @@
         <property name="address" value="Lora de Río, Nº5. Carmona" />
         <property name="userAccount" ref= "userAccount7"/>
         <property name="title" value= "Holi holi"/>
+         <property name="proclaim">
+        	<list>
+                <ref bean="proclaim01"/>
+                <ref bean="proclaim02"/>
+        	</list>
+        </property>
+        
     </bean>
     <!-- CHAPTER -->
     
@@ -697,15 +704,17 @@
 		<property name="creditCard" ref= "creditCard01"/>
     </bean>
     
-    <!-- 
-     <bean id="paradeTry" class="domain.Parade">
-    	<property name="name" value= "paradeTry"/>
+    
+     <bean id="proclaim01" class="domain.Proclaim">
+    	<property name="text" value= "Hola caracola"/>
+    	<property name="moment" value= "2011/09/02 21:00"/>
     </bean>
     
-    <bean id="paradeTry2" class="domain.Parade">
-    	<property name="name" value= "paradeTry2"/>
+    <bean id="proclaim02" class="domain.Proclaim">
+    	<property name="text" value= "Hola holita vecinito"/>
+    	<property name="moment" value= "2011/09/02 21:00"/>
     </bean>
-     -->
+     
 </beans>
 
 
