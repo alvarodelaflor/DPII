@@ -46,6 +46,7 @@
 		<value>/views/legalRecord/messages</value>
 		<value>/views/miscellaneousRecord/messages</value>
 		<value>/views/history/messages</value>
+		<value>/views/proclaim/messages</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<value>/views/configuration/messages</value>

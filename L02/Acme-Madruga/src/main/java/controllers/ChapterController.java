@@ -27,6 +27,7 @@ import services.WelcomeService;
 import domain.Chapter;
 import domain.Proclaim;
 import forms.RegistrationForm;
+import security.LoginService;
 
 @Controller
 @RequestMapping("/chapter")
@@ -115,6 +116,22 @@ public class ChapterController extends AbstractController {
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
+	
+	private Boolean checkChapterLoggerSameChapterToShow(final int chapterId) {
+		Boolean res = false;
+		try {
+			Chapter chapterLogger = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
+			if (chapterLogger.getId()==chapterId) {
+				System.out.println("Se esta mostrando la información del chapter logueado");
+				res = true;
+			} else {
+				System.out.println("El usuario logueado es un chapter diferente al que se va a mostrar");
+			}
+		} catch (Exception e) {
+			System.out.println("El usuario logueado no es un chapter");
+		}
+		return res;
+	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
@@ -127,6 +144,10 @@ public class ChapterController extends AbstractController {
 			result = new ModelAndView("chapter/show");
 			result.addObject("chapter", chapter);
 			result.addObject("proclaims", proclaims);
+			// ALVARO 15/03/2019 11:35 -- Si el logueado es el mismo que se va a mostrar se habilita el botón de crear una proclaim
+			if (checkChapterLoggerSameChapterToShow(id)) {
+				result.addObject("validChapter", true);
+			}
 			result.addObject("requestURI", "chapter/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

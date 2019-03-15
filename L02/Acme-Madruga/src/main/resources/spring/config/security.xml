@@ -139,6 +139,8 @@
 		<security:intercept-url pattern="/history/miscellaneousRecord/create.do" access="hasRole('BROTHERHOOD')" />	
 		<security:intercept-url pattern="/history/miscellaneousRecord/edit.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/history/miscellaneousRecord/delete.do" access="hasRole('BROTHERHOOD')" />
+
+		<security:intercept-url pattern="/proclaim/chapter/create.do" access="hasRole('CHAPTER')" />	
 		
 		<security:intercept-url pattern="/history/list.do" access="permitAll" />
 		<security:intercept-url pattern="/history/show.do" access="permitAll" />

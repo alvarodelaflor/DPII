@@ -37,6 +37,12 @@
 	<display:column property="text" titleKey="proclaim.text"></display:column>
 	<display:column property="moment" titleKey="proclaim.moment"></display:column>
 </display:table>
+<!-- ALVARO 15/03/2019 -->
+<jstl:if test="${validChapter==true}">
+	<form method="get" action="/Acme-Madruga/proclaim/chapter/create.do">
+		<button><spring:message code="createProclaim"/></button>
+	</form>
+</jstl:if>
 
 </div>
 
