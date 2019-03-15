@@ -143,6 +143,15 @@
         <property name="phone" value="+3423456789" />
         <property name="address" value="Lora de Río, Nº5. Carmona" />
         <property name="userAccount" ref= "userAccount7"/>
+          <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox40"/>
+                <ref bean="messageBox41"/>
+                <ref bean="messageBox42"/>
+                <ref bean="messageBox43"/>
+                <ref bean="messageBox44"/>
+        	</list>
+        </property>
         <property name="title" value= "Holi holi"/>
          <property name="proclaim">
         	<list>
@@ -716,6 +725,41 @@
     <bean id="proclaim02" class="domain.Proclaim">
     	<property name="text" value= "Hola holita vecinito"/>
     	<property name="moment" value= "2011/09/02 21:00"/>
+    </bean>
+    
+          <bean id="messageBox40" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox41" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox42" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox43" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox44" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
     </bean>
      
     
