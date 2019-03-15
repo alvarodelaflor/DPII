@@ -227,7 +227,8 @@
                 <ref bean="messageBox19"/>
                 <ref bean="messageBox20"/>
         	</list>
-        </property>	
+        </property>
+       <property name="history" ref= "history01"/>		
     </bean>
     
     <bean id="brotherhood02" class="domain.Brotherhood">
@@ -250,7 +251,8 @@
                 <ref bean="messageBox24"/>
                 <ref bean="messageBox25"/>
         	</list>
-        </property>	
+        </property>
+       <property name="history" ref= "history02"/>	
     </bean>
     
     <!-- BROTHERHOOD -->
@@ -625,6 +627,14 @@
     	<property name="longitude" value="-5.987670"/>
     </bean>  
     <!-- SEGMENT -->
+    <!-- HISTORY -->
+    <bean id="history01" class="domain.History">
+
+    </bean>
+    <bean id="history02" class="domain.History">
+
+    </bean>
+    <!-- HISTORY -->
 </beans>
 
 
