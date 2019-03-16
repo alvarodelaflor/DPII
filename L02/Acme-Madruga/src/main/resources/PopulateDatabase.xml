@@ -766,6 +766,20 @@
     
     <bean id="history02" class="domain.History">
 	</bean>    
+	
+	 <bean id="periodRecord1" class="domain.PeriodRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+    	<property name="startYear" value= "2019"/>
+		<property name="endYear" value= "2020"/>
+		<property name="photos" value="carmen"/>
+    </bean>
+    
+    <bean id="inceptionRecord1" class="domain.InceptionRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+		<property name="photos" value="carmen"/>
+    </bean>
     
      
 </beans>

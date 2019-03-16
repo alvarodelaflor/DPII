@@ -66,4 +66,8 @@ public class HistoryService {
 	public History findOne(final int id) {
 		return this.historyRepository.findOne(id);
 	}
+
+	public void flush() {
+		this.historyRepository.flush();
+	}
 }
