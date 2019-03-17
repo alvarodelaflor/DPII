@@ -21,6 +21,8 @@ public class StringToParadeConverter implements Converter<String, Parade> {
 	@Override
 	public Parade convert(final String text) {
 		Parade result;
+		System.out.println("text del converter");
+		System.out.println(text);
 		int id;
 
 		try {

@@ -44,7 +44,14 @@
           		<form:label path="creditCard.expiration"><spring:message code="sponsorship.creditCard.expiration" /></form:label>
 				<form:input type="date" path="creditCard.expiration" required="required" placeholder="yyyy/MM/dd HH:mm"/>
 				<form:errors cssClass="error" path="creditCard.expiration"/><br>
-					
+				<form:label path="parade">
+				<spring:message code="sponsorship.parade" />:
+				</form:label>
+				<form:select required ="required" path="parade">
+   		 		<form:options items="${parades}" />
+				</form:select>
+				<form:errors cssClass="error" path="parade" />					
+			<br></br>
 			<input type="submit" name="save" value=<spring:message code="send" />/>
 			<acme:cancel url="sponsorship/list.do" code="sponsorship.cancel"/>
 		</form:form>
