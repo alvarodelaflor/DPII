@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,13 +34,13 @@ public class PathController extends AbstractController {
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView listParades(@RequestParam(value = "paradeId", defaultValue = "-1") final int paradeId) {
+	public ModelAndView showPath(@RequestParam(value = "paradeId", defaultValue = "-1") final int paradeId) {
 		ModelAndView result;
 
 		try {
 			result = new ModelAndView("path/show");
 			final Path path = this.pathService.getParadePath(paradeId);
-			final Brotherhood loggedBrotherhood = this.brotherhoodService.findOne(LoginService.getPrincipal().getId());
+			final Brotherhood loggedBrotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 
 			// In case we are logged as the brotherhood who owns this parade we want to also modify the path
 			if (loggedBrotherhood != null && loggedBrotherhood.getId() == path.getParade().getBrotherhood().getId())
@@ -49,9 +50,26 @@ public class PathController extends AbstractController {
 
 			final List<Segment> segments = this.segmentService.getAllSegments(path);
 			result.addObject("segments", segments);
+			result.addObject("paradeId", paradeId);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		return result;
+	}
+	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST)
+	public ModelAndView editSegment(@RequestParam("paradeId") final int paradeId, final Segment segment, final BindingResult binding) {
+		ModelAndView result;
+
+		final Segment res = this.segmentService.reconstruct(segment, binding);
+
+		try {
+			this.segmentService.save(res, paradeId);
+			result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
+		} catch (final Exception e) {
+			e.printStackTrace();
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
 		return result;
 	}
 }

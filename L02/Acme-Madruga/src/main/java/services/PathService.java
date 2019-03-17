@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PathRepository;
-import security.Authority;
 import security.LoginService;
 import domain.Parade;
 import domain.Path;
@@ -27,8 +26,11 @@ public class PathService {
 	}
 
 	public Path save(final Path path) {
-		// We have to be a brotherhood
-		this.assertAuthority("BROTHERHOOD");
+		// We have to be the brotherhood owner of this parade
+		final Parade parade = this.paradeService.findOne(path.getParade().getId());
+		final int loggedAccountId = LoginService.getPrincipal().getId();
+
+		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
 
 		final Path res = this.pathRepository.save(path);
 
@@ -49,16 +51,6 @@ public class PathService {
 				res = this.pathRepository.getParadePath(paradeId);
 		}
 		return res;
-	}
-	// ------------------------------- Private methods
-	private boolean checkAuthority(final String authority) {
-		final Authority au = new Authority();
-		au.setAuthority(authority);
-		return LoginService.getPrincipal().getAuthorities().contains(au);
-	}
-
-	private void assertAuthority(final String authority) {
-		Assert.isTrue(this.checkAuthority(authority));
 	}
 
 }

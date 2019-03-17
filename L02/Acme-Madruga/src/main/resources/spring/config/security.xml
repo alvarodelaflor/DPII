@@ -222,6 +222,9 @@
 		
 		<security:intercept-url pattern="/finder/member/show.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/finder/member/refresh.do" access="hasRole('MEMBER')" />
+		
+		<security:intercept-url pattern="/path/show.do" access="permitAll" />
+		<security:intercept-url pattern="/path/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 			<security:intercept-url pattern="/messageBox/list.do" access="isAuthenticated()" /> 
@@ -256,7 +259,6 @@
 		<security:intercept-url pattern="/sponsorship/create.do" access="hasRole('SPONSOR')"/> 	
 		<security:intercept-url pattern="/sponsorship/edit.do" access="hasRole('SPONSOR')"/> 	
 		<security:intercept-url pattern="/sponsorship/delete.do" access="hasRole('SPONSOR')"/> 	
-		<security:intercept-url pattern="/path/show.do" access="permitAll" />
 		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
