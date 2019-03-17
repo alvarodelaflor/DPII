@@ -12,13 +12,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<jstl:if test="${owner == false}]">
 <ol>
 <jstl:forEach var="segment" items="${segments}">
 	<li> <jstl:out value=" Origen: (${segment.latitude}, ${segment.longitude}); Destino: (${segment.destination.latitude}, ${segment.destination.longitude})"/> </li>
 </jstl:forEach>
 </ol>
+</jstl:if>
 
+<jstl:if test="${owner == true}]">
+<ol>
+<jstl:forEach var="segment" items="${segments}">
+	<li> <jstl:out value=" Origen: (${segment.latitude}, ${segment.longitude}); Destino: (${segment.destination.latitude}, ${segment.destination.longitude})"/> <a href="/path/edit.do?segmentId=${segment.id}"></a> </li>
+</jstl:forEach>
+</ol>
+</jstl:if>
 <div>
 	<form method="get" action="#">
 		<button type="submit">
