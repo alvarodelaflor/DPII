@@ -78,6 +78,7 @@ public class PeriodRecordService {
 	public PeriodRecord save(final PeriodRecord periodRecord) {
 		Assert.notNull(periodRecord, "periodRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "Brotherhood have not got an inception record");
 		PeriodRecord periodRecordSaved;
 		// Assert periodRecord owner is the same that brotherhood logger
 		PeriodRecord periodRecordFromDB = this.periodRecordRepository.findOne(periodRecord.getId());

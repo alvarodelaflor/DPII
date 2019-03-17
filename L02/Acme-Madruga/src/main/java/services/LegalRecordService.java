@@ -54,7 +54,7 @@ public class LegalRecordService {
 	public LegalRecord save(final LegalRecord legalRecord) {
 		Assert.notNull(legalRecord, "legalRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		Assert.isTrue(brotherhood.getHistory().getInceptionRecord()!=null, "brotherhood.null.inceptionRecord");
+		Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "Brotherhood have not got an inception record");
 		LegalRecord legalRecordSaved;
 		// Assert legalRecord owner is the same that brotherhood logger
 		LegalRecord legalRecordFromDB = this.legalRecordRepository.findOne(legalRecord.getId());

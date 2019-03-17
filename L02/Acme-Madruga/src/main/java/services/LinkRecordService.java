@@ -54,6 +54,7 @@ public class LinkRecordService {
 	public LinkRecord save(final LinkRecord linkRecord) {
 		Assert.notNull(linkRecord, "linkRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "Brotherhood have not got an inception record");
 		LinkRecord linkRecordSaved;
 		// Assert linkRecord owner is the same that brotherhood logger
 		LinkRecord linkRecordFromDB = this.linkRecordRepository.findOne(linkRecord.getId());
