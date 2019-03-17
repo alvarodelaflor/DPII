@@ -40,7 +40,8 @@
 		<bean class="converters.StringToMessageBoxConverter" />
 		<bean class="converters.ParadeToStringConverter" /> 
 		<bean class="converters.StringToParadeConverter" />
-		
+		<bean class="converters.StringToInceptionRecordConverter" />
+		<bean class="converters.InceptionRecordToStringConverter" /> 		
 		<bean class="converters.StringToChapterConverter" />
 		<bean class="converters.ChapterToStringConverter" /> 
 

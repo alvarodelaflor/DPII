@@ -6,11 +6,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
 import repositories.HistoryRepository;
 import domain.Brotherhood;
 import domain.History;
-import repositories.HistoryRepository;
 import security.LoginService;
 
 /*

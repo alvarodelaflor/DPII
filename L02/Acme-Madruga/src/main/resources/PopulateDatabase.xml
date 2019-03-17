@@ -288,7 +288,7 @@
        <property name="history" ref= "history01"/>		
     </bean>
     
-    <bean id="brotherhood02" class="domain.Brotherhood">
+    <bean id="brotherhood2" class="domain.Brotherhood">
     	<property name="name" value="Brotherhood02" />
     	<property name="middleName" value="Dogran" />
     	<property name="surname" value="de la Flor Bonilla" />
@@ -819,9 +819,16 @@
 
     </bean>
     <bean id="history02" class="domain.History">
-
+		<property name="inceptionRecord" ref="inceptionRecord01" />
     </bean>
     <!-- HISTORY -->
+    <!-- INCEPTIONRECORD -->
+    <bean id="inceptionRecord01" class="domain.InceptionRecord">
+		<property name="title" value="Título de prueba"/>
+		<property name="description" value="Descripción de prueba"/>
+		<property name="photos" value="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Alcora.JPG/220px-Alcora.JPG"/>
+    </bean>    
+    <!-- INCEPTIONRECORD -->
 </beans>
 
 

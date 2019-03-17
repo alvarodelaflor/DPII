@@ -20,10 +20,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import services.BrotherhoodService;
 import services.HistoryService;
-import services.InceptionRecordService;
 import services.LegalRecordService;
 import services.PeriodRecordService;
 import utilities.AbstractTest;
@@ -53,21 +51,20 @@ public class HistoryTest extends AbstractTest {
 	@Autowired
 	private LegalRecordService		legalRecordService;
 
-	@Autowired
-	private InceptionRecordService	inceptionRecordService;
-
-
 	// Tests ------------------------------------------------------------------
 
 	@Test
 	public void driverHistory() {
 		final Object testingData[][] = {
 			{ //CASO: Se crea una history sin InceptionRecord pero si con periodRecord
-				"brotherhood", super.getEntityId("periodRecord1"), 0, NullPointerException.class
+				"brotherhood", super.getEntityId("periodRecord1"), 0, null
 			}, { //CASO: Se crea una history sin InceptionRecord pero si con legalRecord
-				"brotherhood", 0, super.getEntityId("legalRecord1"), NullPointerException.class
+				"brotherhood", 0, super.getEntityId("legalRecord1"), null
 			}, { //CASO: Se crea una history sin InceptionRecord pero si con legalRecord y periodRecord
-				"brotherhood", super.getEntityId("periodRecord1"), super.getEntityId("legalRecord1"), NullPointerException.class
+				"brotherhood", super.getEntityId("periodRecord1"), super.getEntityId("legalRecord1"), null
+			// ÁLVARO
+			}, { //CASO: Se añade una PeriodRecord y una legalRecord a una history
+				"brotherhood2", super.getEntityId("periodRecord1"), super.getEntityId("legalRecord1"), null
 			}
 		};
 
@@ -104,6 +101,7 @@ public class HistoryTest extends AbstractTest {
 			super.unauthenticate();
 
 		} catch (final Throwable oops) {
+			System.out.println(oops.getClass());
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
