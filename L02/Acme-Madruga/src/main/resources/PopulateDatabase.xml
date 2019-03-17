@@ -760,13 +760,7 @@
     	<property name="isDefault" value= "true"/>
     	<property name="messages"> <null/> </property>
     	<property name="parentBox"> <null/> </property>
-    </bean>
-    
-	<bean id="history01" class="domain.History">
-	</bean>    
-    
-    <bean id="history02" class="domain.History">
-	</bean>    
+    </bean>  
 	
 	 <bean id="periodRecord1" class="domain.PeriodRecord">
     	<property name="title" value= "carmen"/>

@@ -22,6 +22,24 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <body>
+	<script type= "text/javascript">
+		function preguntaES(){
+    		if (confirm('Una vez creada, no podrá borrar ni editar, ¿está usted seguro de que todo sea correcto?')){
+    			return true;
+    		} else {
+    			return false;
+    		}
+		}
+	</script>
+	<script type= "text/javascript">
+		function preguntaEN(){
+    		if (confirm('Once created, you can not delete or edit, are you sure everything is correct?')){
+    			return true;
+    		} else {
+    			return false;
+    		}
+		}
+	</script>
 	<div>
     	<form:form class="formularioEdicion" method="POST" modelAttribute="proclaim" action="proclaim/chapter/create.do">
           	<form:hidden path="id"/>
@@ -34,7 +52,18 @@
                	<acme:textboxMoment code="proclaim.moment" path="moment"/>
           	</fieldset>
           	<acme:cancel url="chapter/show.do?id=${chapterId}" code="cancel"/>
-          	<acme:submit name="save" code="send"/>
+	       	<c:choose>
+	       		<c:when test="${language == true}">
+					<button type="submit" name="save" class="btn btn-primary" onclick="return preguntaEN()">
+						<spring:message code="send" />
+					</button>
+				</c:when>
+				<c:otherwise>
+					<button type="submit" name="save" class="btn btn-primary" onclick="return preguntaES()">
+						<spring:message code="send" />
+					</button>
+				</c:otherwise>
+			</c:choose>
 		</form:form>
 	</div>
 </body>

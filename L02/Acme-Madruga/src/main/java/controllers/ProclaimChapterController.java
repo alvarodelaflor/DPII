@@ -14,6 +14,7 @@ package controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -64,7 +65,17 @@ public class ProclaimChapterController extends AbstractController {
 			result.addObject("proclaim", proclaim);
 			result.addObject("chapterId", chapterLogger.getId());
 			result.addObject("logo", welcomeService.getLogo());
-			result.addObject("system", welcomeService.getSystem());			
+			result.addObject("system", welcomeService.getSystem());		
+			final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
+			Boolean language;
+			if (actuallanguage.equals("English")||actuallanguage.equals("inglés")) {
+				System.out.println("Actual languge: " + actuallanguage);
+				language = true;
+			} else {
+				System.out.println("Actual languge: " + actuallanguage);
+				language = false;
+			}
+			result.addObject("language", language);
 		} catch (Exception e) {
 			System.out.println("Error e en GET /create ProclaimController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
