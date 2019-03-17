@@ -79,4 +79,7 @@ public class HistoryService {
 		return this.historyRepository.findOne(id);
 	}
 
+	public void flush() {
+		this.historyRepository.flush();
+	}
 }

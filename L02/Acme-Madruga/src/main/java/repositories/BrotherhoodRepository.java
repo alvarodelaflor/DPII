@@ -81,4 +81,7 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	@Query("select b from Brotherhood b where b.area.id = ?1")
 	Collection<Brotherhood> brotherhoodArea(int id);
 
+	@Query("select b from Brotherhood b where b.name=?1")
+	Brotherhood findByUserName(String userAccountId);
+
 }

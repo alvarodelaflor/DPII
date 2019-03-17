@@ -761,6 +761,35 @@
     	<property name="messages"> <null/> </property>
     	<property name="parentBox"> <null/> </property>
     </bean>
+    
+	<bean id="history01" class="domain.History">
+	</bean>    
+    
+    <bean id="history02" class="domain.History">
+	</bean>    
+	
+	 <bean id="periodRecord1" class="domain.PeriodRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+    	<property name="startYear" value= "2019"/>
+		<property name="endYear" value= "2020"/>
+		<property name="photos" value="carmen"/>
+    </bean>
+    
+    <bean id="legalRecord1" class="domain.LegalRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+    	<property name="legalName" value= "hola"/>
+    	<property name="vatNumber" value= "EH12345678C"/>
+    	<property name="laws" value= "hola"/>		
+    </bean>
+    
+    <bean id="inceptionRecord1" class="domain.InceptionRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+    	<property name="photos" value= "hola"/>
+    </bean>
+    
      
     
     <!-- PATHS -->

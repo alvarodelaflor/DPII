@@ -430,4 +430,10 @@ public class BrotherhoodService {
 		return this.brotherhoodRepository.brotherhoodArea(id);
 	}
 
+	public Brotherhood getBrotherhoodByName(final String name) {
+		Brotherhood res;
+		res = this.brotherhoodRepository.findByUserName(name);
+		return res;
+	}
+
 }
