@@ -768,6 +768,7 @@
     	<property name="startYear" value= "2019"/>
 		<property name="endYear" value= "2020"/>
 		<property name="photos" value="carmen"/>
+		<property name="history" ref= "history01"/>	
     </bean>
     
     <bean id="legalRecord1" class="domain.LegalRecord">
@@ -775,13 +776,15 @@
     	<property name="description" value= "hola"/>
     	<property name="legalName" value= "hola"/>
     	<property name="vatNumber" value= "EH12345678C"/>
-    	<property name="laws" value= "hola"/>		
+    	<property name="laws" value= "hola"/>
+    	<property name="history" ref= "history01"/>	
     </bean>
     
     <bean id="inceptionRecord1" class="domain.InceptionRecord">
     	<property name="title" value= "carmen"/>
     	<property name="description" value= "hola"/>
     	<property name="photos" value= "hola"/>
+    	<property name="history" ref= "history01"/>	
     </bean>
     
      
@@ -816,7 +819,9 @@
     <!-- SEGMENT -->
     <!-- HISTORY -->
     <bean id="history01" class="domain.History">
-
+		<property name="periodRecord" ref= "periodRecord1"/>
+		<property name="legalRecord" ref= "legalRecord1"/>
+		<property name="inceptionRecord" ref= "inceptionRecord1"/>
     </bean>
     <bean id="history02" class="domain.History">
 

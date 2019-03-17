@@ -22,6 +22,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
 import domain.Enrolled;
+import domain.History;
 import domain.Member;
 import domain.MessageBox;
 import forms.RegistrationForm;
@@ -55,11 +56,15 @@ public class BrotherhoodService {
 
 	@Autowired
 	private RequestService		requestService;
+
 	@Autowired
 	private MessageBoxService	messageBoxService;
 
 	@Autowired
-	AreaService					areaService;
+	private AreaService			areaService;
+
+	@Autowired
+	private HistoryService		historyService;
 
 
 	public Collection<Brotherhood> findByAreaId(final int areaId) {
@@ -436,4 +441,30 @@ public class BrotherhoodService {
 		return res;
 	}
 
+	public Collection<Brotherhood> findBrotherhoodWithLargestHistory() {
+
+		final Collection<Brotherhood> res = new ArrayList<Brotherhood>();
+
+		final Collection<History> histories = this.historyService.findHistoriesPerSize(this.historyService.maxRecordPerHistory());
+
+		for (final History history : histories)
+			res.add(this.brotherhoodRepository.findBrotherhoodByHistory(history.getId()));
+		System.out.println("Lista en el servicio para encontrar la mas grande: ");
+		System.out.println(res);
+		return res;
+
+	}
+
+	public Collection<Brotherhood> findBrotherhoodsWithHistoryLargerThanAvg() {
+
+		final Collection<Brotherhood> res = new ArrayList<Brotherhood>();
+		final Collection<History> histories = this.historyService.findHistoriesPerSize(this.historyService.avgRecordPerHistory());
+
+		for (final History history : histories)
+			res.add(this.brotherhoodRepository.findBrotherhoodByHistory(history.getId()));
+
+		System.out.println("Lista en el servicio para encontrar la mas grandes que la media: ");
+		System.out.println(res);
+		return res;
+	}
 }

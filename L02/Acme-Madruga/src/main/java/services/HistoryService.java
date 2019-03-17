@@ -1,17 +1,18 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.HistoryRepository;
+import security.LoginService;
 import domain.Brotherhood;
 import domain.History;
-import repositories.HistoryRepository;
-import security.LoginService;
 
 /*
  * CONTROL DE CAMBIOS HistroyService.java
@@ -26,9 +27,9 @@ public class HistoryService {
 
 	@Autowired
 	private HistoryRepository	historyRepository;
-	
+
 	@Autowired
-	private BrotherhoodService brotherhoodService;
+	private BrotherhoodService	brotherhoodService;
 
 
 	//Supporting services ------------------
@@ -52,12 +53,12 @@ public class HistoryService {
 	public History findHistoryByInceptionRecordId(final int inceptionRecordId) {
 		return this.historyRepository.findHistoryByInceptionRecordId(inceptionRecordId);
 	}
-	
-	public History save(History history) {
+
+	public History save(final History history) {
 		try {
-			Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-			Assert.isTrue(brotherhood.getHistory().getId()==history.getId());	
-		} catch (Exception e) {
+			final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+			Assert.isTrue(brotherhood.getHistory().getId() == history.getId());
+		} catch (final Exception e) {
 			System.out.println("El usuario no esta registrado a�n");
 		}
 		return this.historyRepository.save(history);
@@ -81,5 +82,56 @@ public class HistoryService {
 
 	public void flush() {
 		this.historyRepository.flush();
+	}
+
+	public Collection<History> findHistoriesPerSize(final float t) {
+
+		final Collection<History> res = new ArrayList<History>();
+
+		//final Float size = this.historyRepository.maxRecordPerHistory();
+		final List<History> all = this.historyRepository.findAll();
+		System.out.println("Todas las history:");
+		System.out.println(all);
+
+		for (int i = 0; i < all.size(); i++) {
+
+			float count = 0;
+			count = count + all.get(i).getLegalRecord().size();
+			count = count + all.get(i).getLinkRecord().size();
+			count = count + all.get(i).getPeriodRecord().size();
+			count = count + all.get(i).getMiscellaneousRecord().size();
+			count = count + 1; // Inception Record
+
+			System.out.println(count);
+
+			if (count >= t)
+				res.add(all.get(i));
+			System.out.println("==================== Iteraciones del for:");
+			System.out.println(res);
+		}
+
+		System.out.println("Lista en el repo: ");
+		System.out.println(res);
+		return res;
+	}
+
+	public float maxRecordPerHistory() {
+
+		return this.historyRepository.maxRecordPerHistory();
+	}
+
+	public float minRecordPerHistory() {
+
+		return this.historyRepository.minRecordPerHistory();
+	}
+
+	public float avgRecordPerHistory() {
+
+		return this.historyRepository.avgRecordPerHistory();
+	}
+
+	public float stddevRecordPerHistory() {
+
+		return this.historyRepository.stddevRecordPerHistory();
 	}
 }

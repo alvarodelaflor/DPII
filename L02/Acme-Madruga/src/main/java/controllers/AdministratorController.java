@@ -32,6 +32,7 @@ import services.AreaService;
 import services.BrotherhoodService;
 import services.ConfigurationService;
 import services.FinderService;
+import services.HistoryService;
 import services.MemberService;
 import services.ParadeService;
 import services.RequestService;
@@ -77,6 +78,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	ConfigurationService	configurationService;
+
+	@Autowired
+	HistoryService			historyService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -253,6 +257,15 @@ public class AdministratorController extends AbstractController {
 			final Float maxBrotherhoodPerArea = this.brotherhoodService.maxBrotherhoodPerArea();
 			final Float stddevBrotherhoodPerArea = this.brotherhoodService.stddevBrotherhoodPerArea();
 
+			final Float avgRecordPerHistory = this.historyService.avgRecordPerHistory();
+			final Float minRecordPerHistory = this.historyService.minRecordPerHistory();
+			final Float maxRecordPerHistory = this.historyService.maxRecordPerHistory();
+			final Float stddevRecordPerHistory = this.historyService.stddevRecordPerHistory();
+			final Collection<Brotherhood> brotherhoodLargestHistory = this.brotherhoodService.findBrotherhoodWithLargestHistory();
+			System.out.println("Listas en el controlador: ");
+			System.out.println(brotherhoodLargestHistory);
+			final Collection<Brotherhood> brotherhoodWithLargerHistoryThanAvg = this.brotherhoodService.findBrotherhoodsWithHistoryLargerThanAvg();
+			System.out.println(brotherhoodWithLargerHistoryThanAvg);
 			final Float minNumberOfResult = this.finderService.minNumberOfResult();
 			final Float maxNumberOfResult = this.finderService.maxNumberOfResult();
 			final Float avgNumberOfResult = this.finderService.avgNumberOfResult();
@@ -281,6 +294,11 @@ public class AdministratorController extends AbstractController {
 			result.addObject("maxBrotherhoodPerArea", maxBrotherhoodPerArea);
 			result.addObject("stddevBrotherhoodPerArea", stddevBrotherhoodPerArea);
 
+			result.addObject("avgRecordPerHistory", avgRecordPerHistory);
+			result.addObject("minRecordPerHistory", minRecordPerHistory);
+			result.addObject("maxRecordPerHistory", maxRecordPerHistory);
+			result.addObject("stddevRecordPerHistory", stddevRecordPerHistory);
+
 			result.addObject("largestBrotherhood", largestBrotherhood);
 			result.addObject("getRatioRequestParadeStatusTrue", getRatioRequestParadeStatusTrue);
 			result.addObject("getRatioRequestParadeStatusFalse", getRatioRequestParadeStatusFalse);
@@ -290,6 +308,8 @@ public class AdministratorController extends AbstractController {
 			result.addObject("minNumberOfMemberPerBrotherhood", minNumberOfMemberPerBrotherhood);
 			result.addObject("avgNumberOfMemberPerBrotherhood", avgNumberOfMemberPerBrotherhood);
 			result.addObject("desviationOfNumberOfMemberPerBrotherhood", desviationOfNumberOfMemberPerBrotherhood);
+			result.addObject("brotherhoodLargestHistory", brotherhoodLargestHistory);
+			result.addObject("brotherhoodWithLargerHistoryThanAvg", brotherhoodWithLargerHistoryThanAvg);
 
 			result.addObject("minParade", minParade);
 			result.addObject("maxParade", maxParade);
