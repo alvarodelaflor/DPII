@@ -26,10 +26,15 @@
     	<form:form class="formularioEdicion" method="POST" modelAttribute="legalRecord" action="history/legalRecord/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox code="legalRecord.title" path="title"/>
-          	<acme:textbox code="legalRecord.description" path="description"/>
-          	<acme:textbox code="legalRecord.legalName" path="legalName"/>
-          	<acme:textbox code="legalRecord.laws" path="laws"/>
+          	<fieldset>
+          		<legend>
+          			<spring:message code="legalRecord.dates" />
+          		</legend>
+          		<acme:textbox code="legalRecord.title" path="title"/>
+          		<acme:textbox code="legalRecord.description" path="description"/>
+          		<acme:textbox code="legalRecord.legalName" path="legalName"/>
+          		<acme:textbox code="legalRecord.laws" path="laws"/>
+          	</fieldset>
           	<acme:textboxVatNumber code="legalRecord.vatNumber" path="vatNumber"/>
           	<acme:cancel url="history/show.do?brotherhoodId=${brotherhoodId}" code="cancel"/>
           	<acme:submit name="save" code="send"/>

@@ -44,7 +44,9 @@
 		<value>/views/periodRecord/messages</value>
 		<value>/views/linkRecord/messages</value>
 		<value>/views/legalRecord/messages</value>
+		<value>/views/miscellaneousRecord/messages</value>
 		<value>/views/history/messages</value>
+		<value>/views/proclaim/messages</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<value>/views/configuration/messages</value>
@@ -60,6 +62,7 @@
 		<!-- ANTONIO SANCHEZ -->
 		<value>/views/request/messages</value>
 		<value>/views/finder/messages</value>
+		<value>/views/path/messages</value>
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 		<value>/views/message/messages</value>

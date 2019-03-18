@@ -83,6 +83,11 @@
 		<security:intercept-url pattern="/chapter/create.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/chapter/save.do" access="permitAll" /> 
 		<security:intercept-url pattern="/chapter/conditions.do" access="permitAll"/> 
+		<security:intercept-url pattern="/chapter/list.do" access="permitAll"/> 
+		<security:intercept-url pattern="/area/areaChapter.do" access="permitAll"/> 
+		<security:intercept-url pattern="/chapter/show.do" access="permitAll"/> 		
+		<security:intercept-url pattern="/brotherhood/brotherhoodArea.do" access="permitAll"/> 		
+		
 		<!-- CARMEN -->
 
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
@@ -129,7 +134,13 @@
 		
 		<security:intercept-url pattern="/history/legalRecord/create.do" access="hasRole('BROTHERHOOD')" />	
 		<security:intercept-url pattern="/history/legalRecord/edit.do" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/history/legalRecord/delete.do" access="hasRole('BROTHERHOOD')" />			
+		<security:intercept-url pattern="/history/legalRecord/delete.do" access="hasRole('BROTHERHOOD')" />
+		
+		<security:intercept-url pattern="/history/miscellaneousRecord/create.do" access="hasRole('BROTHERHOOD')" />	
+		<security:intercept-url pattern="/history/miscellaneousRecord/edit.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/history/miscellaneousRecord/delete.do" access="hasRole('BROTHERHOOD')" />
+
+		<security:intercept-url pattern="/proclaim/chapter/create.do" access="hasRole('CHAPTER')" />	
 		
 		<security:intercept-url pattern="/history/list.do" access="permitAll" />
 		<security:intercept-url pattern="/history/show.do" access="permitAll" />
@@ -137,6 +148,7 @@
 		<security:intercept-url pattern="/history/periodRecord/show.do" access="permitAll" />
 		<security:intercept-url pattern="/history/linkRecord/show.do" access="permitAll" />
 		<security:intercept-url pattern="/history/legalRecord/show.do" access="permitAll" />
+		<security:intercept-url pattern="/history/miscellaneousRecord/show.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/parade/show.do" access="permitAll" />
 		
@@ -248,6 +260,7 @@
 		<security:intercept-url pattern="/sponsorship/administrator/list.do" access="hasRole('ADMIN')"/> 	
 		<security:intercept-url pattern="/sponsorship/administrator/checkCreditCard.do" access="hasRole('ADMIN')"/> 	
 		
+		<security:intercept-url pattern="/path/show.do" access="permitAll" />
 		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

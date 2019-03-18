@@ -143,16 +143,23 @@
         <property name="phone" value="+3423456789" />
         <property name="address" value="Lora de Río, Nº5. Carmona" />
         <property name="userAccount" ref= "userAccount7"/>
-        <property name="title" value= "Holi holi"/>
           <property name="messageBoxes">
         	<list>
-                <ref bean="messageBox31"/>
-                <ref bean="messageBox32"/>
-                <ref bean="messageBox33"/>
-                <ref bean="messageBox34"/>
-                <ref bean="messageBox35"/>
+                <ref bean="messageBox40"/>
+                <ref bean="messageBox41"/>
+                <ref bean="messageBox42"/>
+                <ref bean="messageBox43"/>
+                <ref bean="messageBox44"/>
         	</list>
-        </property>	
+        </property>
+        <property name="title" value= "Holi holi"/>
+         <property name="proclaim">
+        	<list>
+                <ref bean="proclaim01"/>
+                <ref bean="proclaim02"/>
+        	</list>
+        </property>
+        
     </bean>
     <!-- CHAPTER -->
     
@@ -277,11 +284,11 @@
                 <ref bean="messageBox19"/>
                 <ref bean="messageBox20"/>
         	</list>
-        </property>	
-        <property name="history"> <null/> </property>
+        </property>
+       <property name="history" ref= "history01"/>		
     </bean>
     
-    <bean id="brotherhood02" class="domain.Brotherhood">
+    <bean id="brotherhood2" class="domain.Brotherhood">
     	<property name="name" value="Brotherhood02" />
     	<property name="middleName" value="Dogran" />
     	<property name="surname" value="de la Flor Bonilla" />
@@ -301,8 +308,8 @@
                 <ref bean="messageBox24"/>
                 <ref bean="messageBox25"/>
         	</list>
-        </property>	
-        <property name="history"> <null/> </property>
+        </property>
+       <property name="history" ref= "history02"/>	
     </bean>
     
     <!-- BROTHERHOOD -->
@@ -321,6 +328,7 @@
 		<property name="maxRow" value= "10"/>
 		<property name="maxColum" value= "1"/>
 		<property name="floatt" ref= "float01"/>
+		<property name="status" value="SUBMITTED"/>
     </bean>
     
     <bean id="parade02" class="domain.Parade">
@@ -435,6 +443,7 @@
 	<!-- AREA -->
     <bean id="area01" class="domain.Area">
     	<property name="name" value= "Pregonar"/>
+    	<property name="chapter" ref= "chapter01"/>
     	<property name="pictures">
     		<null></null>
     	</property>
@@ -745,15 +754,125 @@
 		
     </bean>
     
-    <!-- 
-     <bean id="paradeTry" class="domain.Parade">
-    	<property name="name" value= "paradeTry"/>
+    
+     <bean id="proclaim01" class="domain.Proclaim">
+    	<property name="text" value= "Hola caracola"/>
+    	<property name="moment" value= "2011/09/02 21:00"/>
     </bean>
     
-    <bean id="paradeTry2" class="domain.Parade">
-    	<property name="name" value= "paradeTry2"/>
+    <bean id="proclaim02" class="domain.Proclaim">
+    	<property name="text" value= "Hola holita vecinito"/>
+    	<property name="moment" value= "2011/09/02 21:00"/>
     </bean>
-     -->
+    
+          <bean id="messageBox40" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox41" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox42" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox43" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox44" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>  
+	
+	 <bean id="periodRecord1" class="domain.PeriodRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+    	<property name="startYear" value= "2019"/>
+		<property name="endYear" value= "2020"/>
+		<property name="photos" value="carmen"/>
+    </bean>
+    
+    <bean id="legalRecord1" class="domain.LegalRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+    	<property name="legalName" value= "hola"/>
+    	<property name="vatNumber" value= "EH12345678C"/>
+    	<property name="laws" value= "hola"/>		
+    </bean>    
+    <bean id="inceptionRecord1" class="domain.InceptionRecord">
+    	<property name="title" value= "carmen"/>
+    	<property name="description" value= "hola"/>
+    	<property name="photos" value= "http://hola"/>
+    </bean>
+    
+    <!-- LINKRECORD -->
+    <bean id="linkRecord1" class="domain.LinkRecord">
+    	<property name="title" value= "Título linkRecord"/>
+    	<property name="description" value= "Description linkRecord"/>
+    	<property name="link" value= "https://www.elEnlace.com/"/>
+    </bean>
+    <!-- LINKRECORD -->
+    
+    <!-- PATHS -->
+    <bean id="path1" class="domain.Path">
+    	<property name="parade" ref="parade01"/>
+    	<property name="origin" ref="segment1"/>
+    </bean>
+    <!-- PATHS -->
+    
+    <!-- SEGMENT -->
+    <bean id="segment1" class="domain.Segment">
+    	<property name="latitude" value="37.358152"/>
+    	<property name="longitude" value="-5.986656"/>
+    	<property name="destination" ref="segment2"/>
+    </bean>
+    <bean id="segment2" class="domain.Segment">
+    	<property name="latitude" value="37.356200"/>
+    	<property name="longitude" value="-5.986408"/>
+    	<property name="destination" ref="segment3"/>
+    </bean>
+    <bean id="segment3" class="domain.Segment">
+    	<property name="latitude" value="37.356089"/>
+    	<property name="longitude" value="-5.986586"/>
+    	<property name="destination" ref="segment4"/>
+    </bean>
+    <bean id="segment4" class="domain.Segment">
+    	<property name="latitude" value="37.356132"/>
+    	<property name="longitude" value="-5.987670"/>
+    </bean>  
+    <!-- SEGMENT -->
+    <!-- HISTORY -->
+    <bean id="history01" class="domain.History">
+
+    </bean>
+    <bean id="history02" class="domain.History">
+		<property name="inceptionRecord" ref="inceptionRecord01" />
+    </bean>
+    <!-- HISTORY -->
+    <!-- INCEPTIONRECORD -->
+    <bean id="inceptionRecord01" class="domain.InceptionRecord">
+		<property name="title" value="Título de prueba"/>
+		<property name="description" value="Descripción de prueba"/>
+		<property name="photos" value="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Alcora.JPG/220px-Alcora.JPG"/>
+    </bean> 
+  
+    <!-- INCEPTIONRECORD -->
 </beans>
 
 

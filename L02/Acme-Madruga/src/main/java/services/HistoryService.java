@@ -5,10 +5,11 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.Assert;
 import repositories.HistoryRepository;
 import domain.Brotherhood;
 import domain.History;
+import security.LoginService;
 
 /*
  * CONTROL DE CAMBIOS HistroyService.java
@@ -23,6 +24,9 @@ public class HistoryService {
 
 	@Autowired
 	private HistoryRepository	historyRepository;
+	
+	@Autowired
+	private BrotherhoodService brotherhoodService;
 
 
 	//Supporting services ------------------
@@ -46,8 +50,14 @@ public class HistoryService {
 	public History findHistoryByInceptionRecordId(final int inceptionRecordId) {
 		return this.historyRepository.findHistoryByInceptionRecordId(inceptionRecordId);
 	}
-
-	public History save(final History history) {
+	
+	public History save(History history) {
+		try {
+			Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+			Assert.isTrue(brotherhood.getHistory().getId()==history.getId());	
+		} catch (Exception e) {
+			System.out.println("El usuario no esta registrado a�n");
+		}
 		return this.historyRepository.save(history);
 	}
 
@@ -67,4 +77,7 @@ public class HistoryService {
 		return this.historyRepository.findOne(id);
 	}
 
+	public void flush() {
+		this.historyRepository.flush();
+	}
 }

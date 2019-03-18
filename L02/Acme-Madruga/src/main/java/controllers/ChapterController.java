@@ -10,18 +10,24 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.ChapterService;
 import services.WelcomeService;
 import domain.Chapter;
+import domain.Proclaim;
 import forms.RegistrationForm;
+import security.LoginService;
 
 @Controller
 @RequestMapping("/chapter")
@@ -88,6 +94,64 @@ public class ChapterController extends AbstractController {
 		result = new ModelAndView("chapter/create");
 		result.addObject("message", string);
 		result.addObject("chapter", chapter);
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+		try {
+			final Collection<Chapter> chapter = this.chapterService.findAll();
+			result = new ModelAndView("chapter/list");
+			result.addObject("chapter", chapter);
+			result.addObject("requestURI", "chapter/list.do");
+			result.addObject("logo", this.welcomeService.getLogo());
+			result.addObject("system", this.welcomeService.getSystem());
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
+	
+	private Boolean checkChapterLoggerSameChapterToShow(final int chapterId) {
+		Boolean res = false;
+		try {
+			Chapter chapterLogger = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
+			if (chapterLogger.getId()==chapterId) {
+				System.out.println("Se esta mostrando la información del chapter logueado");
+				res = true;
+			} else {
+				System.out.println("El usuario logueado es un chapter diferente al que se va a mostrar");
+			}
+		} catch (Exception e) {
+			System.out.println("El usuario logueado no es un chapter");
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		ModelAndView result;
+		try {
+			final Chapter chapter = this.chapterService.findOne(id);
+			Assert.notNull(chapter);
+			final Collection<Proclaim> proclaims = this.chapterService.getChapterByUserAccountId(chapter.getUserAccount().getId()).getProclaim();
+			System.out.println(chapter);
+			result = new ModelAndView("chapter/show");
+			result.addObject("chapter", chapter);
+			result.addObject("proclaims", proclaims);
+			// ALVARO 15/03/2019 11:35 -- Si el logueado es el mismo que se va a mostrar se habilita el botón de crear una proclaim
+			if (checkChapterLoggerSameChapterToShow(id)) {
+				result.addObject("validChapter", true);
+			}
+			result.addObject("requestURI", "chapter/show.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;

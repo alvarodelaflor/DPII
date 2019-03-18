@@ -31,4 +31,9 @@
 		<put-attribute name="body" value="/views/area/create.jsp" />
 	</definition>
 	
+	<definition name="area/areaChapter" extends="master.page">	
+		<put-attribute name="title" value="Cabildo: Area" />
+		<put-attribute name="body" value="/views/area/areaChapter.jsp" />
+	</definition>
+	
 </tiles-definitions>

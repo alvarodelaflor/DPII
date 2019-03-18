@@ -18,14 +18,25 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div>
-	<table>
-    		<tr><td><spring:message code="inceptionRecord.title" /><jstl:out value="${inceptionRecord.title}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="inceptionRecord.description" /><jstl:out value="${inceptionRecord.description}"></jstl:out></td></tr>
-    		<tr><td><spring:message code="inceptionRecord.photos" /><jstl:out value="${inceptionRecord.photos}"></jstl:out></td></tr>
-	</table>
+	<fieldset>
+		<legend>
+			<spring:message code="inceptionRecord.dates" />
+		</legend>
+    		<h3><spring:message code="inceptionRecord.title" /></h3><jstl:out value=" ${inceptionRecord.title}"></jstl:out>
+    		<h3><spring:message code="inceptionRecord.description" /></h3><jstl:out value=" ${inceptionRecord.description}"></jstl:out>
+	</fieldset>
+	<fieldset>
+		<legend>
+			<spring:message code="inceptionRecord.photos" />
+		</legend>
+			<jstl:forEach var ="res" items="${photos}">
+				<p><img src="${res}" border="1" alt="Error" width="400" height="300"></p>
+			</jstl:forEach>
+	</fieldset>
 </div>
 <div>      
 	<form>
+		<br>
 		<input type="button" value=<spring:message code="back" /> name="back" onclick="history.back()" />
 	</form>
 </div>

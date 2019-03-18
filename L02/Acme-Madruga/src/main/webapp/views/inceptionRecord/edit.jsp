@@ -26,9 +26,22 @@
     	<form:form class="formularioEdicion" method="POST" modelAttribute="inceptionRecord" action="history/inceptionRecord/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox code="inceptionRecord.title" path="title"/>
-          	<acme:textbox code="inceptionRecord.description" path="description"/>
-          	<acme:textbox code="inceptionRecord.photos" path="photos"/>
+          	<fieldset>
+          		<legend>
+          			<spring:message code="inceptionRecord.dates" />
+          		</legend>
+              	<acme:textbox code="inceptionRecord.title" path="title"/>
+          		<acme:textbox code="inceptionRecord.description" path="description"/>
+          	</fieldset>
+          	<fieldset>
+          		<legend>
+          			<spring:message code="inceptionRecord.photos" />
+          		</legend>
+          		<i><spring:message code="inceptionRecord.photos.info" /></i>
+          		<br>
+          		<br>
+          		<acme:textbox code="inceptionRecord.photos" path="photos"/>
+          	</fieldset>
           	<acme:cancel url="history/show.do?brotherhoodId=${brotherhoodId}" code="cancel"/>
           	<acme:submit name="save" code="send"/>
 		</form:form>

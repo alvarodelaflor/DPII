@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Brotherhood;
-import domain.History;
 
 /*
  * CONTROL DE CAMBIOS BrotherhoodRepository.java
@@ -22,7 +21,7 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 
 	@Query("select b from Brotherhood b join b.userAccount bua where bua.id=?1")
 	Brotherhood findByUserAccountId(int userAccountId);
-	
+
 	@Query("select b from Brotherhood b join b.history bh where bh.id=?1")
 	Brotherhood findBrotherhoodByHistory(int historyId);
 
@@ -78,5 +77,11 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	//22.2.1 CARMEN
 	@Query("select (cast((select count(b) from Brotherhood b where b.area = a) as float)/(select count(a1) from Area a1)) from Area a")
 	Float ratioBrotherhoodPerArea();
+
+	@Query("select b from Brotherhood b where b.area.id = ?1")
+	Collection<Brotherhood> brotherhoodArea(int id);
+
+	@Query("select b from Brotherhood b join b.userAccount bu where bu.username=?1")
+	Brotherhood findByUserName(String userAccountId);
 
 }

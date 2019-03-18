@@ -18,12 +18,13 @@ import security.Authority;
 import security.UserAccount;
 import domain.Chapter;
 import domain.MessageBox;
+import domain.Proclaim;
 import forms.RegistrationForm;
 
 /*
  * CONTROL DE CAMBIOS ChapterService.java
  * 
- * Carmen Fernández 08/03/2019 19:49
+ * Carmen Fernï¿½ndez 08/03/2019 19:49
  */
 
 @Service
@@ -43,6 +44,9 @@ public class ChapterService {
 
 	@Autowired
 	private ChapterRepository	chapterRepository;
+
+	@Autowired
+	private MessageBoxService	messageBoxService;
 
 
 	public Chapter reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
@@ -91,6 +95,12 @@ public class ChapterService {
 		boxesDefault.add(spamBoxSave);
 
 		result.setMessageBoxes(boxesDefault);
+		//MailBox
+
+		//Proclaim
+		final Collection<Proclaim> p = new ArrayList<>();
+		result.setProclaim(p);
+		//Proclaim
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());
 
@@ -200,6 +210,44 @@ public class ChapterService {
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
 		chapter.setUserAccount(user);
+
+		final Collection<Proclaim> p = new ArrayList<>();
+		chapter.setProclaim(p);
+
+		final MessageBox inBox = this.messageBoxService.create();
+		final MessageBox outBox = this.messageBoxService.create();
+		final MessageBox trashBox = this.messageBoxService.create();
+		final MessageBox notificationBox = this.messageBoxService.create();
+		final MessageBox spamBox = this.messageBoxService.create();
+
+		inBox.setName("in box");
+		outBox.setName("out box");
+		trashBox.setName("trash box");
+		notificationBox.setName("notification box");
+		spamBox.setName("spam box");
+
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		trashBox.setIsDefault(true);
+		notificationBox.setIsDefault(true);
+		spamBox.setIsDefault(true);
+
+		final MessageBox inBoxSave = this.messageBoxService.save(inBox);
+		final MessageBox outBoxSave = this.messageBoxService.save(outBox);
+		final MessageBox trashBoxSave = this.messageBoxService.save(trashBox);
+		final MessageBox notificationBoxSave = this.messageBoxService.save(notificationBox);
+		final MessageBox spamBoxSave = this.messageBoxService.save(spamBox);
+
+		final Collection<MessageBox> boxesDefault = new ArrayList<>();
+
+		boxesDefault.add(inBoxSave);
+		boxesDefault.add(outBoxSave);
+		boxesDefault.add(trashBoxSave);
+		boxesDefault.add(notificationBoxSave);
+		boxesDefault.add(spamBoxSave);
+
+		chapter.setMessageBoxes(boxesDefault);
+
 		return chapter;
 	}
 
@@ -233,6 +281,12 @@ public class ChapterService {
 		Boolean res = false;
 		if (this.actorService.getActorByEmail(chapter.getEmail()) == null)
 			res = true;
+		return res;
+	}
+
+	public Chapter getChapterByUserAccountId(final int userAccountId) {
+		Chapter res;
+		res = this.chapterRepository.findByUserAccountId(userAccountId);
 		return res;
 	}
 

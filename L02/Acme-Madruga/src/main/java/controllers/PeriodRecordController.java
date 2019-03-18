@@ -10,6 +10,7 @@
 
 package controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,6 +64,12 @@ public class PeriodRecordController extends AbstractController {
 			Assert.notNull(periodRecord, "periodRecord.null");
 			result = new ModelAndView("history/periodRecord/show");
 			result.addObject("periodRecord", periodRecord);
+			if (periodRecord.getPhotos().contains("'")) {
+				List<String> photos = Arrays.asList(periodRecord.getPhotos().split("'"));
+				result.addObject("photos", photos);
+			} else {
+				result.addObject("photos", periodRecord.getPhotos());	
+			}
 		} catch (Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");			
 		}
@@ -132,6 +140,21 @@ public class PeriodRecordController extends AbstractController {
 	public ModelAndView save(@Valid final PeriodRecord periodRecord, final BindingResult binding) {
 		ModelAndView result;
 
+		if (periodRecord.getPhotos() != null && periodRecord.getPhotos().length() >0 && !this.periodRecordService.checkPhotos(periodRecord.getPhotos())) {
+			final ObjectError error = new ObjectError("photos", "Must be URL/URLs");
+			binding.addError(error);
+			binding.rejectValue("photos", "error.periodRecord.photos");
+		}
+		
+		if (periodRecord.getStartYear() != null && periodRecord.getEndYear() !=null && periodRecord.getEndYear()<periodRecord.getStartYear()) {
+			final ObjectError error1 = new ObjectError("startYear", "End year must be higher than start year");
+			final ObjectError error2 = new ObjectError("endYear", "End year must be higher than start year");
+			binding.addError(error1);
+			binding.addError(error2);
+			binding.rejectValue("startYear", "error.periodRecord.year");
+			binding.rejectValue("endYear", "error.periodRecord.year");
+		}
+		
 		if (binding.hasErrors()) {
 			System.out.println("Error en PeriodRecordController.java, binding: " + binding);
 			result = new ModelAndView("history/periodRecord/edit");
@@ -147,7 +170,7 @@ public class PeriodRecordController extends AbstractController {
 				System.out.println("Error en SAVE PeriodRecordController.java Throwable: " + oops);
 				result = new ModelAndView("history/periodRecord/edit");
 				result.addObject("periodRecord", periodRecord);
-				result.addObject("message", "periodRecord.commit.error");
+				result.addObject("message", "periodRecord.commit.error");	
 			}
 		result.addObject("logo", welcomeService.getLogo());
 		result.addObject("system", welcomeService.getSystem());

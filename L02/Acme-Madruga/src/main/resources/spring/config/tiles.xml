@@ -43,7 +43,9 @@
 		<value>/views/periodRecord/tiles.xml</value>
 		<value>/views/linkRecord/tiles.xml</value>
 		<value>/views/legalRecord/tiles.xml</value>
+		<value>/views/miscellaneousRecord/tiles.xml</value>
 		<value>/views/history/tiles.xml</value>
+		<value>/views/proclaim/tiles.xml</value>
 		<!-- ALVARO -->
 		<!-- FRAN -->
 		<value>/views/configuration/tiles.xml</value>
@@ -59,6 +61,7 @@
 		<!-- ANTONIO SANCHEZ -->
 		<value>/views/request/tiles.xml</value>
 		<value>/views/finder/tiles.xml</value>
+		<value>/views/path/tiles.xml</value>
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 		<value>/views/message/tiles.xml</value>

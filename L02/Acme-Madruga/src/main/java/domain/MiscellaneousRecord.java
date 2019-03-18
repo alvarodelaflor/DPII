@@ -1,4 +1,3 @@
-
 package domain;
 
 import javax.persistence.Access;
@@ -7,6 +6,6 @@ import javax.persistence.Entity;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Miscellaneous extends Record {
+public class MiscellaneousRecord extends Record {
 
 }

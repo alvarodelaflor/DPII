@@ -24,6 +24,7 @@ public class History extends DomainEntity {
 	private Collection<PeriodRecord> periodRecord;
 	private Collection<LegalRecord> legalRecord;
 	private Collection<LinkRecord> linkRecord;
+	private Collection<MiscellaneousRecord> miscellaneousRecord;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	public InceptionRecord getInceptionRecord() {
@@ -32,6 +33,15 @@ public class History extends DomainEntity {
 
 	public void setInceptionRecord(InceptionRecord inceptionRecord) {
 		this.inceptionRecord = inceptionRecord;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL)
+	public Collection<MiscellaneousRecord> getMiscellaneousRecord() {
+		return miscellaneousRecord;
+	}
+
+	public void setMiscellaneousRecord(Collection<MiscellaneousRecord> miscellaneousRecord) {
+		this.miscellaneousRecord = miscellaneousRecord;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)

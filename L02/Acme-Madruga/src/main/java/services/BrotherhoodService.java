@@ -421,9 +421,19 @@ public class BrotherhoodService {
 	public Collection<Object[]> countBrotherhoodPerArea() {
 		return this.brotherhoodRepository.countBrotherhoodPerArea();
 	}
-	
-	public Brotherhood findBrotherhoodByHistory(int historyId) {
+
+	public Brotherhood findBrotherhoodByHistory(final int historyId) {
 		return this.brotherhoodRepository.findBrotherhoodByHistory(historyId);
+	}
+
+	public Collection<Brotherhood> brotherhoodArea(final int id) {
+		return this.brotherhoodRepository.brotherhoodArea(id);
+	}
+
+	public Brotherhood getBrotherhoodByName(final String name) {
+		Brotherhood res;
+		res = this.brotherhoodRepository.findByUserName(name);
+		return res;
 	}
 
 }

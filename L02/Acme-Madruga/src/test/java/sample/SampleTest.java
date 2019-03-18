@@ -51,12 +51,13 @@ public class SampleTest extends AbstractTest {
 			{
 				"userAccount1", super.getEntityId("userAccount1"), null
 			}, {
-				"userAccount2", super.getEntityId("userAccount2"), null
-			}, {
 				"userAccount3", super.getEntityId("userAccount3"), null
 			}, {
-				"non-existent", 0, AssertionError.class
+				"userAccount6", super.getEntityId("userAccount6"), null
 			}
+		//			, {
+		//				"non-existent", 0, AssertionError.class
+		//			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
