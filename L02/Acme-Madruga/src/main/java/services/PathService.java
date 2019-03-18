@@ -4,11 +4,14 @@ package services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PathRepository;
 import security.LoginService;
 import domain.Parade;
 import domain.Path;
+import domain.Segment;
 
 @Service
 public class PathService {
@@ -22,13 +25,18 @@ public class PathService {
 	@Autowired
 	private SegmentService	segmentService;
 
+	@Autowired
+	private Validator		validator;
 
-	public Path create() {
+
+	public Path create(final int paradeId) {
 		final Path path = new Path();
+		final Parade parade = this.paradeService.findOne(paradeId);
+		path.setParade(parade);
 		return path;
 	}
 
-	public Path save(final Path path) {
+	public Path save(final Path path, final int paradeId) {
 		// We have to be the brotherhood owner of this parade
 		this.assertParadeOwner(path.getParade().getId());
 		final Path res = this.pathRepository.save(path);
@@ -43,11 +51,11 @@ public class PathService {
 		try {
 			final int loggedAccountId = LoginService.getPrincipal().getId();
 			if (parade.getIsFinal() || parade.getBrotherhood().getUserAccount().getId() == loggedAccountId)
-				res = this.pathRepository.getParadePath(paradeId);
+				res = this.pathRepository.findFromParade(paradeId);
 		} catch (final Exception e) {
 			// This is because LoginService.getPrincipal() throws an exception in case none is logged
 			if (parade.getIsFinal())
-				res = this.pathRepository.getParadePath(paradeId);
+				res = this.pathRepository.findFromParade(paradeId);
 		}
 		return res;
 	}
@@ -63,10 +71,17 @@ public class PathService {
 	}
 
 	public Path createFromParade(final int paradeId) {
-		final Path path = this.create();
-		final Parade parade = this.paradeService.findOne(paradeId);
-		path.setParade(parade);
+		final Path path = this.create(paradeId);
 		return this.pathRepository.save(path);
+	}
+
+	public void setOrigin(final int paradeId, final Segment pathOrigin) {
+		// We have to be the parade owner :3
+		this.assertParadeOwner(paradeId);
+		// REMIND YOURSELF THAT THIS IS ONLY BEING CALLED WHEN WE HAVE NO ORIGIN
+		final Path path = this.pathRepository.findFromParade(paradeId);
+		path.setOrigin(pathOrigin);
+		this.pathRepository.save(path);
 	}
 
 	// ========================== PRIVATE METHODS
@@ -76,6 +91,15 @@ public class PathService {
 
 		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
 
+	}
+
+	public Segment reconstruct(final Segment segment, final BindingResult binding) {
+		// This should only be called when there's no path, segment id is always 0
+		Assert.isTrue(segment.getId() == 0);
+
+		this.validator.validate(segment, binding);
+
+		return segment;
 	}
 
 }

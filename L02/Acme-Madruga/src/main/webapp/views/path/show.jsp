@@ -29,10 +29,9 @@
 <!-- When we are the parade owner and have 1 segment-->
 <jstl:if test="${owner and fn:length(segments) <= 1}">
 	<li>
-	<form id="segment" action="segment/brotherhood/edit.do" method="post">
+	<form id="segment" action="path/brotherhood/edit.do" method="post">
 		<input id="paradeId" name="paradeId" value="${paradeId}" type="hidden">
-		<input id="id" name="id" value="${segments[0].id}" type="hidden">
-	
+		<input id="id" name="id" value="${not empty segments[0].id ? segments[0].id : 0}" type="hidden">
 		<label>${pathOrigin}: (</label>
 		<input id="latitude" name="latitude" value="${segments[0].latitude}" type="text">
 		<label>, </label>
@@ -46,7 +45,7 @@
 		<label>)</label>
 	
 		<button type="submit" name="edit" class="btn btn-primary"><spring:message code="path.edit"/></button>
-		<button type="button" name="delete" class="btn btn-primary" onclick="window.location='path/brotherhood/delete.do?paradeId=${paradeId}&segmentId=${segments[0].id}'">
+		<button type="button" name="delete" class="btn btn-primary" onclick="window.location='path/brotherhood/delete.do?paradeId=${paradeId}&segmentId=${not empty segments[0].id ? segments[0].id : 0}'">
 			<spring:message code="path.delete"/>
 		</button>
 	</form>

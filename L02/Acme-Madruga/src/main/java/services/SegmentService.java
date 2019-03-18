@@ -58,6 +58,10 @@ public class SegmentService {
 		return fullPath;
 	}
 
+	public Segment findOne(final int id) {
+		return this.segmentRepository.findOne(id);
+	}
+
 	public Segment reconstruct(final Segment segment, final BindingResult binding) {
 		Segment res = this.create();
 		if (segment.getId() == 0)
@@ -112,4 +116,5 @@ public class SegmentService {
 		final Parade parade = this.paradeService.findOne(paradeId);
 		Assert.isTrue(loggedId == parade.getBrotherhood().getId());
 	}
+
 }

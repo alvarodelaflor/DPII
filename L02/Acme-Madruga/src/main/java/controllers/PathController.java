@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,6 +58,28 @@ public class PathController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		return result;
+	}
+
+	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST)
+	public ModelAndView editSegment(@RequestParam("paradeId") final int paradeId, final Segment segment, final BindingResult binding) {
+		ModelAndView result;
+
+		final Segment res = this.pathService.reconstruct(segment, binding);
+
+		if (binding.hasErrors()) {
+			result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
+			result.addObject("wrongSegment", res);
+		} else
+			try {
+				final Segment pathOrigin = this.segmentService.save(res, paradeId);
+				this.pathService.setOrigin(paradeId, pathOrigin);
+				result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
+			} catch (final Exception e) {
+				e.printStackTrace();
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+
 		return result;
 	}
 
