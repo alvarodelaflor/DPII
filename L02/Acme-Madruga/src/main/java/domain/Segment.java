@@ -52,7 +52,7 @@ public class Segment extends DomainEntity {
 	}
 
 	@OneToOne(optional = true, cascade = {
-		CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+		CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH
 	})
 	public Segment getDestination() {
 		return this.destination;

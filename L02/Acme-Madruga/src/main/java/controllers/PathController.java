@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +38,11 @@ public class PathController extends AbstractController {
 
 		try {
 			result = new ModelAndView("path/show");
-			final Path path = this.pathService.getParadePath(paradeId);
+			Path path = this.pathService.getParadePath(paradeId);
+			// We don't have a path? Then we create it, no problem
+			if (path == null)
+				path = this.pathService.createFromParade(paradeId);
+
 			final Brotherhood loggedBrotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 
 			// In case we are logged as the brotherhood who owns this parade we want to also modify the path
@@ -56,14 +59,13 @@ public class PathController extends AbstractController {
 		}
 		return result;
 	}
-	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST)
-	public ModelAndView editSegment(@RequestParam("paradeId") final int paradeId, final Segment segment, final BindingResult binding) {
+
+	@RequestMapping(value = "/brotherhood/delete", method = RequestMethod.GET)
+	public ModelAndView deleteSegment(@RequestParam("paradeId") final int paradeId, final int segmentId) {
 		ModelAndView result;
 
-		final Segment res = this.segmentService.reconstruct(segment, binding);
-
 		try {
-			this.segmentService.save(res, paradeId);
+			this.pathService.delete(segmentId, paradeId);
 			result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
 		} catch (final Exception e) {
 			e.printStackTrace();

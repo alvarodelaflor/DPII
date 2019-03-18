@@ -12,4 +12,7 @@ public interface PathRepository extends JpaRepository<Path, Integer> {
 
 	@Query("select p from Path p where p.parade.id=?1")
 	Path getParadePath(int paradeId);
+
+	@Query("select p from Path p where p.origin.id=?1")
+	Path findFromOriginSegment(int segmentId);
 }
