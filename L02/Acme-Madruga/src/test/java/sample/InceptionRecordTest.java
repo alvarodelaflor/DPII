@@ -51,14 +51,14 @@ public class InceptionRecordTest extends AbstractTest {
 				//Positivo: Editar photos
 				"brotherhood", super.getEntityId("inceptionRecord1"), "Carmen", "hola", "http://modificarPhoto", null
 			}, {
-				//Negativo: Dejar vacío el campo título
-				"brotherhood", super.getEntityId("inceptionRecord1"), "", "hola", "http://modificarPhoto", ConstraintViolationException.class
+				//Negativo: Dejar final vacío el campo título
+				"brotherhood", super.getEntityId("inceptionRecord1"), " ", "hola", "http://modificarPhoto", ConstraintViolationException.class
 			}, {
-				//Negativo: Dejar vacío el campo descripción
-				"brotherhood", super.getEntityId("inceptionRecord1"), "Carmen", "", "http://modificarPhoto", ConstraintViolationException.class
+				//Negativo: Dejar final vacío el campo descripción
+				"brotherhood", super.getEntityId("inceptionRecord1"), "Carmen", " ", "http://modificarPhoto", ConstraintViolationException.class
 			}, {
 				//Negativo: Dejar vacío el campo photos
-				"brotherhood", super.getEntityId("inceptionRecord1"), "Carmen", "hola", "", ConstraintViolationException.class
+				"brotherhood", super.getEntityId("inceptionRecord1"), "Carmen", "hola", " ", IllegalArgumentException.class
 			}, {
 				//Negativo: Editar inceptionRecord con member
 				"member", super.getEntityId("inceptionRecord1"), "Carmen", "hola", "http://modificarPhoto", IllegalArgumentException.class
@@ -74,6 +74,9 @@ public class InceptionRecordTest extends AbstractTest {
 			}, {
 				//Negativo: Editar inceptionRecord que no existe
 				"brotherhood", null, "Carmen", "hola", "http://modificarPhoto", NullPointerException.class
+			}, {
+				//Negativo: Editar inceptionRecord con photos que no son url
+				"brotherhood", super.getEntityId("inceptionRecord1"), "Carmen", "hola", "modificarPhoto", IllegalArgumentException.class
 			}
 		};
 
@@ -101,7 +104,7 @@ public class InceptionRecordTest extends AbstractTest {
 			super.unauthenticate();
 
 		} catch (final Exception oops) {
-			//oops.printStackTrace();
+			oops.printStackTrace();
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
