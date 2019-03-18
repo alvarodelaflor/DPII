@@ -776,15 +776,20 @@
     	<property name="legalName" value= "hola"/>
     	<property name="vatNumber" value= "EH12345678C"/>
     	<property name="laws" value= "hola"/>		
-    </bean>
-    
+    </bean>    
     <bean id="inceptionRecord1" class="domain.InceptionRecord">
     	<property name="title" value= "carmen"/>
     	<property name="description" value= "hola"/>
     	<property name="photos" value= "hola"/>
     </bean>
     
-     
+    <!-- LINKRECORD -->
+    <bean id="linkRecord1" class="domain.LinkRecord">
+    	<property name="title" value= "Título linkRecord"/>
+    	<property name="description" value= "Description linkRecord"/>
+    	<property name="link" value= "https://www.elEnlace.com/"/>
+    </bean>
+    <!-- LINKRECORD -->
     
     <!-- PATHS -->
     <bean id="path1" class="domain.Path">
