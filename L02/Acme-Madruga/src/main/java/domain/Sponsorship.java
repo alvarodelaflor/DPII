@@ -19,7 +19,16 @@ public class Sponsorship extends DomainEntity {
 	//////////////////////////////////
 	private Sponsor		sponsor;
 	private Parade		parade;
+	private Boolean		active;
 
+
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(final Boolean active) {
+		this.active = active;
+	}
 
 	@URL
 	@SafeHtml(whitelistType = WhiteListType.NONE)

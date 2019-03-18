@@ -144,6 +144,15 @@
         <property name="address" value="Lora de Río, Nº5. Carmona" />
         <property name="userAccount" ref= "userAccount7"/>
         <property name="title" value= "Holi holi"/>
+          <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox31"/>
+                <ref bean="messageBox32"/>
+                <ref bean="messageBox33"/>
+                <ref bean="messageBox34"/>
+                <ref bean="messageBox35"/>
+        	</list>
+        </property>	
     </bean>
     <!-- CHAPTER -->
     
@@ -269,6 +278,7 @@
                 <ref bean="messageBox20"/>
         	</list>
         </property>	
+        <property name="history"> <null/> </property>
     </bean>
     
     <bean id="brotherhood02" class="domain.Brotherhood">
@@ -292,6 +302,7 @@
                 <ref bean="messageBox25"/>
         	</list>
         </property>	
+        <property name="history"> <null/> </property>
     </bean>
     
     <!-- BROTHERHOOD -->
@@ -672,6 +683,41 @@
     	<property name="parentBox"> <null/> </property>
     </bean>
     
+    <bean id="messageBox31" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox32" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox33" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox34" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox35" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
      <bean id="creditCard01" class="domain.CreditCard">
     	<property name="holder" value= "Lopera"/>
     	<property name="make" value= "VISA"/>
@@ -686,6 +732,7 @@
     	<property name="sponsor" ref= "sponsor01"/>
 		<property name="parade" ref= "parade02"/>
 		<property name="creditCard" ref= "creditCard01"/>
+		<property name="active" value= "false"/>
     </bean>
     
     <bean id="sponsorship02" class="domain.Sponsorship">
@@ -694,6 +741,8 @@
     	<property name="sponsor" ref= "sponsor01"/>
 		<property name="parade" ref= "parade01"/>
 		<property name="creditCard" ref= "creditCard01"/>
+		<property name="active" value= "true"/>
+		
     </bean>
     
     <!-- 

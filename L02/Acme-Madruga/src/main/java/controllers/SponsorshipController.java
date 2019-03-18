@@ -188,7 +188,6 @@ public class SponsorshipController extends AbstractController {
 				final int userLoggin = LoginService.getPrincipal().getId();
 				final Sponsor sponsor = this.sponsorService.getSponsorByUserId(userLoggin);
 				Assert.isTrue(sponsor != null);
-				sponsor.getSponsorships().remove(sponsorship);
 				result = new ModelAndView("sponsorship/list");
 				this.sponsorshipService.delete(sponsorship);
 				//				final String system = this.welcomeService.getSystem();

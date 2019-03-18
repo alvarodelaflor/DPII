@@ -29,6 +29,8 @@
   																          			
           		    <tr><td><spring:message code="sponsorship.show.parade" /><jstl:out value="${sponsorship.parade}"></jstl:out></td></tr>
  
+               		<tr><td><spring:message code="sponsorship.show.active" /><jstl:out value="${sponsorship.active}"></jstl:out></td></tr>
+     
            		    <tr><td><spring:message code="sponsorship.show.creditCard.number" /><jstl:out value="${sponsorship.creditCard.number}"></jstl:out></td></tr>
  
            		    <tr><td><spring:message code="sponsorship.show.creditCard.make" /><jstl:out value="${sponsorship.creditCard.make}"></jstl:out></td></tr>

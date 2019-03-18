@@ -21,6 +21,11 @@
 		<put-attribute name="body" value="/views/sponsorship/list.jsp" />
 	</definition>
 	
+	<definition name="sponsorship/administrator/list" extends="master.page">	
+		<put-attribute name="title" value="Patrocinios Lista" />
+		<put-attribute name="body" value="/views/sponsorship/list.jsp" />
+	</definition>
+
 	<definition name="sponsorship/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar patrocinio" />
 		<put-attribute name="body" value="/views/sponsorship/edit.jsp" />

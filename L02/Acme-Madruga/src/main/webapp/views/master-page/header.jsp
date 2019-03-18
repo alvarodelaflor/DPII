@@ -39,6 +39,7 @@
 					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>		
 					<li><a href="administrator/actorList.do"><spring:message code="master.page.administrator.actorList" /></a></li>		
 					<li><a href="administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>
+					<li><a href="sponsorship/administrator/list.do"><spring:message code="master.page.sponsorship.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

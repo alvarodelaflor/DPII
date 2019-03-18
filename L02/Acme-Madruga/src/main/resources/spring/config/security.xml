@@ -244,6 +244,10 @@
 		<security:intercept-url pattern="/sponsorship/create.do" access="hasRole('SPONSOR')"/> 	
 		<security:intercept-url pattern="/sponsorship/edit.do" access="hasRole('SPONSOR')"/> 	
 		<security:intercept-url pattern="/sponsorship/delete.do" access="hasRole('SPONSOR')"/> 	
+
+		<security:intercept-url pattern="/sponsorship/administrator/list.do" access="hasRole('ADMIN')"/> 	
+		<security:intercept-url pattern="/sponsorship/administrator/checkCreditCard.do" access="hasRole('ADMIN')"/> 	
+		
 		<!-- ANTONIO SALVAT --> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

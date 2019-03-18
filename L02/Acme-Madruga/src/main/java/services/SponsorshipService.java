@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,12 +52,14 @@ public class SponsorshipService {
 
 			result = sponsorship;
 			result.setSponsor(s);
+			result.setActive(true);
 			//MailBox
 		} else {
 			result = this.sponsorshipRepository.findOne(sponsorship.getId());
 
 			result.setBanner(sponsorship.getBanner());
 			result.setTarget(sponsorship.getTarget());
+			result.setCreditCard(sponsorship.getCreditCard());
 
 			this.validator.validate(result, binding);
 		}
@@ -81,7 +84,17 @@ public class SponsorshipService {
 	}
 
 	public void delete(final Sponsorship sponsorship) {
-		this.sponsorshipRepository.delete(sponsorship);
+		if (sponsorship.getActive() == true)
+			sponsorship.setActive(false);
+		else
+			sponsorship.setActive(true);
+		final Sponsorship res = this.save(sponsorship);
+	}
+
+	public void checkCreditCard(final Sponsorship sponsorship) {
+		if (sponsorship.getCreditCard().getExpiration().before(new Date()))
+			sponsorship.setActive(false);
+		final Sponsorship res = this.save(sponsorship);
 	}
 
 }

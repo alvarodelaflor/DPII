@@ -16,16 +16,39 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<display:table name="sponsorships" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-<display:column titleKey="sponsorship.target">
+	<security:authorize access="hasRole('SPONSOR')">
+		<display:table name="sponsorships" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+			<display:column titleKey="sponsorship.target">
 						<a href="sponsorship/show.do?sponsorshipId=${row.id}"><jstl:out
 								value="${row.target}"></jstl:out> </a>
-					</display:column>	
-					<display:column titleKey="sponsorship.delete"><a href="sponsorship/delete.do?sponsorshipId=${row.id}"><spring:message code="sponsorship.delete" /></a></display:column>
-	<display:column titleKey="sponsorship.edit"><a href="sponsorship/edit.do?sponsorshipId=${row.id}"><spring:message code="sponsorship.edit" /></a></display:column>
-</display:table>
+					</display:column>
+					
+			<c:choose>
+				<c:when test="${row.active == true}">
+					<display:column titleKey="sponsorship.delete"><a href="sponsorship/delete.do?sponsorshipId=${row.id}"><spring:message code="sponsorship.deactivate" /></a></display:column>
+				</c:when>
+				<c:otherwise>
+					<display:column titleKey="sponsorship.delete"><a href="sponsorship/delete.do?sponsorshipId=${row.id}"><spring:message code="sponsorship.activate" /></a></display:column>
 
-<p class="create"><input type="button" value=<spring:message code="createSponsorship" /> id="buttonSponsorship" name="buttonSponsorship"  onclick="location.href='sponsorship/create.do';"/></p>
+				</c:otherwise>
+			</c:choose>		
+						
+			<display:column titleKey="sponsorship.edit"><a href="sponsorship/edit.do?sponsorshipId=${row.id}"><spring:message code="sponsorship.edit" /></a></display:column>
+		</display:table>
 
+		<p class="create"><input type="button" value=<spring:message code="createSponsorship" /> id="buttonSponsorship" name="buttonSponsorship"  onclick="location.href='sponsorship/create.do';"/></p>
+	</security:authorize>
+
+	<security:authorize access="hasRole('ADMIN')">
+		<display:table name="sponsorships" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+					<display:column property="target" titleKey="sponsorship.target"></display:column>
+					<display:column property="sponsor" titleKey="sponsorship.sponsor"></display:column>
+					<display:column property="active" titleKey="sponsorship.active"></display:column>
+					<display:column property="creditCard.number" titleKey="sponsorship.creditCard.number"></display:column>
+					<display:column property="creditCard.expiration" titleKey="sponsorship.creditCard.expiration"></display:column>
+		</display:table>
+			<p class="checkCreditCard"><input type="button" value=<spring:message code="checkCreditCard" /> id="buttoncheckCreditCard" name="buttoncheckCreditCard"  onclick="location.href='sponsorship/administrator/checkCreditCard.do';"/></p>
+	</security:authorize>
 <acme:cancel url=" " code="cancel"/>
