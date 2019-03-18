@@ -38,6 +38,8 @@ public class LegalRecordService {
 	//Simple CRUD Methods ------------------
 
 	public LegalRecord create() {
+		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		LegalRecord legalRecord = new LegalRecord();
 		return legalRecord;
 
@@ -54,6 +56,7 @@ public class LegalRecordService {
 	public LegalRecord save(final LegalRecord legalRecord) {
 		Assert.notNull(legalRecord, "legalRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "Brotherhood have not got an inception record");
 		LegalRecord legalRecordSaved;
 		// Assert legalRecord owner is the same that brotherhood logger

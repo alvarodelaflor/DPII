@@ -34,8 +34,6 @@ import utilities.AbstractTest;
 @Transactional
 public class HistoryTest extends AbstractTest {
 
-	// System under test ------------------------------------------------------
-
 	@Autowired
 	private PeriodRecordService		periodRecordService;
 	
@@ -50,14 +48,25 @@ public class HistoryTest extends AbstractTest {
 
 	// Tests ------------------------------------------------------------------
 
-
-
-	// Ancillary methods ------------------------------------------------------
-	
 	@Test
 	public void test1() {
 		/*
 		 * In this test we will test the creation of records in a history that already had an inception Record.
+		 * 
+		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, periodRecord, legalRecord, linkRecord, miscellaneousRecord 
@@ -102,31 +111,46 @@ public class HistoryTest extends AbstractTest {
 	public void test2() {
 		/*
 		 * In this test we will test the creation of a linkRecord in a history that does not have a Record inception.
+		 * 
+		 * 		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, periodRecord, legalRecord, linkRecord, miscellaneousRecord 
 			{ 
-				"brotherhood", 0, 0, 1, 1, IllegalArgumentException.class
-			}, { 
+//				"brotherhood", 0, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
 				"brotherhood", 0, 0, 1, 0, IllegalArgumentException.class
-//			}, {  REPETIDO
-//				"brotherhood", 0, 0, 1, 1, IllegalArgumentException.class
-			}, { 
-				"brotherhood", 0, 1, 1, 0, IllegalArgumentException.class
-//			}, { REPETIDO
-//				"brotherhood", 0, 1, 1, 1, IllegalArgumentException.class
+			}, {  
+				"brotherhood", 0, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 0, 1, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"brotherhood", 0, 1, 0, 1, IllegalArgumentException.class NOT LinkRecord created
 			}, { 
 				"brotherhood", 0, 1, 1, 0, IllegalArgumentException.class
 			}, { 
 				"brotherhood", 0, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"brotherhood", 1, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
 			}, { 
 				"brotherhood", 1, 0, 1, 0, IllegalArgumentException.class
 			}, { 
 				"brotherhood", 1, 0, 1, 1, IllegalArgumentException.class
-//			}, { REPETIDO
-//				"brotherhood", 1, 0, 1, 0, IllegalArgumentException.class
-			}, { 
-				"brotherhood", 1, 0, 1, 1, IllegalArgumentException.class
 			}, { 
 				"brotherhood", 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 
@@ -135,6 +159,127 @@ public class HistoryTest extends AbstractTest {
 				"brotherhood", 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 
 				"brotherhood", 1, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"admin", 0, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+//			}, {
+			}, { 				
+				"admin", 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"admin", 0, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"admin", 0, 1, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"admin", 0, 1, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"admin", 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"admin", 1, 0, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"admin", 1, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"admin", 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 	
+//				"member", 0, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+				"member", 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"member", 0, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"member", 0, 1, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"member", 0, 1, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"member", 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"member", 1, 0, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"member", 1, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"member", 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"chapter", 0, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 				
+				"chapter", 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"chapter", 0, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"chapter", 0, 1, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"chapter", 0, 1, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"chapter", 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"chapter", 1, 0, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"chapter", 1, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"chapter", 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, IllegalArgumentException.class		
+			}, { 	
+//				"sponsor", 0, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+				"sponsor", 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"sponsor", 0, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"sponsor", 0, 1, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"sponsor", 0, 1, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"sponsor", 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"sponsor", 1, 0, 0, 0, IllegalArgumentException.class NOT LinkRecord created
+//			}, { 
+//				"sponsor", 1, 0, 0, 1, IllegalArgumentException.class NOT LinkRecord created
+			}, { 
+				"sponsor", 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, IllegalArgumentException.class
 			}
 		};
 

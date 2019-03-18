@@ -42,6 +42,8 @@ public class InceptionRecordService {
 	//Simple CRUD Methods ------------------
 
 	public InceptionRecord create() {
+		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		final InceptionRecord inceptionRecord = new InceptionRecord();
 		return inceptionRecord;
 
@@ -80,6 +82,7 @@ public class InceptionRecordService {
 	public InceptionRecord save(final InceptionRecord inceptionRecord) {
 		Assert.notNull(inceptionRecord, "inceptionRecordSaveService.null");
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		InceptionRecord inceptionRecordSaved;
 		// Assert inceptionRecord owner is the same that brotherhood logger
 		

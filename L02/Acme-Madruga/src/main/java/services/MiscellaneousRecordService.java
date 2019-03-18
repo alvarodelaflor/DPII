@@ -39,6 +39,8 @@ public class MiscellaneousRecordService {
 	//Simple CRUD Methods ------------------
 
 	public MiscellaneousRecord create() {
+		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		MiscellaneousRecord miscellaneousRecord = new MiscellaneousRecord();
 		return miscellaneousRecord;
 
@@ -55,6 +57,7 @@ public class MiscellaneousRecordService {
 	public MiscellaneousRecord save(final MiscellaneousRecord miscellaneousRecord) {
 		Assert.notNull(miscellaneousRecord, "miscellaneousRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "Brotherhood have not got an inception record");
 		MiscellaneousRecord miscellaneousRecordSaved;
 		// Assert miscellaneousRecord owner is the same that brotherhood logger

@@ -40,6 +40,8 @@ public class PeriodRecordService {
 	//Simple CRUD Methods ------------------
 
 	public PeriodRecord create() {
+		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		PeriodRecord periodRecord = new PeriodRecord();
 		return periodRecord;
 
@@ -78,6 +80,7 @@ public class PeriodRecordService {
 	public PeriodRecord save(final PeriodRecord periodRecord) {
 		Assert.notNull(periodRecord, "periodRecordSaveService.null");
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null");
 		Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "Brotherhood have not got an inception record");
 		PeriodRecord periodRecordSaved;
 		// Assert periodRecord owner is the same that brotherhood logger
