@@ -780,7 +780,7 @@
     <bean id="inceptionRecord1" class="domain.InceptionRecord">
     	<property name="title" value= "carmen"/>
     	<property name="description" value= "hola"/>
-    	<property name="photos" value= "hola"/>
+    	<property name="photos" value= "http://hola"/>
     </bean>
     
     <!-- LINKRECORD -->
@@ -832,7 +832,8 @@
 		<property name="title" value="Título de prueba"/>
 		<property name="description" value="Descripción de prueba"/>
 		<property name="photos" value="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Alcora.JPG/220px-Alcora.JPG"/>
-    </bean>    
+    </bean> 
+  
     <!-- INCEPTIONRECORD -->
 </beans>
 

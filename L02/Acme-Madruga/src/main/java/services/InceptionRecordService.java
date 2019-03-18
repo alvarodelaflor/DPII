@@ -42,7 +42,7 @@ public class InceptionRecordService {
 	//Simple CRUD Methods ------------------
 
 	public InceptionRecord create() {
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(brotherhood, "Brotherhood is null");
 		final InceptionRecord inceptionRecord = new InceptionRecord();
 		return inceptionRecord;
@@ -57,36 +57,35 @@ public class InceptionRecordService {
 		final InceptionRecord inceptionRecord = this.inceptionRecordRepository.findOne(id);
 		return inceptionRecord;
 	}
-	
-	public Boolean checkPhotos(String photos) {
+
+	public Boolean checkPhotos(final String photos) {
 		Boolean res = true;
 		try {
 			if (photos.contains("'")) {
 				System.out.println("Son multiples fotos");
-				List<String> photosC = Arrays.asList(photos.split("'"));
-				for (String photo : photosC) {
-					new URL(photo).toURI();	
-				}
+				final List<String> photosC = Arrays.asList(photos.split("'"));
+				for (final String photo : photosC)
+					new URL(photo).toURI();
 			} else {
 				System.out.println("Es una �nica foto");
 				new URL(photos).toURI();
-			}			
-		} catch (Exception e) {
+			}
+		} catch (final Exception e) {
 			System.out.println("No es una foto");
 			res = false;
 		}
 
 		return res;
 	}
-	
+
 	public InceptionRecord save(final InceptionRecord inceptionRecord) {
 		Assert.notNull(inceptionRecord, "inceptionRecordSaveService.null");
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(brotherhood, "Brotherhood is null");
 		InceptionRecord inceptionRecordSaved;
 		// Assert inceptionRecord owner is the same that brotherhood logger
-		
-		if (brotherhood!=null && brotherhood.getHistory()!=null && brotherhood.getHistory().getInceptionRecord()!=null) {
+
+		if (brotherhood != null && brotherhood.getHistory() != null && brotherhood.getHistory().getInceptionRecord() != null) {
 			/*
 			 * En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la
 			 * misma que la que tiene el brotherhood logueado
