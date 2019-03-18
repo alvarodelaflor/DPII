@@ -83,9 +83,9 @@ public class InceptionRecordService {
 		Assert.notNull(inceptionRecord, "inceptionRecordSaveService.null");
 		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(brotherhood, "Brotherhood is null");
+		Assert.isTrue(this.checkPhotos(inceptionRecord.getPhotos()), "Photo are not URLs");
 		InceptionRecord inceptionRecordSaved;
 		// Assert inceptionRecord owner is the same that brotherhood logger
-		
 		if (brotherhood!=null && brotherhood.getHistory()!=null && brotherhood.getHistory().getInceptionRecord()!=null) {
 			/*
 			 * En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la
