@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -101,6 +103,15 @@ public class PathService {
 		// We have to also validate the destination
 		this.validator.validate(segment.getDestination(), binding);
 		return segment;
+	}
+
+	public void deleteWithParade(final int id) {
+		this.assertParadeOwner(id);
+		final Path path = this.pathRepository.findFromParade(id);
+		final List<Segment> segments = this.segmentService.getAllSegments(path);
+		this.pathRepository.delete(path.getId());
+		for (int i = 0; i < segments.size(); i++)
+			this.segmentService.deleteFromDB(segments.get(i).getId());
 	}
 
 }

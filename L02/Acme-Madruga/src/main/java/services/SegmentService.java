@@ -117,4 +117,10 @@ public class SegmentService {
 		Assert.isTrue(loggedId == parade.getBrotherhood().getId());
 	}
 
+	public void deleteFromDB(final int id) {
+		// This is only called internally
+		this.segmentRepository.delete(id);
+
+	}
+
 }
