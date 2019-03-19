@@ -18,17 +18,36 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <display:table name="parade" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<display:column property="title" titleKey="parade.title"></display:column>
-	<display:column property="moment" titleKey="parade.moment"></display:column>
-	<display:column property="description" titleKey="parade.description"></display:column> 
-	<display:column titleKey="parade.ticker">
-		<a href="parade/show.do?paradeId=${row.id}">${row.ticker}</a>
-	</display:column>
-	<jstl:if test="${row.isFinal}">
-		<display:column titleKey="parade.path">
-			<a href="path/show.do?paradeId=${row.id}"><spring:message code="parade.path" /></a>
-		</display:column>
+	<!-- We are showing this publicly so we only want to show the accepted ones -->
+	<display:column titleKey="parade.title"> 
+	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
+		<jstl:out value="title"></jstl:out> 
 	</jstl:if>
+	</display:column>
+	
+	<display:column titleKey="parade.moment"> 
+	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
+		<jstl:out value="moment"></jstl:out> 
+	</jstl:if>
+	</display:column>
+	
+	<display:column titleKey="parade.description"> 
+	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
+		<jstl:out value="description"></jstl:out> 
+	</jstl:if>
+	</display:column>
+	
+	<display:column titleKey="parade.ticker"> 
+	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
+		<a href="parade/show.do?paradeId=${row.id}">${row.ticker}</a>
+	</jstl:if>
+	</display:column>
+
+	<display:column titleKey="parade.path"> 
+	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
+		<a href="path/show.do?paradeId=${row.id}"><spring:message code="parade.path" /></a>
+	</jstl:if>
+	</display:column>
 </display:table>
 
 <input type="button" value="back" name="back" onclick="history.back()" />
