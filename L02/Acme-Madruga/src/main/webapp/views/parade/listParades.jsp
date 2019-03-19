@@ -24,6 +24,11 @@
 	<display:column titleKey="parade.ticker">
 		<a href="parade/show.do?paradeId=${row.id}">${row.ticker}</a>
 	</display:column>
+	<jstl:if test="${row.isFinal}">
+		<display:column titleKey="parade.path">
+			<a href="path/show.do?paradeId=${row.id}"><spring:message code="parade.path" /></a>
+		</display:column>
+	</jstl:if>
 </display:table>
 
 <input type="button" value="back" name="back" onclick="history.back()" />
