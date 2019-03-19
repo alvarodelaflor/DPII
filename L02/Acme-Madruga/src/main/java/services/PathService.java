@@ -108,10 +108,12 @@ public class PathService {
 	public void deleteWithParade(final int id) {
 		this.assertParadeOwner(id);
 		final Path path = this.pathRepository.findFromParade(id);
-		final List<Segment> segments = this.segmentService.getAllSegments(path);
-		this.pathRepository.delete(path.getId());
-		for (int i = 0; i < segments.size(); i++)
-			this.segmentService.deleteFromDB(segments.get(i).getId());
+		if (path != null) {
+			final List<Segment> segments = this.segmentService.getAllSegments(path);
+			this.pathRepository.delete(path.getId());
+			for (int i = 0; i < segments.size(); i++)
+				this.segmentService.deleteFromDB(segments.get(i).getId());
+		}
 	}
 
 }
