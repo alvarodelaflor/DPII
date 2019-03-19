@@ -14,7 +14,7 @@
 <!-- Both not owner and owner -->
 <spring:message code='path.origin' var="pathOrigin"/>
 <spring:message code='path.destination' var="pathDestination"/>
-
+<h2> <spring:message code='segment.info'/> </h2>
 
 <!-- When we are not the parade owner and have segments-->
 <jstl:if test="${not owner and fn:length(segments) > 0}">
@@ -29,7 +29,7 @@
 <!-- When we are the parade owner and have 1 segment-->
 <jstl:if test="${owner and fn:length(segments) <= 1}">
 	<li>
-	<form id="segment" action="path/brotherhood/edit.do" method="post">
+	<form id="segment" action="${not empty segments[0].id ? 'segment' : 'path'}/brotherhood/edit.do" method="post">
 		<input id="paradeId" name="paradeId" value="${paradeId}" type="hidden">
 		<input id="id" name="id" value="${not empty segments[0].id ? segments[0].id : 0}" type="hidden">
 		<label>${pathOrigin}: (</label>
@@ -105,6 +105,9 @@
 	</form>
 </jstl:forEach>
 </ol>
+</jstl:if>
+<jstl:if test="${wrongSegment}">
+	<span class="error"><spring:message code="segment.error"/></span>
 </jstl:if>
 <div>
 	<form method="get" action="#">

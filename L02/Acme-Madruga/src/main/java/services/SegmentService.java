@@ -63,27 +63,27 @@ public class SegmentService {
 	}
 
 	public Segment reconstruct(final Segment segment, final BindingResult binding) {
-		Segment res = this.create();
-		if (segment.getId() == 0)
-			res = segment;
-		else {
-			Segment aux;
-			aux = this.segmentRepository.findOne(segment.getId());
-			res.setId(aux.getId());
-			res.setVersion(aux.getVersion());
-			res.setLatitude(segment.getLatitude());
-			res.setLongitude(segment.getLongitude());
+		// This is only called when we have a path, segment exists
+		final Segment res = this.create();
 
-			if (aux.getDestination() != null)
-				res.setDestination(aux.getDestination());
-			else
-				res.setDestination(this.create());
+		Segment aux;
+		aux = this.segmentRepository.findOne(segment.getId());
+		res.setId(aux.getId());
+		res.setVersion(aux.getVersion());
+		res.setLatitude(segment.getLatitude());
+		res.setLongitude(segment.getLongitude());
 
-			res.getDestination().setLatitude(segment.getDestination().getLatitude());
-			res.getDestination().setLongitude(segment.getDestination().getLongitude());
-		}
+		if (aux.getDestination() != null)
+			res.setDestination(aux.getDestination());
+		else
+			res.setDestination(this.create());
+
+		res.getDestination().setLatitude(segment.getDestination().getLatitude());
+		res.getDestination().setLongitude(segment.getDestination().getLongitude());
+
 		this.validator.validate(res, binding);
-
+		// We have to also validate the destination
+		this.validator.validate(res.getDestination(), binding);
 		return res;
 	}
 

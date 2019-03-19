@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import security.LoginService;
 import services.BrotherhoodService;
@@ -62,14 +63,14 @@ public class PathController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST)
-	public ModelAndView editSegment(@RequestParam("paradeId") final int paradeId, final Segment segment, final BindingResult binding) {
+	public ModelAndView editSegment(@RequestParam("paradeId") final int paradeId, final Segment segment, final BindingResult binding, final RedirectAttributes redirectAttributes) {
 		ModelAndView result;
 
 		final Segment res = this.pathService.reconstruct(segment, binding);
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
-			result.addObject("wrongSegment", res);
+			redirectAttributes.addFlashAttribute("wrongSegment", true);
 		} else
 			try {
 				final Segment pathOrigin = this.segmentService.save(res, paradeId);

@@ -98,7 +98,8 @@ public class PathService {
 		Assert.isTrue(segment.getId() == 0);
 
 		this.validator.validate(segment, binding);
-
+		// We have to also validate the destination
+		this.validator.validate(segment.getDestination(), binding);
 		return segment;
 	}
 
