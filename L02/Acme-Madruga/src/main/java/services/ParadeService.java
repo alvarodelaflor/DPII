@@ -57,6 +57,9 @@ public class ParadeService {
 	@Autowired
 	private PathService			pathService;
 
+	@Autowired
+	private SponsorshipService	sponsorshipService;
+
 
 	//Simple CRUD Methods ------------------
 
@@ -115,6 +118,7 @@ public class ParadeService {
 		Assert.notNull(this.paradeRepository.findOne(parade.getId()), "La parade no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == parade.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
 		this.pathService.deleteWithParade(parade.getId());
+		this.sponsorshipService.deleteParadeSponsorships(parade.getId());
 		this.requestService.deleteAllRequestByParade(parade.getId());
 		this.positionAuxService.deleteAllPositionByParade(parade.getId());
 		this.finderService.updateParades(parade);
