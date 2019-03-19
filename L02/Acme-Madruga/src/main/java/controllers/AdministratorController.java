@@ -13,6 +13,7 @@ package controllers;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ import services.FinderService;
 import services.MemberService;
 import services.ParadeService;
 import services.RequestService;
+import services.SponsorService;
+import services.SponsorshipService;
 import services.WelcomeService;
 import domain.Actor;
 import domain.Administrator;
@@ -42,6 +45,7 @@ import domain.Brotherhood;
 import domain.Configuration;
 import domain.Member;
 import domain.Parade;
+import domain.Sponsor;
 import forms.RegistrationForm;
 
 @Controller
@@ -68,6 +72,12 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	AreaService				areaService;
+
+	@Autowired
+	SponsorService			sponsorService;
+
+	@Autowired
+	SponsorshipService		sponsorshipService;
 
 	@Autowired
 	FinderService			finderService;
@@ -259,11 +269,17 @@ public class AdministratorController extends AbstractController {
 			final Float stddevNumberOfResult = this.finderService.stddevNumberOfResult();
 			final Float ratioFinder = this.finderService.ratioResult();
 
+			final Double ratioActiveSponsorships = this.sponsorshipService.getRatioActiveSponsorships();
+			final List<Sponsor> top5 = this.sponsorService.top5ByActiveSponsorhips();
+
 			//CARMEN --> A+
 			final Float noSpammersRation = this.actorService.noSpammersRation();
 			final Float spammersRation = this.actorService.spammersRation();
 			//CARMEN --> A+
 			result = new ModelAndView("administrator/dashboard");
+
+			result.addObject("ratioActiveSponsorships", ratioActiveSponsorships);
+			result.addObject("top5", top5);
 
 			result.addObject("noSpammersRation", noSpammersRation);
 			result.addObject("spammersRation", spammersRation);

@@ -22,8 +22,7 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Intege
 	@Query("select stddev(cast((select count(sp) from Sponsor s join s.sponsorships sp where sp.active=true) as float))from Sponsor so")
 	Integer stddevActiveSponsorshipPerSponsor();
 
-	//select count(sp) from Sponsor s join s.sponsorships sp where sp.active=true;
-
-	//select max(cast((select count(sp) from Sponsor s join s.sponsorships sp where sp.active=true) as float))from Sponsor so;
+	@Query("select (count(s1)/(select count(s) from Sponsorship s))*1.0 from Sponsorship s1 where s1.active = true")
+	Double getRatioActiveSponsorships();
 
 }

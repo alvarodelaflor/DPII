@@ -97,4 +97,8 @@ public class SponsorshipService {
 		final Sponsorship res = this.save(sponsorship);
 	}
 
+	public Double getRatioActiveSponsorships() {
+
+		return this.sponsorshipRepository.getRatioActiveSponsorships();
+	}
 }
