@@ -43,8 +43,12 @@
 		<p><spring:message code="admin.avgBrotherhoodPerArea" /> <jstl:out value="${avgBrotherhoodPerArea}"></jstl:out></p>		
 		<p><spring:message code="admin.minBrotherhoodPerArea" /> <jstl:out value="${minBrotherhoodPerArea}"></jstl:out></p>		
 		<p><spring:message code="admin.maxBrotherhoodPerArea" /> <jstl:out value="${maxBrotherhoodPerArea}"></jstl:out></p>		
-		<p><spring:message code="admin.stddevBrotherhoodPerArea" /> <jstl:out value="${stddevBrotherhoodPerArea}"></jstl:out></p>		
-		<p><spring:message code="admin.countBrotherhoodPerArea" /> <jstl:out value="${map}"></jstl:out></p>		
+		<p><spring:message code="admin.stddevBrotherhoodPerArea" /> <jstl:out value="${stddevBrotherhoodPerArea}"></jstl:out></p>
+		<p><spring:message code="admin.countBrotherhoodPerArea" /> <jstl:out value="${map}"></jstl:out></p>
+		<p><spring:message code="admin.avgRecordPerHistory" /> <jstl:out value="${avgRecordPerHistory}"></jstl:out></p>		
+		<p><spring:message code="admin.minRecordPerHistory" /> <jstl:out value="${minRecordPerHistory}"></jstl:out></p>		
+		<p><spring:message code="admin.maxRecordPerHistory" /> <jstl:out value="${maxRecordPerHistory}"></jstl:out></p>		
+		<p><spring:message code="admin.stddevRecordPerHistory" /> <jstl:out value="${stddevRecordPerHistory}"></jstl:out></p>				
 		<p><spring:message code="admin.minNumberOfResult" /> <jstl:out value="${minNumberOfResult}"></jstl:out></p>		
 		<p><spring:message code="admin.maxNumberOfResult" /> <jstl:out value="${maxNumberOfResult}"></jstl:out></p>		
 		<p><spring:message code="admin.avgNumberOfResult" /> <jstl:out value="${avgNumberOfResult}"></jstl:out></p>		
@@ -75,6 +79,21 @@
 		<display:column property="name" titleKey="sponsor.name"></display:column>
 </display:table>
 	</div>
+
+<p><spring:message code="admin.brotherhoodLargestHistory" /> </p>	
+<display:table pagesize="5" name="${brotherhoodLargestHistory}" id="brotherhoodLargestHistory"
+	requestURI="${requestURI}">
+		<display:column property="title" titleKey="brotherhood.title"></display:column>
+</display:table>
+
+<p><spring:message code="admin.brotherhoodWithLargerHistoryThanAvg" /> </p>	
+<display:table pagesize="5" name="${brotherhoodWithLargerHistoryThanAvg}" id="brotherhoodWithLargerHistoryThanAvg"
+	requestURI="${requestURI}">
+		<display:column property="title" titleKey="brotherhood.title"></display:column>
+</display:table>
+
+</div>
+	
 <br>
 <br>
 

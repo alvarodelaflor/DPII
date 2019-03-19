@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -101,4 +102,10 @@ public class SponsorshipService {
 
 		return this.sponsorshipRepository.getRatioActiveSponsorships();
 	}
+	public void deleteParadeSponsorships(final int paradeId) {
+		final Collection<Sponsorship> sponsorships = this.sponsorshipRepository.getParadeSponsorships(paradeId);
+		for (final Sponsorship sponsorship : sponsorships)
+			this.sponsorshipRepository.delete(sponsorship.getId());
+	}
+
 }

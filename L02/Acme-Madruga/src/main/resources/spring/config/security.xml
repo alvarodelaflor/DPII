@@ -222,6 +222,12 @@
 		
 		<security:intercept-url pattern="/finder/member/show.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/finder/member/refresh.do" access="hasRole('MEMBER')" />
+		
+		<security:intercept-url pattern="/path/show.do" access="permitAll" />
+		<security:intercept-url pattern="/segment/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/segment/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/path/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/path/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 			<security:intercept-url pattern="/messageBox/list.do" access="isAuthenticated()" /> 

@@ -45,9 +45,6 @@ public class ChapterService {
 	@Autowired
 	private ChapterRepository	chapterRepository;
 
-	@Autowired
-	private MessageBoxService	messageBoxService;
-
 
 	public Chapter reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Chapter result = this.create();

@@ -23,7 +23,7 @@ public class Path extends DomainEntity {
 		this.parade = parade;
 	}
 
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	public Segment getOrigin() {
 		return this.origin;
 	}

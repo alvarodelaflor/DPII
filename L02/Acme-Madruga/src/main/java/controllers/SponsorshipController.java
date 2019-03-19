@@ -161,6 +161,7 @@ public class SponsorshipController extends AbstractController {
 			}
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
+		result.addObject("parades", this.paradeService.findAll());
 		return result;
 	}
 
