@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -50,7 +51,9 @@ public class Segment extends DomainEntity {
 		this.longitude = longitude;
 	}
 
-	@OneToOne(optional = true)
+	@OneToOne(optional = true, cascade = {
+		CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH
+	})
 	public Segment getDestination() {
 		return this.destination;
 	}
