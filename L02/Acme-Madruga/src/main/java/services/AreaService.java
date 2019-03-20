@@ -107,4 +107,9 @@ public class AreaService {
 		System.out.println("area" + a);
 		return a;
 	}
+
+	public Float ratioAreaNoCoordinate() {
+		final Float res = (float) (this.areaRepository.AreaNoChapter() / (float) this.areaRepository.AreaALL());
+		return res;
+	}
 }

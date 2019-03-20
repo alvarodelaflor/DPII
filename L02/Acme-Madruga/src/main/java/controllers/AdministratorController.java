@@ -276,7 +276,20 @@ public class AdministratorController extends AbstractController {
 			final Float noSpammersRation = this.actorService.noSpammersRation();
 			final Float spammersRation = this.actorService.spammersRation();
 			//CARMEN --> A+
+
+			final Float ratioAreaNoCoordinate = this.areaService.ratioAreaNoCoordinate();
+			final Float ratioFinalSUBMITTED = this.paradeService.ratioFinalSUBMITTED();
+			final Float ratioFinalACCEPTED = this.paradeService.ratioFinalACCEPTED();
+			final Float ratioFinalREJECTED = this.paradeService.ratioFinalREJECTED();
+			final Float ratioNoFinalNULL = this.paradeService.ratioNoFinalNULL();
+
 			result = new ModelAndView("administrator/dashboard");
+
+			result.addObject("ratioAreaNoCoordinate", ratioAreaNoCoordinate);
+			result.addObject("ratioFinalSUBMITTED", ratioFinalSUBMITTED);
+			result.addObject("ratioFinalACCEPTED", ratioFinalACCEPTED);
+			result.addObject("ratioFinalREJECTED", ratioFinalREJECTED);
+			result.addObject("ratioNoFinalNULL", ratioNoFinalNULL);
 
 			result.addObject("noSpammersRation", noSpammersRation);
 			result.addObject("spammersRation", spammersRation);

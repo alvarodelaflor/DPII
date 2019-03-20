@@ -448,6 +448,20 @@
     		<null></null>
     	</property>
     </bean>	
+
+    <bean id="area02" class="domain.Area">
+    	<property name="name" value= "Carmen"/>
+    	<property name="pictures">
+    		<null></null>
+    	</property>
+    </bean>	
+    
+     <bean id="area03" class="domain.Area">
+    	<property name="name" value= "Hola"/>
+    	<property name="pictures">
+    		<null></null>
+    	</property>
+    </bean>
 	<!-- AREA -->
 	<!-- FINDER -->
     <bean id="finder01" class="domain.Finder">

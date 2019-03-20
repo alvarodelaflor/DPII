@@ -230,4 +230,23 @@ public class ParadeService {
 	public Collection<Parade> findParadesBrotherhoodFinal(final Integer brotherhood) {
 		return this.paradeRepository.findParadesBrotherhoodFinal(brotherhood);
 	}
+
+	// REQUISITO 8
+	public Float ratioFinalSUBMITTED() {
+		return this.paradeRepository.ratioFinalSUBMITTED();
+	}
+
+	public Float ratioFinalACCEPTED() {
+		return this.paradeRepository.ratioFinalACCEPTED();
+	}
+
+	public Float ratioFinalREJECTED() {
+		return this.paradeRepository.ratioFinalREJECTED();
+	}
+
+	public Float ratioNoFinalNULL() {
+		return this.paradeRepository.ratioNoFinalNULL();
+	}
+	// REQUISITO 8
+
 }
