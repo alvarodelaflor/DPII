@@ -506,6 +506,13 @@ public class AdministratorController extends AbstractController {
 		HashSet<String> scoreWordsPos = new HashSet<>();
 		HashSet<String> scoreWordsNeg = new HashSet<>();
 
+		//Configuration
+		// ------------------------------------------------------------
+		final Configuration configuration = this.configurationService.getConfiguration();
+		final Double fair = configuration.getFair();
+		final Double VAT = configuration.getVAT();
+		// ------------------------------------------------------------
+
 		//CreditCards'Makes
 		// ------------------------------------------------------------
 		HashSet<String> creditCardMakes = new HashSet<>();
@@ -527,9 +534,6 @@ public class AdministratorController extends AbstractController {
 		// ------------------------------------------------------------
 		//Logo
 		final String logo = this.welcomeService.getLogo();
-
-		//Configuration (FINDER)
-		final Configuration configuration = this.configurationService.getConfiguration();
 
 		//Spam words
 		if (this.welcomeService.getSpamWords().isEmpty())
@@ -565,6 +569,8 @@ public class AdministratorController extends AbstractController {
 
 		System.out.println("Carmen: Entro en el list");
 
+		result.addObject("fair", fair);
+		result.addObject("VAT", VAT);
 		result.addObject("logo", logo);
 		result.addObject("ingles", ingles);
 		result.addObject("spanish", spanish);
@@ -610,6 +616,56 @@ public class AdministratorController extends AbstractController {
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
+	}
+	// ------------------------------------------------------------
+	// Fair and VAT Methods:
+	// ------------------------------------------------------------
+	@RequestMapping(value = "/newFair", method = RequestMethod.GET)
+	public ModelAndView newFair(@RequestParam("newFair") final Double newFair) {
+
+		ModelAndView res = new ModelAndView("redirect:list.do");
+
+		try {
+
+			final Configuration config = this.configurationService.getConfiguration();
+			config.setFair(newFair);
+			this.configurationService.save(config);
+			res.addObject("logo", this.welcomeService.getLogo());
+			res.addObject("system", this.welcomeService.getSystem());
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "number.positive.error") {
+				res = new ModelAndView("redirect:list.do");
+				res.addObject("message", "number.positive.error");
+				res.addObject("logo", this.welcomeService.getLogo());
+				res.addObject("system", this.welcomeService.getSystem());
+			}
+		}
+
+		return res;
+	}
+	@RequestMapping(value = "/newVAT", method = RequestMethod.GET)
+	public ModelAndView newVAT(@RequestParam("newVAT") final Double newVAT) {
+
+		ModelAndView res = new ModelAndView("redirect:list.do");
+
+		try {
+
+			final Configuration config = this.configurationService.getConfiguration();
+			config.setVAT(newVAT);
+			this.configurationService.save(config);
+			res.addObject("logo", this.welcomeService.getLogo());
+			res.addObject("system", this.welcomeService.getSystem());
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "number.positive.error") {
+				res = new ModelAndView("redirect:list.do");
+				res.addObject("message", "number.positive.error");
+				res.addObject("logo", this.welcomeService.getLogo());
+				res.addObject("system", this.welcomeService.getSystem());
+			}
+		}
+		return res;
 	}
 	// ------------------------------------------------------------
 

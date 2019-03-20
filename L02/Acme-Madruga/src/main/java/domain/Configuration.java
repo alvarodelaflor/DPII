@@ -8,8 +8,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
@@ -17,7 +15,29 @@ public class Configuration extends DomainEntity {
 	// Cache
 	private Integer	cacheHours;
 	private Integer	cacheAmount;
+	private Double	fair;
+	private Double	VAT;
 
+
+	@Min(0)
+	@NotNull
+	public Double getFair() {
+		return this.fair;
+	}
+
+	public void setFair(final Double fair) {
+		this.fair = fair;
+	}
+
+	@Min(0)
+	@NotNull
+	public Double getVAT() {
+		return this.VAT;
+	}
+
+	public void setVAT(final Double vAT) {
+		this.VAT = vAT;
+	}
 
 	@NotNull
 	@Min(1)
@@ -40,4 +60,5 @@ public class Configuration extends DomainEntity {
 	public void setCacheAmount(final Integer cacheAmount) {
 		this.cacheAmount = cacheAmount;
 	}
+
 }

@@ -24,6 +24,31 @@
 
 <br>
 
+<!--FAIR-->
+<h3>
+	<i><spring:message code="admin.fair" /></i>
+</h3>
+<p>${fair}</p>
+<security:authorize access="hasRole('ADMIN')">
+	<form:form class="formularioEdicion" method="GET"
+		action="administrator/newFair.do?newFair='${newFair}'.do">
+		<spring:message code="newFair" />
+		<input type=number name="newFair" required="required" />
+		<acme:submit name="save" code="saveNewFair" />
+	</form:form>
+</security:authorize>
+
+<p>${VAT}</p>
+<security:authorize access="hasRole('ADMIN')">
+	<form:form class="formularioEdicion" method="GET"
+		action="administrator/newVAT.do?newVAT='${newVAT}'.do">
+		<spring:message code="newVAT" />
+		<input type=number name="newVAT" required="required" />
+		<form:errors path="VAT"></form:errors>
+		<acme:submit name="save" code="saveNewVAT" />
+	</form:form>
+</security:authorize>
+<!--FAIR-->
 <!-- FINDER -->
 <security:authorize access="hasRole('ADMIN')">
 	<div>
@@ -110,8 +135,6 @@
 		<acme:submit name="save" code="saveNewSpamWord" />
 	</form:form>
 </security:authorize>
-
-
 <!--SPAM WORDS-->
 
 <!--SCORE WORDS-->

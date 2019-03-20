@@ -33,6 +33,11 @@ public class ChapterTest extends AbstractTest {
 
 	// Drivers:
 	@Test
+	public void chapterRegisterValidation() {
+
+	}
+
+	@Test
 	public void chapterCreateProclaim() {
 
 		final Object testingData[][] = {
@@ -93,23 +98,6 @@ public class ChapterTest extends AbstractTest {
 	}
 
 	// Negatives Tests:
-	@Test
-	public void registerAsChapterTestNeg() {
-
-		Class<?> caught = null;
-
-		try {
-
-			this.authenticate("admin");
-			this.chapterService.create();
-			this.unauthenticate();
-		} catch (final Throwable oops) {
-
-			caught = oops.getClass();
-		}
-
-		super.checkExceptions(Exception.class, caught); // Que excepcion debe saltar?
-	}
 
 	// Abstract:
 	protected void chapterCreateProclaim(final String username, final Class<?> expected) {
@@ -123,6 +111,9 @@ public class ChapterTest extends AbstractTest {
 		} catch (final Throwable oops) {
 
 			caught = oops.getClass();
+		} finally {
+
+			this.rollbackTransaction();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -139,6 +130,10 @@ public class ChapterTest extends AbstractTest {
 		} catch (final Throwable oops) {
 
 			caught = oops.getClass();
+
+		} finally {
+
+			this.rollbackTransaction();
 		}
 
 		super.checkExceptions(expected, caught);
