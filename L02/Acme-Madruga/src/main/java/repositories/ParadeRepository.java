@@ -52,4 +52,20 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	@Query("select min(p.maxRow * p.maxColum) from Parade p")
 	Integer maxParadeN();
 
+	// Requisito 8
+	@Query("select distinct(cast((select count(p) from Parade p where p.isFinal= 1 and p.status='SUBMITTED') as float)/(select count(p1) from Parade p1)) from Parade p2")
+	Float ratioFinalSUBMITTED();
+
+	// Requisito 8
+	@Query("select distinct(cast((select count(p) from Parade p where p.isFinal= 1 and p.status='ACCEPTED') as float)/(select count(p1) from Parade p1)) from Parade p2")
+	Float ratioFinalACCEPTED();
+
+	// Requisito 8
+	@Query("select distinct(cast((select count(p) from Parade p where p.isFinal= 1 and p.status='REJECTED') as float)/(select count(p1) from Parade p1)) from Parade p2")
+	Float ratioFinalREJECTED();
+
+	// Requisito 8
+	@Query("select distinct(cast((select count(p) from Parade p where p.isFinal= 0) as float)/(select count(p1) from Parade p1 where p1.isFinal= 1)) from Parade p2")
+	Float ratioNoFinalNULL();
+
 }

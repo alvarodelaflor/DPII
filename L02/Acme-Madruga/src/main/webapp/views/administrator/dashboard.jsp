@@ -56,6 +56,12 @@
 		<p><spring:message code="admin.ratioFinder" /> <jstl:out value="${ratioFinder}"></jstl:out></p>	
 		<p><spring:message code="ratioActiveSponsorships" /> <jstl:out value="${ratioActiveSponsorships}"></jstl:out></p>	
 		
+				<p><spring:message code="admin.ratioAreaNoCoordinate" /> <jstl:out value="${ratioAreaNoCoordinate}"></jstl:out></p>	
+				<p><spring:message code="admin.ratioFinalSUBMITTED" /> <jstl:out value="${ratioFinalSUBMITTED}"></jstl:out></p>	
+				<p><spring:message code="admin.ratioFinalACCEPTED" /> <jstl:out value="${ratioFinalACCEPTED}"></jstl:out></p>	
+				<p><spring:message code="admin.ratioFinalREJECTED" /> <jstl:out value="${ratioFinalREJECTED}"></jstl:out></p>	
+				<p><spring:message code="admin.ratioNoFinalNULL" /> <jstl:out value="${ratioNoFinalNULL}"></jstl:out></p>	
+		
 		
 <p><spring:message code="admin.lisMemberAccept" /> </p>	
 <display:table pagesize="5" name="${lisMemberAccept}" id="lisMemberAccept"
