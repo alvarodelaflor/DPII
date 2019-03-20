@@ -61,6 +61,11 @@
 				<p><spring:message code="admin.ratioFinalREJECTED" /> <jstl:out value="${ratioFinalREJECTED}"></jstl:out></p>	
 				<p><spring:message code="admin.ratioNoFinalNULL" /> <jstl:out value="${ratioNoFinalNULL}"></jstl:out></p>	
 		
+				<p><spring:message code="admin.minParadeCapter" /> <jstl:out value="${minParadeCapter}"></jstl:out></p>	
+				<p><spring:message code="admin.maxParadeCapter" /> <jstl:out value="${maxParadeCapter}"></jstl:out></p>	
+				<p><spring:message code="admin.avgParadeCapter" /> <jstl:out value="${avgParadeCapter}"></jstl:out></p>	
+				<p><spring:message code="admin.stddevParadeCapter" /> <jstl:out value="${stddevParadeCapter}"></jstl:out></p>	
+				<p><spring:message code="admin.paradeChapter" /> <jstl:out value="${paradeChapter}"></jstl:out></p>	
 		
 <p><spring:message code="admin.lisMemberAccept" /> </p>	
 <display:table pagesize="5" name="${lisMemberAccept}" id="lisMemberAccept"

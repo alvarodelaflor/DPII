@@ -283,7 +283,19 @@ public class AdministratorController extends AbstractController {
 			final Float ratioFinalREJECTED = this.paradeService.ratioFinalREJECTED();
 			final Float ratioNoFinalNULL = this.paradeService.ratioNoFinalNULL();
 
+			final Float minParadeCapter = this.paradeService.minParadeCapter();
+			final Float maxParadeCapter = this.paradeService.maxParadeCapter();
+			final Float avgParadeCapter = this.paradeService.avgParadeCapter();
+			final Float stddevParadeCapter = this.paradeService.stddevParadeCapter();
+			final Collection<String> paradeChapter = this.paradeService.ParadeChapter();
+
 			result = new ModelAndView("administrator/dashboard");
+
+			result.addObject("minParadeCapter", minParadeCapter);
+			result.addObject("maxParadeCapter", maxParadeCapter);
+			result.addObject("avgParadeCapter", avgParadeCapter);
+			result.addObject("stddevParadeCapter", stddevParadeCapter);
+			result.addObject("paradeChapter", paradeChapter);
 
 			result.addObject("ratioAreaNoCoordinate", ratioAreaNoCoordinate);
 			result.addObject("ratioFinalSUBMITTED", ratioFinalSUBMITTED);

@@ -3,6 +3,7 @@ package repositories;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -67,5 +68,35 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	// Requisito 8
 	@Query("select distinct(cast((select count(p) from Parade p where p.isFinal= 0) as float)/(select count(p1) from Parade p1 where p1.isFinal= 1)) from Parade p2")
 	Float ratioNoFinalNULL();
+
+	// Requisito 8
+	@Query("select min((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	Float minParadeCapter();
+
+	// Requisito 8
+	@Query("select max((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	Float maxParadeCapter();
+
+	// Requisito 8
+	@Query("select avg((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	Float avgParadeCapter();
+
+	// Requisito 8
+	@Query("select stddev((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	Float stddevParadeCapter();
+
+	// Requisito 8
+	@Query("select c.name,(select 1.1*count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id) from Chapter c")
+	List<Object[]> ParadeChapter();
+
+	//@Query("select a.chapter.id from Area a where a IN(select p.brotherhood.area from Parade p where p.brotherhood.size > (select avg(p1.brotherhood.size)*1.1 from Parade p1))")
+
+	//	@Query("select c from Chapter c where (select 1.1*count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id) > (select count(p) from Parade p)")
+
+	//select c.id,(select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id) as h from Chapter c order by h;     
+
+	//select min((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h;
+
+	//select min((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id))*1.0 as h from Chapter c order by h;
 
 }

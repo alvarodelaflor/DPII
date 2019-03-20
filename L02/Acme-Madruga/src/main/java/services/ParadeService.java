@@ -57,6 +57,9 @@ public class ParadeService {
 	@Autowired
 	private PathService			pathService;
 
+	@Autowired
+	private ChapterService		chapterService;
+
 
 	//Simple CRUD Methods ------------------
 
@@ -246,6 +249,40 @@ public class ParadeService {
 
 	public Float ratioNoFinalNULL() {
 		return this.paradeRepository.ratioNoFinalNULL();
+	}
+
+	public Float minParadeCapter() {
+		return this.paradeRepository.minParadeCapter();
+	}
+
+	public Float maxParadeCapter() {
+		return this.paradeRepository.maxParadeCapter();
+	}
+
+	public Float avgParadeCapter() {
+		return this.paradeRepository.avgParadeCapter();
+	}
+
+	public Float stddevParadeCapter() {
+		return this.paradeRepository.stddevParadeCapter();
+	}
+
+	public Collection<String> ParadeChapter() {
+		final Collection<String> res = new ArrayList<>();
+
+		final List<Object[]> collection = this.paradeRepository.ParadeChapter();
+
+		for (int i = 0; i < collection.size(); i++) {
+
+			final String c = (String) collection.get(i)[0];
+			final Double valor = (Double) collection.get(i)[1];
+
+			if (valor > this.avgParadeCapter())
+				res.add(c);
+		}
+		System.out.println(res);
+
+		return res;
 	}
 	// REQUISITO 8
 
