@@ -79,6 +79,9 @@
 				<display:column titleKey="parade.path">
 					<a href="path/show.do?paradeId=${row.id}"><spring:message code="parade.path" /></a>
 				</display:column>
+				<display:column titleKey="parade.path">
+					<a href="parade/brotherhood/copy.do?paradeId=${row.id}">Make a copy of this parade</a>
+				</display:column>
 			</display:table>
 		</security:authorize>
 	</div>

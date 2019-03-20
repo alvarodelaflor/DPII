@@ -204,6 +204,21 @@ public class ParadeBrotherhoodController extends AbstractController {
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
+
+	@RequestMapping(value = "/copy", method = RequestMethod.GET)
+	public ModelAndView copyParade(@RequestParam(value = "paradeId", defaultValue = "-1") final int paradeId) {
+		ModelAndView res;
+
+		try {
+			this.paradeService.createCopy(paradeId);
+			res = new ModelAndView("redirect:/parade/brotherhood/list.do");
+		} catch (final Exception e) {
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
 	public ModelAndView createEditModelAndView(final Parade parade) {
 		ModelAndView result;
 
@@ -231,4 +246,5 @@ public class ParadeBrotherhoodController extends AbstractController {
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
+
 }
