@@ -271,6 +271,7 @@ public class AdministratorController extends AbstractController {
 			final Float minRecordPerHistory = this.historyService.minRecordPerHistory();
 			final Float maxRecordPerHistory = this.historyService.maxRecordPerHistory();
 			final Float stddevRecordPerHistory = this.historyService.stddevRecordPerHistory();
+
 			final Collection<Brotherhood> brotherhoodLargestHistory = this.brotherhoodService.findBrotherhoodWithLargestHistory();
 			System.out.println("Listas en el controlador: ");
 			System.out.println(brotherhoodLargestHistory);

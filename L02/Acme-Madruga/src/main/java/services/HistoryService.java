@@ -134,7 +134,12 @@ public class HistoryService {
 	}
 
 	public float avgRecordPerHistory() {
-		return this.historyRepository.avgRecordPerHistory();
+
+		try {
+			return this.historyRepository.avgRecordPerHistory();
+		} catch (final Exception e) {
+			return 0;
+		}
 	}
 
 	public float stddevRecordPerHistory() {
