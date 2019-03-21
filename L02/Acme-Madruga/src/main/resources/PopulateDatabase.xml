@@ -899,6 +899,9 @@
     </bean>
     <bean id="history02" class="domain.History">
 		<property name="inceptionRecord" ref="inceptionRecord01" />
+		<property name="linkRecord" ref="linkRecord1" />
+		<property name="legalRecord" ref="legalRecord1" />
+		<property name="periodRecord" ref="periodRecord1" />
     </bean>
     <!-- HISTORY -->
     <!-- INCEPTIONRECORD -->

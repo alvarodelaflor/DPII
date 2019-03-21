@@ -25,5 +25,6 @@
 		<put-attribute name="title" value="Create a proclaim" />
 		<put-attribute name="body" value="/views/proclaim/edit.jsp" />
 	</definition>
+
 	
 </tiles-definitions>

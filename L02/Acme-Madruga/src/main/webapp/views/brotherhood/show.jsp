@@ -19,7 +19,19 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <security:authorize access="hasRole('BROTHERHOOD')"> 
 
+<head>
+<style>
+	 img {
+	 width: 40%;
+	 height: 40%;
+	 }
+	</style>
+</head>
+
 <div class="content">
+	
+	<img alt="" src="${banner}"  width="2">
+
 	<table>
 		
 		<c:choose>

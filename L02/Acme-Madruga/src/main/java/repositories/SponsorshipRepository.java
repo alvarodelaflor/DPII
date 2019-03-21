@@ -2,6 +2,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +31,7 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Intege
 	//select max(cast((select count(sp) from Sponsor s join s.sponsorships sp where sp.active=true) as float))from Sponsor so;
 	@Query("select s from Sponsorship s where s.parade.id=?1")
 	Collection<Sponsorship> getParadeSponsorships(int paradeId);
+
+	@Query("select s.banner from Sponsorship s where s.parade.id=?1")
+	List<String> getBannersSponsorships(int paradeId);
 }
