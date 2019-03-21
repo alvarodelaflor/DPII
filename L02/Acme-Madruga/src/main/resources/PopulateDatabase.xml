@@ -356,6 +356,19 @@
 		<property name="floatt" ref= "float01"/>
 		<property name="status" value= "SUBMITTED"/>
     </bean>
+    
+    <bean id="parade04" class="domain.Parade">
+    	<property name="title" value="Testing" />
+    	<property name="description" value="Testing muy fuerte" />
+    	<property name="moment" value="2020/04/03 21:00" />
+		<property name="brotherhood" ref= "brotherhood2"/>
+		<property name="ticker" value="211503-ABCDE4" />
+		<property name="isFinal" value= "true"/>
+		<property name="maxRow" value= "10"/>
+		<property name="maxColum" value= "1"/>
+		<property name="floatt" ref= "float01"/>
+		<property name="status" value= "SUBMITTED"/>
+    </bean>
     <!-- PARADE -->
     <!-- FLOAT -->
 	<bean id="float01" class="domain.Float">
@@ -867,6 +880,9 @@
     <bean id="path1" class="domain.Path">
     	<property name="parade" ref="parade01"/>
     	<property name="origin" ref="segment1"/>
+    </bean>
+    <bean id="path2" class="domain.Path">
+    	<property name="parade" ref="parade02"/>
     </bean>
     <!-- PATHS -->
     
