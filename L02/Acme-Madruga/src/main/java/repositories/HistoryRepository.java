@@ -42,7 +42,7 @@ public interface HistoryRepository extends JpaRepository<History, Integer> {
 	@Query("select max(cast((select count(r) from Record r where r.history = h) as float)) from History h")
 	Float maxRecordPerHistory();
 
-	@Query("select avg(cast((select count(r) from Record r where r.history = h) as float)) from History h")
+	@Query("select avg(cast((select count(r) from Record r where r.history.id = h.id) as float)) from History h")
 	Float avgRecordPerHistory();
 
 	@Query("select stddev(cast((select count(r) from Record r where r.history = h) as float)) from History h")

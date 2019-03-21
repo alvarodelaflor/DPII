@@ -8,11 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
 import repositories.HistoryRepository;
 import security.LoginService;
 import domain.Brotherhood;
 import domain.History;
-import security.LoginService;
 
 /*
  * CONTROL DE CAMBIOS HistroyService.java
@@ -117,21 +117,32 @@ public class HistoryService {
 
 	public float maxRecordPerHistory() {
 
-		return this.historyRepository.maxRecordPerHistory();
+		try {
+			return this.historyRepository.maxRecordPerHistory();
+		} catch (final Exception e) {
+			return 0;
+		}
 	}
 
 	public float minRecordPerHistory() {
 
-		return this.historyRepository.minRecordPerHistory();
+		try {
+			return this.historyRepository.minRecordPerHistory();
+		} catch (final Exception e) {
+			return 0;
+		}
 	}
 
 	public float avgRecordPerHistory() {
-
 		return this.historyRepository.avgRecordPerHistory();
 	}
 
 	public float stddevRecordPerHistory() {
 
-		return this.historyRepository.stddevRecordPerHistory();
+		try {
+			return this.historyRepository.stddevRecordPerHistory();
+		} catch (final Exception e) {
+			return 0;
+		}
 	}
 }

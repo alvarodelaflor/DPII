@@ -17,6 +17,7 @@ import repositories.ParadeRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Parade;
 import domain.PositionAux;
 
@@ -58,7 +59,6 @@ public class ParadeService {
 	private ChapterService		chapterService;
 	@Autowired
 	private SponsorshipService	sponsorshipService;
-
 
 	@Autowired
 	private TickerService		tickerService;
@@ -270,7 +270,6 @@ public class ParadeService {
 	}
 	// REQUISITO 8
 
-
 	public void createCopy(final int paradeId) {
 		final Parade parade = this.paradeRepository.findOne(paradeId);
 
@@ -302,7 +301,7 @@ public class ParadeService {
 		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
 
 	}
-	
+
 	public Collection<Parade> findParadesByChapter(final int chapterId) {
 		final Collection<Parade> parades = this.paradeRepository.findParadesByChapter(chapterId);
 		return parades;
@@ -337,7 +336,6 @@ public class ParadeService {
 		parade.setMaxRow(result.getMaxRow());
 		parade.setMaxColum(result.getMaxColum());
 		parade.setFloatt(result.getFloatt());
-		parade.setPath(result.getPath());
 		result = parade;
 		this.validator.validate(result, binding);
 		return result;
@@ -345,8 +343,8 @@ public class ParadeService {
 	public Parade updateStatus(final Parade parade) {
 		final UserAccount login = LoginService.getPrincipal();
 		Assert.isTrue(login != null);
-		Assert.isTrue(this.chapterService.findByUserAccount(login.getId()) != null);
-		final Chapter chapter = this.chapterService.findByUserAccount(login.getId());
+		Assert.isTrue(this.chapterService.getChapterByUserAccountId(login.getId()) != null);
+		final Chapter chapter = this.chapterService.getChapterByUserAccountId(login.getId());
 		Assert.isTrue(parade.getBrotherhood().getArea().getChapter().equals(chapter));
 		Assert.isTrue(this.findOne(parade.getId()) != null);
 		final Parade saveParade = this.paradeRepository.save(parade);

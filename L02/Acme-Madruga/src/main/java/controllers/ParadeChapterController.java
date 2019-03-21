@@ -99,7 +99,7 @@ public class ParadeChapterController extends AbstractController {
 	public ModelAndView listParades() {
 		ModelAndView result;
 		try {
-			final Chapter chapter = this.chapterService.findByUserAccount(LoginService.getPrincipal().getId());
+			final Chapter chapter = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
 			System.out.println(chapter.getId());
 			final Collection<Parade> submittedParades = this.paradeService.findSubmittedParadesByChapter(chapter.getId());
 			final Collection<Parade> acceptedParades = this.paradeService.findAcceptedParadesByChapter(chapter.getId());

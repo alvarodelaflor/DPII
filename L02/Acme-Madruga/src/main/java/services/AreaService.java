@@ -37,6 +37,9 @@ public class AreaService {
 	@Autowired
 	private BrotherhoodService		brotherhoodService;
 
+	@Autowired
+	private ChapterService			chapterService;
+
 
 	//Simple CRUD Methods ------------------
 
@@ -112,18 +115,18 @@ public class AreaService {
 		final Float res = (float) (this.areaRepository.AreaNoChapter() / (float) this.areaRepository.AreaALL());
 		return res;
 	}
-	
+
 	//Ferrete
-	
-		public Collection<Area> unassignedAreas() {
-		Assert.notNull(this.chapterService.findByUserAccount(LoginService.getPrincipal().getId()));
+
+	public Collection<Area> unassignedAreas() {
+		Assert.notNull(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()));
 		return this.areaRepository.UnassignedAreas();
 	}
 
 	public void assignChapter(final Integer id) {
-		final Chapter chapter = this.chapterService.findByUserAccount(LoginService.getPrincipal().getId());
+		final Chapter chapter = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
 		System.out.println("SERVICIO:  " + chapter);
-		Assert.notNull(this.chapterService.findByUserAccount(LoginService.getPrincipal().getId()));
+		Assert.notNull(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()));
 		final Area area = this.findOne(id);
 		System.out.println("SERVICIO:  " + area);
 		Assert.notNull(area, "areaExist.error");
