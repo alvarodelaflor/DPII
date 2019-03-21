@@ -11,7 +11,10 @@
 package acmeParadeTest;
 
 import java.util.List;
+
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ import domain.LinkRecord;
 import domain.MiscellaneousRecord;
 import domain.PeriodRecord;
 import services.BrotherhoodService;
+import services.InceptionRecordService;
 import services.LegalRecordService;
 import services.LinkRecordService;
 import services.MiscellaneousRecordService;
@@ -49,6 +53,9 @@ public class HistoryTest extends AbstractTest {
 	
 	@Autowired
 	private BrotherhoodService brotherhoodService;
+	
+	@Autowired
+	private InceptionRecordService inceptionRecordService;
 	
 	@Autowired
 	private MiscellaneousRecordService miscellaneousRecordService;
@@ -117,6 +124,8 @@ public class HistoryTest extends AbstractTest {
 	@Test
 	public void test2() {
 		/*
+		 * NEGATIVE TEST
+		 * 
 		 * In this test we will test the creation of a linkRecord in a history that does not have a Record inception.
 		 * 
 		 * 		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
@@ -597,4 +606,306 @@ public class HistoryTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
+	
+	@Test
+	public void test5() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * 	  In this test we will test edit a inceptionRecord.
+		 * 
+		 * 	  1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			// brotherhoodId, ¿editTitle?, ¿editDescription?, ¿editPhotos? 
+			{ 
+				"brotherhood", 0, 0, 0, null
+			}, { 
+				"brotherhood", 0, 0, 1, null
+			}, {  
+				"brotherhood", 0, 1, 0, null
+			}, { 
+				"brotherhood", 0, 1, 1, null
+			}, { 
+				"brotherhood", 1, 0, 0, null
+			}, { 
+				"brotherhood", 1, 0, 1, null
+			}, { 
+				"brotherhood", 1, 1, 0, null
+			}, { 
+				"brotherhood", 1, 1, 1, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTestEditInception((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3],(Class<?>) testingData[i][4]);
+	}
+
+	protected void checkTestEditInception(final String userName, final int title, final int description, final int photos, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(userName);
+			
+			InceptionRecord inceptionRecord = this.inceptionRecordService.create();
+			inceptionRecord.setTitle("El título");
+			inceptionRecord.setDescription("La descripción");
+			inceptionRecord.setPhotos("https://www.myPhoto.com/idPhoto=4569");
+			InceptionRecord inceptionRecordSaved = this.inceptionRecordService.save(inceptionRecord);
+			
+			if (title!=0) {
+				inceptionRecordSaved.setTitle("Nuevo título");
+			}
+			
+			if (description!=0) {
+				inceptionRecord.setDescription("Nueva descripción");
+			}
+			
+			if (photos!=0) {
+				inceptionRecord.setPhotos("https://www.myPhoto.com/idePhoto=666");
+			}
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test6() {
+		/*
+		 * NEGATIVE TEST
+		 * 
+		 * 	  In this test we will test edit a inceptionRecord.
+		 * 
+		 * 	  1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			// brotherhoodId, ¿editTitle?, ¿editDescription?, ¿editPhotos? 
+			{ 
+				"brotherhood", 0, 0, 0, 0, 0, 0, null
+			}, { 
+				"brotherhood", 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {  
+				"brotherhood", 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 0, 1, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 0, 1, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 0, 1, 1, 1, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 0, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 1, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 0, 1, 1, 1, 1, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
+//			}, {  
+//				"brotherhood", 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 1, 0, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 1, 0, 0, ConstraintViolationException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+//			}, { 
+//				"brotherhood", 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 1, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood", 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood", 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTestEditInceptionNegative((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (int) testingData[i][5], (int) testingData[i][6], (Class<?>) testingData[i][7]);
+	}
+
+	protected void checkTestEditInceptionNegative(final String userName, final int titleBlank, final int descriptionBlank, final int photosBlank, final int titleNull, final int descriptionNull, final int photosNull, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(userName);
+			
+			InceptionRecord inceptionRecord = this.inceptionRecordService.create();
+			inceptionRecord.setTitle("El título");
+			inceptionRecord.setDescription("La descripción");
+			inceptionRecord.setPhotos("https://www.myPhoto.com/idPhoto=4569");
+			InceptionRecord inceptionRecordSaved = this.inceptionRecordService.save(inceptionRecord);
+			
+			if (titleBlank!=0) {
+				inceptionRecordSaved.setTitle("");
+			}
+			
+			if (titleNull!=0) {
+				inceptionRecordSaved.setTitle(null);
+			}
+			
+			if (titleBlank!=0 && titleNull!=0 && ((photosBlank - photosNull)+(descriptionBlank - descriptionNull))!=0) {
+				inceptionRecordSaved.setTitle("Título editado");
+			}
+			
+			if (descriptionBlank!=0) {
+				inceptionRecordSaved.setDescription("");
+			}
+			
+			if (descriptionNull!=0) {
+				inceptionRecordSaved.setDescription(null);
+			}
+			
+			if (descriptionBlank!=0 && descriptionNull!=0 && ((titleBlank - titleNull)+(photosBlank - photosNull))!=0) {
+				inceptionRecordSaved.setDescription("Descripción editada");
+			}
+			
+			if (photosBlank!=0) {
+				inceptionRecordSaved.setPhotos("");
+			}
+			
+			if (photosNull!=0) {
+				inceptionRecordSaved.setPhotos(null);
+			}
+			
+			if (photosBlank!=0 && photosNull !=0 && ((titleBlank - titleNull)+(descriptionBlank - descriptionNull))!=0) {
+				inceptionRecordSaved.setPhotos("https://www.myPhoto.com/idPhoto=43");
+			}
+			
+			this.inceptionRecordService.save(inceptionRecordSaved);
+			
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+			System.out.println(caught);
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.inceptionRecordService.flush();
+		this.checkExceptions(expected, caught);
+	}
+
 }
