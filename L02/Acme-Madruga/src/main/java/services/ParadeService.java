@@ -81,19 +81,23 @@ public class ParadeService {
 		return this.paradeRepository.findOne(id);
 	}
 	public Parade save(final Parade parade) {
-		final Parade paradeUpdate = this.paradeRepository.save(parade);
 		final List<PositionAux> positionAuxs = new ArrayList<PositionAux>();
-		if (parade.getIsFinal().equals(true))
+		Parade paradeUpdate1 = this.paradeRepository.save(parade);
+		if (parade.getIsFinal().equals(true)) {
+			parade.setStatus("SUBMITTED");
+			paradeUpdate1 = this.paradeRepository.save(paradeUpdate1);
 			for (int i = 0; i < parade.getMaxRow(); i++)
 				for (int j = 0; j < parade.getMaxColum(); j++) {
 					final PositionAux positionAux = this.positionAuxService.create();
 					positionAux.setRow(i);
 					positionAux.setColum(j);
-					positionAux.setParade(paradeUpdate);
+					positionAux.setParade(paradeUpdate1);
 					positionAux.setStatus(false);
 					positionAuxs.add(positionAux);
 				}
+		}
 		this.positionAuxService.saveAll(positionAuxs);
+		final Parade paradeUpdate = this.paradeRepository.save(paradeUpdate1);
 		return paradeUpdate;
 	}
 
