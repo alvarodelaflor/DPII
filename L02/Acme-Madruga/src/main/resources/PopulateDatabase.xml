@@ -507,6 +507,8 @@
 	<bean id="configuration" class="domain.Configuration">
     	<property name="cacheHours" value="1"/>
     	<property name="cacheAmount" value="10"/>
+    	<property name="fair" value="150"/>
+    	<property name="VAT" value="21"/>
     </bean>
 	<!-- CONFIGURATION -->
 	

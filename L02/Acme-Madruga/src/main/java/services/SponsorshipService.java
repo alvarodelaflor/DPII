@@ -98,6 +98,10 @@ public class SponsorshipService {
 		final Sponsorship res = this.save(sponsorship);
 	}
 
+	public Double getRatioActiveSponsorships() {
+
+		return this.sponsorshipRepository.getRatioActiveSponsorships();
+	}
 	public void deleteParadeSponsorships(final int paradeId) {
 		final Collection<Sponsorship> sponsorships = this.sponsorshipRepository.getParadeSponsorships(paradeId);
 		for (final Sponsorship sponsorship : sponsorships)

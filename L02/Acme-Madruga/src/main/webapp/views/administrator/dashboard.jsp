@@ -54,6 +54,7 @@
 		<p><spring:message code="admin.avgNumberOfResult" /> <jstl:out value="${avgNumberOfResult}"></jstl:out></p>		
 		<p><spring:message code="admin.stddevNumberOfResult" /> <jstl:out value="${stddevNumberOfResult}"></jstl:out></p>
 		<p><spring:message code="admin.ratioFinder" /> <jstl:out value="${ratioFinder}"></jstl:out></p>	
+		<p><spring:message code="ratioActiveSponsorships" /> <jstl:out value="${ratioActiveSponsorships}"></jstl:out></p>	
 		
 				<p><spring:message code="admin.ratioAreaNoCoordinate" /> <jstl:out value="${ratioAreaNoCoordinate}"></jstl:out></p>	
 				<p><spring:message code="admin.ratioFinalSUBMITTED" /> <jstl:out value="${ratioFinalSUBMITTED}"></jstl:out></p>	
@@ -82,6 +83,13 @@
 	<display:column property="moment" titleKey="parade.moment"></display:column>
 	<display:column property="description" titleKey="parade.description"></display:column>
 </display:table>
+	
+	<p><spring:message code="admin.top5" /> </p>	
+<display:table pagesize="5" name="${top5}" id="top5"
+	requestURI="${requestURI}">
+		<display:column property="name" titleKey="sponsor.name"></display:column>
+</display:table>
+	</div>
 
 <p><spring:message code="admin.brotherhoodLargestHistory" /> </p>	
 <display:table pagesize="5" name="${brotherhoodLargestHistory}" id="brotherhoodLargestHistory"

@@ -243,4 +243,20 @@ public class SponsorService {
 		return a;
 	}
 
+	public List<Sponsor> top5ByActiveSponsorhips() {
+
+		final List<Sponsor> res = new ArrayList<Sponsor>();
+		final List<Sponsor> all = this.sponsorRepository.findAllOrderByActiveSponsorshipSize();
+
+		if (all.size() <= 5)
+
+			return all;
+		else {
+
+			final List<Sponsor> top = all.subList(0, 4);
+			res.addAll(top);
+			return res;
+		}
+
+	}
 }
