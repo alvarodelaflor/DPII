@@ -10,7 +10,9 @@
 
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -123,9 +125,17 @@ public class AdministratorController extends AbstractController {
 		else
 			try {
 				this.administratorService.saveR(administrator);
+
+				SimpleDateFormat formatter;
+				String moment;
+				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				moment = formatter.format(new Date());
 				result = new ModelAndView("welcome/index");
+				result.addObject("moment", moment);
+
 				result.addObject("logo", this.welcomeService.getLogo());
 				result.addObject("system", this.welcomeService.getSystem());
+
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createModelAndView(administrator, "email.wrong");
@@ -271,6 +281,7 @@ public class AdministratorController extends AbstractController {
 			final Float minRecordPerHistory = this.historyService.minRecordPerHistory();
 			final Float maxRecordPerHistory = this.historyService.maxRecordPerHistory();
 			final Float stddevRecordPerHistory = this.historyService.stddevRecordPerHistory();
+
 			final Collection<Brotherhood> brotherhoodLargestHistory = this.brotherhoodService.findBrotherhoodWithLargestHistory();
 			System.out.println("Listas en el controlador: ");
 			System.out.println(brotherhoodLargestHistory);
@@ -296,7 +307,19 @@ public class AdministratorController extends AbstractController {
 			final Float ratioFinalREJECTED = this.paradeService.ratioFinalREJECTED();
 			final Float ratioNoFinalNULL = this.paradeService.ratioNoFinalNULL();
 
+			final Float minParadeCapter = this.paradeService.minParadeCapter();
+			final Float maxParadeCapter = this.paradeService.maxParadeCapter();
+			final Float avgParadeCapter = this.paradeService.avgParadeCapter();
+			final Float stddevParadeCapter = this.paradeService.stddevParadeCapter();
+			final Collection<String> paradeChapter = this.paradeService.ParadeChapter();
+
 			result = new ModelAndView("administrator/dashboard");
+
+			result.addObject("minParadeCapter", minParadeCapter);
+			result.addObject("maxParadeCapter", maxParadeCapter);
+			result.addObject("avgParadeCapter", avgParadeCapter);
+			result.addObject("stddevParadeCapter", stddevParadeCapter);
+			result.addObject("paradeChapter", paradeChapter);
 
 			result.addObject("ratioAreaNoCoordinate", ratioAreaNoCoordinate);
 			result.addObject("ratioFinalSUBMITTED", ratioFinalSUBMITTED);

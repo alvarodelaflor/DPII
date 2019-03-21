@@ -16,6 +16,7 @@ import security.LoginService;
 import services.BrotherhoodService;
 import services.PathService;
 import services.SegmentService;
+import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Path;
 import domain.Segment;
@@ -32,6 +33,9 @@ public class PathController extends AbstractController {
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	private WelcomeService		welcomeService;
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -56,6 +60,8 @@ public class PathController extends AbstractController {
 			final List<Segment> segments = this.segmentService.getAllSegments(path);
 			result.addObject("segments", segments);
 			result.addObject("paradeId", paradeId);
+			result.addObject("logo", this.welcomeService.getLogo());
+			result.addObject("system", this.welcomeService.getSystem());
 		} catch (final IllegalArgumentException e) {
 			result = new ModelAndView("path/show");
 			Path path = this.pathService.getParadePath(paradeId);
@@ -65,6 +71,9 @@ public class PathController extends AbstractController {
 			final List<Segment> segments = this.segmentService.getAllSegments(path);
 			result.addObject("segments", segments);
 			result.addObject("paradeId", paradeId);
+			result.addObject("logo", this.welcomeService.getLogo());
+			result.addObject("system", this.welcomeService.getSystem());
+
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -79,6 +88,8 @@ public class PathController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
+			result.addObject("logo", this.welcomeService.getLogo());
+			result.addObject("system", this.welcomeService.getSystem());
 			redirectAttributes.addFlashAttribute("wrongSegment", true);
 		} else
 			try {

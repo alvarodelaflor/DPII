@@ -10,9 +10,11 @@
 
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +96,14 @@ public class BrotherhoodController extends AbstractController {
 				final History savedHistory = this.historyService.save(history);
 				brotherhood.setHistory(savedHistory);
 				this.brotherhoodService.saveR(brotherhood);
+
+				SimpleDateFormat formatter;
+				String moment;
+				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				moment = formatter.format(new Date());
 				result = new ModelAndView("welcome/index");
+				result.addObject("moment", moment);
+
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createModelAndView(brotherhood, "email.wrong");

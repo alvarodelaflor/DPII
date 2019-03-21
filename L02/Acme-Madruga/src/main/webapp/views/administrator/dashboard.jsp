@@ -56,12 +56,17 @@
 		<p><spring:message code="admin.ratioFinder" /> <jstl:out value="${ratioFinder}"></jstl:out></p>	
 		<p><spring:message code="ratioActiveSponsorships" /> <jstl:out value="${ratioActiveSponsorships}"></jstl:out></p>	
 		
-				<p><spring:message code="admin.ratioAreaNoCoordinate" /> <jstl:out value="${ratioAreaNoCoordinate}"></jstl:out></p>	
-				<p><spring:message code="admin.ratioFinalSUBMITTED" /> <jstl:out value="${ratioFinalSUBMITTED}"></jstl:out></p>	
-				<p><spring:message code="admin.ratioFinalACCEPTED" /> <jstl:out value="${ratioFinalACCEPTED}"></jstl:out></p>	
-				<p><spring:message code="admin.ratioFinalREJECTED" /> <jstl:out value="${ratioFinalREJECTED}"></jstl:out></p>	
-				<p><spring:message code="admin.ratioNoFinalNULL" /> <jstl:out value="${ratioNoFinalNULL}"></jstl:out></p>	
+		<p><spring:message code="admin.ratioAreaNoCoordinate" /> <jstl:out value="${ratioAreaNoCoordinate}"></jstl:out></p>	
+		<p><spring:message code="admin.ratioFinalSUBMITTED" /> <jstl:out value="${ratioFinalSUBMITTED}"></jstl:out></p>	
+		<p><spring:message code="admin.ratioFinalACCEPTED" /> <jstl:out value="${ratioFinalACCEPTED}"></jstl:out></p>	
+		<p><spring:message code="admin.ratioFinalREJECTED" /> <jstl:out value="${ratioFinalREJECTED}"></jstl:out></p>	
+		<p><spring:message code="admin.ratioNoFinalNULL" /> <jstl:out value="${ratioNoFinalNULL}"></jstl:out></p>	
 		
+		<p><spring:message code="admin.minParadeCapter" /> <jstl:out value="${minParadeCapter}"></jstl:out></p>	
+		<p><spring:message code="admin.maxParadeCapter" /> <jstl:out value="${maxParadeCapter}"></jstl:out></p>	
+		<p><spring:message code="admin.avgParadeCapter" /> <jstl:out value="${avgParadeCapter}"></jstl:out></p>	
+		<p><spring:message code="admin.stddevParadeCapter" /> <jstl:out value="${stddevParadeCapter}"></jstl:out></p>	
+		<p><spring:message code="admin.paradeChapter" /> <jstl:out value="${paradeChapter}"></jstl:out></p>	
 		
 <p><spring:message code="admin.lisMemberAccept" /> </p>	
 <display:table pagesize="5" name="${lisMemberAccept}" id="lisMemberAccept"
@@ -79,12 +84,11 @@
 	<display:column property="description" titleKey="parade.description"></display:column>
 </display:table>
 	
-	<p><spring:message code="admin.top5" /> </p>	
+<p><spring:message code="admin.top5" /> </p>	
 <display:table pagesize="5" name="${top5}" id="top5"
 	requestURI="${requestURI}">
 		<display:column property="name" titleKey="sponsor.name"></display:column>
 </display:table>
-	</div>
 
 <p><spring:message code="admin.brotherhoodLargestHistory" /> </p>	
 <display:table pagesize="5" name="${brotherhoodLargestHistory}" id="brotherhoodLargestHistory"

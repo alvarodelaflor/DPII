@@ -10,6 +10,9 @@
 
 package controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -70,7 +73,14 @@ public class SponsorController extends AbstractController {
 		else
 			try {
 				this.sponsorService.saveR(sponsor);
+
+				SimpleDateFormat formatter;
+				String moment;
+				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				moment = formatter.format(new Date());
 				result = new ModelAndView("welcome/index");
+				result.addObject("moment", moment);
+
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createModelAndView(sponsor, "email.wrong");

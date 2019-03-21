@@ -10,7 +10,9 @@
 
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.ActorService;
 import services.ChapterService;
 import services.WelcomeService;
 import domain.Chapter;
 import domain.Proclaim;
 import forms.RegistrationForm;
-import security.LoginService;
 
 @Controller
 @RequestMapping("/chapter")
@@ -76,7 +78,14 @@ public class ChapterController extends AbstractController {
 		else
 			try {
 				this.chapterService.saveR(chapter);
+
+				SimpleDateFormat formatter;
+				String moment;
+				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				moment = formatter.format(new Date());
 				result = new ModelAndView("welcome/index");
+				result.addObject("moment", moment);
+
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createModelAndView(chapter, "email.wrong");
@@ -116,18 +125,17 @@ public class ChapterController extends AbstractController {
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
-	
+
 	private Boolean checkChapterLoggerSameChapterToShow(final int chapterId) {
 		Boolean res = false;
 		try {
-			Chapter chapterLogger = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
-			if (chapterLogger.getId()==chapterId) {
+			final Chapter chapterLogger = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
+			if (chapterLogger.getId() == chapterId) {
 				System.out.println("Se esta mostrando la información del chapter logueado");
 				res = true;
-			} else {
+			} else
 				System.out.println("El usuario logueado es un chapter diferente al que se va a mostrar");
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out.println("El usuario logueado no es un chapter");
 		}
 		return res;
@@ -145,9 +153,8 @@ public class ChapterController extends AbstractController {
 			result.addObject("chapter", chapter);
 			result.addObject("proclaims", proclaims);
 			// ALVARO 15/03/2019 11:35 -- Si el logueado es el mismo que se va a mostrar se habilita el botón de crear una proclaim
-			if (checkChapterLoggerSameChapterToShow(id)) {
+			if (this.checkChapterLoggerSameChapterToShow(id))
 				result.addObject("validChapter", true);
-			}
 			result.addObject("requestURI", "chapter/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

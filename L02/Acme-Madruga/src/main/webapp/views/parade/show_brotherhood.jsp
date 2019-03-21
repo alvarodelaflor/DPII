@@ -48,38 +48,41 @@
 					<jstl:out value="${parade.title}"></jstl:out></td>
 			</tr>
 			<tr>
-				<td><strong><spring:message code="parade.description" />: </strong>
-					<jstl:out value="${parade.description}"></jstl:out></td>
+				<td><strong><spring:message code="parade.description" />:
+				</strong> <jstl:out value="${parade.description}"></jstl:out></td>
 			</tr>
 			<tr>
-				<td><strong><spring:message code="parade.moment" />: </strong>
-					<jstl:out value="${parade.moment}"></jstl:out></td>
+				<td><strong><spring:message code="parade.moment" />:
+				</strong> <jstl:out value="${parade.moment}"></jstl:out></td>
 			</tr>
 			<tr>
-				<td><strong><spring:message code="parade.brotherhood" />: </strong>
-					<jstl:out
+				<td><strong><spring:message code="parade.brotherhood" />:
+				</strong> <jstl:out
 						value="${parade.brotherhood.name} ${parade.brotherhood.surname}"></jstl:out></td>
 			</tr>
 			<tr>
-				<td><strong><spring:message code="parade.ticker" />: </strong>
-					<jstl:out value="${parade.ticker}"></jstl:out></td>
+				<td><strong><spring:message code="parade.ticker" />:
+				</strong> <jstl:out value="${parade.ticker}"></jstl:out></td>
 			</tr>
 			<tr>
-				<td><strong><spring:message code="parade.maxRow" />: </strong>
-					<jstl:out value="${parade.maxRow}"></jstl:out></td>
+				<td><strong><spring:message code="parade.maxRow" />:
+				</strong> <jstl:out value="${parade.maxRow}"></jstl:out></td>
 			</tr>
 			<tr>
-				<td><strong><spring:message code="parade.maxColum" />: </strong>
-					<jstl:out value="${parade.maxColum}"></jstl:out></td>
+				<td><strong><spring:message code="parade.maxColum" />:
+				</strong> <jstl:out value="${parade.maxColum}"></jstl:out></td>
 			</tr>
 			<tr>
 				<td><strong><spring:message code="parade.float" />: </strong>
 					<jstl:out value="${parade.floatt.title}"></jstl:out></td>
 			</tr>
 			<tr>
-				<td><strong><spring:message code="parade.status" />: </strong><span
-					class="parade-${fn:toLowerCase(parade.status)}"><jstl:out
-							value="${parade.status}"></jstl:out></span></td>
+				<td><strong><spring:message code="parade.status" />:
+				</strong> <span class="parade-${fn:toLowerCase(parade.status)}"> <jstl:if
+							test="${not empty parade.status}">
+							<spring:message code="parade.${fn:toLowerCase(parade.status)}" />
+						</jstl:if>
+				</span></td>
 			</tr>
 
 		</table>

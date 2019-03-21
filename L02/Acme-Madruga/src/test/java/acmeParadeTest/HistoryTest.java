@@ -152,9 +152,9 @@ public class HistoryTest extends AbstractTest {
 			}, { 
 				"brotherhood", 1, 0, 1, 1, IllegalArgumentException.class
 			}, { 
-				"brotherhood", 1, 1, 1, 0, IllegalArgumentException.class
+				"brotherhood", 1, 1, 0, 0, IllegalArgumentException.class
 			}, { 
-				"brotherhood", 1, 1, 1, 1, IllegalArgumentException.class
+				"brotherhood", 1, 1, 0, 1, IllegalArgumentException.class
 			}, { 
 				"brotherhood", 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 
@@ -183,9 +183,9 @@ public class HistoryTest extends AbstractTest {
 			}, { 
 				"admin", 1, 0, 1, 1, IllegalArgumentException.class
 			}, { 
-				"admin", 1, 1, 1, 0, IllegalArgumentException.class
+				"admin", 1, 1, 0, 0, IllegalArgumentException.class
 			}, { 
-				"admin", 1, 1, 1, 1, IllegalArgumentException.class
+				"admin", 1, 1, 0, 1, IllegalArgumentException.class
 			}, { 
 				"admin", 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 
@@ -213,9 +213,9 @@ public class HistoryTest extends AbstractTest {
 			}, { 
 				"member", 1, 0, 1, 1, IllegalArgumentException.class
 			}, { 
-				"member", 1, 1, 1, 0, IllegalArgumentException.class
+				"member", 1, 1, 0, 0, IllegalArgumentException.class
 			}, { 
-				"member", 1, 1, 1, 1, IllegalArgumentException.class
+				"member", 1, 1, 0, 1, IllegalArgumentException.class
 			}, { 
 				"member", 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 
@@ -243,9 +243,9 @@ public class HistoryTest extends AbstractTest {
 			}, { 
 				"chapter", 1, 0, 1, 1, IllegalArgumentException.class
 			}, { 
-				"chapter", 1, 1, 1, 0, IllegalArgumentException.class
+				"chapter", 1, 1, 0, 0, IllegalArgumentException.class
 			}, { 
-				"chapter", 1, 1, 1, 1, IllegalArgumentException.class
+				"chapter", 1, 1, 0, 1, IllegalArgumentException.class
 			}, { 
 				"chapter", 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 
@@ -273,9 +273,9 @@ public class HistoryTest extends AbstractTest {
 			}, { 
 				"sponsor", 1, 0, 1, 1, IllegalArgumentException.class
 			}, { 
-				"sponsor", 1, 1, 1, 0, IllegalArgumentException.class
+				"sponsor", 1, 1, 0, 0, IllegalArgumentException.class
 			}, { 
-				"sponsor", 1, 1, 1, 1, IllegalArgumentException.class
+				"sponsor", 1, 1, 0, 1, IllegalArgumentException.class
 			}, { 
 				"sponsor", 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 

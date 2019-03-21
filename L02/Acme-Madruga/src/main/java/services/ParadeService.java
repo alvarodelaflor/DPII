@@ -1,14 +1,11 @@
 
 package services;
 
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +17,7 @@ import repositories.ParadeRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Parade;
 import domain.PositionAux;
 
@@ -58,7 +56,12 @@ public class ParadeService {
 	private PathService			pathService;
 
 	@Autowired
+	private ChapterService		chapterService;
+	@Autowired
 	private SponsorshipService	sponsorshipService;
+
+	@Autowired
+	private TickerService		tickerService;
 
 
 	//Simple CRUD Methods ------------------
@@ -70,26 +73,6 @@ public class ParadeService {
 
 	}
 
-	public String randomTicker(final Parade parade) {
-		String ticker = "";
-		Boolean res = true;
-		while (res) {
-			ticker = "";
-			final String characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			final StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < 6; i++) {
-				final int randomInt = new SecureRandom().nextInt(characterSet.length());
-				sb.append(characterSet.substring(randomInt, randomInt + 1));
-			}
-			final Date date = DateTime.now().toDate();
-			final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-			final String dateConvert = sdf.format(date);
-			ticker = dateConvert.replaceAll("-", "") + "-" + sb.toString();
-			if (this.paradeRepository.findParadesByTicker(ticker).isEmpty())
-				res = false;
-		}
-		return ticker;
-	}
 	public Collection<Parade> findAll() {
 		return this.paradeRepository.findAll();
 	}
@@ -171,7 +154,7 @@ public class ParadeService {
 		if (parade.getId() == 0) {
 			parade.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 			if (parade.getMoment() != null)
-				parade.setTicker(this.randomTicker(parade));
+				parade.setTicker(this.tickerService.randomTicker());
 			result = parade;
 		} else {
 			result = this.paradeRepository.findOne(parade.getId());
@@ -251,6 +234,120 @@ public class ParadeService {
 	public Float ratioNoFinalNULL() {
 		return this.paradeRepository.ratioNoFinalNULL();
 	}
+
+	public Float minParadeCapter() {
+		return this.paradeRepository.minParadeCapter();
+	}
+
+	public Float maxParadeCapter() {
+		return this.paradeRepository.maxParadeCapter();
+	}
+
+	public Float avgParadeCapter() {
+		return this.paradeRepository.avgParadeCapter();
+	}
+
+	public Float stddevParadeCapter() {
+		return this.paradeRepository.stddevParadeCapter();
+	}
+
+	public Collection<String> ParadeChapter() {
+		final Collection<String> res = new ArrayList<>();
+
+		final List<Object[]> collection = this.paradeRepository.ParadeChapter();
+
+		for (int i = 0; i < collection.size(); i++) {
+
+			final String c = (String) collection.get(i)[0];
+			final Double valor = (Double) collection.get(i)[1];
+
+			if (valor > this.avgParadeCapter())
+				res.add(c);
+		}
+		System.out.println(res);
+
+		return res;
+	}
 	// REQUISITO 8
 
+	public void createCopy(final int paradeId) {
+		final Parade parade = this.paradeRepository.findOne(paradeId);
+
+		Assert.notNull(parade);
+		// We have to check that we are the owner of this parade
+		this.assertParadeOwner(parade);
+
+		final Parade res = this.create();
+
+		res.setTicker(this.tickerService.randomTicker());
+		res.setStatus(null);
+		res.setRejectionReason(null);
+		res.setIsFinal(false);
+
+		res.setBrotherhood(parade.getBrotherhood());
+		res.setDescription(parade.getDescription());
+		res.setFloatt(parade.getFloatt());
+		res.setMaxColum(parade.getMaxColum());
+		res.setMaxRow(parade.getMaxRow());
+		res.setMoment(parade.getMoment());
+		res.setTitle(parade.getTitle());
+
+		this.paradeRepository.save(res);
+	}
+
+	private void assertParadeOwner(final Parade parade) {
+		final int loggedAccountId = LoginService.getPrincipal().getId();
+
+		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
+
+	}
+
+	public Collection<Parade> findParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findParadesByChapter(chapterId);
+		return parades;
+	}
+
+	public Collection<Parade> findSubmittedParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findSubmittedParadesByChapter(chapterId);
+		return parades;
+	}
+
+	public Collection<Parade> findAcceptedParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findAcceptedByChapter(chapterId);
+		return parades;
+	}
+
+	public Collection<Parade> findRejectedParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findRejectedByChapter(chapterId);
+		return parades;
+	}
+
+	public Parade reconstructStatus(final Parade parade, final BindingResult binding) {
+		Parade result;
+		result = this.paradeRepository.findOne(parade.getId());
+		parade.setId(result.getId());
+		parade.setVersion(result.getVersion());
+		parade.setBrotherhood(result.getBrotherhood());
+		parade.setMoment(result.getMoment());
+		parade.setTicker(result.getTicker());
+		parade.setTitle(result.getTitle());
+		parade.setDescription(result.getDescription());
+		parade.setIsFinal(result.getIsFinal());
+		parade.setMaxRow(result.getMaxRow());
+		parade.setMaxColum(result.getMaxColum());
+		parade.setFloatt(result.getFloatt());
+		result = parade;
+		this.validator.validate(result, binding);
+		return result;
+	}
+	public Parade updateStatus(final Parade parade) {
+		final UserAccount login = LoginService.getPrincipal();
+		Assert.isTrue(login != null);
+		Assert.isTrue(this.chapterService.getChapterByUserAccountId(login.getId()) != null);
+		final Chapter chapter = this.chapterService.getChapterByUserAccountId(login.getId());
+		Assert.isTrue(parade.getBrotherhood().getArea().getChapter().equals(chapter));
+		Assert.isTrue(this.findOne(parade.getId()) != null);
+		final Parade saveParade = this.paradeRepository.save(parade);
+		return saveParade;
+	}
 }

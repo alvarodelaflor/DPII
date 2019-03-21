@@ -3,7 +3,7 @@ package services;
 
 /*
  * CONTROL DE CAMBIOS AdministratorService.java
- * FRAN 19/02/2019 11:36 CREACIÓN DE LA CLASE
+ * FRAN 19/02/2019 11:36 CREACIï¿½N DE LA CLASE
  */
 
 import java.util.ArrayList;
@@ -36,6 +36,9 @@ public class AreaService {
 	private AdministratorService	adminService;
 	@Autowired
 	private BrotherhoodService		brotherhoodService;
+
+	@Autowired
+	private ChapterService			chapterService;
 
 
 	//Simple CRUD Methods ------------------
@@ -111,5 +114,27 @@ public class AreaService {
 	public Float ratioAreaNoCoordinate() {
 		final Float res = (float) (this.areaRepository.AreaNoChapter() / (float) this.areaRepository.AreaALL());
 		return res;
+	}
+
+	//Ferrete
+
+	public Collection<Area> unassignedAreas() {
+		Assert.notNull(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()));
+		return this.areaRepository.UnassignedAreas();
+	}
+
+	public void assignChapter(final Integer id) {
+		final Chapter chapter = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
+		System.out.println("SERVICIO:  " + chapter);
+		Assert.notNull(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()));
+		final Area area = this.findOne(id);
+		System.out.println("SERVICIO:  " + area);
+		Assert.notNull(area, "areaExist.error");
+		Assert.isNull(area.getChapter(), "areaExistsChapter.error");
+		Assert.isTrue(!(area.getChapter().getUserAccount().getId() == (LoginService.getPrincipal().getId())), "areaSameChapter.error");
+		area.setChapter(chapter);
+		this.save(area);
+		this.areaRepository.flush();
+
 	}
 }

@@ -10,6 +10,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
 
 <!-- Both not owner and owner -->
 <spring:message code='path.origin' var="pathOrigin"/>
@@ -45,9 +47,11 @@
 		<label>)</label>
 	
 		<button type="submit" name="edit" class="btn btn-primary"><spring:message code="path.edit"/></button>
-		<button type="button" name="delete" class="btn btn-primary" onclick="window.location='path/brotherhood/delete.do?paradeId=${paradeId}&segmentId=${not empty segments[0].id ? segments[0].id : 0}'">
+		<jstl:if test="${not empty segments[0].id}">
+		<button type="button" name="delete" class="btn btn-primary" onclick="window.location='path/brotherhood/delete.do?paradeId=${paradeId}&segmentId=${segments[0].id}'">
 			<spring:message code="path.delete"/>
 		</button>
+		</jstl:if>
 	</form>
 	</li>
 </jstl:if>
@@ -109,10 +113,8 @@
 <jstl:if test="${wrongSegment}">
 	<span class="error"><spring:message code="segment.error"/></span>
 </jstl:if>
-<div>
-	<form method="get" action="#">
-		<button type="submit">
-			<spring:message code="back" />
-		</button>
-	</form>
-</div>
+
+<acme:cancel url="parade/brotherhood/list.do" code="cancel"/>
+
+
+
