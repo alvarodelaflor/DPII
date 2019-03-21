@@ -1,6 +1,8 @@
 
 package sample;
 
+import java.util.List;
+
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
@@ -10,10 +12,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import domain.Area;
+import domain.Chapter;
+import domain.Proclaim;
+import services.AreaService;
 import services.ChapterService;
 import services.ProclaimService;
 import utilities.AbstractTest;
-import domain.Proclaim;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -29,6 +34,9 @@ public class ChapterTest extends AbstractTest {
 	// Auxiliar Services:
 	@Autowired
 	private ProclaimService	proclaimService;
+	
+	@Autowired
+	private AreaService areaService;
 
 
 	// Drivers:
@@ -137,5 +145,105 @@ public class ChapterTest extends AbstractTest {
 		}
 
 		super.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test1() {
+		/*
+		 * In this test we will test the show and list of chapters and their areas and proclaims.
+		 * 
+		 * 	I. R.
+		 * 
+		 * 5.   There's a new kind of actor in the system: chapters. For every chapter, the system must store its title.
+		 *      Every chapter co-ordinates and area and, thus, the parades organised by the brotherhoods in that area. 
+		 *      No area can be co-ordinated by more than one chapter.
+		 * 12.  Chapters can publish proclaims. For every proclaim, the system must store the moment when it's published 
+		 * 		and a piece of text that can't be longer than 250 characters.	
+		 * 
+		 * F. R.
+		 * 
+		 * 1.  List the chapters that are registered in the system, navigate to the areas that they co-ordinate, to the 
+		 * 	   brotherhoods that have settle in those areas, and to the parades that they organise.
+		 * 
+		 * 2.  Browse the proclaims of the chapters.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			// username, error
+			{ 
+				null, null
+			}, { 
+				"admin", null
+			}, { 
+				"chapter", null				
+			}, { 
+				"brotherhood", null
+			}, { 
+				"member", null
+			}, { 
+				"sponsor", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTest((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+	
+	protected void checkTest(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			
+			if (userName!=null) {
+				super.authenticate(userName);				
+			}
+
+			List<Chapter> chapters = this.chapterService.findAll();
+			for (Chapter chapter : chapters) {
+				chapter.getId();
+				chapter.getVersion();
+				chapter.getName();
+				chapter.getSurname();
+				chapter.getPhoto();
+				chapter.getEmail();
+				chapter.getMiddleName();
+				chapter.getPhone();
+				chapter.getTitle();
+				chapter.getSocialProfiles();
+			}
+			for (Chapter chapter : chapters) {
+				List<Proclaim> proclaims = (List<Proclaim>)  chapter.getProclaim();
+				for (Proclaim proclaim : proclaims) {
+					proclaim.getId();
+					proclaim.getVersion();
+					proclaim.getMoment();
+					proclaim.getText();
+				}
+			}
+			for (Chapter chapter : chapters) {
+				Area area = this.areaService.findAreaChapter(chapter);
+				area.getId();
+				area.getVersion();
+				area.getName();
+				area.getPictures();
+			}
+			
+			if (userName!=null) {
+				super.unauthenticate();				
+			}
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
 	}
 }

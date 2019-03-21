@@ -83,9 +83,8 @@ public class ParadeService {
 	public Parade save(final Parade parade) {
 		final List<PositionAux> positionAuxs = new ArrayList<PositionAux>();
 		Parade paradeUpdate1 = this.paradeRepository.save(parade);
-		if (parade.getIsFinal().equals(true)) {
-			parade.setStatus("SUBMITTED");
-			paradeUpdate1 = this.paradeRepository.save(paradeUpdate1);
+		if (paradeUpdate1.getIsFinal().equals(true)) {
+			paradeUpdate1.setStatus("SUBMITTED");
 			for (int i = 0; i < parade.getMaxRow(); i++)
 				for (int j = 0; j < parade.getMaxColum(); j++) {
 					final PositionAux positionAux = this.positionAuxService.create();
