@@ -10,6 +10,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
 
 <!-- Both not owner and owner -->
 <spring:message code='path.origin' var="pathOrigin"/>
@@ -109,10 +111,8 @@
 <jstl:if test="${wrongSegment}">
 	<span class="error"><spring:message code="segment.error"/></span>
 </jstl:if>
-<div>
-	<form method="get" action="#">
-		<button type="submit">
-			<spring:message code="back" />
-		</button>
-	</form>
-</div>
+
+<acme:cancel url="parade/brotherhood/list.do" code="cancel"/>
+
+
+
