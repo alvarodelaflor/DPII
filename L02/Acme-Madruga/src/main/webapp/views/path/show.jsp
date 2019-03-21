@@ -47,9 +47,11 @@
 		<label>)</label>
 	
 		<button type="submit" name="edit" class="btn btn-primary"><spring:message code="path.edit"/></button>
-		<button type="button" name="delete" class="btn btn-primary" onclick="window.location='path/brotherhood/delete.do?paradeId=${paradeId}&segmentId=${not empty segments[0].id ? segments[0].id : 0}'">
+		<jstl:if test="${not empty segments[0].id}">
+		<button type="button" name="delete" class="btn btn-primary" onclick="window.location='path/brotherhood/delete.do?paradeId=${paradeId}&segmentId=${segments[0].id}'">
 			<spring:message code="path.delete"/>
 		</button>
+		</jstl:if>
 	</form>
 	</li>
 </jstl:if>
