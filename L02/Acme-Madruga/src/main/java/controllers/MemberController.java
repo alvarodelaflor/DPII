@@ -10,7 +10,9 @@
 
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Brotherhood;
-import domain.Member;
-import forms.RegistrationForm;
 import security.LoginService;
 import services.ActorService;
 import services.BrotherhoodService;
 import services.MemberService;
 import services.WelcomeService;
+import domain.Brotherhood;
+import domain.Member;
+import forms.RegistrationForm;
 
 @Controller
 @RequestMapping("/member")
@@ -43,9 +45,9 @@ public class MemberController extends AbstractController {
 
 	@Autowired
 	ActorService		actorService;
-	
+
 	@Autowired
-	WelcomeService welcomeService;
+	WelcomeService		welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -60,8 +62,9 @@ public class MemberController extends AbstractController {
 		final RegistrationForm registrationForm = new RegistrationForm();
 		result = new ModelAndView("member/create");
 		result.addObject("registrationForm", registrationForm);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+
 		return result;
 	}
 
@@ -78,15 +81,20 @@ public class MemberController extends AbstractController {
 		else
 			try {
 				this.memberService.saveR(member);
+				SimpleDateFormat formatter;
+				String moment;
+				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				moment = formatter.format(new Date());
 				result = new ModelAndView("welcome/index");
+				result.addObject("moment", moment);
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createModelAndView(member, "email.wrong");
 				else
 					result = this.createModelAndView(member, "error.email");
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -104,8 +112,8 @@ public class MemberController extends AbstractController {
 		result = new ModelAndView("member/edit");
 
 		result.addObject("member", member);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -127,8 +135,8 @@ public class MemberController extends AbstractController {
 				else
 					result = this.createEditModelAndView(member, "error.email");
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -138,8 +146,8 @@ public class MemberController extends AbstractController {
 		result = new ModelAndView("member/edit");
 		result.addObject("message", string);
 		result.addObject("member", member);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -149,8 +157,8 @@ public class MemberController extends AbstractController {
 		result = new ModelAndView("member/create");
 		result.addObject("message", string);
 		result.addObject("member", member);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -167,12 +175,12 @@ public class MemberController extends AbstractController {
 			result = new ModelAndView("member/show");
 			result.addObject("member", member);
 
-			result.addObject("requestURI", "member/show.do");	
-		} catch (Exception e) {
+			result.addObject("requestURI", "member/show.do");
+		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -185,23 +193,23 @@ public class MemberController extends AbstractController {
 			result = new ModelAndView("member/listMembers");
 			result.addObject("brotherhood", brotherhood);
 			result.addObject("member", member);
-			result.addObject("requestURI", "member/listMembers.do");	
-		} catch (Exception e) {
+			result.addObject("requestURI", "member/listMembers.do");
+		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/conditions", method = RequestMethod.GET)
 	public ModelAndView conditions() {
 		ModelAndView result;
 		result = new ModelAndView("member/conditions");
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public @ResponseBody
 	Member export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
