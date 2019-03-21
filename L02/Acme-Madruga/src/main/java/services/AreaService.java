@@ -107,4 +107,26 @@ public class AreaService {
 		System.out.println("area" + a);
 		return a;
 	}
+	
+	//Ferrete
+	
+		public Collection<Area> unassignedAreas() {
+		Assert.notNull(this.chapterService.findByUserAccount(LoginService.getPrincipal().getId()));
+		return this.areaRepository.UnassignedAreas();
+	}
+
+	public void assignChapter(final Integer id) {
+		final Chapter chapter = this.chapterService.findByUserAccount(LoginService.getPrincipal().getId());
+		System.out.println("SERVICIO:  " + chapter);
+		Assert.notNull(this.chapterService.findByUserAccount(LoginService.getPrincipal().getId()));
+		final Area area = this.findOne(id);
+		System.out.println("SERVICIO:  " + area);
+		Assert.notNull(area, "areaExist.error");
+		Assert.isNull(area.getChapter(), "areaExistsChapter.error");
+		Assert.isTrue(!(area.getChapter().getUserAccount().getId() == (LoginService.getPrincipal().getId())), "areaSameChapter.error");
+		area.setChapter(chapter);
+		this.save(area);
+		this.areaRepository.flush();
+
+	}
 }

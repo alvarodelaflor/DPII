@@ -47,5 +47,15 @@
 		<put-attribute name="title" value="Hermandad: desfiles" />
 		<put-attribute name="body" value="/views/parade/listParades.jsp" /> 
 	</definition>
+	<!-- CHAPTER -->
+	<definition name="parade/chapter/list" extends="master.page">	
+		<put-attribute name="title" value="Sección: Desfiles de tu Área" />
+		<put-attribute name="body" value="/views/parade/list_chapter.jsp" />
+	</definition>
+	
+	<definition name="parade/chapter/edit" extends="master.page">	
+		<put-attribute name="title" value="Sección: Aceptar / Rechazar Desfile" />
+		<put-attribute name="body" value="/views/parade/editStatus.jsp" />
+	</definition>
 	
 </tiles-definitions>

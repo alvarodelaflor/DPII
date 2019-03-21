@@ -51,5 +51,18 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	//12.3.6 --> 
 	@Query("select min(p.maxRow * p.maxColum) from Parade p")
 	Integer maxParadeN();
+	
+	//2.2
+	@Query("select p from Parade p join p.brotherhood b join b.area a join a.chapter c where c.id=?1 and p.isFinal = true")
+	Collection<Parade> findParadesByChapter(int chapterId);
+	//2.2 parades que est⮠publicadas en estado submitted
+	@Query("select p from Parade p join p.brotherhood b join b.area a join a.chapter c where c.id=?1 and p.status like 'SUBMITTED' and p.isFinal = true")
+	Collection<Parade> findSubmittedParadesByChapter(int chapterId);
+	//2.2 parades que est⮠publicadas en estado accepted
+	@Query("select p from Parade p join p.brotherhood b join b.area a join a.chapter c where c.id=?1 and p.status like 'ACCEPTED' and p.isFinal = true")
+	Collection<Parade> findAcceptedByChapter(int chapterId);
+	//2.2 parades que est⮠publicadas en estado accepted
+	@Query("select p from Parade p join p.brotherhood b join b.area a join a.chapter c where c.id=?1 and p.status like 'REJECTED' and p.isFinal = true")
+	Collection<Parade> findRejectedByChapter(int chapterId);
 
 }
