@@ -36,4 +36,14 @@
 		<put-attribute name="body" value="/views/area/areaChapter.jsp" />
 	</definition>
 	
+	<!--Ferrete -->
+	<definition name="area/chapter/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de áreas" />
+		<put-attribute name="body" value="/views/area/list_chapter.jsp" />
+	</definition>
+	
+	<definition name="area/chapter/show" extends="master.page">	
+		<put-attribute name="title" value="Sección: Detalles de Área" />
+		<put-attribute name="body" value="/views/area/show_chapter.jsp" />
+	</definition>
 </tiles-definitions>

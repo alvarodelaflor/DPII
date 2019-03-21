@@ -302,4 +302,54 @@ public class ParadeService {
 		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
 
 	}
+	
+	public Collection<Parade> findParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findParadesByChapter(chapterId);
+		return parades;
+	}
+
+	public Collection<Parade> findSubmittedParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findSubmittedParadesByChapter(chapterId);
+		return parades;
+	}
+
+	public Collection<Parade> findAcceptedParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findAcceptedByChapter(chapterId);
+		return parades;
+	}
+
+	public Collection<Parade> findRejectedParadesByChapter(final int chapterId) {
+		final Collection<Parade> parades = this.paradeRepository.findRejectedByChapter(chapterId);
+		return parades;
+	}
+
+	public Parade reconstructStatus(final Parade parade, final BindingResult binding) {
+		Parade result;
+		result = this.paradeRepository.findOne(parade.getId());
+		parade.setId(result.getId());
+		parade.setVersion(result.getVersion());
+		parade.setBrotherhood(result.getBrotherhood());
+		parade.setMoment(result.getMoment());
+		parade.setTicker(result.getTicker());
+		parade.setTitle(result.getTitle());
+		parade.setDescription(result.getDescription());
+		parade.setIsFinal(result.getIsFinal());
+		parade.setMaxRow(result.getMaxRow());
+		parade.setMaxColum(result.getMaxColum());
+		parade.setFloatt(result.getFloatt());
+		parade.setPath(result.getPath());
+		result = parade;
+		this.validator.validate(result, binding);
+		return result;
+	}
+	public Parade updateStatus(final Parade parade) {
+		final UserAccount login = LoginService.getPrincipal();
+		Assert.isTrue(login != null);
+		Assert.isTrue(this.chapterService.findByUserAccount(login.getId()) != null);
+		final Chapter chapter = this.chapterService.findByUserAccount(login.getId());
+		Assert.isTrue(parade.getBrotherhood().getArea().getChapter().equals(chapter));
+		Assert.isTrue(this.findOne(parade.getId()) != null);
+		final Parade saveParade = this.paradeRepository.save(parade);
+		return saveParade;
+	}
 }

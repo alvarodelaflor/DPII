@@ -70,6 +70,16 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('CHAPTER')">
+			<li><a class="fNiv"><spring:message	code="master.page.chapter" /></a>
+				<ul>
+					<li class="arrow"></li>																												
+					<li><a href="area/chapter/list.do"><spring:message code="master.page.administrator.areaList" /></a></li>
+					<li><a href="parade/chapter/list.do"><spring:message code="master.page.chapter.paradeList" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('SPONSOR')">
 			<li><a class="fNiv"><spring:message	code="master.page.sponsor" /></a>
 				<ul>
