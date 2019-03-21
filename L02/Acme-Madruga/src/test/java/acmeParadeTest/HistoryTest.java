@@ -10,17 +10,21 @@
 
 package acmeParadeTest;
 
+import java.util.List;
 import javax.transaction.Transactional;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import domain.Brotherhood;
+import domain.History;
+import domain.InceptionRecord;
 import domain.LegalRecord;
 import domain.LinkRecord;
 import domain.MiscellaneousRecord;
 import domain.PeriodRecord;
+import services.BrotherhoodService;
 import services.LegalRecordService;
 import services.LinkRecordService;
 import services.MiscellaneousRecordService;
@@ -42,6 +46,9 @@ public class HistoryTest extends AbstractTest {
 	
 	@Autowired
 	private LinkRecordService		linkRecordService;
+	
+	@Autowired
+	private BrotherhoodService brotherhoodService;
 	
 	@Autowired
 	private MiscellaneousRecordService miscellaneousRecordService;
@@ -329,6 +336,260 @@ public class HistoryTest extends AbstractTest {
 				this.miscellaneousRecordService.save(miscellaneousRecord);
 			}
 			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test3() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * In this test we will test the show and list of chapters and their areas and proclaims.
+		 * 
+		 * 
+		 *  Information requirements
+		 *  1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, 
+		 *     zero or more legal records, zero or more link records, and zero or more miscellaneous records. For every record, the 
+		 *     system must store its title and a piece of text that describes it. For every inception record, it must also store some photos; 
+		 *     for every period record, it must also store a start year, an end year, and some photos; for every legal record, it must also store 
+		 *     a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *     with which the original brotherhood is linked.
+		 *     
+		 *  1. Display the history of every brotherhood that he or she can display.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			// username, error
+			{ 
+				null, null
+			}, { 
+				"admin", null
+			}, { 
+				"chapter", null				
+			}, { 
+				"brotherhood", null
+			}, { 
+				"member", null
+			}, { 
+				"sponsor", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTestPositive((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+	
+	protected void checkTestPositive(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			
+			if (userName!=null) {
+				super.authenticate(userName);				
+			}
+
+			List<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			for (Brotherhood brotherhood : brotherhoods) {
+				brotherhood.getId();
+				brotherhood.getVersion();
+				brotherhood.getName();
+				brotherhood.getSurname();
+				brotherhood.getPhoto();
+				brotherhood.getEmail();
+				brotherhood.getMiddleName();
+				brotherhood.getPhone();
+				brotherhood.getTitle();
+				brotherhood.getSocialProfiles();
+				History history = brotherhood.getHistory();
+				if (history!=null) {
+					InceptionRecord inceptionRecord = history.getInceptionRecord();
+					if (inceptionRecord!=null) {
+						inceptionRecord.getId();
+						inceptionRecord.getVersion();
+						inceptionRecord.getDescription();
+						inceptionRecord.getPhotos();
+						inceptionRecord.getTitle();
+					}
+					
+					List<LegalRecord> legalrecords = (List<LegalRecord>) history.getLegalRecord();
+					for (LegalRecord legalRecord : legalrecords) {
+						if (legalRecord!=null) {
+							legalRecord.getId();
+							legalRecord.getVersion();
+							legalRecord.getDescription();
+							legalRecord.getLaws();
+							legalRecord.getLegalName();
+							legalRecord.getVatNumber();
+							legalRecord.getTitle();
+						}
+					}
+					
+					List<LinkRecord> linkRecords = (List<LinkRecord>) history.getLinkRecord();
+					for (LinkRecord linkRecord : linkRecords) {
+						if (linkRecord!=null) {
+							linkRecord.getId();
+							linkRecord.getVersion();
+							linkRecord.getDescription();
+							linkRecord.getLink();
+							linkRecord.getTitle();
+						}
+					}
+					
+					List<MiscellaneousRecord> miscellaneousRecords = (List<MiscellaneousRecord>) history.getMiscellaneousRecord();
+					for (MiscellaneousRecord miscellaneousRecord : miscellaneousRecords) {
+						if (miscellaneousRecord!=null) {
+							miscellaneousRecord.getId();
+							miscellaneousRecord.getVersion();
+							miscellaneousRecord.getDescription();
+							miscellaneousRecord.getTitle();
+						}
+					}
+					
+					List<PeriodRecord> periodRecords = (List<PeriodRecord>) history.getPeriodRecord();
+					for (PeriodRecord periodRecord : periodRecords) {
+						if (periodRecord!=null) {
+							periodRecord.getId();
+							periodRecord.getVersion();
+							periodRecord.getDescription();
+							periodRecord.getTitle();
+							periodRecord.getStartYear();
+							periodRecord.getEndYear();
+							periodRecord.getPhotos();
+						}
+					}
+				}
+			}
+
+			if (userName!=null) {
+				super.unauthenticate();				
+			}
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test4() {
+		/*
+		 * NEGATIVE TEST
+		 * 
+		 * In this test we will test the show and list of chapters and their areas and proclaims.
+		 * 
+		 * 
+		 *  Information requirements
+		 *  1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, 
+		 *     zero or more legal records, zero or more link records, and zero or more miscellaneous records. For every record, the 
+		 *     system must store its title and a piece of text that describes it. For every inception record, it must also store some photos; 
+		 *     for every period record, it must also store a start year, an end year, and some photos; for every legal record, it must also store 
+		 *     a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *     with which the original brotherhood is linked.
+		 *     
+		 *  1. Display the history of every brotherhood that he or she can display.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			// username, error
+			{ 
+				null, IndexOutOfBoundsException.class
+			}, { 
+				"admin", IndexOutOfBoundsException.class
+			}, { 
+				"chapter", IndexOutOfBoundsException.class				
+			}, { 
+				"brotherhood", IndexOutOfBoundsException.class
+			}, { 
+				"member", IndexOutOfBoundsException.class
+			}, { 
+				"sponsor", IndexOutOfBoundsException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTestNegative((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+	
+	protected void checkTestNegative(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			
+			if (userName!=null) {
+				super.authenticate(userName);				
+			}
+
+			List<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			for (Brotherhood brotherhood : brotherhoods) {
+				brotherhood.getId();
+				brotherhood.getVersion();
+				brotherhood.getName();
+				brotherhood.getSurname();
+				brotherhood.getPhoto();
+				brotherhood.getEmail();
+				brotherhood.getMiddleName();
+				brotherhood.getPhone();
+				brotherhood.getTitle();
+				brotherhood.getSocialProfiles();
+				History history = brotherhood.getHistory();
+				if (history!=null) {
+					InceptionRecord inceptionRecord = history.getInceptionRecord();
+					if (inceptionRecord!=null) {
+						inceptionRecord.getId();
+						inceptionRecord.getVersion();
+						inceptionRecord.getDescription();
+						inceptionRecord.getPhotos();
+						inceptionRecord.getTitle();
+					}
+					
+					List<LegalRecord> legalrecords = (List<LegalRecord>) history.getLegalRecord();
+					if (legalrecords.size()==0) {
+						legalrecords.get(0).getId();
+					}
+
+					
+					List<LinkRecord> linkRecords = (List<LinkRecord>) history.getLinkRecord();
+					if (linkRecords.size()==0) {
+						linkRecords.get(0).getId();
+					}
+					
+					List<MiscellaneousRecord> miscellaneousRecords = (List<MiscellaneousRecord>) history.getMiscellaneousRecord();
+					if (miscellaneousRecords.size()==0) {
+						miscellaneousRecords.get(0).getId();
+					}
+					
+					List<PeriodRecord> periodRecords = (List<PeriodRecord>) history.getPeriodRecord();
+					if (periodRecords.size()==0) {
+						periodRecords.get(0).getId();
+					}
+				}
+			}
+
+			if (userName!=null) {
+				super.unauthenticate();				
+			}
+
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
