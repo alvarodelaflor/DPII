@@ -1,14 +1,11 @@
 
 package services;
 
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +56,12 @@ public class ParadeService {
 
 	@Autowired
 	private ChapterService		chapterService;
+	@Autowired
+	private SponsorshipService	sponsorshipService;
+
+
+	@Autowired
+	private TickerService		tickerService;
 
 
 	//Simple CRUD Methods ------------------
@@ -70,26 +73,6 @@ public class ParadeService {
 
 	}
 
-	public String randomTicker(final Parade parade) {
-		String ticker = "";
-		Boolean res = true;
-		while (res) {
-			ticker = "";
-			final String characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			final StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < 6; i++) {
-				final int randomInt = new SecureRandom().nextInt(characterSet.length());
-				sb.append(characterSet.substring(randomInt, randomInt + 1));
-			}
-			final Date date = DateTime.now().toDate();
-			final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-			final String dateConvert = sdf.format(date);
-			ticker = dateConvert.replaceAll("-", "") + "-" + sb.toString();
-			if (this.paradeRepository.findParadesByTicker(ticker).isEmpty())
-				res = false;
-		}
-		return ticker;
-	}
 	public Collection<Parade> findAll() {
 		return this.paradeRepository.findAll();
 	}
@@ -118,6 +101,7 @@ public class ParadeService {
 		Assert.notNull(this.paradeRepository.findOne(parade.getId()), "La parade no existe");
 		Assert.isTrue(LoginService.getPrincipal().getId() == parade.getBrotherhood().getUserAccount().getId(), "brotherhoodLoggerDiferent");
 		this.pathService.deleteWithParade(parade.getId());
+		this.sponsorshipService.deleteParadeSponsorships(parade.getId());
 		this.requestService.deleteAllRequestByParade(parade.getId());
 		this.positionAuxService.deleteAllPositionByParade(parade.getId());
 		this.finderService.updateParades(parade);
@@ -170,7 +154,7 @@ public class ParadeService {
 		if (parade.getId() == 0) {
 			parade.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 			if (parade.getMoment() != null)
-				parade.setTicker(this.randomTicker(parade));
+				parade.setTicker(this.tickerService.randomTicker());
 			result = parade;
 		} else {
 			result = this.paradeRepository.findOne(parade.getId());
@@ -286,4 +270,36 @@ public class ParadeService {
 	}
 	// REQUISITO 8
 
+
+	public void createCopy(final int paradeId) {
+		final Parade parade = this.paradeRepository.findOne(paradeId);
+
+		Assert.notNull(parade);
+		// We have to check that we are the owner of this parade
+		this.assertParadeOwner(parade);
+
+		final Parade res = this.create();
+
+		res.setTicker(this.tickerService.randomTicker());
+		res.setStatus(null);
+		res.setRejectionReason(null);
+		res.setIsFinal(false);
+
+		res.setBrotherhood(parade.getBrotherhood());
+		res.setDescription(parade.getDescription());
+		res.setFloatt(parade.getFloatt());
+		res.setMaxColum(parade.getMaxColum());
+		res.setMaxRow(parade.getMaxRow());
+		res.setMoment(parade.getMoment());
+		res.setTitle(parade.getTitle());
+
+		this.paradeRepository.save(res);
+	}
+
+	private void assertParadeOwner(final Parade parade) {
+		final int loggedAccountId = LoginService.getPrincipal().getId();
+
+		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
+
+	}
 }

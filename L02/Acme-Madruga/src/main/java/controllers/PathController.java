@@ -56,6 +56,15 @@ public class PathController extends AbstractController {
 			final List<Segment> segments = this.segmentService.getAllSegments(path);
 			result.addObject("segments", segments);
 			result.addObject("paradeId", paradeId);
+		} catch (final IllegalArgumentException e) {
+			result = new ModelAndView("path/show");
+			Path path = this.pathService.getParadePath(paradeId);
+			// We don't have a path? Then we create it, no problem
+			if (path == null)
+				path = this.pathService.createFromParade(paradeId);
+			final List<Segment> segments = this.segmentService.getAllSegments(path);
+			result.addObject("segments", segments);
+			result.addObject("paradeId", paradeId);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

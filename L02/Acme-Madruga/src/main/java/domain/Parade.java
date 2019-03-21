@@ -48,6 +48,7 @@ public class Parade extends DomainEntity {
 	private domain.Float	floatt;
 
 	private String			status;
+	private String			rejectionReason;
 
 
 	@NotNull
@@ -146,4 +147,13 @@ public class Parade extends DomainEntity {
 	public void setFloatt(final Float floatt) {
 		this.floatt = floatt;
 	}
+
+	public String getRejectionReason() {
+		return this.rejectionReason;
+	}
+
+	public void setRejectionReason(final String rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+
 }

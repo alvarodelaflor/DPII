@@ -228,6 +228,7 @@
 		<security:intercept-url pattern="/segment/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/path/brotherhood/delete.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/path/brotherhood/edit.do" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/parade/brotherhood/copy.do" access="hasRole('BROTHERHOOD')" />
 		<!-- ANTONIO SANCHEZ -->
 		<!-- ANTONIO SALVAT -->
 			<security:intercept-url pattern="/messageBox/list.do" access="isAuthenticated()" /> 

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -95,6 +96,12 @@ public class SponsorshipService {
 		if (sponsorship.getCreditCard().getExpiration().before(new Date()))
 			sponsorship.setActive(false);
 		final Sponsorship res = this.save(sponsorship);
+	}
+
+	public void deleteParadeSponsorships(final int paradeId) {
+		final Collection<Sponsorship> sponsorships = this.sponsorshipRepository.getParadeSponsorships(paradeId);
+		for (final Sponsorship sponsorship : sponsorships)
+			this.sponsorshipRepository.delete(sponsorship.getId());
 	}
 
 }
