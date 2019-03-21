@@ -26,6 +26,7 @@ import services.MemberService;
 import services.ParadeService;
 import services.PositionAuxService;
 import services.RequestService;
+import services.SponsorshipService;
 import services.WelcomeService;
 import domain.Brotherhood;
 import domain.Parade;
@@ -52,6 +53,9 @@ public class ParadeController extends AbstractController {
 
 	@Autowired
 	MemberService		memberService;
+
+	@Autowired
+	SponsorshipService	sponsorshipService;
 
 	@Autowired
 	RequestService		requestService;
@@ -90,12 +94,14 @@ public class ParadeController extends AbstractController {
 	public ModelAndView show(@RequestParam(value = "paradeId", defaultValue = "-1") final int paradeId) {
 		ModelAndView result;
 		final Parade parade = this.paradeService.findOne(paradeId);
+		final String banner = this.sponsorshipService.randomBanner(paradeId);
 
 		if (this.paradeService.findOne(paradeId) == null)
 			result = new ModelAndView("redirect:/welcome/index.do");
 		else {
 			Assert.notNull(parade, "parade.nul");
 			result = new ModelAndView("parade/brotherhood/show");
+			result.addObject("banner", banner);
 			result.addObject("parade", parade);
 			try {
 				if (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null)
