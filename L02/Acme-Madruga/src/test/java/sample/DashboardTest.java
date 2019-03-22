@@ -45,8 +45,11 @@ public class DashboardTest extends AbstractTest {
 	private ChapterService	chapterService;
 
 
+	// ******NOTE: TO PROPERLY EXECUTE THIS TEST IT'S NECESSARY TO EXECUTE DashboardTestPopulateDatabase.java because we need to have a non variable set of data
 	@Test
 	/*
+	 * 
+	 * 
 	 * In this test we will test the dashboard.
 	 * 
 	 * I. R.
