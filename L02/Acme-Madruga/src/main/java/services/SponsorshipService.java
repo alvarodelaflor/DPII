@@ -125,4 +125,8 @@ public class SponsorshipService {
 
 		return res;
 	}
+	public void flush() {
+		this.sponsorshipRepository.flush();
+	}
+
 }

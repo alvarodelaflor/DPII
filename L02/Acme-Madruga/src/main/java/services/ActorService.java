@@ -50,7 +50,7 @@ public class ActorService {
 		return this.actorRepository.getActorByEmail(email, emailA);
 	}
 
-	public Object getActorByUser(final String userName) {
+	public Actor getActorByUser(final String userName) {
 		return this.actorRepository.getActorByUser(userName);
 	}
 
