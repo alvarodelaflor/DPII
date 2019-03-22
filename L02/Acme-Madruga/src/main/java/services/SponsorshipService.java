@@ -108,4 +108,8 @@ public class SponsorshipService {
 			this.sponsorshipRepository.delete(sponsorship.getId());
 	}
 
+	public void flush() {
+		this.sponsorshipRepository.flush();
+	}
+
 }
