@@ -344,30 +344,16 @@
 		<property name="floatt" ref= "float02"/>
     </bean>
     
-    <bean id="parade03" class="domain.Parade">
-    	<property name="title" value="Fiesta de Navidad" />
-    	<property name="description" value="Santa Claus repartirá caramelos por las calles" />
-    	<property name="moment" value="2020/04/03 21:00" />
-		<property name="brotherhood" ref= "brotherhood01"/>
-		<property name="ticker" value="211403-ABCDE4" />
-		<property name="isFinal" value= "true"/>
-		<property name="maxRow" value= "10"/>
-		<property name="maxColum" value= "1"/>
-		<property name="floatt" ref= "float01"/>
-		<property name="status" value= "SUBMITTED"/>
-    </bean>
-    
     <bean id="parade04" class="domain.Parade">
     	<property name="title" value="Testing" />
     	<property name="description" value="Testing muy fuerte" />
     	<property name="moment" value="2020/04/03 21:00" />
-		<property name="brotherhood" ref= "brotherhood2"/>
+		<property name="brotherhood" ref= "brotherhood01"/>
 		<property name="ticker" value="211503-ABCDE4" />
-		<property name="isFinal" value= "true"/>
+		<property name="isFinal" value= "false"/>
 		<property name="maxRow" value= "10"/>
 		<property name="maxColum" value= "1"/>
 		<property name="floatt" ref= "float01"/>
-		<property name="status" value= "SUBMITTED"/>
     </bean>
     <!-- PARADE -->
     <!-- FLOAT -->
