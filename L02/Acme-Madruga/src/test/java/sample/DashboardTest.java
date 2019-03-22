@@ -10,6 +10,10 @@
 
 package sample;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -17,8 +21,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import services.AreaService;
+import services.ChapterService;
 import services.ParadeService;
 import utilities.AbstractTest;
 
@@ -34,6 +40,9 @@ public class DashboardTest extends AbstractTest {
 
 	@Autowired
 	private ParadeService	paradeService;
+
+	@Autowired
+	private ChapterService	chapterService;
 
 
 	@Test
@@ -68,28 +77,58 @@ public class DashboardTest extends AbstractTest {
 	 * Analysis of data coverage
 	 * TODO
 	 */
-	public void DriverDashboard() {
+	public void DriverDashboard2() {
+
+		final Collection<String> res = new ArrayList<>();
+		res.add(this.chapterService.findOne(807).getName());
+
+		final Collection<String> res1 = new ArrayList<>();
+
 		final Object testingData[][] = {
 			{
-				"admin", null
+				// Test positivos de resultados 
+				"admin", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, null
 			}, {
-				"brotherhood", IllegalArgumentException.class
+				// Test negativos de actor
+				"brotherhood", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
 			}, {
-				"sponsor", IllegalArgumentException.class
+				"chapter", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
 			}, {
-				"chapter", IllegalArgumentException.class
+				"sponsor", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
 			}, {
-				"member", IllegalArgumentException.class
+				"member", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				// Test negativos datos erroneos
+				"admin", 0.0, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.0, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.1, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.0, 0.662, 0.5, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.0, 0.667, 0.2, 3.0, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.0, 0.667, 0.5, 3.3, 3.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 0.0, 3.0, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.90, 0.0, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.2, res, IllegalArgumentException.class
+			}, {
+				"admin", 0.333, 0.333, 0.0, 0.667, 0.5, 3.0, 3.0, 3.0, 0.0, res1, IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.Template((String) testingData[i][0], (Class<?>) testingData[i][1]);
+			this.Template2((String) testingData[i][0], (double) testingData[i][1], (double) testingData[i][2], (double) testingData[i][3], (double) testingData[i][4], (double) testingData[i][5], (double) testingData[i][6], (double) testingData[i][7],
+				(double) testingData[i][8], (double) testingData[i][9], (Collection<String>) testingData[i][10], (Class<?>) testingData[i][11]);
 	}
-
 	// Ancillary methods ------------------------------------------------------
 
-	protected void Template(final String userName, final Class<?> expected) {
+	protected void Template2(final String userName, final Double ratioFinalSUBMITTED, final Double ratioFinalACCEPTED, final Double ratioFinalREJECTED, final Double ratioAreaNoCoordinate, final Double ratioNoFinalNULL, final Double minParadeCapter,
+		final Double maxParadeCapter, final Double avgParadeCapter, final Double stddevParadeCapter, final Collection<String> ParadeChapter, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 
@@ -97,27 +136,28 @@ public class DashboardTest extends AbstractTest {
 			this.startTransaction();
 			super.authenticate(userName);
 
-			this.areaService.ratioAreaNoCoordinate();
-			this.paradeService.avgParadeCapter();
-			this.paradeService.ratioFinalACCEPTED();
-			this.paradeService.ratioFinalREJECTED();
-			this.paradeService.ratioFinalSUBMITTED();
-			this.paradeService.ratioNoFinalNULL();
-			this.paradeService.minParadeCapter();
-			this.paradeService.maxParadeCapter();
-			this.paradeService.avgParadeCapter();
-			this.paradeService.stddevParadeCapter();
-			this.paradeService.ParadeChapter();
+			final DecimalFormat df = new DecimalFormat("#.###");
+
+			Assert.isTrue(ratioFinalSUBMITTED.equals(Double.valueOf(df.format(this.paradeService.ratioFinalSUBMITTED()))));
+			Assert.isTrue(ratioFinalACCEPTED.equals(Double.valueOf(df.format(this.paradeService.ratioFinalACCEPTED()))));
+			Assert.isTrue(ratioFinalREJECTED.equals(Double.valueOf(df.format(this.paradeService.ratioFinalREJECTED()))));
+			Assert.isTrue(ratioAreaNoCoordinate.equals(Double.valueOf(df.format(this.areaService.ratioAreaNoCoordinate()))));
+			Assert.isTrue(ratioNoFinalNULL.equals(Double.valueOf(df.format(this.paradeService.ratioNoFinalNULL()))));
+
+			Assert.isTrue(minParadeCapter.equals(Double.valueOf(df.format(this.paradeService.minParadeCapter()))));
+			Assert.isTrue(maxParadeCapter.equals(Double.valueOf(df.format(this.paradeService.maxParadeCapter()))));
+			Assert.isTrue(avgParadeCapter.equals(Double.valueOf(df.format(this.paradeService.avgParadeCapter()))));
+			Assert.isTrue(stddevParadeCapter.equals(Double.valueOf(df.format(this.paradeService.stddevParadeCapter()))));
+
+			Assert.isTrue(ParadeChapter.equals(this.paradeService.ParadeChapter()));
 
 			super.unauthenticate();
 
 		} catch (final Exception oops) {
-			oops.printStackTrace();
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
 	}
-
 }
