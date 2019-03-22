@@ -62,6 +62,11 @@ public class AdministratorService {
 		return this.scoreWordsNeg;
 	}
 
+	public void flush() {
+
+		this.administratorRepository.flush();
+	}
+
 	public void setScoreWordsPos(final HashSet<String> scoreWordsPos) {
 		this.scoreWordsPos = scoreWordsPos;
 	}
@@ -218,6 +223,9 @@ public class AdministratorService {
 	}
 
 	public Administrator create() {
+
+		Assert.notNull(this.administratorRepository.findByUserAccountId(LoginService.getPrincipal().getId()));
+
 		final Administrator member = new Administrator();
 		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();
