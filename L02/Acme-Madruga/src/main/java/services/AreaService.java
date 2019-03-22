@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.AreaRepository;
+import security.Authority;
 import security.LoginService;
 import domain.Administrator;
 import domain.Area;
@@ -112,6 +113,9 @@ public class AreaService {
 	}
 
 	public Float ratioAreaNoCoordinate() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		final Float res = (float) (this.areaRepository.AreaNoChapter() / (float) this.areaRepository.AreaALL());
 		return res;
 	}

@@ -40,7 +40,7 @@ public class PathService {
 
 	public Path save(final Path path, final int paradeId) {
 		// We have to be the brotherhood owner of this parade
-		this.assertParadeOwner(path.getParade().getId());
+		this.assertParadeOwner(paradeId);
 		final Path res = this.pathRepository.save(path);
 
 		return res;
@@ -90,7 +90,6 @@ public class PathService {
 	private void assertParadeOwner(final int paradeId) {
 		final Parade parade = this.paradeService.findOne(paradeId);
 		final int loggedAccountId = LoginService.getPrincipal().getId();
-
 		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
 
 	}
