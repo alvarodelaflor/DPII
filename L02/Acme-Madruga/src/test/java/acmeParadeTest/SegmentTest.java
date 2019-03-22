@@ -46,8 +46,8 @@ public class SegmentTest extends AbstractTest {
 	public void SegmentDriver1() {
 
 		final Object testingData[][] = {
-			// ======== CREATION ========
-			// ----- Positive tests (insert valid latitude and longitude)
+			// ======== CREATE ========
+			// ----- Positive tests (insert valid latitude or longitude)
 			{
 				"brotherhood", 0.123456f, 0.123456f, "create", null
 			}, {
@@ -63,7 +63,7 @@ public class SegmentTest extends AbstractTest {
 			}, {
 				"brotherhood", -90f, -180f, "create", null
 			},
-			// ------ Negative tests (insert invalid latitude and longitude)
+			// ------ Negative tests (insert invalid latitude or longitude)
 			{
 				"brotherhood", 91f, 0f, "create", ConstraintViolationException.class
 			}, {
@@ -87,32 +87,36 @@ public class SegmentTest extends AbstractTest {
 			}, {
 				"admin", 0f, 0f, "create", IllegalArgumentException.class
 			},
-			// ======== MODIFICATION ========
-			// ----- Positive tests (insert valid latitude and longitude)
+			// ======== MODIFY ========
+			// ----- Positive tests (insert valid user, latitude or longitude)
 			{
 				"brotherhood", 0.123456f, 0.123456f, "modify", null
 			},
-		// ------ Negative tests (insert invalid latitude and longitude)
-		//			{
-		//				"brotherhood", 91f, 0f, "modify", ConstraintViolationException.class
-		//			},
-		//			// ------ Negative tests (invalid user)
-		//			{
-		//				"member", 0f, 0f, "modify", IllegalArgumentException.class
-		//			},
-		//			// ======== DELETION ========
-		//			// ----- Positive tests (insert valid latitude and longitude)
-		//			{
-		//				"brotherhood", 0.123456f, 0.123456f, "delete", null
-		//			},
-		//			// ------ Negative tests (insert invalid latitude and longitude)
-		//			{
-		//				"brotherhood", 91f, 0f, "delete", ConstraintViolationException.class
-		//			},
-		//			// ------ Negative tests (invalid user)
-		//			{
-		//				"member", 0f, 0f, "delete", IllegalArgumentException.class
-		//			}
+			// ------ Negative tests (insert valid user, invalid latitude or longitude)
+			{
+				"brotherhood", 91f, 0f, "modify", ConstraintViolationException.class
+			}, {
+				"brotherhood", 91f, -190f, "modify", ConstraintViolationException.class
+			},
+			// ------ Negative tests (invalid user)
+			{
+				"member", 0f, 0f, "modify", IllegalArgumentException.class
+			}, {
+				"sponsor", 0f, 0f, "modify", IllegalArgumentException.class
+			}, {
+				"admin", 0f, 0f, "modify", IllegalArgumentException.class
+			}, {
+				"chapter", 0f, 0f, "modify", IllegalArgumentException.class
+			},
+			// ======== DELETE ========
+			// ----- Positive tests (valid user)
+			{
+				"brotherhood", 0f, 0f, "delete", null
+			},
+			// ------ Negative tests (invalid user)
+			{
+				"member", 0f, 0f, "delete", IllegalArgumentException.class
+			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
