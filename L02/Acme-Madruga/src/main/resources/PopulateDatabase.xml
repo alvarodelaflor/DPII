@@ -128,11 +128,46 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount9" class="security.UserAccount">
+		<property name="username" value="chapterchapter" />
+		<property name="password" value="08391c959fc8bd0b672c596c4d6bcdcd" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHAPTER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	
 	
 	<!-- Other domain beans come here -->	
 	
 		<!-- CHAPTER -->
+		
+	<bean id="chapter02" class="domain.Chapter">
+    	<property name="name" value="Carmen1" />
+    	<property name="middleName" value="Holita1" />
+    	<property name="surname" value="Fernández Benjumea" />
+    	<property name="photo" value="https://www.megaidea.net/wp-content/uploads/2018/07/DORAEMON-18.png" />
+		<property name="email" value="carferben@carferbenM" />
+        <property name="phone" value="+3423456789" />
+        <property name="address" value="Lora de Río, Nº5. Carmona" />
+        <property name="userAccount" ref= "userAccount9"/>
+          <property name="messageBoxes">
+        	<list>
+                <ref bean="messageBox80"/>
+                <ref bean="messageBox81"/>
+                <ref bean="messageBox82"/>
+                <ref bean="messageBox83"/>
+                <ref bean="messageBox84"/>
+        	</list>
+        </property>
+        <property name="title" value= "Holi holi"/>        
+    </bean>
+    	
+	
 	
     <bean id="chapter01" class="domain.Chapter">
     	<property name="name" value="Carmen" />
@@ -755,6 +790,44 @@
     	<property name="messages"> <null/> </property>
     	<property name="parentBox"> <null/> </property>
     </bean>
+    
+     <bean id="messageBox80" class="domain.MessageBox">
+    	<property name="name" value= "spam box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+          <bean id="messageBox81" class="domain.MessageBox">
+    	<property name="name" value= "in box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox82" class="domain.MessageBox">
+    	<property name="name" value= "out box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox83" class="domain.MessageBox">
+    	<property name="name" value= "trash box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+     <bean id="messageBox84" class="domain.MessageBox">
+    	<property name="name" value= "notification box"/>
+    	<property name="isDefault" value= "true"/>
+    	<property name="messages"> <null/> </property>
+    	<property name="parentBox"> <null/> </property>
+    </bean>
+    
+    
+    
     
      <bean id="creditCard01" class="domain.CreditCard">
     	<property name="holder" value= "Lopera"/>
