@@ -340,8 +340,4 @@ public class AdministratorService {
 		return this.getScoreWordsNeg();
 	}
 
-	public void flush() {
-		this.administratorRepository.flush();
-	}
-
 }

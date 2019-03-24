@@ -138,22 +138,37 @@ public class FinderService {
 	}
 
 	public Float minNumberOfResult() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.finderRepository.minNumberOfResult();
 	}
 
 	public Float maxNumberOfResult() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.finderRepository.maxNumberOfResult();
 	}
 
 	public Float avgNumberOfResult() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.finderRepository.avgNumberOfResult();
 	}
 
 	public Float stddevNumberOfResult() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.finderRepository.stddevNumberOfResult();
 	}
 
 	public Float ratioResult() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.finderRepository.ratioFinder();
 	}
 

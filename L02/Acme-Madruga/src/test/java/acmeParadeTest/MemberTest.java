@@ -321,7 +321,7 @@ public class MemberTest extends AbstractTest {
 
 			/////////////////// SI NO HAY NINGUN ERROR Y SE CREA EL MEMBER SE EDITA
 
-			if (this.brotherhoodService.findOne(member.getId()) != null) {
+			if (this.memberService.findOne(member.getId()) != null) {
 
 				super.authenticate(member.getUserAccount().getUsername());
 
