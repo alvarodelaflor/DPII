@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import services.BrotherhoodService;
 import services.MemberService;
-import services.ParadeService;
 import utilities.AbstractTest;
 import domain.Brotherhood;
 import domain.Member;
@@ -32,9 +31,6 @@ public class BrotherhoodTest extends AbstractTest {
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
-
-	@Autowired
-	private ParadeService		paradeService;
 
 	@Autowired
 	private MemberService		memberService;
@@ -434,7 +430,7 @@ public class BrotherhoodTest extends AbstractTest {
 				"", "", "noExistoEnElPopulate@noExistoEnElPopulate5", res1, IllegalArgumentException.class
 			}, {
 				// PASSWORD EMAIL FECHA INCORRECTO 
-				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "noExistoEnElPopulate@noExistoEnElPopulate5", res1, IllegalArgumentException.class
+				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "noExistoEnElPopulate", res1, IllegalArgumentException.class
 			}
 		};
 

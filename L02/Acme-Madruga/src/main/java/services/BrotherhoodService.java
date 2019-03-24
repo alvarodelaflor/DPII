@@ -395,11 +395,17 @@ public class BrotherhoodService {
 	}
 
 	public Collection<String> largestBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.brotherhoodMaxRow();
 
 	}
 
 	public Collection<String> smallestBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.brotherhoodMinRow();
 	}
 
@@ -408,22 +414,37 @@ public class BrotherhoodService {
 	}
 
 	public Float minBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.minBrotherhoodPerArea();
 	}
 
 	public Float maxBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.maxBrotherhoodPerArea();
 	}
 
 	public Float avgBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.avgBrotherhoodPerArea();
 	}
 
 	public Float stddevBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.stddevBrotherhoodPerArea();
 	}
 
 	public Collection<Object[]> countBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.countBrotherhoodPerArea();
 	}
 
@@ -442,6 +463,9 @@ public class BrotherhoodService {
 	}
 
 	public Collection<Brotherhood> findBrotherhoodWithLargestHistory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 
 		final Collection<Brotherhood> res = new ArrayList<Brotherhood>();
 
@@ -456,6 +480,9 @@ public class BrotherhoodService {
 	}
 
 	public Collection<Brotherhood> findBrotherhoodsWithHistoryLargerThanAvg() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 
 		final Collection<Brotherhood> res = new ArrayList<Brotherhood>();
 		final Collection<History> histories = this.historyService.findHistoriesPerSize(this.historyService.avgRecordPerHistory());

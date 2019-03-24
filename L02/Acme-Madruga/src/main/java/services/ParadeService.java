@@ -187,6 +187,9 @@ public class ParadeService {
 	}
 
 	public Collection<Parade> paradeOrganised() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.findAllWithCreationDateTimeBeforeI(LocalDateTime.now().toDate(), this.sumarMes(LocalDateTime.now().toDate()));
 	}
 
@@ -204,21 +207,36 @@ public class ParadeService {
 	}
 
 	public String minParade() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		final Parade p = this.paradeRepository.minParade();
 		return p == null ? null : p.getTitle();
 	}
 	public String maxParade() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		final Parade p = this.paradeRepository.maxParade();
 		return p == null ? null : p.getTitle();
 	}
 	public Integer minParadeN() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.minParadeN();
 	}
 	public Integer maxParadeN() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.maxParadeN();
 	}
 
 	public Collection<Parade> findParadesBrotherhoodFinal(final Integer brotherhood) {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.findParadesBrotherhoodFinal(brotherhood);
 	}
 

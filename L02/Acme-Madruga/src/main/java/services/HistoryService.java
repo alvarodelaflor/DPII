@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.HistoryRepository;
+import security.Authority;
 import security.LoginService;
 import domain.Brotherhood;
 import domain.History;
@@ -116,7 +117,9 @@ public class HistoryService {
 	}
 
 	public float maxRecordPerHistory() {
-
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		try {
 			return this.historyRepository.maxRecordPerHistory();
 		} catch (final Exception e) {
@@ -125,7 +128,9 @@ public class HistoryService {
 	}
 
 	public float minRecordPerHistory() {
-
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		try {
 			return this.historyRepository.minRecordPerHistory();
 		} catch (final Exception e) {
@@ -134,6 +139,9 @@ public class HistoryService {
 	}
 
 	public float avgRecordPerHistory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 
 		try {
 			return this.historyRepository.avgRecordPerHistory();
@@ -143,6 +151,9 @@ public class HistoryService {
 	}
 
 	public float stddevRecordPerHistory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 
 		try {
 			return this.historyRepository.stddevRecordPerHistory();
