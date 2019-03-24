@@ -62,10 +62,6 @@ public class AdministratorService {
 		return this.scoreWordsNeg;
 	}
 
-	public void flush() {
-
-		this.administratorRepository.flush();
-	}
 
 	public void setScoreWordsPos(final HashSet<String> scoreWordsPos) {
 		this.scoreWordsPos = scoreWordsPos;
