@@ -287,4 +287,7 @@ public class ChapterService {
 		return res;
 	}
 
+	public void flush() {
+		this.chapterRepository.flush();
+	}
 }

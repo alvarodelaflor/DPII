@@ -349,4 +349,8 @@ public class MemberService {
 	public Float desviationOfNumberOfMemberPerBrotherhood() {
 		return this.memberRepository.stddevNumberOfMembersPerBrotherhood();
 	}
+
+	public void flush() {
+		this.memberRepository.flush();
+	}
 }

@@ -467,4 +467,8 @@ public class BrotherhoodService {
 		System.out.println(res);
 		return res;
 	}
+
+	public void flush() {
+		this.brotherhoodRepository.flush();
+	}
 }
