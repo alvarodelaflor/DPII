@@ -62,16 +62,13 @@ public class InceptionRecordService {
 		Boolean res = true;
 		try {
 			if (photos.contains("'")) {
-				System.out.println("Son multiples fotos");
 				final List<String> photosC = Arrays.asList(photos.split("'"));
 				for (final String photo : photosC)
 					new URL(photo).toURI();
 			} else {
-				System.out.println("Es una �nica foto");
 				new URL(photos).toURI();
 			}
 		} catch (final Exception e) {
-			System.out.println("No es una foto");
 			res = false;
 		}
 
@@ -85,7 +82,7 @@ public class InceptionRecordService {
 		Assert.isTrue(this.checkPhotos(inceptionRecord.getPhotos()), "Photo are not URLs");
 		InceptionRecord inceptionRecordSaved;
 		// Assert inceptionRecord owner is the same that brotherhood logger
-		if (brotherhood!=null && brotherhood.getHistory()!=null && brotherhood.getHistory().getInceptionRecord()!=null) {
+		if (brotherhood.getHistory()!=null && brotherhood.getHistory().getInceptionRecord()!=null) {
 			/*
 			 * En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la
 			 * misma que la que tiene el brotherhood logueado
