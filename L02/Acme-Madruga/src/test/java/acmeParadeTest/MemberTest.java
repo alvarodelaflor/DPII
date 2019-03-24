@@ -13,34 +13,32 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import services.AreaService;
-import services.ChapterService;
-import services.ProclaimService;
+import services.BrotherhoodService;
+import services.MemberService;
+import services.ParadeService;
 import utilities.AbstractTest;
-import domain.Area;
-import domain.Chapter;
-import domain.Proclaim;
+import domain.Member;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @Transactional
-public class ChapterTest extends AbstractTest {
+public class MemberTest extends AbstractTest {
 
 	@Autowired
-	private ChapterService	chapterService;
+	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private AreaService		areaService;
+	private ParadeService		paradeService;
 
 	@Autowired
-	private ProclaimService	proclaimService;
+	private MemberService		memberService;
 
 
 	/*
 	 * 
-	 * In this test we will test the register as Chapter.
+	 * In this test we will test the register and edit as Member.
 	 * 
 	 * Analysis of sentence coverage
 	 * TODO
@@ -57,8 +55,7 @@ public class ChapterTest extends AbstractTest {
 				0, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 0, 0, 0, 1, 1, 1, null
+
 			}, {
 				0, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -66,23 +63,21 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				0, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				0, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
+				0, 1, 1, 1, 0, 1, 1, null
 			}, {
 				0, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 1, 0, 0, 1, 1, 1, null
+
 			}, {
 				0, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 0, 1, 1, 1, 1, 1, null
+
 			}, {
 				0, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -90,23 +85,21 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				0, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				0, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
+				0, 1, 1, 0, 0, 1, 1, null
 			}, {
 				0, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 1, 0, 1, 1, 1, 1, null
+
 			}, {
 				0, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 0, 1, 0, 1, 1, 1, null
+
 			}, {
 				0, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -114,23 +107,21 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				0, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				0, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
+				0, 1, 0, 1, 0, 1, 1, null
 			}, {
 				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 1, 1, 0, 1, 1, 1, null
+
 			}, {
 				0, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 0, 1, 1, 1, 1, 1, null
+
 			}, {
 				0, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -138,23 +129,21 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				0, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				0, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
+				0, 1, 0, 0, 0, 1, 1, null
 			}, {
 				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 1, 1, 1, 1, 1, 0, ConstraintViolationException.class
-			}, {
-				0, 1, 1, 1, 1, 1, 1, null
+
 			}, {
 				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				1, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				1, 0, 0, 0, 1, 1, 1, null
+
 			}, {
 				1, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -162,23 +151,21 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				1, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				1, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
+				1, 1, 1, 1, 0, 1, 1, null
 			}, {
 				1, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
 			}, {
 				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			}, {
-				1, 1, 0, 0, 1, 1, 1, null
+
 			}, {
 				1, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				1, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				1, 0, 1, 1, 1, 1, 1, null
+
 			}, {
 				1, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -186,23 +173,21 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				1, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				1, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
+				1, 1, 1, 0, 0, 1, 1, null
 			}, {
 				1, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
 			}, {
 				1, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
-			}, {
-				1, 1, 0, 1, 1, 1, 1, null
+
 			}, {
 				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				1, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				1, 0, 1, 0, 1, 1, 1, null
+
 			}, {
 				1, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -210,23 +195,21 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				1, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				1, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
+				1, 1, 0, 1, 0, 1, 1, null
 			}, {
 				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
 			}, {
 				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			}, {
-				1, 1, 1, 0, 1, 1, 1, null
+
 			}, {
 				1, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				1, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
-			}, {
-				1, 0, 1, 1, 1, 1, 1, null
+
 			}, {
 				1, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
 			}, {
@@ -234,7 +217,7 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				1, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				1, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
+				1, 1, 0, 0, 0, 1, 1, null
 			}, {
 				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
@@ -243,80 +226,155 @@ public class ChapterTest extends AbstractTest {
 				1, 1, 1, 1, 1, 1, 0, ConstraintViolationException.class
 			}, {
 				1, 1, 1, 1, 1, 1, 1, null
+			}, {
+				0, 0, 0, 0, 1, 1, 1, null
+			}, {
+				1, 0, 1, 1, 1, 1, 1, null
+			}, {
+				1, 1, 1, 0, 1, 1, 1, null
+			}, {
+				1, 0, 1, 0, 1, 1, 1, null
+			}, {
+				1, 1, 0, 1, 1, 1, 1, null
+			}, {
+				1, 0, 1, 1, 1, 1, 1, null
+			}, {
+				1, 1, 0, 0, 1, 1, 1, null
+			}, {
+				0, 1, 1, 1, 1, 1, 1, null
+			}, {
+				1, 0, 0, 0, 1, 1, 1, null
+			}, {
+				0, 0, 1, 1, 1, 1, 1, null
+			}, {
+				0, 1, 1, 0, 1, 1, 1, null
+			}, {
+				0, 0, 1, 0, 1, 1, 1, null
+			}, {
+				0, 1, 0, 1, 1, 1, 1, null
+			}, {
+				0, 0, 1, 1, 1, 1, 1, null
+			}, {
+				0, 1, 0, 0, 1, 1, 1, null
 			}
+
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.testRegisterChapter((int) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (int) testingData[i][5], (int) testingData[i][6], (Class<?>) testingData[i][7]);
+			this.testRegister((int) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (int) testingData[i][5], (int) testingData[i][6], (Class<?>) testingData[i][7]);
 
 	}
-	public void testRegisterChapter(final int middleName, final int address, final int photo, final int phone, final int title, final int name, final int surname, final Class<?> expected) {
+	public void testRegister(final int middleName, final int address, final int photo, final int phone, final int title, final int name, final int surname, final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
+			System.out.println("entro");
 			this.startTransaction();
 
-			final Chapter chapter = this.chapterService.create();
-			chapter.getUserAccount().setUsername("noExistoEnElPopulate");
+			final Member member = this.memberService.create();
+			member.getUserAccount().setUsername("memberNoExisto");
 
-			final String password = "noExistoEnElPopulate";
+			final String password = "memberNoExisto";
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword(password, null);
-			chapter.getUserAccount().setPassword(hashPassword);
+			member.getUserAccount().setPassword(hashPassword);
 
-			chapter.setEmail("noExistoEnElPopulate@noExistoEnElPopulate");
+			member.setEmail("memberNoExisto@memberNoExisto");
+
+			System.out.println("entro");
 
 			if (middleName != 0)
-				chapter.setMiddleName("noExistoEnElPopulate");
+				member.setMiddleName("memberNoExisto");
 			else
-				chapter.setMiddleName("");
+				member.setMiddleName("");
 
 			if (address != 0)
-				chapter.setAddress("noExistoEnElPopulate");
+				member.setAddress("memberNoExisto");
 			else
-				chapter.setAddress("");
+				member.setAddress("");
 
 			if (photo != 0)
-				chapter.setPhoto("http://noExistoEnElPopulate");
+				member.setPhoto("http://memberNoExisto");
 			else
-				chapter.setPhoto("");
+				member.setPhoto("");
 
 			if (phone != 0)
-				chapter.setPhone("11111111");
+				member.setPhone("11111111");
 			else
-				chapter.setPhone("");
-
-			if (title != 0)
-				chapter.setTitle("noExistoEnElPopulate");
-			else
-				chapter.setTitle("");
+				member.setPhone("");
 
 			if (name != 0)
-				chapter.setName("noExistoEnElPopulate");
+				member.setName("memberNoExisto");
 			else
-				chapter.setName("");
+				member.setName("");
+			System.out.println("entro");
 
 			if (surname != 0)
-				chapter.setSurname("noExistoEnElPopulate");
+				member.setSurname("memberNoExisto");
 			else
-				chapter.setSurname("");
+				member.setSurname("");
+			System.out.println("entro");
 
-			this.chapterService.saveR(chapter);
-			this.chapterService.flush();
+			this.memberService.saveR(member);
 
+			System.out.println("entro");
+
+			/////////////////// SI NO HAY NINGUN ERROR Y SE CREA EL MEMBER SE EDITA
+
+			if (this.brotherhoodService.findOne(member.getId()) != null) {
+
+				super.authenticate(member.getUserAccount().getUsername());
+
+				if (middleName != 0)
+					member.setMiddleName("noExistoEnElPopulate");
+				else
+					member.setMiddleName("");
+
+				if (address != 0)
+					member.setAddress("noExistoEnElPopulate");
+				else
+					member.setAddress("");
+
+				if (photo != 0)
+					member.setPhoto("http://noExistoEnElPopulate");
+				else
+					member.setPhoto("");
+
+				if (phone != 0)
+					member.setPhone("11111111");
+				else
+					member.setPhone("");
+
+				if (name != 0)
+					member.setName("noExistoEnElPopulate");
+				else
+					member.setName("");
+
+				if (surname != 0)
+					member.setSurname("noExistoEnElPopulate");
+				else
+					member.setSurname("");
+
+				this.memberService.save(member);
+			}
+
+			if (expected != null)
+				this.memberService.flush();
+
+			super.unauthenticate();
 		} catch (final Throwable oops) {
+			System.out.println(oops);
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
 	}
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * 
-	 * In this test we will test the register as Chapter.
+	 * In this test we will test the register and edit as Member.
 	 * 
 	 * Analysis of sentence coverage
 	 * TODO
@@ -325,6 +383,7 @@ public class ChapterTest extends AbstractTest {
 	 */
 	@Test
 	public void driver2() {
+
 		final Object testingData[][] = {
 			//	userName, password, email
 			{
@@ -365,6 +424,9 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				// PASSWORD EMAIL INCORRECTO
 				"", "", "noExistoEnElPopulate@noExistoEnElPopulate5", ConstraintViolationException.class
+			}, {
+				// EMAIL  CORRECTO 
+				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "carmen <noExistoEnElPopulate@noExistoEnElPopulate5>", null
 			}
 		};
 
@@ -378,27 +440,38 @@ public class ChapterTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Chapter chapter = this.chapterService.create();
-			chapter.getUserAccount().setUsername(userName);
-			chapter.setEmail(email);
+			final Member m = this.memberService.create();
+			m.getUserAccount().setUsername(userName);
+			m.setEmail(email);
 
 			final String password = passwordd;
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword(password, null);
-			chapter.getUserAccount().setPassword(hashPassword);
+			m.getUserAccount().setPassword(hashPassword);
 
-			chapter.setTitle("Carmen");
-			chapter.setName("Carmen");
-			chapter.setSurname("Carmen");
-			chapter.setPhone("");
-			chapter.setAddress("Lora del río, n5");
-			chapter.setMiddleName("carmen");
-			chapter.setPhoto("");
+			m.setName("Carmen");
+			m.setSurname("Carmen");
+			m.setPhone("");
+			m.setAddress("Lora del río, n5");
+			m.setMiddleName("carmen");
+			m.setPhoto("");
 
-			this.chapterService.saveR(chapter);
-			System.out.println(chapter);
+			this.memberService.saveR(m);
 
-			this.chapterService.flush();
+			if (this.memberService.findOne(m.getId()) != null) {
+
+				super.authenticate(m.getUserAccount().getUsername());
+
+				m.setEmail(email);
+
+				this.memberService.save(m);
+
+			}
+
+			super.unauthenticate();
+
+			if (expected != null)
+				this.memberService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -407,132 +480,15 @@ public class ChapterTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
 	public void driver3() {
 		/*
-		 * POSITIVO
-		 * 
-		 * In this test we will test the show and list of chapters and their areas and proclaims.
-		 * 
-		 * I. R.
-		 * 
-		 * 5. There's a new kind of actor in the system: chapters. For every chapter, the system must store its title.
-		 * Every chapter co-ordinates and area and, thus, the parades organised by the brotherhoods in that area.
-		 * No area can be co-ordinated by more than one chapter.
-		 * 12. Chapters can publish proclaims. For every proclaim, the system must store the moment when it's published
-		 * and a piece of text that can't be longer than 250 characters.
-		 * 
-		 * F. R.
-		 * 
-		 * 1. List the chapters that are registered in the system, navigate to the areas that they co-ordinate, to the
-		 * brotherhoods that have settle in those areas, and to the parades that they organise.
-		 * 
-		 * 2. Browse the proclaims of the chapters.
-		 * 
-		 * Analysis of sentence coverage
-		 * TODO
-		 * Analysis of data coverage
-		 * TODO
-		 */
-		final Object testingData[][] = {
-			// username, error
-			{
-				null, null
-			}, {
-				"admin", null
-			}, {
-				"chapter", null
-			}, {
-				"brotherhood", null
-			}, {
-				"member", null
-			}, {
-				"sponsor", null
-			}
-		};
-
-		for (int i = 0; i < testingData.length; i++)
-			this.checkTest((String) testingData[i][0], (Class<?>) testingData[i][1]);
-	}
-
-	protected void checkTest(final String userName, final Class<?> expected) {
-		Class<?> caught = null;
-
-		try {
-
-			this.startTransaction();
-
-			if (userName != null)
-				super.authenticate(userName);
-
-			final List<Chapter> chapters = this.chapterService.findAll();
-			for (final Chapter chapter : chapters) {
-				chapter.getId();
-				chapter.getVersion();
-				chapter.getName();
-				chapter.getSurname();
-				chapter.getPhoto();
-				chapter.getEmail();
-				chapter.getMiddleName();
-				chapter.getPhone();
-				chapter.getTitle();
-				chapter.getSocialProfiles();
-			}
-			for (final Chapter chapter : chapters) {
-				final List<Proclaim> proclaims = (List<Proclaim>) chapter.getProclaim();
-				for (final Proclaim proclaim : proclaims) {
-					proclaim.getId();
-					proclaim.getVersion();
-					proclaim.getMoment();
-					proclaim.getText();
-				}
-			}
-			for (final Chapter chapter : chapters) {
-				final Area area = this.areaService.findAreaChapter(chapter);
-				if (area != null) {
-					area.getId();
-					area.getVersion();
-					area.getName();
-					area.getPictures();
-
-				}
-			}
-			if (userName != null)
-				super.unauthenticate();
-
-		} catch (final Throwable oops) {
-			caught = oops.getClass();
-		} finally {
-			this.rollbackTransaction();
-		}
-		this.checkExceptions(expected, caught);
-	}
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Test
-	public void driver4() {
-		/*
 		 * NEGATIVO
 		 * 
-		 * In this test we will test the show and list of chapters and their areas and proclaims.
+		 * In this test we will test the show of brotherhoods
 		 * 
-		 * I. R.
-		 * 
-		 * 5. There's a new kind of actor in the system: chapters. For every chapter, the system must store its title.
-		 * Every chapter co-ordinates and area and, thus, the parades organised by the brotherhoods in that area.
-		 * No area can be co-ordinated by more than one chapter.
-		 * 12. Chapters can publish proclaims. For every proclaim, the system must store the moment when it's published
-		 * and a piece of text that can't be longer than 250 characters.
-		 * 
-		 * F. R.
-		 * 
-		 * 1. List the chapters that are registered in the system, navigate to the areas that they co-ordinate, to the
-		 * brotherhoods that have settle in those areas, and to the parades that they organise.
-		 * 
-		 * 2. Browse the proclaims of the chapters.
 		 * 
 		 * Analysis of sentence coverage
 		 * TODO
@@ -546,13 +502,78 @@ public class ChapterTest extends AbstractTest {
 			}, {
 				"admin", IndexOutOfBoundsException.class
 			}, {
-				"chapter", IndexOutOfBoundsException.class
+				"brotherhood", IndexOutOfBoundsException.class
 			}, {
 				"brotherhood", IndexOutOfBoundsException.class
 			}, {
 				"member", IndexOutOfBoundsException.class
 			}, {
 				"sponsor", IndexOutOfBoundsException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTest3((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	protected void checkTest3(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (userName != null)
+				super.authenticate(userName);
+
+			final List<Member> members = (List<Member>) this.memberService.findAll();
+
+			if (members.size() != 0) {
+				members.clear();
+				members.get(0).getId();
+				members.get(0).getVersion();
+			}
+
+			if (userName != null)
+				super.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	@Test
+	public void driver4() {
+		/*
+		 * POSITIVO
+		 * 
+		 * In this test we will test the show of brotherhoods
+		 * 
+		 * 
+		 * Analysis of sentence coverage
+		 * TODO
+		 * Analysis of data coverage
+		 * TODO
+		 */
+		final Object testingData[][] = {
+			// username, error
+			{
+				null, null
+			}, {
+				"admin", null
+			}, {
+				"brotherhood", null
+			}, {
+				"brotherhood", null
+			}, {
+				"member", null
+			}, {
+				"sponsor", null
 			}
 		};
 
@@ -570,27 +591,18 @@ public class ChapterTest extends AbstractTest {
 			if (userName != null)
 				super.authenticate(userName);
 
-			final List<Chapter> chapters = this.chapterService.findAll();
-			if (chapters.isEmpty()) {
-				chapters.get(0).getId();
-				chapters.get(0).getVersion();
-			}
-
-			for (final Chapter chapter : chapters) {
-				final List<Proclaim> proclaims = (List<Proclaim>) chapter.getProclaim();
-				if (proclaims.isEmpty()) {
-					proclaims.get(0).getId();
-					proclaims.get(0).getVersion();
-				}
-
-			}
-			for (final Chapter chapter : chapters) {
-				final Area area = this.areaService.findAreaChapter(chapter);
-				area.getId();
-				area.getVersion();
-				area.getName();
-				area.getPictures();
-
+			final List<Member> members = (List<Member>) this.memberService.findAll();
+			for (final Member member : members) {
+				member.getId();
+				member.getVersion();
+				member.getAddress();
+				member.getName();
+				member.getSurname();
+				member.getPhoto();
+				member.getEmail();
+				member.getMiddleName();
+				member.getPhone();
+				member.getSocialProfiles();
 			}
 
 			if (userName != null)
@@ -603,4 +615,5 @@ public class ChapterTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
+
 }
