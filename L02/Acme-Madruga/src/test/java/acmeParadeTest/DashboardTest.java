@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -149,8 +150,79 @@ public class DashboardTest extends AbstractTest {
 			this.Template2((String) testingData[i][0], (double) testingData[i][1], (double) testingData[i][2], (double) testingData[i][3], (double) testingData[i][4], (double) testingData[i][5], (double) testingData[i][6], (double) testingData[i][7],
 				(double) testingData[i][8], (double) testingData[i][9], (Collection<String>) testingData[i][10], (Class<?>) testingData[i][11]);
 	}
+
+	@Test
+	public void QueriesRequirement12() {
+
+		final Object testingData[][] = {
+			{
+				"admin", 0.5, 0.0, 1.0, 0.5, "Hermandad de la VERA CRUZ", "Hermandad del Rosario", 0.0, 0.333, 0.333, null
+			}, {
+				"admin", 0.0, 0.0, 1.0, 0.5, "a", "b", 0.0, 0.0, 0.0, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 1.0, 1.0, 0.5, "a", "b", 0.0, 0.0, 0.0, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 0.0, 0.0, 0.5, "a", "b", 0.0, 0.0, 0.0, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 0.0, 1.0, 1.0, "a", "b", 0.0, 0.0, 0.0, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 0.0, 1.0, 0.5, "a", "Hermandad del Rosario", 0.0, 0.0, 0.0, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 0.0, 1.0, 0.5, "Hermandad de la VERA CRUZ", "b", 0.0, 0.0, 0.0, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 0.0, 1.0, 0.5, "Hermandad de la VERA CRUZ", "Hermandad del Rosario", 1.0, 0.333, 0.333, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 0.0, 1.0, 0.5, "Hermandad de la VERA CRUZ", "Hermandad del Rosario", 0.0, 0.0, 0.333, IllegalArgumentException.class
+			}, {
+				"admin", 0.5, 0.0, 1.0, 0.5, "Hermandad de la VERA CRUZ", "Hermandad del Rosario", 0.0, 0.333, 0.0, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.QueriesRequirement12((String) testingData[i][0], (double) testingData[i][1], (double) testingData[i][2], (double) testingData[i][3], (double) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(double) testingData[i][7], (double) testingData[i][8], (double) testingData[i][9], (Class<?>) testingData[i][10]);
+	}
 	// Ancillary methods ------------------------------------------------------
 
+	protected void QueriesRequirement12(final String username, final Double avg, final Double min, final Double max, final Double stddev, final String largest, final String smallest, final Double rrpf, final Double rrpn, final Double rrpt,
+		final Class<?> expected) {
+
+		Class<?> caught = null;
+		final DecimalFormat df = new DecimalFormat("#.###");
+
+		try {
+
+			this.startTransaction();
+			super.authenticate(username);
+			final Double a = Double.valueOf(df.format(this.memberService.avgNumberOfMemberPerBrotherhood()));
+			final Double b = Double.valueOf(df.format(this.memberService.minNumberOfMemberPerBrotherhood()));
+			final Double c = Double.valueOf(df.format(this.memberService.maxNumberOfMemberPerBrotherhood()));
+			final Double d = Double.valueOf(df.format(this.memberService.desviationOfNumberOfMemberPerBrotherhood()));
+			final List<String> e = new ArrayList<String>(this.brotherhoodService.largestBrotherhood());
+			final List<String> f = new ArrayList<String>(this.brotherhoodService.smallestBrotherhood());
+			final Double g = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusFalse()));
+			final Double h = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusNull()));
+			final Double i = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusTrue()));
+			Assert.isTrue(avg.equals(a));
+			Assert.isTrue(min.equals(b));
+			Assert.isTrue(max.equals(c));
+			Assert.isTrue(stddev.equals(d));
+			Assert.isTrue(e.get(0).equals(largest));
+			Assert.isTrue(f.get(0).equals(smallest));
+			Assert.isTrue(g.equals(rrpf));
+			Assert.isTrue(h.equals(rrpn));
+			Assert.isTrue(i.equals(rrpt));
+			super.unauthenticate();
+		} catch (final Exception oops) {
+
+			caught = oops.getClass();
+		} finally {
+
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 	protected void Template2(final String userName, final Double ratioFinalSUBMITTED, final Double ratioFinalACCEPTED, final Double ratioFinalREJECTED, final Double ratioAreaNoCoordinate, final Double ratioNoFinalNULL, final Double minParadeCapter,
 		final Double maxParadeCapter, final Double avgParadeCapter, final Double stddevParadeCapter, final Collection<String> ParadeChapter, final Class<?> expected) {
 		Class<?> caught;
