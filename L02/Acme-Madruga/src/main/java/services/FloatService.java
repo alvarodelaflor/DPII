@@ -1,7 +1,10 @@
 
 package services;
 
+import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,12 +63,34 @@ public class FloatService {
 	public domain.Float findOne(final int id) {
 		return this.floatRepository.findOne(id);
 	}
+	
+	public Boolean checkPhotos(final String photos) {
+		Boolean res = true;
+		try {
+			if (photos.contains("'")) {
+				final List<String> photosC = Arrays.asList(photos.split("'"));
+				for (final String photo : photosC)
+					new URL(photo).toURI();
+			} else {
+				new URL(photos).toURI();
+			}
+		} catch (final Exception e) {
+			res = false;
+		}
+
+		return res;
+	}
+	
 	public domain.Float save(final domain.Float floatt) {
 		/*
 		 * Ya que no le podemos pasar nada al create porque el reconstruidor hace que se lo cargue decidimos colocar
 		 * aquí la asignación del brotherhood y será en el controlador donde se vigile que la edición la realiza el creador
 		 * de esa floatt
 		 */
+		Assert.notNull(brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()), "Not brotherhood Logger");
+		if (floatt.getPictures()!=null && floatt.getPictures().length()>0) {
+			Assert.isTrue(checkPhotos(floatt.getPictures()), "pictures are not URLs");
+		}
 		floatt.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
 		return this.floatRepository.save(floatt);
 	}
@@ -134,5 +159,9 @@ public class FloatService {
 		}
 		this.validator.validate(floatt, binding);
 		return result;
+	}
+	
+	public void flush() {
+		this.floatRepository.flush();
 	}
 }

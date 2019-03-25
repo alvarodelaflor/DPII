@@ -339,5 +339,9 @@ public class AdministratorService {
 		this.scoreWordsNeg.remove(word);
 		return this.getScoreWordsNeg();
 	}
+	
+	public void flush() {
+		this.administratorRepository.flush();
+	}
 
 }
