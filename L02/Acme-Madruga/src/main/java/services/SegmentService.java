@@ -64,6 +64,7 @@ public class SegmentService {
 
 	public Segment reconstruct(final Segment segment, final BindingResult binding) {
 		// This is only called when we have a path, segment exists
+		Assert.notNull(segment.getDestination());
 		final Segment res = this.create();
 
 		Segment aux;
