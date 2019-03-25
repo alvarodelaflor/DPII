@@ -243,8 +243,21 @@ public class AdministratorService {
 	}
 
 	public Administrator saveR(final Administrator admin) {
+		// Email
 		Assert.isTrue(!this.checkEmailFormatter(admin), "email.wrong");
 		Assert.isTrue(this.checkEmailR(admin), "error.email");
+		// Username
+		Assert.isTrue(admin.getUserAccount().getUsername() != null);
+		Assert.isTrue(!(this.actorService.getActorByUser(admin.getUserAccount().getUsername()) != null));
+		Assert.isTrue(admin.getUserAccount().getUsername().length() >= 5 && admin.getUserAccount().getUsername().length() <= 32);
+		// Password
+		Assert.isTrue(admin.getUserAccount().getPassword() != null);
+		Assert.isTrue(admin.getUserAccount().getPassword().length() >= 5 && admin.getUserAccount().getPassword().length() <= 32);
+		// Name
+		Assert.isTrue(admin.getName() != null && admin.getName() != "");
+		// Surname
+		Assert.isTrue(admin.getSurname() != null && admin.getSurname() != "");
+
 		if (admin.getPhone().matches("^([0-9]{4,})$"))
 			admin.setPhone("+" + this.welcomeService.getPhone() + " " + admin.getPhone());
 		return this.administratorRepository.save(admin);
@@ -316,12 +329,16 @@ public class AdministratorService {
 
 	// Método para añadir pos
 	public HashSet<String> newScoreWordsPos(final String newWord) {
+
+		Assert.notNull(this.findByUserAccountId(LoginService.getPrincipal().getId()));
+
 		this.scoreWordsPos.add(newWord);
 		return this.getScoreWordsPos();
 	}
 
 	// Método para borrar pos
 	public HashSet<String> deleteScoreWordsPos(final String word) {
+		Assert.notNull(this.findByUserAccountId(LoginService.getPrincipal().getId()));
 		Assert.isTrue(this.getScoreWordsPos().contains(word), "noScoreWord.error");
 		this.scoreWordsPos.remove(word);
 		return this.getScoreWordsPos();
@@ -329,12 +346,14 @@ public class AdministratorService {
 
 	// Método para añadir neg 
 	public HashSet<String> newScoreWordsNeg(final String newWord) {
+		Assert.notNull(this.findByUserAccountId(LoginService.getPrincipal().getId()));
 		this.scoreWordsNeg.add(newWord);
 		return this.getScoreWordsNeg();
 	}
 
 	// Método para borrar neg
 	public HashSet<String> deleteScoreWordsNeg(final String word) {
+		Assert.notNull(this.findByUserAccountId(LoginService.getPrincipal().getId()));
 		Assert.isTrue(this.getScoreWordsNeg().contains(word), "noScoreWord.error");
 		this.scoreWordsNeg.remove(word);
 		return this.getScoreWordsNeg();

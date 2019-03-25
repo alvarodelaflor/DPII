@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -112,19 +113,20 @@ public class SponsorshipService {
 			this.sponsorshipRepository.delete(sponsorship.getId());
 	}
 
-	public String randomBanner(final int paradeId) {
+	public Sponsorship randomSponsorship(final int paradeId) {
 
-		//TODO: controller and view(src) 
-		String res = "";
-		final List<String> banners = this.sponsorshipRepository.getBannersSponsorships(paradeId);
-
+		Sponsorship res = null;
+		final List<Sponsorship> shs = new ArrayList<>(this.sponsorshipRepository.getParadeSponsorships(paradeId));
 		final Random r = new Random();
 
-		if (!banners.isEmpty())
-			res = banners.get(r.nextInt(banners.size()));
-
+		if (!shs.isEmpty()) {
+			res = shs.get(r.nextInt(shs.size()));
+			res.setBannerCount((res.getBannerCount() + 1));
+			res = this.sponsorshipRepository.save(res);
+		}
 		return res;
 	}
+
 	public void flush() {
 		this.sponsorshipRepository.flush();
 	}

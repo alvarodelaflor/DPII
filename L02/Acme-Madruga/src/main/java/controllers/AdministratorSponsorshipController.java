@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ConfigurationService;
 import services.SponsorshipService;
 import services.WelcomeService;
+import domain.Configuration;
 import domain.Sponsorship;
 
 @Controller
@@ -18,9 +20,11 @@ import domain.Sponsorship;
 public class AdministratorSponsorshipController extends AbstractController {
 
 	@Autowired
-	private SponsorshipService	sponsorshipService;
+	private SponsorshipService		sponsorshipService;
 	@Autowired
-	private WelcomeService		welcomeService;
+	private WelcomeService			welcomeService;
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	public AdministratorSponsorshipController() {
@@ -30,12 +34,15 @@ public class AdministratorSponsorshipController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 
+		final Configuration config = this.configurationService.getConfiguration();
+
 		ModelAndView res;
 
 		try {
 			res = new ModelAndView("sponsorship/administrator/list");
 			res.addObject("sponsorships", this.sponsorshipService.findAll());
 			res.addObject("requestURI", "sponsorship/administrator/list.do");
+			res.addObject("config", config);
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
@@ -43,7 +50,6 @@ public class AdministratorSponsorshipController extends AbstractController {
 		res.addObject("system", this.welcomeService.getSystem());
 		return res;
 	}
-
 	@RequestMapping(value = "/checkCreditCard", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(value = "sponsorshipId", defaultValue = "-1") final int sponsorshipId) {
 		ModelAndView result;
@@ -82,4 +88,16 @@ public class AdministratorSponsorshipController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/collect", method = RequestMethod.GET)
+	public ModelAndView collect(@RequestParam(value = "sponsorshipId", defaultValue = "-1") final int sponsorshipId) {
+
+		final ModelAndView res = new ModelAndView("redirect:list.do");
+
+		final Sponsorship s = this.sponsorshipService.findOne(sponsorshipId);
+		s.setBannerCount(0);
+		this.sponsorshipService.save(s);
+		res.addObject("logo", this.welcomeService.getLogo());
+		res.addObject("system", this.welcomeService.getSystem());
+		return res;
+	}
 }

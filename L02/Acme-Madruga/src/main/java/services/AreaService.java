@@ -57,6 +57,9 @@ public class AreaService {
 
 	public Area save(final Area area) {
 
+		// Name:
+		Assert.isTrue(area.getName() != "");
+
 		if (area.getPictures().size() != 0) {
 			final List<String> s = new ArrayList<String>(area.getPictures());
 			final String[] pictures = s.get(0).split("'");

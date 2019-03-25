@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.BrotherhoodService;
+import services.ConfigurationService;
 import services.FloatService;
 import services.MemberService;
 import services.MessageService;
@@ -31,8 +32,10 @@ import services.PositionAuxService;
 import services.SponsorshipService;
 import services.WelcomeService;
 import domain.Brotherhood;
+import domain.Configuration;
 import domain.Message;
 import domain.Parade;
+import domain.Sponsorship;
 
 /*
  * CONTROL DE CAMBIOS ParadeBrotherhoodController.java
@@ -65,6 +68,9 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 	@Autowired
 	private MemberService		memberService;
+
+	@Autowired
+	ConfigurationService		configurationService;
 
 	@Autowired
 	private WelcomeService		welcomeService;
@@ -102,7 +108,8 @@ public class ParadeBrotherhoodController extends AbstractController {
 	public ModelAndView show(@RequestParam(value = "paradeId", defaultValue = "-1") final int paradeId) {
 		ModelAndView result;
 		final Parade parade = this.paradeService.findOne(paradeId);
-		final String banner = this.sponsorshipService.randomBanner(paradeId);
+		final Sponsorship s = this.sponsorshipService.randomSponsorship(paradeId);
+		final Configuration config = this.configurationService.getConfiguration();
 
 		if (this.paradeService.findOne(paradeId) == null || LoginService.getPrincipal().getId() != parade.getBrotherhood().getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
@@ -111,7 +118,8 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 			result = new ModelAndView("parade/brotherhood/show");
 
-			result.addObject("banner", banner);
+			result.addObject("config", config);
+			result.addObject("sponsorship", s);
 			result.addObject("parade", parade);
 			result.addObject("requestURI", "parade/brotherhood/show.do");
 		}
