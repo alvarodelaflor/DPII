@@ -38,7 +38,7 @@ public class BrotherhoodTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register and edit as Brotherhood.
+	 * In this test we will test the register as Brotherhood.
 	 * 
 	 * Analysis of sentence coverage
 	 * TODO
@@ -308,52 +308,52 @@ public class BrotherhoodTest extends AbstractTest {
 
 			this.brotherhoodService.saveR(b);
 
-			/////////////////// SI NO HAY NINGUN ERROR Y SE CREA EL BROTHEHOOD SE EDITA
-
-			if (this.brotherhoodService.findOne(b.getId()) != null) {
-
-				super.authenticate(b.getUserAccount().getUsername());
-
-				if (middleName != 0)
-					b.setMiddleName("noExistoEnElPopulate");
-				else
-					b.setMiddleName("");
-
-				if (address != 0)
-					b.setAddress("noExistoEnElPopulate");
-				else
-					b.setAddress("");
-
-				if (photo != 0)
-					b.setPhoto("http://noExistoEnElPopulate");
-				else
-					b.setPhoto("");
-
-				if (phone != 0)
-					b.setPhone("11111111");
-				else
-					b.setPhone("");
-
-				if (title != 0)
-					b.setTitle("noExistoEnElPopulate");
-				else
-					b.setTitle("");
-
-				if (name != 0)
-					b.setName("noExistoEnElPopulate");
-				else
-					b.setName("");
-
-				if (surname != 0)
-					b.setSurname("noExistoEnElPopulate");
-				else
-					b.setSurname("");
-
-				System.out.println(b.getTitle());
-
-				this.brotherhoodService.save(b);
-
-			}
+			//			/////////////////// SI NO HAY NINGUN ERROR Y SE CREA EL BROTHEHOOD SE EDITA
+			//
+			//			if (this.brotherhoodService.findOne(b.getId()) != null) {
+			//
+			//				super.authenticate(b.getUserAccount().getUsername());
+			//
+			//				if (middleName != 0)
+			//					b.setMiddleName("noExistoEnElPopulate");
+			//				else
+			//					b.setMiddleName("");
+			//
+			//				if (address != 0)
+			//					b.setAddress("noExistoEnElPopulate");
+			//				else
+			//					b.setAddress("");
+			//
+			//				if (photo != 0)
+			//					b.setPhoto("http://noExistoEnElPopulate");
+			//				else
+			//					b.setPhoto("");
+			//
+			//				if (phone != 0)
+			//					b.setPhone("11111111");
+			//				else
+			//					b.setPhone("");
+			//
+			//				if (title != 0)
+			//					b.setTitle("noExistoEnElPopulate");
+			//				else
+			//					b.setTitle("");
+			//
+			//				if (name != 0)
+			//					b.setName("noExistoEnElPopulate");
+			//				else
+			//					b.setName("");
+			//
+			//				if (surname != 0)
+			//					b.setSurname("noExistoEnElPopulate");
+			//				else
+			//					b.setSurname("");
+			//
+			//				System.out.println(b.getTitle());
+			//
+			//				this.brotherhoodService.save(b);
+			//
+			//			}
 			this.brotherhoodService.flush();
 
 			super.unauthenticate();
@@ -369,7 +369,7 @@ public class BrotherhoodTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register and edit as Brotherhood.
+	 * In this test we will test the register as Brotherhood.
 	 * 
 	 * Analysis of sentence coverage
 	 * TODO
@@ -408,15 +408,6 @@ public class BrotherhoodTest extends AbstractTest {
 				//USERNAME Y PASSWORD INCORRECT0
 				"", "noExistoEnElPopulate5", "emailIncorrecto", res, IllegalArgumentException.class
 			}, {
-				//USERNAME Y PASSWORD INCORRECT0
-				"d", "noExistoEnElPopulate5", "", res, IllegalArgumentException.class
-			}, {
-				//USERNAME Y PASSWORD INCORRECT0
-				"", "noExistoEnElPopulate5", "", res, IllegalArgumentException.class
-			}, {
-				//EMAIL EXISTE
-				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "carferben@carferben", res, IllegalArgumentException.class
-			}, {
 				//USERNAME PASSWORD EMAIL INCORRECTO
 				"", "", "", res, IllegalArgumentException.class
 			}, {
@@ -428,15 +419,13 @@ public class BrotherhoodTest extends AbstractTest {
 			}, {
 				// PASSWORD EMAIL FECHA INCORRECTO 
 				"", "", "noExistoEnElPopulate@noExistoEnElPopulate5", res1, IllegalArgumentException.class
-			}, {
-				// PASSWORD EMAIL FECHA INCORRECTO 
-				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "noExistoEnElPopulate", res1, IllegalArgumentException.class
+			}, { //EMAIL EXISTE
+				"noExistoEnElPopulate2", "noExistoEnElPopulate2", "alvdebon2@alum.us.es", res, IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
 			this.testRegister2((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Date) testingData[i][3], (Class<?>) testingData[i][4]);
-
 	}
 	public void testRegister2(final String userName, final String passwordd, final String email, final Date date, final Class<?> expected) {
 		Class<?> caught = null;
@@ -464,18 +453,6 @@ public class BrotherhoodTest extends AbstractTest {
 
 			this.brotherhoodService.saveR(b);
 			System.out.println(b);
-
-			if (this.brotherhoodService.findOne(b.getId()) != null) {
-
-				b.getUserAccount().setUsername(userName);
-				b.setEmail(email);
-				b.setEstablishmentDate(date);
-
-				b.getUserAccount().setPassword(hashPassword);
-
-				this.brotherhoodService.save(b);
-
-			}
 
 			this.brotherhoodService.flush();
 
@@ -708,6 +685,366 @@ public class BrotherhoodTest extends AbstractTest {
 
 			if (userName != null)
 				super.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////
+
+	/*
+	 * 
+	 * In this test we will test the register as Brotherhood.
+	 * 
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void driver5() {
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone, title, name, surname
+			{
+				0, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 1, 1, 1, null
+			}, {
+				0, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 1, null
+			}, {
+				0, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 1, 1, 1, null
+			}, {
+				0, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 1, 1, null
+			}, {
+				0, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 1, 1, 1, null
+			}, {
+				0, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 1, 1, 1, null
+			}, {
+				0, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 1, 1, 1, null
+			}, {
+				0, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 1, 1, 1, null
+			}, {
+				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 1, 1, 1, null
+			}, {
+				1, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 1, null
+			}, {
+				1, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 1, 1, 1, null
+			}, {
+				1, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 1, 1, null
+			}, {
+				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 1, 1, 1, null
+			}, {
+				1, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 1, 1, 1, null
+			}, {
+				1, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 1, 1, 1, null
+			}, {
+				1, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 1, 1, 1, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testEditB((int) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (int) testingData[i][5], (int) testingData[i][6], (Class<?>) testingData[i][7]);
+
+	}
+	public void testEditB(final int middleName, final int address, final int photo, final int phone, final int title, final int name, final int surname, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+
+			super.authenticate("brotherhood");
+
+			final Brotherhood b = this.brotherhoodService.findOne(super.getEntityId("brotherhood01"));
+			if (middleName != 0)
+				b.setMiddleName("noExistoEnElPopulate");
+			else
+				b.setMiddleName("");
+
+			if (address != 0)
+				b.setAddress("noExistoEnElPopulate");
+			else
+				b.setAddress("");
+
+			if (photo != 0)
+				b.setPhoto("http://noExistoEnElPopulate");
+			else
+				b.setPhoto("");
+
+			if (phone != 0)
+				b.setPhone("11111111");
+			else
+				b.setPhone("");
+
+			if (title != 0)
+				b.setTitle("noExistoEnElPopulate");
+			else
+				b.setTitle("");
+
+			if (name != 0)
+				b.setName("noExistoEnElPopulate");
+			else
+				b.setName("");
+
+			if (surname != 0)
+				b.setSurname("noExistoEnElPopulate");
+			else
+				b.setSurname("");
+
+			System.out.println(b.getTitle());
+
+			this.brotherhoodService.save(b);
+
+			this.brotherhoodService.flush();
+
+			super.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////
+	/*
+	 * 
+	 * In this test we will test the register as Brotherhood.
+	 * 
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void driver6() {
+
+		final Date res = LocalDateTime.now().toDate();
+		res.setMonth(res.getMonth() - 1);
+
+		final Date res1 = LocalDateTime.now().toDate();
+		res1.setMonth(res.getMonth() + 3);
+
+		final Object testingData[][] = {
+			//	userName, password, email
+			{
+				"noExistoEnElPopulate2", "noExistoEnElPopulate2", "noExistoEnElPopulate@noExistoEnElPopulate2", res, null
+			}, {
+				//EMAIL INCORRECTO
+				"noExistoEnElPopulate3", "noExistoEnElPopulate3", "emailIncorrecto", res, IllegalArgumentException.class
+			}, {
+				//EMAIL INCORRECTO
+				"noExistoEnElPopulate4", "noExistoEnElPopulate4", "", res, ConstraintViolationException.class
+			}, {
+				//USERNAME INCORRECTO
+				"", "noExistoEnElPopulate5", "noExistoEnElPopulate@noExistoEnElPopulate5", res, ConstraintViolationException.class
+			}, {
+				//USERNAME INCORRECT0
+				"d", "noExistoEnElPopulate5", "noExistoEnElPopulate@noExistoEnElPopulate5", res, ConstraintViolationException.class
+			}, {
+				//USERNAME Y PASSWORD INCORRECT0
+				"d", "noExistoEnElPopulate5", "emailIncorrecto", res, ConstraintViolationException.class
+			}, {
+				//USERNAME Y PASSWORD INCORRECT0
+				"", "noExistoEnElPopulate5", "emailIncorrecto", res, ConstraintViolationException.class
+			}, {
+				//USERNAME PASSWORD EMAIL INCORRECTO
+				"", "", "", res, ConstraintViolationException.class
+			}, {
+				// PASSWORD EMAIL INCORRECTO
+				"noExistoEnElPopulate5", "", "", res, ConstraintViolationException.class
+			}, {
+				// PASSWORD EMAIL INCORRECTO
+				"", "", "noExistoEnElPopulate@noExistoEnElPopulate5", res, ConstraintViolationException.class
+			}, {
+				// PASSWORD EMAIL FECHA INCORRECTO 
+				"", "", "noExistoEnElPopulate@noExistoEnElPopulate5", res1, ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testRegister5((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Date) testingData[i][3], (Class<?>) testingData[i][4]);
+	}
+
+	public void testRegister5(final String userName, final String passwordd, final String email, final Date date, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+
+			super.authenticate("brotherhood");
+
+			final Brotherhood b = this.brotherhoodService.findOne(super.getEntityId("brotherhood01"));
+
+			b.getUserAccount().setUsername(userName);
+			b.setEmail(email);
+			b.setEstablishmentDate(date);
+
+			this.brotherhoodService.save(b);
+
+			this.brotherhoodService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

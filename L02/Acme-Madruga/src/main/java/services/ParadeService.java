@@ -399,4 +399,8 @@ public class ParadeService {
 		final Parade saveParade = this.paradeRepository.save(parade);
 		return saveParade;
 	}
+
+	public void flush() {
+		this.paradeRepository.flush();
+	}
 }

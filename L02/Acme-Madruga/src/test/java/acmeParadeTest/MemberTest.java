@@ -38,7 +38,7 @@ public class MemberTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register and edit as Member.
+	 * In this test we will test the edit as Member.
 	 * 
 	 * Analysis of sentence coverage
 	 * TODO
@@ -321,42 +321,42 @@ public class MemberTest extends AbstractTest {
 
 			/////////////////// SI NO HAY NINGUN ERROR Y SE CREA EL MEMBER SE EDITA
 
-			if (this.memberService.findOne(member.getId()) != null) {
-
-				super.authenticate(member.getUserAccount().getUsername());
-
-				if (middleName != 0)
-					member.setMiddleName("noExistoEnElPopulate");
-				else
-					member.setMiddleName("");
-
-				if (address != 0)
-					member.setAddress("noExistoEnElPopulate");
-				else
-					member.setAddress("");
-
-				if (photo != 0)
-					member.setPhoto("http://noExistoEnElPopulate");
-				else
-					member.setPhoto("");
-
-				if (phone != 0)
-					member.setPhone("11111111");
-				else
-					member.setPhone("");
-
-				if (name != 0)
-					member.setName("noExistoEnElPopulate");
-				else
-					member.setName("");
-
-				if (surname != 0)
-					member.setSurname("noExistoEnElPopulate");
-				else
-					member.setSurname("");
-
-				this.memberService.save(member);
-			}
+			//			if (this.memberService.findOne(member.getId()) != null) {
+			//
+			//				super.authenticate(member.getUserAccount().getUsername());
+			//
+			//				if (middleName != 0)
+			//					member.setMiddleName("noExistoEnElPopulate");
+			//				else
+			//					member.setMiddleName("");
+			//
+			//				if (address != 0)
+			//					member.setAddress("noExistoEnElPopulate");
+			//				else
+			//					member.setAddress("");
+			//
+			//				if (photo != 0)
+			//					member.setPhoto("http://noExistoEnElPopulate");
+			//				else
+			//					member.setPhoto("");
+			//
+			//				if (phone != 0)
+			//					member.setPhone("11111111");
+			//				else
+			//					member.setPhone("");
+			//
+			//				if (name != 0)
+			//					member.setName("noExistoEnElPopulate");
+			//				else
+			//					member.setName("");
+			//
+			//				if (surname != 0)
+			//					member.setSurname("noExistoEnElPopulate");
+			//				else
+			//					member.setSurname("");
+			//
+			//				this.memberService.save(member);
+			//			}
 
 			if (expected != null)
 				this.memberService.flush();
@@ -374,7 +374,7 @@ public class MemberTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register and edit as Member.
+	 * In this test we will test the register as Member.
 	 * 
 	 * Analysis of sentence coverage
 	 * TODO
@@ -609,6 +609,355 @@ public class MemberTest extends AbstractTest {
 				super.unauthenticate();
 
 		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	////////////////////////////////////////////////////
+	/*
+	 * 
+	 * In this test we will test the register and edit as Member.
+	 * 
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void driver6() {
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone, title, name, surname
+			{
+				0, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				0, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 0, 1, 1, null
+			}, {
+				0, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+
+			}, {
+				0, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				0, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 0, 1, 1, null
+			}, {
+				0, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
+
+			}, {
+				0, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				0, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 0, 1, 1, null
+			}, {
+				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+
+			}, {
+				0, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				0, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 1, 1, null
+			}, {
+				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 1, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 0, 1, 1, null
+			}, {
+				1, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 0, 1, 1, null
+			}, {
+				1, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 0, 1, 1, null
+			}, {
+				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
+
+			}, {
+				1, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 1, 1, null
+			}, {
+				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 1, 1, 0, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 1, 1, 1, null
+			}, {
+				0, 0, 0, 0, 1, 1, 1, null
+			}, {
+				1, 0, 1, 1, 1, 1, 1, null
+			}, {
+				1, 1, 1, 0, 1, 1, 1, null
+			}, {
+				1, 0, 1, 0, 1, 1, 1, null
+			}, {
+				1, 1, 0, 1, 1, 1, 1, null
+			}, {
+				1, 0, 1, 1, 1, 1, 1, null
+			}, {
+				1, 1, 0, 0, 1, 1, 1, null
+			}, {
+				0, 1, 1, 1, 1, 1, 1, null
+			}, {
+				1, 0, 0, 0, 1, 1, 1, null
+			}, {
+				0, 0, 1, 1, 1, 1, 1, null
+			}, {
+				0, 1, 1, 0, 1, 1, 1, null
+			}, {
+				0, 0, 1, 0, 1, 1, 1, null
+			}, {
+				0, 1, 0, 1, 1, 1, 1, null
+			}, {
+				0, 0, 1, 1, 1, 1, 1, null
+			}, {
+				0, 1, 0, 0, 1, 1, 1, null
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testEdit((int) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (int) testingData[i][5], (int) testingData[i][6], (Class<?>) testingData[i][7]);
+
+	}
+	public void testEdit(final int middleName, final int address, final int photo, final int phone, final int title, final int name, final int surname, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			System.out.println("entro");
+			this.startTransaction();
+
+			super.authenticate("member");
+
+			final Member member = this.memberService.findOne(super.getEntityId("member01"));
+			if (middleName != 0)
+				member.setMiddleName("noExistoEnElPopulate");
+			else
+				member.setMiddleName("");
+
+			if (address != 0)
+				member.setAddress("noExistoEnElPopulate");
+			else
+				member.setAddress("");
+
+			if (photo != 0)
+				member.setPhoto("http://noExistoEnElPopulate");
+			else
+				member.setPhoto("");
+
+			if (phone != 0)
+				member.setPhone("11111111");
+			else
+				member.setPhone("");
+
+			if (name != 0)
+				member.setName("noExistoEnElPopulate");
+			else
+				member.setName("");
+
+			if (surname != 0)
+				member.setSurname("noExistoEnElPopulate");
+			else
+				member.setSurname("");
+
+			this.memberService.save(member);
+
+			if (expected != null)
+				this.memberService.flush();
+
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			System.out.println(oops);
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	//////////////////////////////////////////////
+
+	/*
+	 * 
+	 * In this test we will test the register and edit as Member.
+	 * 
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void driver7() {
+
+		final Object testingData[][] = {
+			//	userName, password, email
+			{
+				"noExistoEnElPopulate3", "noExistoEnElPopulate2", "noExistoEnElPopulate@no3ExistoEnElPopulate2", null
+			}, {
+				//EMAIL INCORRECTO
+				"noExistoEnElPopulate3", "noExistoEnElPopulate3", "emailIncorrecto", IllegalArgumentException.class
+			}, {
+				//EMAIL INCORRECTO
+				"noExistoEnElPopulate4", "noExistoEnElPopulate4", "", IllegalArgumentException.class
+			}, {
+				//USERNAME Y PASSWORD INCORRECT0
+				"d", "noExistoEnElPopulate5", "emailIncorrecto", IllegalArgumentException.class
+			}, {
+				//USERNAME Y PASSWORD INCORRECT0
+				"", "noExistoEnElPopulate5", "emailIncorrecto", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.teste((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+
+	}
+	public void teste(final String userName, final String passwordd, final String email, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+
+			super.authenticate("member");
+
+			final Member m = this.memberService.findOne(super.getEntityId("member01"));
+			m.setEmail(email);
+
+			this.memberService.save(m);
+
+			super.unauthenticate();
+
+			if (expected != null)
+				this.memberService.flush();
+
+		} catch (final Throwable oops) {
+			System.out.println(oops);
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
