@@ -39,9 +39,14 @@ public class SegmentTest extends AbstractTest {
 	private PathService			pathService;
 
 
-	// (LEVEL B 3.3) Testing updating a path
-	// A path can be updated by adding a segment to the last segment of it, updating a segment or deleting one
-	// 
+	/*
+	 * (LEVEL B 3.3) Testing updating a path
+	 * A path can be updated by adding a segment to the last segment of it, updating a segment or deleting one
+	 * 
+	 * Analysis of sentence coverage: 48%
+	 * 
+	 * Analysis of data coverage: TODO
+	 */
 	@Test
 	public void SegmentDriver1() {
 
