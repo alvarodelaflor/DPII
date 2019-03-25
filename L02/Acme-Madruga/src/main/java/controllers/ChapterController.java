@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -161,6 +162,40 @@ public class ChapterController extends AbstractController {
 		}
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
+
+	//Nuevo
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int chapterId) {
+		ModelAndView result;
+
+		final Chapter chapter = this.chapterService.findOne(chapterId);
+		System.out.println("Chapter encontrado: " + chapter);
+		if (this.chapterService.findOne(chapterId) == null || LoginService.getPrincipal().getId() != chapter.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(chapter, "chapter.null");
+
+			try {
+				this.chapterService.delete(chapter);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
+	//Nuevo
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody
+	Chapter export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Chapter result = new Chapter();
+		result = this.chapterService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
 		return result;
 	}
 

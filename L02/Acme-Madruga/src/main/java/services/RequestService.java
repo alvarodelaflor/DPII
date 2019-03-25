@@ -254,4 +254,8 @@ public class RequestService {
 	public Double getRatioRequestParadeStatusNull() {
 		return this.requestRepository.getRatioRequestParadeStatusNull();
 	}
+
+	public void deleteMemberRequests(final int id) {
+		this.requestRepository.deleteInBatch(this.requestRepository.getMemberRequests(id));
+	}
 }
