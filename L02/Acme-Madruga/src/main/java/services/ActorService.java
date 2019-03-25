@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
@@ -97,10 +98,16 @@ public class ActorService {
 
 	// CARMEN --> A+
 	public Float spammersRation() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.actorRepository.spammersRation();
 	}
 
 	public Float noSpammersRation() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.actorRepository.noSpammersRation();
 	}
 }

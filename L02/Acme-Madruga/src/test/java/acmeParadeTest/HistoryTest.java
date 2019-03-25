@@ -62,9 +62,11 @@ public class HistoryTest extends AbstractTest {
 
 	// Tests ------------------------------------------------------------------
 
-//	@Test
-	public void test1() {
+	@Test
+	public void test01() {
 		/*
+		 * POSITIVE TEST
+		 * 
 		 * In this test we will test the creation of records in a history that already had an inception Record.
 		 * 
 		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
@@ -121,8 +123,8 @@ public class HistoryTest extends AbstractTest {
 			this.checkTest((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4],(Class<?>) testingData[i][5]);
 	}
 	
-//	@Test
-	public void test2() {
+	@Test
+	public void test02() {
 		/*
 		 * NEGATIVE TEST
 		 * 
@@ -353,12 +355,12 @@ public class HistoryTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 	
-//	@Test
-	public void test3() {
+	@Test
+	public void test03() {
 		/*
 		 * POSITIVE TEST
 		 * 
-		 * In this test we will test the show and list of chapters and their areas and proclaims.
+		 * In this test we will test the show and list of brotherhoods and their histories and records
 		 * 
 		 * 
 		 *  Information requirements
@@ -493,12 +495,12 @@ public class HistoryTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 	
-//	@Test
-	public void test4() {
+	@Test
+	public void test04() {
 		/*
 		 * NEGATIVE TEST
 		 * 
-		 * In this test we will test the show and list of chapters and their areas and proclaims.
+		 * In this test we will test the show and list of brotherhoods and their histories and records.
 		 * 
 		 * 
 		 *  Information requirements
@@ -607,8 +609,8 @@ public class HistoryTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 	
-//	@Test
-	public void test5() {
+	@Test
+	public void test05() {
 		/*
 		 * POSITIVE TEST
 		 * 
@@ -688,7 +690,7 @@ public class HistoryTest extends AbstractTest {
 	}
 	
 	@Test
-	public void test6() {
+	public void test06() {
 		/*
 		 * NEGATIVE TEST
 		 * 
@@ -967,6 +969,1284 @@ public class HistoryTest extends AbstractTest {
 				"brotherhood", 1, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
 			}, { 
 				"brotherhood", 1, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {  
+				"brotherhood2", 0, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 0, 1, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 0, 1, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 0, 1, 1, 1, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 0, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 1, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 0, 1, 1, 1, 1, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
+			}, {  
+				"brotherhood2", 0, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 0, 1, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 0, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 0, 1, 1, 1, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 1, 0, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 1, 1, 0, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 0, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"brotherhood2", 1, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"brotherhood2", 1, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"brotherhood2", 1, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"admin", 0, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"admin", 0, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 0, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"admin", 1, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"admin", 1, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"admin", 1, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"member", 0, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"member", 0, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 0, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"member", 1, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"member", 1, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"member", 1, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"chapter", 0, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"chapter", 0, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 0, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"chapter", 1, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"chapter", 1, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"chapter", 1, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"sponsor", 0, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"sponsor", 0, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 0, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"sponsor", 1, 0, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 0, 1, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {  
+				"sponsor", 1, 1, 0, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 0, 1, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 0, 1, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 0, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 0, 1, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 1, 0, 1, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, { 
+				"sponsor", 1, 1, 1, 1, 1, 1, 1, IllegalArgumentException.class
 			}
 		};
 
@@ -981,11 +2261,28 @@ public class HistoryTest extends AbstractTest {
 			this.startTransaction();
 			super.authenticate(userName);
 			
-			InceptionRecord inceptionRecord = this.inceptionRecordService.create();
-			inceptionRecord.setTitle("El título");
-			inceptionRecord.setDescription("La descripción");
-			inceptionRecord.setPhotos("https://www.myPhoto.com/idPhoto=4569");
-			InceptionRecord inceptionRecordSaved = this.inceptionRecordService.save(inceptionRecord);
+			InceptionRecord inceptionRecordSaved;
+			
+			if (userName.equals("brotherhood")) {
+				InceptionRecord inceptionRecord = this.inceptionRecordService.create();
+				inceptionRecord.setTitle("El título");
+				inceptionRecord.setDescription("La descripción");
+				inceptionRecord.setPhotos("https://www.myPhoto.com/idPhoto=4569");
+				inceptionRecordSaved = this.inceptionRecordService.save(inceptionRecord);
+			} else {
+				super.unauthenticate();
+				super.authenticate("brotherhood");
+				
+				InceptionRecord inceptionRecord = this.inceptionRecordService.create();
+				inceptionRecord.setTitle("El título");
+				inceptionRecord.setDescription("La descripción");
+				inceptionRecord.setPhotos("https://www.myPhoto.com/idPhoto=4569");
+				inceptionRecordSaved = this.inceptionRecordService.save(inceptionRecord);				
+				
+				super.unauthenticate();
+				super.authenticate(userName);
+			}
+			
 			
 			if (titleBlank!=0 ) {
 				inceptionRecordSaved.setTitle("");
@@ -1020,7 +2317,7 @@ public class HistoryTest extends AbstractTest {
 			}
 			
 			if (photosBlank!=0 && photosNull !=0 && ((titleBlank - titleNull)+(descriptionBlank - descriptionNull))!=0) {
-				inceptionRecordSaved.setPhotos("https://www.myPhoto.com/idPhoto=43");
+				inceptionRecordSaved.setPhotos("https://www.myPhoto.com/idPhoto=43'https://www.myPhoto.com/idPhoto=43");
 			}
 			
 			if (malUrl!=0) {
@@ -1033,11 +2330,484 @@ public class HistoryTest extends AbstractTest {
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
-			System.out.println(caught);
 		} finally {
 			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
 	}
+	
+	@Test
+	public void test07() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * In this test we will test the creation of miscellaneous records in a history that already had an inception Record.
+		 * 
+		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			// brotherhoodId, periodRecord, legalRecord, linkRecord 
+			{ 
+				"brotherhood2", 0, 0, 1, null
+			}, { 
+				"brotherhood2", 0, 1, 0, null
+			}, { 
+				"brotherhood2", 0, 1, 1, null
+			}, { 
+				"brotherhood2", 1, 0, 0, null
+			}, { 
+				"brotherhood2", 1, 0, 1, null
+			}, { 
+				"brotherhood2", 1, 1, 0, null
+			}, { 
+				"brotherhood2", 1, 1, 1, null
+			}
+		};
 
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTestM((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3],(Class<?>) testingData[i][4]);
+	}
+	
+	protected void checkTestM(final String userName, final int periodRecordID, final int legalRecordID, final int linkRecordID, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(userName);
+			
+			MiscellaneousRecord miscellaneousRecord = this.miscellaneousRecordService.create();
+			miscellaneousRecord.setTitle("El título");
+			miscellaneousRecord.setDescription("La descripción");
+			this.miscellaneousRecordService.save(miscellaneousRecord);
+			
+			if (periodRecordID!=0) {
+				PeriodRecord periodRecord = this.periodRecordService.create();
+				periodRecord.setTitle("El título");
+				periodRecord.setDescription("La descripción");
+				periodRecord.setStartYear(2001);
+				periodRecord.setEndYear(2015);
+				periodRecord.setPhotos("https://www.myPhoto.com/idPhoto=543");
+				this.periodRecordService.save(periodRecord);
+			}
+			
+			if (legalRecordID!=0) {
+				LegalRecord legalRecord = this.legalRecordService.create();
+				legalRecord.setTitle("El título");
+				legalRecord.setDescription("La descripción");
+				legalRecord.setLegalName("Nombre Legal");
+				legalRecord.setLaws("Leyes");
+				legalRecord.setVatNumber("ES1234567B");
+				this.legalRecordService.save(legalRecord);
+			}
+			
+			if (linkRecordID!=0) {
+				LinkRecord linkRecord = this.linkRecordService.create();
+				linkRecord.setTitle("El título");
+				linkRecord.setDescription("La descripción");
+				linkRecord.setLink("https://www.elEnlace.com/id=32534");
+				this.linkRecordService.save(linkRecord);
+			}
+			
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test08() {
+		/*
+		 * NEGATIVE TEST
+		 * 
+		 * In this test we will test the creation of miscellaneous records in a history that already had an inception Record.
+		 * 
+		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+				// brotherhoodId, periodRecord, legalRecord, linkRecord, miscellaneousRecord 
+				{ 
+					"brotherhood2", 0, 0, 0, 0, null
+				}, { 
+					"brotherhood2", 0, 0, 0, 1, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 0, 0, 1, 0, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 0, 0, 1, 1, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 0, 1, 0, 0, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 0, 1, 0, 1, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 0, 1, 1, 0, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 0, 1, 1, 1, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 0, 0, 0, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 0, 0, 1, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 0, 1, 0, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 0, 1, 1, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 1, 0, 0, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 1, 0, 1, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 1, 1, 0, ConstraintViolationException.class
+				}, { 
+					"brotherhood2", 1, 1, 1, 1, ConstraintViolationException.class
+				}, {
+					"brotherhood", 0, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 0, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 0, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 0, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 0, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 0, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 0, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 0, 1, 1, 1, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"brotherhood", 1, 1, 1, 1, IllegalArgumentException.class
+				}, {
+					"admin", 0, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 0, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"admin", 0, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 0, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"admin", 0, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 0, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"admin", 0, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 0, 1, 1, 1, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"admin", 1, 1, 1, 1, IllegalArgumentException.class
+				}, {
+					"member", 0, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"member", 0, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"member", 0, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"member", 0, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"member", 0, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"member", 0, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"member", 0, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"member", 0, 1, 1, 1, IllegalArgumentException.class
+				}, { 
+					"member", 1, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"member", 1, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"member", 1, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"member", 1, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"member", 1, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"member", 1, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"member", 1, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"member", 1, 1, 1, 1, IllegalArgumentException.class
+				}, {
+					"chapter", 0, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 0, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"chapter", 0, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 0, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"chapter", 0, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 0, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"chapter", 0, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 0, 1, 1, 1, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"chapter", 1, 1, 1, 1, IllegalArgumentException.class
+				}, {
+					"sponsor", 0, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 0, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"sponsor", 0, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 0, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"sponsor", 0, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 0, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"sponsor", 0, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 0, 1, 1, 1, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 0, 0, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 0, 0, 1, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 0, 1, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 0, 1, 1, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 1, 0, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 1, 0, 1, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 1, 1, 0, IllegalArgumentException.class
+				}, { 
+					"sponsor", 1, 1, 1, 1, IllegalArgumentException.class
+				}
+			};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTestNMisc((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (Class<?>) testingData[i][5]);
+	}
+	
+	protected void checkTestNMisc(final String userName, final int titleBlank, final int descriptionBlank, final int titleNull, final int descriptionNull, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(userName);
+			
+			MiscellaneousRecord miscellaneousRecord = this.miscellaneousRecordService.create();
+			
+			if (titleBlank!=0 ) {
+				miscellaneousRecord.setTitle("");
+			}
+			
+			if (titleNull!=0) {
+				miscellaneousRecord.setTitle(null);
+			}
+			
+			
+			if (titleBlank == 0 && titleNull == 0) {
+				miscellaneousRecord.setTitle("Título");
+			}
+			
+			if (descriptionBlank!=0) {
+				miscellaneousRecord.setDescription("");
+			}
+			
+			if (descriptionNull!=0) {
+				miscellaneousRecord.setDescription(null);
+			}
+			
+			if (descriptionBlank==0 && descriptionNull==0) {
+				miscellaneousRecord.setDescription("Descripción");
+			}
+			this.miscellaneousRecordService.save(miscellaneousRecord);
+			this.inceptionRecordService.flush();
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test09() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * In this test we will test delete a miscellaneous record.
+		 * 
+		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			{ 
+				"brotherhood2", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkDeleteM((String) testingData[i][0] ,(Class<?>) testingData[i][1]);
+	}
+	
+	@Test
+	public void test10() {
+		/*
+		 * NEGATIVE TEST
+		 * 
+		 * In this test we will test delete a miscellaneous record.
+		 * 
+		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records, 
+		 *    zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it. 
+		 *    For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every 
+		 *    legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood 
+		 *    with which the original brotherhood is linked.
+		 *    
+		 *    3. An actor who is authenticated as a brotherhood must be able to:
+		 *			1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		final Object testingData[][] = {
+			{ 
+				"brotherhood2", null
+			}, { 
+				"brotherhood", IllegalArgumentException.class
+			}, { 
+				"admin", IllegalArgumentException.class
+			}, { 
+				"chapter", IllegalArgumentException.class
+			}, { 
+				"member", IllegalArgumentException.class
+			}, { 
+				"sponsor", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkDeleteM((String) testingData[i][0] ,(Class<?>) testingData[i][1]);
+	}
+
+	protected void checkDeleteM(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(userName);
+			
+			MiscellaneousRecord miscellaneousRecord;
+			MiscellaneousRecord miscellaneousRecordSaved;
+			
+			if (userName.equals("brotherhood2")) {
+				miscellaneousRecord = this.miscellaneousRecordService.create();
+				miscellaneousRecord.setTitle("El título");
+				miscellaneousRecord.setDescription("La descripción");
+				miscellaneousRecordSaved = this.miscellaneousRecordService.save(miscellaneousRecord);
+			} else {
+				super.unauthenticate();
+				super.authenticate("brotherhood2");
+				
+				miscellaneousRecord = this.miscellaneousRecordService.create();
+				miscellaneousRecord.setTitle("El título");
+				miscellaneousRecord.setDescription("La descripción");
+				miscellaneousRecordSaved = this.miscellaneousRecordService.save(miscellaneousRecord);				
+				
+				super.unauthenticate();
+				super.authenticate(userName);
+			}
+			
+			this.miscellaneousRecordService.delete(miscellaneousRecordSaved);
+			this.miscellaneousRecordService.flush();
+			
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
 }

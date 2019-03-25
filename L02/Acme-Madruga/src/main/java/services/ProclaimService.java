@@ -49,4 +49,8 @@ public class ProclaimService {
 		chapter.getProclaim().add(proclaimSaved);
 		return proclaimSaved;
 	}
+	
+	public void flush() {
+		this.proclaimRepository.flush();
+	}
 }

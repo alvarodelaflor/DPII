@@ -76,11 +76,16 @@ public class MiscellaneousRecordService {
 
 	public void delete(final MiscellaneousRecord miscellaneousRecord) {
 		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(brotherhood, "Brotherhood is null in delete mis");
 		MiscellaneousRecord miscellaneousRecordFromDB = this.miscellaneousRecordRepository.findOne(miscellaneousRecord.getId());
 		List<MiscellaneousRecord> miscellaneousRecordLogger = (List<MiscellaneousRecord>)brotherhood.getHistory().getMiscellaneousRecord();
 		Assert.isTrue(miscellaneousRecordLogger.contains(miscellaneousRecordFromDB), "miscellaneousRecordServiceDelete.diferentBrotherhoodLogger");
 		brotherhood.getHistory().getMiscellaneousRecord().remove(miscellaneousRecordFromDB);
 		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
 		this.historyService.save(brotherhood.getHistory());
+	}
+	
+	public void flush() {
+		this.miscellaneousRecordRepository.flush();
 	}
 }

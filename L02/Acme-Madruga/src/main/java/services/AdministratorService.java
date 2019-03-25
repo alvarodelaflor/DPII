@@ -62,10 +62,6 @@ public class AdministratorService {
 		return this.scoreWordsNeg;
 	}
 
-	public void flush() {
-
-		this.administratorRepository.flush();
-	}
 
 	public void setScoreWordsPos(final HashSet<String> scoreWordsPos) {
 		this.scoreWordsPos = scoreWordsPos;
@@ -361,6 +357,10 @@ public class AdministratorService {
 		Assert.isTrue(this.getScoreWordsNeg().contains(word), "noScoreWord.error");
 		this.scoreWordsNeg.remove(word);
 		return this.getScoreWordsNeg();
+	}
+	
+	public void flush() {
+		this.administratorRepository.flush();
 	}
 
 }
