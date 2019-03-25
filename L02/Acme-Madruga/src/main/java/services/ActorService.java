@@ -66,7 +66,7 @@ public class ActorService {
 		Assert.notNull(creatorAdmin, "user.logged.error");
 
 		// Check for Spammer flag
-		Assert.isTrue(actor.getUserAccount().getSpammerFlag() != false || actor.getUserAccount().getPolarity() < 0, "ban.error");
+		Assert.isTrue(actor.getUserAccount().getSpammerFlag() == true || actor.getUserAccount().getPolarity() < 0, "ban.error");
 
 		actor.getUserAccount().setBanned(true);
 		return this.actorRepository.save(actor);

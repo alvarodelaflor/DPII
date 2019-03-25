@@ -53,7 +53,7 @@ public class PositionService {
 	}
 
 	public Position findOne(final int id) {
-		Position position = this.positionRepository.findOne(id);
+		final Position position = this.positionRepository.findOne(id);
 		Assert.notNull(position, "position.null");
 		return position;
 	}
@@ -65,6 +65,10 @@ public class PositionService {
 		// "Check that an Admin is saving the new Area"
 		final Administrator creatorAdmin = this.adminService.findByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(creatorAdmin, "user.error");
+
+		// "Check not blank"
+		Assert.isTrue(position.getNameEn() != "");
+		Assert.isTrue(position.getNameEs() != "");
 
 		return this.positionRepository.save(position);
 	}

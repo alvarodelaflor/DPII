@@ -44,10 +44,16 @@
 	<security:authorize access="hasRole('ADMIN')">
 		<display:table name="sponsorships" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 					<display:column property="target" titleKey="sponsorship.target"></display:column>
-					<display:column property="sponsor" titleKey="sponsorship.sponsor"></display:column>
+					<display:column property="sponsor.name" titleKey="sponsorship.sponsor"></display:column>
 					<display:column property="active" titleKey="sponsorship.active"></display:column>
 					<display:column property="creditCard.number" titleKey="sponsorship.creditCard.number"></display:column>
 					<display:column property="creditCard.expiration" titleKey="sponsorship.creditCard.expiration"></display:column>
+					<display:column titleKey="charge">
+						<jstl:out value="${(config.fair+((config.fair*config.VAT)/100.0))*row.bannerCount}"></jstl:out>
+					</display:column>
+					<display:column titleKey="collect">
+						<a href="sponsorship/administrator/collect.do?sponsorshipId=${row.id}"><spring:message code="collect"></spring:message></a>
+					</display:column>
 		</display:table>
 			<p class="checkCreditCard"><input type="button" value=<spring:message code="checkCreditCard" /> id="buttoncheckCreditCard" name="buttoncheckCreditCard"  onclick="location.href='sponsorship/administrator/checkCreditCard.do';"/></p>
 	</security:authorize>

@@ -780,6 +780,7 @@
     
      <bean id="sponsorship01" class="domain.Sponsorship">
     	<property name="banner" value= "http://banner.com"/>
+    	<property name="bannerCount" value= "0"/>
     	<property name="target" value= "target01"/>
     	<property name="sponsor" ref= "sponsor01"/>
 		<property name="parade" ref= "parade02"/>
@@ -789,6 +790,7 @@
     
     <bean id="sponsorship02" class="domain.Sponsorship">
     	<property name="banner" value= "http://banner2.com"/>
+    	<property name="bannerCount" value= "0"/>
     	<property name="target" value= "target02"/>
     	<property name="sponsor" ref= "sponsor01"/>
 		<property name="parade" ref= "parade01"/>

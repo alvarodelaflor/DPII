@@ -16,11 +16,20 @@ public class Sponsorship extends DomainEntity {
 
 	private String		banner, target;
 	private CreditCard	creditCard;
+	private Integer		bannerCount	= 0;
 	//////////////////////////////////
 	private Sponsor		sponsor;
 	private Parade		parade;
 	private Boolean		active;
 
+
+	public Integer getBannerCount() {
+		return this.bannerCount;
+	}
+
+	public void setBannerCount(final Integer bannerCount) {
+		this.bannerCount = bannerCount;
+	}
 
 	public Boolean getActive() {
 		return this.active;
