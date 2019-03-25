@@ -48,7 +48,7 @@ public class PathTest extends AbstractTest {
 	 * 
 	 * Analysis of sentence coverage: 88.2% (Source: EclEmma)
 	 * 
-	 * Analysis of data coverage: TODO
+	 * Analysis of data coverage: ~75% (Source: I think these tests could cover this percentage because we aren't testing a lot of parade values)
 	 */
 	@Test
 	public void PathDriver1() {
