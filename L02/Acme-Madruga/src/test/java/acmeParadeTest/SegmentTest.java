@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import repositories.SegmentRepository;
 import services.ParadeService;
@@ -43,7 +44,7 @@ public class SegmentTest extends AbstractTest {
 	 * (LEVEL B 3.3) Testing updating a path
 	 * A path can be updated by adding a segment to the last segment of it, updating a segment or deleting one
 	 * 
-	 * Analysis of sentence coverage: 48%
+	 * Analysis of sentence coverage: 48% (Source: EclEmma)
 	 * 
 	 * Analysis of data coverage: TODO
 	 */
@@ -67,6 +68,8 @@ public class SegmentTest extends AbstractTest {
 				"brotherhood", 90f, 180f, "create", null
 			}, {
 				"brotherhood", -90f, -180f, "create", null
+			}, { // This is only called internally
+				"brotherhood", 0f, 0f, "internal", null
 			},
 			// ------ Negative tests (insert invalid latitude or longitude)
 			{
@@ -145,7 +148,8 @@ public class SegmentTest extends AbstractTest {
 				segment = this.segmentService.create();
 				segment.setLatitude(BigDecimal.valueOf(latitude));
 				segment.setLongitude(BigDecimal.valueOf(longitude));
-				this.segmentService.save(segment, paradeId);
+				segment = this.segmentService.save(segment, paradeId);
+				Assert.notNull(this.segmentService.findOne(segment.getId()));
 			} else if (mode == "modify") {
 				final Path path = this.pathService.getParadePath(paradeId);
 				final Segment origin = path.getOrigin();
@@ -156,7 +160,14 @@ public class SegmentTest extends AbstractTest {
 				final Path path = this.pathService.getParadePath(paradeId);
 				final Segment lastSegment = this.segmentService.getAllSegments(path).get(this.segmentService.getAllSegments(path).size() - 1);
 				this.segmentService.delete(lastSegment.getId(), paradeId);
+			} else if (mode == "internal") {
+				segment = this.segmentService.create();
+				segment.setLatitude(BigDecimal.valueOf(latitude));
+				segment.setLongitude(BigDecimal.valueOf(longitude));
+				segment = this.segmentService.save(segment, paradeId);
+				this.segmentService.deleteFromDB(segment.getId());
 			}
+
 			this.segmentRepository.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
