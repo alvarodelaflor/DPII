@@ -23,7 +23,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import domain.Brotherhood;
 import security.Authority;
 import security.UserAccount;
@@ -898,5 +897,100 @@ public class FloatTest extends AbstractTest {
 			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test07() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * In this test we will test list and show float.
+		 * 
+		 * Information requirements
+		 * 
+		 * 5. Brotherhoods own floats, for which the system must store their title, description, and some optional pictures. 
+		 *	   Any of the floats that a brotherhood owns can be involved in any of the processions that they organise.
+		 *    
+		 * Functional requirements
+		 * 
+		 * 10. An actor who is authenticated as a brotherhood must be able to:
+		 *		1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate("brotherhood");
+		
+			List<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			List<domain.Float> floats = new ArrayList<domain.Float>();
+			for (Brotherhood broteherhood : brotherhoods) {
+				floats.addAll(broteherhood.getFloats());
+			}
+			
+			for (domain.Float floatt : floats) {
+				floatt.getId();
+				floatt.getVersion();
+				floatt.getBrotherhood();
+				floatt.getTitle();
+				floatt.getDescription();
+				floatt.getPictures();
+			}
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(null, caught);
+	}
+	
+	@Test
+	public void test08() {
+		/*
+		 * NEGATIVE TEST
+		 * 
+		 * In this test we will test list and show float.
+		 * 
+		 * Information requirements
+		 * 
+		 * 5. Brotherhoods own floats, for which the system must store their title, description, and some optional pictures. 
+		 *	   Any of the floats that a brotherhood owns can be involved in any of the processions that they organise.
+		 *    
+		 * Functional requirements
+		 * 
+		 * 10. An actor who is authenticated as a brotherhood must be able to:
+		 *		1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
+		 *
+		 *	Analysis of sentence coverage 
+		 *			TODO
+		 *	Analysis of data coverage
+		 *			TODO
+		 *
+		 */
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate("brotherhood");
+		
+			List<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			for (Brotherhood broteherhood : brotherhoods) {
+				List<domain.Float> floats = (List<domain.Float>) broteherhood.getFloats();
+				floats.get(0).getId();
+			}
+			
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(IndexOutOfBoundsException.class, caught);
 	}
 }
