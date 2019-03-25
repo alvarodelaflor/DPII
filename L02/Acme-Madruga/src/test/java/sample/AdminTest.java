@@ -282,6 +282,24 @@ public class AdminTest extends AbstractTest {
 			{
 				0, 0, null
 			}, {
+				0, 1, null
+			}, {
+				1, 0, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.actorPolarity((int) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	@Test
+	public void actorPolarityNeg() {
+
+		final Object testingData[][] = {
+
+			{
+				0, 0, IllegalArgumentException.class
+			}, {
 				0, 1, IllegalArgumentException.class
 			}, {
 				1, 0, IllegalArgumentException.class
@@ -289,7 +307,7 @@ public class AdminTest extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.actorPolarity((int) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.actorPolarityNeg((int) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
 	@Test
@@ -734,7 +752,7 @@ public class AdminTest extends AbstractTest {
 			final Date date = new Date(0002, 01, 22);
 			bro.setEstablishmentDate(date);
 			bro.setPhone("123456789");
-			this.brotherhoodService.saveR(bro);
+			final Brotherhood savedBro = this.brotherhoodService.saveR(bro);
 
 			this.authenticate("brousername");
 
@@ -751,7 +769,7 @@ public class AdminTest extends AbstractTest {
 			msg.setEmailReceiver(receiver);
 			this.msgService.save(msg);
 
-			Assert.isTrue(!bro.getUserAccount().getSpammerFlag());
+			Assert.isTrue(!savedBro.getUserAccount().getSpammerFlag());
 
 			this.unauthenticate();
 
@@ -813,6 +831,65 @@ public class AdminTest extends AbstractTest {
 				Assert.isTrue(postBro.getUserAccount().getPolarity() < 0.);
 			else
 				Assert.isTrue(postBro.getUserAccount().getPolarity() == 0.);
+
+		} catch (final Throwable oops) {
+
+			caught = oops.getClass();
+		} finally {
+
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+	}
+
+	protected void actorPolarityNeg(final int good, final int bad, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			final Brotherhood bro = this.brotherhoodService.create();
+			bro.setName("broname");
+			bro.setSurname("brosurname");
+			bro.getUserAccount().setUsername("brousername");
+			bro.getUserAccount().setPassword("bropassword");
+			bro.setEmail("bro@email.com");
+			bro.setTitle("brotitle");
+			final Date date = new Date(0002, 01, 22);
+			bro.setEstablishmentDate(date);
+			bro.setPhone("123456789");
+			final Brotherhood savedBro = this.brotherhoodService.saveR(bro);
+
+			this.authenticate("brousername");
+
+			final Message msg = this.msgService.create();
+			final Priority priority = new Priority();
+			priority.setValue("HIGH");
+			msg.setPriority(priority);
+			msg.setSubject("subject");
+			msg.setBody("no score");
+			if (good == 1)
+				msg.setBody("good");
+			else if (bad == 1)
+				msg.setBody("bad");
+			final Collection<String> receiver = new ArrayList<String>();
+			receiver.add("bro2@email.com");
+			msg.setEmailReceiver(receiver);
+			this.msgService.save(msg);
+
+			this.unauthenticate();
+
+			final Brotherhood postBro = this.brotherhoodService.findOne(savedBro.getId());
+
+			if (good == 1)
+				Assert.isTrue(postBro.getUserAccount().getPolarity() <= 0.);
+			else if (bad == 1)
+				Assert.isTrue(postBro.getUserAccount().getPolarity() >= 0.);
+			else
+				Assert.isTrue(postBro.getUserAccount().getPolarity() != 0.);
 
 		} catch (final Throwable oops) {
 
