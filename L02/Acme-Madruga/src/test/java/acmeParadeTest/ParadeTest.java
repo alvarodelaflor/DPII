@@ -13,6 +13,7 @@ package acmeParadeTest;
 import java.util.Date;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -22,6 +23,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.Authority;
+import security.LoginService;
 import services.BrotherhoodService;
 import services.FloatService;
 import services.ParadeService;
@@ -48,7 +51,7 @@ public class ParadeTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 	/*
 	 * 
-	 * In this test we will test the register and edit as Brotherhood.
+	 * In this test we will test the create of Parade.
 	 * 
 	 * Analysis of sentence coverage
 	 * TODO
@@ -58,197 +61,201 @@ public class ParadeTest extends AbstractTest {
 	@Test
 	public void driver1() {
 		final Object testingData[][] = {
-			//	
-			//			{
-			//				0, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 0, 0, 1, 1, 1, null
-			//			}, {
-			//				0, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 1, 1, 1, null
-			//			}, {
-			//				0, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 1, 1, 1, 1, null
-			//			}, {
-			//				0, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 1, 1, 1, 1, null
-			//			}, {
-			//				0, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 0, 1, 1, 1, null
-			//			}, {
-			//				0, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 0, 1, 1, 1, null
-			//			}, {
-			//				0, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 1, 1, 1, 1, 1, null
-			//			}, {
-			//				0, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 1, 1, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				0, 1, 1, 1, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 0, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 0, 0, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 0, 1, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 1, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 1, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 0, 1, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 0, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 1, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 1, 0, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 1, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 1, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 1, 1, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 1, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 0, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 1, 1, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 1, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 1, 0, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 1, 1, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 1, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 1, 1, 1, 1, 1, null
-			//			}, {
-			//				1, 0, 0, 0, 1, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 0, 1, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 0, 0, 0, 0, ConstraintViolationException.class
-			//			}, {
-			//				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
-			//			}, 
+
 			{
+				0, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 0, 0, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+
+			}, {
+				0, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+
+			}, {
+				0, 0, 1, 1, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 0, 1, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+
+			}, {
+				0, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 1, 0, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 1, 0, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+
+			}, {
+				0, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 1, 1, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				0, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
+			}, {
+				0, 1, 1, 1, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 0, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 0, 0, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 1, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 1, 0, 1, 0, IllegalArgumentException.class
+
+			}, {
+				1, 1, 1, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 0, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 1, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 1, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 1, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 0, 1, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 0, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 0, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 1, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 0, 1, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 1, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 1, 0, 1, 1, 1, null
+			}, {
+				1, 0, 1, 1, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 1, 0, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 1, 1, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 1, 1, 1, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 0, 0, 0, 1, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 0, 0, 0, 1, 0, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 1, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 0, 0, 0, 1, 1, ConstraintViolationException.class
+			}, {
+				1, 1, 0, 0, 0, 0, 0, IllegalArgumentException.class
+			}, {
+				1, 1, 0, 1, 1, 0, 1, ConstraintViolationException.class
+			}, {
 				1, 1, 1, 1, 1, 1, 0, IllegalArgumentException.class
 			}, {
 				1, 1, 1, 1, 1, 1, 1, null
@@ -299,10 +306,13 @@ public class ParadeTest extends AbstractTest {
 
 			if (maxColum != 0)
 				p.setMaxColum(4);
-			System.out.println("llego");
+			else
+				p.setMaxColum(-1);
 
 			if (maxRox != 0)
 				p.setMaxRow(10);
+			else
+				p.setMaxRow(-1);
 
 			if (floatt != 0) {
 				final domain.Float f = this.floatService.create();
@@ -314,11 +324,12 @@ public class ParadeTest extends AbstractTest {
 				p.setFloatt(fSave);
 			}
 
-			this.paradeService.save(p);
+			final Parade p1 = this.paradeService.save(p);
 
-			Assert.notNull(p.getFloatt());
+			Assert.notNull(p1.getFloatt());
 
-			//this.paradeService.flush();
+			this.paradeService.flush();
+
 			super.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -330,4 +341,93 @@ public class ParadeTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Test
+	public void driver2() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * In this test we will test the create of Parade.
+		 * 
+		 * Analysis of sentence coverage
+		 * TODO
+		 * Analysis of data coverage
+		 * TODO
+		 */
+		final Object testingData[][] = {
+			// username, error
+			{
+				null, IllegalArgumentException.class
+			}, {
+				"admin", IllegalArgumentException.class
+			}, {
+				"chapter", IllegalArgumentException.class
+			}, {
+				"brotherhood", null
+			}, {
+				"member", IllegalArgumentException.class
+			}, {
+				"sponsor", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.test1((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	public void test1(final String actor, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+
+			super.authenticate(actor);
+
+			final Authority authority = new Authority();
+			authority.setAuthority(Authority.BROTHERHOOD);
+			Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+
+			final Parade p = this.paradeService.create();
+
+			p.setBrotherhood(this.brotherhoodService.findOne(super.getEntityId("brotherhood01")));
+			System.out.println("llego");
+
+			p.setTitle("soyUnTitulo");
+			p.setDescription("soyUnaDescripcion");
+			final Date res = LocalDateTime.now().toDate();
+			res.setMonth(res.getMonth() + 3);
+
+			p.setMoment(res);
+
+			p.setIsFinal(false);
+
+			p.setMaxColum(4);
+
+			p.setMaxRow(10);
+
+			final domain.Float f = this.floatService.create();
+			f.setDescription("soyUnDescripcion");
+			f.setPictures("http://soyUnaFoto");
+			f.setTitle("soyUnTitulo");
+			f.setBrotherhood(this.brotherhoodService.findOne(super.getEntityId("brotherhood01")));
+			final domain.Float fSave = this.floatService.save(f);
+			p.setFloatt(fSave);
+
+			final Parade p1 = this.paradeService.save(p);
+
+			Assert.notNull(p1.getFloatt());
+
+			this.paradeService.flush();
+
+			super.unauthenticate();
+
+		} catch (final Throwable oops) {
+			System.out.println(oops);
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
 }
