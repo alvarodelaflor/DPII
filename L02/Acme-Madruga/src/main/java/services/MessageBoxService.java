@@ -125,6 +125,15 @@ public class MessageBoxService {
 	}
 
 	public MessageBox save(final MessageBox messageBox) {
+		final MessageBox oldMessageBox = this.messageBoxRepository.findOne(messageBox.getId());
+		System.out.println(oldMessageBox);
+		if (oldMessageBox != null)
+			if (oldMessageBox.getName() == "in box" || oldMessageBox.getName() == "out box" || oldMessageBox.getName() == "spam box" || oldMessageBox.getName() == "trash box" || oldMessageBox.getName() == "notification box")
+				Assert.isTrue(oldMessageBox.getName() == messageBox.getName());
+		System.out.println("falla aqui");
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
+		Assert.isTrue(!this.getNameBox(a.getId()).contains(messageBox.getName()));
 		final MessageBox result = this.messageBoxRepository.save(messageBox);
 		return result;
 	}
@@ -277,5 +286,12 @@ public class MessageBoxService {
 	public Collection<MessageBox> getSonBox(final Integer id) {
 		final Collection<MessageBox> sonBoxCollection = this.messageBoxRepository.getSonBox(id);
 		return sonBoxCollection;
+	}
+
+	public List<String> getNameBox(final Integer id) {
+		final Collection<String> nameBoxCollection = this.messageBoxRepository.getNameBox(id);
+		final List<String> nameBoxList = new ArrayList<>();
+		nameBoxList.addAll(nameBoxCollection);
+		return nameBoxList;
 	}
 }

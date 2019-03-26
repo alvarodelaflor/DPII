@@ -67,11 +67,11 @@ public class CreditCard {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+	@Future
 	public Date getExpiration() {
 		return this.expiration;
 	}
 
-	@Future
 	public void setExpiration(final Date expiration) {
 		this.expiration = expiration;
 	}

@@ -117,8 +117,8 @@ public class MessageController extends AbstractController {
 			result.addObject("messageBoxId", messageBoxId);
 			result.addObject("requestURI", "message/show.do");
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -130,8 +130,8 @@ public class MessageController extends AbstractController {
 
 		msg = this.messageService.create();
 		result = this.createEditModelAndView(msg);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -148,8 +148,8 @@ public class MessageController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -174,8 +174,8 @@ public class MessageController extends AbstractController {
 			Assert.notNull(msg);
 			result = this.createEditModelAndView(msg);
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -276,8 +276,8 @@ public class MessageController extends AbstractController {
 				System.out.println(oops);
 				result = this.createEditModelAndView(msg, "message.commit.error");
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	@RequestMapping(value = "/editNotification", method = RequestMethod.GET)
@@ -303,8 +303,8 @@ public class MessageController extends AbstractController {
 			Assert.notNull(msg);
 			result = this.createEditModelAndViewNotification(msg);
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -351,8 +351,8 @@ public class MessageController extends AbstractController {
 				System.out.println(oops);
 				result = this.createEditModelAndView(msg, "message.commit.error");
 			}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	protected ModelAndView createEditModelAndView(final Message msg) {
@@ -363,8 +363,8 @@ public class MessageController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -402,8 +402,8 @@ public class MessageController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 	protected ModelAndView createEditModelAndViewNotification(final Message msg) {
@@ -414,8 +414,8 @@ public class MessageController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -431,8 +431,8 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 		result.addObject("msgCode", msgCode);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -470,8 +470,8 @@ public class MessageController extends AbstractController {
 			formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			moment = formatter.format(new Date());
 			result.addObject("moment", moment);
-			result.addObject("logo", welcomeService.getLogo());
-			result.addObject("system", welcomeService.getSystem());
+			result.addObject("logo", this.welcomeService.getLogo());
+			result.addObject("system", this.welcomeService.getSystem());
 			return result;
 		}
 
@@ -493,8 +493,8 @@ public class MessageController extends AbstractController {
 		}
 
 		result.addObject("language", language);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -528,26 +528,10 @@ public class MessageController extends AbstractController {
 		ModelAndView result;
 		try {
 
-			System.out.println(msg.getMessageBoxes());
-			System.out.println("Entro en el save");
+			this.messageService.editMessageBox(msg);
+
 			final UserAccount login = LoginService.getPrincipal();
 			final Actor sender = this.actorService.getActorByUserId(login.getId());
-
-			final Message oldMessage = this.messageService.findOne(msg.getId());
-			System.out.println(oldMessage.getMessageBoxes());
-
-			final Collection<MessageBox> boxesJsp = msg.getMessageBoxes();
-
-			msg.getMessageBoxes().addAll(oldMessage.getMessageBoxes());
-
-			System.out.println(msg.getMessageBoxes());
-
-			for (final MessageBox messageBox : oldMessage.getMessageBoxes())
-				if (sender.getMessageBoxes().contains(messageBox) && !boxesJsp.contains(messageBox))
-					msg.getMessageBoxes().remove(messageBox);
-
-			System.out.println(sender.getName());
-			System.out.println(sender.getEmail());
 
 			if (binding.hasErrors()) {
 				System.out.println("Entro en el binding messageController");
@@ -585,8 +569,8 @@ public class MessageController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
@@ -649,8 +633,8 @@ public class MessageController extends AbstractController {
 			result.addObject("nameMessageBox", nameMessageBox);
 			result.addObject("msgCode", msgCode);
 		}
-		result.addObject("logo", welcomeService.getLogo());
-		result.addObject("system", welcomeService.getSystem());
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 

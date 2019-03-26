@@ -386,4 +386,38 @@ public class MessageService {
 		return message;
 	}
 
+	public void editMessageBox(final Message message) {
+		System.out.println("new Boxes");
+		System.out.println(message.getMessageBoxes());
+
+		final List<MessageBox> listNewBoxes = new ArrayList<>();
+		listNewBoxes.addAll(message.getMessageBoxes());
+
+		final UserAccount login = LoginService.getPrincipal();
+		final Actor sender = this.actorService.getActorByUserId(login.getId());
+
+		final Message oldMessage = this.findOne(message.getId());
+		System.out.println("antiguas Boxes");
+		System.out.println(oldMessage.getMessageBoxes());
+
+		final Collection<MessageBox> boxesJsp = message.getMessageBoxes();
+
+		message.getMessageBoxes().addAll(oldMessage.getMessageBoxes());
+
+		System.out.println(message.getMessageBoxes());
+
+		System.out.println("nuevas");
+		System.out.println(listNewBoxes);
+
+		for (final MessageBox messageBox : oldMessage.getMessageBoxes()) {
+			System.out.println(sender.getMessageBoxes().contains(messageBox));
+			System.out.println(boxesJsp.contains(messageBox));
+			System.out.println(!listNewBoxes.contains(messageBox));
+			if (sender.getMessageBoxes().contains(messageBox) && boxesJsp.contains(messageBox) && !(listNewBoxes.contains(messageBox)))
+				message.getMessageBoxes().remove(messageBox);
+		}
+		System.out.println(sender.getName());
+		System.out.println(sender.getEmail());
+	}
+
 }
