@@ -5,10 +5,12 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /*
  * CONTROL DE CAMBIOS Member.java
@@ -25,7 +27,10 @@ public class Member extends Actor {
 	private Finder					finder;
 
 
-	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "member", cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
 	public Collection<Enrolled> getEnrolleds() {
 		return this.enrolleds;
 	}
@@ -34,7 +39,10 @@ public class Member extends Actor {
 		this.enrolleds = enrolleds;
 	}
 
-	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	@OneToOne(optional = false, cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
 	public Finder getFinder() {
 		return this.finder;
 	}

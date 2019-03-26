@@ -17,6 +17,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 import repositories.BrotherhoodRepository;
+import repositories.FloatRepository;
+import repositories.ParadeRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
@@ -65,6 +67,18 @@ public class BrotherhoodService {
 
 	@Autowired
 	private HistoryService		historyService;
+
+	@Autowired
+	private FloatService		floatService;
+
+	@Autowired
+	private FloatRepository		floatRepository;
+
+	@Autowired
+	private ParadeService		paradeService;
+
+	@Autowired
+	private ParadeRepository	paradeRepo;
 
 
 	public Collection<Brotherhood> findByAreaId(final int areaId) {
@@ -395,11 +409,17 @@ public class BrotherhoodService {
 	}
 
 	public Collection<String> largestBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.brotherhoodMaxRow();
 
 	}
 
 	public Collection<String> smallestBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.brotherhoodMinRow();
 	}
 
@@ -408,22 +428,37 @@ public class BrotherhoodService {
 	}
 
 	public Float minBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.minBrotherhoodPerArea();
 	}
 
 	public Float maxBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.maxBrotherhoodPerArea();
 	}
 
 	public Float avgBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.avgBrotherhoodPerArea();
 	}
 
 	public Float stddevBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.stddevBrotherhoodPerArea();
 	}
 
 	public Collection<Object[]> countBrotherhoodPerArea() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.brotherhoodRepository.countBrotherhoodPerArea();
 	}
 
@@ -442,6 +477,9 @@ public class BrotherhoodService {
 	}
 
 	public Collection<Brotherhood> findBrotherhoodWithLargestHistory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 
 		final Collection<Brotherhood> res = new ArrayList<Brotherhood>();
 
@@ -456,6 +494,9 @@ public class BrotherhoodService {
 	}
 
 	public Collection<Brotherhood> findBrotherhoodsWithHistoryLargerThanAvg() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 
 		final Collection<Brotherhood> res = new ArrayList<Brotherhood>();
 		final Collection<History> histories = this.historyService.findHistoriesPerSize(this.historyService.avgRecordPerHistory());
@@ -466,5 +507,19 @@ public class BrotherhoodService {
 		System.out.println("Lista en el servicio para encontrar la mas grandes que la media: ");
 		System.out.println(res);
 		return res;
+	}
+
+	public void flush() {
+		this.brotherhoodRepository.flush();
+	}
+
+	public void delete(final Brotherhood brotherhood) {
+		Assert.isTrue(LoginService.getPrincipal().getId() == brotherhood.getUserAccount().getId());
+		final Collection<domain.Float> floats = this.floatRepository.findFloatByBrotherhood(brotherhood.getId());
+		if (!floats.isEmpty())
+			for (final domain.Float f : floats)
+				this.floatService.delete(f);
+
+		this.brotherhoodRepository.delete(brotherhood);
 	}
 }

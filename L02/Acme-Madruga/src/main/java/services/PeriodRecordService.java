@@ -60,17 +60,14 @@ public class PeriodRecordService {
 		Boolean res = true;
 		try {
 			if (photos.contains("'")) {
-				System.out.println("Son multiples fotos");
 				List<String> photosC = Arrays.asList(photos.split("'"));
 				for (String photo : photosC) {
 					new URL(photo).toURI();	
 				}
 			} else {
-				System.out.println("Es una única foto");
 				new URL(photos).toURI();
 			}			
 		} catch (Exception e) {
-			System.out.println("No es una foto");
 			res = false;
 		}
 

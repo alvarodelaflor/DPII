@@ -22,13 +22,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.BrotherhoodService;
+import services.ConfigurationService;
 import services.MemberService;
 import services.ParadeService;
 import services.PositionAuxService;
 import services.RequestService;
+import services.SponsorshipService;
 import services.WelcomeService;
 import domain.Brotherhood;
+import domain.Configuration;
 import domain.Parade;
+import domain.Sponsorship;
 
 /*
  * CONTROL DE CAMBIOS ParadeBrotherhoodController.java
@@ -42,22 +46,28 @@ import domain.Parade;
 public class ParadeController extends AbstractController {
 
 	@Autowired
-	BrotherhoodService	brotherhoodService;
+	BrotherhoodService		brotherhoodService;
 
 	@Autowired
-	PositionAuxService	positionAuxService;
+	PositionAuxService		positionAuxService;
 
 	@Autowired
-	ParadeService		paradeService;
+	ParadeService			paradeService;
 
 	@Autowired
-	MemberService		memberService;
+	MemberService			memberService;
 
 	@Autowired
-	RequestService		requestService;
+	SponsorshipService		sponsorshipService;
 
 	@Autowired
-	WelcomeService		welcomeService;
+	RequestService			requestService;
+
+	@Autowired
+	ConfigurationService	configurationService;
+
+	@Autowired
+	WelcomeService			welcomeService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -90,13 +100,17 @@ public class ParadeController extends AbstractController {
 	public ModelAndView show(@RequestParam(value = "paradeId", defaultValue = "-1") final int paradeId) {
 		ModelAndView result;
 		final Parade parade = this.paradeService.findOne(paradeId);
+		final Sponsorship sponsorship = this.sponsorshipService.randomSponsorship(paradeId);
+		final Configuration config = this.configurationService.getConfiguration();
 
 		if (this.paradeService.findOne(paradeId) == null)
 			result = new ModelAndView("redirect:/welcome/index.do");
 		else {
 			Assert.notNull(parade, "parade.nul");
 			result = new ModelAndView("parade/brotherhood/show");
+			result.addObject("sponsorship", sponsorship);
 			result.addObject("parade", parade);
+			result.addObject("config", config);
 			try {
 				if (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null)
 					result.addObject("validMember", this.validMember(paradeId));
@@ -117,4 +131,5 @@ public class ParadeController extends AbstractController {
 			res = false;
 		return res;
 	}
+
 }

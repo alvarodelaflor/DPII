@@ -1,9 +1,11 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,9 @@ public class SponsorshipService {
 
 	@Autowired
 	private SponsorService			sponsorService;
+
+	@Autowired
+	private ParadeService			paradeService;
 
 
 	public Sponsorship reconstruct(final Sponsorship sponsorship, final BindingResult binding) {
@@ -123,6 +128,20 @@ public class SponsorshipService {
 		final Collection<Sponsorship> sponsorships = this.sponsorshipRepository.getParadeSponsorships(paradeId);
 		for (final Sponsorship sponsorship : sponsorships)
 			this.sponsorshipRepository.delete(sponsorship.getId());
+	}
+
+	public Sponsorship randomSponsorship(final int paradeId) {
+
+		Sponsorship res = null;
+		final List<Sponsorship> shs = new ArrayList<>(this.sponsorshipRepository.getParadeSponsorships(paradeId));
+		final Random r = new Random();
+
+		if (!shs.isEmpty()) {
+			res = shs.get(r.nextInt(shs.size()));
+			res.setBannerCount((res.getBannerCount() + 1));
+			res = this.sponsorshipRepository.save(res);
+		}
+		return res;
 	}
 
 	public void flush() {

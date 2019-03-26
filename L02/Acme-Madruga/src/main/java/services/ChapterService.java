@@ -15,6 +15,7 @@ import org.springframework.validation.Validator;
 
 import repositories.ChapterRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Chapter;
 import domain.MessageBox;
@@ -287,4 +288,12 @@ public class ChapterService {
 		return res;
 	}
 
+	public void flush() {
+		this.chapterRepository.flush();
+	}
+
+	public void delete(final Chapter chapter) {
+		Assert.isTrue(LoginService.getPrincipal().getId() == chapter.getUserAccount().getId());
+
+	}
 }

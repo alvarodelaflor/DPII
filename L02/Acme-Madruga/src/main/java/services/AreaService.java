@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.AreaRepository;
+import security.Authority;
 import security.LoginService;
 import domain.Administrator;
 import domain.Area;
@@ -55,6 +56,9 @@ public class AreaService {
 	}
 
 	public Area save(final Area area) {
+
+		// Name:
+		Assert.isTrue(area.getName() != "");
 
 		if (area.getPictures().size() != 0) {
 			final List<String> s = new ArrayList<String>(area.getPictures());
@@ -112,6 +116,9 @@ public class AreaService {
 	}
 
 	public Float ratioAreaNoCoordinate() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		final Float res = (float) (this.areaRepository.AreaNoChapter() / (float) this.areaRepository.AreaALL());
 		return res;
 	}
@@ -131,9 +138,9 @@ public class AreaService {
 		System.out.println("SERVICIO:  " + area);
 		Assert.notNull(area, "areaExist.error");
 		Assert.isNull(area.getChapter(), "areaExistsChapter.error");
-		Assert.isTrue(!(area.getChapter().getUserAccount().getId() == (LoginService.getPrincipal().getId())), "areaSameChapter.error");
 		area.setChapter(chapter);
-		this.save(area);
+		System.out.println("CHAPTER DEL AREA: " + area.getChapter());
+		this.areaRepository.save(area);
 		this.areaRepository.flush();
 
 	}

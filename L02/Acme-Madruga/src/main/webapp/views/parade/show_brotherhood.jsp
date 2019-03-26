@@ -19,6 +19,16 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<head>
+<style>
+	 img {
+	 width: 25%;
+	 height: 25%;
+	 }
+	</style>
+</head>
+
 <body>
 	<security:authorize access="hasRole('MEMBER')">
 		<jstl:if test="${validMember}">
@@ -29,7 +39,9 @@
 			</form>
 		</jstl:if>
 	</security:authorize>
-	<div></div>
+	<div>
+		<img alt="" src="${sponsorship.banner}">
+	</div>
 	<div>
 		<table>
 			<tr>
@@ -75,6 +87,8 @@
 			</tr>
 
 		</table>
+		
+		
 	</div>
 	<div>
 		<form>

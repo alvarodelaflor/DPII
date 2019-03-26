@@ -49,5 +49,6 @@
 <br>
 
 <acme:cancel url="chapter/list.do" code="back"/>
+<acme:cancel url="/chapter/export.do?id=${chapter.id}" code="export"/><br>
 
 

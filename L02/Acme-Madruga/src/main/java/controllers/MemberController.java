@@ -219,4 +219,28 @@ public class MemberController extends AbstractController {
 			return null;
 		return result;
 	}
+
+	//Nuevo
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int memberId) {
+		ModelAndView result;
+
+		final Member member = this.memberService.findOne(memberId);
+		System.out.println("Member encontrado: " + member);
+		if (this.memberService.findOne(memberId) == null || LoginService.getPrincipal().getId() != member.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(member, "member.null");
+
+			try {
+				this.memberService.delete(member);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
 }

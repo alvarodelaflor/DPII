@@ -232,26 +232,48 @@ public class RequestService {
 	}
 
 	public Double getRatioRequestStatusTrue() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.requestRepository.getRatioRequestStatusTrue();
 	}
 
 	public Double getRatioRequestStatusFalse() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.requestRepository.getRatioRequestStatusFalse();
 	}
 
 	public Double getRatioRequestStatusNull() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.requestRepository.getRatioRequestStatusNull();
 	}
 
 	public Double getRatioRequestParadeStatusTrue() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.requestRepository.getRatioRequestParadeStatusTrue();
 	}
 
 	public Double getRatioRequestParadeStatusFalse() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.requestRepository.getRatioRequestParadeStatusFalse();
 	}
 
 	public Double getRatioRequestParadeStatusNull() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.requestRepository.getRatioRequestParadeStatusNull();
+	}
+
+	public void deleteMemberRequests(final int id) {
+		this.requestRepository.deleteInBatch(this.requestRepository.getMemberRequests(id));
 	}
 }

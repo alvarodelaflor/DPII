@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ParadeRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
@@ -81,19 +82,22 @@ public class ParadeService {
 		return this.paradeRepository.findOne(id);
 	}
 	public Parade save(final Parade parade) {
-		final Parade paradeUpdate = this.paradeRepository.save(parade);
 		final List<PositionAux> positionAuxs = new ArrayList<PositionAux>();
-		if (parade.getIsFinal().equals(true))
+		final Parade paradeUpdate1 = this.paradeRepository.save(parade);
+		if (paradeUpdate1.getIsFinal().equals(true)) {
+			paradeUpdate1.setStatus("SUBMITTED");
 			for (int i = 0; i < parade.getMaxRow(); i++)
 				for (int j = 0; j < parade.getMaxColum(); j++) {
 					final PositionAux positionAux = this.positionAuxService.create();
 					positionAux.setRow(i);
 					positionAux.setColum(j);
-					positionAux.setParade(paradeUpdate);
+					positionAux.setParade(paradeUpdate1);
 					positionAux.setStatus(false);
 					positionAuxs.add(positionAux);
 				}
+		}
 		this.positionAuxService.saveAll(positionAuxs);
+		final Parade paradeUpdate = this.paradeRepository.save(paradeUpdate1);
 		return paradeUpdate;
 	}
 
@@ -183,6 +187,9 @@ public class ParadeService {
 	}
 
 	public Collection<Parade> paradeOrganised() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.findAllWithCreationDateTimeBeforeI(LocalDateTime.now().toDate(), this.sumarMes(LocalDateTime.now().toDate()));
 	}
 
@@ -200,58 +207,100 @@ public class ParadeService {
 	}
 
 	public String minParade() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		final Parade p = this.paradeRepository.minParade();
 		return p == null ? null : p.getTitle();
 	}
 	public String maxParade() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		final Parade p = this.paradeRepository.maxParade();
 		return p == null ? null : p.getTitle();
 	}
 	public Integer minParadeN() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.minParadeN();
 	}
 	public Integer maxParadeN() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.maxParadeN();
 	}
 
 	public Collection<Parade> findParadesBrotherhoodFinal(final Integer brotherhood) {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.findParadesBrotherhoodFinal(brotherhood);
 	}
 
 	// REQUISITO 8
 	public Float ratioFinalSUBMITTED() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.ratioFinalSUBMITTED();
 	}
 
 	public Float ratioFinalACCEPTED() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.ratioFinalACCEPTED();
 	}
 
 	public Float ratioFinalREJECTED() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.ratioFinalREJECTED();
 	}
 
 	public Float ratioNoFinalNULL() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.ratioNoFinalNULL();
 	}
 
 	public Float minParadeCapter() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.minParadeCapter();
 	}
 
 	public Float maxParadeCapter() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.maxParadeCapter();
 	}
 
 	public Float avgParadeCapter() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.avgParadeCapter();
 	}
 
 	public Float stddevParadeCapter() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.stddevParadeCapter();
 	}
 
 	public Collection<String> ParadeChapter() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		final Collection<String> res = new ArrayList<>();
 
 		final List<Object[]> collection = this.paradeRepository.ParadeChapter();
@@ -349,5 +398,9 @@ public class ParadeService {
 		Assert.isTrue(this.findOne(parade.getId()) != null);
 		final Parade saveParade = this.paradeRepository.save(parade);
 		return saveParade;
+	}
+
+	public void flush() {
+		this.paradeRepository.flush();
 	}
 }

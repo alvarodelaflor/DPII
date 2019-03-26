@@ -213,4 +213,5 @@ public class SponsorshipController extends AbstractController {
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
+
 }

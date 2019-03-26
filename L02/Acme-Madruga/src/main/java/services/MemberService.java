@@ -49,6 +49,9 @@ public class MemberService {
 	@Autowired
 	private FinderService		finderService;
 
+	@Autowired
+	private RequestService		requestService;
+
 
 	public Member reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Member result = this.create();
@@ -317,17 +320,26 @@ public class MemberService {
 	}
 
 	public Collection<Member> lisMemberAccept() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.memberRepository.memberAccept();
 	}
 
 	public Boolean checkAlreadyInParade(final int memberId) {
 		Boolean res = false;
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		if (this.memberRepository.membersOfParade(memberId) > 0)
 			res = true;
 		return res;
 	}
 
 	public Boolean checkIsInBrotherhood(final int brotherhoodId) {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		Boolean res = false;
 		final int memberId = this.memberRepository.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		if (this.memberRepository.membersOfBrotherhood(memberId, brotherhoodId) > 0)
@@ -336,17 +348,39 @@ public class MemberService {
 	}
 
 	public Float maxNumberOfMemberPerBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.memberRepository.maxNumberOfMembersPerBrotherhood();
 	}
 
 	public Float minNumberOfMemberPerBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.memberRepository.minNumberOfMembersPerBrotherhood();
 	}
 	public Float avgNumberOfMemberPerBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.memberRepository.avgNumberOfMembersPerBrotherhood();
 	}
 
 	public Float desviationOfNumberOfMemberPerBrotherhood() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.memberRepository.stddevNumberOfMembersPerBrotherhood();
+	}
+
+	public void flush() {
+		this.memberRepository.flush();
+	}
+	public void delete(final Member member) {
+		Assert.isTrue(member.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.requestService.deleteMemberRequests(member.getId());
+		this.memberRepository.delete(member);
+
 	}
 }

@@ -19,7 +19,19 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <security:authorize access="hasRole('BROTHERHOOD')"> 
 
+<head>
+<style>
+	 img {
+	 width: 40%;
+	 height: 40%;
+	 }
+	</style>
+</head>
+
 <div class="content">
+	
+	<img alt="" src="${banner}"  width="2">
+
 	<table>
 		
 		<c:choose>
@@ -62,6 +74,10 @@
 	<br>
 	<br>
 <acme:cancel url=" " code="back"/>
-<acme:cancel url="/brotherhood/export.do?id=${brotherhood.id}" code="export"/>
+<acme:cancel url="/brotherhood/export.do?id=${brotherhood.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/brotherhood/deleteUser.do?id=${brotherhood.id}" code="delete"/>
+
+
 
 

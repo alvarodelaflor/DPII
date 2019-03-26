@@ -40,7 +40,7 @@ public class PathService {
 
 	public Path save(final Path path, final int paradeId) {
 		// We have to be the brotherhood owner of this parade
-		this.assertParadeOwner(path.getParade().getId());
+		this.assertParadeOwner(paradeId);
 		final Path res = this.pathRepository.save(path);
 
 		return res;
@@ -74,7 +74,7 @@ public class PathService {
 
 	public Path createFromParade(final int paradeId) {
 		final Path path = this.create(paradeId);
-		return this.pathRepository.save(path);
+		return this.save(path, paradeId);
 	}
 
 	public void setOrigin(final int paradeId, final Segment pathOrigin) {
@@ -90,7 +90,6 @@ public class PathService {
 	private void assertParadeOwner(final int paradeId) {
 		final Parade parade = this.paradeService.findOne(paradeId);
 		final int loggedAccountId = LoginService.getPrincipal().getId();
-
 		Assert.isTrue(parade.getBrotherhood().getUserAccount().getId() == loggedAccountId);
 
 	}
@@ -101,13 +100,14 @@ public class PathService {
 
 		this.validator.validate(segment, binding);
 		// We have to also validate the destination
-		this.validator.validate(segment.getDestination(), binding);
+		if (segment.getDestination() != null)
+			this.validator.validate(segment.getDestination(), binding);
 		return segment;
 	}
 
-	public void deleteWithParade(final int id) {
-		this.assertParadeOwner(id);
-		final Path path = this.pathRepository.findFromParade(id);
+	public void deleteWithParade(final int paradeID) {
+		this.assertParadeOwner(paradeID);
+		final Path path = this.pathRepository.findFromParade(paradeID);
 		if (path != null) {
 			final List<Segment> segments = this.segmentService.getAllSegments(path);
 			this.pathRepository.delete(path.getId());
