@@ -138,9 +138,9 @@ public class AreaService {
 		System.out.println("SERVICIO:  " + area);
 		Assert.notNull(area, "areaExist.error");
 		Assert.isNull(area.getChapter(), "areaExistsChapter.error");
-		Assert.isTrue(!(area.getChapter().getUserAccount().getId() == (LoginService.getPrincipal().getId())), "areaSameChapter.error");
 		area.setChapter(chapter);
-		this.save(area);
+		System.out.println("CHAPTER DEL AREA: " + area.getChapter());
+		this.areaRepository.save(area);
 		this.areaRepository.flush();
 
 	}

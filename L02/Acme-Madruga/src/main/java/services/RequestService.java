@@ -272,4 +272,8 @@ public class RequestService {
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.requestRepository.getRatioRequestParadeStatusNull();
 	}
+
+	public void deleteMemberRequests(final int id) {
+		this.requestRepository.deleteInBatch(this.requestRepository.getMemberRequests(id));
+	}
 }

@@ -49,6 +49,9 @@ public class MemberService {
 	@Autowired
 	private FinderService		finderService;
 
+	@Autowired
+	private RequestService		requestService;
+
 
 	public Member reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
 		final Member result = this.create();
@@ -373,5 +376,11 @@ public class MemberService {
 
 	public void flush() {
 		this.memberRepository.flush();
+	}
+	public void delete(final Member member) {
+		Assert.isTrue(member.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.requestService.deleteMemberRequests(member.getId());
+		this.memberRepository.delete(member);
+
 	}
 }

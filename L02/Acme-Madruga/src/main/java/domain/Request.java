@@ -3,8 +3,8 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-
 
 /*
  * CONTROL DE CAMBIOS Position.java
@@ -48,7 +47,7 @@ public class Request extends DomainEntity {
 		this.status = status;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	public Member getMember() {
 		return this.member;
 	}

@@ -74,6 +74,10 @@
 	<br>
 	<br>
 <acme:cancel url=" " code="back"/>
-<acme:cancel url="/brotherhood/export.do?id=${brotherhood.id}" code="export"/>
+<acme:cancel url="/brotherhood/export.do?id=${brotherhood.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/brotherhood/deleteUser.do?id=${brotherhood.id}" code="delete"/>
+
+
 
 
