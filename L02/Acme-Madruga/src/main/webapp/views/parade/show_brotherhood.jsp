@@ -77,6 +77,12 @@
 				<td><strong><spring:message code="parade.float" />: </strong>
 					<jstl:out value="${parade.floatt.title}"></jstl:out></td>
 			</tr>
+			
+			<tr>
+				<td><strong><spring:message code="parade.status.rejection" /> </strong>
+					<jstl:out value="${parade.rejectionReason}"></jstl:out></td>
+			</tr>
+			
 			<tr>
 				<td><strong><spring:message code="parade.status" />:
 				</strong> <span class="parade-${fn:toLowerCase(parade.status)}"> <jstl:if
