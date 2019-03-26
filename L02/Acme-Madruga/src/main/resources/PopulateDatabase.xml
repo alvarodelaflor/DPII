@@ -921,13 +921,6 @@
     	<property name="laws" value= "hola"/>	
 		<property name="history" ref="history02" />	
     </bean>    
-    <bean id="inceptionRecord1" class="domain.InceptionRecord">
-    	<property name="title" value= "carmen"/>
-    	<property name="description" value= "hola"/>
-    	<property name="photos" value= "http://hola"/>
-		<property name="history" ref="history02" />
-
-    </bean>
     
     <!-- LINKRECORD -->
     <bean id="linkRecord1" class="domain.LinkRecord">
