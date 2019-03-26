@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +52,17 @@ public class PathController extends AbstractController {
 
 			final Brotherhood loggedBrotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 
+			List<Segment> segments = null;
 			// In case we are logged as the brotherhood who owns this parade we want to also modify the path
-			if (loggedBrotherhood != null && loggedBrotherhood.getId() == path.getParade().getBrotherhood().getId())
+			if (loggedBrotherhood != null && loggedBrotherhood.getId() == path.getParade().getBrotherhood().getId()) {
 				result.addObject("owner", true);
-			else
+				segments = this.segmentService.getAllSegments(path);
+			} else {
 				result.addObject("owner", false);
+				segments = new ArrayList<Segment>(this.segmentService.getAllSegments(path));
+				segments.remove(segments.size() - 1);
+			}
 
-			final List<Segment> segments = this.segmentService.getAllSegments(path);
 			result.addObject("segments", segments);
 			result.addObject("paradeId", paradeId);
 			result.addObject("logo", this.welcomeService.getLogo());
@@ -68,7 +73,8 @@ public class PathController extends AbstractController {
 			// We don't have a path? Then we create it, no problem
 			if (path == null)
 				path = this.pathService.createFromParade(paradeId);
-			final List<Segment> segments = this.segmentService.getAllSegments(path);
+			final List<Segment> segments = new ArrayList<Segment>(this.segmentService.getAllSegments(path));
+			segments.remove(segments.size() - 1);
 			result.addObject("segments", segments);
 			result.addObject("paradeId", paradeId);
 			result.addObject("logo", this.welcomeService.getLogo());
@@ -79,7 +85,6 @@ public class PathController extends AbstractController {
 		}
 		return result;
 	}
-
 	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST)
 	public ModelAndView editSegment(@RequestParam("paradeId") final int paradeId, final Segment segment, final BindingResult binding, final RedirectAttributes redirectAttributes) {
 		ModelAndView result;

@@ -74,7 +74,7 @@ public class PathService {
 
 	public Path createFromParade(final int paradeId) {
 		final Path path = this.create(paradeId);
-		return this.save(path, paradeId);
+		return this.pathRepository.save(path);
 	}
 
 	public void setOrigin(final int paradeId, final Segment pathOrigin) {
