@@ -65,9 +65,8 @@ public class InceptionRecordService {
 				final List<String> photosC = Arrays.asList(photos.split("'"));
 				for (final String photo : photosC)
 					new URL(photo).toURI();
-			} else {
+			} else
 				new URL(photos).toURI();
-			}
 		} catch (final Exception e) {
 			res = false;
 		}
@@ -82,7 +81,7 @@ public class InceptionRecordService {
 		Assert.isTrue(this.checkPhotos(inceptionRecord.getPhotos()), "Photo are not URLs");
 		InceptionRecord inceptionRecordSaved;
 		// Assert inceptionRecord owner is the same that brotherhood logger
-		if (brotherhood.getHistory()!=null && brotherhood.getHistory().getInceptionRecord()!=null) {
+		if (brotherhood.getHistory() != null && brotherhood.getHistory().getInceptionRecord() != null) {
 			/*
 			 * En el caso de que el brotherhood tenga ya una inceptionRecord se comprueba que la id de la que se va a editar sea la
 			 * misma que la que tiene el brotherhood logueado
@@ -92,6 +91,7 @@ public class InceptionRecordService {
 			Assert.isTrue(idHistoryBrotherhoodLogger == history.getId(), "inceptionRecord.brotherhood.diferent");
 		}
 		final History history = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
+		inceptionRecord.setHistory(history);
 		inceptionRecordSaved = this.inceptionRecordRepository.save(inceptionRecord);
 		history.setInceptionRecord(inceptionRecordSaved);
 		this.historyService.save(history);

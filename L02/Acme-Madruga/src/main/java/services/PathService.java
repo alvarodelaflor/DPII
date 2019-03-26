@@ -74,7 +74,7 @@ public class PathService {
 
 	public Path createFromParade(final int paradeId) {
 		final Path path = this.create(paradeId);
-		return this.save(path, paradeId);
+		return this.pathRepository.save(path);
 	}
 
 	public void setOrigin(final int paradeId, final Segment pathOrigin) {
@@ -97,11 +97,10 @@ public class PathService {
 	public Segment reconstruct(final Segment segment, final BindingResult binding) {
 		// This should only be called when there's no path, segment id is always 0
 		Assert.isTrue(segment.getId() == 0);
-
+		System.out.println("This is true: " + (segment.getId() == 0));
 		this.validator.validate(segment, binding);
 		// We have to also validate the destination
-		if (segment.getDestination() != null)
-			this.validator.validate(segment.getDestination(), binding);
+		this.validator.validate(segment.getDestination(), binding);
 		return segment;
 	}
 

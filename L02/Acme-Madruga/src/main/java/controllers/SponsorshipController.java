@@ -2,12 +2,14 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import services.ParadeService;
 import services.SponsorService;
 import services.SponsorshipService;
 import services.WelcomeService;
+import domain.CreditCard;
 import domain.Parade;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -30,6 +33,7 @@ public class SponsorshipController extends AbstractController {
 
 	@Autowired
 	private SponsorshipService	sponsorshipService;
+
 	@Autowired
 	private WelcomeService		welcomeService;
 
@@ -59,11 +63,26 @@ public class SponsorshipController extends AbstractController {
 			res = new ModelAndView("sponsorship/list");
 			res.addObject("sponsorships", sponsor.getSponsorships());
 			res.addObject("requestURI", "sponsorship/list.do");
+			res.addObject("validSponsor", validSponsor());
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
 		res.addObject("logo", this.welcomeService.getLogo());
 		res.addObject("system", this.welcomeService.getSystem());
+		return res;
+	}
+	
+	private Boolean validSponsor() {
+		Boolean res = true;
+		try {
+			for (Parade parade : this.paradeService.findAll()) {
+				if (!parade.getIsFinal().equals(true) || !parade.getStatus().equals("ACCEPTED")) {
+					res = false;
+				}
+			}
+		} catch (Exception e) {
+			res = false;
+		}
 		return res;
 	}
 
@@ -96,19 +115,23 @@ public class SponsorshipController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		ModelAndView result;
+		final ModelAndView result;
 
 		Sponsorship sponsorship;
+		try {
+			Assert.isTrue(!this.paradeService.findAll().isEmpty(), "No hay parades");
+			sponsorship = this.sponsorshipService.create();
 
-		sponsorship = this.sponsorshipService.create();
+			final Collection<Parade> parades = this.paradeService.findAll();
 
-		final Collection<Parade> parades = this.paradeService.findAll();
-
-		result = new ModelAndView("sponsorship/create");
-		result.addObject("sponsorship", sponsorship);
-		result.addObject("logo", this.welcomeService.getLogo());
-		result.addObject("parades", parades);
-		result.addObject("system", this.welcomeService.getSystem());
+			result = new ModelAndView("sponsorship/create");
+			result.addObject("sponsorship", sponsorship);
+			result.addObject("logo", this.welcomeService.getLogo());
+			result.addObject("parades", parades);
+			result.addObject("system", this.welcomeService.getSystem());	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -124,22 +147,76 @@ public class SponsorshipController extends AbstractController {
 			sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 
 			result = new ModelAndView("sponsorship/edit");
+
 			result.addObject("parades", parades);
 			result.addObject("sponsorship", sponsorship);
 		}
+
+		HashSet<String> makes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			makes = this.welcomeService.defaultCCsMakes();
+		else
+			makes = this.welcomeService.getCreditCardsMakes();
+
+		result.addObject("makes", makes);
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
+	
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveEdit(Sponsorship sponsorship, final BindingResult binding) {
 		ModelAndView result;
 
 		sponsorship = this.sponsorshipService.reconstruct(sponsorship, binding);
+		
+		CreditCard creditCard = sponsorship.getCreditCard();
+		
+		if (!this.sponsorshipService.checkCVV(creditCard)) {
+			final ObjectError error = new ObjectError("creditCard.cvv", "Must be into 100-999");
+			binding.addError(error);
+			binding.rejectValue("creditCard.CVV", "error.creditCard.cvv");
+		}
+		
+		if (!this.sponsorshipService.checkNumber(creditCard)) {
+			final ObjectError error = new ObjectError("creditCard.number", "Must be a number with 16 digits");
+			binding.addError(error);
+			binding.rejectValue("creditCard.number", "error.creditCard.number");
+		}
+		
+		if (!this.sponsorshipService.checkMoment(creditCard)) {
+			final ObjectError error = new ObjectError("creditCard.expiration", "Must be in future");
+			binding.addError(error);
+			binding.rejectValue("creditCard.expiration", "error.creditCard.expiration");
+		}
+		
+		if (!this.sponsorshipService.checkHolderBlank(creditCard)) {
+			final ObjectError error = new ObjectError("creditCard.holder", "Must be not blank");
+			binding.addError(error);
+			binding.rejectValue("creditCard.holder", "error.creditCard.holderBlank");
+		}
+		
+		if (!this.sponsorshipService.checkHolderInsecure(creditCard)) {
+			final ObjectError error = new ObjectError("creditCard.holder", "Insecure HTML");
+			binding.addError(error);
+			binding.rejectValue("creditCard.holder", "error.creditCard.holderInsercure");
+		}
+		
+		if (!this.sponsorshipService.checkMakeBlank(creditCard)) {
+			final ObjectError error = new ObjectError("creditCard.make", "Must be not blank");
+			binding.addError(error);
+			binding.rejectValue("creditCard.make", "error.creditCard.makeBlank");
+		}
+		
+		if (!this.sponsorshipService.checkMakeInsecure(creditCard)) {
+			final ObjectError error = new ObjectError("creditCard.make", "Insecure HTML");
+			binding.addError(error);
+			binding.rejectValue("creditCard.make", "error.creditCard.makeInsercure");
+		}
 
 		if (binding.hasErrors()) {
-			System.out.println("El error pasa por aquí alvaro (IF de save())");
+			System.out.println("El error pasa por aquï¿½ alvaro (IF de save())");
 			System.out.println(binding);
 			result = new ModelAndView("sponsorship/edit");
 		} else
@@ -159,6 +236,14 @@ public class SponsorshipController extends AbstractController {
 				System.out.println(binding);
 				result = new ModelAndView("sponsorship/edit");
 			}
+
+		HashSet<String> makes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			makes = this.welcomeService.defaultCCsMakes();
+		else
+			makes = this.welcomeService.getCreditCardsMakes();
+
+		result.addObject("makes", makes);
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		result.addObject("parades", this.paradeService.findAll());

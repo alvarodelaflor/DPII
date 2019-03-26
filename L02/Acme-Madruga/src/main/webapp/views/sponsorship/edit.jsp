@@ -38,21 +38,25 @@
           		<acme:textbox code="sponsorship.banner" path="banner" />
           		<acme:textbox code="sponsorship.target" path="target" />
           		<acme:textbox code="sponsorship.creditCard.holder" path="creditCard.holder" />
-          		<acme:textbox code="sponsorship.creditCard.make" path="creditCard.make" />
+          		<form:label path="creditCard.make">
+					<spring:message code="creditCardMakes" />:
+				</form:label>
+          		<form:select required ="required" path="creditCard.make">
+   		 			<form:options items="${makes}"/>
+				</form:select>
+				<form:errors cssClass="error" path="parade" />		
           		<acme:textbox code="sponsorship.creditCard.number" path="creditCard.number" />
           		<acme:textbox code="sponsorship.creditCard.cvv" path="creditCard.CVV" />
-          		<form:label path="creditCard.expiration"><spring:message code="sponsorship.creditCard.expiration" /></form:label>
-				<form:input type="date" path="creditCard.expiration" required="required" placeholder="yyyy/MM/dd HH:mm"/>
-				<form:errors cssClass="error" path="creditCard.expiration"/><br>
+				<acme:textboxMoment code="sponsorship.creditCard.expiration" path="creditCard.expiration"/>
 				<form:label path="parade">
 				<spring:message code="sponsorship.parade" />:
 				</form:label>
 				<form:select required ="required" path="parade">
-   		 		<form:options items="${parades}" />
+   		 			<form:options items="${parades}" itemLabel="title"/>
 				</form:select>
 				<form:errors cssClass="error" path="parade" />					
 			<br></br>
-			<input type="submit" name="save" value=<spring:message code="send" />/>
+			<acme:submit name="save" code="send"/>
 			<acme:cancel url="sponsorship/list.do" code="sponsorship.cancel"/>
 		</form:form>
       </div>

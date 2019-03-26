@@ -53,6 +53,8 @@ public class Sponsorship extends DomainEntity {
 	}
 
 	@NotBlank
+	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTarget() {
 		return this.target;
 	}

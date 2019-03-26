@@ -21,9 +21,11 @@
 
 <div class="content">
 				<table>    						
-    				<tr><td><spring:message code="sponsorship.show.banner" /><jstl:out value="${sponsorship.banner}"></jstl:out></td></tr>
+    				<tr><td><spring:message code="sponsorship.show.banner" /></td></tr>
+    				
+    				<tr><td><img src="${sponsorship.banner}" border="1" alt="Error" width="400" height="300"></td></tr>
     							
-    				<tr><td><spring:message code="sponsorship.show.target" /><jstl:out value="${sponsorship.target}"></jstl:out></td></tr>
+    				<tr><td><spring:message code="sponsorship.show.target" /><a href =<jstl:out value="${sponsorship.target}"></jstl:out>><jstl:out value="${sponsorship.target}"></jstl:out></a></td></tr>
     				  		
       				<tr><td><spring:message code="sponsorship.show.sponsor" /><jstl:out value="${sponsorship.sponsor.name}"></jstl:out></td></tr>
   																          			
@@ -38,3 +40,10 @@
           			
           			
       			</div>
+      			<div>      
+	<form>
+		<br>
+		<input type="button" value=<spring:message code="back" /> name="back" onclick="history.back()" />
+	</form>
+</div>
+      			

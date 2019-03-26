@@ -337,9 +337,6 @@ public class MemberService {
 	}
 
 	public Boolean checkIsInBrotherhood(final int brotherhoodId) {
-		final Authority authority = new Authority();
-		authority.setAuthority(Authority.ADMIN);
-		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		Boolean res = false;
 		final int memberId = this.memberRepository.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		if (this.memberRepository.membersOfBrotherhood(memberId, brotherhoodId) > 0)

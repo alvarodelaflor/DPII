@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import repositories.PeriodRecordRepository;
+import security.LoginService;
 import domain.Brotherhood;
 import domain.History;
 import domain.PeriodRecord;
-import repositories.PeriodRecordRepository;
-import security.LoginService;
 
 /*
  * CONTROL DE CAMBIOS PositionService.java
@@ -28,21 +29,22 @@ public class PeriodRecordService {
 
 	//Managed Repository -------------------	
 	@Autowired
-	private PeriodRecordRepository		periodRecordRepository;
+	private PeriodRecordRepository	periodRecordRepository;
 
 	//Supporting services ------------------
 	@Autowired
-	private BrotherhoodService brotherhoodService;
-	
+	private BrotherhoodService		brotherhoodService;
+
 	@Autowired
-	private HistoryService historyService;
+	private HistoryService			historyService;
+
 
 	//Simple CRUD Methods ------------------
 
 	public PeriodRecord create() {
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(brotherhood, "Brotherhood is null");
-		PeriodRecord periodRecord = new PeriodRecord();
+		final PeriodRecord periodRecord = new PeriodRecord();
 		return periodRecord;
 
 	}
@@ -52,43 +54,42 @@ public class PeriodRecordService {
 	}
 
 	public PeriodRecord findOne(final int id) {
-		PeriodRecord periodRecord = this.periodRecordRepository.findOne(id);
+		final PeriodRecord periodRecord = this.periodRecordRepository.findOne(id);
 		return periodRecord;
 	}
-	
-	public Boolean checkPhotos(String photos) {
+
+	public Boolean checkPhotos(final String photos) {
 		Boolean res = true;
 		try {
 			if (photos.contains("'")) {
-				List<String> photosC = Arrays.asList(photos.split("'"));
-				for (String photo : photosC) {
-					new URL(photo).toURI();	
-				}
-			} else {
+				final List<String> photosC = Arrays.asList(photos.split("'"));
+				for (final String photo : photosC)
+					new URL(photo).toURI();
+			} else
 				new URL(photos).toURI();
-			}			
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 
 		return res;
 	}
-	
+
 	public PeriodRecord save(final PeriodRecord periodRecord) {
 		Assert.notNull(periodRecord, "periodRecordSaveService.null");
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(brotherhood, "Brotherhood is null");
 		Assert.notNull(brotherhood.getHistory().getInceptionRecord(), "Brotherhood have not got an inception record");
 		Assert.isTrue(this.checkPhotos(periodRecord.getPhotos()), "Photos are not URLs");
 		PeriodRecord periodRecordSaved;
 		// Assert periodRecord owner is the same that brotherhood logger
-		PeriodRecord periodRecordFromDB = this.periodRecordRepository.findOne(periodRecord.getId());
-		History history = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
-		if (brotherhood!=null && brotherhood.getHistory()!=null && !brotherhood.getHistory().getPeriodRecord().isEmpty() && periodRecordFromDB!=null) {
-			List<PeriodRecord> periodRecordLogger = (List<PeriodRecord>)brotherhood.getHistory().getPeriodRecord();
+		final PeriodRecord periodRecordFromDB = this.periodRecordRepository.findOne(periodRecord.getId());
+		final History history = this.historyService.findHistoryByBrotherhood(brotherhood.getId());
+		if (brotherhood != null && brotherhood.getHistory() != null && !brotherhood.getHistory().getPeriodRecord().isEmpty() && periodRecordFromDB != null) {
+			final List<PeriodRecord> periodRecordLogger = (List<PeriodRecord>) brotherhood.getHistory().getPeriodRecord();
 			Assert.isTrue(periodRecordLogger.contains(periodRecordFromDB), "periodRecordServiceSave.diferentBrotherhoodLogger");
 			history.getPeriodRecord().remove(periodRecordFromDB);
-		} 
+		}
+		periodRecord.setHistory(history);
 		periodRecordSaved = this.periodRecordRepository.save(periodRecord);
 		history.getPeriodRecord().add(periodRecordSaved);
 		this.historyService.save(history);
@@ -97,9 +98,9 @@ public class PeriodRecordService {
 
 	public void delete(final PeriodRecord periodRecord) {
 		Assert.notNull(periodRecord, "periodRecord.null");
-		Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-		PeriodRecord periodRecordFromDB = this.periodRecordRepository.findOne(periodRecord.getId());
-		List<PeriodRecord> periodRecordLogger = (List<PeriodRecord>)brotherhood.getHistory().getPeriodRecord();
+		final Brotherhood brotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+		final PeriodRecord periodRecordFromDB = this.periodRecordRepository.findOne(periodRecord.getId());
+		final List<PeriodRecord> periodRecordLogger = (List<PeriodRecord>) brotherhood.getHistory().getPeriodRecord();
 		Assert.isTrue(periodRecordLogger.contains(periodRecordFromDB), "periodRecordServiceDelete.diferentBrotherhoodLogger");
 		brotherhood.getHistory().getPeriodRecord().remove(periodRecordFromDB);
 		this.periodRecordRepository.delete(periodRecord);

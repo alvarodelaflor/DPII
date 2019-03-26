@@ -372,7 +372,7 @@
     	<property name="moment" value="2020/04/03 21:00" />
 		<property name="brotherhood" ref= "brotherhood01"/>
 		<property name="ticker" value="200403-FGHIJ9" />
-		<property name="isFinal" value= "false"/>
+		<property name="isFinal" value= "true"/>
 		<property name="maxRow" value= "9"/>
 		<property name="maxColum" value= "1"/>
 		<property name="status" value= "REJECTED"/>
@@ -830,17 +830,17 @@
     
     
      <bean id="creditCard01" class="domain.CreditCard">
-    	<property name="holder" value= "Lopera"/>
+    	<property name="holder" value= "Manuel Ruiz de Lopera"/>
     	<property name="make" value= "VISA"/>
-    	<property name="number" value= "1345432Ffeds"/>
+    	<property name="number" value= "1234567891234567"/>
     	<property name="CVV" value= "234"/>
- 		<property name="expiration" value= "2019/09/02 21:00"/>
+ 		<property name="expiration" value= "2039/12/12 23:59"/>
     </bean>
     
      <bean id="sponsorship01" class="domain.Sponsorship">
-    	<property name="banner" value= "http://banner.com"/>
+    	<property name="banner" value= "https://estaticos.elperiodico.com/resources/jpg/4/9/policia-encuentra-nino-cinco-anos-madrugada-solo-calle-1524574525394.jpg"/>
     	<property name="bannerCount" value= "0"/>
-    	<property name="target" value= "target01"/>
+    	<property name="target" value= "https://www.elvisodelalcor.org/"/>
     	<property name="sponsor" ref= "sponsor01"/>
 		<property name="parade" ref= "parade02"/>
 		<property name="creditCard" ref= "creditCard01"/>
@@ -848,9 +848,9 @@
     </bean>
     
     <bean id="sponsorship02" class="domain.Sponsorship">
-    	<property name="banner" value= "http://banner2.com"/>
+    	<property name="banner" value= "http://www.elgrifoinformacion.com/multimedia/images/ROMERIADELVISODEELVISODELALCOR.jpg"/>
     	<property name="bannerCount" value= "0"/>
-    	<property name="target" value= "target02"/>
+    	<property name="target" value= "https://es.wikipedia.org/wiki/El_Viso_del_Alcor"/>
     	<property name="sponsor" ref= "sponsor01"/>
 		<property name="parade" ref= "parade01"/>
 		<property name="creditCard" ref= "creditCard01"/>
@@ -921,13 +921,6 @@
     	<property name="laws" value= "hola"/>	
 		<property name="history" ref="history02" />	
     </bean>    
-    <bean id="inceptionRecord1" class="domain.InceptionRecord">
-    	<property name="title" value= "carmen"/>
-    	<property name="description" value= "hola"/>
-    	<property name="photos" value= "http://hola"/>
-		<property name="history" ref="history02" />
-
-    </bean>
     
     <!-- LINKRECORD -->
     <bean id="linkRecord1" class="domain.LinkRecord">
