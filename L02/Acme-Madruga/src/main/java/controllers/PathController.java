@@ -60,7 +60,8 @@ public class PathController extends AbstractController {
 			} else {
 				result.addObject("owner", false);
 				segments = new ArrayList<Segment>(this.segmentService.getAllSegments(path));
-				segments.remove(segments.size() - 1);
+				if (segments.size() > 0)
+					segments.remove(segments.size() - 1);
 			}
 
 			result.addObject("segments", segments);
@@ -74,7 +75,8 @@ public class PathController extends AbstractController {
 			if (path == null)
 				path = this.pathService.createFromParade(paradeId);
 			final List<Segment> segments = new ArrayList<Segment>(this.segmentService.getAllSegments(path));
-			segments.remove(segments.size() - 1);
+			if (segments.size() > 0)
+				segments.remove(segments.size() - 1);
 			result.addObject("segments", segments);
 			result.addObject("paradeId", paradeId);
 			result.addObject("logo", this.welcomeService.getLogo());
@@ -90,11 +92,8 @@ public class PathController extends AbstractController {
 		ModelAndView result;
 
 		final Segment res = this.pathService.reconstruct(segment, binding);
-
 		if (binding.hasErrors()) {
 			result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
-			result.addObject("logo", this.welcomeService.getLogo());
-			result.addObject("system", this.welcomeService.getSystem());
 			redirectAttributes.addFlashAttribute("wrongSegment", true);
 		} else
 			try {
