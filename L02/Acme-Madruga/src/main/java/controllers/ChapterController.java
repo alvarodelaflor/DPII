@@ -148,11 +148,13 @@ public class ChapterController extends AbstractController {
 		try {
 			final Chapter chapter = this.chapterService.findOne(id);
 			Assert.notNull(chapter);
+			final Boolean checkChapter = LoginService.getPrincipal().getId() == chapter.getUserAccount().getId();
 			final Collection<Proclaim> proclaims = this.chapterService.getChapterByUserAccountId(chapter.getUserAccount().getId()).getProclaim();
 			System.out.println(chapter);
 			result = new ModelAndView("chapter/show");
 			result.addObject("chapter", chapter);
 			result.addObject("proclaims", proclaims);
+			result.addObject("checkChapter", checkChapter);
 			// ALVARO 15/03/2019 11:35 -- Si el logueado es el mismo que se va a mostrar se habilita el botón de crear una proclaim
 			if (this.checkChapterLoggerSameChapterToShow(id))
 				result.addObject("validChapter", true);
@@ -179,8 +181,9 @@ public class ChapterController extends AbstractController {
 
 			try {
 				this.chapterService.delete(chapter);
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/j_spring_security_logout");
 			} catch (final Exception e) {
+				System.out.println(e.getMessage());
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 		}

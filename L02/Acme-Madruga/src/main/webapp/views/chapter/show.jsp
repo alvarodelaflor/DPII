@@ -49,6 +49,10 @@
 <br>
 
 <acme:cancel url="chapter/list.do" code="back"/>
+<jstl:if test="${checkChapter}">
 <acme:cancel url="/chapter/export.do?id=${chapter.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/chapter/delete.do?id=${chapter.id}" code="delete"/>
+</jstl:if>
 
 
