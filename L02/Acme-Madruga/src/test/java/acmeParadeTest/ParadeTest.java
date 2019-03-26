@@ -11,6 +11,7 @@
 package acmeParadeTest;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
@@ -1167,7 +1168,7 @@ public class ParadeTest extends AbstractTest {
 	}
 
 	@Test
-	public void test09() {
+	public void driver6() {
 		/*
 		 * POSITIVE TEST
 		 * 
@@ -1180,7 +1181,7 @@ public class ParadeTest extends AbstractTest {
 		 */
 		final Object testingData[][] = {
 			{
-				"brotherhood2", null
+				"brotherhood", null
 			}
 		};
 
@@ -1189,7 +1190,7 @@ public class ParadeTest extends AbstractTest {
 	}
 
 	@Test
-	public void test10() {
+	public void driver7() {
 		/*
 		 * NEGATIVE TEST
 		 * 
@@ -1202,10 +1203,6 @@ public class ParadeTest extends AbstractTest {
 		 */
 		final Object testingData[][] = {
 			{
-				"brotherhood2", null
-			}, {
-				"brotherhood", IllegalArgumentException.class
-			}, {
 				"admin", IllegalArgumentException.class
 			}, {
 				"chapter", IllegalArgumentException.class
@@ -1230,7 +1227,7 @@ public class ParadeTest extends AbstractTest {
 			Parade p;
 			Parade paradeSave;
 
-			if (userName.equals("brotherhood2")) {
+			if (userName.equals("brotherhood")) {
 				p = this.paradeService.create();
 
 				p.setBrotherhood(this.brotherhoodService.findOne(super.getEntityId("brotherhood01")));
@@ -1253,10 +1250,25 @@ public class ParadeTest extends AbstractTest {
 				paradeSave = this.paradeService.save(p);
 			} else {
 				super.unauthenticate();
-				super.authenticate("brotherhood2");
+				super.authenticate("brotherhood");
 
 				p = this.paradeService.create();
-				p.setTitle("El título");
+				p.setBrotherhood(this.brotherhoodService.findOne(super.getEntityId("brotherhood01")));
+				p.setTitle("soyUnTitulo");
+				p.setDescription("soyUnaDescripcion");
+				final Date res = LocalDateTime.now().toDate();
+				res.setMonth(res.getMonth() + 3);
+				p.setMoment(res);
+				p.setIsFinal(false);
+				p.setMaxColum(4);
+				p.setMaxRow(10);
+				final domain.Float f = this.floatService.create();
+				f.setDescription("soyUnDescripcion");
+				f.setPictures("http://soyUnaFoto");
+				f.setTitle("soyUnTitulo");
+				f.setBrotherhood(this.brotherhoodService.findOne(super.getEntityId("brotherhood01")));
+				final domain.Float fSave = this.floatService.save(f);
+				p.setFloatt(fSave);
 				paradeSave = this.paradeService.save(p);
 
 				super.unauthenticate();
@@ -1267,6 +1279,72 @@ public class ParadeTest extends AbstractTest {
 			this.paradeService.flush();
 
 			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/////////////////////////////////////////////////////////////////
+
+	@Test
+	public void driver8() {
+		/*
+		 * NEGATIVO
+		 * 
+		 * In this test we will test the list parade
+		 * 
+		 * Analysis of sentence coverage
+		 * TODO
+		 * Analysis of data coverage
+		 * TODO
+		 */
+		final Object testingData[][] = {
+			// username, error
+			{
+				null, IndexOutOfBoundsException.class
+			}, {
+				"admin", IndexOutOfBoundsException.class
+			}, {
+				"brotherhood", IndexOutOfBoundsException.class
+			}, {
+				"brotherhood", IndexOutOfBoundsException.class
+			}, {
+				"member", IndexOutOfBoundsException.class
+			}, {
+				"sponsor", IndexOutOfBoundsException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTest1((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	protected void checkTest1(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (userName != null)
+				super.authenticate(userName);
+
+			final List<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			for (int i = 0; i < brotherhoods.size(); i++) {
+				final List<Parade> parades = (List<Parade>) brotherhoods.get(i).getParades();
+
+				for (int j = 0; j <= parades.size(); j++) {
+					parades.get(j).getId();
+					parades.get(j).getTitle();
+				}
+			}
+
+			if (userName != null)
+				super.unauthenticate();
+
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
