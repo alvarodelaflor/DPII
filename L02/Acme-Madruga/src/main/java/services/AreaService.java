@@ -134,6 +134,7 @@ public class AreaService {
 		final Chapter chapter = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
 		System.out.println("SERVICIO:  " + chapter);
 		Assert.notNull(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()));
+		Assert.isNull(this.areaRepository.findAreaChapter(LoginService.getPrincipal().getId()));
 		final Area area = this.findOne(id);
 		System.out.println("SERVICIO:  " + area);
 		Assert.notNull(area, "areaExist.error");
@@ -143,5 +144,8 @@ public class AreaService {
 		this.areaRepository.save(area);
 		this.areaRepository.flush();
 
+	}
+	public Boolean checkChapterHasNoArea() {
+		return this.areaRepository.findAreaChapter(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()).getId()) == null ? true : false;
 	}
 }

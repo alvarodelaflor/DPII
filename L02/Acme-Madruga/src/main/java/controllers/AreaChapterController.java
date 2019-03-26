@@ -41,12 +41,14 @@ public class AreaChapterController {
 			res = new ModelAndView("area/chapter/list");
 			res.addObject("areas", areas);
 			res.addObject("requestURI", "area/chapter/list.do");
+			res.addObject("checkChapter", this.areaService.checkChapterHasNoArea());
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());
 			res = new ModelAndView("redirect:index.do");
 		}
 		res.addObject("logo", this.welcomeService.getLogo());
 		res.addObject("system", this.welcomeService.getSystem());
+		
 		return res;
 	}
 
