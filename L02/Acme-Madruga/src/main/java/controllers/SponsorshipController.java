@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -30,6 +31,7 @@ public class SponsorshipController extends AbstractController {
 
 	@Autowired
 	private SponsorshipService	sponsorshipService;
+
 	@Autowired
 	private WelcomeService		welcomeService;
 
@@ -96,7 +98,7 @@ public class SponsorshipController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		ModelAndView result;
+		final ModelAndView result;
 
 		Sponsorship sponsorship;
 
@@ -104,7 +106,14 @@ public class SponsorshipController extends AbstractController {
 
 		final Collection<Parade> parades = this.paradeService.findAll();
 
+		HashSet<String> makes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			makes = this.welcomeService.defaultCCsMakes();
+		else
+			makes = this.welcomeService.getCreditCardsMakes();
+
 		result = new ModelAndView("sponsorship/create");
+		result.addObject("makes", makes);
 		result.addObject("sponsorship", sponsorship);
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("parades", parades);
@@ -123,10 +132,18 @@ public class SponsorshipController extends AbstractController {
 			Assert.isTrue(this.sponsorshipService.findOne(sponsorshipId) != null);
 			sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 
+			HashSet<String> makes = new HashSet<>();
+			if (this.welcomeService.getCreditCardsMakes().size() == 0)
+				makes = this.welcomeService.defaultCCsMakes();
+			else
+				makes = this.welcomeService.getCreditCardsMakes();
+
 			result = new ModelAndView("sponsorship/edit");
+			result.addObject("makes", makes);
 			result.addObject("parades", parades);
 			result.addObject("sponsorship", sponsorship);
 		}
+
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
