@@ -30,9 +30,6 @@
 	<div style="width: 48%; float:left;">
 		<p><spring:message code="admin.TheLargestBrotherhoods" /> <jstl:out	value="${largestBrotherhood}"></jstl:out></p>
 		<p><spring:message code="admin.TheSmallestBrotherhoods" /> <jstl:out value="${smallestBrotherhood}"></jstl:out></p>		
-		<p><spring:message code="admin.TheRatioRequestsTrue" /> <jstl:out value="${getRatioRequestStatusTrue}"></jstl:out></p>
-		<p><spring:message code="admin.TheRatioRequestsFalse" /> <jstl:out value="${getRatioRequestStatusFalse}"></jstl:out></p>
-		<p><spring:message code="admin.TheRatioRequestsNull" /> <jstl:out value="${getRatioRequestStatusNull}"></jstl:out></p>
 		<p><spring:message code="admin.getRatioRequestParadeStatusTrue" /> <jstl:out value="${getRatioRequestParadeStatusTrue}"></jstl:out></p>
 		<p><spring:message code="admin.getRatioRequestParadeStatusFalse" /> <jstl:out value="${getRatioRequestParadeStatusFalse}"></jstl:out></p>
 		<p><spring:message code="admin.getRatioRequestParadeStatusNull" /> <jstl:out value="${getRatioRequestParadeStatusNull}"></jstl:out></p>
