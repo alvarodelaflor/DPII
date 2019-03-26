@@ -187,8 +187,13 @@ public class ParadeBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Parade parade, final BindingResult binding) {
 		ModelAndView result;
-
-		parade = this.paradeService.reconstruct(parade, binding);
+		
+		try {
+			parade = this.paradeService.reconstruct(parade, binding);	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+			return result;
+		}
 		if (binding.hasErrors()) {
 			System.out.println("Binding con errores: " + binding.getAllErrors());
 			result = this.createEditModelAndView(parade);

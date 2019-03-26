@@ -162,6 +162,7 @@ public class ParadeService {
 			result = parade;
 		} else {
 			result = this.paradeRepository.findOne(parade.getId());
+			Assert.notNull(result, "Parade is null");
 			//			result.setTitle(parade.getTitle());
 			//			result.setDescription(parade.getDescription());
 			//			result.setMoment(parade.getMoment());
@@ -371,6 +372,7 @@ public class ParadeService {
 	public Parade reconstructStatus(final Parade parade, final BindingResult binding) {
 		Parade result;
 		result = this.paradeRepository.findOne(parade.getId());
+		Assert.notNull(result, "Parade is null");
 		parade.setId(result.getId());
 		parade.setVersion(result.getVersion());
 		parade.setBrotherhood(result.getBrotherhood());

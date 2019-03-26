@@ -153,8 +153,12 @@ public class FloatBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(domain.Float floatt, final BindingResult binding) {
 		ModelAndView result;
-
-		floatt = this.floatService.reconstruct(floatt, binding);
+		try {
+			floatt = this.floatService.reconstruct(floatt, binding);	
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+			return result;
+		}
 		final List<String> pictures = Arrays.asList(floatt.getPictures().split("'"));
 		if (floatt.getPictures() != null && floatt.getPictures().length() > 0)
 			for (final String picture : pictures)

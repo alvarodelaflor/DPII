@@ -73,15 +73,15 @@ public class SponsorshipController extends AbstractController {
 	}
 	
 	private Boolean validSponsor() {
-		Boolean res = true;
+		Boolean res = false;
 		try {
 			for (Parade parade : this.paradeService.findAll()) {
-				if (!parade.getIsFinal().equals(true) || !parade.getStatus().equals("ACCEPTED")) {
-					res = false;
+				if (parade.getIsFinal().equals(true) && parade.getStatus().equals("ACCEPTED")) {
+					res = true;
 				}
 			}
 		} catch (Exception e) {
-			res = false;
+			// Se ha producido un error
 		}
 		return res;
 	}
@@ -115,7 +115,7 @@ public class SponsorshipController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		final ModelAndView result;
+		ModelAndView result;
 
 		Sponsorship sponsorship;
 		try {

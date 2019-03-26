@@ -148,6 +148,7 @@ public class FloatService {
 			result = floatt;
 		} else {
 			result = this.floatRepository.findOne(floatt.getId());
+			Assert.notNull(result, "Float is null");
 			//			result.setTitle(floatt.getTitle());
 			//			result.setDescription(floatt.getDescription());
 			//			result.setPictures(floatt.getPictures());
