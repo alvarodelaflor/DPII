@@ -132,18 +132,19 @@ public class SponsorshipController extends AbstractController {
 			Assert.isTrue(this.sponsorshipService.findOne(sponsorshipId) != null);
 			sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 
-			HashSet<String> makes = new HashSet<>();
-			if (this.welcomeService.getCreditCardsMakes().size() == 0)
-				makes = this.welcomeService.defaultCCsMakes();
-			else
-				makes = this.welcomeService.getCreditCardsMakes();
-
 			result = new ModelAndView("sponsorship/edit");
-			result.addObject("makes", makes);
+
 			result.addObject("parades", parades);
 			result.addObject("sponsorship", sponsorship);
 		}
 
+		HashSet<String> makes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			makes = this.welcomeService.defaultCCsMakes();
+		else
+			makes = this.welcomeService.getCreditCardsMakes();
+
+		result.addObject("makes", makes);
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
@@ -176,6 +177,14 @@ public class SponsorshipController extends AbstractController {
 				System.out.println(binding);
 				result = new ModelAndView("sponsorship/edit");
 			}
+
+		HashSet<String> makes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			makes = this.welcomeService.defaultCCsMakes();
+		else
+			makes = this.welcomeService.getCreditCardsMakes();
+
+		result.addObject("makes", makes);
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		result.addObject("parades", this.paradeService.findAll());
