@@ -6,6 +6,7 @@ package services;
  * FRAN 19/02/2019 11:36 CREACI�N DE LA CLASE
  */
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -64,6 +65,10 @@ public class AreaService {
 			final List<String> s = new ArrayList<String>(area.getPictures());
 			final String[] pictures = s.get(0).split("'");
 			final List<String> s2 = Arrays.asList(pictures);
+
+			for (final String photo : s2)
+				this.checkPhotos(photo);
+
 			area.setPictures(s2);
 		}
 
@@ -72,6 +77,17 @@ public class AreaService {
 		Assert.notNull(creatorAdmin, "user.error");
 
 		return this.areaRepository.save(area);
+	}
+
+	private Boolean checkPhotos(final String photo) {
+		Boolean res = true;
+		try {
+			new URL(photo).toURI();
+		} catch (final Exception e) {
+			res = false;
+		}
+
+		return res;
 	}
 
 	public Area update(final Area area) {
