@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -32,6 +33,7 @@ public class SponsorshipController extends AbstractController {
 
 	@Autowired
 	private SponsorshipService	sponsorshipService;
+
 	@Autowired
 	private WelcomeService		welcomeService;
 
@@ -113,7 +115,7 @@ public class SponsorshipController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		ModelAndView result;
+		final ModelAndView result;
 
 		Sponsorship sponsorship;
 		try {
@@ -145,9 +147,18 @@ public class SponsorshipController extends AbstractController {
 			sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 
 			result = new ModelAndView("sponsorship/edit");
+
 			result.addObject("parades", parades);
 			result.addObject("sponsorship", sponsorship);
 		}
+
+		HashSet<String> makes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			makes = this.welcomeService.defaultCCsMakes();
+		else
+			makes = this.welcomeService.getCreditCardsMakes();
+
+		result.addObject("makes", makes);
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
@@ -205,7 +216,7 @@ public class SponsorshipController extends AbstractController {
 		}
 
 		if (binding.hasErrors()) {
-			System.out.println("El error pasa por aquí alvaro (IF de save())");
+			System.out.println("El error pasa por aquï¿½ alvaro (IF de save())");
 			System.out.println(binding);
 			result = new ModelAndView("sponsorship/edit");
 		} else
@@ -225,6 +236,14 @@ public class SponsorshipController extends AbstractController {
 				System.out.println(binding);
 				result = new ModelAndView("sponsorship/edit");
 			}
+
+		HashSet<String> makes = new HashSet<>();
+		if (this.welcomeService.getCreditCardsMakes().size() == 0)
+			makes = this.welcomeService.defaultCCsMakes();
+		else
+			makes = this.welcomeService.getCreditCardsMakes();
+
+		result.addObject("makes", makes);
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		result.addObject("parades", this.paradeService.findAll());

@@ -52,7 +52,7 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	//12.3.6 --> 
 	@Query("select min(p.maxRow * p.maxColum) from Parade p")
 	Integer maxParadeN();
-	
+
 	//2.2
 	@Query("select p from Parade p join p.brotherhood b join b.area a join a.chapter c where c.id=?1 and p.isFinal = true")
 	Collection<Parade> findParadesByChapter(int chapterId);
@@ -83,19 +83,24 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	Float ratioNoFinalNULL();
 
 	// Requisito 8
-	@Query("select min((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	@Query("select min((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c")
 	Float minParadeCapter();
 
 	// Requisito 8
-	@Query("select max((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	@Query("select max((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c")
 	Float maxParadeCapter();
 
+	//  select max((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c
+	//  select min((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c
+	//  select avg((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c
+	//  select stddev((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c
+
 	// Requisito 8
-	@Query("select avg((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	@Query("select avg((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c")
 	Float avgParadeCapter();
 
 	// Requisito 8
-	@Query("select stddev((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id)/(1))*1.0 as h from Chapter c order by h")
+	@Query("select stddev((select count(p) from Parade p join p.brotherhood b where c.id = b.area.chapter.id and p.isFinal=1)/(1)) from Chapter c")
 	Float stddevParadeCapter();
 
 	// Requisito 8

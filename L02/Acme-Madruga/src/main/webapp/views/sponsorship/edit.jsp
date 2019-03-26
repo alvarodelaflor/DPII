@@ -38,7 +38,13 @@
           		<acme:textbox code="sponsorship.banner" path="banner" />
           		<acme:textbox code="sponsorship.target" path="target" />
           		<acme:textbox code="sponsorship.creditCard.holder" path="creditCard.holder" />
-          		<acme:textbox code="sponsorship.creditCard.make" path="creditCard.make" />
+          		<form:label path="creditCard.make">
+					<spring:message code="creditCardMakes" />:
+				</form:label>
+          		<form:select required ="required" path="creditCard.make">
+   		 			<form:options items="${makes}"/>
+				</form:select>
+				<form:errors cssClass="error" path="parade" />		
           		<acme:textbox code="sponsorship.creditCard.number" path="creditCard.number" />
           		<acme:textbox code="sponsorship.creditCard.cvv" path="creditCard.CVV" />
 				<acme:textboxMoment code="sponsorship.creditCard.expiration" path="creditCard.expiration"/>
@@ -46,7 +52,7 @@
 				<spring:message code="sponsorship.parade" />:
 				</form:label>
 				<form:select required ="required" path="parade">
-   		 		<form:options items="${parades}" />
+   		 			<form:options items="${parades}" itemLabel="title"/>
 				</form:select>
 				<form:errors cssClass="error" path="parade" />					
 			<br></br>
