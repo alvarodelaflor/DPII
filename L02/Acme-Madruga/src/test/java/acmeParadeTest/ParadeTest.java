@@ -1166,4 +1166,113 @@ public class ParadeTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	@Test
+	public void test09() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * In this test we will test delete a parade.
+		 * 
+		 * Analysis of sentence coverage
+		 * TODO
+		 * Analysis of data coverage
+		 * TODO
+		 */
+		final Object testingData[][] = {
+			{
+				"brotherhood2", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkDeleteM((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	@Test
+	public void test10() {
+		/*
+		 * NEGATIVE TEST
+		 * 
+		 * In this test we will test delete a parade.
+		 * 
+		 * Analysis of sentence coverage
+		 * TODO
+		 * Analysis of data coverage
+		 * TODO
+		 */
+		final Object testingData[][] = {
+			{
+				"brotherhood2", null
+			}, {
+				"brotherhood", IllegalArgumentException.class
+			}, {
+				"admin", IllegalArgumentException.class
+			}, {
+				"chapter", IllegalArgumentException.class
+			}, {
+				"member", IllegalArgumentException.class
+			}, {
+				"sponsor", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkDeleteM((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	protected void checkDeleteM(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(userName);
+
+			Parade p;
+			Parade paradeSave;
+
+			if (userName.equals("brotherhood2")) {
+				p = this.paradeService.create();
+
+				p.setBrotherhood(this.brotherhoodService.findOne(super.getEntityId("brotherhood01")));
+				p.setTitle("soyUnTitulo");
+				p.setDescription("soyUnaDescripcion");
+				final Date res = LocalDateTime.now().toDate();
+				res.setMonth(res.getMonth() + 3);
+				p.setMoment(res);
+				p.setIsFinal(false);
+				p.setMaxColum(4);
+				p.setMaxRow(10);
+				final domain.Float f = this.floatService.create();
+				f.setDescription("soyUnDescripcion");
+				f.setPictures("http://soyUnaFoto");
+				f.setTitle("soyUnTitulo");
+				f.setBrotherhood(this.brotherhoodService.findOne(super.getEntityId("brotherhood01")));
+				final domain.Float fSave = this.floatService.save(f);
+				p.setFloatt(fSave);
+
+				paradeSave = this.paradeService.save(p);
+			} else {
+				super.unauthenticate();
+				super.authenticate("brotherhood2");
+
+				p = this.paradeService.create();
+				p.setTitle("El título");
+				paradeSave = this.paradeService.save(p);
+
+				super.unauthenticate();
+				super.authenticate(userName);
+			}
+
+			this.paradeService.delete(paradeSave);
+			this.paradeService.flush();
+
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
 }
