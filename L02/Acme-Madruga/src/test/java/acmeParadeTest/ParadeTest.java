@@ -1310,11 +1310,73 @@ public class ParadeTest extends AbstractTest {
 			}, {
 				"brotherhood", IndexOutOfBoundsException.class
 			}, {
-				"brotherhood", IndexOutOfBoundsException.class
-			}, {
 				"member", IndexOutOfBoundsException.class
 			}, {
 				"sponsor", IndexOutOfBoundsException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTest19((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	protected void checkTest19(final String userName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (userName != null)
+				super.authenticate(userName);
+
+			final List<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+			for (int i = 0; i < brotherhoods.size(); i++) {
+				final List<Parade> parades = (List<Parade>) brotherhoods.get(i).getParades();
+
+				for (int j = 0; j <= parades.size(); j++) {
+					parades.get(j).getId();
+					parades.get(j).getTitle();
+				}
+			}
+
+			if (userName != null)
+				super.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	@Test
+	public void driver9() {
+		/*
+		 * POSITIVO
+		 * 
+		 * In this test we will test the list parade
+		 * 
+		 * Analysis of sentence coverage
+		 * TODO
+		 * Analysis of data coverage
+		 * TODO
+		 */
+		final Object testingData[][] = {
+			// username, error
+			{
+				null, IllegalArgumentException.class
+			}, {
+				"admin", IllegalArgumentException.class
+			}, {
+				"brotherhood", null
+			}, {
+				"member", IllegalArgumentException.class
+			}, {
+				"sponsor", IllegalArgumentException.class
 			}
 		};
 
@@ -1332,11 +1394,15 @@ public class ParadeTest extends AbstractTest {
 			if (userName != null)
 				super.authenticate(userName);
 
+			final Authority authority = new Authority();
+			authority.setAuthority(Authority.BROTHERHOOD);
+			Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+
 			final List<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
 			for (int i = 0; i < brotherhoods.size(); i++) {
 				final List<Parade> parades = (List<Parade>) brotherhoods.get(i).getParades();
 
-				for (int j = 0; j <= parades.size(); j++) {
+				for (int j = 0; j < parades.size(); j++) {
 					parades.get(j).getId();
 					parades.get(j).getTitle();
 				}
