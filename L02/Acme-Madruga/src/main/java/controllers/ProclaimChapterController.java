@@ -13,6 +13,7 @@ package controllers;
 
 import javax.validation.Valid;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,7 @@ public class ProclaimChapterController extends AbstractController {
 			Chapter chapterLogger = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
 			Assert.notNull(chapterLogger, "No chapter is logger");
 			Proclaim proclaim = this.proclaimService.create();
+			proclaim.setMoment(DateTime.now().toDate());
 			result = new ModelAndView("proclaim/chapter/create");
 			result.addObject("proclaim", proclaim);
 			result.addObject("chapterId", chapterLogger.getId());
@@ -68,7 +70,7 @@ public class ProclaimChapterController extends AbstractController {
 			result.addObject("system", welcomeService.getSystem());		
 			final String actuallanguage = LocaleContextHolder.getLocale().getDisplayLanguage();
 			Boolean language;
-			if (actuallanguage.equals("English")||actuallanguage.equals("inglés")) {
+			if (actuallanguage.equals("English") ||actuallanguage.equals("inglés") || actuallanguage.equals("english")) {
 				System.out.println("Actual languge: " + actuallanguage);
 				language = true;
 			} else {

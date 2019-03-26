@@ -44,12 +44,12 @@
     	<form:form class="formularioEdicion" method="POST" modelAttribute="proclaim" action="proclaim/chapter/create.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
+          	<form:hidden path="moment"/>
           	<fieldset>
           		<legend>
           			<spring:message code="proclaim.dates" />
           		</legend>
                	<acme:textbox code="proclaim.text" path="text"/>
-               	<acme:textboxMoment code="proclaim.moment" path="moment"/>
           	</fieldset>
           	<acme:cancel url="chapter/show.do?id=${chapterId}" code="cancel"/>
 	       	<c:choose>

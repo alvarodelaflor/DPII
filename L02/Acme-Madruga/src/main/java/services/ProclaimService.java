@@ -8,6 +8,7 @@ package services;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -45,6 +46,7 @@ public class ProclaimService {
 		Assert.notNull(chapter, "chapterLoggerNull");
 		Proclaim proclaimDB = this.proclaimRepository.findOne(proclaimRecord.getId());
 		Assert.isTrue(proclaimDB==null, "Try to edit a save proclaim");
+		proclaimRecord.setMoment(DateTime.now().toDate());
 		Proclaim proclaimSaved = this.proclaimRepository.save(proclaimRecord);
 		chapter.getProclaim().add(proclaimSaved);
 		return proclaimSaved;
