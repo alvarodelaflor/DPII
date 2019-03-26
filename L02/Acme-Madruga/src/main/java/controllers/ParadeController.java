@@ -111,12 +111,9 @@ public class ParadeController extends AbstractController {
 			result.addObject("sponsorship", sponsorship);
 			result.addObject("parade", parade);
 			result.addObject("config", config);
-			try {
-				if (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null)
-					result.addObject("validMember", this.validMember(paradeId));
-			} catch (final Exception e) {
+			result.addObject("validMember", this.validMember(paradeId));
+			System.out.println("Valid member: " + this.validMember(paradeId));
 
-			}
 			result.addObject("requestURI", "parade/brotherhood/show.do");
 		}
 		result.addObject("logo", this.welcomeService.getLogo());
@@ -125,10 +122,14 @@ public class ParadeController extends AbstractController {
 	}
 	public Boolean validMember(final int paradeId) {
 		Boolean res = true;
-		final Parade parade = this.paradeService.findOne(paradeId);
-		final int brotherhoodId = this.paradeService.findOne(paradeId).getBrotherhood().getId();
-		if (parade == null || !this.requestService.validMemberToCreateRequest(paradeId) || !this.memberService.checkIsInBrotherhood(brotherhoodId) || parade.getIsFinal().equals(false))
+		try {
+			final Parade parade = this.paradeService.findOne(paradeId);
+			final int brotherhoodId = this.paradeService.findOne(paradeId).getBrotherhood().getId();
+			if (parade == null || !this.requestService.validMemberToCreateRequest(paradeId) || !this.memberService.checkIsInBrotherhood(brotherhoodId) || !parade.getStatus().equals("ACCEPTED"))
+				res = false;	
+		} catch (Exception e) {
 			res = false;
+		}
 		return res;
 	}
 

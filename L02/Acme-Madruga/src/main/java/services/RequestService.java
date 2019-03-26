@@ -107,7 +107,7 @@ public class RequestService {
 		final int idMember = this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		System.out.println("Request pendientes: " + this.requestRepository.findAllByMemberParadePending(idParade, idMember));
 		System.out.println("Request Aceptadas: " + this.requestRepository.findAllByMemberParadeAccepted(idParade, idMember));
-		if (this.requestRepository.findAllByMemberParadePending(idParade, idMember).size() > 0 || this.requestRepository.findAllByMemberParadeAccepted(idParade, idMember).size() > 0)
+		if (!this.requestRepository.findAllByMemberParadePending(idParade, idMember).isEmpty() || !this.requestRepository.findAllByMemberParadeAccepted(idParade, idMember).isEmpty())
 			res = false;
 		return res;
 	}
