@@ -74,7 +74,7 @@ public class PathService {
 
 	public Path createFromParade(final int paradeId) {
 		final Path path = this.create(paradeId);
-		return this.pathRepository.save(path);
+		return this.save(path, paradeId);
 	}
 
 	public void setOrigin(final int paradeId, final Segment pathOrigin) {
@@ -100,13 +100,14 @@ public class PathService {
 
 		this.validator.validate(segment, binding);
 		// We have to also validate the destination
-		this.validator.validate(segment.getDestination(), binding);
+		if (segment.getDestination() != null)
+			this.validator.validate(segment.getDestination(), binding);
 		return segment;
 	}
 
-	public void deleteWithParade(final int id) {
-		this.assertParadeOwner(id);
-		final Path path = this.pathRepository.findFromParade(id);
+	public void deleteWithParade(final int paradeID) {
+		this.assertParadeOwner(paradeID);
+		final Path path = this.pathRepository.findFromParade(paradeID);
 		if (path != null) {
 			final List<Segment> segments = this.segmentService.getAllSegments(path);
 			this.pathRepository.delete(path.getId());

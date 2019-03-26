@@ -57,6 +57,9 @@ public class AreaService {
 
 	public Area save(final Area area) {
 
+		// Name:
+		Assert.isTrue(area.getName() != "");
+
 		if (area.getPictures().size() != 0) {
 			final List<String> s = new ArrayList<String>(area.getPictures());
 			final String[] pictures = s.get(0).split("'");
@@ -135,9 +138,9 @@ public class AreaService {
 		System.out.println("SERVICIO:  " + area);
 		Assert.notNull(area, "areaExist.error");
 		Assert.isNull(area.getChapter(), "areaExistsChapter.error");
-		Assert.isTrue(!(area.getChapter().getUserAccount().getId() == (LoginService.getPrincipal().getId())), "areaSameChapter.error");
 		area.setChapter(chapter);
-		this.save(area);
+		System.out.println("CHAPTER DEL AREA: " + area.getChapter());
+		this.areaRepository.save(area);
 		this.areaRepository.flush();
 
 	}

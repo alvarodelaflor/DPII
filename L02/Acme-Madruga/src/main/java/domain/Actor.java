@@ -14,7 +14,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -22,10 +21,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
 
 import security.UserAccount;
 
@@ -55,7 +56,10 @@ public abstract class Actor extends DomainEntity {
 
 
 	@Valid
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
 	public Collection<SocialProfile> getSocialProfiles() {
 		return this.socialProfiles;
 	}
@@ -131,7 +135,10 @@ public abstract class Actor extends DomainEntity {
 		this.address = address;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
 	public UserAccount getUserAccount() {
 		return this.userAccount;
 	}
@@ -141,7 +148,10 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@Valid
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
 	public Collection<MessageBox> getMessageBoxes() {
 		return this.messageBoxes;
 	}

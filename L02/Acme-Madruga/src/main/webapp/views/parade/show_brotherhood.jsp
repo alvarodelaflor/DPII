@@ -19,6 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <head>
 <style>
 	 img {
@@ -39,7 +40,7 @@
 		</jstl:if>
 	</security:authorize>
 	<div>
-		<img alt="" src="${banner}">
+		<img alt="" src="${sponsorship.banner}">
 	</div>
 	<div>
 		<table>
@@ -86,6 +87,8 @@
 			</tr>
 
 		</table>
+		
+		
 	</div>
 	<div>
 		<form>

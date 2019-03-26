@@ -309,4 +309,28 @@ public class BrotherhoodController extends AbstractController {
 			return null;
 		return result;
 	}
+
+	//Nuevo
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+	public ModelAndView deleteUser(@RequestParam(value = "id", defaultValue = "-1") final int brotherhoodId) {
+		ModelAndView result;
+
+		final Brotherhood brotherhood = this.brotherhoodService.findOne(brotherhoodId);
+		System.out.println("Brotherhood encontrado: " + brotherhood);
+		if (this.brotherhoodService.findOne(brotherhoodId) == null || LoginService.getPrincipal().getId() != brotherhood.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(brotherhood, "brotherhood.null");
+
+			try {
+				this.brotherhoodService.delete(brotherhood);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
 }

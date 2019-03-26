@@ -25,6 +25,7 @@ import org.springframework.util.Assert;
 
 import services.AreaService;
 import services.ChapterService;
+import services.HistoryService;
 import services.ParadeService;
 import utilities.AbstractTest;
 
@@ -43,6 +44,9 @@ public class DashboardTest extends AbstractTest {
 
 	@Autowired
 	private ChapterService	chapterService;
+
+	@Autowired
+	private HistoryService	historyService;
 
 
 	// ******NOTE: TO PROPERLY EXECUTE THIS TEST IT'S NECESSARY TO EXECUTE DashboardTestPopulateDatabase.java because we need to have a non variable set of data
@@ -128,8 +132,27 @@ public class DashboardTest extends AbstractTest {
 			this.Template2((String) testingData[i][0], (double) testingData[i][1], (double) testingData[i][2], (double) testingData[i][3], (double) testingData[i][4], (double) testingData[i][5], (double) testingData[i][6], (double) testingData[i][7],
 				(double) testingData[i][8], (double) testingData[i][9], (Collection<String>) testingData[i][10], (Class<?>) testingData[i][11]);
 	}
-	// Ancillary methods ------------------------------------------------------
 
+	public void Requirement4Queries() {
+
+		final Object testingData[][] = {
+			{
+				// Test positivos de resultados 
+				"admin", 0.333, 0.333, 0.0, 0.667, null
+			}, {
+				// Test negativos de actor
+				"admin", 0.333, 0.333, 0.0, 0.667, null
+			}, {
+				// Test negativos datos erroneos
+				"admin", 0.333, 0.333, 0.0, 0.667, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Requirement4Queries((String) testingData[i][0], (double) testingData[i][1], (double) testingData[i][2], (double) testingData[i][3], (double) testingData[i][4], (Class<?>) testingData[i][5]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
 	protected void Template2(final String userName, final Double ratioFinalSUBMITTED, final Double ratioFinalACCEPTED, final Double ratioFinalREJECTED, final Double ratioAreaNoCoordinate, final Double ratioNoFinalNULL, final Double minParadeCapter,
 		final Double maxParadeCapter, final Double avgParadeCapter, final Double stddevParadeCapter, final Collection<String> ParadeChapter, final Class<?> expected) {
 		Class<?> caught;
@@ -159,6 +182,35 @@ public class DashboardTest extends AbstractTest {
 		} catch (final Exception oops) {
 			caught = oops.getClass();
 		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	//1. The average, the minimum, the maximum, and the standard deviation of the number of records per history.
+	//2. The brotherhood with the largest history.
+	//3. Brotherhood whose history is larger than the average.
+
+	protected void Requirement4Queries(final String username, final Double avg, final Double max, final Double min, final Double stddev, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(username);
+			final DecimalFormat df = new DecimalFormat("#.###");
+
+			Assert.isTrue(avg.equals(Double.valueOf(df.format(this.historyService.avgRecordPerHistory()))));
+			Assert.isTrue(max.equals(Double.valueOf(df.format(this.historyService.minRecordPerHistory()))));
+			Assert.isTrue(min.equals(Double.valueOf(df.format(this.historyService.maxRecordPerHistory()))));
+			Assert.isTrue(stddev.equals(Double.valueOf(df.format(this.historyService.stddevRecordPerHistory()))));
+
+			super.unauthenticate();
+		} catch (final Exception oops) {
+
+			caught = oops.getClass();
+		} finally {
+
 			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
