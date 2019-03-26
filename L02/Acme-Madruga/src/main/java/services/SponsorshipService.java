@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
@@ -48,12 +49,14 @@ public class SponsorshipService {
 		Sponsorship result;
 
 		if (sponsorship.getId() == 0) {
+			System.out.println("id 0");
 			final UserAccount user = LoginService.getPrincipal();
 			final Sponsor s = this.sponsorService.getSponsorByUserId(user.getId());
 
 			result = sponsorship;
 			result.setSponsor(s);
 			result.setActive(true);
+			this.validator.validate(result, binding);
 			//MailBox
 		} else {
 			result = this.sponsorshipRepository.findOne(sponsorship.getId());
@@ -63,6 +66,8 @@ public class SponsorshipService {
 			result.setCreditCard(sponsorship.getCreditCard());
 
 			this.validator.validate(result, binding);
+			System.out.println("binding reconstruct");
+			System.out.println(binding.getAllErrors().get(0));
 		}
 		return result;
 	}
@@ -81,10 +86,22 @@ public class SponsorshipService {
 	}
 
 	public Sponsorship save(final Sponsorship sponsorship) {
+		final UserAccount user = LoginService.getPrincipal();
+		final Sponsor sponsor = this.sponsorService.getSponsorByUserId(user.getId());
+		Assert.notNull(sponsor);
+		Assert.notNull(sponsorship.getCreditCard().getCVV());
+		Assert.notNull(sponsorship.getCreditCard().getMake());
+		Assert.notNull(sponsorship.getCreditCard().getNumber());
+		Assert.notNull(sponsorship.getCreditCard().getHolder());
+		Assert.notNull(sponsorship.getCreditCard().getExpiration());
 		return this.sponsorshipRepository.save(sponsorship);
 	}
 
 	public void delete(final Sponsorship sponsorship) {
+		final UserAccount user = LoginService.getPrincipal();
+		final Sponsor sponsor = this.sponsorService.getSponsorByUserId(user.getId());
+		Assert.notNull(sponsor);
+		Assert.isTrue(sponsor.getSponsorships().contains(sponsorship));
 		if (sponsorship.getActive() == true)
 			sponsorship.setActive(false);
 		else
