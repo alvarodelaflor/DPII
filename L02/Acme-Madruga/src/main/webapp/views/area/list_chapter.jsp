@@ -23,10 +23,13 @@
 						<a href="area/chapter/show.do?areaId=${row.id}"><jstl:out
 								value="${row.name}"></jstl:out> </a>
 					</display:column>
-					<display:column titleKey="edit">
+					<display:column titleKey="assign">
+					<jstl:if test="${checkChapter}">
 						<a href="area/chapter/edit.do?areaId=${row.id}">
 						<spring:message code="area.assign"></spring:message> </a>
+					</jstl:if>
 					</display:column>
+					
 				</display:table>
 			</div>
 			<div>
