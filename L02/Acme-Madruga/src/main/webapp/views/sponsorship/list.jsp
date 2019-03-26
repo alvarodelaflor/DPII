@@ -19,6 +19,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 	<security:authorize access="hasRole('SPONSOR')">
+		<jstl:if test="${validSponsor}">		
+			<p class="create"><input type="button" value=<spring:message code="createSponsorship" /> id="buttonSponsorship" name="buttonSponsorship"  onclick="location.href='sponsorship/create.do';"/></p>
+		</jstl:if>
 		<display:table name="sponsorships" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 			<display:column titleKey="sponsorship.target">
 						<a href="sponsorship/show.do?sponsorshipId=${row.id}"><jstl:out
@@ -38,7 +41,6 @@
 			<display:column titleKey="sponsorship.edit"><a href="sponsorship/edit.do?sponsorshipId=${row.id}"><spring:message code="sponsorship.edit" /></a></display:column>
 		</display:table>
 
-		<p class="create"><input type="button" value=<spring:message code="createSponsorship" /> id="buttonSponsorship" name="buttonSponsorship"  onclick="location.href='sponsorship/create.do';"/></p>
 	</security:authorize>
 
 	<security:authorize access="hasRole('ADMIN')">
@@ -57,4 +59,10 @@
 		</display:table>
 			<p class="checkCreditCard"><input type="button" value=<spring:message code="checkCreditCard" /> id="buttoncheckCreditCard" name="buttoncheckCreditCard"  onclick="location.href='sponsorship/administrator/checkCreditCard.do';"/></p>
 	</security:authorize>
-<acme:cancel url=" " code="cancel"/>
+	<div>
+		<form method="get" action="#">
+			<button type="submit">
+				<spring:message code="back" />
+			</button>
+		</form>
+	</div>

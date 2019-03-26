@@ -41,9 +41,7 @@
           		<acme:textbox code="sponsorship.creditCard.make" path="creditCard.make" />
           		<acme:textbox code="sponsorship.creditCard.number" path="creditCard.number" />
           		<acme:textbox code="sponsorship.creditCard.cvv" path="creditCard.CVV" />
-          		<form:label path="creditCard.expiration"><spring:message code="sponsorship.creditCard.expiration" /></form:label>
-				<form:input type="date" path="creditCard.expiration" required="required" placeholder="yyyy/MM/dd HH:mm"/>
-				<form:errors cssClass="error" path="creditCard.expiration"/><br>
+				<acme:textboxMoment code="sponsorship.creditCard.expiration" path="creditCard.expiration"/>
 				<form:label path="parade">
 				<spring:message code="sponsorship.parade" />:
 				</form:label>
@@ -52,7 +50,7 @@
 				</form:select>
 				<form:errors cssClass="error" path="parade" />					
 			<br></br>
-			<input type="submit" name="save" value=<spring:message code="send" />/>
+			<acme:submit name="save" code="send"/>
 			<acme:cancel url="sponsorship/list.do" code="sponsorship.cancel"/>
 		</form:form>
       </div>
