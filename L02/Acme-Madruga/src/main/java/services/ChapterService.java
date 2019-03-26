@@ -13,10 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
+import repositories.AreaRepository;
 import repositories.ChapterRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Area;
 import domain.Chapter;
 import domain.MessageBox;
 import domain.Proclaim;
@@ -45,6 +47,12 @@ public class ChapterService {
 
 	@Autowired
 	private ChapterRepository	chapterRepository;
+
+	@Autowired
+	private AreaRepository		areaRepository;
+
+	@Autowired
+	private AreaService			areaService;
 
 
 	public Chapter reconstructR(final RegistrationForm registrationForm, final BindingResult binding) {
@@ -294,6 +302,10 @@ public class ChapterService {
 
 	public void delete(final Chapter chapter) {
 		Assert.isTrue(LoginService.getPrincipal().getId() == chapter.getUserAccount().getId());
+		final Area fix = this.areaService.findAreaChapter(chapter);
+		fix.setChapter(null);
+		this.areaRepository.save(fix);
+		this.chapterRepository.delete(chapter);
 
 	}
 }

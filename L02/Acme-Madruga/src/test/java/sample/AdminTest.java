@@ -23,6 +23,7 @@ import services.MemberService;
 import services.MessageBoxService;
 import services.MessageService;
 import services.PositionService;
+import services.WelcomeService;
 import utilities.AbstractTest;
 import domain.Administrator;
 import domain.Area;
@@ -67,6 +68,9 @@ public class AdminTest extends AbstractTest {
 
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private WelcomeService			welcomeService;
 
 
 	// Drivers:
@@ -160,6 +164,22 @@ public class AdminTest extends AbstractTest {
 
 		for (int i = 0; i < testingData.length; i++)
 			this.areaSave((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	@Test
+	public void assignArea() {
+
+		final Object testingData[][] = {
+
+			{
+				"chapter", null
+			}, {
+				"member", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.assignArea((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
 
 	@Test
@@ -257,6 +277,45 @@ public class AdminTest extends AbstractTest {
 		for (int i = 0; i < testingData.length; i++)
 			this.adminBroadcast((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
+	@Test
+	public void adminAddSpamWord() {
+
+		final Object testingData[][] = {
+
+			{
+				"admin", 0, null
+			}, {
+				"chapter", 0, null
+			}, {
+				"admin", 1, null
+			}, {
+				"chapter", 1, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.adminAddSpamWord((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	@Test
+	public void adminDeleteSpamWord() {
+
+		final Object testingData[][] = {
+
+			{
+				"admin", 0, null
+			}, {
+				"chapter", 0, null
+			}, {
+				"admin", 1, null
+			}, {
+				"chapter", 1, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.adminDeleteSpamWord((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
 
 	@Test
 	public void actorSpammer() {
@@ -309,7 +368,6 @@ public class AdminTest extends AbstractTest {
 		for (int i = 0; i < testingData.length; i++)
 			this.actorPolarityNeg((int) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
-
 	@Test
 	public void adminAddScoreWord() {
 
@@ -333,7 +391,6 @@ public class AdminTest extends AbstractTest {
 		for (int i = 0; i < testingData.length; i++)
 			this.adminAddScoreWord((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
-
 	@Test
 	public void adminDeleteScoreWord() {
 
@@ -764,13 +821,14 @@ public class AdminTest extends AbstractTest {
 			msg.setBody("no spam");
 			if (spammer == 1)
 				msg.setBody("sex");
+			this.welcomeService.newSpamWords("sex");
 			final Collection<String> receiver = new ArrayList<String>();
 			receiver.add("bro2@email.com");
 			msg.setEmailReceiver(receiver);
 			this.msgService.save(msg);
 
 			Assert.isTrue(!savedBro.getUserAccount().getSpammerFlag());
-
+			this.welcomeService.deleteSpamWords("sex");
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -976,6 +1034,64 @@ public class AdminTest extends AbstractTest {
 		super.checkExceptions(expected, caught);
 	}
 
+	protected void adminAddSpamWord(final String username, final int newPos, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			this.authenticate(username);
+			final int posBefore = this.welcomeService.getSpamWords().size();
+
+			if (newPos == 1) {
+
+				this.welcomeService.newSpamWords("newWord");
+				Assert.isTrue(posBefore == this.welcomeService.getSpamWords().size() - 1);
+			} else
+				Assert.isTrue(posBefore == this.welcomeService.getSpamWords().size());
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+
+			caught = oops.getClass();
+		} finally {
+
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+	}
+
+	protected void adminDeleteSpamWord(final String username, final int newPos, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			this.authenticate(username);
+			final int posBefore = this.welcomeService.getSpamWords().size();
+
+			if (newPos == 1) {
+
+				this.welcomeService.deleteSpamWords("newWord");
+				Assert.isTrue(posBefore == this.welcomeService.getSpamWords().size() + 1);
+			} else
+				Assert.isTrue(posBefore == this.welcomeService.getSpamWords().size());
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+
+			caught = oops.getClass();
+		} finally {
+
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+	}
+
 	protected void adminBanActor(final String username, final int spammer, final int lowScore, final Class<?> expected) {
 
 		Class<?> caught = null;
@@ -1049,4 +1165,63 @@ public class AdminTest extends AbstractTest {
 
 		super.checkExceptions(expected, caught);
 	}
+
+	protected void assignArea(final String username, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			this.authenticate("admin");
+			final Area newArea = this.areaService.create();
+
+			// Set de parametros validos:
+			newArea.setName("nombreValido");
+			final Collection<String> vpics = new ArrayList<String>();
+			newArea.setPictures(vpics);
+
+			// Set de parametros invalidos:
+
+			final Area saved = this.areaService.save(newArea);
+			this.unauthenticate();
+
+			this.authenticate(username);
+			this.areaService.assignChapter(saved.getId());
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+
+			caught = oops.getClass();
+		} finally {
+
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+	}
+
+	protected void listAreas(final String username, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			// Set de parametros invalidos:
+			this.startTransaction();
+			this.authenticate(username);
+			this.areaService.unassignedAreas();
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+
+			caught = oops.getClass();
+		} finally {
+
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+	}
+
 }
