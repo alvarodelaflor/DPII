@@ -234,9 +234,6 @@ public class ParadeService {
 	}
 
 	public Collection<Parade> findParadesBrotherhoodFinal(final Integer brotherhood) {
-		final Authority authority = new Authority();
-		authority.setAuthority(Authority.ADMIN);
-		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.paradeRepository.findParadesBrotherhoodFinal(brotherhood);
 	}
 

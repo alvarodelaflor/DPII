@@ -14,15 +14,15 @@ import domain.Administrator;
 @Service
 public class WelcomeService {
 
-	String					e			= "Welcome to Acme Madrugï¿½, the site to organise your parades.";
+	String					e			= "Welcome to Acme Parade, the site to organise your parades.";
 
-	String					s			= "ï¿½Bienvenidos a Acme Madrugï¿½! Tu sitio para organizar parades.";
+	String					s			= "¡Bienvenidos a Acme Parade! Tu sitio para organizar desfiles.";
 
-	String							system				= "Acme Madrugï¿½!";
+	String							system				= "Acme Parade!";
 
 	String							phone				= "34";
 
-	String							country				= "Espaï¿½a/Spain";
+	String							country				= "España/Spain";
 
 	@URL
 	String							logo				= "https://tinyurl.com/acme-madruga";
