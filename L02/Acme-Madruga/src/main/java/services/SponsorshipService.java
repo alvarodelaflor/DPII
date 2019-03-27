@@ -240,6 +240,18 @@ public class SponsorshipService {
 		}
 		return res;
 	}
+	
+	public Boolean checkAnyParade() {
+		Boolean res = true;
+		try {
+			if (this.paradeService.findAll().isEmpty()) {
+				res = false;
+			}	
+		} catch (Exception e) {
+			res = false;
+		}
+		return res;
+	}
 	// ALVARO
 
 }
