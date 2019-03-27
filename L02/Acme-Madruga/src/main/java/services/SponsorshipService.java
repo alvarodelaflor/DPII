@@ -1,7 +1,6 @@
 
 package services;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -67,8 +66,8 @@ public class SponsorshipService {
 			this.validator.validate(result, binding);
 			//MailBox
 		} else {
-			Sponsorship res = this.sponsorshipRepository.findOne(sponsorship.getId());
-			
+			final Sponsorship res = this.sponsorshipRepository.findOne(sponsorship.getId());
+
 			result = sponsorship;
 
 			result.setId(res.getId());
@@ -99,12 +98,12 @@ public class SponsorshipService {
 		final Sponsor sponsor = this.sponsorService.getSponsorByUserId(user.getId());
 		Assert.notNull(sponsor);
 		Assert.isTrue(this.checkCVV(sponsorship.getCreditCard()), "CVV not Valid");
-		Assert.isTrue(checkNumber(sponsorship.getCreditCard()), "Number not valid");
+		Assert.isTrue(this.checkNumber(sponsorship.getCreditCard()), "Number not valid");
 		Assert.isTrue(this.checkMoment(sponsorship.getCreditCard()), "Moment must be in the future");
-		Assert.isTrue(checkHolderBlank(sponsorship.getCreditCard()), "Must be not blank");
-		Assert.isTrue(checkHolderInsecure(sponsorship.getCreditCard()), "Insecure HTML");
-		Assert.isTrue(checkMakeBlank(sponsorship.getCreditCard()), "Must be not blank");
-		Assert.isTrue(checkMakeInsecure(sponsorship.getCreditCard()), "Insecure HTML");
+		Assert.isTrue(this.checkHolderBlank(sponsorship.getCreditCard()), "Must be not blank");
+		Assert.isTrue(this.checkHolderInsecure(sponsorship.getCreditCard()), "Insecure HTML");
+		Assert.isTrue(this.checkMakeBlank(sponsorship.getCreditCard()), "Must be not blank");
+		Assert.isTrue(this.checkMakeInsecure(sponsorship.getCreditCard()), "Insecure HTML");
 		Assert.notNull(sponsorship.getCreditCard().getCVV());
 		Assert.notNull(sponsorship.getCreditCard().getMake());
 		Assert.notNull(sponsorship.getCreditCard().getNumber());
@@ -158,88 +157,82 @@ public class SponsorshipService {
 	public void flush() {
 		this.sponsorshipRepository.flush();
 	}
-	
+
 	// ALVARO
-	public Boolean checkCVV(CreditCard creditCard) {
+	public Boolean checkCVV(final CreditCard creditCard) {
 		Boolean res = true;
 		try {
-			if (Integer.valueOf(creditCard.getCVV())<100 || Integer.valueOf(creditCard.getCVV())>999) {
+			if (Integer.valueOf(creditCard.getCVV()) < 100 || Integer.valueOf(creditCard.getCVV()) > 999)
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
-	public Boolean checkNumber(CreditCard creditCard) {
+
+	public Boolean checkNumber(final CreditCard creditCard) {
 		Boolean res = true;
+		System.out.println(creditCard.getNumber().length());
 		try {
-			Long number = Long.getLong(creditCard.getNumber());
-			if (creditCard.getNumber().length()!=16) {
+			final Long number = Long.getLong(creditCard.getNumber());
+			if (creditCard.getNumber().length() != 16)
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
-	public Boolean checkMoment(CreditCard creditCard) {
+
+	public Boolean checkMoment(final CreditCard creditCard) {
 		Boolean res = true;
 		try {
-			if (!creditCard.getExpiration().after(DateTime.now().toDate())) {
+			if (!creditCard.getExpiration().after(DateTime.now().toDate()))
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
-	public Boolean checkHolderBlank(CreditCard creditCard) {
+
+	public Boolean checkHolderBlank(final CreditCard creditCard) {
 		Boolean res = true;
 		try {
-			if (creditCard.getHolder().length()==0) {
+			if (creditCard.getHolder().length() == 0)
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
-	public Boolean checkHolderInsecure(CreditCard creditCard) {
+
+	public Boolean checkHolderInsecure(final CreditCard creditCard) {
 		Boolean res = true;
 		try {
-			if (creditCard.getHolder().contains("<") || creditCard.getHolder().contains(">")) {
+			if (creditCard.getHolder().contains("<") || creditCard.getHolder().contains(">"))
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
-	public Boolean checkMakeBlank(CreditCard creditCard) {
+
+	public Boolean checkMakeBlank(final CreditCard creditCard) {
 		Boolean res = true;
 		try {
-			if (creditCard.getMake().length()==0) {
+			if (creditCard.getMake().length() == 0)
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
-	public Boolean checkMakeInsecure(CreditCard creditCard) {
+
+	public Boolean checkMakeInsecure(final CreditCard creditCard) {
 		Boolean res = true;
 		try {
-			if (creditCard.getMake().contains("<") || creditCard.getMake().contains(">")) {
+			if (creditCard.getMake().contains("<") || creditCard.getMake().contains(">"))
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;

@@ -118,7 +118,7 @@ public class MessageBoxTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-			final Sponsor testSpons = this.sponsorService.findOne(1075);
+			final Sponsor testSpons = this.sponsorService.findOne(1068);
 			super.authenticate("sponsor");
 			final MessageBox test = this.messageBoxService.create();
 			test.setName("test");

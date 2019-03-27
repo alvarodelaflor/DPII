@@ -56,15 +56,15 @@ public class SocialProfileTest extends AbstractTest {
 		final Object testingData[][] = {
 			//idActor,
 			{
-				876, null
+				1068, null
 			}, {
-				871, null
+				1062, null
 			}, {
-				812, null
+				1004, null
 			}, {
-				792, null
+				978, null
 			}, {
-				798, null
+				990, null
 			}
 		};
 
@@ -79,7 +79,7 @@ public class SocialProfileTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			if (id == 876) {
+			if (id == 1068) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -90,7 +90,7 @@ public class SocialProfileTest extends AbstractTest {
 				Assert.isTrue(test.getSocialProfiles().contains(save));
 
 			}
-			if (id == 871) {
+			if (id == 1062) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -100,7 +100,7 @@ public class SocialProfileTest extends AbstractTest {
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
 			}
-			if (id == 812) {
+			if (id == 1004) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -110,7 +110,7 @@ public class SocialProfileTest extends AbstractTest {
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
 			}
-			if (id == 792) {
+			if (id == 978) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -120,7 +120,7 @@ public class SocialProfileTest extends AbstractTest {
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
 			}
-			if (id == 798) {
+			if (id == 990) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -145,15 +145,15 @@ public class SocialProfileTest extends AbstractTest {
 	//		final Object testingData[][] = {
 	//			//idActor,
 	//			{
-	//				876, null
+	//				1068, null
 	//			}, {
-	//				871, null
+	//				1062, null
 	//			}, {
-	//				812, null
+	//				1004, null
 	//			}, {
-	//				792, null
+	//				978, null
 	//			}, {
-	//				798, null
+	//				990, null
 	//			}
 	//		};
 	//
@@ -168,7 +168,7 @@ public class SocialProfileTest extends AbstractTest {
 	//		try {
 	//			this.startTransaction();
 	//
-	//			if (id == 876) {
+	//			if (id == 1068) {
 	//				final SocialProfile newSo = this.socialProfileService.create();
 	//				newSo.setLink("http://google.es");
 	//				newSo.setName("try");
@@ -179,7 +179,7 @@ public class SocialProfileTest extends AbstractTest {
 	//				Assert.isTrue(test.getSocialProfiles().contains(save));
 	//
 	//			}
-	//			if (id == 871) {
+	//			if (id == 1062) {
 	//				final SocialProfile newSo = this.socialProfileService.create();
 	//				newSo.setLink("http://google.es");
 	//				newSo.setName("try");
@@ -189,7 +189,7 @@ public class SocialProfileTest extends AbstractTest {
 	//				final SocialProfile save = this.socialProfileService.save(newSo);
 	//				Assert.isTrue(test.getSocialProfiles().contains(save));
 	//			}
-	//			if (id == 812) {
+	//			if (id == 1004) {
 	//				final SocialProfile newSo = this.socialProfileService.create();
 	//				newSo.setLink("http://google.es");
 	//				newSo.setName("try");
@@ -199,7 +199,7 @@ public class SocialProfileTest extends AbstractTest {
 	//				final SocialProfile save = this.socialProfileService.save(newSo);
 	//				Assert.isTrue(test.getSocialProfiles().contains(save));
 	//			}
-	//			if (id == 792) {
+	//			if (id == 978) {
 	//				final SocialProfile newSo = this.socialProfileService.create();
 	//				newSo.setLink("http://google.es");
 	//				newSo.setName("try");
@@ -209,7 +209,7 @@ public class SocialProfileTest extends AbstractTest {
 	//				final SocialProfile save = this.socialProfileService.save(newSo);
 	//				Assert.isTrue(test.getSocialProfiles().contains(save));
 	//			}
-	//			if (id == 798) {
+	//			if (id == 990) {
 	//				final SocialProfile newSo = this.socialProfileService.create();
 	//				newSo.setLink("http://google.es");
 	//				newSo.setName("try");
@@ -233,77 +233,77 @@ public class SocialProfileTest extends AbstractTest {
 	@Test
 	public void driver3() {
 		final Object testingData[][] = {
-			//idActor,nick,link,name //876,871,812,792,798
+			//idActor,nick,link,name //1068,1062,1004,978,990
 			{
-				876, 0, 0, 1, ConstraintViolationException.class
+				1068, 0, 0, 1, ConstraintViolationException.class
 			}, {
-				876, 0, 1, 0, ConstraintViolationException.class
+				1068, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				876, 0, 1, 1, ConstraintViolationException.class
+				1068, 0, 1, 1, ConstraintViolationException.class
 			}, {
-				876, 1, 0, 0, ConstraintViolationException.class
+				1068, 1, 0, 0, ConstraintViolationException.class
 			}, {
-				876, 1, 0, 1, ConstraintViolationException.class
+				1068, 1, 0, 1, ConstraintViolationException.class
 			}, {
-				876, 1, 1, 0, ConstraintViolationException.class
+				1068, 1, 1, 0, ConstraintViolationException.class
 			}, {
-				876, 1, 1, 1, ConstraintViolationException.class
+				1068, 1, 1, 1, ConstraintViolationException.class
 			}, {
-				871, 0, 0, 1, ConstraintViolationException.class
+				1062, 0, 0, 1, ConstraintViolationException.class
 			}, {
-				871, 0, 1, 0, ConstraintViolationException.class
+				1062, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				871, 0, 1, 1, ConstraintViolationException.class
+				1062, 0, 1, 1, ConstraintViolationException.class
 			}, {
-				871, 1, 0, 0, ConstraintViolationException.class
+				1062, 1, 0, 0, ConstraintViolationException.class
 			}, {
-				871, 1, 0, 1, ConstraintViolationException.class
+				1062, 1, 0, 1, ConstraintViolationException.class
 			}, {
-				871, 1, 1, 0, ConstraintViolationException.class
+				1062, 1, 1, 0, ConstraintViolationException.class
 			}, {
-				871, 1, 1, 1, ConstraintViolationException.class
+				1062, 1, 1, 1, ConstraintViolationException.class
 			}, {
-				812, 0, 0, 1, ConstraintViolationException.class
+				1004, 0, 0, 1, ConstraintViolationException.class
 			}, {
-				812, 0, 1, 0, ConstraintViolationException.class
+				1004, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				812, 0, 1, 1, ConstraintViolationException.class
+				1004, 0, 1, 1, ConstraintViolationException.class
 			}, {
-				812, 1, 0, 0, ConstraintViolationException.class
+				1004, 1, 0, 0, ConstraintViolationException.class
 			}, {
-				812, 1, 0, 1, ConstraintViolationException.class
+				1004, 1, 0, 1, ConstraintViolationException.class
 			}, {
-				812, 1, 1, 0, ConstraintViolationException.class
+				1004, 1, 1, 0, ConstraintViolationException.class
 			}, {
-				812, 1, 1, 1, ConstraintViolationException.class
+				1004, 1, 1, 1, ConstraintViolationException.class
 			}, {
-				792, 0, 0, 1, ConstraintViolationException.class
+				978, 0, 0, 1, ConstraintViolationException.class
 			}, {
-				792, 0, 1, 0, ConstraintViolationException.class
+				978, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				792, 0, 1, 1, ConstraintViolationException.class
+				978, 0, 1, 1, ConstraintViolationException.class
 			}, {
-				792, 1, 0, 0, ConstraintViolationException.class
+				978, 1, 0, 0, ConstraintViolationException.class
 			}, {
-				792, 1, 0, 1, ConstraintViolationException.class
+				978, 1, 0, 1, ConstraintViolationException.class
 			}, {
-				792, 1, 1, 0, ConstraintViolationException.class
+				978, 1, 1, 0, ConstraintViolationException.class
 			}, {
-				792, 1, 1, 1, ConstraintViolationException.class
+				978, 1, 1, 1, ConstraintViolationException.class
 			}, {
-				798, 0, 0, 1, ConstraintViolationException.class
+				990, 0, 0, 1, ConstraintViolationException.class
 			}, {
-				798, 0, 1, 0, ConstraintViolationException.class
+				990, 0, 1, 0, ConstraintViolationException.class
 			}, {
-				798, 0, 1, 1, ConstraintViolationException.class
+				990, 0, 1, 1, ConstraintViolationException.class
 			}, {
-				798, 1, 0, 0, ConstraintViolationException.class
+				990, 1, 0, 0, ConstraintViolationException.class
 			}, {
-				798, 1, 0, 1, ConstraintViolationException.class
+				990, 1, 0, 1, ConstraintViolationException.class
 			}, {
-				798, 1, 1, 0, ConstraintViolationException.class
+				990, 1, 1, 0, ConstraintViolationException.class
 			}, {
-				798, 1, 1, 1, ConstraintViolationException.class
+				990, 1, 1, 1, ConstraintViolationException.class
 			},
 
 		};
@@ -330,27 +330,27 @@ public class SocialProfileTest extends AbstractTest {
 			if (name != 0)
 				newSo.setName(null);
 
-			if (id == 876) {
+			if (id == 1068) {
 				final Sponsor test = this.sponsorService.findOne(id);
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 			}
-			if (id == 871) {
+			if (id == 1062) {
 				final Administrator test = this.administratorService.findOne(id);
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 			}
-			if (id == 812) {
+			if (id == 1004) {
 				final Brotherhood test = this.brotherhoodService.findOne(id);
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 			}
-			if (id == 792) {
+			if (id == 978) {
 				final Chapter test = this.chapterService.findOne(id);
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 			}
-			if (id == 798) {
+			if (id == 990) {
 				final Member test = this.memberService.findOne(id);
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
@@ -371,15 +371,15 @@ public class SocialProfileTest extends AbstractTest {
 		final Object testingData[][] = {
 			//idActor,
 			{
-				876, null
+				1068, null
 			}, {
-				871, null
+				1062, null
 			}, {
-				812, null
+				1004, null
 			}, {
-				792, null
+				978, null
 			}, {
-				798, null
+				990, null
 			}
 		};
 
@@ -394,7 +394,7 @@ public class SocialProfileTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			if (id == 876) {
+			if (id == 1068) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -407,7 +407,7 @@ public class SocialProfileTest extends AbstractTest {
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 
 			}
-			if (id == 871) {
+			if (id == 1062) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -419,7 +419,7 @@ public class SocialProfileTest extends AbstractTest {
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 			}
-			if (id == 812) {
+			if (id == 1004) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -431,7 +431,7 @@ public class SocialProfileTest extends AbstractTest {
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 			}
-			if (id == 792) {
+			if (id == 978) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -443,7 +443,7 @@ public class SocialProfileTest extends AbstractTest {
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 			}
-			if (id == 798) {
+			if (id == 990) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -471,15 +471,15 @@ public class SocialProfileTest extends AbstractTest {
 		final Object testingData[][] = {
 			//idActor,
 			{
-				876, IllegalArgumentException.class
+				1068, IllegalArgumentException.class
 			}, {
-				871, IllegalArgumentException.class
+				1062, IllegalArgumentException.class
 			}, {
-				812, IllegalArgumentException.class
+				1004, IllegalArgumentException.class
 			}, {
-				792, IllegalArgumentException.class
+				978, IllegalArgumentException.class
 			}, {
-				798, IllegalArgumentException.class
+				990, IllegalArgumentException.class
 			}
 		};
 
@@ -494,7 +494,7 @@ public class SocialProfileTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			if (id == 876) {
+			if (id == 1068) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -504,13 +504,13 @@ public class SocialProfileTest extends AbstractTest {
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
 				super.unauthenticate();
-				final Administrator test1 = this.administratorService.findOne(871);
+				final Administrator test1 = this.administratorService.findOne(1062);
 				super.authenticate(test1.getUserAccount().getUsername());
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 
 			}
-			if (id == 871) {
+			if (id == 1062) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -519,12 +519,12 @@ public class SocialProfileTest extends AbstractTest {
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
-				final Sponsor test1 = this.sponsorService.findOne(876);
+				final Sponsor test1 = this.sponsorService.findOne(1068);
 				super.authenticate(test1.getUserAccount().getUsername());
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 			}
-			if (id == 812) {
+			if (id == 1004) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -533,12 +533,12 @@ public class SocialProfileTest extends AbstractTest {
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
-				final Chapter test1 = this.chapterService.findOne(792);
+				final Chapter test1 = this.chapterService.findOne(978);
 				super.authenticate(test1.getUserAccount().getUsername());
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 			}
-			if (id == 792) {
+			if (id == 978) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -547,12 +547,12 @@ public class SocialProfileTest extends AbstractTest {
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
-				final Brotherhood test1 = this.brotherhoodService.findOne(812);
+				final Brotherhood test1 = this.brotherhoodService.findOne(1004);
 				super.authenticate(test1.getUserAccount().getUsername());
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));
 			}
-			if (id == 798) {
+			if (id == 990) {
 				final SocialProfile newSo = this.socialProfileService.create();
 				newSo.setLink("http://google.es");
 				newSo.setName("try");
@@ -561,7 +561,7 @@ public class SocialProfileTest extends AbstractTest {
 				super.authenticate(test.getUserAccount().getUsername());
 				final SocialProfile save = this.socialProfileService.save(newSo);
 				Assert.isTrue(test.getSocialProfiles().contains(save));
-				final Chapter test1 = this.chapterService.findOne(792);
+				final Chapter test1 = this.chapterService.findOne(978);
 				super.authenticate(test1.getUserAccount().getUsername());
 				this.socialProfileService.delete(save);
 				Assert.isTrue(!test.getSocialProfiles().contains(save));

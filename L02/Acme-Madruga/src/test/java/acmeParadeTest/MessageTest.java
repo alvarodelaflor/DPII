@@ -145,12 +145,13 @@ public class MessageTest extends AbstractTest {
 			final MessageBox inBoxReceive = this.messageBoxService.getInBoxActor(receive.getId());
 			Assert.isTrue(saveMessage.getMessageBoxes().contains(inBoxReceive));
 
-			final MessageBox outBoxSender = this.messageBoxService.getOutBoxActor(1075);
+			final MessageBox outBoxSender = this.messageBoxService.getOutBoxActor(1068);
 
 			final Message deleteMessage = this.messageService.delete(saveMessage, outBoxSender.getId());
 
 			Assert.isTrue(!outBoxSender.getMessages().contains(saveMessage));
-			Assert.isTrue(this.messageBoxService.getTrashBoxActor(1075).getMessages().contains(saveMessage));
+			final MessageBox trashBoxSender = this.messageBoxService.getTrashBoxActor(1068);
+			Assert.isTrue(this.messageBoxService.getTrashBoxActor(1068).getMessages().contains(saveMessage));
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -189,14 +190,14 @@ public class MessageTest extends AbstractTest {
 			final MessageBox inBoxReceive = this.messageBoxService.getInBoxActor(receive.getId());
 			Assert.isTrue(saveMessage.getMessageBoxes().contains(inBoxReceive));
 
-			final MessageBox outBoxSender = this.messageBoxService.getOutBoxActor(1075);
+			final MessageBox outBoxSender = this.messageBoxService.getOutBoxActor(1062);
 
 			super.unauthenticate();
 
 			final Message deleteMessage = this.messageService.delete(saveMessage, outBoxSender.getId());
 
 			Assert.isTrue(!outBoxSender.getMessages().contains(saveMessage));
-			Assert.isTrue(this.messageBoxService.getTrashBoxActor(1075).getMessages().contains(saveMessage));
+			Assert.isTrue(this.messageBoxService.getTrashBoxActor(1062).getMessages().contains(saveMessage));
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

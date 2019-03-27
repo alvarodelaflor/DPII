@@ -12,7 +12,6 @@ import javax.validation.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -49,7 +48,7 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	userNameSponsor,
 			{
-				791, null
+				1068, null
 			}
 		};
 
@@ -64,7 +63,7 @@ public class SponsorshipTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Sponsor sponsorActor = this.sponsorService.getSponsorByUserId(sponsor);
+			final Sponsor sponsorActor = this.sponsorService.findOne(sponsor);
 
 			final Collection<Sponsorship> sponsorships = sponsorActor.getSponsorships();
 
@@ -83,7 +82,7 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	userNameSponsor,
 			{
-				791, IllegalArgumentException.class
+				1068, IllegalArgumentException.class
 			}
 		};
 
@@ -98,7 +97,7 @@ public class SponsorshipTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Sponsor sponsorActor = this.sponsorService.getSponsorByUserId(sponsor);
+			final Sponsor sponsorActor = this.sponsorService.findOne(sponsor);
 
 			final Collection<Sponsorship> sponsorships = sponsorActor.getSponsorships();
 
@@ -146,25 +145,26 @@ public class SponsorshipTest extends AbstractTest {
 			sponsorshipTest.setBanner("http://google.es");
 			sponsorshipTest.setTarget("test");
 
-			final Sponsor test = this.sponsorService.findOne(876);
+			final Sponsor test = this.sponsorService.findOne(1068);
 
 			sponsorshipTest.setSponsor(test);
 
-			final Parade parade = this.paradeService.findOne(872);
+			final Parade parade = this.paradeService.findOne(1063);
 
 			sponsorshipTest.setParade(parade);
 
 			final CreditCard card = new CreditCard();
 			card.setCVV("111");
 			card.setMake("VISA");
-			card.setNumber("6543256");
+			card.setNumber("1234567890987654");
 			card.setHolder("try");
-			card.setExpiration(new Date());
+			final Date date = new Date(2030, 01, 22);
+			card.setExpiration(date);
 
 			sponsorshipTest.setCreditCard(card);
 
 			final Sponsorship sponsorshipSave = this.sponsorshipService.save(sponsorshipTest);
-			this.sponsorshipService.flush();
+			//		this.sponsorshipService.flush();
 			super.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -180,7 +180,7 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	banner, parade, cvv, make, sponsor
 			{
-				0, 0, 0, 0, 1, DataIntegrityViolationException.class
+				0, 0, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 0, 0, 1, 0, IllegalArgumentException.class
 			}, {
@@ -194,9 +194,9 @@ public class SponsorshipTest extends AbstractTest {
 			}, {
 				0, 0, 1, 1, 1, IllegalArgumentException.class
 			}, {
-				0, 1, 0, 0, 0, DataIntegrityViolationException.class
+				0, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
-				0, 1, 0, 0, 1, DataIntegrityViolationException.class
+				0, 1, 0, 0, 1, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 1, 0, IllegalArgumentException.class
 			}, {
@@ -248,7 +248,6 @@ public class SponsorshipTest extends AbstractTest {
 			this.testRegisterSponsorshipNegative((int) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (Class<?>) testingData[i][5]);
 
 	}
-
 	public void testRegisterSponsorshipNegative(final int banner, final int parade, final int cvv, final int make, final int sponsor, final Class<?> expected) {
 		Class<?> caught = null;
 
@@ -262,21 +261,21 @@ public class SponsorshipTest extends AbstractTest {
 			sponsorshipTest.setActive(true);
 			sponsorshipTest.setTarget("test");
 
-			final Sponsor test = this.sponsorService.findOne(876);
+			final Sponsor test = this.sponsorService.findOne(1068);
 
 			sponsorshipTest.setSponsor(test);
 
-			final Parade paradeTest = this.paradeService.findOne(872);
+			final Parade paradeTest = this.paradeService.findOne(1063);
 
 			sponsorshipTest.setParade(paradeTest);
 
 			final CreditCard card = new CreditCard();
 			card.setCVV("111");
 			card.setMake("VISA");
-			card.setNumber("6543256");
+			card.setNumber("1234567890987654");
 			card.setHolder("try");
-			card.setExpiration(new Date());
-
+			final Date date = new Date(2030, 01, 22);
+			card.setExpiration(date);
 			sponsorshipTest.setCreditCard(card);
 
 			sponsorshipTest.setBanner("http://google.es");
@@ -309,9 +308,9 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	userNameSponsor,
 			{
-				877, null
+				1069, null
 			}, {
-				878, null
+				1070, null
 			}
 		};
 
@@ -330,16 +329,16 @@ public class SponsorshipTest extends AbstractTest {
 
 			final Sponsorship sponsorshipTest = this.sponsorshipService.findOne(sponsorship);
 
-			if (sponsorship == 877)
+			if (sponsorship == 1069)
 				Assert.isTrue(sponsorshipTest.getActive() == false);
-			if (sponsorship == 878)
+			if (sponsorship == 1070)
 				Assert.isTrue(sponsorshipTest.getActive() == true);
 
 			this.sponsorshipService.delete(sponsorshipTest);
 
-			if (sponsorship == 877)
+			if (sponsorship == 1069)
 				Assert.isTrue(sponsorshipTest.getActive() == true);
-			if (sponsorship == 878)
+			if (sponsorship == 1070)
 				Assert.isTrue(sponsorshipTest.getActive() == false);
 
 			this.sponsorshipService.flush();
