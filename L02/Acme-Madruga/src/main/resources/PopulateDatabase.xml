@@ -838,7 +838,7 @@
     </bean>
     
      <bean id="sponsorship01" class="domain.Sponsorship">
-    	<property name="banner" value= "https://estaticos.elperiodico.com/resources/jpg/4/9/policia-encuentra-nino-cinco-anos-madrugada-solo-calle-1524574525394.jpg"/>
+    	<property name="banner" value= "https://www.citic.udc.es/upload/user/miguel_toro_1.jpg"/>
     	<property name="bannerCount" value= "0"/>
     	<property name="target" value= "https://www.elvisodelalcor.org/"/>
     	<property name="sponsor" ref= "sponsor01"/>
@@ -848,7 +848,7 @@
     </bean>
     
     <bean id="sponsorship02" class="domain.Sponsorship">
-    	<property name="banner" value= "http://www.elgrifoinformacion.com/multimedia/images/ROMERIADELVISODEELVISODELALCOR.jpg"/>
+    	<property name="banner" value= "https://www.citic.udc.es/upload/user/miguel_toro_2.jpg"/>
     	<property name="bannerCount" value= "0"/>
     	<property name="target" value= "https://es.wikipedia.org/wiki/El_Viso_del_Alcor"/>
     	<property name="sponsor" ref= "sponsor01"/>
