@@ -15,6 +15,7 @@ import org.springframework.validation.Validator;
 
 import repositories.SponsorRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.MessageBox;
 import domain.Sponsor;
@@ -264,5 +265,10 @@ public class SponsorService {
 
 	public void flush() {
 		this.sponsorRepository.flush();
+	}
+
+	public void delete(final Sponsor sponsor) {
+		Assert.isTrue(LoginService.getPrincipal().getId() == sponsor.getUserAccount().getId());
+		this.sponsorRepository.delete(sponsor);
 	}
 }

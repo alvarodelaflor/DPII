@@ -147,6 +147,9 @@
 						<li><a href="administrator/edit.do"><spring:message code="master.page.administrator.edit" /></a></li>
 						<li><a href="administrator/create.do"><spring:message code="master.page.administrator.create" /></a></li>			
 					</security:authorize>
+					<security:authorize access="hasRole('SPONSOR')">
+						<li><a href="sponsor/show.do"><spring:message code="master.page.member.show" /></a></li>	
+					</security:authorize>
 				</ul>
 			</li>
 </security:authorize>
