@@ -31,6 +31,9 @@ public class SegmentService {
 	@Autowired
 	private Validator			validator;
 
+	@Autowired
+	private PathService			pathService;
+
 
 	public Segment create() {
 		final Segment res = new Segment();
@@ -41,6 +44,7 @@ public class SegmentService {
 	public Segment save(Segment segment, final int paradeId) {
 		// We need the paradeId to check if we are the owner of the parade
 		this.assertParadeOwner(paradeId);
+		Assert.isTrue(segment.getArrivalTime().before(segment.getDestination().getArrivalTime()));
 		segment = this.segmentRepository.save(segment);
 		return segment;
 	}
@@ -67,8 +71,14 @@ public class SegmentService {
 		Assert.notNull(segment.getDestination());
 		final Segment res = this.create();
 
-		Segment aux;
-		aux = this.segmentRepository.findOne(segment.getId());
+		final Segment aux = this.segmentRepository.findOne(segment.getId());
+
+		final Path path = this.pathService.findFromOriginSegment(aux.getId());
+		if (path != null)
+			res.setArrivalTime(segment.getArrivalTime());
+		else
+			res.setArrivalTime(aux.getArrivalTime());
+
 		res.setId(aux.getId());
 		res.setVersion(aux.getVersion());
 		res.setLatitude(segment.getLatitude());
@@ -81,6 +91,7 @@ public class SegmentService {
 
 		res.getDestination().setLatitude(segment.getDestination().getLatitude());
 		res.getDestination().setLongitude(segment.getDestination().getLongitude());
+		res.getDestination().setArrivalTime(segment.getDestination().getArrivalTime());
 
 		this.validator.validate(res, binding);
 		// We have to also validate the destination

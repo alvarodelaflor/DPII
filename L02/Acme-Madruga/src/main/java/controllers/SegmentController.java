@@ -24,9 +24,8 @@ public class SegmentController extends AbstractController {
 	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST)
 	public ModelAndView editSegment(@RequestParam("paradeId") final int paradeId, final Segment segment, final BindingResult binding, final RedirectAttributes redirectAttributes) {
 		ModelAndView result;
-		System.out.println(binding.getAllErrors());
 		final Segment res = this.segmentService.reconstruct(segment, binding);
-		System.out.println(binding.getAllErrors());
+
 		if (binding.hasErrors()) {
 			result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
 			redirectAttributes.addFlashAttribute("wrongSegment", true);
@@ -36,7 +35,8 @@ public class SegmentController extends AbstractController {
 				result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
 			} catch (final Exception e) {
 				e.printStackTrace();
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/path/show.do?paradeId=" + paradeId);
+				redirectAttributes.addFlashAttribute("wrongSegment", true);
 			}
 
 		return result;

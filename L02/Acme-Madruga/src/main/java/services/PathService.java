@@ -59,6 +59,7 @@ public class PathService {
 			if (parade.getIsFinal())
 				res = this.pathRepository.findFromParade(paradeId);
 		}
+		System.out.println(res);
 		return res;
 	}
 
@@ -70,6 +71,11 @@ public class PathService {
 		final int segmentToDelete = path.getOrigin().getId();
 		path.setOrigin(null);
 		this.segmentService.delete(segmentToDelete, path.getParade().getId());
+	}
+
+	public Path findFromOriginSegment(final int segmentId) {
+		final Path path = this.pathRepository.findFromOriginSegment(segmentId);
+		return path;
 	}
 
 	public Path createFromParade(final int paradeId) {
@@ -97,7 +103,7 @@ public class PathService {
 	public Segment reconstruct(final Segment segment, final BindingResult binding) {
 		// This should only be called when there's no path, segment id is always 0
 		Assert.isTrue(segment.getId() == 0);
-		System.out.println("This is true: " + (segment.getId() == 0));
+		Assert.isTrue(segment.getArrivalTime().before(segment.getDestination().getArrivalTime()));
 		this.validator.validate(segment, binding);
 		// We have to also validate the destination
 		this.validator.validate(segment.getDestination(), binding);
