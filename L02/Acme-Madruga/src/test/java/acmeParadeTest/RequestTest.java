@@ -107,13 +107,12 @@ public class RequestTest extends AbstractTest {
 					request = this.requestService.findOne(requestId);
 					request.setStatus(true);
 				}
-
 				this.requestService.delete(requestId);
 			}
 
 			if (useCases.contains("send")) {
 				brotherhoodId = this.getEntityId("brotherhood01");
-				final int paradeId = this.paradeService.getParadeByBrotherhoodId(brotherhoodId).iterator().next().getId();
+				final int paradeId = this.getEntityId("parade01");
 				request = this.requestService.create(paradeId);
 				request = this.requestService.save(request);
 			}
