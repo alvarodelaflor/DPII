@@ -11,7 +11,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- Both not owner and owner -->
 <spring:message code='path.origin' var="pathOrigin"/>
@@ -22,7 +22,7 @@
 <jstl:if test="${not owner and fn:length(segments) > 0}">
 <ol>
 <jstl:forEach var="segment" items="${segments}">
-	<li> <jstl:out value=" ${pathOrigin}: (${segment.latitude}, ${segment.longitude}) =>${pathDestination}: (${segment.destination.latitude}, ${segment.destination.longitude})"/> </li>
+	<li> [<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segment.arrivalTime}' />] <jstl:out value=" ${pathOrigin}: (${segment.latitude}, ${segment.longitude}) => " />[<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segment.destination.arrivalTime}' />] <jstl:out value="${pathDestination}: (${segment.destination.latitude}, ${segment.destination.longitude})"/> </li>
 </jstl:forEach>
 </ol>
 </jstl:if>
@@ -34,12 +34,17 @@
 	<form id="segment" action="${not empty segments[0].id ? 'segment' : 'path'}/brotherhood/edit.do" method="post">
 		<input id="paradeId" name="paradeId" value="${paradeId}" type="hidden">
 		<input id="id" name="id" value="${not empty segments[0].id ? segments[0].id : 0}" type="hidden">
+		<label>[</label>
+		<input id="arrivalTime" name="arrivalTime" value="<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segments[0].arrivalTime}' />" type="text">
+		<label>] </label>
 		<label>${pathOrigin}: (</label>
 		<input id="latitude" name="latitude" value="${segments[0].latitude}" type="text">
 		<label>, </label>
 		<input id="longitude" name="longitude" value="${segments[0].longitude}" type="text">
-		<label>) =></label>
-			
+		<label>) => </label>
+		<label>[</label>
+		<input id="destination.arrivalTime" name="destination.arrivalTime" value="<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segments[0].destination.arrivalTime}' />" type="text">
+		<label>] </label>
 		<label>${pathDestination}: (</label>
 		<input id="destination.latitude" name="destination.latitude" value="${segments[0].destination.latitude}" type="text">
 		<label>, </label>
@@ -63,13 +68,17 @@
 <form id="segment" action="segment/brotherhood/edit.do" method="post">
 	<input id="paradeId" name="paradeId" value="${paradeId}" type="hidden">
 	<input id="id" name="id" value="${segments[0].id}" type="hidden">
-
+	<label>[</label>
+	<input id="arrivalTime" name="arrivalTime" value="<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segments[0].arrivalTime}' />" type="text">
+	<label>] </label>
 	<label>${pathOrigin}: (</label>
 	<input id="latitude" name="latitude" value="${segments[0].latitude}" type="text">
 	<label>, </label>
 	<input id="longitude" name="longitude" value="${segments[0].longitude}" type="text">
-	<label>) =></label>
-		
+	<label>) => </label>
+	<label>[</label>
+	<input id="destination.arrivalTime" name="destination.arrivalTime" value="<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segments[0].destination.arrivalTime}' />" type="text">
+	<label>] </label>
 	<label>${pathDestination}: (</label>
 	<input id="destination.latitude" name="destination.latitude" value="${segments[0].destination.latitude}" type="text">
 	<label>, </label>
@@ -92,8 +101,13 @@
 			<input id="id" name="id" value="${segment.id}" type="hidden">
 			<input id="latitude" name="latitude" value="${segment.latitude}" type="hidden">
 			<input id="longitude" name="longitude" value="${segment.longitude}" type="hidden">
+			<input id="arrivalTime" name="arrivalTime" value="<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segment.arrivalTime}' />" type="hidden">
 			
-			<jstl:out value="${pathOrigin}: (${segment.latitude}, ${segment.longitude}) =>"/>
+			[<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segment.arrivalTime}' />] 
+			<jstl:out value="${pathOrigin}: (${segment.latitude}, ${segment.longitude}) => "/>
+			<label>[</label>
+			<input id="destination.arrivalTime" name="destination.arrivalTime" value="<fmt:formatDate pattern = "yyyy/MM/dd HH:mm" value = '${segment.destination.arrivalTime}' />" type="text">
+			<label>] </label>
 			<label>${pathDestination}: (</label>
 			<input id="destination.latitude" name="destination.latitude" value="${segment.destination.latitude}" type="text">
 			<label>, </label>
@@ -113,6 +127,7 @@
 <jstl:if test="${wrongSegment}">
 	<span class="error"><spring:message code="segment.error"/></span>
 </jstl:if>
+
 
 <acme:cancel url="parade/brotherhood/list.do" code="cancel"/>
 
