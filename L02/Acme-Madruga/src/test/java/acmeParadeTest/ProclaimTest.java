@@ -135,43 +135,27 @@ public class ProclaimTest extends AbstractTest {
 		final Object testingData[][] = {
 			// chapterId, textBlank, texMax, textNull, date 
 			{ 
-				"chapter", 0, 0, 0, 1, ConstraintViolationException.class
+				"chapter", 0, 0, 0, ConstraintViolationException.class
 			}, { 
-				"chapter", 0, 0, 1, 0, ConstraintViolationException.class
+				"chapter", 0, 0, 1, ConstraintViolationException.class
 			}, { 
-				"chapter", 0, 0, 1, 1, ConstraintViolationException.class
+				"chapter", 0, 1, 0, ConstraintViolationException.class
 			}, { 
-				"chapter", 0, 1, 0, 0, ConstraintViolationException.class
+				"chapter", 0, 1, 1, ConstraintViolationException.class
 			}, { 
-				"chapter", 0, 1, 0, 1, ConstraintViolationException.class
+				"chapter", 1, 0, 0, ConstraintViolationException.class
 			}, { 
-				"chapter", 0, 1, 1, 0, ConstraintViolationException.class
+				"chapter", 1, 0, 1, ConstraintViolationException.class
 			}, { 
-				"chapter", 0, 1, 1, 1, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 0, 0, 0, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 0, 0, 1, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 0, 1, 0, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 0, 1, 1, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 1, 0, 0, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 1, 0, 1, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 1, 1, 1, ConstraintViolationException.class
-			}, { 
-				"chapter", 1, 1, 1, 1, ConstraintViolationException.class
+				"chapter", 1, 1, 1, ConstraintViolationException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.checkTest((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (int) testingData[i][4], (Class<?>) testingData[i][5]);
+			this.checkTest((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (int) testingData[i][3], (Class<?>) testingData[i][4]);
 	}
 
-	protected void checkTest(final String userName, final int textBlank, final int textMax, final int textNull, final int date, final Class<?> expected) {
+	protected void checkTest(final String userName, final int textBlank, final int textMax, final int textNull, final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
@@ -190,13 +174,7 @@ public class ProclaimTest extends AbstractTest {
 				proclaim.setText("Normal text");
 			}
 			
-			if (date != 0) {
-				proclaim.setMoment(null);
-			} else {
-				proclaim.setMoment(LocalDate.now().toDate());
-			}
-			
-			if (((textBlank + textMax + textNull) > 1 || (textBlank + textMax + textNull) == 0) && date == 0) {
+			if (((textBlank + textMax + textNull) > 1 || (textBlank + textMax + textNull) == 0)) {
 				/*
 				 * Este es el caso de que el resultado es positivo, por lo que vamos a forzar un caso negativo para agilizar las pruebas
 				 */
