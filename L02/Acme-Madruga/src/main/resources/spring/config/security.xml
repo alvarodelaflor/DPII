@@ -205,7 +205,7 @@
 		<security:intercept-url pattern="/member/export.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/brotherhood/export.do" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/chapter/export.do" access="hasRole('CHAPTER')"/>	
-		
+		<security:intercept-url pattern="/sponsor/export.do" access="hasRole('SPONSOR')" />
 		
 		<security:intercept-url pattern="/administrator/newScoreWordPos.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/administrator/deleteScoreWordPos.do" access="hasRole('ADMIN')" />  	  				  
@@ -224,7 +224,10 @@
 		<security:intercept-url pattern="/administrator/delete.do" access="hasRole('ADMIN')" />		
 		<security:intercept-url pattern="/member/delete.do" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/brotherhood/deleteUser.do" access="hasRole('BROTHERHOOD')" />  
-		<security:intercept-url pattern="/chapter/delete.do" access="hasRole('CHAPTER')"/>	
+		<security:intercept-url pattern="/chapter/delete.do" access="hasRole('CHAPTER')"/>
+		<security:intercept-url pattern="/sponsor/delete.do" access="hasRole('SPONSOR')" />
+		
+		<security:intercept-url pattern="/sponsor/show.do" access="hasRole('SPONSOR')" />	
 		<!-- FERRETE -->
 		<!-- ANTONIO SANCHEZ -->
 		<security:intercept-url pattern="/request/member/list.do" access="hasRole('MEMBER')" />

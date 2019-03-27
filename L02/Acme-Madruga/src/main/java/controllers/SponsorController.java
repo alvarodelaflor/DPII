@@ -15,11 +15,15 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.ActorService;
 import services.SponsorService;
 import services.WelcomeService;
@@ -103,4 +107,59 @@ public class SponsorController extends AbstractController {
 		return result;
 	}
 
+	//Nuevo
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int sponsorId) {
+		ModelAndView result;
+
+		final Sponsor sponsor = this.sponsorService.findOne(sponsorId);
+		System.out.println("Sponsor encontrado: " + sponsor);
+		if (this.sponsorService.findOne(sponsorId) == null || LoginService.getPrincipal().getId() != sponsor.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(sponsor, "sponsor.null");
+
+			try {
+				this.sponsorService.delete(sponsor);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody
+	Sponsor export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Sponsor result = new Sponsor();
+		result = this.sponsorService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView list() {
+
+		ModelAndView result;
+		try {
+			final int userLoggin = LoginService.getPrincipal().getId();
+			final Sponsor sponsor;
+			sponsor = this.sponsorService.getSponsorByUserId(userLoggin);
+			Assert.isTrue(sponsor != null);
+
+			result = new ModelAndView("sponsor/show");
+			result.addObject("sponsor", sponsor);
+
+			result.addObject("requestURI", "sponsor/show.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
+		return result;
+	}
 }
