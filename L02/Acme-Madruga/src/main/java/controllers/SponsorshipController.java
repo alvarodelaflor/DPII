@@ -63,26 +63,12 @@ public class SponsorshipController extends AbstractController {
 			res = new ModelAndView("sponsorship/list");
 			res.addObject("sponsorships", sponsor.getSponsorships());
 			res.addObject("requestURI", "sponsorship/list.do");
-			res.addObject("validSponsor", validSponsor() && this.sponsorshipService.checkAnyParade() && this.welcomeService.getCreditCardsMakes().isEmpty());
+			res.addObject("validSponsor", this.sponsorshipService.checkAnyParade());
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
 		res.addObject("logo", this.welcomeService.getLogo());
 		res.addObject("system", this.welcomeService.getSystem());
-		return res;
-	}
-	
-	private Boolean validSponsor() {
-		Boolean res = false;
-		try {
-			for (Parade parade : this.paradeService.findAll()) {
-				if (parade.getIsFinal().equals(true) && parade.getStatus().equals("ACCEPTED")) {
-					res = true;
-				}
-			}
-		} catch (Exception e) {
-			// Se ha producido un error
-		}
 		return res;
 	}
 

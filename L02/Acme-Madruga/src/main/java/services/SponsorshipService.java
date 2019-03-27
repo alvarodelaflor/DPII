@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -14,13 +15,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Administrator;
+import domain.CreditCard;
+import domain.Parade;
+import domain.Sponsor;
+import domain.Sponsorship;
 import repositories.SponsorshipRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Administrator;
-import domain.CreditCard;
-import domain.Sponsor;
-import domain.Sponsorship;
 
 /*
  * CONTROL DE CAMBIOS SponsorshipService.java
@@ -243,13 +245,15 @@ public class SponsorshipService {
 	}
 	
 	public Boolean checkAnyParade() {
-		Boolean res = true;
+		Boolean res = false;
 		try {
-			if (this.paradeService.findAll().isEmpty()) {
-				res = false;
-			}	
+			for (Parade parade : this.paradeService.findAll()) {
+				if (parade.getIsFinal().equals(true) && parade.getStatus().equals("ACCEPTED")) {
+					res = true;
+				}
+			}
 		} catch (Exception e) {
-			res = false;
+			// Se ha producido un error
 		}
 		return res;
 	}
