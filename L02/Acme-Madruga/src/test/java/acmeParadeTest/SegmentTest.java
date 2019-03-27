@@ -180,9 +180,7 @@ public class SegmentTest extends AbstractTest {
 				segment.setDestination(destination);
 				this.segmentService.save(segment, paradeId);
 			} else if (mode == "delete") {
-				final Path path = this.pathService.getParadePath(paradeId);
-				System.out.println(path);
-				System.out.println(paradeId);
+				final Path path = this.pathService.findFromOriginSegment(this.getEntityId("segment1"));
 				final Segment lastSegment = this.segmentService.getAllSegments(path).get(this.segmentService.getAllSegments(path).size() - 1);
 				this.segmentService.delete(lastSegment.getId(), paradeId);
 			} else if (mode == "internal") {
