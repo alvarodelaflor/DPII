@@ -67,7 +67,7 @@ public class AreaService {
 			final List<String> s2 = Arrays.asList(pictures);
 
 			for (final String photo : s2)
-				this.checkPhotos(photo);
+				Assert.isTrue(this.checkPhotos(photo), "error.url");
 
 			area.setPictures(s2);
 		}
@@ -79,9 +79,10 @@ public class AreaService {
 		return this.areaRepository.save(area);
 	}
 
-	private Boolean checkPhotos(final String photo) {
+	public Boolean checkPhotos(final String photo) {
 		Boolean res = true;
 		try {
+
 			new URL(photo).toURI();
 		} catch (final Exception e) {
 			res = false;
