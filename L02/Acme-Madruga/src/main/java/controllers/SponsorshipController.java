@@ -63,7 +63,7 @@ public class SponsorshipController extends AbstractController {
 			res = new ModelAndView("sponsorship/list");
 			res.addObject("sponsorships", sponsor.getSponsorships());
 			res.addObject("requestURI", "sponsorship/list.do");
-			res.addObject("validSponsor", validSponsor());
+			res.addObject("validSponsor", validSponsor() && this.sponsorshipService.checkAnyParade() && this.welcomeService.getCreditCardsMakes().isEmpty());
 		} catch (final Exception e) {
 			res = new ModelAndView("redirect:index.do");
 		}
@@ -121,10 +121,15 @@ public class SponsorshipController extends AbstractController {
 		try {
 			Assert.isTrue(!this.paradeService.findAll().isEmpty(), "No hay parades");
 			sponsorship = this.sponsorshipService.create();
-
-			final Collection<Parade> parades = this.paradeService.findAll();
-
 			result = new ModelAndView("sponsorship/create");
+			HashSet<String> makes = new HashSet<>();
+			final Collection<Parade> parades = this.paradeService.findAll();
+			if (this.welcomeService.getCreditCardsMakes().size() == 0)
+				makes = this.welcomeService.defaultCCsMakes();
+			else
+				makes = this.welcomeService.getCreditCardsMakes();
+
+			result.addObject("makes", makes);
 			result.addObject("sponsorship", sponsorship);
 			result.addObject("logo", this.welcomeService.getLogo());
 			result.addObject("parades", parades);

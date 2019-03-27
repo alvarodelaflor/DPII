@@ -17,6 +17,7 @@ import org.springframework.validation.Validator;
 import repositories.SponsorshipRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Administrator;
 import domain.CreditCard;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -50,6 +51,9 @@ public class SponsorshipService {
 
 	@Autowired
 	private ParadeService			paradeService;
+
+	@Autowired
+	private AdministratorService	adminService;
 
 
 	public Sponsorship reconstruct(final Sponsorship sponsorship, final BindingResult binding) {
@@ -96,7 +100,8 @@ public class SponsorshipService {
 	public Sponsorship save(final Sponsorship sponsorship) {
 		final UserAccount user = LoginService.getPrincipal();
 		final Sponsor sponsor = this.sponsorService.getSponsorByUserId(user.getId());
-		Assert.notNull(sponsor);
+		final Administrator admin = this.adminService.getAdministratorByUserAccountId(user.getId());
+		Assert.isTrue(sponsor != null || admin != null);
 		Assert.isTrue(this.checkCVV(sponsorship.getCreditCard()), "CVV not Valid");
 		Assert.isTrue(this.checkNumber(sponsorship.getCreditCard()), "Number not valid");
 		Assert.isTrue(this.checkMoment(sponsorship.getCreditCard()), "Moment must be in the future");
@@ -111,7 +116,6 @@ public class SponsorshipService {
 		Assert.notNull(sponsorship.getCreditCard().getExpiration());
 		return this.sponsorshipRepository.save(sponsorship);
 	}
-
 	public void delete(final Sponsorship sponsorship) {
 		final UserAccount user = LoginService.getPrincipal();
 		final Sponsor sponsor = this.sponsorService.getSponsorByUserId(user.getId());
@@ -233,6 +237,18 @@ public class SponsorshipService {
 			if (creditCard.getMake().contains("<") || creditCard.getMake().contains(">"))
 				res = false;
 		} catch (final Exception e) {
+			res = false;
+		}
+		return res;
+	}
+	
+	public Boolean checkAnyParade() {
+		Boolean res = true;
+		try {
+			if (this.paradeService.findAll().isEmpty()) {
+				res = false;
+			}	
+		} catch (Exception e) {
 			res = false;
 		}
 		return res;

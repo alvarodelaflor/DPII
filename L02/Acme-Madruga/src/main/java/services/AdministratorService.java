@@ -220,8 +220,6 @@ public class AdministratorService {
 
 	public Administrator create() {
 
-		Assert.notNull(this.administratorRepository.findByUserAccountId(LoginService.getPrincipal().getId()));
-
 		final Administrator member = new Administrator();
 		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();
@@ -246,17 +244,6 @@ public class AdministratorService {
 		// Email
 		Assert.isTrue(!this.checkEmailFormatter(admin), "email.wrong");
 		Assert.isTrue(this.checkEmailR(admin), "error.email");
-		// Username
-		Assert.isTrue(admin.getUserAccount().getUsername() != null);
-		Assert.isTrue(!(this.actorService.getActorByUser(admin.getUserAccount().getUsername()) != null));
-		Assert.isTrue(admin.getUserAccount().getUsername().length() >= 5 && admin.getUserAccount().getUsername().length() <= 32);
-		// Password
-		Assert.isTrue(admin.getUserAccount().getPassword() != null);
-		Assert.isTrue(admin.getUserAccount().getPassword().length() >= 5 && admin.getUserAccount().getPassword().length() <= 32);
-		// Name
-		Assert.isTrue(admin.getName() != null && admin.getName() != "");
-		// Surname
-		Assert.isTrue(admin.getSurname() != null && admin.getSurname() != "");
 
 		if (admin.getPhone().matches("^([0-9]{4,})$"))
 			admin.setPhone("+" + this.welcomeService.getPhone() + " " + admin.getPhone());
