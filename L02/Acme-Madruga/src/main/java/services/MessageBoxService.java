@@ -123,6 +123,16 @@ public class MessageBoxService {
 		System.out.println("no falla donde creo");
 		return result;
 	}
+	
+	private Boolean checkAnyLogger() {
+		Boolean res = true;
+		try {
+			LoginService.getPrincipal();
+		} catch (Exception e) {
+			res = false;
+		}
+		return res;
+	}
 
 	public MessageBox save(final MessageBox messageBox) {
 		final MessageBox oldMessageBox = this.messageBoxRepository.findOne(messageBox.getId());
@@ -131,9 +141,13 @@ public class MessageBoxService {
 			if (oldMessageBox.getName() == "in box" || oldMessageBox.getName() == "out box" || oldMessageBox.getName() == "spam box" || oldMessageBox.getName() == "trash box" || oldMessageBox.getName() == "notification box")
 				Assert.isTrue(oldMessageBox.getName() == messageBox.getName());
 		System.out.println("falla aqui");
-		final UserAccount user = LoginService.getPrincipal();
-		final Actor a = this.actorService.getActorByUserId(user.getId());
-		Assert.isTrue(!this.getNameBox(a.getId()).contains(messageBox.getName()));
+		if (checkAnyLogger()) {
+			final UserAccount user = LoginService.getPrincipal();
+			final Actor a = this.actorService.getActorByUserId(user.getId());
+			if (this.administratorService.getAdministratorByUserAccountId(LoginService.getPrincipal().getId()) == null) {
+				Assert.isTrue(!this.getNameBox(a.getId()).contains(messageBox.getName()));	
+			}
+		}
 		final MessageBox result = this.messageBoxRepository.save(messageBox);
 		return result;
 	}
