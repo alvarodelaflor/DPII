@@ -919,62 +919,23 @@ public class AdminTest extends AbstractTest {
 	public void driver6() {
 
 		final Object testingData[][] = {
-			//	userName, password, email
+			//	email
 			{
-				"noExistoEnElPopulate3", "noExistoEnElPopulate2", "noExistoEnElPopulate@no3ExistoEnElPopulate2", null
+				"noExistoEnElPopulate3@", null
 			}, {
-				//EMAIL INCORRECTO
-				"noExistoEnElPopulate3", "noExistoEnElPopulate3", "emailIncorrecto", IllegalArgumentException.class
+				"noExistoEnElPopulate3@noExistoEnElPopulate3", null
 			}, {
-				//EMAIL INCORRECTO
-				"noExistoEnElPopulate4", "noExistoEnElPopulate4", "", IllegalArgumentException.class
+				"noExistoEnElPopulate3", IllegalArgumentException.class
 			}, {
-				//USERNAME INCORRECTO
-				"", "noExistoEnElPopulate5", "noExistoEnElPopulate@noExistoEnElPopulate5", IllegalArgumentException.class
-			}, {
-				//USERNAME INCORRECT0
-				"d", "noExistoEnElPopulate5", "noExistoEnElPopulate@noExistoEnElPopulate5", ConstraintViolationException.class
-			}, {
-				//USERNAME Y PASSWORD INCORRECT0
-				"d", "noExistoEnElPopulate5", "emailIncorrecto", IllegalArgumentException.class
-			}, {
-				//USERNAME Y PASSWORD INCORRECT0
-				"", "noExistoEnElPopulate5", "emailIncorrecto", IllegalArgumentException.class
-			}, {
-				//USERNAME Y PASSWORD INCORRECT0
-				"d", "noExistoEnElPopulate5", "", IllegalArgumentException.class
-			}, {
-				//USERNAME Y PASSWORD INCORRECT0
-				"", "noExistoEnElPopulate5", "", IllegalArgumentException.class
-			}, {
-				//EMAIL EXISTE
-				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "carferben@carferben", IllegalArgumentException.class
-			}, {
-				//USERNAME PASSWORD EMAIL INCORRECTO
-				"", "", "", IllegalArgumentException.class
-			}, {
-				// PASSWORD EMAIL INCORRECTO
-				"noExistoEnElPopulate5", "", "", IllegalArgumentException.class
-			}, {
-				// PASSWORD EMAIL INCORRECTO
-				"", "", "noExistoEnElPopulate@noExistoEnElPopulate5", ConstraintViolationException.class
-			}, {
-				// EMAIL  CORRECTO 
-				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "carmen <noExistoEnElPopulate@noExistoEnElPopulate5>", null
-			}, {
-				// EMAIL  CORRECTO 
-				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "carmen <noExistoEnElPopulate@>", null
-			}, {
-				// EMAIL  CORRECTO 
-				"noExistoEnElPopulate5", "noExistoEnElPopulate5", "noExistoEnElPopulate@", null
+				"", IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.teste2((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+			this.teste2((String) testingData[i][0], (Class<?>) testingData[i][1]);
 
 	}
-	public void teste2(final String userName, final String passwordd, final String email, final Class<?> expected) {
+	public void teste2(final String email, final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
