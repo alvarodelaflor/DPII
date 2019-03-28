@@ -81,9 +81,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 92%
 		 * Analysis of data coverage
-		 * TODO
+		 * 99%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, periodRecord, legalRecord, linkRecord, miscellaneousRecord 
@@ -141,9 +141,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 92%
 		 * Analysis of data coverage
-		 * TODO
+		 * 99%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, periodRecord, legalRecord, linkRecord, miscellaneousRecord 
@@ -375,9 +375,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Display the history of every brotherhood that he or she can display.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 80%
 		 * Analysis of data coverage
-		 * TODO
+		 * 99%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -509,9 +509,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Display the history of every brotherhood that he or she can display.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 92.1
 		 * Analysis of data coverage
-		 * TODO
+		 * 80%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -614,9 +614,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 92%
 		 * Analysis of data coverage
-		 * TODO
+		 * 87%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, ¿editTitle?, ¿editDescription?, ¿editPhotos? 
@@ -677,7 +677,7 @@ public class HistoryTest extends AbstractTest {
 	@Test
 	public void test06() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST -> domain check and owner check
 		 * 
 		 * In this test we will test edit a inceptionRecord.
 		 * 
@@ -691,9 +691,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 92%
 		 * Analysis of data coverage
-		 * TODO
+		 * 99%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, ¿malURL? ¿editTitle?, ¿editDescription?, ¿editPhotos? 
@@ -2329,9 +2329,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 92%
 		 * Analysis of data coverage
-		 * TODO
+		 * 99%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, periodRecord, legalRecord, linkRecord 
@@ -2409,7 +2409,7 @@ public class HistoryTest extends AbstractTest {
 	@Test
 	public void test08() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST owner check and domain check
 		 * 
 		 * In this test we will test the creation of miscellaneous records in a history that already had an inception Record.
 		 * 
@@ -2423,9 +2423,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 92%
 		 * Analysis of data coverage
-		 * TODO
+		 * 99%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, periodRecord, legalRecord, linkRecord, miscellaneousRecord 
@@ -2683,9 +2683,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 90%
 		 * Analysis of data coverage
-		 * TODO
+		 * 80%
 		 */
 		final Object testingData[][] = {
 			{
@@ -2700,7 +2700,7 @@ public class HistoryTest extends AbstractTest {
 	@Test
 	public void test10() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST -> owner check
 		 * 
 		 * In this test we will test delete a miscellaneous record.
 		 * 
@@ -2714,9 +2714,9 @@ public class HistoryTest extends AbstractTest {
 		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 90%
 		 * Analysis of data coverage
-		 * TODO
+		 * 99%
 		 */
 		final Object testingData[][] = {
 			{

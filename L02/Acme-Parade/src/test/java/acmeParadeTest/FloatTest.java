@@ -64,9 +64,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 42.8%
 		 * Analysis of data coverage
-		 * TODO
+		 * 95.2%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, pictures
@@ -113,7 +113,7 @@ public class FloatTest extends AbstractTest {
 	@Test
 	public void test02() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST -> domain restriction and actor check
 		 * 
 		 * In this test we will test the creation of a float.
 		 * 
@@ -128,9 +128,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 82.5%
 		 * Analysis of data coverage
-		 * TODO
+		 * 95.2%
 		 */
 		final Object testingData[][] = {
 			// brotherhoodId, titleBlank, descriptionBlank, titleNull, descriptionNull, picturesInvalid 
@@ -527,9 +527,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 100%
 		 * Analysis of data coverage
-		 * TODO
+		 * 90%
 		 */
 		final Object testingData[][] = {
 			{
@@ -544,7 +544,7 @@ public class FloatTest extends AbstractTest {
 	@Test
 	public void test04() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST -> not owner
 		 * 
 		 * In this test we will test delete a float.
 		 * 
@@ -559,9 +559,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 100%
 		 * Analysis of data coverage
-		 * TODO
+		 * 90%
 		 */
 		final Object testingData[][] = {
 			{
@@ -642,9 +642,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 90%
 		 * Analysis of data coverage
-		 * TODO
+		 * 95.2%
 		 */
 		final Object testingData[][] = {
 			// title, description, picture
@@ -714,7 +714,7 @@ public class FloatTest extends AbstractTest {
 	@Test
 	public void test06() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST -> domain check and owner check
 		 * 
 		 * In this test we will test edit a float.
 		 * 
@@ -729,9 +729,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 90%
 		 * Analysis of data coverage
-		 * TODO
+		 * 95.2%
 		 */
 		final Object testingData[][] = {
 			// titleBlank, descriptionBlank, titleNull, descriptionNull, pictureNotValid
@@ -905,9 +905,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 90%
 		 * Analysis of data coverage
-		 * TODO
+		 * 70%
 		 */
 
 		Class<?> caught = null;
@@ -941,7 +941,7 @@ public class FloatTest extends AbstractTest {
 	@Test
 	public void test08() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST -> show a not save float
 		 * 
 		 * In this test we will test list and show float.
 		 * 
@@ -956,9 +956,9 @@ public class FloatTest extends AbstractTest {
 		 * 1. Manage their floats, which includes listing, showing, creating, updating, and deleting them.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 70%
 		 * Analysis of data coverage
-		 * TODO
+		 * 75%
 		 */
 		Class<?> caught = null;
 

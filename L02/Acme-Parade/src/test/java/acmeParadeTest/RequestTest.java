@@ -36,11 +36,11 @@ public class RequestTest extends AbstractTest {
 
 
 	/*
-	 * (LEVEL C 11) Testing request
+	 * (ACME-MADRUGA: LEVEL C 11) Testing request
 	 * 
-	 * Analysis of sentence coverage: 35.8%
+	 * Analysis of sentence coverage: 35.4% (ECLEMMA)
 	 * 
-	 * Analysis of data coverage: TODO
+	 * Analysis of data coverage: 80% (We don't have a lot of data to test)
 	 */
 	@Test
 	public void RequestDriver1() {
