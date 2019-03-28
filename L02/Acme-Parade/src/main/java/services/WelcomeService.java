@@ -25,7 +25,7 @@ public class WelcomeService {
 	String							country				= "España/Spain";
 
 	@URL
-	String							logo				= "http://oi63.tinypic.com/11invgm.jpg";
+	String							logo				= "http://oi64.tinypic.com/24yzaps.jpg";
 
 	public HashSet<String>			spamWords			= new HashSet<>();
 
