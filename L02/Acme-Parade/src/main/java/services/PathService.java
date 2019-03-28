@@ -90,6 +90,7 @@ public class PathService {
 		this.assertParadeOwner(paradeId);
 		// REMIND YOURSELF THAT THIS IS ONLY BEING CALLED WHEN WE HAVE NO ORIGIN
 		final Path path = this.pathRepository.findFromParade(paradeId);
+		Assert.isNull(path.getOrigin());
 		path.setOrigin(pathOrigin);
 		this.pathRepository.save(path);
 	}
@@ -105,7 +106,6 @@ public class PathService {
 	public Segment reconstruct(final Segment segment, final BindingResult binding) {
 		// This should only be called when there's no path, segment id is always 0
 		Assert.isTrue(segment.getId() == 0);
-		Assert.isTrue(segment.getArrivalTime().before(segment.getDestination().getArrivalTime()));
 		this.validator.validate(segment, binding);
 		// We have to also validate the destination
 		this.validator.validate(segment.getDestination(), binding);

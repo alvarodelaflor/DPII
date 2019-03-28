@@ -110,7 +110,7 @@ public class PathTest extends AbstractTest {
 			Parade parade = null;
 			if (owner)
 				// I need at least one parade of the logged brotherhood to make this work
-				parade = this.paradeService.findOne(this.getEntityId("parade01"));
+				parade = this.paradeService.findOne(this.getEntityId("parade02"));
 
 			if (mode == "create")
 				this.pathService.createFromParade(parade.getId());
