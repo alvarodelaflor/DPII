@@ -152,6 +152,8 @@ public class MessageBoxController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(MessageBox messageBox, final BindingResult binding, @RequestParam(value = "idParent", defaultValue = "-1") final int idParent) {
 		ModelAndView result;
+		messageBox = this.messageBoxService.reconstruct(messageBox, binding, idParent);
+
 		if (this.checkNameMailbox(messageBox)) {
 			final ObjectError error = new ObjectError("mailbox.name", "Ya existe esa box");
 			binding.addError(error);
@@ -176,8 +178,6 @@ public class MessageBoxController extends AbstractController {
 				System.out.println(messageBox.getIsDefault());
 				System.out.println(messageBox.getMessages());
 				System.out.println(messageBox.getParentBox());
-
-				messageBox = this.messageBoxService.reconstruct(messageBox, binding, idParent);
 
 				System.out.println(messageBox);
 
