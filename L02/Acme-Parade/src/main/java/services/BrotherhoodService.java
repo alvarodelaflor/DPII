@@ -318,7 +318,7 @@ public class BrotherhoodService {
 	}
 	private Boolean checkDate(final Brotherhood brotherhood) {
 		Boolean res = true;
-		if (brotherhood.getEstablishmentDate().after(LocalDateTime.now().toDate()))
+		if (brotherhood.getEstablishmentDate() == null || brotherhood.getEstablishmentDate().after(LocalDateTime.now().toDate()))
 			res = false;
 		return res;
 	}
