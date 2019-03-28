@@ -60,17 +60,21 @@ public class AdministratorSponsorshipController extends AbstractController {
 
 		if (this.sponsorshipService.findOne(sponsorshipId) == null) {
 			result = new ModelAndView("sponsorship/list");
+			final Configuration config = this.configurationService.getConfiguration();
+			result.addObject("config", config);
 			result.addObject("sponsorships", this.sponsorshipService.findAll());
 			result.addObject("requestURI", "sponsorship/administrator/list.do");
 		} else
 			try {
 				Assert.isTrue(sponsorship != null);
+				final Configuration config = this.configurationService.getConfiguration();
 				result = new ModelAndView("sponsorship/administrator/list");
 				this.sponsorshipService.checkCreditCard(sponsorship);
 				//				final String system = this.welcomeService.getSystem();
 				//				result.addObject("system", system);
 				//				final String logo = this.welcomeService.getLogo();
 				//				result.addObject("logo", logo);
+				result.addObject("config", config);
 				result.addObject("sponsorships", this.sponsorshipService.findAll());
 				result.addObject("requestURI", "sponsorship/administrator/list.do");
 			} catch (final Throwable oops) {
