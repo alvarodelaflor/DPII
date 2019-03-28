@@ -247,8 +247,8 @@ public class AdministratorController extends AbstractController {
 			result = new ModelAndView("welcome/index");
 		else {
 
-			final Collection<String> largestBrotherhood = this.brotherhoodService.largestBrotherhood();
-			final Collection<String> smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
+			final String largestBrotherhood = this.brotherhoodService.largestBrotherhood();
+			final String smallestBrotherhood = this.brotherhoodService.smallestBrotherhood();
 			final Collection<Parade> paradeOrganised = this.paradeService.paradeOrganised();
 			final Double getRatioRequestStatusTrue = this.requestService.getRatioRequestStatusTrue();
 			final Double getRatioRequestStatusFalse = this.requestService.getRatioRequestStatusFalse();

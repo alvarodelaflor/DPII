@@ -46,9 +46,15 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	@Query("select b.title from Brotherhood b where cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float) = (select max(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float)) from Brotherhood b)")
 	Collection<String> brotherhoodMaxRow();
 
+	@Query("select e.brotherhood.title from Enrolled e where e.state = 1 and e.dropMoment = null group by e.brotherhood.id order by count(e) desc")
+	Collection<String> largestBrotherhood();
+
 	//12.3.3 CARMEN
 	@Query("select b.title from Brotherhood b where cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float) = (select min(cast((select count(e) from Enrolled e where e.brotherhood = b and e.state = 1 and e.dropMoment = null) as float)) from Brotherhood b)")
 	Collection<String> brotherhoodMinRow();
+
+	@Query("select e.brotherhood.title from Enrolled e where e.state = 1 and e.dropMoment = null group by e.brotherhood.id order by count(e) asc")
+	Collection<String> smallestBrotherhood();
 
 	//12.3.1 CARMEN
 	@Query("select count(b) from Brotherhood b")
