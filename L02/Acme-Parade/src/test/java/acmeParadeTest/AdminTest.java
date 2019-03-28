@@ -1011,10 +1011,21 @@ public class AdminTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	// FRAN
-
 	@Test
-	// Test de CREATE que junto con el de SAVE comprueban la creacion de un nuevo area;
+	/*
+	 * Test CREATE checks for new area creation;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to create an area.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter (NON-Admin) tries to create an area.
+	 * 
+	 * Requirement under test: 22 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 75%
+	 * Analysis of data coverage: 40%
+	 */
 	public void adminCreateArea() {
 
 		final Object testingData[][] = {
@@ -1031,6 +1042,21 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test SAVE checks for saving area;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to save an area.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter (NON-Admin) tries to save an area.
+	 * Logged Admin tries to save an area which already exists (searched by name).
+	 * 
+	 * Requirement under test: 22 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 75%
+	 * Analysis of data coverage: 33%
+	 */
 	public void areaSave() {
 
 		final Object testingData[][] = {
@@ -1065,7 +1091,22 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
-	// Test que comprueba DELETE de un Area
+	/*
+	 * Test DELETE checks for deleting area;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to delete an area which is not used
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter (NON-Admin) tries to delete an area.
+	 * Logged Admin tries to delete a null area.
+	 * Logged Admin tries to delete a used area.
+	 * 
+	 * Requirement under test: 22 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 57%
+	 */
 	public void adminDeleteArea() {
 
 		final Object testingData[][] = {
@@ -1086,7 +1127,20 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
-	// Test de CREATE que junto con SAVE comprueban la creacion de una nueva position;
+	/*
+	 * Test CREATE checks for new position creation;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to create a position.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter (NON-Admin) tries to create a position.
+	 * 
+	 * Requirement under test: 12 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 40%
+	 */
 	public void adminPositionCreate() {
 
 		final Object testingData[][] = {
@@ -1103,6 +1157,23 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test SAVE checks for saving position;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to save a position.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Admin tries to save a position with incorrect field: nameEN.
+	 * Logged Admin tries to save a position with incorrect field: nameES.
+	 * Logged Admin tries to save a position with already exists.
+	 * Logged Chapter (NON-Admin) tries to save a position.
+	 * 
+	 * Requirement under test: 12 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 63%
+	 */
 	public void positionSave() {
 
 		final Object testingData[][] = {
@@ -1126,7 +1197,21 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
-	// Test que comprueba DELETE de una position;
+	/*
+	 * Test DELETE checks for deleting position;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to delete a position which is not used.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Admin tries to delete a position which is used.
+	 * Logged Chapter (NON-Admin) tries to delete a position.
+	 * 
+	 * Requirement under test: 12 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 50%
+	 */
 	public void adminDeletePosition() {
 
 		final Object testingData[][] = {
@@ -1145,6 +1230,20 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test ADD spamWord;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to add a spamWord.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter tries to add a spamWord.
+	 * 
+	 * Requirement under test: 31 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 40%
+	 */
 	public void adminAddSpamWord() {
 
 		final Object testingData[][] = {
@@ -1165,6 +1264,20 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test DELETE spamWord;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to delete a spamWord.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter tries to delete a spamWord.
+	 * 
+	 * Requirement under test: 31 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 40%
+	 */
 	public void adminDeleteSpamWord() {
 
 		final Object testingData[][] = {
@@ -1185,6 +1298,20 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test SPAMMER checks for finding actors which send spam;
+	 * 
+	 * POSITIVE TEST
+	 * Actor sends normal message and is not setted to spammer.
+	 * 
+	 * NEGATIVE TEST
+	 * Actor sends spam and is setted to spammer.
+	 * 
+	 * Requirement under test: 31 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 27%
+	 */
 	public void actorSpammer() {
 
 		final Object testingData[][] = {
@@ -1201,6 +1328,19 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test SCORE checks for scoring actors regarding their sent msgs;
+	 * 
+	 * POSITIVE TEST
+	 * Actor sends neutral message and its score does not change.
+	 * Actor sends good message and its score goes up.
+	 * Actor sends bad message and its goes down.
+	 * 
+	 * Requirement under test: 28 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 90%
+	 */
 	public void actorPolarity() {
 
 		final Object testingData[][] = {
@@ -1219,6 +1359,19 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test SCORE checks for scoring actors regarding their sent msgs;
+	 * 
+	 * NEGATIVE TEST
+	 * Actor sends neutral message and its score is modified.
+	 * Actor sends good message and its score does not goes up.
+	 * Actor sends bad message and its does not goes down.
+	 * 
+	 * Requirement under test: 28 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 90%
+	 */
 	public void actorPolarityNeg() {
 
 		final Object testingData[][] = {
@@ -1236,6 +1389,20 @@ public class AdminTest extends AbstractTest {
 			this.actorPolarityNeg((int) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 	@Test
+	/*
+	 * Test ADD scoreWord;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to add a scoreWord.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter tries to add a scoreWord. (Positives and Negatives)
+	 * 
+	 * Requirement under test: 31 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 75%
+	 */
 	public void adminAddScoreWord() {
 
 		final Object testingData[][] = {
@@ -1259,6 +1426,20 @@ public class AdminTest extends AbstractTest {
 			this.adminAddScoreWord((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
 	@Test
+	/*
+	 * Test DELETE scoreWord;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to delete a scoreWord.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Chapter tries to delete a scoreWord. (Positives and Negatives)
+	 * 
+	 * Requirement under test: 31 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 75%
+	 */
 	public void adminDeleteScoreWord() {
 
 		final Object testingData[][] = {
@@ -1283,6 +1464,22 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test BAN actor;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to ban a spammer.
+	 * Logged Admin tries to ban an actor which have bad polarity.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Admin tries to ban an "good" actor.
+	 * Logged Chapter(NON-Admin) tries to ban.
+	 * 
+	 * Requirement under test: 28 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 75%
+	 */
 	public void adminBanActor() {
 		final Object testingData[][] = {
 
@@ -1304,6 +1501,22 @@ public class AdminTest extends AbstractTest {
 	}
 
 	@Test
+	/*
+	 * Test UNBAN actor;
+	 * 
+	 * POSITIVE TEST
+	 * Logged Admin tries to unban a spammer.
+	 * Logged Admin tries to unban an actor which have bad polarity.
+	 * 
+	 * NEGATIVE TEST
+	 * Logged Admin tries to unban an "good" actor.
+	 * Logged Chapter(NON-Admin) tries to unban.
+	 * 
+	 * Requirement under test: 28 (Acme-Madruga)
+	 * 
+	 * Analysis of sentence coverage: 90%
+	 * Analysis of data coverage: 75%
+	 */
 	public void adminUnbanActor() {
 
 		final Object testingData[][] = {
@@ -1319,6 +1532,7 @@ public class AdminTest extends AbstractTest {
 			this.adminUnbanActor((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
 
+	// AUX methods:
 	protected void adminCreateArea(final String username, final Class<?> expected) {
 
 		Class<?> caught = null;
