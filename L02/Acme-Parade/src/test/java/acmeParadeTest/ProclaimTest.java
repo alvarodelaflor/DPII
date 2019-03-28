@@ -37,7 +37,7 @@ public class ProclaimTest extends AbstractTest {
 
 	// Tests ------------------------------------------------------------------
 
-	//	@Test
+	@Test
 	public void test01() {
 		/*
 		 * POSITIVE TEST
@@ -57,9 +57,9 @@ public class ProclaimTest extends AbstractTest {
 		 * or delete it, so double confirmation prior to publication is a must.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 80%
 		 * Analysis of data coverage
-		 * TODO
+		 * 70%
 		 */
 		final Object testingData[][] = {
 			// chapterId, textMin, texMax, date 
@@ -112,7 +112,7 @@ public class ProclaimTest extends AbstractTest {
 	@Test
 	public void test02() {
 		/*
-		 * NEGATIVE TEST
+		 * NEGATIVE TEST -> domain check and actor check
 		 * 
 		 * In this test we will test the creation of a proclaim.
 		 * 
@@ -129,9 +129,9 @@ public class ProclaimTest extends AbstractTest {
 		 * or delete it, so double confirmation prior to publication is a must.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 85%
 		 * Analysis of data coverage
-		 * TODO
+		 * 72%
 		 */
 		final Object testingData[][] = {
 			// chapterId, textBlank, texMax, textNull, date 
