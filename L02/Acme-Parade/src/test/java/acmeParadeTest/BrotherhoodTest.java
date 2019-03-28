@@ -43,9 +43,9 @@ public class BrotherhoodTest extends AbstractTest {
 	 * In this test we will test the register as Brotherhood.
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 46,5%
 	 * Analysis of data coverage
-	 * TODO
+	 * 30,4%
 	 */
 	@Test
 	public void driver1() {
@@ -375,9 +375,9 @@ public class BrotherhoodTest extends AbstractTest {
 	 * In this test we will test the register as Brotherhood.
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 47%
 	 * Analysis of data coverage
-	 * TODO
+	 * 30,6%
 	 */
 	@Test
 	public void driver2() {
@@ -493,9 +493,9 @@ public class BrotherhoodTest extends AbstractTest {
 		 * 2. Browse the proclaims of the brotherhoods.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 10%
 		 * Analysis of data coverage
-		 * TODO
+		 * 30,5%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -623,9 +623,9 @@ public class BrotherhoodTest extends AbstractTest {
 		 * 2. Browse the proclaims of the brotherhoods.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 10%
 		 * Analysis of data coverage
-		 * TODO
+		 * 30,5%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -707,9 +707,9 @@ public class BrotherhoodTest extends AbstractTest {
 	 * In this test we will test the register as Brotherhood.
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 48,5%
 	 * Analysis of data coverage
-	 * TODO
+	 * 30,6%
 	 */
 	@Test
 	public void driver5() {
@@ -981,9 +981,9 @@ public class BrotherhoodTest extends AbstractTest {
 	 * In this test we will test the register as Brotherhood.
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 34,5%
 	 * Analysis of data coverage
-	 * TODO
+	 * 45,5%
 	 */
 	@Test
 	public void driver6() {

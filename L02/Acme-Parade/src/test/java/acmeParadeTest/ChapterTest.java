@@ -43,12 +43,12 @@ public class ChapterTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register as Chapter.
+	 * In this test we will test the register as Chapter. 
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 30,5%
 	 * Analysis of data coverage
-	 * TODO
+	 * 40,5%
 	 */
 	@Test
 	public void driver1() {
@@ -323,9 +323,9 @@ public class ChapterTest extends AbstractTest {
 	 * In this test we will test the register as Chapter.
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 57%
 	 * Analysis of data coverage
-	 * TODO
+	 * 30,7%
 	 */
 	@Test
 	public void driver2() {
@@ -438,9 +438,9 @@ public class ChapterTest extends AbstractTest {
 		 * 2. Browse the proclaims of the chapters.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 40,5%
 		 * Analysis of data coverage
-		 * TODO
+		 * 34,5%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -541,9 +541,9 @@ public class ChapterTest extends AbstractTest {
 		 * 2. Browse the proclaims of the chapters.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 30%
 		 * Analysis of data coverage
-		 * TODO
+		 * 48,5%
 		 */
 		final Object testingData[][] = {
 			// username, error

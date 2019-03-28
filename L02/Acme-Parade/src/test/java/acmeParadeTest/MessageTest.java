@@ -38,6 +38,9 @@ public class MessageTest extends AbstractTest {
 	ActorService		actorService;
 
 
+	//Requirement        -> 21
+	//Sentence coverage  -> 20%
+	//Data Coverage      -> 30%
 	@Test
 	public void driver1() {
 		final Object testingData[][] = {
@@ -75,6 +78,10 @@ public class MessageTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 21
+	//Bussiness rule      -> 22
+	//Sentence coverage  -> 35%
+	//Data Coverage      -> 40%
 	@Test
 	public void driver2() {
 		final Object testingData[][] = {
@@ -117,7 +124,11 @@ public class MessageTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
+	
 
+	//Requirement        -> 22
+	//Sentence coverage  -> 30%
+	//Data Coverage      -> 30%
 	@Test
 	public void driver3() {
 		final Object testingData[][] = {
@@ -163,7 +174,11 @@ public class MessageTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
-
+	
+	
+	//Requirement        -> 22
+	//Sentence coverage  -> 30%
+	//Data Coverage      -> 40%
 	@Test
 	public void driver4() {
 		final Object testingData[][] = {
@@ -211,6 +226,9 @@ public class MessageTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 23
+	//Sentence coverage  -> 40%
+	//Data Coverage      -> 50%
 	@Test
 	public void driver5() {
 		final Object testingData[][] = {
@@ -247,7 +265,10 @@ public class MessageTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
-
+	
+	//Requirement        -> 22
+	//Sentence coverage  -> 35%
+	//Data Coverage      -> 60%
 	@Test
 	public void driver6() {
 		final Object testingData[][] = {
@@ -284,6 +305,9 @@ public class MessageTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 22
+	//Sentence coverage  -> 30%
+	//Data Coverage      -> 35%
 	@Test
 	public void driver7() {
 		final Object testingData[][] = {
@@ -333,6 +357,9 @@ public class MessageTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 22
+	//Sentence coverage  -> 35%
+	//Data Coverage      -> 25%
 	@Test
 	public void driver8() {
 		final Object testingData[][] = {

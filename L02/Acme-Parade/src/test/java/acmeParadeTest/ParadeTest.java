@@ -56,9 +56,9 @@ public class ParadeTest extends AbstractTest {
 	 * In this test we will test the create of Parade.
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 60%
 	 * Analysis of data coverage
-	 * TODO
+	 * 43,4%
 	 */
 	@Test
 	public void driver1() {
@@ -353,9 +353,9 @@ public class ParadeTest extends AbstractTest {
 		 * In this test we will test the create of Parade.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 20%
 		 * Analysis of data coverage
-		 * TODO
+		 * 35,6%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -442,9 +442,9 @@ public class ParadeTest extends AbstractTest {
 	 * In this test we will test the edit of Parade with status is false
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 40%
 	 * Analysis of data coverage
-	 * TODO
+	 * 35,5%
 	 */
 	@Test
 	public void driver3() {
@@ -762,9 +762,9 @@ public class ParadeTest extends AbstractTest {
 	 * In this test we will test the edit of Parade with status is true
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 45,3%
 	 * Analysis of data coverage
-	 * TODO
+	 * 54,5%
 	 */
 	@Test
 	public void driver4() {
@@ -1083,9 +1083,9 @@ public class ParadeTest extends AbstractTest {
 		 * In this test we will test the edit of Parade.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 47,5%
 		 * Analysis of data coverage
-		 * TODO
+		 * 34,5%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -1180,9 +1180,9 @@ public class ParadeTest extends AbstractTest {
 		 * In this test we will test delete a parade.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 18,1%
 		 * Analysis of data coverage
-		 * TODO
+		 * 15,4%
 		 */
 		final Object testingData[][] = {
 			{
@@ -1202,8 +1202,9 @@ public class ParadeTest extends AbstractTest {
 		 * In this test we will test delete a parade.
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 18,1%
 		 * Analysis of data coverage
+		 * 15,4%sis of data coverage
 		 * TODO
 		 */
 		final Object testingData[][] = {
@@ -1303,9 +1304,9 @@ public class ParadeTest extends AbstractTest {
 		 * In this test we will test the list parade
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 18,1%
 		 * Analysis of data coverage
-		 * TODO
+		 * 15,4%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -1368,9 +1369,9 @@ public class ParadeTest extends AbstractTest {
 		 * In this test we will test the list parade
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 18,1%
 		 * Analysis of data coverage
-		 * TODO
+		 * 35,4%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -1436,9 +1437,9 @@ public class ParadeTest extends AbstractTest {
 		 * In this test we will test the show parade
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 28,1%
 		 * Analysis of data coverage
-		 * TODO
+		 * 35,4%
 		 */
 		final Object testingData[][] = {
 			// username, error

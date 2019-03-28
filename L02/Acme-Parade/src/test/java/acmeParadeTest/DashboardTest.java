@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -89,17 +90,14 @@ public class DashboardTest extends AbstractTest {
 	HistoryService			historyService;
 
 
-	// ******NOTE: TO PROPERLY EXECUTE THIS TEST IT'S NECESSARY TO EXECUTE DashboardTestPopulateDatabase.java because we need to have a non variable set of data
-
 	/*
-	 * 
 	 * 
 	 * In this test we will test the dashboard (ACME-PARADE).
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 37,6%
 	 * Analysis of data coverage
-	 * TODO
+	 * 29,5%
 	 */
 	@Test
 	public void DriverDashboard1() {
@@ -159,8 +157,9 @@ public class DashboardTest extends AbstractTest {
 		try {
 			this.startTransaction();
 			super.authenticate(userName);
-			final DecimalFormat df = new DecimalFormat("#.###");
-
+			final DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance(Locale.ENGLISH);
+			df.applyPattern("#.###");
+			
 			Assert.isTrue(ratioFinalSUBMITTED.equals(Double.valueOf(df.format(this.paradeService.ratioFinalSUBMITTED()))));
 			Assert.isTrue(ratioFinalACCEPTED.equals(Double.valueOf(df.format(this.paradeService.ratioFinalACCEPTED()))));
 			Assert.isTrue(ratioFinalREJECTED.equals(Double.valueOf(df.format(this.paradeService.ratioFinalREJECTED()))));
@@ -188,7 +187,7 @@ public class DashboardTest extends AbstractTest {
 
 		final Object testingData[][] = {
 			{
-				"admin", 0.5, 0.0, 1.0, 0.5, "Hermandad de la VERA CRUZ", "Hermandad del Rosario", 0.0, 0.333, 0.0, null
+				"admin", 0.5, 0.0, 1.0, 0.5, "Hermandad de la VERA CRUZ", "Hermandad de la VERA CRUZ", 0.0, 0.333, 0.0, null
 			}, {
 				"admin", 0.0, 0.0, 1.0, 0.5, "a", "b", 0.0, 0.0, 0.0, IllegalArgumentException.class
 			}, {
@@ -220,22 +219,15 @@ public class DashboardTest extends AbstractTest {
 		final Class<?> expected) {
 
 		Class<?> caught = null;
-		final DecimalFormat df = new DecimalFormat("#.###");
-
+		final DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance(Locale.ENGLISH);
+		df.applyPattern("#.###");
 		try {
 
 			this.startTransaction();
-
+			
 			super.authenticate(username);
-			final Double a = Double.valueOf(df.format(this.memberService.avgNumberOfMemberPerBrotherhood()));
-			final Double b = Double.valueOf(df.format(this.memberService.minNumberOfMemberPerBrotherhood()));
-			final Double c = Double.valueOf(df.format(this.memberService.maxNumberOfMemberPerBrotherhood()));
-			final Double d = Double.valueOf(df.format(this.memberService.desviationOfNumberOfMemberPerBrotherhood()));
-			final Double g = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusFalse()));
-			final Double h = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusNull()));
-			final Double i = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusTrue()));
-
-			System.out.println(this.memberService.avgNumberOfMemberPerBrotherhood());
+			
+			System.out.println(df.format(this.memberService.avgNumberOfMemberPerBrotherhood()));
 			System.out.println(this.memberService.minNumberOfMemberPerBrotherhood());
 			System.out.println(this.memberService.maxNumberOfMemberPerBrotherhood());
 			System.out.println(this.memberService.desviationOfNumberOfMemberPerBrotherhood());
@@ -244,6 +236,16 @@ public class DashboardTest extends AbstractTest {
 			System.out.println(this.requestService.getRatioRequestParadeStatusFalse());
 			System.out.println(this.requestService.getRatioRequestParadeStatusNull());
 			System.out.println(this.requestService.getRatioRequestParadeStatusTrue());
+			
+			final Double a = Double.valueOf(df.format(this.memberService.avgNumberOfMemberPerBrotherhood()));
+			final Double b = Double.valueOf(df.format(this.memberService.minNumberOfMemberPerBrotherhood()));
+			final Double c = Double.valueOf(df.format(this.memberService.maxNumberOfMemberPerBrotherhood()));
+			final Double d = Double.valueOf(df.format(this.memberService.desviationOfNumberOfMemberPerBrotherhood()));
+			final Double g = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusFalse()));
+			final Double h = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusNull()));
+			final Double i = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusTrue()));
+
+
 
 			Assert.isTrue(avg.equals(a));
 			Assert.isTrue(min.equals(b));
@@ -252,21 +254,21 @@ public class DashboardTest extends AbstractTest {
 			Assert.isTrue(g.equals(rrpf));
 			Assert.isTrue(h.equals(rrpn));
 			Assert.isTrue(i.equals(rrpt));
+			
 			super.unauthenticate();
 		} catch (final Exception oops) {
 
 			caught = oops.getClass();
 		} finally {
 
-			this.rollbackTransaction();
 			super.unauthenticate();
+			this.rollbackTransaction();
 		}
 
 		this.checkExceptions(expected, caught);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
-	// ******NOTE: TO PROPERLY EXECUTE THIS TEST IT'S NECESSARY TO EXECUTE DashboardTestPopulateDatabase.java because we need to have a non variable set of data
 	@Test
 	/*
 	 * 
@@ -274,9 +276,9 @@ public class DashboardTest extends AbstractTest {
 	 * In this test we will test the dashboard (ACME-Parade).
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 38,5%
 	 * Analysis of data coverage
-	 * TODO
+	 * 40%
 	 */
 	public void DriverDashboard2() {
 
@@ -326,7 +328,8 @@ public class DashboardTest extends AbstractTest {
 			}, {
 				"admin", 0.0, 0.0, 1.0, 0.0, 0.0, 2.333, res, 1.0, 0.0, 0.5, 0.5, res1, "Virgen del Rosario", "Virgen del Rosario", 10, 9, 0.667, 0.0, 2.0, 0.943, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, res2, res3, map, IllegalArgumentException.class
 			}, {
-				"admin", 0.0, 0.0, 1.0, 0.0, 0.0, 0.333, res2, 1.0, 0.0, 0.5, 0.5, res1, "Virgen del Rosario", "Virgen del Rosario", 10, 9, 0.667, 0.0, 2.0, 0.943, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, res2, res3, map, IllegalArgumentException.class
+				"admin"
+				+ "", 0.0, 0.0, 1.0, 0.0, 0.0, 0.333, res2, 1.0, 0.0, 0.5, 0.5, res1, "Virgen del Rosario", "Virgen del Rosario", 10, 9, 0.667, 0.0, 2.0, 0.943, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, res2, res3, map, IllegalArgumentException.class
 			}, {
 				"admin", 0.0, 0.0, 1.0, 0.0, 0.0, 0.333, res, 2.0, 0.0, 0.5, 0.5, res1, "Virgen del Rosario", "Virgen del Rosario", 10, 9, 0.667, 0.0, 2.0, 0.943, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, res2, res3, map, IllegalArgumentException.class
 			}, {
@@ -415,7 +418,8 @@ public class DashboardTest extends AbstractTest {
 			this.startTransaction();
 			super.authenticate(userName);
 
-			final DecimalFormat df = new DecimalFormat("#.###");
+			final DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance(Locale.ENGLISH);
+			df.applyPattern("#.###");
 
 			final Collection<Object[]> countBrotherhoodPerArea = this.brotherhoodService.countBrotherhoodPerArea();
 			final Map<String, Long> map1 = new HashMap<>();

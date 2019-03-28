@@ -72,12 +72,12 @@ public class AdminTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register as Admin.
+	 * In this test we will test the register as Admin. R12.1
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 67%
 	 * Analysis of data coverage
-	 * TODO
+	 * 47,6%
 	 */
 	@Test
 	public void driver3() {
@@ -412,12 +412,12 @@ public class AdminTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register as Member.
+	 * In this test we will test the register as Admin. R12.1
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 30,8%
 	 * Analysis of data coverage
-	 * TODO
+	 * 30%
 	 */
 	@Test
 	public void driver4() {
@@ -538,9 +538,9 @@ public class AdminTest extends AbstractTest {
 		 * 
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 20,6%
 		 * Analysis of data coverage
-		 * TODO
+		 * 10%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -603,9 +603,9 @@ public class AdminTest extends AbstractTest {
 		 * 
 		 * 
 		 * Analysis of sentence coverage
-		 * TODO
+		 * 20%
 		 * Analysis of data coverage
-		 * TODO
+		 * 10%
 		 */
 		final Object testingData[][] = {
 			// username, error
@@ -666,12 +666,12 @@ public class AdminTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the register as Admin.
+	 * In this test we will test the edit as Admin. R9
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 63%
 	 * Analysis of data coverage
-	 * TODO
+	 * 47,5%
 	 */
 	@Test
 	public void driver5() {
@@ -950,12 +950,12 @@ public class AdminTest extends AbstractTest {
 
 	/*
 	 * 
-	 * In this test we will test the edit as admin.
+	 * In this test we will test the edit as admin. R9
 	 * 
 	 * Analysis of sentence coverage
-	 * TODO
+	 * 30,5%
 	 * Analysis of data coverage
-	 * TODO
+	 * 20,5%
 	 */
 	@Test
 	public void driver6() {

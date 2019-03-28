@@ -28,6 +28,10 @@ public class SponsorTest extends AbstractTest {
 	private SponsorService	sponsorService;
 
 
+	
+	//Requirement        -> 15.1
+	//Sentence coverage  -> 20%
+	//Data Coverage      -> 40%
 	@Test
 	public void driver1() {
 		final Object testingData[][] = {
@@ -114,6 +118,10 @@ public class SponsorTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 15.1
+	//Bussiness rule     -> Set like null required parameters
+	//Sentence coverage  -> 20%
+	//Data Coverage      -> 40%
 	@Test
 	public void driver2() {
 		final Object testingData[][] = {
@@ -233,6 +241,9 @@ public class SponsorTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 15.1
+	//Sentence coverage  -> 40%
+	//Data Coverage      -> 55%
 	@Test
 	public void driver3() {
 		final Object testingData[][] = {
@@ -265,6 +276,9 @@ public class SponsorTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 15.1
+	//Sentence coverage  -> 40%
+	//Data Coverage      -> 55%
 	@Test
 	public void driver4() {
 		final Object testingData[][] = {

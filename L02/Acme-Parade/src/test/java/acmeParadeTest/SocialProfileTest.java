@@ -51,6 +51,9 @@ public class SocialProfileTest extends AbstractTest {
 	private MemberService			memberService;
 
 
+	//Requirement        -> 23
+	//Sentence coverage  -> 45%
+	//Data Coverage      -> 50%
 	@Test
 	public void driver1() {
 		final Object testingData[][] = {
@@ -229,6 +232,11 @@ public class SocialProfileTest extends AbstractTest {
 	//		}
 	//		this.checkExceptions(expected, caught);
 	//	}
+	
+	//Requirement        -> 23
+	//Bussiness rule     -> domain rule check
+	//Sentence coverage  -> 55%
+	//Data Coverage      -> 40%
 
 	@Test
 	public void driver3() {
@@ -367,6 +375,9 @@ public class SocialProfileTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 23
+	//Sentence coverage  -> 20%
+	//Data Coverage      -> 35%
 	@Test
 	public void driver4() {
 		final Object testingData[][] = {
@@ -468,6 +479,9 @@ public class SocialProfileTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	//Requirement        -> 23
+	//Sentence coverage  -> 34%
+	//Data Coverage      -> 33%
 	@Test
 	public void driver5() {
 		final Object testingData[][] = {
