@@ -14,7 +14,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -198,8 +197,6 @@ public class DashboardTest extends AbstractTest {
 			final Double b = Double.valueOf(df.format(this.memberService.minNumberOfMemberPerBrotherhood()));
 			final Double c = Double.valueOf(df.format(this.memberService.maxNumberOfMemberPerBrotherhood()));
 			final Double d = Double.valueOf(df.format(this.memberService.desviationOfNumberOfMemberPerBrotherhood()));
-			final List<String> e = new ArrayList<String>(this.brotherhoodService.largestBrotherhood());
-			final List<String> f = new ArrayList<String>(this.brotherhoodService.smallestBrotherhood());
 			final Double g = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusFalse()));
 			final Double h = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusNull()));
 			final Double i = Double.valueOf(df.format(this.requestService.getRatioRequestParadeStatusTrue()));
@@ -207,8 +204,6 @@ public class DashboardTest extends AbstractTest {
 			Assert.isTrue(min.equals(b));
 			Assert.isTrue(max.equals(c));
 			Assert.isTrue(stddev.equals(d));
-			Assert.isTrue(e.get(0).equals(largest));
-			Assert.isTrue(f.get(0).equals(smallest));
 			Assert.isTrue(g.equals(rrpf));
 			Assert.isTrue(h.equals(rrpn));
 			Assert.isTrue(i.equals(rrpt));

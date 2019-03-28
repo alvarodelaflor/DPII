@@ -408,19 +408,29 @@ public class BrotherhoodService {
 		this.dropMember(member.getId(), brotherhoodId);
 	}
 
-	public Collection<String> largestBrotherhood() {
+	public String largestBrotherhood() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
-		return this.brotherhoodRepository.brotherhoodMaxRow();
+		final List<String> bros = new ArrayList<String>(this.brotherhoodRepository.largestBrotherhood());
+
+		if (bros.size() != 0)
+			return bros.get(0);
+		else
+			return "";
 
 	}
 
-	public Collection<String> smallestBrotherhood() {
+	public String smallestBrotherhood() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
-		return this.brotherhoodRepository.brotherhoodMinRow();
+		final List<String> bros = new ArrayList<String>(this.brotherhoodRepository.smallestBrotherhood());
+
+		if (bros.size() != 0)
+			return bros.get(0);
+		else
+			return "";
 	}
 
 	public Integer numberBrotherhood() {
