@@ -23,11 +23,6 @@
   <section id="main-content">
   
     <article>
-      <header>
-        <h2>
-        	<spring:message code="sponsorship.edit" />
-        </h2>
-      </header>
       
       <div class="content">
     		
