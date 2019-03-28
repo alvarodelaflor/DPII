@@ -17,13 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import domain.Administrator;
-import domain.Area;
-import domain.Brotherhood;
-import domain.Enrolled;
-import domain.Message;
-import domain.Position;
-import domain.Priority;
 import services.ActorService;
 import services.AdministratorService;
 import services.AreaService;
@@ -33,6 +26,14 @@ import services.MessageService;
 import services.PositionService;
 import services.WelcomeService;
 import utilities.AbstractTest;
+import domain.Administrator;
+import domain.Area;
+import domain.Brotherhood;
+import domain.Enrolled;
+import domain.Message;
+import domain.Position;
+import domain.Priority;
+import forms.RegistrationForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -43,30 +44,31 @@ public class AdminTest extends AbstractTest {
 
 	@Autowired
 	private AdministratorService	administratorService;
-	
-	@Autowired
-	private AreaService areaService;
-	
-	@Autowired
-	private AdministratorService adminService;
-	
-	@Autowired
-	private EnrolledService enrolledService;
 
 	@Autowired
-	private MessageService msgService;
-	
+	private AreaService				areaService;
+
 	@Autowired
-	private BrotherhoodService brotherhoodService;
-	
+	private AdministratorService	adminService;
+
 	@Autowired
-	private WelcomeService welcomeService;
-	
+	private EnrolledService			enrolledService;
+
 	@Autowired
-	private ActorService actorService;
-	
+	private MessageService			msgService;
+
 	@Autowired
-	private PositionService positionService;
+	private BrotherhoodService		brotherhoodService;
+
+	@Autowired
+	private WelcomeService			welcomeService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private PositionService			positionService;
+
 
 	/*
 	 * 
@@ -353,8 +355,6 @@ public class AdminTest extends AbstractTest {
 
 			System.out.println("entro");
 
-			super.unauthenticate();
-
 			/////////////////// SI NO HAY NINGUN ERROR Y SE CREA EL ADMIN SE EDITA
 			//
 			//			if (this.administratorService.findOne(admin.getId()) != null) {
@@ -402,6 +402,7 @@ public class AdminTest extends AbstractTest {
 			System.out.println(oops);
 			caught = oops.getClass();
 		} finally {
+			super.unauthenticate();
 			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
@@ -502,8 +503,6 @@ public class AdminTest extends AbstractTest {
 
 			this.administratorService.saveR(a);
 
-			super.unauthenticate();
-
 			if (this.administratorService.findOne(a.getId()) != null) {
 
 				super.authenticate(a.getUserAccount().getUsername());
@@ -523,6 +522,7 @@ public class AdminTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -588,10 +588,10 @@ public class AdminTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
-
 	///////////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
@@ -659,6 +659,7 @@ public class AdminTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -940,6 +941,7 @@ public class AdminTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -1004,12 +1006,13 @@ public class AdminTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
 
 	// FRAN
-	
+
 	@Test
 	// Test de CREATE que junto con el de SAVE comprueban la creacion de un nuevo area;
 	public void adminCreateArea() {
@@ -1051,7 +1054,7 @@ public class AdminTest extends AbstractTest {
 		final Object testingData[][] = {
 
 			{
-				"chapter", null
+				"chapterchapter", null
 			}, {
 				"member", IllegalArgumentException.class
 			}
@@ -1140,7 +1143,6 @@ public class AdminTest extends AbstractTest {
 		for (int i = 0; i < testingData.length; i++)
 			this.adminDeletePosition((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
-
 
 	@Test
 	public void adminAddSpamWord() {
@@ -1317,7 +1319,6 @@ public class AdminTest extends AbstractTest {
 			this.adminUnbanActor((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
 
-
 	protected void adminCreateArea(final String username, final Class<?> expected) {
 
 		Class<?> caught = null;
@@ -1334,6 +1335,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1367,6 +1369,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1418,6 +1421,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1439,6 +1443,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1480,6 +1485,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1527,11 +1533,11 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
 	}
-
 
 	protected void actorSpammer(final int spammer, final Class<?> expected) {
 
@@ -1579,6 +1585,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1638,6 +1645,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1697,6 +1705,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1734,6 +1743,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1771,6 +1781,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1800,6 +1811,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1829,6 +1841,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1867,6 +1880,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1903,6 +1917,7 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
@@ -1938,11 +1953,11 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
 	}
-
 	protected void listAreas(final String username, final Class<?> expected) {
 
 		Class<?> caught = null;
@@ -1961,11 +1976,89 @@ public class AdminTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		super.checkExceptions(expected, caught);
 	}
 
-	
+	@Test
+	public void driver10() {
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone
+			{
+				"admin01", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testReconstruct((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	public void testReconstruct(final String id, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			final Administrator test = this.administratorService.findOne(this.getEntityId(id));
+			test.setName("testName");
+			final Administrator reconstructTest = this.administratorService.reconstruct(test, null);
+			Assert.isTrue(reconstructTest.getName().equals("testName"));
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	@Test
+	public void driver8() {
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone
+			{
+				"0", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testReconstructForm((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	public void testReconstructForm(final String id, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			final RegistrationForm form = new RegistrationForm();
+			form.setAccept(true);
+			form.setPassword("password");
+			form.setConfirmPassword("password");
+			form.setAddress("address");
+			form.setEmail("email@test.com");
+			form.setMiddleName("testMiddle");
+			form.setName("testName");
+			form.setPhoto("http://photo.com");
+			form.setPhone("666777888");
+			form.setUserName("userNameTest");
+			form.setSurname("surname");
+			form.setTitle("title");
+
+			final Administrator test = this.administratorService.reconstructR(form, null);
+
+			Assert.notNull(test);
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
 	// FRAN
 }

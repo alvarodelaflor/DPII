@@ -70,6 +70,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -112,6 +113,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -157,6 +159,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -203,6 +206,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -239,6 +243,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -274,6 +279,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -322,6 +328,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -371,6 +378,7 @@ public class MessageTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}

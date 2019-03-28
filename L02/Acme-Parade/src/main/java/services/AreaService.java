@@ -164,6 +164,7 @@ public class AreaService {
 
 	}
 	public Boolean checkChapterHasNoArea() {
-		return this.areaRepository.findAreaChapter(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()).getId()) == null ? true : false;
+		final Boolean res = this.areaRepository.findAreaChapter(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()).getId()) == null ? true : false;
+		return res;
 	}
 }

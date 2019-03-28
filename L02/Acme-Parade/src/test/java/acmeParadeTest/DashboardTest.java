@@ -178,6 +178,7 @@ public class DashboardTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -258,6 +259,7 @@ public class DashboardTest extends AbstractTest {
 		} finally {
 
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 
 		this.checkExceptions(expected, caught);
@@ -284,7 +286,7 @@ public class DashboardTest extends AbstractTest {
 		final Collection<String> res2 = new ArrayList<>();
 		res2.add("Hermandad de la VERA CRUZ");
 		final Collection<String> res3 = new ArrayList<>();
-		res3.add("Hermandad del Rosario");
+		res3.add("Hermandad de la VERA CRUZ");
 
 		final Map<String, Long> map = new HashMap<>();
 		map.put("Carmen", 0L);
@@ -421,8 +423,8 @@ public class DashboardTest extends AbstractTest {
 				map1.put((String) o[0], (Long) o[1]);
 
 			Assert.isTrue(map.equals(map1));
-			Assert.isTrue(largestBrotherhood.equals((this.brotherhoodService.largestBrotherhood())));
-			Assert.isTrue(smallestBrotherhood.equals((this.brotherhoodService.smallestBrotherhood())));
+			Assert.isTrue(largestBrotherhood.contains((this.brotherhoodService.largestBrotherhood())));
+			Assert.isTrue(smallestBrotherhood.contains((this.brotherhoodService.smallestBrotherhood())));
 			Assert.isTrue(noSpammersRation.equals(Double.valueOf(df.format(this.actorService.noSpammersRation()))));
 			Assert.isTrue(spammersRation.equals(Double.valueOf(df.format(this.actorService.spammersRation()))));
 			Assert.isTrue(avgBrotherhoodPerArea.equals(Double.valueOf(df.format(this.brotherhoodService.avgBrotherhoodPerArea()))));
@@ -456,6 +458,45 @@ public class DashboardTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	@Test
+	public void driver4() {
+
+		final float min = Float.valueOf((float) 0.0);
+		final float max = Float.valueOf((float) 4.0);
+		final float avg = Float.valueOf((float) 2.0);
+		final float sttdev = Float.valueOf((float) 2.0);
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone
+			{
+				min, max, avg, sttdev, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testDashHisto((Float) testingData[i][0], (Float) testingData[i][1], (Float) testingData[i][2], (Float) testingData[i][3], (Class<?>) testingData[i][4]);
+
+	}
+	public void testDashHisto(final Float min, final Float max, final Float avg, final Float sttdev, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate("admin");
+			Assert.isTrue(min == this.historyService.minRecordPerHistory());
+			Assert.isTrue(max == this.historyService.maxRecordPerHistory());
+			Assert.isTrue(avg == this.historyService.avgRecordPerHistory());
+			Assert.isTrue(sttdev == this.historyService.stddevRecordPerHistory());
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}

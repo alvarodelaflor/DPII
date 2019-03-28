@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import services.BrotherhoodService;
 import services.MemberService;
@@ -21,6 +22,7 @@ import utilities.AbstractTest;
 import domain.Brotherhood;
 import domain.Member;
 import domain.Parade;
+import forms.RegistrationForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -362,6 +364,7 @@ public class BrotherhoodTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -460,6 +463,7 @@ public class BrotherhoodTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -587,6 +591,7 @@ public class BrotherhoodTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -690,6 +695,7 @@ public class BrotherhoodTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -964,6 +970,7 @@ public class BrotherhoodTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -1050,6 +1057,86 @@ public class BrotherhoodTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	@Test
+	public void driver7() {
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone
+			{
+				"brotherhood01", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testReconstruct((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	public void testReconstruct(final String id, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			final Brotherhood test = this.brotherhoodService.findOne(this.getEntityId(id));
+			test.setName("testName");
+			final Brotherhood reconstructTest = this.brotherhoodService.reconstruct(test, null);
+			Assert.isTrue(reconstructTest.getName().equals("testName"));
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	@Test
+	public void driver9() {
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone
+			{
+				"0", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testReconstructForm((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	public void testReconstructForm(final String id, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			final RegistrationForm form = new RegistrationForm();
+			form.setAccept(true);
+			form.setPassword("password");
+			form.setConfirmPassword("password");
+			form.setAddress("address");
+			form.setEmail("email@test.com");
+			form.setMiddleName("testMiddle");
+			form.setName("testName");
+			form.setPhoto("http://photo.com");
+			form.setPhone("666777888");
+			form.setUserName("userNameTest");
+			form.setSurname("surname");
+			form.setTitle("title");
+			form.setEstableshmentDate(new Date());
+
+			final Brotherhood test = this.brotherhoodService.reconstructR(form, null);
+
+			Assert.notNull(test);
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}

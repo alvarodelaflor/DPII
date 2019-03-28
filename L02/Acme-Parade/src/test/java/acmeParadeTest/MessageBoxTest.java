@@ -62,6 +62,7 @@ public class MessageBoxTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -84,6 +85,7 @@ public class MessageBoxTest extends AbstractTest {
 		Class<?> caught = null;
 
 		try {
+			super.authenticate("chapter");
 			this.startTransaction();
 			final MessageBox test = this.messageBoxService.create();
 			test.setName("in box");
@@ -95,10 +97,10 @@ public class MessageBoxTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
-
 	@Test
 	public void driver3() {
 		final Object testingData[][] = {
@@ -134,6 +136,7 @@ public class MessageBoxTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -173,6 +176,7 @@ public class MessageBoxTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -209,6 +213,7 @@ public class MessageBoxTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -246,6 +251,7 @@ public class MessageBoxTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}

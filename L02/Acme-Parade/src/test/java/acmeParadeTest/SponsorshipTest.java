@@ -48,7 +48,7 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	userNameSponsor,
 			{
-				1068, null
+				0, null
 			}
 		};
 
@@ -63,9 +63,9 @@ public class SponsorshipTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Sponsor sponsorActor = this.sponsorService.findOne(sponsor);
+			final Sponsor test = this.sponsorService.findOne(super.getEntityId("sponsor01"));
 
-			final Collection<Sponsorship> sponsorships = sponsorActor.getSponsorships();
+			final Collection<Sponsorship> sponsorships = test.getSponsorships();
 
 			this.sponsorshipService.flush();
 
@@ -73,6 +73,7 @@ public class SponsorshipTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -82,7 +83,7 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	userNameSponsor,
 			{
-				1068, IllegalArgumentException.class
+				0, IllegalArgumentException.class
 			}
 		};
 
@@ -97,9 +98,9 @@ public class SponsorshipTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Sponsor sponsorActor = this.sponsorService.findOne(sponsor);
+			final Sponsor test = this.sponsorService.findOne(super.getEntityId("sponsor01"));
 
-			final Collection<Sponsorship> sponsorships = sponsorActor.getSponsorships();
+			final Collection<Sponsorship> sponsorships = test.getSponsorships();
 
 			final List<Sponsorship> listSponsorships = new ArrayList<>();
 
@@ -113,6 +114,7 @@ public class SponsorshipTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -145,11 +147,11 @@ public class SponsorshipTest extends AbstractTest {
 			sponsorshipTest.setBanner("http://google.es");
 			sponsorshipTest.setTarget("test");
 
-			final Sponsor test = this.sponsorService.findOne(1068);
+			final Sponsor test = this.sponsorService.findOne(super.getEntityId("sponsor01"));
 
 			sponsorshipTest.setSponsor(test);
 
-			final Parade parade = this.paradeService.findOne(1063);
+			final Parade parade = this.paradeService.findOne(this.getEntityId("parade01"));
 
 			sponsorshipTest.setParade(parade);
 
@@ -171,6 +173,7 @@ public class SponsorshipTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -261,11 +264,11 @@ public class SponsorshipTest extends AbstractTest {
 			sponsorshipTest.setActive(true);
 			sponsorshipTest.setTarget("test");
 
-			final Sponsor test = this.sponsorService.findOne(1068);
+			final Sponsor test = this.sponsorService.findOne(super.getEntityId("sponsor01"));
 
 			sponsorshipTest.setSponsor(test);
 
-			final Parade paradeTest = this.paradeService.findOne(1063);
+			final Parade paradeTest = this.paradeService.findOne(this.getEntityId("parade01"));
 
 			sponsorshipTest.setParade(paradeTest);
 
@@ -299,6 +302,7 @@ public class SponsorshipTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -308,18 +312,18 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	userNameSponsor,
 			{
-				1069, null
+				"sponsorship01", null
 			}, {
-				1070, null
+				"sponsorship02", null
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.testDeleteSponsorship((int) testingData[i][0], (Class<?>) testingData[i][1]);
+			this.testDeleteSponsorship((String) testingData[i][0], (Class<?>) testingData[i][1]);
 
 	}
 
-	public void testDeleteSponsorship(final int sponsorship, final Class<?> expected) {
+	public void testDeleteSponsorship(final String sponsorship, final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
@@ -327,18 +331,18 @@ public class SponsorshipTest extends AbstractTest {
 
 			super.authenticate("sponsor");
 
-			final Sponsorship sponsorshipTest = this.sponsorshipService.findOne(sponsorship);
+			final Sponsorship sponsorshipTest = this.sponsorshipService.findOne(this.getEntityId(sponsorship));
 
-			if (sponsorship == 1069)
+			if (sponsorship == "sponsorship01")
 				Assert.isTrue(sponsorshipTest.getActive() == false);
-			if (sponsorship == 1070)
+			if (sponsorship == "sponsorship02")
 				Assert.isTrue(sponsorshipTest.getActive() == true);
 
 			this.sponsorshipService.delete(sponsorshipTest);
 
-			if (sponsorship == 1069)
+			if (sponsorship == "sponsorship01")
 				Assert.isTrue(sponsorshipTest.getActive() == true);
-			if (sponsorship == 1070)
+			if (sponsorship == "sponsorship02")
 				Assert.isTrue(sponsorshipTest.getActive() == false);
 
 			this.sponsorshipService.flush();
@@ -348,6 +352,7 @@ public class SponsorshipTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -357,18 +362,18 @@ public class SponsorshipTest extends AbstractTest {
 		final Object testingData[][] = {
 			//	userNameSponsor,
 			{
-				877, NullPointerException.class
+				"sponsorship01", NullPointerException.class
 			}, {
-				878, NullPointerException.class
+				"sponsorship02", NullPointerException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.testDeleteSponsorshipNegative((int) testingData[i][0], (Class<?>) testingData[i][1]);
+			this.testDeleteSponsorshipNegative((String) testingData[i][0], (Class<?>) testingData[i][1]);
 
 	}
 
-	public void testDeleteSponsorshipNegative(final int sponsorship, final Class<?> expected) {
+	public void testDeleteSponsorshipNegative(final String sponsorship, final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
@@ -394,7 +399,7 @@ public class SponsorshipTest extends AbstractTest {
 
 			super.authenticate("sponsorTest");
 
-			final Sponsorship sponsorshipTest = this.sponsorshipService.findOne(sponsorship);
+			final Sponsorship sponsorshipTest = this.sponsorshipService.findOne(this.getEntityId(sponsorship));
 
 			this.sponsorshipService.delete(sponsorshipTest);
 
@@ -406,6 +411,7 @@ public class SponsorshipTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
