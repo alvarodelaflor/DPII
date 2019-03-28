@@ -612,7 +612,13 @@ public class ChapterTest extends AbstractTest {
 	}
 
 	// FERRETE
-
+	/*
+	 * (LEVEL B 2) Testing Unassigned areas listing for chapters. Especifically that only a chapter can ask for it.
+	 * 
+	 * Analysis of sentence coverage: 32%
+	 * 
+	 * Analysis of data coverage: 60% (Missing the rest of possible users requesting)
+	 */
 	@Test
 	public void listAreas() {
 
@@ -629,6 +635,13 @@ public class ChapterTest extends AbstractTest {
 			this.listAreas((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
 
+	/*
+	 * (LEVEL B 2) Testing parade listing for chapters, those that belong to the area he/she coordinates.
+	 * 
+	 * Analysis of sentence coverage: 15%
+	 * 
+	 * Analysis of data coverage: 60% (Missing the rest of possible users requesting)
+	 */
 	@Test
 	public void listParades() {
 
