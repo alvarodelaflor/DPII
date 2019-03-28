@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -62,7 +61,6 @@ public class Brotherhood extends Actor {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
-	@NotNull
 	public Date getEstablishmentDate() {
 		return this.establishmentDate;
 	}
