@@ -141,6 +141,16 @@ public class ChapterController extends AbstractController {
 		}
 		return res;
 	}
+	
+	private Boolean checkAnyLogger() {
+		Boolean res = true;
+		try {
+			LoginService.getPrincipal();
+		} catch (Exception e) {
+			res = false;
+		}
+		return res;
+	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
@@ -148,7 +158,10 @@ public class ChapterController extends AbstractController {
 		try {
 			final Chapter chapter = this.chapterService.findOne(id);
 			Assert.notNull(chapter);
-			final Boolean checkChapter = LoginService.getPrincipal().getId() == chapter.getUserAccount().getId();
+			Boolean checkChapter = false;
+			if (checkAnyLogger()) {
+				checkChapter = LoginService.getPrincipal().getId() == chapter.getUserAccount().getId();				
+			}
 			final Collection<Proclaim> proclaims = this.chapterService.getChapterByUserAccountId(chapter.getUserAccount().getId()).getProclaim();
 			System.out.println(chapter);
 			result = new ModelAndView("chapter/show");
