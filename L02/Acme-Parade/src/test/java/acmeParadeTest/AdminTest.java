@@ -1074,6 +1074,21 @@ public class AdminTest extends AbstractTest {
 			this.areaSave((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
+	/*
+	 * 
+	 * (LEVEL B 2) Testing area assignment for chapters, specifically that only a user logged as chapter can do it.
+	 * 
+	 * POSITIVE TEST
+	 * A chapter with no assigned areas tries to self-assign an area.
+	 * 
+	 * NEGATIVE TEST
+	 * A member tries to self-assign an area.
+	 * 
+	 * Analysis of sentence coverage: 17%
+	 * 
+	 * Analysis of data coverage: 60% (Missing the rest of possible users requesting)
+	 */
+
 	@Test
 	public void assignArea() {
 
@@ -1229,6 +1244,22 @@ public class AdminTest extends AbstractTest {
 			this.adminDeletePosition((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
+	/*
+	 * 
+	 * (LEVEL C 14 - Madrugá) Testing spam word addition into the system.
+	 * 
+	 * POSITIVE TEST
+	 * - An admin tries to add a new spam word.
+	 * - An admin doesn't add any spam word.
+	 * - A chapter tries to add a new spam word.
+	 * NEGATIVE TEST
+	 * - A chapter tries to add a new spam word
+	 * 
+	 * Analysis of sentence coverage: 7%
+	 * 
+	 * Analysis of data coverage: 50% (Missing the rest of possible users requesting)
+	 */
+
 	@Test
 	/*
 	 * Test ADD spamWord;
@@ -1262,6 +1293,22 @@ public class AdminTest extends AbstractTest {
 		for (int i = 0; i < testingData.length; i++)
 			this.adminAddSpamWord((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
+
+	/*
+	 * 
+	 * (LEVEL C 14 - Madrugá) Testing word deletion into the system.
+	 * 
+	 * POSITIVE TEST
+	 * - An admin tries to delete a spam word.
+	 * - An admin doesn't delete any spam word.
+	 * - A chapter tries to delete a spam word.
+	 * NEGATIVE TEST
+	 * - A chapter tries to delete a spam word
+	 * 
+	 * Analysis of sentence coverage: 7%
+	 * 
+	 * Analysis of data coverage: 50% (Missing the rest of possible users requesting)
+	 */
 
 	@Test
 	/*

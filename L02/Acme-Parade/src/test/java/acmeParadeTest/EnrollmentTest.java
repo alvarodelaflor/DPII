@@ -31,6 +31,21 @@ public class EnrollmentTest extends AbstractTest {
 	private BrotherhoodService	brotherhoodService;
 
 
+	/*
+	 * 
+	 * (LEVEL C-6 - Madrugá) Testing enrollment creation.
+	 * 
+	 * POSITIVE TEST
+	 * A member tries to create and save a new enrollment.
+	 * 
+	 * NEGATIVE TEST
+	 * A chapter tries to create and save new enrollment.
+	 * 
+	 * Analysis of sentence coverage: 20%
+	 * 
+	 * Analysis of data coverage: 50% (Missing the rest of possible users requesting)
+	 */
+
 	@Test
 	public void createEnrolled() {
 
