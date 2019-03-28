@@ -46,9 +46,9 @@ public class SegmentTest extends AbstractTest {
 	 * (LEVEL B 3.3) Testing updating a path
 	 * A path can be updated by adding a segment to the last segment of it, updating a segment or deleting one
 	 * 
-	 * Analysis of sentence coverage: 85.1% (Source: EclEmma)
+	 * Analysis of sentence coverage: 84.8% (Source: EclEmma)
 	 * 
-	 * Analysis of data coverage: ~70% (Source: Segment has latitude, longitude, arrivalTime and destination. I think these tests could have around 70% data coverage)
+	 * Analysis of data coverage: ~60% (Source: Segment has latitude, longitude, arrivalTime and destination. I think these tests could have around 70% data coverage)
 	 */
 	@Test
 	public void SegmentDriver1() {

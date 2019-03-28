@@ -47,9 +47,9 @@ public class PathTest extends AbstractTest {
 	 * (LEVEL B 3.3) Testing creating a Path and updating it's origin
 	 * A path won't be deleted, only segments can be deleted, so the rest of this test suite is in SegmentTest
 	 * 
-	 * Analysis of sentence coverage: 88.2% (Source: EclEmma)
+	 * Analysis of sentence coverage: 66% (Source: EclEmma)
 	 * 
-	 * Analysis of data coverage: ~55% (Source: I think these tests could cover this percentage because we aren't testing a lot of parade values)
+	 * Analysis of data coverage: ~50% (Source: I think these tests could cover this percentage because we aren't testing a lot of parade values)
 	 */
 	@Test
 	public void PathDriver1() {
