@@ -21,19 +21,19 @@
 	<!-- We are showing this publicly so we only want to show the accepted ones -->
 	<display:column titleKey="parade.title"> 
 	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
-		<jstl:out value="title"></jstl:out> 
+		<jstl:out value="${row.title}"></jstl:out> 
 	</jstl:if>
 	</display:column>
 	
 	<display:column titleKey="parade.moment"> 
 	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
-		<jstl:out value="moment"></jstl:out> 
+		<jstl:out value="${row.moment}"></jstl:out> 
 	</jstl:if>
 	</display:column>
 	
 	<display:column titleKey="parade.description"> 
 	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
-		<jstl:out value="description"></jstl:out> 
+		<jstl:out value="${row.description}"></jstl:out> 
 	</jstl:if>
 	</display:column>
 	
