@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
@@ -20,7 +21,9 @@ public class Sponsorship extends DomainEntity {
 	private CreditCard	creditCard;
 	private Integer		bannerCount	= 0;
 	//////////////////////////////////
+	@JsonIgnore
 	private Sponsor		sponsor;
+	@JsonIgnore
 	private Parade		parade;
 	private Boolean		active;
 

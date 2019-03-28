@@ -29,9 +29,39 @@
     				  		
       				<tr><td><spring:message code="sponsorship.show.sponsor" /><jstl:out value="${sponsorship.sponsor.name}"></jstl:out></td></tr>
   																          			
-          		    <tr><td><spring:message code="sponsorship.show.parade" /><jstl:out value="${sponsorship.parade}"></jstl:out></td></tr>
+          		    <tr><td><spring:message code="sponsorship.show.parade" /><jstl:out value="${sponsorship.parade.title}"></jstl:out></td></tr>
  
-               		<tr><td><spring:message code="sponsorship.show.active" /><jstl:out value="${sponsorship.active}"></jstl:out></td></tr>
+               		<tr><td><spring:message code="sponsorship.show.active" />
+               		
+               		<c:choose>
+    					<c:when test="${language=='English'}">
+							
+							<c:choose>
+    						<c:when test="${sponsorship.active == true}">
+								<spring:message code="SI" />
+    						</c:when>    
+    						<c:otherwise>
+								<spring:message code="NO" />
+    						</c:otherwise>
+							</c:choose>
+							
+    				</c:when>    
+    				<c:otherwise>
+						
+							<c:choose>
+    						<c:when test="${sponsorship.active == true}">
+								<spring:message code="SI" />
+    						</c:when>    
+    						<c:otherwise>
+								<spring:message code="NO" />
+    						</c:otherwise>
+							</c:choose>
+
+    				</c:otherwise>
+					</c:choose>
+               		
+               		
+               		</td></tr>
      
            		    <tr><td><spring:message code="sponsorship.show.creditCard.number" /><jstl:out value="${sponsorship.creditCard.number}"></jstl:out></td></tr>
  

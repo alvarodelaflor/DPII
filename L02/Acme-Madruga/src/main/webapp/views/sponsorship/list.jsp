@@ -19,9 +19,14 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 	<security:authorize access="hasRole('SPONSOR')">
-		<jstl:if test="${validSponsor}">		
-			<p class="create"><input type="button" value=<spring:message code="createSponsorship" /> id="buttonSponsorship" name="buttonSponsorship"  onclick="location.href='sponsorship/create.do';"/></p>
-		</jstl:if>
+		<c:choose>
+			<c:when test="${validSponsor}">
+				<p class="create"><input type="button" value=<spring:message code="createSponsorship" /> id="buttonSponsorship" name="buttonSponsorship"  onclick="location.href='sponsorship/create.do';"/></p>			
+			</c:when>
+			<c:otherwise>
+				<p><spring:message code="emptyParade" /></p>
+			</c:otherwise>
+		</c:choose>
 		<display:table name="sponsorships" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 			<display:column titleKey="sponsorship.target">
 						<a href="sponsorship/show.do?sponsorshipId=${row.id}"><jstl:out

@@ -26,4 +26,9 @@
 		<put-attribute name="body" value="/views/sponsor/conditions.jsp" /> 
 	</definition>
 	
+	<definition name="sponsor/show" extends="master.page">	
+		<put-attribute name="title" value="Patrocinador: Perfil" />
+		<put-attribute name="body" value="/views/sponsor/show.jsp" />
+	</definition>
+	
 </tiles-definitions>

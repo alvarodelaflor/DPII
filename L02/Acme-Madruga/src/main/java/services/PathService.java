@@ -49,6 +49,7 @@ public class PathService {
 	public Path getParadePath(final int paradeId) {
 		// In case we aren't the parade owner we have to check that the parade is in final mode
 		final Parade parade = this.paradeService.findOne(paradeId);
+		System.out.println(paradeId);
 		Path res = null;
 		try {
 			final int loggedAccountId = LoginService.getPrincipal().getId();
@@ -79,6 +80,7 @@ public class PathService {
 	}
 
 	public Path createFromParade(final int paradeId) {
+		this.assertParadeOwner(paradeId);
 		final Path path = this.create(paradeId);
 		return this.pathRepository.save(path);
 	}
