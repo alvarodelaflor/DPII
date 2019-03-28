@@ -152,52 +152,56 @@ public class MessageBoxController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(MessageBox messageBox, final BindingResult binding, @RequestParam(value = "idParent", defaultValue = "-1") final int idParent) {
 		ModelAndView result;
-		messageBox = this.messageBoxService.reconstruct(messageBox, binding, idParent);
-
-		if (this.checkNameMailbox(messageBox)) {
-			final ObjectError error = new ObjectError("mailbox.name", "Ya existe esa box");
-			binding.addError(error);
-			binding.rejectValue("name", "error.mailbox.name");
-		}
-		if (binding.hasErrors()) {
-			System.out.println("Entro en el binding");
-			System.out.println(binding.getAllErrors().get(0));
-			result = this.createEditModelAndView(messageBox);
-		} else
-			try {
-				System.out.println("El id del padre niño");
-				System.out.println(idParent);
-
-				final UserAccount login = LoginService.getPrincipal();
-				final Actor logged = this.actorService.getActorByUserId(login.getId());
-
-				System.out.println("Entro en el edit post");
-
-				System.out.println(messageBox);
-				System.out.println(messageBox.getName());
-				System.out.println(messageBox.getIsDefault());
-				System.out.println(messageBox.getMessages());
-				System.out.println(messageBox.getParentBox());
-
-				System.out.println(messageBox);
-
-				System.out.println(binding);
-				System.out.println(messageBox);
-				System.out.println(messageBox.getParentBox());
-				System.out.println("Entro en el save");
-				System.out.println("entro en update");
-				final MessageBox updated = this.messageBoxService.update(messageBox);
-				if (!logged.getMessageBoxes().contains(messageBox)) {
-					logged.getMessageBoxes().add(updated);
-					final Actor saved = this.actorService.save(logged);
-				}
-				System.out.println(logged.getMessageBoxes());
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				System.out.println("entro en oopss");
-				System.out.println(oops);
-				result = this.createEditModelAndView(messageBox, "messageBox.commit.error");
+		try {
+			messageBox = this.messageBoxService.reconstruct(messageBox, binding, idParent);
+			if (this.checkNameMailbox(messageBox)) {
+				final ObjectError error = new ObjectError("mailbox.name", "Ya existe esa box");
+				binding.addError(error);
+				binding.rejectValue("name", "error.mailbox.name");
 			}
+			if (binding.hasErrors()) {
+				System.out.println("Entro en el binding");
+				System.out.println(binding.getAllErrors().get(0));
+				result = this.createEditModelAndView(messageBox);
+			} else
+				try {
+					System.out.println("El id del padre niño");
+					System.out.println(idParent);
+
+					final UserAccount login = LoginService.getPrincipal();
+					final Actor logged = this.actorService.getActorByUserId(login.getId());
+
+					System.out.println("Entro en el edit post");
+
+					System.out.println(messageBox);
+					System.out.println(messageBox.getName());
+					System.out.println(messageBox.getIsDefault());
+					System.out.println(messageBox.getMessages());
+					System.out.println(messageBox.getParentBox());
+
+					System.out.println(messageBox);
+
+					System.out.println(binding);
+					System.out.println(messageBox);
+					System.out.println(messageBox.getParentBox());
+					System.out.println("Entro en el save");
+					System.out.println("entro en update");
+					final MessageBox updated = this.messageBoxService.update(messageBox);
+					if (!logged.getMessageBoxes().contains(messageBox)) {
+						logged.getMessageBoxes().add(updated);
+						final Actor saved = this.actorService.save(logged);
+					}
+					System.out.println(logged.getMessageBoxes());
+					result = new ModelAndView("redirect:list.do");
+				} catch (final Throwable oops) {
+					System.out.println("entro en oopss");
+					System.out.println(oops);
+					result = this.createEditModelAndView(messageBox, "messageBox.commit.error");
+				}
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
 		result.addObject("logo", this.welcomeService.getLogo());
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
