@@ -15,10 +15,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import services.AreaService;
 import services.ChapterService;
+import services.ParadeService;
 import utilities.AbstractTest;
 import domain.Area;
 import domain.Chapter;
 import domain.Proclaim;
+import security.LoginService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -32,6 +34,9 @@ public class ChapterTest extends AbstractTest {
 
 	@Autowired
 	private AreaService		areaService;
+	
+	@Autowired
+	private ParadeService paradeService;
 
 
 	/*
@@ -599,4 +604,88 @@ public class ChapterTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
+	
+	// FERRETE
+	
+	@Test
+	public void listAreas() {
+
+		final Object testingData[][] = {
+
+			{
+				"chapter", null
+			}, {
+				"member", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.listAreas((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	@Test
+	public void listParades() {
+
+		final Object testingData[][] = {
+
+			{
+				"chapter", null
+			}, {
+				"member", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.listAreas((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	
+	protected void listAreas(final String username, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			// Set de parametros invalidos:
+			this.startTransaction();
+			this.authenticate(username);
+			this.areaService.unassignedAreas();
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+	}
+
+	protected void listParades(final String username, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			// Set de parametros invalidos:
+			this.startTransaction();
+			this.authenticate(username);
+			this.paradeService.findParadesByChapter(LoginService.getPrincipal().getId());
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+	}
+
+	
+	// FERRETE
 }
