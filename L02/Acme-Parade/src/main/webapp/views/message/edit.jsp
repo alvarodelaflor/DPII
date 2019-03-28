@@ -17,7 +17,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<p><spring:message code="editMessage" /></p>
 <body>
 	<form:form action="message/editMessageBox.do" method="POST"	modelAttribute="msg">
 		

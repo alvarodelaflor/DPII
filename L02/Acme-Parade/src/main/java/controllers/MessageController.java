@@ -80,10 +80,10 @@ public class MessageController extends AbstractController {
 				result = new ModelAndView("message/list");
 				result.addObject("msgs", msgs);
 				result.addObject("messageBoxes", messageBox);
-				//		final String system = this.welcomeService.getSystem();
-				//		result.addObject("system", system);
-				//		final String logo = this.welcomeService.getLogo();
-				//		result.addObject("logo", logo);
+				final String system = this.welcomeService.getSystem();
+				result.addObject("system", system);
+				final String logo = this.welcomeService.getLogo();
+				result.addObject("logo", logo);
 				result.addObject("messageBoxId", messageBoxId);
 				result.addObject("requestURI", "message/list.do");
 			}
