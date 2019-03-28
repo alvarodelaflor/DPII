@@ -158,6 +158,7 @@ public class AreaService {
 		Assert.isNull(area.getChapter(), "areaExistsChapter.error");
 		area.setChapter(chapter);
 		System.out.println("CHAPTER DEL AREA: " + area.getChapter());
+		Assert.isTrue(checkChapterHasNoArea(), "chapter has area");
 		this.areaRepository.save(area);
 		this.areaRepository.flush();
 

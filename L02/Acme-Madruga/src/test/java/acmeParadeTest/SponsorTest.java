@@ -2,6 +2,7 @@
 package acmeParadeTest;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -117,7 +118,7 @@ public class SponsorTest extends AbstractTest {
 			{
 				0, 0, 0, 0, 1, NullPointerException.class
 			}, {
-				0, 0, 0, 1, 0, NullPointerException.class
+				0, 0, 0, 1, 0, IllegalArgumentException.class
 			}, {
 				0, 0, 0, 1, 1, NullPointerException.class
 			}, {
@@ -129,11 +130,11 @@ public class SponsorTest extends AbstractTest {
 			}, {
 				0, 0, 1, 1, 1, NullPointerException.class
 			}, {
-				0, 1, 0, 0, 0, NullPointerException.class
+				0, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				0, 1, 0, 0, 1, NullPointerException.class
 			}, {
-				0, 1, 0, 1, 0, NullPointerException.class
+				0, 1, 0, 1, 0, IllegalArgumentException.class
 			}, {
 				0, 1, 0, 1, 1, NullPointerException.class
 			}, {
@@ -145,11 +146,11 @@ public class SponsorTest extends AbstractTest {
 			}, {
 				0, 1, 1, 1, 1, NullPointerException.class
 			}, {
-				1, 0, 0, 0, 0, NullPointerException.class
+				1, 0, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 0, 0, 0, 1, NullPointerException.class
 			}, {
-				1, 0, 0, 1, 0, NullPointerException.class
+				1, 0, 0, 1, 0, IllegalArgumentException.class
 			}, {
 				1, 0, 0, 1, 1, NullPointerException.class
 			}, {
@@ -161,11 +162,11 @@ public class SponsorTest extends AbstractTest {
 			}, {
 				1, 0, 1, 1, 1, NullPointerException.class
 			}, {
-				1, 1, 0, 0, 0, NullPointerException.class
+				1, 1, 0, 0, 0, ConstraintViolationException.class
 			}, {
 				1, 1, 0, 0, 1, NullPointerException.class
 			}, {
-				1, 1, 0, 1, 0, NullPointerException.class
+				1, 1, 0, 1, 0, IllegalArgumentException.class
 			}, {
 				1, 1, 0, 1, 1, NullPointerException.class
 			}, {

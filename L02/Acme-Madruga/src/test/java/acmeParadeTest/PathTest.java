@@ -2,6 +2,7 @@
 package acmeParadeTest;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 import javax.transaction.Transactional;
 
@@ -48,7 +49,7 @@ public class PathTest extends AbstractTest {
 	 * 
 	 * Analysis of sentence coverage: 88.2% (Source: EclEmma)
 	 * 
-	 * Analysis of data coverage: ~75% (Source: I think these tests could cover this percentage because we aren't testing a lot of parade values)
+	 * Analysis of data coverage: ~55% (Source: I think these tests could cover this percentage because we aren't testing a lot of parade values)
 	 */
 	@Test
 	public void PathDriver1() {
@@ -64,25 +65,25 @@ public class PathTest extends AbstractTest {
 			}, { // This is called only when there's one segment, the origin
 				"brotherhood", true, "delete", null
 			},
-			// ------ Negative tests (insert parade not owner)
+			//		 ------ Negative tests (insert parade not owner)
 			{
-				"brotherhood", false, "create", IllegalArgumentException.class
+				"brotherhood", false, "create", NullPointerException.class
 			}, {
-				"brotherhood", false, "modify", IllegalArgumentException.class
+				"brotherhood", false, "modify", NullPointerException.class
 			}, {
-				"brotherhood", false, "deleteEntirePath", IllegalArgumentException.class
+				"brotherhood", false, "deleteEntirePath", NullPointerException.class
 			}, { // This is called only when there's one segment, the origin
-				"brotherhood", false, "delete", IllegalArgumentException.class
+				"brotherhood", false, "delete", NullPointerException.class
 			},
-			// ------ Negative tests (insert invalid user)
+			//		 ------ Negative tests (insert invalid user)
 			{
-				"member", false, "create", IllegalArgumentException.class
+				"member", false, "create", NullPointerException.class
 			}, {
-				"sponsor", false, "create", IllegalArgumentException.class
+				"sponsor", false, "create", NullPointerException.class
 			}, {
-				"admin", false, "create", IllegalArgumentException.class
+				"admin", false, "create", NullPointerException.class
 			}, {
-				"chapter", false, "create", IllegalArgumentException.class
+				"chapter", false, "create", NullPointerException.class
 			}, {
 				"member", true, "create", IllegalArgumentException.class
 			}, {
@@ -106,27 +107,43 @@ public class PathTest extends AbstractTest {
 		try {
 			this.startTransaction();
 			super.authenticate(userName);
-			Parade parade = this.paradeService.findParadesByTicker("211503-ABCDE4").iterator().next();
+			Parade parade = null;
 			if (owner)
 				// I need at least one parade of the logged brotherhood to make this work
-				parade = this.paradeService.findAllBrotherhoodLogged().iterator().next();
+				parade = this.paradeService.findOne(this.getEntityId("parade01"));
 
 			if (mode == "create")
 				this.pathService.createFromParade(parade.getId());
 			else if (mode == "modify") {
-				this.pathService.getParadePath(parade.getId());
+				final Calendar calendar = Calendar.getInstance();
 				Segment segment = this.segmentService.create();
 				segment.setLatitude(BigDecimal.valueOf(0));
 				segment.setLongitude(BigDecimal.valueOf(0));
+				segment.setArrivalTime(calendar.getTime());
+
+				final Segment destination = this.segmentService.create();
+				destination.setLatitude(BigDecimal.valueOf(0));
+				destination.setLongitude(BigDecimal.valueOf(0));
+				calendar.add(Calendar.HOUR, 1);
+				destination.setArrivalTime(calendar.getTime());
+				segment.setDestination(destination);
 				final BindingResult binding = null;
 				segment = this.pathService.reconstruct(segment, binding);
 				final Segment savedSegment = this.segmentService.save(segment, parade.getId());
 				this.pathService.setOrigin(parade.getId(), savedSegment);
 			} else if (mode == "delete") {
-				this.pathService.getParadePath(parade.getId());
+				final Calendar calendar = Calendar.getInstance();
 				Segment segment = this.segmentService.create();
 				segment.setLatitude(BigDecimal.valueOf(0));
 				segment.setLongitude(BigDecimal.valueOf(0));
+				segment.setArrivalTime(calendar.getTime());
+
+				final Segment destination = this.segmentService.create();
+				destination.setLatitude(BigDecimal.valueOf(0));
+				destination.setLongitude(BigDecimal.valueOf(0));
+				calendar.add(Calendar.HOUR, 1);
+				destination.setArrivalTime(calendar.getTime());
+				segment.setDestination(destination);
 				final BindingResult binding = null;
 				segment = this.pathService.reconstruct(segment, binding);
 				final Segment savedSegment = this.segmentService.save(segment, parade.getId());

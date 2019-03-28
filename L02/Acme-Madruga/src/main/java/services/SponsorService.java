@@ -15,6 +15,7 @@ import org.springframework.validation.Validator;
 
 import repositories.SponsorRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.MessageBox;
 import domain.Sponsor;
@@ -219,9 +220,10 @@ public class SponsorService {
 		Assert.isTrue(!this.checkEmailFormatter(sponsor), "email.wrong");
 		Assert.isTrue(!(this.actorService.getActorByUser(sponsor.getUserAccount().getUsername()) != null));
 		Assert.isTrue(!(sponsor.getUserAccount().getUsername().length() <= 5 && sponsor.getUserAccount().getUsername().length() <= 5));
-
-		if (sponsor.getPhone().matches("^([0-9]{4,})$"))
-			sponsor.setPhone("+" + this.welcomeService.getPhone() + " " + sponsor.getPhone());
+		Assert.notNull(sponsor.getUserAccount().getPassword());
+		if (sponsor.getPhone() != null)
+			if (sponsor.getPhone().matches("^([0-9]{4,})$"))
+				sponsor.setPhone("+" + this.welcomeService.getPhone() + " " + sponsor.getPhone());
 		return this.sponsorRepository.save(sponsor);
 	}
 
@@ -264,5 +266,10 @@ public class SponsorService {
 
 	public void flush() {
 		this.sponsorRepository.flush();
+	}
+
+	public void delete(final Sponsor sponsor) {
+		Assert.isTrue(LoginService.getPrincipal().getId() == sponsor.getUserAccount().getId());
+		this.sponsorRepository.delete(sponsor);
 	}
 }

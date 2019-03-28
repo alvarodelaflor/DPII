@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import services.BrotherhoodService;
 import services.ChapterService;
 import services.WelcomeService;
 import domain.Area;
+import security.LoginService;
 
 @Controller
 @RequestMapping("/area/chapter")
@@ -82,6 +84,7 @@ public class AreaChapterController {
 		ModelAndView res;
 
 		try {
+			Assert.isTrue(this.areaService.checkChapterHasNoArea(), "chapter has area");
 			this.areaService.assignChapter(areaId);
 
 			res = new ModelAndView("redirect:list.do");
