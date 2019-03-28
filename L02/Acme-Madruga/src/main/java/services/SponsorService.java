@@ -219,9 +219,10 @@ public class SponsorService {
 		Assert.isTrue(!this.checkEmailFormatter(sponsor), "email.wrong");
 		Assert.isTrue(!(this.actorService.getActorByUser(sponsor.getUserAccount().getUsername()) != null));
 		Assert.isTrue(!(sponsor.getUserAccount().getUsername().length() <= 5 && sponsor.getUserAccount().getUsername().length() <= 5));
-
-		if (sponsor.getPhone().matches("^([0-9]{4,})$"))
-			sponsor.setPhone("+" + this.welcomeService.getPhone() + " " + sponsor.getPhone());
+		Assert.notNull(sponsor.getUserAccount().getPassword());
+		if (sponsor.getPhone() != null)
+			if (sponsor.getPhone().matches("^([0-9]{4,})$"))
+				sponsor.setPhone("+" + this.welcomeService.getPhone() + " " + sponsor.getPhone());
 		return this.sponsorRepository.save(sponsor);
 	}
 
