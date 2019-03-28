@@ -139,12 +139,11 @@ public class AdministratorController extends AbstractController {
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createModelAndView(administrator, "email.wrong");
-				else {
+				else
 					result = this.createModelAndView(administrator, "error.email");
-					result.addObject("logo", this.welcomeService.getLogo());
-					result.addObject("system", this.welcomeService.getSystem());
-				}
 			}
+		result.addObject("logo", this.welcomeService.getLogo());
+		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
 
