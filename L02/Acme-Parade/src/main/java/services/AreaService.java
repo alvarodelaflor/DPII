@@ -156,14 +156,15 @@ public class AreaService {
 		System.out.println("SERVICIO:  " + area);
 		Assert.notNull(area, "areaExist.error");
 		Assert.isNull(area.getChapter(), "areaExistsChapter.error");
-		area.setChapter(chapter);
 		System.out.println("CHAPTER DEL AREA: " + area.getChapter());
-		Assert.isTrue(checkChapterHasNoArea(), "chapter has area");
+		Assert.isTrue(this.checkChapterHasNoArea(), "chapter has area");
+		area.setChapter(chapter);
 		this.areaRepository.save(area);
 		this.areaRepository.flush();
 
 	}
 	public Boolean checkChapterHasNoArea() {
-		return this.areaRepository.findAreaChapter(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()).getId()) == null ? true : false;
+		final Boolean res = this.areaRepository.findAreaChapter(this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId()).getId()) == null ? true : false;
+		return res;
 	}
 }

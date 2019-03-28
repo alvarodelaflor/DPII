@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import services.BrotherhoodService;
 import services.MemberService;
@@ -367,6 +368,7 @@ public class MemberTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -477,6 +479,7 @@ public class MemberTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -541,6 +544,7 @@ public class MemberTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -612,6 +616,7 @@ public class MemberTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -896,6 +901,7 @@ public class MemberTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -961,8 +967,40 @@ public class MemberTest extends AbstractTest {
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
 
+	@Test
+	public void driver10() {
+		final Object testingData[][] = {
+			//	middleName, address, photo, phone
+			{
+				"member01", null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.testReconstruct((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	public void testReconstruct(final String id, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			final Member test = this.memberService.findOne(this.getEntityId(id));
+			test.setName("testName");
+			final Member reconstructTest = this.memberService.reconstruct(test, null);
+			Assert.isTrue(reconstructTest.getName().equals("testName"));
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
 }
