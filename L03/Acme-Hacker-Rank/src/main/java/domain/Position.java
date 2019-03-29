@@ -66,6 +66,10 @@ public class Position extends DomainEntity {
 		return this.ticker;
 	}
 
+	public void setTicker(final String ticker) {
+		this.ticker = ticker;
+	}
+
 	@NotNull
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSkills() {

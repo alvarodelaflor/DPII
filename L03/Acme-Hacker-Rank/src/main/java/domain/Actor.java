@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -41,6 +42,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@URL
 	public String getPhoto() {
 		return this.photo;
 	}
@@ -51,6 +53,7 @@ public class Actor extends DomainEntity {
 
 	@NotNull
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@URL
 	public String getEmail() {
 		return this.email;
 	}
