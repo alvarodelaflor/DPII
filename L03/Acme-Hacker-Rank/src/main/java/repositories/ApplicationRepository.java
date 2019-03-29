@@ -10,7 +10,7 @@ import domain.Application;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
-	//Application per Hacker:
+	// Application per Hacker:
 	@Query("select avg(cast((select count(a) from Application a where a.hacker = h) as float)) from Hacker a")
 	public Float avgApplicationPerHacker();
 

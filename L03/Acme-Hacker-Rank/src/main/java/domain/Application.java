@@ -7,9 +7,9 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
@@ -58,7 +58,7 @@ public class Application extends DomainEntity {
 		this.applyMoment = applyMoment;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getResponse() {
 		return this.response;
@@ -68,7 +68,7 @@ public class Application extends DomainEntity {
 		this.response = response;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getLink() {
 		return this.link;

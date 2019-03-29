@@ -5,8 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
@@ -30,7 +30,7 @@ public class Position extends DomainEntity {
 		this.company = company;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
 		return this.title;
@@ -40,7 +40,7 @@ public class Position extends DomainEntity {
 		this.title = title;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return this.description;
@@ -50,7 +50,7 @@ public class Position extends DomainEntity {
 		this.description = description;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getProfile() {
 		return this.profile;
@@ -60,7 +60,7 @@ public class Position extends DomainEntity {
 		this.profile = profile;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTicker() {
 		return this.ticker;
@@ -70,7 +70,7 @@ public class Position extends DomainEntity {
 		this.ticker = ticker;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSkills() {
 		return this.skills;
@@ -80,7 +80,7 @@ public class Position extends DomainEntity {
 		this.skills = skills;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTechs() {
 		return this.techs;
@@ -90,7 +90,7 @@ public class Position extends DomainEntity {
 		this.techs = techs;
 	}
 
-	@NotNull
+	@NotBlank
 	public Date getDeadline() {
 		return this.deadline;
 	}
@@ -99,7 +99,7 @@ public class Position extends DomainEntity {
 		this.deadline = deadline;
 	}
 
-	@NotNull
+	@NotBlank
 	public Double getSalary() {
 		return this.salary;
 	}
@@ -108,7 +108,7 @@ public class Position extends DomainEntity {
 		this.salary = salary;
 	}
 
-	@NotNull
+	@NotBlank
 	public Boolean getStatus() {
 		return this.status;
 	}

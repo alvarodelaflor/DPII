@@ -14,4 +14,11 @@ public class HackerService {
 
 	@Autowired
 	private HackerRepository	hackerRepository;
+
+
+	// DashBoard:
+	public String findHackerWithMoreApplications() {
+
+		return this.hackerRepository.findHackerWithMoreApplications();
+	}
 }

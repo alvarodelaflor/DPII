@@ -16,7 +16,7 @@ public class PositionService {
 	private PositionRepository	positionRepository;
 
 
-	//DashBoard:
+	// DashBoard:
 	public Float avgPositionPerCompany() {
 
 		return this.positionRepository.avgPositionPerCompany();
@@ -36,4 +36,35 @@ public class PositionService {
 
 		return this.positionRepository.stddevPositionPerCompany();
 	}
+
+	public Double avgSalaryPerPosition() {
+
+		return this.positionRepository.avgSalaryPerPosition();
+	}
+
+	public Double minSalaryPerPosition() {
+
+		return this.positionRepository.minSalaryPerPosition();
+	}
+
+	public Double maxSalaryPerPosition() {
+
+		return this.positionRepository.maxSalaryPerPosition();
+	}
+
+	public Double stddevSalaryPerPosition() {
+
+		return this.positionRepository.stddevSalaryPerPosition();
+	}
+
+	public String bestPosition() {
+
+		return this.positionRepository.bestPositon();
+	}
+
+	public String worstPosition() {
+
+		return this.positionRepository.worstPositon();
+	}
+
 }

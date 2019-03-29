@@ -14,4 +14,11 @@ public class CompanyService {
 
 	@Autowired
 	private CompanyRepository	companyRepository;
+
+
+	// DashBoard:
+	public String findCompanyWithMorePositions() {
+
+		return this.companyRepository.findCompanyWithMorePositions();
+	}
 }

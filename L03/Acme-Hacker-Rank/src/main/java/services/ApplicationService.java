@@ -16,7 +16,7 @@ public class ApplicationService {
 	private ApplicationRepository	applicationRepository;
 
 
-	//DashBoard:
+	// DashBoard:
 	public Float avgApplicationPerHacker() {
 
 		return this.applicationRepository.avgApplicationPerHacker();

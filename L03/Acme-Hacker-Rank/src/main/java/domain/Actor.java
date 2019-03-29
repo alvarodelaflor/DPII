@@ -8,6 +8,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.hibernate.validator.constraints.URL;
@@ -21,7 +22,7 @@ public class Actor extends DomainEntity {
 	CreditCard	creditCard;
 
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
@@ -31,7 +32,7 @@ public class Actor extends DomainEntity {
 		this.name = name;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSurname() {
 		return this.surname;
@@ -51,7 +52,7 @@ public class Actor extends DomainEntity {
 		this.photo = photo;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@URL
 	public String getEmail() {
@@ -62,7 +63,7 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPhone() {
 		return this.phone;
@@ -72,7 +73,7 @@ public class Actor extends DomainEntity {
 		this.phone = phone;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getAddress() {
 		return this.address;

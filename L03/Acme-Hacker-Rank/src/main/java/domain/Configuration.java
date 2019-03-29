@@ -4,8 +4,8 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
@@ -17,7 +17,7 @@ public class Configuration extends DomainEntity {
 	Integer	cacheHours, cacheAmount;
 
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSystemName() {
 		return this.systemName;
@@ -27,7 +27,7 @@ public class Configuration extends DomainEntity {
 		this.systemName = systemName;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getCountryCode() {
 		return this.countryCode;
@@ -37,7 +37,7 @@ public class Configuration extends DomainEntity {
 		this.countryCode = countryCode;
 	}
 
-	@NotNull
+	@NotBlank
 	public Integer getCacheHours() {
 		return this.cacheHours;
 	}
@@ -46,7 +46,7 @@ public class Configuration extends DomainEntity {
 		this.cacheHours = cacheHours;
 	}
 
-	@NotNull
+	@NotBlank
 	public Integer getCacheAmount() {
 		return this.cacheAmount;
 	}

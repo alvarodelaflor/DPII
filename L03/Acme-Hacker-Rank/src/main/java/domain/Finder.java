@@ -8,8 +8,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
@@ -33,7 +33,7 @@ public class Finder extends DomainEntity {
 		this.positions = positions;
 	}
 
-	@NotNull
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getKey() {
 		return this.key;
@@ -43,7 +43,7 @@ public class Finder extends DomainEntity {
 		this.key = key;
 	}
 
-	@NotNull
+	@NotBlank
 	public Date getDeadline() {
 		return this.deadline;
 	}
@@ -52,7 +52,7 @@ public class Finder extends DomainEntity {
 		this.deadline = deadline;
 	}
 
-	@NotNull
+	@NotBlank
 	public Double getMinSalary() {
 		return this.minSalary;
 	}
@@ -61,7 +61,7 @@ public class Finder extends DomainEntity {
 		this.minSalary = minSalary;
 	}
 
-	@NotNull
+	@NotBlank
 	public Double getMaxSalary() {
 		return this.maxSalary;
 	}
