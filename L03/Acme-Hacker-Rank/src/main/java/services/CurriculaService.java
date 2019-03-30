@@ -81,6 +81,7 @@ public class CurriculaService {
 	 * @return The save curricula
 	 */
 	public Curricula save(Curricula curricula) {
+		Assert.notNull(curricula, "Curricula is null");
 		Assert.isTrue(checkAnyLogger(), "Any user is login");
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		Assert.notNull(hackerLogin, "No hacker is login");
