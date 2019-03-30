@@ -25,7 +25,6 @@ public class Curricula extends DomainEntity {
 	private Hacker hacker;
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return name;
 	}
@@ -35,7 +34,6 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getStatement() {
 		return statement;
 	}
@@ -45,7 +43,6 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPhone() {
 		return phone;
 	}
@@ -55,8 +52,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Pattern(regexp = "^https://github.com/")
+	@Pattern(regexp = "https:\\/\\/?(?:www.)?github.com\\/[A-Za-z]{3}")
 	public String getLinkGitHub() {
 		return linkGitHub;
 	}
@@ -66,8 +62,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Pattern(regexp = "^https://www.linkedin.com/in/")
+	@Pattern(regexp = "https:\\/\\/?(?:www.)?(?:es.)?linkedin.com\\/in\\/[A-Za-z]{5}")
 	public String getLinkLinkedin() {
 		return linkLinkedin;
 	}
@@ -78,7 +73,6 @@ public class Curricula extends DomainEntity {
 	
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getMiscellaneous() {
 		return miscellaneous;
 	}
@@ -87,7 +81,6 @@ public class Curricula extends DomainEntity {
 		this.miscellaneous = miscellaneous;
 	}
 
-	@NotNull
 	public Boolean getIsCopy() {
 		return isCopy;
 	}
@@ -96,8 +89,7 @@ public class Curricula extends DomainEntity {
 		this.isCopy = isCopy;
 	}
 
-	@NotNull
-	@ManyToOne(optional=true)
+	@ManyToOne(optional=false)
 	public Hacker getHacker() {
 		return hacker;
 	}

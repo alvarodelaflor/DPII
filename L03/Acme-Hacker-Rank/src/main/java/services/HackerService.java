@@ -14,12 +14,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
+import domain.Hacker;
+import forms.RegistrationForm;
 import repositories.ActorRepository;
 import repositories.HackerRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
-import domain.Hacker;
-import forms.RegistrationForm;
 
 @Service
 @Transactional
@@ -161,11 +162,6 @@ public class HackerService {
 	}
 	// QUERY ---------------------------------------------------------------	
 
-	public Hacker getHackerByUserAccountId(final int userAccountId) {
-		Hacker res;
-		res = this.hackerRepository.findByUserAccountId(userAccountId);
-		return res;
-	}
 
 	// SAVE-EDIT ---------------------------------------------------------------	
 

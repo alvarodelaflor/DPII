@@ -20,6 +20,6 @@ import domain.PositionData;
 @Repository
 public interface PositionDataRepository extends JpaRepository<PositionData, Integer> {
 
-	@Query("select c from PositionData pd join pd.curricula pdc where pdc.id=?1")
-	public Collection<PositionData> getPositionDataFromCurricula(int curriculaId);
+	@Query("select pd from PositionData pd join pd.curricula pdc where pdc.id=?1")
+	Collection<PositionData> getPositionDataFromCurricula(int curriculaId);
 }

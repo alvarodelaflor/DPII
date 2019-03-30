@@ -131,7 +131,7 @@ public class CurriculaService {
 			curricula.setIsCopy(result.getIsCopy());
 			result = curricula;
 		}
-		this.validator.validate(curricula, binding);
+		this.validator.validate(result, binding);
 		return result;
 	}
 

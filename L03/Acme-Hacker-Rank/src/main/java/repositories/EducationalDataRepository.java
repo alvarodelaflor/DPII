@@ -19,6 +19,6 @@ import domain.EducationalData;
 @Repository
 public interface EducationalDataRepository extends JpaRepository<EducationalData, Integer> {
 	
-	@Query("select c from EducationalData ed join ed.curricula edc where edc.id=?1")
-	public Collection<EducationalData> getEducationalDataFromCurriculaId(int curriculaId);
+	@Query("select ed from EducationalData ed join ed.curricula edc where edc.id=?1")
+	Collection<EducationalData> getEducationalDataFromCurriculaId(int curriculaId);
 }

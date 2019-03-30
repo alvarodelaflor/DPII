@@ -37,10 +37,10 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	public Double stddevSalaryPerPosition();
 
 	// Best and Worst Postions (salary):
-	@Query("select p.title from Postion p where p.salary = max(p.salary)")
+	@Query("select p.title from Position p where p.salary = max(p.salary)")
 	public String bestPositon();
 
-	@Query("select p.title from Postion p where p.salary = min(p.salary)")
+	@Query("select p.title from Position p where p.salary = min(p.salary)")
 	public String worstPositon();
 
 }

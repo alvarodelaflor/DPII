@@ -31,7 +31,7 @@ import services.HackerService;
  */
 
 @Controller
-@RequestMapping("/proclaim/chapter")
+@RequestMapping("/curricula/hacker")
 public class CurriculaHackerController extends AbstractController {
 	
 	@Autowired
@@ -84,13 +84,14 @@ public class CurriculaHackerController extends AbstractController {
 				Assert.notNull(hackerLogin, "No hacker is login");
 				Assert.isTrue(curricula != null, "curricula.null");
 				this.curriculaService.save(curricula);
-				result = new ModelAndView("redirect:/curricula/list.do?hackerId="+curricula.getHacker().getId());
-				result.addObject("requestURI", "curricula/list.do");
+//				result = new ModelAndView("redirect:/curricula/list.do?hackerId="+curricula.getHacker().getId());
+//				result.addObject("requestURI", "curricula/list.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);
 				result = new ModelAndView("curricula/hacker/edit");
 				result.addObject("curricula", curricula);
-				result.addObject("message", "proclaim.commit.error");
+				result.addObject("message", "curricula.commit.error");
 			}
 		return result;
 	}

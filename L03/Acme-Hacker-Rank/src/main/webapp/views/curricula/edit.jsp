@@ -24,16 +24,15 @@
 <body>
 
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="proclaim" action="curricula/hacker/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="curricula" action="curricula/hacker/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox code="name" path="curricula.name"/>
-          	<acme:textbox code="statement" path="curricula.statement"/>
-          	<acme:textbox code="phone" path="curricula.phone"/>
-          	<acme:textbox code="linkGitHub" path="curricula.linkGitHub"/>
-          	<acme:textbox code="linkLinkedin" path="curricula.linkLinkedin"/>
-          	<acme:textbox code="miscellaneous" path="curricula.miscellaneous"/>
-          	<acme:textbox code="name" path="curricula.name"/>
+          	<acme:textbox path="name" code="curricula.name"/>
+          	<acme:textbox path="statement" code="curricula.statement"/>
+          	<acme:textbox path="phone" code="curricula.phone"/>
+          	<acme:textbox path="linkGitHub" code="curricula.linkGitHub"/>
+          	<acme:textbox path="linkLinkedin" code="curricula.linkLinkedin"/>
+          	<acme:textbox path="miscellaneous" code="curricula.miscellaneous"/>
           	<acme:submit name="save" code="save"/>
           	<acme:cancel url="#" code="cancel"/>
 		</form:form>
