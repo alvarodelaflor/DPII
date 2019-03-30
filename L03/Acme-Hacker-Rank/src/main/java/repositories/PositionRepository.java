@@ -15,4 +15,7 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.company.id =?1 and p.status=true")
 	Collection<Position> findAllPositionByCompany(int companyId);
 
+	@Query("select p from Position p where p.status=true")
+	Collection<Position> findAllPositionWithStatusTrue();
+
 }

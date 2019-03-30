@@ -40,8 +40,8 @@
 		<security:intercept-url pattern="/company/list.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/position/listCompany.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/list.do" access="permitAll" /> 
 
-		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
 		<!-- CARMEM -->
 

@@ -28,6 +28,13 @@
 					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('HACKER')">
@@ -36,7 +43,14 @@
 					<li class="arrow"></li>
 					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
 				</ul>
-			</li>
+		</li>
+		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+				</ul>
+		</li>
 
 		</security:authorize>
 		
@@ -45,7 +59,14 @@
 				<ul>
 					<li class="arrow"></li>
 				</ul>
-			</li>
+		</li>
+		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+				</ul>
+		</li>
 
 		</security:authorize>
 		
@@ -62,7 +83,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>				
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
 				</ul>
 			</li>
 			

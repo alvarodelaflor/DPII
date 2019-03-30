@@ -31,4 +31,9 @@ public class PositionService {
 		return p;
 	}
 
+	// findAllPositionByCompany ---------------------------------------------------------------
+	public Collection<Position> findAllPositionWithStatusTrue() {
+		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrue();
+		return p;
+	}
 }

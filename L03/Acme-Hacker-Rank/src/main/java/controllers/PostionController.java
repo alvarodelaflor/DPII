@@ -54,4 +54,21 @@ public class PostionController extends AbstractController {
 		return result;
 	}
 
+	// LIST ---------------------------------------------------------------		
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+		try {
+			System.out.println("entro");
+			final Collection<Position> positions = this.positionService.findAllPositionWithStatusTrue();
+			System.out.println(positions);
+			result = new ModelAndView("position/list");
+			result.addObject("positions", positions);
+			result.addObject("requestURI", "position/.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
 }
