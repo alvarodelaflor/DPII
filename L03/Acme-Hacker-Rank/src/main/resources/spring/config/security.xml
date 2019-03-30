@@ -28,6 +28,18 @@
 
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" /> 
+		
+		<!-- CARMEM -->
+		<security:intercept-url pattern="/hacker/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/hacker/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/hacker/edit.do" access="hasRole('HACKER')" />
+		
+		<security:intercept-url pattern="/company/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/company/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/company/edit.do" access="hasRole('COMPANY')"/>  
+		
+		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
+		<!-- CARMEM -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
