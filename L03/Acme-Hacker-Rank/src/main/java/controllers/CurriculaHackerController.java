@@ -18,6 +18,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import domain.Curricula;
 import domain.Hacker;
@@ -63,6 +64,24 @@ public class CurriculaHackerController extends AbstractController {
 		return result;
 	}
 	
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
+		ModelAndView result;
+		try {
+			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
+			Assert.notNull(curriculaDB, "Curricula not found in DB");
+			Hacker hackerLogin = this.hackerService.getHackerLogin();
+			Assert.notNull(hackerLogin, "No hacker is login");
+			Assert.isTrue(hackerLogin.equals(curriculaDB.getHacker()));
+			result = new ModelAndView("curricula/hacker/edit");
+			result.addObject("curricula", curriculaDB);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView edit(Curricula curricula, final BindingResult binding) {
 		ModelAndView result;
@@ -84,15 +103,38 @@ public class CurriculaHackerController extends AbstractController {
 				Assert.notNull(hackerLogin, "No hacker is login");
 				Assert.isTrue(curricula != null, "curricula.null");
 				this.curriculaService.save(curricula);
-//				result = new ModelAndView("redirect:/curricula/list.do?hackerId="+curricula.getHacker().getId());
-//				result.addObject("requestURI", "curricula/list.do");
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/curricula/list.do?hackerId="+curricula.getHacker().getId());
+				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);
 				result = new ModelAndView("curricula/hacker/edit");
 				result.addObject("curricula", curricula);
 				result.addObject("message", "curricula.commit.error");
 			}
+		return result;
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
+		ModelAndView result;
+		Hacker hackerLogin = this.hackerService.getHackerLogin();
+		
+		try {
+			Assert.notNull(hackerLogin, "No hacker is login");
+			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
+			Assert.notNull(curriculaDB, "Not found curricula in DB");
+			Assert.isTrue(curriculaDB.getHacker().equals(hackerLogin), "Not allow to delete, diferent hacker");
+			this.curriculaService.delete(curriculaDB);
+			result = new ModelAndView("redirect:/curricula/list.do?hackerId="+hackerLogin.getId());
+		} catch (final Throwable oops) {
+			System.out.println("Error en CurriculaHackerController.java Throwable: " + oops);
+			if (hackerLogin!=null) {
+				result = new ModelAndView("redirect:/curricula/list.do?hackerId="+hackerLogin.getId());				
+			} else {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+			result.addObject("message", "curricula.commit.error");
+		}
 		return result;
 	}
 }
