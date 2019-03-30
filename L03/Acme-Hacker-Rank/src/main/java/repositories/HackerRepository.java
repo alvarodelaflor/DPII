@@ -13,4 +13,7 @@ public interface HackerRepository extends JpaRepository<Hacker, Integer> {
 	// TODO: Hackers who have made more applications:
 	@Query("select a.hacker.name from Application a group by a.id")
 	public String findHackerWithMoreApplications();
+	
+	@Query("select h from Hacker h join h.userAccount hua where hua.id=?1")
+	Hacker getHackerByUserAccountId(int userAccountId);
 }
