@@ -24,12 +24,17 @@
 		<value>/views/welcome/messages</value>
 		
 		<value>/views/administrator/messages</value>
-		<value>/views/customer/messages</value>
 		<value>/views/profile/messages</value>
 		
 		<!-- ALVARO -->
 		<value>/views/curricula/messages</value>
 		<!-- ALVARO -->
+		
+		<!-- CARMEN -->
+		<value>/views/hacker/messages</value>
+		<value>/views/company/messages</value>
+		<value>/views/actor/messages</value>
+		<!-- CARMEN -->
 	</util:list>
 
 </beans>

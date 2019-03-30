@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="hacker/create" extends="master.page">	
+		<put-attribute name="title" value="Registro" />
+		<put-attribute name="body" value="/views/hacker/create.jsp" />
+	</definition>
+	
+	<definition name="hacker/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar" />
+		<put-attribute name="body" value="/views/hacker/show.jsp" />
+	</definition>
+	
+	<definition name="hacker/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar" />
+		<put-attribute name="body" value="/views/hacker/edit.jsp" />
+	</definition>
+	
+</tiles-definitions>

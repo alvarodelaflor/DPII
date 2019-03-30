@@ -12,37 +12,25 @@ package controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/customer")
-public class CustomerController extends AbstractController {
+@RequestMapping("/actor")
+public class ActorController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public CustomerController() {
+	public ActorController() {
 		super();
 	}
 
-	// Action-1 ---------------------------------------------------------------		
+	// CONDITIONS ---------------------------------------------------------------		
 
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
+	@RequestMapping(value = "/conditions", method = RequestMethod.GET)
+	public ModelAndView conditions() {
 		ModelAndView result;
-
-		result = new ModelAndView("customer/action-1");
-
-		return result;
-	}
-
-	// Action-2 ---------------------------------------------------------------		
-
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
-		ModelAndView result;
-
-		result = new ModelAndView("customer/action-2");
-
+		result = new ModelAndView("actor/conditions");
 		return result;
 	}
 }

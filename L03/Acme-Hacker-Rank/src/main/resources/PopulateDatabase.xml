@@ -30,18 +30,6 @@
 		</property>
 	</bean>
 
-	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="super" />
 		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
@@ -49,9 +37,6 @@
 			<list>
 				<bean class="security.Authority">
 					<property name="authority" value="ADMIN" />
-				</bean>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
 				</bean>
 			</list>
 		</property>

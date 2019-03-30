@@ -10,7 +10,7 @@ import domain.Company;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
-	// TODO: Companies who have offered more positions:
-	@Query("select p.company.commercialName from Position p")
-	public String findCompanyWithMorePositions();
+	@Query("select m from Company m join m.userAccount mua where mua.id=?1")
+	Company findByUserAccountId(int userAccountId);
+
 }

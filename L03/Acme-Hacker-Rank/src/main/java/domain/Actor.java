@@ -6,24 +6,39 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.validation.constraints.NotNull;
+import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.hibernate.validator.constraints.URL;
+
+import security.UserAccount;
 
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Actor extends DomainEntity {
 
-	String		name, surname, photo, email, phone, address;
-	CreditCard	creditCard;
+	String				name, surname, photo, email, phone, address;
+	CreditCard			creditCard;
 
+	private UserAccount	userAccount;
+
+
+	@ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
+	public UserAccount getUserAccount() {
+		return this.userAccount;
+	}
+
+	public void setUserAccount(final UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
@@ -33,7 +48,6 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSurname() {
 		return this.surname;
 	}
@@ -42,7 +56,6 @@ public class Actor extends DomainEntity {
 		this.surname = surname;
 	}
 
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@URL
 	public String getPhoto() {
 		return this.photo;
@@ -53,8 +66,6 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@URL
 	public String getEmail() {
 		return this.email;
 	}
@@ -63,8 +74,6 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
-	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPhone() {
 		return this.phone;
 	}
@@ -74,7 +83,6 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getAddress() {
 		return this.address;
 	}
@@ -83,7 +91,6 @@ public class Actor extends DomainEntity {
 		this.address = address;
 	}
 
-	@NotNull
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
