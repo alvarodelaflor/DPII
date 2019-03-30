@@ -56,7 +56,14 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="hacker/create.do"><spring:message code="master.page.register.hacker" /></a></li>
-					<li><a href="company/create.do"><spring:message code="master.page.register.company" /></a></li>				</ul>
+					<li><a href="company/create.do"><spring:message code="master.page.register.company" /></a></li>				
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>				
+				</ul>
 			</li>
 			
 		

@@ -30,18 +30,61 @@
 		</property>
 	</bean>
 
-	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="company" />
+		<property name="password" value="93c731f1c3a84ef05cd54d044c379eaa" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
+					<property name="authority" value="COMPANY" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<!-- Other domain beans come here -->
+	
+	<!-- COMPANY -->
+	<bean id="company01" class="domain.Company">
+    	<property name="name" value="Carmen" />
+    	<property name="surname" value="Fernández Benjumea" />
+    	<property name="photo" value="https://www.megaidea.net/wp-content/uploads/2018/07/DORAEMON-18.png" />
+		<property name="email" value="carferben@carferben" />
+        <property name="phone" value="+3423456789" />
+        <property name="address" value="Lora de Río, Nº5. Carmona" />
+        <property name="commercialName" value="Carmen" />
+        <property name="userAccount" ref= "userAccount2"/>      
+    </bean>
+	<!-- COMPANY -->	
+	
+	<!-- POSITION  -->
+	<bean id="position01" class="domain.Position">
+    	<property name="ticker" value="ticker01" />
+    	<property name="title" value="title01" />
+    	<property name="techs" value="techs01" />
+		<property name="status" value="true" />
+        <property name="skills" value="skills01" />
+        <property name="salary" value= "20.0" />
+        <property name="profile" value="profile01" />
+        <property name="description" value= "description01"/>     
+        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="company" ref= "company01"/>       
+    </bean>
+    
+    <bean id="position02" class="domain.Position">
+    	<property name="ticker" value="ticker01" />
+    	<property name="title" value="title01" />
+    	<property name="techs" value="techs01" />
+		<property name="status" value="false" />
+        <property name="skills" value="skills01" />
+        <property name="salary" value= "20.0" />
+        <property name="profile" value="profile01" />
+        <property name="description" value= "description01"/>     
+        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="company" ref= "company01"/>       
+    </bean>
+	<!-- POSITION  -->
+	
+		
 	
 </beans>

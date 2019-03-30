@@ -30,6 +30,7 @@
 		<value>/views/hacker/tiles.xml</value>
 		<value>/views/company/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
+		<value>/views/position/tiles.xml</value>
 		<!-- CARMEN -->
 	</util:list>
 

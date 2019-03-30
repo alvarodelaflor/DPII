@@ -30,6 +30,7 @@
 		<value>/views/hacker/messages</value>
 		<value>/views/company/messages</value>
 		<value>/views/actor/messages</value>
+		<value>/views/position/messages</value>
 		<!-- CARMEN -->
 	</util:list>
 
