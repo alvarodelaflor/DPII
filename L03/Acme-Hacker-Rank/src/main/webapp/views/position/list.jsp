@@ -21,9 +21,9 @@
 
 
 	<display:table name="positions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-		<display:column titleKey="postion.title">
-			<a href="company/listPosition.do?id=${row.id}"><jstl:out value="${row.title}"/></a></display:column>
-		<display:column titleKey="position.company" ><a href="company/listPosition.do?id=${row.id}"><spring:message code="position.company.show" /></a></display:column>
+		<display:column titleKey="position.ticker">
+			<a href="position/show.do?id=${row.id}"><jstl:out value="${row.ticker}"/></a></display:column>
+		<display:column titleKey="position.company" ><a href="company/show.do?id=${row.company.id}"><spring:message code="position.company.show" /></a></display:column>
 	</display:table>
 					
 	<acme:cancel url=" " code="company.cancel"/>

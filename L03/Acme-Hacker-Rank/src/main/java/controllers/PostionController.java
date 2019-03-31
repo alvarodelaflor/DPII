@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,7 @@ public class PostionController extends AbstractController {
 		super();
 	}
 
-	// SHOW ---------------------------------------------------------------		
+	// listCompany ---------------------------------------------------------------		
 	@RequestMapping(value = "/listCompany", method = RequestMethod.GET)
 	public ModelAndView listCompany(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		ModelAndView result;
@@ -65,6 +66,24 @@ public class PostionController extends AbstractController {
 			result = new ModelAndView("position/list");
 			result.addObject("positions", positions);
 			result.addObject("requestURI", "position/.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+
+		ModelAndView result;
+		final Position position;
+		try {
+			position = this.positionService.findOne(id);
+			System.out.println(position);
+			Assert.notNull(position);
+			result = new ModelAndView("position/show");
+			result.addObject("position", position);
+			result.addObject("requestURI", "position/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

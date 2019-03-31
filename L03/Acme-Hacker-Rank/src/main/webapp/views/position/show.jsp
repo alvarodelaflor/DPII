@@ -20,20 +20,12 @@
 
 <div class="content">
 	<table>
-		<c:choose>
-    		<c:when test="${company.photo==''}">
-				<tr><td><spring:message code="company.photo" /><br>
-    		</c:when>    
-    		<c:otherwise>
-				<tr><td><spring:message code="company.photo" /><br>
-				<img width="95" src="${company.photo}" alt="ERROR"/></td></tr>
-    		</c:otherwise>
-		</c:choose>
-		<tr><td><spring:message code="company.name" /> <jstl:out	value="${company.name}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.surname" /> <jstl:out value="${company.surname}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.address" /> <jstl:out value="${company.address}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.email" /> <jstl:out value="${company.email}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.phone" /> <jstl:out value="${company.phone}"></jstl:out></td></tr>
+		<tr><td><spring:message code="position.ticker" />: <jstl:out	value="${position.ticker}"></jstl:out></td></tr>
+		<tr><td><spring:message code="position.desdline" />: <jstl:out value="${position.deadline}"></jstl:out></td></tr>
+		<tr><td><spring:message code="position.profile" />: <jstl:out value="${position.profile}"></jstl:out></td></tr>
+		<tr><td><spring:message code="position.skills" />: <jstl:out value="${position.skills}"></jstl:out></td></tr>
+		<tr><td><spring:message code="position.techs" />: <jstl:out value="${position.techs}"></jstl:out></td></tr>
+		<tr><td><spring:message code="position.title" />: <jstl:out value="${position.title}"></jstl:out></td></tr>
 	</table>
 </div>
-<acme:cancel url=" " code="company.cancel"/>
+<input type="button" value="back" name="position.cancel" onclick="history.back()" />

@@ -1,12 +1,15 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.PositionRepository;
+import domain.Position;
 
 @Service
 @Transactional
@@ -17,7 +20,7 @@ public class PositionService {
 
 
 	// FINDALL ---------------------------------------------------------------
-	public Collection<Position> findALL(final int id) {
+	public Collection<Position> findALL() {
 		return this.positionRepository.findAll();
 	}
 
@@ -32,6 +35,11 @@ public class PositionService {
 	public Collection<Position> findAllPositionWithStatusTrue() {
 		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrue();
 		return p;
+	}
+
+	// FINDALL ---------------------------------------------------------------
+	public Position findOne(final int id) {
+		return this.positionRepository.findOne(id);
 	}
 
 	// DashBoard:
