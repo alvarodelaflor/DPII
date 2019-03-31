@@ -10,9 +10,7 @@
 
 package controllers;
 
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,12 +73,7 @@ public class CompanyController extends AbstractController {
 				System.out.println("carmen: voy a guardar");
 				final Company a = this.companyService.saveCreate(company);
 				System.out.println(a);
-				SimpleDateFormat formatter;
-				String moment;
-				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-				moment = formatter.format(new Date());
 				result = new ModelAndView("welcome/index");
-				result.addObject("moment", moment);
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createEditModelAndView(company, "email.wrong");
@@ -149,7 +142,8 @@ public class CompanyController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
 	public ModelAndView saveEdit(Company company, final BindingResult binding) {
 		ModelAndView result;
-		System.out.println(company);
+
+		System.out.println("Company a editar" + company);
 
 		company = this.companyService.reconstructEdit(company, binding);
 
@@ -166,12 +160,21 @@ public class CompanyController extends AbstractController {
 			} catch (final Throwable oops) {
 				System.out.println(oops);
 				if (oops.getMessage().equals("email.wrong"))
-					result = this.createEditModelAndView(company, "email.wrong");
+					result = this.editModelAndView(company, "email.wrong");
 				else if (oops.getMessage().equals("error.email"))
-					result = this.createEditModelAndView(company, "error.email");
+					result = this.editModelAndView(company, "error.email");
 				else
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Company company, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("company/edit");
+		result.addObject("message", string);
+		result.addObject("company", company);
 		return result;
 	}
 

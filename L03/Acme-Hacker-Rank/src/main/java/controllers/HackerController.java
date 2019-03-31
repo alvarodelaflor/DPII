@@ -155,16 +155,26 @@ public class HackerController extends AbstractController {
 			try {
 				hacker = this.hackerService.saveEdit(hacker);
 				result = new ModelAndView("redirect:show.do");
+				System.out.println(hacker);
 				result.addObject("hacker", hacker);
 			} catch (final Throwable oops) {
 				System.out.println(oops);
 				if (oops.getMessage().equals("email.wrong"))
-					result = this.createEditModelAndView(hacker, "email.wrong");
+					result = this.editModelAndView(hacker, "email.wrong");
 				else if (oops.getMessage().equals("error.email"))
-					result = this.createEditModelAndView(hacker, "error.email");
+					result = this.editModelAndView(hacker, "error.email");
 				else
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Hacker hacker, final String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("hacker/edit");
+		result.addObject("message", message);
+		result.addObject("hacker", hacker);
 		return result;
 	}
 }

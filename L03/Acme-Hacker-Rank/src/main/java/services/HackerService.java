@@ -14,14 +14,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
-import domain.Curricula;
-import domain.Hacker;
-import forms.RegistrationForm;
 import repositories.ActorRepository;
 import repositories.HackerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Curricula;
+import domain.Hacker;
+import forms.RegistrationForm;
 
 @Service
 @Transactional
@@ -35,6 +35,9 @@ public class HackerService {
 
 	@Autowired
 	private Validator			validator;
+
+	@Autowired
+	private ActorService		actorService;
 
 
 	// CREATE ---------------------------------------------------------------		
@@ -68,7 +71,8 @@ public class HackerService {
 
 	private Boolean checkEmail(final Hacker hacker) {
 		Boolean res = false;
-		if (this.actorRepository.getActorByEmail(hacker.getEmail()) == null)
+		System.out.println(this.actorRepository.getActorByEmail(hacker.getEmail()).size());
+		if (this.actorRepository.getActorByEmail(hacker.getEmail()).size() < 1)
 			res = true;
 		return res;
 	}
@@ -144,8 +148,9 @@ public class HackerService {
 
 	public Hacker reconstructEdit(final Hacker hacker, final BindingResult binding) {
 		Hacker result;
+		final Hacker res = this.hackerRepository.findOne(hacker.getId());
 
-		result = this.hackerRepository.findOne(hacker.getId());
+		result = hacker;
 
 		result.setName(hacker.getName());
 		result.setSurname(hacker.getSurname());
@@ -153,27 +158,43 @@ public class HackerService {
 		result.setEmail(hacker.getEmail());
 		result.setPhone(hacker.getPhone());
 		result.setAddress(hacker.getAddress());
-		result.setId(hacker.getId());
-		result.setVersion(hacker.getId());
 
 		this.validator.validate(result, binding);
 		System.out.println(binding.getAllErrors());
 
-		return result;
+		if (binding.getAllErrors().isEmpty()) {
+			res.setName(result.getName());
+			res.setSurname(result.getSurname());
+			res.setPhoto(result.getPhoto());
+			res.setEmail(result.getEmail());
+			res.setPhone(result.getPhone());
+			res.setAddress(result.getAddress());
+		}
+
+		return res;
+
 	}
 	// QUERY ---------------------------------------------------------------	
-
 
 	// SAVE-EDIT ---------------------------------------------------------------	
 
 	public Hacker saveEdit(Hacker hacker) {
-		Assert.isTrue(!this.checkEmail(hacker), "error.email");
 		Assert.isTrue(!this.checkEmailFormatter(hacker), "email.wrong");
+		Assert.isTrue(this.checkEmailEdit(hacker), "error.email");
 		//		if (hacker.getPhone().matches("^([0-9]{4,})$"))
 		//			hacker.setPhone("+" + //COMPLETAR//+ " " + hacker.getPhone());		
 		hacker = this.hackerRepository.save(hacker);
 		System.out.println(hacker);
 		return hacker;
+	}
+
+	private Boolean checkEmailEdit(final Hacker hacker) {
+		Boolean res = false;
+		System.out.println(this.actorService.getActorByEmailE(hacker.getEmail()) == null);
+
+		if (this.actorService.getActorByEmailE(hacker.getEmail()) == null && this.actorRepository.getActorByEmail(hacker.getEmail()).size() <= 1)
+			res = true;
+		return res;
 	}
 
 	// FINDONE ---------------------------------------------------------------	
@@ -187,17 +208,17 @@ public class HackerService {
 
 		return this.hackerRepository.findHackerWithMoreApplications();
 	}
-	
+
 	/**
 	 * Find a hacker by his userAccount id.
 	 * 
 	 * @author �lvaro de la Flor Bonilla
 	 * @return Hacker with the given userAccountId.
 	 */
-	public Hacker getHackerByUserAccountId(int userAccountId) {
+	public Hacker getHackerByUserAccountId(final int userAccountId) {
 		return this.hackerRepository.getHackerByUserAccountId(userAccountId);
 	}
-	
+
 	/**
 	 * Check that any user is login
 	 * 
@@ -208,12 +229,12 @@ public class HackerService {
 		Boolean res = true;
 		try {
 			LoginService.getPrincipal().getId();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Get the hackerLogin. Must exits an user login.
 	 * 
@@ -224,7 +245,7 @@ public class HackerService {
 		Hacker res;
 		try {
 			res = this.getHackerByUserAccountId(LoginService.getPrincipal().getId());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = null;
 		}
 		return res;
@@ -236,7 +257,7 @@ public class HackerService {
 	 * @author �lvaro de la Flor Bonilla
 	 * @return The hacker of the given curricula
 	 */
-	public Hacker getHackerByCurriculaId(Curricula curricula) {
+	public Hacker getHackerByCurriculaId(final Curricula curricula) {
 		Assert.notNull(curricula);
 		return this.hackerRepository.getHackerByCurriculaId(curricula.getId());
 	}
