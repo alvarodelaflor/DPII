@@ -42,6 +42,32 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="hacker" />
+		<property name="password" value="d6a6bc0db10694a2d90e3a69648f3a03" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- Other domain beans come here -->	
+	
+	<!-- HACKER -->
+	 <bean id="hacker01" class="domain.Hacker">
+    	<property name="name" value="Antonio" />
+    	<property name="surname" value="Salvat" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="antonio@alum.us.es" />
+        <property name="phone" value="+34625381121" />
+        <property name="address" value="Lora del río, nº5" />
+        <property name="userAccount" ref= "userAccount4"/>
+		<property name="creditCard"><null></null></property></bean>
+	<!-- HACKER -->
+	
+	
 	
 </beans>

@@ -1,12 +1,16 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -20,11 +24,26 @@ import security.UserAccount;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Actor extends DomainEntity {
 
-	String				name, surname, photo, email, phone, address;
-	CreditCard			creditCard;
+	String								name, surname, photo, email, phone, address;
+	CreditCard							creditCard;
 
-	private UserAccount	userAccount;
+	private UserAccount					userAccount;
 
+	private Collection<SocialProfile>	socialProfiles;
+
+
+	@Valid
+	@OneToMany(cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
+	public Collection<SocialProfile> getSocialProfiles() {
+		return this.socialProfiles;
+	}
+
+	public void setSocialProfiles(final Collection<SocialProfile> socialProfiles) {
+		this.socialProfiles = socialProfiles;
+	}
 
 	@ManyToOne(cascade = javax.persistence.CascadeType.ALL)
 	@Cascade({

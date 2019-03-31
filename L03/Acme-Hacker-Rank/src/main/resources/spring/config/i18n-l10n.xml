@@ -35,6 +35,10 @@
 		<value>/views/company/messages</value>
 		<value>/views/actor/messages</value>
 		<!-- CARMEN -->
+		<!-- ANTONIO S -->
+		<value>/views/socialProfile/messages</value>
+		<value>/views/message/messages</value>
+		<!-- ANTONIO S -->
 	</util:list>
 
 </beans>
