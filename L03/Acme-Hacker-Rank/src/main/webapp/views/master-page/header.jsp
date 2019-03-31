@@ -101,6 +101,8 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="socialProfile/list.do"><spring:message code="master.page.socialProfile.list" /></a></li>					
+					<li><a href="message/list.do"><spring:message code="master.page.message.list" /></a></li>					
 					<security:authorize access="hasRole('HACKER')">
 						<li><a href="hacker/show.do"><spring:message code="master.page.hacker.show" /></a></li>
 						<li><a href="hacker/edit.do"><spring:message code="master.page.hacker.edit" /></a></li>	

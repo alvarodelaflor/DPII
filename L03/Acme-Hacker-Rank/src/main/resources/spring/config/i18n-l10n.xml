@@ -29,6 +29,7 @@
 		<!-- ALVARO -->
 		<value>/views/curricula/messages</value>
 		<value>/views/educationalData/messages</value>
+		<value>/views/positionData/messages</value>
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->
@@ -37,6 +38,10 @@
 		<value>/views/actor/messages</value>
 		<value>/views/position/messages</value>
 		<!-- CARMEN -->
+		<!-- ANTONIO S -->
+		<value>/views/socialProfile/messages</value>
+		<value>/views/message/messages</value>
+		<!-- ANTONIO S -->
 	</util:list>
 
 </beans>

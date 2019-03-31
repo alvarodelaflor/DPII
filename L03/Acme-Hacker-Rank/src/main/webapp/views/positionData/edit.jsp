@@ -24,16 +24,16 @@
 <body>
 
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="educationalData" action="educationalData/hacker/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="positionData" action="positionData/hacker/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	<form:hidden path="curricula"/>
           	<form:hidden path="isCopy"/>
-          	<acme:textbox path="degree" code="educationalData.degree"/>
-          	<acme:textbox path="institution" code="educationalData.institution"/>
-          	<acme:textbox path="mark" code="educationalData.mark"/>
-			<acme:textboxMoment code="educationalData.startDate" path="startDate"/>
-			<acme:textboxMoment code="educationalData.endDate" path="endDate"/>
+          	<acme:textbox path="title" code="positionData.title"/>
+          	<acme:textbox path="description" code="positionData.description"/>
+			<acme:textboxMoment code="positionData.startDate" path="startDate"/>
+			<acme:textboxMoment code="positionData.endDate" path="endDate"/>
+			<acme:select items="${positions}" itemLabel="ticker" code="positionData.position" path="position"/>
           	<acme:submit name="save" code="save"/>
           	<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
 		</form:form>

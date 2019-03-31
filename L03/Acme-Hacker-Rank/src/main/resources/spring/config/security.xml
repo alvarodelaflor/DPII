@@ -46,6 +46,16 @@
 
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
 		<!-- CARMEM -->
+		
+		<!-- ANTONIO S -->
+		<security:intercept-url pattern="/socialProfile/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />	
+		
+		<security:intercept-url pattern="/message/list.do" access="isAuthenticated()" />
+		<!-- ANTONIO S -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
@@ -70,6 +80,11 @@
 		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/positionData/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/positionData/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/positionData/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/positionData/show.do" access="permitAll" />
 		<!-- ALVARO -->
 
 		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 

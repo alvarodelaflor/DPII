@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -34,9 +35,6 @@ public class EducationalDataService {
 	
 	@Autowired
 	private HackerService hackerService;
-	
-	@Autowired
-	private CurriculaService curriculaService;
 
 	// CRUD Methods
 	
@@ -68,6 +66,7 @@ public class EducationalDataService {
 		Assert.notNull(hackerLogin, "No hacker login");
 		Assert.notNull(educationalData, "Null educationalData");
 		Assert.isTrue(hackerLogin.equals(educationalData.getCurricula().getHacker()), "Not allow to edit not own EducationalData");
+		Assert.isTrue(!checkDate(educationalData.getStartDate(), educationalData.getEndDate()), "Not valid date configuaration");
 		return this.educationalDataRepository.save(educationalData);
 	}
 	
@@ -90,7 +89,9 @@ public class EducationalDataService {
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		Assert.notNull(hackerLogin);
 		Assert.isTrue(hackerLogin.equals(this.hackerService.getHackerByCurriculaId(((List<EducationalData>) educationalDatas).get(0).getCurricula())), "Diferent hackers");
-		this.educationalDataRepository.delete(educationalDatas);
+		if (!educationalDatas.isEmpty()) {
+			this.educationalDataRepository.delete(educationalDatas);
+		}
 	}
 	
 	
@@ -128,6 +129,14 @@ public class EducationalDataService {
 		educationalDataCopy.setStartDate(educationalData.getStartDate());
 		educationalDataCopy.setIsCopy(true);
 		return educationalDataCopy;
+	}
+	
+	public Boolean checkDate(Date startDate, Date endDate) {
+		Boolean res = true;
+		if (startDate.before(endDate)) {
+			res = false;
+		}
+		return res;
 	}
 
 	// AUXILIAR METHODS

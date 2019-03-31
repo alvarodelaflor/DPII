@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,9 +100,21 @@ public class EducationalDataHackerController extends AbstractController {
 	public ModelAndView edit(@Valid EducationalData educationalData, final BindingResult binding) {
 		ModelAndView result;
 		
+		if (educationalData.getStartDate()!=null && educationalData.getEndDate()!=null && this.educationalDataService.checkDate(educationalData.getStartDate(), educationalData.getEndDate())) {
+			final ObjectError error = new ObjectError("startDate", "Start date mus be before than end Date");
+			binding.addError(error);
+			binding.rejectValue("startDate", "error.startDate");
+		}
+		
+		if (educationalData.getStartDate()!=null && educationalData.getEndDate()!=null && this.educationalDataService.checkDate(educationalData.getStartDate(), educationalData.getEndDate())) {
+			final ObjectError error = new ObjectError("endDate", "Start date mus be before than end Date");
+			binding.addError(error);
+			binding.rejectValue("endDate", "error.endDate");
+		}
+		
 		if (binding.hasErrors()) {
 			System.out.println("Error en EducationalDataHackerController.java, binding: " + binding);
-			result = new ModelAndView("curricula/hacker/create");
+			result = new ModelAndView("educationalData/hacker/edit");
 			result.addObject("educationalData", educationalData);
 			result.addObject("curricula", educationalData.getCurricula());
 		} else

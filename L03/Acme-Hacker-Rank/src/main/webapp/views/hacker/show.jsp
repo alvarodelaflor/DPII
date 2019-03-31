@@ -20,6 +20,9 @@
 
 <security:authorize access="hasRole('HACKER')"> 
 <div class="content">
+	<form method="get" action="/Acme-Hacker-Rank/curricula/list.do">
+		<button class="linea" name="hackerId" value="${hacker.id}"><spring:message code="show.curricula"/></button>
+	</form>
 	<table>
 		<c:choose>
     		<c:when test="${hacker.photo==''}">

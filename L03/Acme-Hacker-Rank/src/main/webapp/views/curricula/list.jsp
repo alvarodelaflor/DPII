@@ -16,6 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jstl:if test="${hackerLogger==true}">
 	<form method="get" action="/Acme-Hacker-Rank/curricula/hacker/create.do">
@@ -43,4 +44,11 @@
 </display:table>
 <br>
 <br>
-<acme:cancel url="curricula/list.do?hackerId=${row.hacker.id}" code="back"/>
+<c:choose>
+	<c:when test="${hackerLogger==true}">
+		<acme:cancel url="hacker/show.do?hackerId=${curricula.hacker.id}" code="back"/>
+	</c:when>
+	<c:otherwise>
+		<input type="button" value=<spring:message code="curricula.back" /> name="curricula.back" onclick="history.back()" />
+	</c:otherwise>
+</c:choose>

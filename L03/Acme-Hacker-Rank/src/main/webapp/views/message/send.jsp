@@ -22,20 +22,26 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <body>
-
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="educationalData" action="educationalData/hacker/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="message" action="message/send.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<form:hidden path="curricula"/>
-          	<form:hidden path="isCopy"/>
-          	<acme:textbox path="degree" code="educationalData.degree"/>
-          	<acme:textbox path="institution" code="educationalData.institution"/>
-          	<acme:textbox path="mark" code="educationalData.mark"/>
-			<acme:textboxMoment code="educationalData.startDate" path="startDate"/>
-			<acme:textboxMoment code="educationalData.endDate" path="endDate"/>
-          	<acme:submit name="save" code="save"/>
-          	<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
+          	
+
+              	<acme:textbox code="message.subject" path="subject"/>
+          		<acme:textbox code="message.body" path="body"/>
+          		<acme:textbox code="message.tag" path="tag"/>
+          		<br />
+		
+				<form:label path="recipient">
+				<spring:message code="recipient.email" />:
+				</form:label>
+				<form:select multiple="true" path="recipient">
+   		 		<form:options items="${actors}" />
+				</form:select>
+				<form:errors cssClass="error" path="recipient" />
+          	<acme:cancel url="message/list.do" code="cancel"/>
+          	<acme:submit name="save" code="send"/>
 		</form:form>
 	</div>
 </body>

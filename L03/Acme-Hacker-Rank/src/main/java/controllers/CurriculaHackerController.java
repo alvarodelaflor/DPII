@@ -22,12 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import domain.Curricula;
-import domain.EducationalData;
 import domain.Hacker;
 import services.CurriculaService;
-import services.EducationalDataService;
 import services.HackerService;
 
 /*
@@ -45,10 +42,6 @@ public class CurriculaHackerController extends AbstractController {
 
 	@Autowired
 	private CurriculaService curriculaService;
-	
-	@Autowired
-	private EducationalDataService educationalDataService;
-
 
 	// Constructors -----------------------------------------------------------
 
@@ -76,16 +69,23 @@ public class CurriculaHackerController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
 		ModelAndView result;
+		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		try {
 			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Curricula not found in DB");
-			Hacker hackerLogin = this.hackerService.getHackerLogin();
+			Assert.isTrue(!curriculaDB.getIsCopy(), "Trying to edit a copyCurricula");
 			Assert.notNull(hackerLogin, "No hacker is login");
 			Assert.isTrue(hackerLogin.equals(curriculaDB.getHacker()));
 			result = new ModelAndView("curricula/hacker/edit");
 			result.addObject("curricula", curriculaDB);
 		} catch (final Exception e) {
-			result = new ModelAndView("redirect:/welcome/index.do");
+			if (hackerLogin!=null) {
+				result = new ModelAndView("curricula/list");
+				final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByHacker(hackerLogin);
+				result.addObject("curriculas", curriculas);
+			} else {
+				result = new ModelAndView("redirect:/welcome/index.do");	
+			}
 		}
 		return result;
 	}
@@ -110,8 +110,9 @@ public class CurriculaHackerController extends AbstractController {
 				Hacker hackerLogin = this.hackerService.getHackerLogin();
 				Assert.notNull(hackerLogin, "No hacker is login");
 				Assert.isTrue(curricula != null, "curricula.null");
-				this.curriculaService.save(curricula);
-				result = new ModelAndView("redirect:/curricula/list.do?hackerId="+curricula.getHacker().getId());
+				Assert.isTrue(!curricula.getIsCopy(), "Trying to edit a copyCurricula");
+				Curricula saveCurricula = this.curriculaService.save(curricula);
+				result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+saveCurricula.getId());
 				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);
@@ -132,8 +133,6 @@ public class CurriculaHackerController extends AbstractController {
 			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Not found curricula in DB");
 			Assert.isTrue(curriculaDB.getHacker().equals(hackerLogin), "Not allow to delete, diferent hacker");
-			Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
-			this.educationalDataService.deleteAll(educationalDatas);
 			this.curriculaService.delete(curriculaDB);
 			result = new ModelAndView("redirect:/curricula/list.do?hackerId="+hackerLogin.getId());
 		} catch (final Throwable oops) {
