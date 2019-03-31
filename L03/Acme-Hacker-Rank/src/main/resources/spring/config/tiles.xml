@@ -29,6 +29,7 @@
 		<!-- ALVARO -->
 		<value>/views/curricula/tiles.xml</value>
 		<value>/views/educationalData/tiles.xml</value>
+		<value>/views/positionData/tiles.xml</value>
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->

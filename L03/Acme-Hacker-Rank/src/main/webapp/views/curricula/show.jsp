@@ -43,12 +43,20 @@
 		<legend>
 			<spring:message code="curricula.data" />
 		</legend>
-		<p><jstl:out value="${curricula.name}"></jstl:out></p>
-		<p><jstl:out value="${curricula.statement}"></jstl:out></p>
-		<p><jstl:out value="${curricula.phone}"></jstl:out></p>
-		<p><a href =<jstl:out value="${curricula.linkGitHub}"></jstl:out>><jstl:out value="${linkRecord.link}"></jstl:out></a></p>
-		<p><a href =<jstl:out value="${curricula.linkLinkedin}"></jstl:out>><jstl:out value="${linkRecord.link}"></jstl:out></a></p>
-		<p><jstl:out value="${curricula.hacker}"></jstl:out></p>
+		<c:choose>
+    		<c:when test="${curricula.hacker.photo==''}">
+				
+    		</c:when>    
+    		<c:otherwise>
+				<img width="95" src="${curricula.hacker.photo}" alt="ERROR"/>
+    		</c:otherwise>
+		</c:choose>
+		<p><strong><spring:message code="curricula.name" /></strong><jstl:out value="${curricula.name}"></jstl:out></p>
+		<p><strong><spring:message code="curricula.statement" /></strong><jstl:out value="${curricula.statement}"></jstl:out></p>
+		<p><strong><spring:message code="curricula.phone" /></strong><jstl:out value="${curricula.phone}"></jstl:out></p>
+		<p><strong><spring:message code="curricula.linkGitHub" /></strong><a href =<jstl:out value="${curricula.linkGitHub}"></jstl:out>><jstl:out value="${curricula.linkGitHub}"></jstl:out></a></p>
+		<p><strong><spring:message code="curricula.linkLinkedin" /></strong><a href =<jstl:out value="${curricula.linkLinkedin}"></jstl:out>><jstl:out value="${curricula.linkLinkedin}"></jstl:out></a></p>
+		<p><strong><spring:message code="hacker.name" /></strong><jstl:out value="${curricula.hacker}"></jstl:out></p>
 	</fieldset>
 	<fieldset>
 		<legend>
@@ -108,4 +116,5 @@
 	</fieldset>
 </div>
 
+<br>
 <acme:cancel url="curricula/list.do?hackerId=${curricula.hacker.id}" code="back"/>

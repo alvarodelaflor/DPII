@@ -43,4 +43,4 @@
 </display:table>
 <br>
 <br>
-<acme:cancel url="curricula/list.do?hackerId=${row.hacker.id}" code="back"/>
+<input type="button" value=<spring:message code="curricula.back" /> name="curricula.back" onclick="history.back()" />

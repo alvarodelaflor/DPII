@@ -9,4 +9,9 @@ import javax.persistence.Entity;
 @Access(AccessType.PROPERTY)
 public class Hacker extends Actor {
 
+	@Override
+	public String toString() {
+		return getName() + " " + getSurname();
+	}
+
 }

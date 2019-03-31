@@ -25,6 +25,8 @@
 		<!-- ALVARO -->
 		<bean class="converters.StringToCurriculaConverter"/>
 		<bean class="converters.CurriculaToStringConverter"/>
+		<bean class="converters.StringToPositionConverter"/>
+		<bean class="converters.PositionToStringConverter"/>
 		<!-- ALVARO -->
 	</util:list>
 	

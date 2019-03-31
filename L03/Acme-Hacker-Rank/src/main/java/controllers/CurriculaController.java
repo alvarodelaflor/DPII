@@ -14,7 +14,6 @@ package controllers;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -22,12 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
 import domain.PositionData;
-import security.LoginService;
 import services.CurriculaService;
 import services.EducationalDataService;
 import services.HackerService;
@@ -77,7 +74,7 @@ public class CurriculaController extends AbstractController {
 				result.addObject("hackerLogger", true);
 			}
 			Assert.notNull(hacker, "Hacker is null");
-			final Collection<Curricula> curriculas = this.curriculaService.findAllByHackerId(hacker);
+			final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByHacker(hacker);
 			result.addObject("curriculas", curriculas);
 			result.addObject("requestURI", "curriculas/list.do");
 		} catch (final Exception e) {
