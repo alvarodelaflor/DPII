@@ -13,6 +13,7 @@ package controllers;
 
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Curricula;
+import domain.EducationalData;
 import domain.Hacker;
+import domain.PositionData;
+import security.LoginService;
 import services.CurriculaService;
+import services.EducationalDataService;
 import services.HackerService;
+import services.PositionDataService;
 
 /*
  * CONTROL DE CAMBIOS CurriculaHackerController.java
@@ -42,6 +48,12 @@ public class CurriculaController extends AbstractController {
 
 	@Autowired
 	private CurriculaService curriculaService;
+	
+	@Autowired
+	private EducationalDataService educationalDataService;
+	
+	@Autowired
+	private PositionDataService positionDataService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -68,6 +80,35 @@ public class CurriculaController extends AbstractController {
 			final Collection<Curricula> curriculas = this.curriculaService.findAllByHackerId(hacker);
 			result.addObject("curriculas", curriculas);
 			result.addObject("requestURI", "curriculas/list.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
+
+		ModelAndView result;
+		try {
+			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
+			Assert.notNull(curriculaDB, "Not found curricula in DB");
+			result = new ModelAndView("curricula/show");
+			
+			Hacker hackerLogin = this.hackerService.getHackerLogin();
+			if (hackerLogin!=null) {
+				result.addObject("hackerLogin", true);	
+			}
+			
+			result.addObject("curricula", curriculaDB);
+			
+			List<EducationalData> educationalDatas = (List<EducationalData>) this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
+			result.addObject("educationalDatas", educationalDatas);
+			
+			List<PositionData> positionDatas = (List<PositionData>) this.positionDataService.getPositionDataFromCurricula(curriculaDB);
+			result.addObject("positionDatas", positionDatas);
+			
+			result.addObject("requestURI", "hacker/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

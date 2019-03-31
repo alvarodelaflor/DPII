@@ -12,6 +12,8 @@ package controllers;
 
 
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -20,9 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import domain.Curricula;
+import domain.EducationalData;
 import domain.Hacker;
 import services.CurriculaService;
+import services.EducationalDataService;
 import services.HackerService;
 
 /*
@@ -40,6 +45,9 @@ public class CurriculaHackerController extends AbstractController {
 
 	@Autowired
 	private CurriculaService curriculaService;
+	
+	@Autowired
+	private EducationalDataService educationalDataService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -124,6 +132,8 @@ public class CurriculaHackerController extends AbstractController {
 			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Not found curricula in DB");
 			Assert.isTrue(curriculaDB.getHacker().equals(hackerLogin), "Not allow to delete, diferent hacker");
+			Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
+			this.educationalDataService.deleteAll(educationalDatas);
 			this.curriculaService.delete(curriculaDB);
 			result = new ModelAndView("redirect:/curricula/list.do?hackerId="+hackerLogin.getId());
 		} catch (final Throwable oops) {

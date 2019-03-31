@@ -22,6 +22,10 @@
 			Add your own converters using entries of the following form: 
 			<bean class="converters.Class1ToClass2" /> 
 		-->
+		<!-- ALVARO -->
+		<bean class="converters.StringToCurriculaConverter"/>
+		<bean class="converters.CurriculaToStringConverter"/>
+		<!-- ALVARO -->
 	</util:list>
 	
 </beans>

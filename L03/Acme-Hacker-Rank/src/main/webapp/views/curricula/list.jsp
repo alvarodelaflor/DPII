@@ -35,6 +35,9 @@
 			<a href="curricula/hacker/delete.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/delete.png" alt="${row.id}" /></a>	
 		</display:column>
 	</jstl:if>
+	<display:column titleKey="curricula.show">
+		<a href="curricula/show.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/show.png" alt="${row.id}" /></a>	
+	</display:column>
 	<display:column property="name" titleKey="curricula.name"></display:column>
 	<display:column property="statement" titleKey="curricula.statement"></display:column>
 </display:table>

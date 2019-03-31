@@ -36,5 +36,8 @@
 		<put-attribute name="body" value="/views/curricula/list.jsp" />
 	</definition>
 
-	
+	<definition name="curricula/show" extends="master.page">	
+		<put-attribute name="title" value="Show Curricula" />
+		<put-attribute name="body" value="/views/curricula/show.jsp" />
+	</definition>
 </tiles-definitions>

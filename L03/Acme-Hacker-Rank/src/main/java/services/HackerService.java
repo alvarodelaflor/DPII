@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
+import domain.Curricula;
 import domain.Hacker;
 import forms.RegistrationForm;
 import repositories.ActorRepository;
@@ -227,5 +228,16 @@ public class HackerService {
 			res = null;
 		}
 		return res;
+	}
+
+	/**
+	 * Must exits the curricula
+	 * 
+	 * @author �lvaro de la Flor Bonilla
+	 * @return The hacker of the given curricula
+	 */
+	public Hacker getHackerByCurriculaId(Curricula curricula) {
+		Assert.notNull(curricula);
+		return this.hackerRepository.getHackerByCurriculaId(curricula.getId());
 	}
 }

@@ -59,6 +59,11 @@
 		<security:intercept-url pattern="/curricula/hacker/delete.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
 		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/educationalData/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
 		<!-- ALVARO -->
 
 		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
