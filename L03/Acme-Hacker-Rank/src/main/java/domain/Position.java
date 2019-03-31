@@ -7,19 +7,27 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 public class Position extends DomainEntity {
 
-	String	title, description, profile, ticker, skills, techs;
-	Date	deadline;
-	Double	salary;
-	Boolean	status;
+	private String	title, description, profile, skills, techs, ticker;
 
-	Company	company;
+	private Date	deadline;
+	private Double	salary;
+	private Boolean	status;
 
+	private Company	company;
+
+
+	@NotBlank
+	public String getTicker() {
+		return this.ticker;
+	}
+
+	public void setTicker(final String ticker) {
+		this.ticker = ticker;
+	}
 
 	@ManyToOne(optional = false)
 	public Company getCompany() {
@@ -31,7 +39,6 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
 		return this.title;
 	}
@@ -41,7 +48,6 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return this.description;
 	}
@@ -51,7 +57,6 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getProfile() {
 		return this.profile;
 	}
@@ -61,17 +66,6 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getTicker() {
-		return this.ticker;
-	}
-
-	public void setTicker(final String ticker) {
-		this.ticker = ticker;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSkills() {
 		return this.skills;
 	}
@@ -81,7 +75,6 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTechs() {
 		return this.techs;
 	}
@@ -90,7 +83,6 @@ public class Position extends DomainEntity {
 		this.techs = techs;
 	}
 
-	@NotBlank
 	public Date getDeadline() {
 		return this.deadline;
 	}
@@ -99,7 +91,6 @@ public class Position extends DomainEntity {
 		this.deadline = deadline;
 	}
 
-	@NotBlank
 	public Double getSalary() {
 		return this.salary;
 	}
@@ -108,7 +99,6 @@ public class Position extends DomainEntity {
 		this.salary = salary;
 	}
 
-	@NotBlank
 	public Boolean getStatus() {
 		return this.status;
 	}

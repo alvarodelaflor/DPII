@@ -37,7 +37,11 @@
 		<security:intercept-url pattern="/company/create.do" access="permitAll" /> 
 		<security:intercept-url pattern="/company/show.do" access="permitAll" /> 
 		<security:intercept-url pattern="/company/edit.do" access="hasRole('COMPANY')"/>  
-		
+		<security:intercept-url pattern="/company/list.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/position/listCompany.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/list.do" access="permitAll" /> 
+
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
 		<!-- CARMEM -->
 

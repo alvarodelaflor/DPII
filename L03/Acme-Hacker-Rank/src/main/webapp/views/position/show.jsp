@@ -36,4 +36,4 @@
 		<tr><td><spring:message code="company.phone" /> <jstl:out value="${company.phone}"></jstl:out></td></tr>
 	</table>
 </div>
-<input type="button" value="back" name="company.cancel" onclick="history.back()" />
+<acme:cancel url=" " code="company.cancel"/>

@@ -30,4 +30,9 @@
 		<put-attribute name="title" value="Edit" />
 		<put-attribute name="body" value="/views/company/edit.jsp" />
 	</definition>
+	
+	<definition name="company/list" extends="master.page">	
+		<put-attribute name="title" value="List" />
+		<put-attribute name="body" value="/views/company/list.jsp" />
+	</definition>
 </tiles-definitions>

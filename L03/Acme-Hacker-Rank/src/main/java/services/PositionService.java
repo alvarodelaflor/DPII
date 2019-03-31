@@ -16,6 +16,24 @@ public class PositionService {
 	private PositionRepository	positionRepository;
 
 
+	// FINDALL ---------------------------------------------------------------
+	public Collection<Position> findALL(final int id) {
+		return this.positionRepository.findAll();
+	}
+
+	// findAllPositionByCompany ---------------------------------------------------------------
+	public Collection<Position> findAllPositionByCompany(final int companyId) {
+		System.out.println(companyId);
+		final Collection<Position> p = this.positionRepository.findAllPositionByCompany(companyId);
+		return p;
+	}
+
+	// findAllPositionByCompany ---------------------------------------------------------------
+	public Collection<Position> findAllPositionWithStatusTrue() {
+		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrue();
+		return p;
+	}
+
 	// DashBoard:
 	public Float avgPositionPerCompany() {
 
