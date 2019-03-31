@@ -38,6 +38,10 @@
 		<value>/views/actor/tiles.xml</value>
 		<value>/views/position/tiles.xml</value>
 		<!-- CARMEN -->
+		<!-- ANTONIO S -->
+		<value>/views/socialProfile/tiles.xml</value>
+		<value>/views/message/tiles.xml</value>		
+		<!-- ANTONIO S -->
 	</util:list>
 
 </beans>

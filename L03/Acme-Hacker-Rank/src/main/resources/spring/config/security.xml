@@ -46,6 +46,16 @@
 
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
 		<!-- CARMEM -->
+		
+		<!-- ANTONIO S -->
+		<security:intercept-url pattern="/socialProfile/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />	
+		
+		<security:intercept-url pattern="/message/list.do" access="isAuthenticated()" />
+		<!-- ANTONIO S -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
