@@ -19,12 +19,12 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <security:authorize access="hasRole('HACKER')">
-<style>
-	.linea
-	{
-	    float: left;
-	}
-</style>
+	<style>
+		.linea
+		{
+		    float: left;
+		}
+	</style>
 
 	<div>
 		<jstl:if test="${hackerLogin==true}">
@@ -44,8 +44,8 @@
 			<spring:message code="curricula.data" />
 		</legend>
 		<c:choose>
-    		<c:when test="${curricula.hacker.photo==''}">
-				
+    		<c:when test="${curricula.hacker.photo=='' or curricula.hacker.photo==null}">
+				<img width="95" src="./images/hacker.png" alt="ERROR"/>
     		</c:when>    
     		<c:otherwise>
 				<img width="95" src="${curricula.hacker.photo}" alt="ERROR"/>
@@ -69,49 +69,51 @@
 			</form>
 		</jstl:if>
 		<br>
-			<display:table name="positionDatas" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
-				<c:choose>
-					<c:when test="${hackerLogin==true}">
-						<display:column titleKey="curricula.edit">
-							<a href="positionData/hacker/edit.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/edit.png" alt="${row1.id}" /></a>	
-						</display:column>
-						<display:column titleKey="curricula.delete">
-							<a href="positionData/hacker/delete.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/delete.png" alt="${row1.id}" /></a>	
-						</display:column>
-					</c:when>
-				</c:choose>
-				<display:column titleKey="curricula.show"> 
-					<a href="positionData/show.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/show.png" alt="${row1.id}" /></a>
-				</display:column>
-				<display:column property="title" titleKey="curricula.positonData.title"></display:column>
-				<display:column property="description" titleKey="curricula.positinoData.description"></display:column>
-			</display:table>
+		<display:table name="positionDatas" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
+			<c:choose>
+				<c:when test="${hackerLogin==true}">
+					<display:column titleKey="curricula.edit">
+						<a href="positionData/hacker/edit.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/edit.png" alt="${row1.id}" /></a>	
+					</display:column>
+					<display:column titleKey="curricula.delete">
+						<a href="positionData/hacker/delete.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/delete.png" alt="${row1.id}" /></a>	
+					</display:column>
+				</c:when>
+			</c:choose>
+			<display:column titleKey="curricula.show"> 
+				<a href="positionData/show.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/show.png" alt="${row1.id}" /></a>
+			</display:column>
+			<display:column property="title" titleKey="curricula.positonData.title"></display:column>
+			<display:column property="description" titleKey="curricula.positinoData.description"></display:column>
+		</display:table>
+		<jstl:if test="${empty positionDatas}">
 			<br>
 			<br>
-			<strong><spring:message code="curricula.educationalData" /></strong>
-			<br>
-			<jstl:if test="${hackerLogin==true}">
-				<form method="get" action="/Acme-Hacker-Rank/educationalData/hacker/create.do">
-					<button name="curriculaId" value="${curricula.id}"><spring:message code="educationalData.create"/></button>
-				</form>
-			</jstl:if>
-			<display:table name="educationalDatas" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag">
-				<c:choose>
-					<c:when test="${hackerLogin==true}">
-						<display:column titleKey="curricula.edit">
-							<a href="educationalData/hacker/edit.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/edit.png" alt="${row2.id}" /></a>	
-						</display:column>
-						<display:column titleKey="curricula.delete">
-							<a href="educationalData/hacker/delete.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/delete.png" alt="${row2.id}" /></a>	
-						</display:column>
-					</c:when>
-				</c:choose>
-				<display:column titleKey="curricula.show"> 
-					<a href="educationalData/show.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/show.png" alt="${row2.id}" /></a>
-				</display:column>
-				<display:column property="degree" titleKey="curricula.educationalData.degree"></display:column>
-				<display:column property="institution" titleKey="curricula.educationalData.institution"></display:column>
-			</display:table>
+		</jstl:if>
+		<strong><spring:message code="curricula.educationalData" /></strong>
+		<jstl:if test="${hackerLogin==true}">
+			<form method="get" action="/Acme-Hacker-Rank/educationalData/hacker/create.do">
+				<button name="curriculaId" value="${curricula.id}"><spring:message code="educationalData.create"/></button>
+			</form>
+		</jstl:if>
+		<br>
+		<display:table name="educationalDatas" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag">
+			<c:choose>
+				<c:when test="${hackerLogin==true}">
+					<display:column titleKey="curricula.edit">
+						<a href="educationalData/hacker/edit.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/edit.png" alt="${row2.id}" /></a>	
+					</display:column>
+					<display:column titleKey="curricula.delete">
+						<a href="educationalData/hacker/delete.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/delete.png" alt="${row2.id}" /></a>	
+					</display:column>
+				</c:when>
+			</c:choose>
+			<display:column titleKey="curricula.show"> 
+				<a href="educationalData/show.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/show.png" alt="${row2.id}" /></a>
+			</display:column>
+			<display:column property="degree" titleKey="curricula.educationalData.degree"></display:column>
+			<display:column property="institution" titleKey="curricula.educationalData.institution"></display:column>
+		</display:table>
 		<br>
 	</fieldset>
 </div>

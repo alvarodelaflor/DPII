@@ -12,6 +12,8 @@ package controllers;
 
 
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -67,17 +69,23 @@ public class CurriculaHackerController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
 		ModelAndView result;
+		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		try {
 			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Curricula not found in DB");
 			Assert.isTrue(!curriculaDB.getIsCopy(), "Trying to edit a copyCurricula");
-			Hacker hackerLogin = this.hackerService.getHackerLogin();
 			Assert.notNull(hackerLogin, "No hacker is login");
 			Assert.isTrue(hackerLogin.equals(curriculaDB.getHacker()));
 			result = new ModelAndView("curricula/hacker/edit");
 			result.addObject("curricula", curriculaDB);
 		} catch (final Exception e) {
-			result = new ModelAndView("redirect:/welcome/index.do");
+			if (hackerLogin!=null) {
+				result = new ModelAndView("curricula/list");
+				final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByHacker(hackerLogin);
+				result.addObject("curriculas", curriculas);
+			} else {
+				result = new ModelAndView("redirect:/welcome/index.do");	
+			}
 		}
 		return result;
 	}
