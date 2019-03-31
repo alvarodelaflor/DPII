@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -40,6 +41,19 @@ public class PositionService {
 	// FINDALL ---------------------------------------------------------------
 	public Position findOne(final int id) {
 		return this.positionRepository.findOne(id);
+	}
+
+	// searhPosition ---------------------------------------------------------------
+	public Collection<Position> search(final String palabra) {
+		final HashSet<Position> p = new HashSet<>();
+		p.addAll(this.positionRepository.findWithDescription(palabra));
+		p.addAll(this.positionRepository.findWithCompanyName(palabra));
+		p.addAll(this.positionRepository.findWitheProfile(palabra));
+		p.addAll(this.positionRepository.findWithSkills(palabra));
+		p.addAll(this.positionRepository.findWithTitle(palabra));
+		p.addAll(this.positionRepository.findWithTechs(palabra));
+		System.out.println(p);
+		return p;
 	}
 
 	// DashBoard:

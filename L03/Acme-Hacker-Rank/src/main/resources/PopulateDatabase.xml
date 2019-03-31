@@ -72,14 +72,27 @@
     </bean>
     
     <bean id="position02" class="domain.Position">
-    	<property name="ticker" value="ticker01" />
-    	<property name="title" value="title01" />
-    	<property name="techs" value="techs01" />
+    	<property name="ticker" value="ticker02" />
+    	<property name="title" value="title02" />
+    	<property name="techs" value="techs02" />
 		<property name="status" value="false" />
-        <property name="skills" value="skills01" />
+        <property name="skills" value="skills02" />
         <property name="salary" value= "20.0" />
-        <property name="profile" value="profile01" />
-        <property name="description" value= "description01"/>     
+        <property name="profile" value="profile02" />
+        <property name="description" value= "description02"/>     
+        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="company" ref= "company01"/>       
+    </bean>
+    
+    <bean id="position03" class="domain.Position">
+    	<property name="ticker" value="ticker03" />
+    	<property name="title" value="title03" />
+    	<property name="techs" value="techs03" />
+		<property name="status" value="true" />
+        <property name="skills" value="skills03" />
+        <property name="salary" value= "20.0" />
+        <property name="profile" value="profile03" />
+        <property name="description" value= "description03"/>     
         <property name="deadline" value= "2018/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
     </bean>

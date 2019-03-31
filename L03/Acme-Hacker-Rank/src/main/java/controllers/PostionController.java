@@ -20,15 +20,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.PositionFormService;
 import services.PositionService;
 import domain.Position;
+import forms.PositionForm;
 
 @Controller
 @RequestMapping("/position")
 public class PostionController extends AbstractController {
 
 	@Autowired
-	private PositionService	positionService;
+	private PositionService		positionService;
+
+	@Autowired
+	private PositionFormService	positionFormService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -60,11 +65,13 @@ public class PostionController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		try {
+			final PositionForm positionForm = this.positionFormService.create();
 			System.out.println("entro");
 			final Collection<Position> positions = this.positionService.findAllPositionWithStatusTrue();
 			System.out.println(positions);
 			result = new ModelAndView("position/list");
 			result.addObject("positions", positions);
+			result.addObject("positionForm", positionForm);
 			result.addObject("requestURI", "position/.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -72,6 +79,7 @@ public class PostionController extends AbstractController {
 		return result;
 	}
 
+	// SHOW ---------------------------------------------------------------		
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 
@@ -87,6 +95,25 @@ public class PostionController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		return result;
+	}
+
+	// SAVE ---------------------------------------------------------------		
+	@RequestMapping(value = "/newPalabra", method = RequestMethod.GET)
+	public ModelAndView newPalabra(@RequestParam("newPalabra") final String newPalabra) {
+		ModelAndView result;
+
+		try {
+			System.out.println(newPalabra);
+			System.out.println("Carmen: Voy a intentar guardar");
+			final Collection<Position> positions = this.positionService.search(newPalabra);
+			System.out.println(positions);
+			result = new ModelAndView("position/list");
+			result.addObject("positions", positions);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
 		return result;
 	}
 

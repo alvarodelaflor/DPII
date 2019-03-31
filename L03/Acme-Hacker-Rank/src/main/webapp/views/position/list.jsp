@@ -20,11 +20,20 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
+	<form:form class="formularioEdicion" method="GET" action="position/newPalabra.do?newPalabra='${newPalabra}'.do">		
+		<spring:message code="position.word" />
+		<input name="newPalabra"/>
+		<input type="submit" value=<spring:message code="position.search" /> />
+	</form:form>
+		<acme:cancel url="position/list.do" code="position.clear"/>
+	
+	<br>
+
 	<display:table name="positions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 		<display:column titleKey="position.ticker">
 			<a href="position/show.do?id=${row.id}"><jstl:out value="${row.ticker}"/></a></display:column>
 		<display:column titleKey="position.company" ><a href="company/show.do?id=${row.company.id}"><spring:message code="position.company.show" /></a></display:column>
 	</display:table>
 					
-	<acme:cancel url=" " code="company.cancel"/>
+	<acme:cancel url=" " code="position.cancel"/>
 

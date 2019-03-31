@@ -35,6 +35,7 @@
 					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
 				</ul>
 			</li>
+			
 		</security:authorize>
 		
 		<security:authorize access="hasRole('HACKER')">
@@ -87,9 +88,9 @@
 					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
 				</ul>
 			</li>
+
 			
-		
-			
+				
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
