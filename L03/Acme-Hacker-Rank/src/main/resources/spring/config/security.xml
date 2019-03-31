@@ -37,7 +37,13 @@
 		<security:intercept-url pattern="/company/create.do" access="permitAll" /> 
 		<security:intercept-url pattern="/company/show.do" access="permitAll" /> 
 		<security:intercept-url pattern="/company/edit.do" access="hasRole('COMPANY')"/>  
-		
+		<security:intercept-url pattern="/company/list.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/position/listCompany.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/newPalabra.do" access="permitAll" /> 
+
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
 		<!-- CARMEM -->
 		
@@ -66,6 +72,19 @@
 		<!-- ALVARO -->
 		<security:intercept-url pattern="/curricula/hacker/create.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/curricula/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/curricula/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
+		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/educationalData/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/positionData/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/positionData/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/positionData/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/positionData/show.do" access="permitAll" />
 		<!-- ALVARO -->
 
 		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 

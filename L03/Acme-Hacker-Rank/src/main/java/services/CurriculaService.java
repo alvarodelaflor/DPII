@@ -12,14 +12,19 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+
 import domain.Curricula;
+import domain.EducationalData;
 import domain.Hacker;
+import domain.PositionData;
 import repositories.CurriculaRepository;
 import security.LoginService;
 
@@ -104,6 +109,14 @@ public class CurriculaService {
 		Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		Assert.notNull(curriculaDB, "The curricula is not in DB");
 		Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to delete a not own curricula");
+		Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
+		if (!educationalDatas.isEmpty()) {
+			this.educationalDataService.deleteAll(educationalDatas);			
+		}
+		Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
+		if (!positionDatas.isEmpty()) {
+			this.positionDataService.deleteAll(positionDatas);			
+		}
 		this.curriculaRepository.delete(curricula);
 	}
 
@@ -188,10 +201,23 @@ public class CurriculaService {
 	 * @author Álvaro de la Flor Bonilla
 	 * @return Return all Curricula in dataBase of a hacker.
 	 */	
-	public Collection<Curricula> findAllByHackerId(Hacker hacker) {
+	public Collection<Curricula> findAllByHacker(Hacker hacker) {
 		List<Curricula> res = new ArrayList<>();
 		if (hacker!=null) {
-			res = (List<Curricula>) this.curriculaRepository.getCurriculaOfHacker(hacker.getId()); 
+			res = (List<Curricula>) this.curriculaRepository.getCurriculasOfHacker(hacker.getId()); 
+		}
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @author Álvaro de la Flor Bonilla
+	 * @return {@link Collection < {@link Curricula} > not copy mode
+	 */	
+	public Collection<Curricula> findAllNotCopyByHacker(Hacker hacker) {
+		List<Curricula> res = new ArrayList<>();
+		if (hacker!=null) {
+			res = (List<Curricula>) this.curriculaRepository.getCurriculasNotCopyOfHacker(hacker.getId()); 
 		}
 		return res;
 	}

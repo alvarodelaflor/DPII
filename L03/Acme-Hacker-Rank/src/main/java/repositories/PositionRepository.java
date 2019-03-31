@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -42,5 +44,31 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p.title from Position p where p.salary = min(p.salary)")
 	public String worstPositon();
+
+	@Query("select p from Position p where p.company.id =?1 and p.status=true")
+	Collection<Position> findAllPositionByCompany(int companyId);
+
+	@Query("select p from Position p where p.status=true")
+	Collection<Position> findAllPositionWithStatusTrue();
+
+	/////////////////////////////////////////////////////////////////////////////////
+
+	@Query("select p from Position p where p.description like %?1% and p.status=1")
+	Collection<Position> findWithDescription(String description);
+
+	@Query("select p from Position p where p.profile like %?1% and p.status=1")
+	Collection<Position> findWitheProfile(String profile);
+
+	@Query("select p from Position p where p.skills like %?1% and p.status=1")
+	Collection<Position> findWithSkills(String skills);
+
+	@Query("select p from Position p where p.company.name like %?1% and p.status=1")
+	Collection<Position> findWithCompanyName(String companyName);
+
+	@Query("select p from Position p where p.techs like %?1% and p.status=1")
+	Collection<Position> findWithTechs(String techs);
+
+	@Query("select p from Position p where p.title like %?1% and p.status=1")
+	Collection<Position> findWithTitle(String title);
 
 }

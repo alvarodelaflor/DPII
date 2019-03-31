@@ -28,12 +28,15 @@
 		
 		<!-- ALVARO -->
 		<value>/views/curricula/messages</value>
+		<value>/views/educationalData/messages</value>
+		<value>/views/positionData/messages</value>
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->
 		<value>/views/hacker/messages</value>
 		<value>/views/company/messages</value>
 		<value>/views/actor/messages</value>
+		<value>/views/position/messages</value>
 		<!-- CARMEN -->
 		<!-- ANTONIO S -->
 		<value>/views/socialProfile/messages</value>

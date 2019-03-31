@@ -18,7 +18,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<security:authorize access="hasRole('COMPANY')"> 
 <div class="content">
 	<table>
 		<c:choose>
@@ -37,5 +36,4 @@
 		<tr><td><spring:message code="company.phone" /> <jstl:out value="${company.phone}"></jstl:out></td></tr>
 	</table>
 </div>
-</security:authorize>
-<acme:cancel url=" " code="company.cancel"/>
+<input type="button" value="back" name="company.cancel" onclick="history.back()" />

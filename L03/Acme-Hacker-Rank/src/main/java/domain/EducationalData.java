@@ -10,14 +10,14 @@ package domain;
  */
 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -29,7 +29,6 @@ public class EducationalData extends DomainEntity {
 	private Boolean isCopy;
 	
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDegree() {
 		return degree;
 	}
@@ -39,7 +38,6 @@ public class EducationalData extends DomainEntity {
 	}
 	
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getInstitution() {
 		return institution;
 	}
@@ -49,7 +47,6 @@ public class EducationalData extends DomainEntity {
 	}
 	
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getMark() {
 		return mark;
 	}

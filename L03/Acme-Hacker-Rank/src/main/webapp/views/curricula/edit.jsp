@@ -34,7 +34,7 @@
           	<acme:textbox path="linkLinkedin" code="curricula.linkLinkedin"/>
           	<acme:textbox path="miscellaneous" code="curricula.miscellaneous"/>
           	<acme:submit name="save" code="save"/>
-          	<acme:cancel url="#" code="cancel"/>
+          	<acme:cancel url="curricula/list.do?hackerId=" code="back"/>
 		</form:form>
 	</div>
 </body>

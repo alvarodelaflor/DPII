@@ -11,11 +11,9 @@ package domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 public class Curricula extends DomainEntity {
@@ -52,7 +50,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "https:\\/\\/?(?:www.)?github.com\\/[A-Za-z]{3}")
+	@URL // Hay que hacer un patron para las url de git
 	public String getLinkGitHub() {
 		return linkGitHub;
 	}
@@ -62,7 +60,7 @@ public class Curricula extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "https:\\/\\/?(?:www.)?(?:es.)?linkedin.com\\/in\\/[A-Za-z]{5}")
+	@URL // Hay que hacer un patron para las url de linkedin
 	public String getLinkLinkedin() {
 		return linkLinkedin;
 	}
