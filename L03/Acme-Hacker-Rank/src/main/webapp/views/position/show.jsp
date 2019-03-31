@@ -20,12 +20,12 @@
 
 <div class="content">
 	<table>
-		<tr><td><spring:message code="position.ticker" />: <jstl:out	value="${position.ticker}"></jstl:out></td></tr>
-		<tr><td><spring:message code="position.desdline" />: <jstl:out value="${position.deadline}"></jstl:out></td></tr>
-		<tr><td><spring:message code="position.profile" />: <jstl:out value="${position.profile}"></jstl:out></td></tr>
-		<tr><td><spring:message code="position.skills" />: <jstl:out value="${position.skills}"></jstl:out></td></tr>
-		<tr><td><spring:message code="position.techs" />: <jstl:out value="${position.techs}"></jstl:out></td></tr>
-		<tr><td><spring:message code="position.title" />: <jstl:out value="${position.title}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="position.ticker" />: </strong><jstl:out	value="${position.ticker}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="position.desdline" />: </strong><jstl:out value="${position.deadline}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="position.profile" />: </strong><jstl:out value="${position.profile}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="position.skills" />: </strong><jstl:out value="${position.skills}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="position.techs" />: </strong><jstl:out value="${position.techs}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="position.title" />: </strong><jstl:out value="${position.title}"></jstl:out></td></tr>
 	</table>
 </div>
 <input type="button" value="back" name="position.cancel" onclick="history.back()" />
