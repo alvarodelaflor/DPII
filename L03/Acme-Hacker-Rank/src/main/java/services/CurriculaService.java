@@ -169,7 +169,7 @@ public class CurriculaService {
 		curriculaCopy.setHacker(curricula.getHacker());
 		curriculaCopy.setIsCopy(true);
 		curriculaCopy.setLinkGitHub(curricula.getLinkGitHub());
-		curriculaCopy.setLinkGitHub(curricula.getLinkGitHub());
+		curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
 		curriculaCopy.setMiscellaneous(curricula.getMiscellaneous());
 		curriculaCopy.setName(curricula.getName());
 		curriculaCopy.setPhone(curricula.getPhone());

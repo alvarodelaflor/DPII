@@ -112,6 +112,9 @@ public class CurriculaHackerController extends AbstractController {
 				Assert.isTrue(curricula != null, "curricula.null");
 				Assert.isTrue(!curricula.getIsCopy(), "Trying to edit a copyCurricula");
 				Curricula saveCurricula = this.curriculaService.save(curricula);
+				// CHECK COPY CURRICULA WORK
+//				this.curriculaService.createCurriculaCopyAndSave(saveCurricula);
+				//CHECK COPY CURRICULA WORK
 				result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+saveCurricula.getId());
 				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
