@@ -41,8 +41,9 @@
 				<spring:message code="company.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="company/conditions.do" target="_blank"><spring:message code="company.conditions1" /></a>
+				<br>
 				<form:errors path="${accept}" cssClass="error" />
-					
+				
 				<acme:submit name="save" code="company.save"/>
 				<acme:cancel url=" " code="company.cancel"/>
 			</form:form>
