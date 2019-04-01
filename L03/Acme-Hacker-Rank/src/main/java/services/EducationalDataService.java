@@ -1,5 +1,14 @@
 package services;
 
+/**
+ * EducationalDataService.java
+ * 
+ * @author Alvaro de la Flor Bonilla GitHub: alvar017
+ * 
+ * CONTROL:
+ * 30/03/2019 16:47 Creation
+ */
+
 import java.util.ArrayList;
 
 /**
@@ -37,23 +46,30 @@ public class EducationalDataService {
 	private HackerService hackerService;
 
 	// CRUD Methods
-	
+
+	/**
+	 * Create a {@link EducationalData} instance<br>
+	 * Must exist an {@link Hacker} login
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link EducationalData}
+	 */
 	public EducationalData create() {
 		Assert.notNull(this.hackerService.getHackerLogin());
 		return new EducationalData();
 	}
 	
 	/**
-	 * Crete a new EducationalData with the given curricula
+	 * Crete a new EducationalData with the given curricula<br> Atributes isCopy: false and the curricula given are setted by default
 	 * 
-	 * @return {@link EducationalData}
 	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link EducationalData}
 	 */
 	public EducationalData createWithHistory(Curricula curricula) {
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
+		Assert.notNull(hackerLogin, "No hacker is login");
 		Hacker hackerCurricula = this.hackerService.getHackerByCurriculaId(curricula);
 		Assert.notNull(hackerCurricula, "No hacker for this curricula");
-		Assert.notNull(hackerLogin, "No hacker is login");
 		Assert.isTrue(hackerCurricula.equals(hackerLogin), "Login and hacker curricula are diferent");
 		EducationalData res = new EducationalData();
 		res.setCurricula(curricula);

@@ -123,8 +123,8 @@ public class EducationalDataHackerController extends AbstractController {
 				Assert.notNull(hackerLogin, "No hacker is login");
 				Assert.isTrue(educationalData != null, "educationalData.null");
 				Assert.isTrue(this.hackerService.getHackerByCurriculaId(educationalData.getCurricula()).equals(hackerLogin), "Not allow to edit a not own EducationalData");
-				this.educationalDataService.save(educationalData);
-				result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+educationalData.getCurricula().getId());
+				EducationalData educationalDataSave = this.educationalDataService.save(educationalData);
+				result = new ModelAndView("redirect:/educationalData/show.do?educationalDataId="+educationalDataSave.getId());
 				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);

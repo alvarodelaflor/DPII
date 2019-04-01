@@ -53,10 +53,15 @@
 		</c:choose>
 		<p><strong><spring:message code="curricula.name" /></strong><jstl:out value="${curricula.name}"></jstl:out></p>
 		<p><strong><spring:message code="curricula.statement" /></strong><jstl:out value="${curricula.statement}"></jstl:out></p>
-		<p><strong><spring:message code="curricula.phone" /></strong><jstl:out value="${curricula.phone}"></jstl:out></p>
-		<p><strong><spring:message code="curricula.linkGitHub" /></strong><a href =<jstl:out value="${curricula.linkGitHub}"></jstl:out>><jstl:out value="${curricula.linkGitHub}"></jstl:out></a></p>
-		<p><strong><spring:message code="curricula.linkLinkedin" /></strong><a href =<jstl:out value="${curricula.linkLinkedin}"></jstl:out>><jstl:out value="${curricula.linkLinkedin}"></jstl:out></a></p>
-		<p><strong><spring:message code="hacker.name" /></strong><jstl:out value="${curricula.hacker}"></jstl:out></p>
+		<fieldset>
+			<legend>
+				<i><spring:message code="curricula.contact" /></i><img width="35" height="35" src="./images/phone.png" alt="${row1.id}" />	
+			</legend>
+			<p><strong>Hacker <spring:message code="hacker.name" /></strong><jstl:out value="${curricula.hacker}"></jstl:out></p>
+			<p><strong><spring:message code="curricula.phone" /></strong><jstl:out value="${curricula.phone}"></jstl:out></p>
+			<p><strong><spring:message code="curricula.linkGitHub" /></strong><a href =<jstl:out value="${curricula.linkGitHub}"></jstl:out>><jstl:out value="${curricula.linkGitHub}"></jstl:out></a></p>
+			<p><strong><spring:message code="curricula.linkLinkedin" /></strong><a href =<jstl:out value="${curricula.linkLinkedin}"></jstl:out>><jstl:out value="${curricula.linkLinkedin}"></jstl:out></a></p>
+		</fieldset>
 	</fieldset>
 	<fieldset>
 		<legend>
