@@ -45,14 +45,12 @@ public class WelcomeController extends AbstractController {
 		ModelAndView result;
 		final SimpleDateFormat formatter;
 		String moment;
-		String surname = "";
 
 		// CARMEN: NOMBRE DE USUARIO QUE ESTE REGISTRADO
 		try {
 			final UserAccount userlogger = LoginService.getPrincipal();
 			final Actor actor = this.actorService.getActorByUser(userlogger.getUsername());
 			name = actor.getName();
-			surname = actor.getSurname();
 		} catch (final Exception e) {
 			name = "";
 		}
@@ -63,7 +61,6 @@ public class WelcomeController extends AbstractController {
 
 		result = new ModelAndView("welcome/index");
 		result.addObject("name", name);
-		result.addObject("surname", surname);
 		result.addObject("moment", moment);
 
 		return result;

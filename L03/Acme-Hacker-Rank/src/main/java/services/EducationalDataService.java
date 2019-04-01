@@ -23,13 +23,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
@@ -76,7 +73,15 @@ public class EducationalDataService {
 		res.setIsCopy(false);
 		return res;
 	}
-	
+
+	/**
+	 * Save a EducationalData  given <br> 
+	 * 
+	 * Must be a {@link Hacker} login and the owner of the educationalDate to save must be this hacker
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link EducationalData}
+	 */
 	public EducationalData save(EducationalData educationalData) {
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		Assert.notNull(hackerLogin, "No hacker login");
@@ -86,21 +91,54 @@ public class EducationalDataService {
 		return this.educationalDataRepository.save(educationalData);
 	}
 	
+	/**
+	 * Save a collection of EducationalData given <br> 
+	 * 
+	 * Must be a {@link Hacker} login and the owner of the educationalDate to save must be this hacker
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link EducationalData}<{@link EducationalData}>
+	 */	
 	public Collection<EducationalData> savaAll(Collection<EducationalData> educationalsData) {
+		Hacker hackerLogin = this.hackerService.getHackerLogin();
+		Assert.notNull(hackerLogin, "No hacker is login");
+		Assert.isTrue(!educationalsData.isEmpty(), "Empty collection of educationalsData");
+		Assert.isTrue(educationalsData.iterator().next().getCurricula().getHacker().equals(hackerLogin), "No valid hacker to save");
 		return this.educationalDataRepository.save(educationalsData);
 	}
-	
+
+	/**
+	 * Find a EducationalData in the DataBase 
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link EducationalData}
+	 */	
 	public EducationalData findOne(int educationalDataId) {
 		return this.educationalDataRepository.findOne(educationalDataId);
 	}
 	
+	/**
+	 * Delete a EducationalData given <br> 
+	 * 
+	 * Must be a {@link Hacker} login and the owner of the educationalDate to delete must be this hacker
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 */	
 	public void delete(EducationalData educationalData) {
 		Assert.notNull(educationalData);
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
+		Assert.notNull(hackerLogin, "No hacker is login");
 		Assert.isTrue(educationalData.getCurricula().getHacker().equals(hackerLogin), "Not allow to delete a educationalData of another hacker");
 		this.educationalDataRepository.delete(educationalData);
 	}
 	
+	/**
+	 * Delete a Collection of EducationalData given <br> 
+	 * 
+	 * Must be a {@link Hacker} login and the owner of the educationalDate to delete must be this hacker
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 */	
 	public void deleteAll(Collection<EducationalData> educationalDatas) {
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		Assert.notNull(hackerLogin);
@@ -125,6 +163,11 @@ public class EducationalDataService {
 	}
 	
 	public void makeCopyAllEducationalDataForCurricula(Curricula origen, Curricula copy) {
+		Hacker hackerLogin = this.hackerService.getHackerLogin();
+		Assert.notNull(hackerLogin, "No hacker is login");
+		Assert.isTrue(origen.getIsCopy().equals(false) && copy.getIsCopy().equals(true), "Origen can not be copyMode and copy must be copyMode");
+		Assert.isTrue(origen.getHacker().equals(copy.getHacker()), "Diferent hacker origen-copy");
+		Assert.isTrue(origen.getHacker().equals(hackerLogin), "Diferent hacker origen-login");
 		List<EducationalData> educationalsData = (List<EducationalData>) this.educationalDataRepository.getEducationalDataFromCurriculaId(origen.getId());
 		if (!educationalsData.isEmpty()) {
 			Collection<EducationalData> educationalsDataCopy = new ArrayList<>();
@@ -136,6 +179,10 @@ public class EducationalDataService {
 	}
 	
 	public EducationalData getCopy(EducationalData educationalData, Curricula copy) {
+		Hacker hackerLogin = this.hackerService.getHackerLogin();
+		Assert.notNull(hackerLogin, "No hacker is login");
+		Assert.isTrue(educationalData.getCurricula().getHacker().equals(copy.getHacker()));
+		Assert.isTrue(hackerLogin.equals(educationalData.getCurricula().getHacker()), "Hacker curricula is diferent to hacker educationalData");
 		EducationalData educationalDataCopy = this.create();
 		educationalDataCopy.setCurricula(copy);
 		educationalDataCopy.setDegree(educationalData.getDegree());
