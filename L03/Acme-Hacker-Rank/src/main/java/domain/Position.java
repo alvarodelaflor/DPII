@@ -5,6 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -83,6 +87,8 @@ public class Position extends DomainEntity {
 		this.techs = techs;
 	}
 
+	@NotNull
+	@Future
 	public Date getDeadline() {
 		return this.deadline;
 	}
@@ -91,6 +97,9 @@ public class Position extends DomainEntity {
 		this.deadline = deadline;
 	}
 
+	@NotNull
+	@Min(value = 0)
+	@Max(value = (long) Double.MAX_VALUE)
 	public Double getSalary() {
 		return this.salary;
 	}
@@ -99,6 +108,7 @@ public class Position extends DomainEntity {
 		this.salary = salary;
 	}
 
+	@NotNull
 	public Boolean getStatus() {
 		return this.status;
 	}
