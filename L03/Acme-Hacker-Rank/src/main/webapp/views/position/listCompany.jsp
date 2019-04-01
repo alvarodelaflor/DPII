@@ -21,11 +21,12 @@
 
 
 	<display:table name="positions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+		<display:column property="ticker" titleKey="position.ticker"></display:column>
 		<display:column property="title" titleKey="position.title"></display:column>
 		<display:column property="skills" titleKey="position.skills"></display:column>
 		<display:column property="deadline" titleKey="position.deadline"></display:column>
 		<display:column property="techs" titleKey="position.techs"></display:column>
-		<display:column property="ticker" titleKey="position.ticker"></display:column>
+		<display:column property="salary" titleKey="position.salary"></display:column>
 	</display:table>
 					
 <input type="button" value="back" name="position.cancel" onclick="history.back()" />
