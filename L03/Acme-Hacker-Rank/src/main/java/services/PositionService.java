@@ -119,4 +119,14 @@ public class PositionService {
 		return this.positionRepository.findAllPositionsByCompany(companyId);
 	}
 
+	public Position findOneLoggedIsOwner(final int positionId) {
+		Assert.isTrue(this.checkPositionOwner(positionId), "Logged company is not the owner of position " + positionId);
+		return this.positionRepository.findOne(positionId);
+	}
+	private boolean checkPositionOwner(final int positionId) {
+		final int loggedId = LoginService.getPrincipal().getId();
+		final int ownerId = this.positionRepository.findOne(positionId).getCompany().getUserAccount().getId();
+		return loggedId == ownerId;
+	}
+
 }
