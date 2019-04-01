@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,4 +24,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
 	@Query("select stddev(cast((select count(a) from Application a where a.hacker = h) as float)) from Hacker a")
 	public Float stddevApplicationPerHacker();
+
+	@Query("select a from Application a where a.hacker.id = ?1")
+	public Collection<Application> getApplicationsByHacker(int id);
 }

@@ -1,12 +1,15 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.ApplicationRepository;
+import domain.Application;
 
 @Service
 @Transactional
@@ -14,6 +17,9 @@ public class ApplicationService {
 
 	@Autowired
 	private ApplicationRepository	applicationRepository;
+
+	@Autowired
+	private HackerService			hackerService;
 
 
 	// DashBoard:
@@ -35,5 +41,15 @@ public class ApplicationService {
 	public Float stddevApplicationPerHacker() {
 
 		return this.applicationRepository.stddevApplicationPerHacker();
+	}
+
+	// FINDALL  ---------------------------------------------------------------	
+	public Collection<Application> findAll() {
+		return this.applicationRepository.findAll();
+	}
+
+	// getApplicationsByHacker  ---------------------------------------------------------------	
+	public Collection<Application> getApplicationsByHacker(final int id) {
+		return this.applicationRepository.getApplicationsByHacker(id);
 	}
 }

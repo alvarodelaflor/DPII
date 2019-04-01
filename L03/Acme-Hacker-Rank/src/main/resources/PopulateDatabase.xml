@@ -125,6 +125,48 @@
     </bean>
 	<!-- POSITION  -->
 	
+		<!-- CURRICULA -->
+	<bean id="curricula01" class="domain.Curricula">
+    	<property name="name" value="name01" />
+    	<property name="statement" value="statement01" />
+		<property name="phone" value="123456" />
+		<property name="linkGitHub" value="https://linkGitHub01" />
+        <property name="linkLinkedin" value="https://linkLinkedin01" />    
+        <property name="miscellaneous" value= "miscellaneous01"/>   
+        <property name="hacker" ref= "hacker01"/> 
+        <property name="isCopy" value="true"/>          
+    </bean>
+	<!-- CURRICULA -->
+	
+	<!-- PROBLEM -->
+	<bean id="problem01" class="domain.Problem">
+    	<property name="title" value="title01" />
+    	<property name="statement" value="statement01" />
+		<property name="hint" value="hint01" />
+		<property name="draftMode" value="true" />
+        <property name="attachments" value="attachments01" />    
+    </bean>
+	<!-- PROBLEM -->
+	
+	<!-- APPLICATION -->
+	<bean id="application01" class="domain.Application">
+    	<property name="response" value="response01" />
+    	<property name="link" value="https://link01" />
+		<property name="status" value="ACCEPTED" />
+		<property name="position" ref="position01" />
+        <property name="problem" ref="problem01" />    
+        <property name="hacker" ref= "hacker01"/>   
+        <property name="curricula" ref= "curricula01"/>           
+    </bean>
+	<!-- APPLICATION -->
+	
+
+
+	
+	
+
+	
+	
 		
 	
 </beans>

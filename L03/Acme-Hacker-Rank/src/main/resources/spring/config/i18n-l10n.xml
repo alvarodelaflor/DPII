@@ -37,6 +37,7 @@
 		<value>/views/company/messages</value>
 		<value>/views/actor/messages</value>
 		<value>/views/position/messages</value>
+		<value>/views/application/messages</value>
 		<!-- CARMEN -->
 		<!-- ANTONIO S -->
 		<value>/views/socialProfile/messages</value>

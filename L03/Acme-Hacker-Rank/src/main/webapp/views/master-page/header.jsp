@@ -40,6 +40,7 @@
 		<li><a class="fNiv"><spring:message	code="master.page.hacker" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="application/hacker/list.do"><spring:message code="master.page.list.application" /></a></li>	
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
