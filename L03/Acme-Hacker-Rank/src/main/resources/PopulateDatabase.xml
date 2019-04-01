@@ -94,7 +94,7 @@
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile01" />
         <property name="description" value= "description01"/>     
-        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
     </bean>
     
@@ -107,7 +107,7 @@
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile02" />
         <property name="description" value= "description02"/>     
-        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
     </bean>
     
@@ -120,7 +120,7 @@
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile03" />
         <property name="description" value= "description03"/>     
-        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
     </bean>
 	<!-- POSITION  -->

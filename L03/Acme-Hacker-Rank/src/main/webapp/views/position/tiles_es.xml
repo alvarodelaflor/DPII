@@ -31,4 +31,9 @@
 		<put-attribute name="body" value="/views/position/show.jsp" />
 	</definition>
 	
+	<definition name="position/company/list" extends="master.page">	
+		<put-attribute name="title" value="Listado de mis puestos" />
+		<put-attribute name="body" value="/views/position/list_logged_company_positions.jsp" />
+	</definition>
+	
 </tiles-definitions>

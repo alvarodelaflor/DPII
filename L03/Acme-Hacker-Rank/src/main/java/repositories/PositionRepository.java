@@ -46,7 +46,7 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	public String worstPositon();
 
 	@Query("select p from Position p where p.company.id =?1 and p.status=true")
-	Collection<Position> findAllPositionByCompany(int companyId);
+	Collection<Position> findAllPositionStatusTrueByCompany(int companyId);
 
 	@Query("select p from Position p where p.status=true")
 	Collection<Position> findAllPositionWithStatusTrue();
@@ -70,5 +70,8 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p from Position p where p.title like %?1% and p.status=1")
 	Collection<Position> findWithTitle(String title);
+
+	@Query("select p from Position p where p.company.id = ?1")
+	Collection<Position> findAllPositionsByCompany(int companyId);
 
 }

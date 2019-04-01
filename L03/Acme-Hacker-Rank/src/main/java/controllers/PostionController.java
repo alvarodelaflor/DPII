@@ -49,7 +49,7 @@ public class PostionController extends AbstractController {
 		try {
 			System.out.println("entro");
 			System.out.println(id);
-			final Collection<Position> positions = this.positionService.findAllPositionByCompany(id);
+			final Collection<Position> positions = this.positionService.findAllPositionStatusTrueByCompany(id);
 			System.out.println(positions);
 			result = new ModelAndView("position/listCompany");
 			result.addObject("positions", positions);

@@ -23,9 +23,7 @@
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
-					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
+					<li class="arrow"></li>				
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
@@ -42,7 +40,6 @@
 		<li><a class="fNiv"><spring:message	code="master.page.hacker" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
@@ -59,13 +56,14 @@
 		<li><a class="fNiv"><spring:message	code="master.page.company" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="position/company/list.do"><spring:message code="master.page.list.logged_company_positions" /></a></li>	
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
-					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>					
 				</ul>
 		</li>
 
