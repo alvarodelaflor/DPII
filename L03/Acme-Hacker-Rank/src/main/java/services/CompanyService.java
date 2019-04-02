@@ -18,6 +18,7 @@ import org.springframework.validation.Validator;
 import repositories.ActorRepository;
 import repositories.CompanyRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Company;
 import forms.RegistrationForm;
@@ -230,6 +231,11 @@ public class CompanyService {
 	// FINDALL  ---------------------------------------------------------------	
 	public Collection<Company> findAll() {
 		return this.companyRepository.findAll();
+	}
+
+	public void delete(final Company company) {
+		Assert.isTrue(LoginService.getPrincipal().getId() == company.getUserAccount().getId());
+		this.companyRepository.delete(company);
 	}
 
 }

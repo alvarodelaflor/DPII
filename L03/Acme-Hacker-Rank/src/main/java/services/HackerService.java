@@ -261,4 +261,10 @@ public class HackerService {
 		Assert.notNull(curricula);
 		return this.hackerRepository.getHackerByCurriculaId(curricula.getId());
 	}
+
+	public void delete(final Hacker hacker) {
+		Assert.isTrue(LoginService.getPrincipal().getId() == hacker.getUserAccount().getId());
+
+		this.hackerRepository.delete(hacker);
+	}
 }

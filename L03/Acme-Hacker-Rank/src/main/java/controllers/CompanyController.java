@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -190,6 +191,38 @@ public class CompanyController extends AbstractController {
 			result.addObject("companies", companies);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody
+	Company export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Company result = new Company();
+		result = this.companyService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	//Nuevo
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int companyId) {
+		ModelAndView result;
+
+		final Company company = this.companyService.findOne(companyId);
+		System.out.println("Company encontrado: " + company);
+		if (this.companyService.findOne(companyId) == null || LoginService.getPrincipal().getId() != company.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(company, "company.null");
+
+			try {
+				this.companyService.delete(company);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
 		}
 		return result;
 	}

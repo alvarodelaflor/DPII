@@ -19,6 +19,8 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -175,6 +177,39 @@ public class HackerController extends AbstractController {
 		result = new ModelAndView("hacker/edit");
 		result.addObject("message", message);
 		result.addObject("hacker", hacker);
+		return result;
+	}
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody
+	Hacker export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Hacker result = new Hacker();
+		result = this.hackerService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		System.out.println(result);
+		return result;
+	}
+
+	//Nuevo
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int hackerId) {
+		ModelAndView result;
+
+		final Hacker hacker = this.hackerService.findOne(hackerId);
+		System.out.println("Hacker encontrado: " + hacker);
+		if (this.hackerService.findOne(hackerId) == null || LoginService.getPrincipal().getId() != hacker.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(hacker, "hacker.null");
+
+			try {
+				this.hackerService.delete(hacker);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		}
 		return result;
 	}
 }
