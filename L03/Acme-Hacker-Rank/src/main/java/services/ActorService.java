@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 
 @Service
@@ -33,7 +35,6 @@ public class ActorService {
 	public Actor save(final Actor actor) {
 		return this.actorRepository.save(actor);
 	}
-
 
 	public Actor getActorByUser(final String userName) {
 		return this.actorRepository.getActorByUser(userName);

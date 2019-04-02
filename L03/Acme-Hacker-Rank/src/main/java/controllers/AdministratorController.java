@@ -10,13 +10,32 @@
 
 package controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import services.AdministratorService;
+import services.ApplicationService;
+import services.PositionService;
+import domain.Administrator;
+import forms.ActorForm;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
+
+	@Autowired
+	private AdministratorService	adminService;
+
+	@Autowired
+	private PositionService			positionService;
+
+	@Autowired
+	private ApplicationService		applicationService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -24,26 +43,101 @@ public class AdministratorController extends AbstractController {
 		super();
 	}
 
-	// Action-1 ---------------------------------------------------------------		
+	// Dashboard --------------------------------------------------------------
 
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
-		ModelAndView result;
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard() {
 
-		result = new ModelAndView("administrator/action-1");
+		final ModelAndView res = new ModelAndView("administrator/dashboard");
+		res.addObject("requestURI", "administrator/dashboard.do");
 
-		return result;
+		// PositionsPerCompany
+		res.addObject("avgPositionPerCompany", this.positionService.avgPositionPerCompany());
+		res.addObject("minPositionPerCompany", this.positionService.minPositionPerCompany());
+		res.addObject("maxPositionPerCompany", this.positionService.maxPositionPerCompany());
+		res.addObject("stddevPositionPerCompany", this.positionService.stddevPositionPerCompany());
+		// PositionsPerCompany
+
+		// ApplicationPerHacker
+		res.addObject("avgApplicationsPerHacker", this.applicationService.avgApplicationPerHacker());
+		res.addObject("minApplicationsPerHacker", this.applicationService.minApplicationPerHacker());
+		res.addObject("maxApplicationsPerHacker", this.applicationService.maxApplicationPerHacker());
+		res.addObject("stddevApplicationsPerHacker", this.applicationService.stddevApplicationPerHacker());
+		// ApplicationPerHacker
+
+		// CompaniesMorePositions
+		res.addObject("findCompanyWithMorePositions", this.positionService.findCompanyWithMorePositions());
+		// CompaniesMorePositions
+
+		// HackerMoreApplications
+		res.addObject("findHackerMoreApplications", this.applicationService.findHackerWithMoreApplications());
+		// HackerMoreApplications
+
+		// Salaries
+		res.addObject("avgSalaryPerPosition", this.positionService.avgSalaryPerPosition());
+		res.addObject("minSalaryPerPosition", this.positionService.minSalaryPerPosition());
+		res.addObject("maxSalaryPerPosition", this.positionService.maxSalaryPerPosition());
+		res.addObject("stddevSalaryPerPosition", this.positionService.stddevSalaryPerPosition());
+		res.addObject("bestPosition", this.positionService.bestPosition());
+		res.addObject("worstPosition", this.positionService.worstPosition());
+		// Salaries
+
+		return res;
 	}
 
-	// Action-2 ---------------------------------------------------------------
+	// Register New Admin ---------------------------------------------------------------
 
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
-		ModelAndView result;
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
 
-		result = new ModelAndView("administrator/action-2");
+		ModelAndView res;
+		final ActorForm form = new ActorForm();
+		try {
 
-		return result;
+			res = new ModelAndView("administrator/create");
+			res.addObject("requestURI", "administrator/create.do");
+
+			res.addObject("form", form);
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
 	}
 
+	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(final ActorForm form, final BindingResult binding) {
+
+		ModelAndView res;
+		final Administrator admin = this.adminService.reconstruct(form, binding);
+
+		if (binding.hasErrors())
+			res = new ModelAndView("administrator/save");
+		else
+			try {
+
+				this.adminService.save(admin);
+				res = new ModelAndView("welcome/index");
+			} catch (final Throwable oops) {
+
+				if (oops.getMessage().equals("email.wrong"))
+					res = this.createEditModelAndView(admin, "email.wrong");
+				else if (oops.getMessage().equals("error.email"))
+					res = this.createEditModelAndView(admin, "error.email");
+				else
+					res = new ModelAndView("redirect:/welcome/index.do");
+			}
+
+		return res;
+	}
+
+	private ModelAndView createEditModelAndView(final Administrator admin, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("administrator/create");
+		result.addObject("message", string);
+		result.addObject("admin", admin);
+		return result;
+	}
 }

@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
 import security.UserAccount;
@@ -24,8 +25,8 @@ import security.UserAccount;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Actor extends DomainEntity {
 
-	String								name, surname, photo, email, phone, address;
-	CreditCard							creditCard;
+	private String						name, surname, photo, email, phone, address;
+	private CreditCard					creditCard;
 
 	private UserAccount					userAccount;
 
@@ -58,6 +59,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -67,6 +69,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getSurname() {
 		return this.surname;
 	}
@@ -76,6 +79,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@URL
+	@SafeHtml
 	public String getPhoto() {
 		return this.photo;
 	}
@@ -85,6 +89,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getEmail() {
 		return this.email;
 	}
@@ -93,6 +98,7 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
+	@SafeHtml
 	public String getPhone() {
 		return this.phone;
 	}
@@ -102,6 +108,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getAddress() {
 		return this.address;
 	}

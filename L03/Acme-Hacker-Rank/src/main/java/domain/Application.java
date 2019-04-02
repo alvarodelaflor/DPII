@@ -17,11 +17,11 @@ import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	Date		creationMoment, applyMoment;
-	String		response, link, status;
+	private Date		creationMoment, applyMoment;
+	private String		response, link, status;
 
-	Hacker		hacker;
-	Position	position;
+	private Hacker		hacker;
+	private Position	position;
 
 
 	@ManyToOne(optional = false)
@@ -59,7 +59,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getResponse() {
 		return this.response;
 	}
@@ -69,7 +69,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getLink() {
 		return this.link;
 	}

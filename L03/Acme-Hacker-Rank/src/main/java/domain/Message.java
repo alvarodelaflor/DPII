@@ -66,7 +66,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getTag() {
 		return this.tag;
 	}
@@ -76,7 +76,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getSubject() {
 		return this.subject;
 	}
@@ -86,7 +86,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getBody() {
 		return this.body;
 	}

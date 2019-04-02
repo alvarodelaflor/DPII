@@ -313,6 +313,14 @@
 			<version>1.7.4</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.7.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<description>This system allows people share their favourite Shouts.</description>
