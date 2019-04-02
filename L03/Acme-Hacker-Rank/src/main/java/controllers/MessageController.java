@@ -157,7 +157,7 @@ public class MessageController extends AbstractController {
 				final List<String> lisRecipient = new ArrayList<>();
 				lisRecipient.addAll(actors);
 				for (int i = 0; i < lisRecipient.size(); i++)
-					msg = this.messageService.exchangeMessage(msg, this.actorService.getActorByEmail(lisRecipient.get(i)).getId());
+					msg = this.messageService.exchangeMessage(msg, this.actorService.getActorByEmailOnly(lisRecipient.get(i)).getId());
 				this.messageService.save(msg);
 
 				result = new ModelAndView("message/list");

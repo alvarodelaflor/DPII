@@ -28,9 +28,7 @@
 		<bean class="converters.StringToPositionConverter"/>
 		<bean class="converters.PositionToStringConverter"/>
 		<!-- ALVARO -->
-		<!-- ANTONIO S -->
-		<bean class="converters.StringToActorConverter"/>
-		<!-- ANTONIO S -->
+
 	</util:list>
 	
 </beans>
