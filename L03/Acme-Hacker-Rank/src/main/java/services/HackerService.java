@@ -130,7 +130,8 @@ public class HackerService {
 			binding.rejectValue("password", "error.password.confirm");
 		}
 
-		result.getUserAccount().setUsername(registrationForm.getUserName());
+		final String userName = registrationForm.getUserName();
+		result.getUserAccount().setUsername(userName);
 
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
