@@ -110,7 +110,7 @@
 		<property name="status" value="true" />
         <property name="skills" value="skills01" />
         <property name="salary" value= "20.0" />
-        <property name="profile" value="profile01" />
+        <property name="profile" value="http://profile01" />
         <property name="description" value= "description01"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
@@ -123,7 +123,7 @@
 		<property name="status" value="false" />
         <property name="skills" value="skills02" />
         <property name="salary" value= "20.0" />
-        <property name="profile" value="profile02" />
+        <property name="profile" value="http://profile02" />
         <property name="description" value= "description02"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
@@ -136,7 +136,7 @@
 		<property name="status" value="true" />
         <property name="skills" value="skills03" />
         <property name="salary" value= "20.0" />
-        <property name="profile" value="profile03" />
+        <property name="profile" value="http://profile03" />
         <property name="description" value= "description03"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
