@@ -45,6 +45,8 @@
 		<security:intercept-url pattern="/position/newPalabra.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/application/hacker/list.do" access="hasRole('HACKER')" />
 		<!-- CARMEM -->
 		
 		<!-- ANTONIO S -->
@@ -88,7 +90,8 @@
 		<!-- ALVARO -->
 		
 		<!-- HIPONA -->
-		<security:intercept-url pattern="/position/company/list.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/list.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/show.do" access="hasRole('COMPANY')" /> 
 		<!-- HIPONA -->
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

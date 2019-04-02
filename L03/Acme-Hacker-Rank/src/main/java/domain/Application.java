@@ -7,22 +7,43 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	Date		creationMoment, applyMoment;
-	String		response, link, status;
+	Date				creationMoment, applyMoment;
+	String				response, link, status;
 
-	Hacker		hacker;
-	Position	position;
+	Hacker				hacker;
+	Position			position;
 
+	private Problem		problem;
+
+	private Curricula	curricula;
+
+
+	@OneToOne
+	public Curricula getCurricula() {
+		return this.curricula;
+	}
+
+	public void setCurricula(final Curricula curricula) {
+		this.curricula = curricula;
+	}
+
+	@OneToOne
+	public Problem getProblem() {
+		return this.problem;
+	}
+
+	public void setProblem(final Problem problem) {
+		this.problem = problem;
+	}
 
 	@ManyToOne(optional = false)
 	public Hacker getHacker() {
@@ -59,7 +80,6 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getResponse() {
 		return this.response;
 	}
@@ -69,7 +89,6 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getLink() {
 		return this.link;
 	}
