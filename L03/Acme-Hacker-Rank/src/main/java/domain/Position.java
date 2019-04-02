@@ -68,7 +68,6 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
-	@URL
 	public String getProfile() {
 		return this.profile;
 	}

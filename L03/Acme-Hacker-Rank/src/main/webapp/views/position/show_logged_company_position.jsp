@@ -18,6 +18,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<jstl:if test="${position.status}">
 <div class="content">
 	<table>
 		<tr><td><strong><spring:message code="position.title" />: </strong><jstl:out value="${position.title}"></jstl:out></td></tr>
@@ -32,3 +33,45 @@
 	</table>
 </div>
 <input type="button" value="back" name="position.cancel" onclick="window.location = 'position/company/list.do'" />
+</jstl:if>
+<!-- FORM IN CASE THIS IS NOT IN FINAL MODE -->
+<jstl:if test="${not position.status}">
+	<section id="main-content">
+		<article>
+			<div class="content">
+				<form:form class="formularioEdicion" method="POST"
+					modelAttribute="position" action="position/company/edit.do">
+					<form:input path="id" type="hidden"/>
+					
+					<acme:textbox code="position.title" path="title" />
+					<acme:textbox code="position.description" path="description" />
+					<acme:textbox code="position.salary" path="salary"/>
+					<acme:textbox code="position.deadline" path="deadline" placeholder="2021/12/25 15:30"/>
+					<acme:textbox code="position.profile" path="profile" />
+					<acme:textbox code="position.skills" path="skills" />
+					<acme:textbox code="position.techs" path="techs" />
+					
+					<table style="width: 3em">
+						<tr>
+							<th><spring:message code="position.status"/></th>
+							<td>
+							<spring:message code="position.status.true"/>
+							<form:radiobutton path="status" value="true"/> 
+							</td>
+							<td>
+							<spring:message code="position.status.false"/>
+							<form:radiobutton path="status" value="false" checked="checked"/> 
+							</td>
+						</tr>
+					</table>
+					<jstl:if test="${problemCountError}">
+						<span class="error"><spring:message code="position.problemCountError"/> </span>
+					</jstl:if>
+					<br>
+					<acme:submit name="save" code="position.save"/>
+					<input type="button" value="<spring:message code='position.cancel' />" onclick="window.location = 'position/company/list.do'" />
+				</form:form>
+			</div>
+		</article>
+	</section>
+</jstl:if>

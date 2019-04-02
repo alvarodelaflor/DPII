@@ -12,6 +12,7 @@ public class Problem extends DomainEntity {
 	private String	title, statement, hint, attachments;
 
 	private Boolean	draftMode;
+	private Position	position;
 
 
 	public Boolean getDraftMode() {
@@ -61,4 +62,12 @@ public class Problem extends DomainEntity {
 		this.attachments = attachments;
 	}
 
+	@ManyToOne(optional = false)
+	public Position getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(final Position position) {
+		this.position = position;
+	}
 }

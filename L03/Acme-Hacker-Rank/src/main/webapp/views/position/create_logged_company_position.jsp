@@ -33,19 +33,6 @@
 				<acme:textbox code="position.skills" path="skills" />
 				<acme:textbox code="position.techs" path="techs" />
 				
-				<table style="width: 3em">
-					<tr>
-						<th><spring:message code="position.status"/></th>
-						<td>
-						<spring:message code="position.status.true"/>
-						<form:radiobutton path="status" value="true"/> 
-						</td>
-						<td>
-						<spring:message code="position.status.false"/>
-						<form:radiobutton path="status" value="false" checked="checked"/> 
-						</td>
-					</tr>
-				</table>
 				<br>
 				<acme:submit name="save" code="position.save"/>
 				<input type="button" value="<spring:message code='position.cancel' />" onclick="window.location = 'position/company/list.do'" />
