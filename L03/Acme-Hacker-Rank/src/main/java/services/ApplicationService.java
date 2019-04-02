@@ -9,8 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import domain.Application;
 import repositories.ApplicationRepository;
+import domain.Application;
 
 @Service
 @Transactional
@@ -61,5 +61,10 @@ public class ApplicationService {
 	// getApplicationsByHacker  ---------------------------------------------------------------	
 	public Collection<Application> getApplicationsByHacker(final int id) {
 		return this.applicationRepository.getApplicationsByHacker(id);
+	}
+
+	// FINDONE  ---------------------------------------------------------------	
+	public Application findOne(final int id) {
+		return this.applicationRepository.findOne(id);
 	}
 }

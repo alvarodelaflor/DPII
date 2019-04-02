@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -66,4 +67,23 @@ public class ApplicationHackerController extends AbstractController {
 		}
 		return result;
 	}
+
+	// SHOW ---------------------------------------------------------------		
+	@RequestMapping(value = "/hacker/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+
+		ModelAndView result;
+		final Application application;
+		try {
+			application = this.applicationService.findOne(id);
+			System.out.println(application);
+			Assert.notNull(application);
+			result = new ModelAndView("application/hacker/show");
+			result.addObject("application", application);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
 }

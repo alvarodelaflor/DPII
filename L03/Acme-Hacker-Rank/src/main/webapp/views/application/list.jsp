@@ -24,14 +24,21 @@
 
 	<display:table name="applications" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	
-		<display:column property="ticker" titleKey="position.ticker"></display:column>
-		<display:column property="title" titleKey="position.title"></display:column>
-		<display:column property="skills" titleKey="position.skills"></display:column>
-		<display:column property="deadline" titleKey="position.deadline"></display:column>
-		<display:column property="techs" titleKey="position.techs"></display:column>
-		<display:column property="salary" titleKey="position.salary"></display:column>
+		<display:column titleKey="application.Show">
+			<a href="application/hacker/show.do?id=${row.id}"><spring:message code="application.show" /></a></display:column>
+		
+		<display:column property="status" titleKey="application.status"></display:column>
+		
+		<display:column titleKey="application.position">
+			<a href="position/show.do?id=${row.position.id}"><jstl:out value="${row.position.ticker}"/></a></display:column>
+			
+		<display:column titleKey="application.curricula">
+			<a href="curricula/show.do?curriculaId=${row.curricula.id}"><jstl:out value="${row.curricula.name}"/></a></display:column>
+		
+		<display:column titleKey="application.problem">
+			<a href="problem/show.do?Id=${row.problem.id}"><jstl:out value="${row.problem.title}"/></a></display:column>
 	
 	</display:table>
 					
-	<acme:cancel url=" " code="application.cancel"/>
+	<acme:cancel url=" " code="application.back"/>
 

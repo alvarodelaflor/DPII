@@ -22,4 +22,9 @@
 		<put-attribute name="body" value="/views/application/list.jsp" />
 	</definition>
 	
+	<definition name="application/hacker/show" extends="master.page">	
+		<put-attribute name="title" value="Show application" />
+		<put-attribute name="body" value="/views/application/show.jsp" />
+	</definition>
+	
 </tiles-definitions>
