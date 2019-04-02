@@ -3,16 +3,20 @@ package services;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
 import security.LoginService;
 import utilities.AuthUtils;
+import domain.Company;
 import domain.Position;
 
 @Service
@@ -25,7 +29,14 @@ public class PositionService {
 	@Autowired
 	private CompanyService		companyService;
 
+	@Autowired
+	private Validator			validator;
 
+
+	public Position create() {
+		final Position res = new Position();
+		return res;
+	}
 	// FINDALL ---------------------------------------------------------------
 	public Collection<Position> findALL() {
 		return this.positionRepository.findAll();
@@ -129,4 +140,47 @@ public class PositionService {
 		return loggedId == ownerId;
 	}
 
+	public Position reconstructCreate(final Position position, final BindingResult binding) {
+		// We are creating so position id must be 0
+		Assert.isTrue(position.getId() == 0);
+		final Position res = position;
+		final Company owner = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId());
+
+		res.setCompany(owner);
+		res.setTicker(this.getTickerForCompany(owner));
+
+		this.validator.validate(res, binding);
+		return res;
+	}
+
+	private String getTickerForCompany(final Company owner) {
+		String ticker = "";
+		final String croppedName = owner.getCommercialName().substring(0, 4).toUpperCase();
+
+		int validTicker = 1;
+
+		while (validTicker != 0) {
+			validTicker = 0;
+			ticker = croppedName + "-" + this.generateRandomNumber();
+			validTicker += this.positionRepository.countByTicker(ticker);
+		}
+		return ticker;
+	}
+
+	private String generateRandomNumber() {
+		String res = "";
+		final Random random = new Random();
+		for (int i = 0; i < 4; i++)
+			res += random.nextInt(10);
+		return res;
+	}
+
+	public void save(final Position pos) {
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"));
+		// TODO: Control final mode logic
+		if (pos.getId() != 0)
+			// This means position exists so we must be the owner
+			this.checkPositionOwner(pos.getId());
+		this.positionRepository.save(pos);
+	}
 }

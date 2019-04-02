@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +39,7 @@ public class PositionCompanyController {
 		return result;
 	}
 
-	//position/company/show
+	// Showing a position I own -----------------------------------------------
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
 		ModelAndView result;
@@ -49,6 +50,42 @@ public class PositionCompanyController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		return result;
+	}
+
+	// Getting creation form -----------------------------------------------
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		try {
+			final Position position = this.positionService.create();
+			result = new ModelAndView("position/company/form");
+			result.addObject("position", position);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	// Creating a new position --------------------------------------------------
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public ModelAndView create(final Position position, final BindingResult binding) {
+		ModelAndView result;
+
+		final Position pos = this.positionService.reconstructCreate(position, binding);
+
+		System.out.println(binding.getAllErrors());
+		if (binding.hasErrors()) {
+			result = new ModelAndView("position/company/form");
+			result.addObject("position", position);
+		} else
+			try {
+				this.positionService.save(pos);
+				result = new ModelAndView("redirect:/position/company/list.do");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+
 		return result;
 	}
 
