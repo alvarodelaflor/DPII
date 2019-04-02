@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,6 +76,7 @@ public class CurriculaHackerController extends AbstractController {
 			Assert.notNull(curriculaDB, "Curricula not found in DB");
 			Assert.isTrue(!curriculaDB.getIsCopy(), "Trying to edit a copyCurricula");
 			Assert.notNull(hackerLogin, "No hacker is login");
+			curriculaDB.setLinkGitHub(curriculaDB.getLinkGitHub().replaceAll("https://www.github.com/", ""));
 			Assert.isTrue(hackerLogin.equals(curriculaDB.getHacker()));
 			result = new ModelAndView("curricula/hacker/edit");
 			result.addObject("curricula", curriculaDB);
@@ -101,9 +103,16 @@ public class CurriculaHackerController extends AbstractController {
 			return result;
 		}
 		
+		if (!checkLinkGitHub(curricula.getLinkGitHub())) {
+			final ObjectError error = new ObjectError("linkGitHub", "Must be a GitHub link");
+			binding.addError(error);
+			binding.rejectValue("linkGitHub", "error.linkGitHub");
+		}
+		
 		if (binding.hasErrors()) {
 			System.out.println("Error en CurriculaHackerController.java, binding: " + binding);
 			result = new ModelAndView("curricula/hacker/create");
+			curricula.setLinkGitHub(curricula.getLinkGitHub().replaceAll("https://www.github.com/", ""));
 			result.addObject("curricula", curricula);
 		} else
 			try {
@@ -120,10 +129,24 @@ public class CurriculaHackerController extends AbstractController {
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);
 				result = new ModelAndView("curricula/hacker/edit");
+				curricula.setLinkGitHub(curricula.getLinkGitHub().replaceAll("https://www.github.com/", ""));
 				result.addObject("curricula", curricula);
 				result.addObject("message", "curricula.commit.error");
 			}
 		return result;
+	}
+	
+	private Boolean checkLinkGitHub(String linkGitHub) {
+		Boolean res = true;
+		try {
+			String linkTocheck = linkGitHub.replaceAll("https://www.github.com/", "");
+			if (linkTocheck.contains("<") || linkTocheck.contains(">") || linkTocheck.contains(":") || linkTocheck.contains("/") || linkTocheck.contains("|") || linkTocheck.contains("'") || linkTocheck.contains(",")) {
+				res = false;
+			}
+		} catch (Exception e) {
+			res = false;
+		}
+		return res;
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
