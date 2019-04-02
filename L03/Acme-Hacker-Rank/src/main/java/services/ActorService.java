@@ -47,4 +47,12 @@ public class ActorService {
 		return a;
 	}
 
+	public Collection<String> getEmailOfActors() {
+		return this.actorRepository.getEmailofActors();
+	}
+
+	public Collection<Actor> getActorsThatContainsAMessage(final int messageId) {
+		return this.actorRepository.getActorsThatContainsAMessage(messageId);
+	}
+
 }

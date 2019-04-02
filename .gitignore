@@ -65,3 +65,5 @@ nb-configuration.xml
 *.MF
 
 L01/Acme-Madruga/src/main/resources/META-INF/BrotherhoodService\.java
+
+L03/Acme-Hacker-Rank/src/main/java/converters/StringToActorConverter\.java

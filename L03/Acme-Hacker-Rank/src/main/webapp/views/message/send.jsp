@@ -23,7 +23,7 @@
 
 <body>
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="message" action="message/send.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="msg" action="message/send.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	
@@ -37,7 +37,7 @@
 				<spring:message code="recipient.email" />:
 				</form:label>
 				<form:select multiple="true" path="recipient">
-   		 		<form:options items="${actors}" />
+   		 		<form:options items="${emails}" />
 				</form:select>
 				<form:errors cssClass="error" path="recipient" />
           	<acme:cancel url="message/list.do" code="cancel"/>

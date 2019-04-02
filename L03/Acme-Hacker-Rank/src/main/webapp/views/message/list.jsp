@@ -28,6 +28,15 @@
 				</display:column>
 				<display:column property="subject" titleKey="subjectMessage"></display:column>
 			</display:table>	
+			
+			<br>
+  	<a href="message/create.do"><spring:message code="send.msg" /></a>
+  	
+  	<br>
+  	
+  	<security:authorize access="hasRole('ADMIN')">
+  		<a href="message/createBroadcast.do"><spring:message code="send.msg.broadcast" /></a>
+	</security:authorize>
 
 	<div>
 		<form method="get" action="#">
