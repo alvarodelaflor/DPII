@@ -30,13 +30,13 @@
 
               	<acme:textbox code="message.subject" path="subject"/>
           		<acme:textbox code="message.body" path="body"/>
-          		<acme:textbox code="message.tag" path="tag"/>
+          		<acme:textbox code="message.tag" path="tags"/>
           		<br />
 		
 				<form:label path="recipient">
 				<spring:message code="recipient.email" />:
 				</form:label>
-				<form:select multiple="true" path="recipient">
+				<form:select multiple="false" path="recipient">
    		 		<form:options items="${emails}" />
 				</form:select>
 				<form:errors cssClass="error" path="recipient" />

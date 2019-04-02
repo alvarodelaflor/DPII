@@ -6,10 +6,13 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,7 +31,7 @@ public class Message extends DomainEntity {
 	private String				subject;
 	private String				body;
 	private Date				moment;
-	private String				tag;
+	private Collection<Tag>		tags;
 	private String				sender;
 	private Collection<String>	recipient;
 
@@ -51,18 +54,18 @@ public class Message extends DomainEntity {
 		this.sender = sender;
 	}
 
-	@NotBlank
-	//	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getTag() {
-		return this.tag;
+	public void setTags(final Collection<Tag> tags) {
+		this.tags = tags;
 	}
 
-	public void setTag(final String tag) {
-		this.tag = tag;
+	@Valid
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Tag.class)
+	public Collection<Tag> getTags() {
+		return this.tags;
 	}
 
 	@NotBlank
-	//	@SafeHtml(whitelistType = WhiteListType.NONE)
+	//	@SafeHtml(whitistType = WhiteListTy.NONE)
 	public String getSubject() {
 		return this.subject;
 	}
