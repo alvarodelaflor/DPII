@@ -11,6 +11,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 import repositories.AdministratorRepository;
@@ -65,7 +66,11 @@ public class AdministratorService {
 	private Boolean checkEmail(final Administrator admin) {
 
 		Boolean res = true;
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+
 		if (this.actorService.getActorByEmailE(admin.getEmail()) == null && this.actorService.getActorByEmail(admin.getEmail()).size() >= 1)
+			res = false;
+		else if (admin.getEmail().matches(pattern))
 			res = false;
 
 		return res;
@@ -73,11 +78,35 @@ public class AdministratorService {
 
 	public Administrator reconstruct(final ActorForm form, final BindingResult binding) {
 
-		Assert.isTrue(form.getAccept(), "form.accept.error");
-		Assert.isTrue(form.getPassword().length() >= 5 && form.getPassword().length() <= 32, "form.length.error");
-		Assert.isTrue(form.getPassword() == form.getConfirmPassword(), "form.confirmPass.error");
-		Assert.isTrue(form.getUserName().length() >= 5 && form.getUserName().length() <= 32, "form.length.error");
-		Assert.isTrue(this.actorService.getActorByUser(form.getUserName()) == null, "form.actor.already.exists.error");
+		if (form.getAccept() == false) {
+			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
+			binding.addError(error);
+			binding.rejectValue("accept", "error.termsAndConditions");
+		}
+
+		if (form.getUserName().length() <= 5 && form.getUserName().length() <= 5) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userAcount");
+		}
+
+		if (this.actorService.getActorByUser(form.getUserName()) != null) {
+			final ObjectError error = new ObjectError("userName", "");
+			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
+		}
+
+		if (form.getConfirmPassword().length() <= 5 && form.getPassword().length() <= 5) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.password");
+		}
+
+		if (!form.getConfirmPassword().equals(form.getPassword())) {
+			final ObjectError error = new ObjectError("password", "");
+			binding.addError(error);
+			binding.rejectValue("password", "error.password.confirm");
+		}
 
 		final Administrator res = this.create();
 
@@ -89,7 +118,7 @@ public class AdministratorService {
 		res.setPhone(form.getPhone());
 		res.setEmail(form.getEmail());
 
-		Assert.isTrue(this.checkEmail(res));
+		Assert.isTrue(this.checkEmail(res), "email.general.error");
 
 		res.getUserAccount().setUsername(form.getUserName());
 		final String pass = form.getPassword();
