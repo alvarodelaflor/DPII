@@ -34,7 +34,6 @@ public class ActorService {
 		return this.actorRepository.save(actor);
 	}
 
-
 	public Actor getActorByUser(final String userName) {
 		return this.actorRepository.getActorByUser(userName);
 	}

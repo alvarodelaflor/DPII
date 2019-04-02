@@ -203,12 +203,6 @@ public class HackerService {
 		return hacker;
 	}
 
-	// DashBoard:
-	public String findHackerWithMoreApplications() {
-
-		return this.hackerRepository.findHackerWithMoreApplications();
-	}
-
 	/**
 	 * Find a hacker by his userAccount id.
 	 * 

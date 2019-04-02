@@ -1,7 +1,7 @@
 
 package services;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -41,6 +41,15 @@ public class ApplicationService {
 	public Float stddevApplicationPerHacker() {
 
 		return this.applicationRepository.stddevApplicationPerHacker();
+	}
+
+	public String findHackerWithMoreApplications() {
+
+		final List<String> ls = this.applicationRepository.findHackerWithMoreApplications();
+		String res = "";
+		if (!ls.isEmpty())
+			res = ls.get(0);
+		return res;
 	}
 
 	// FINDALL  ---------------------------------------------------------------	

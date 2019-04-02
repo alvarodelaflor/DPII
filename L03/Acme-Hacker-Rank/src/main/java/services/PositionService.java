@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -44,12 +45,12 @@ public class PositionService {
 		return p;
 	}
 
-	// FINDALL ---------------------------------------------------------------
+	// FINDONE ---------------------------------------------------------------
 	public Position findOne(final int id) {
 		return this.positionRepository.findOne(id);
 	}
 
-	// searhPosition ---------------------------------------------------------------
+	// searchPosition ---------------------------------------------------------------
 	public Collection<Position> search(final String palabra) {
 		final HashSet<Position> p = new HashSet<>();
 		p.addAll(this.positionRepository.findWithDescription(palabra));
@@ -105,12 +106,20 @@ public class PositionService {
 
 	public String bestPosition() {
 
-		return this.positionRepository.bestPositon();
+		final List<String> ls = this.positionRepository.bestPositon();
+		String res = "";
+		if (!ls.isEmpty())
+			res = ls.get(0);
+		return res;
 	}
 
 	public String worstPosition() {
 
-		return this.positionRepository.worstPositon();
+		final List<String> ls = this.positionRepository.worstPositon();
+		String res = "";
+		if (!ls.isEmpty())
+			res = ls.get(0);
+		return res;
 	}
 
 	public Collection<Position> findAllPositionsByLoggedCompany() {
@@ -129,4 +138,12 @@ public class PositionService {
 		return loggedId == ownerId;
 	}
 
+	public String findCompanyWithMorePositions() {
+
+		final List<String> ls = this.positionRepository.findCompanyWithMorePositions();
+		String res = "";
+		if (!ls.isEmpty())
+			res = ls.get(0);
+		return res;
+	}
 }

@@ -106,6 +106,16 @@
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		
+
+		<!-- FRAN -->
+		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" /> 
+		<!-- FRAN -->
+
+		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 	
 
 		<security:form-login 

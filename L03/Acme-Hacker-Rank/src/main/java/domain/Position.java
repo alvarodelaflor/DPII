@@ -11,6 +11,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 public class Position extends DomainEntity {
@@ -43,6 +44,7 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getTitle() {
 		return this.title;
 	}
@@ -52,6 +54,7 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getDescription() {
 		return this.description;
 	}
@@ -61,6 +64,7 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getProfile() {
 		return this.profile;
 	}
@@ -70,6 +74,7 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getSkills() {
 		return this.skills;
 	}
@@ -79,6 +84,7 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getTechs() {
 		return this.techs;
 	}

@@ -2,6 +2,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,19 +40,24 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	public Double stddevSalaryPerPosition();
 
 	// Best and Worst Postions (salary):
-	@Query("select p.title from Position p where p.salary = max(p.salary)")
-	public String bestPositon();
+	@Query("select p.title from Position p where p.salary = (select max(p1.salary) from Position p1)")
+	public List<String> bestPositon();
 
-	@Query("select p.title from Position p where p.salary = min(p.salary)")
-	public String worstPositon();
+	@Query("select p.title from Position p where p.salary = (select min(p1.salary) from Position p1)")
+	public List<String> worstPositon();
+
+	// Company More Positions:
+
+	@Query("select p.company.commercialName from Position p group by p.company.id order by count(p.company.id) desc")
+	public List<String> findCompanyWithMorePositions();
+
+	/////////////////////////////////////////////////////////////////////////////////
 
 	@Query("select p from Position p where p.company.id =?1 and p.status=true")
 	Collection<Position> findAllPositionStatusTrueByCompany(int companyId);
 
 	@Query("select p from Position p where p.status=true")
 	Collection<Position> findAllPositionWithStatusTrue();
-
-	/////////////////////////////////////////////////////////////////////////////////
 
 	@Query("select p from Position p where p.description like %?1% and p.status=1")
 	Collection<Position> findWithDescription(String description);

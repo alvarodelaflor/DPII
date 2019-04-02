@@ -20,7 +20,7 @@ public class SocialProfile extends DomainEntity {
 
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getNick() {
 		return this.nick;
 	}
@@ -30,7 +30,7 @@ public class SocialProfile extends DomainEntity {
 	}
 	@NotBlank
 	@URL
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getLink() {
 		return this.link;
 	}
@@ -39,7 +39,7 @@ public class SocialProfile extends DomainEntity {
 		this.link = link;
 	}
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}

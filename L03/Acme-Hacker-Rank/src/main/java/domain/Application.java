@@ -16,11 +16,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	Date				creationMoment, applyMoment;
-	String				response, link, status;
+	private Date		creationMoment, applyMoment;
+	private String		response, link, status;
 
-	Hacker				hacker;
-	Position			position;
+	private Hacker		hacker;
+	private Position	position;
 
 	private Problem		problem;
 
@@ -80,6 +80,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getResponse() {
 		return this.response;
 	}
@@ -89,6 +90,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getLink() {
 		return this.link;
 	}
