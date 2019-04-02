@@ -8,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -32,12 +33,21 @@ public class Actor extends DomainEntity {
 
 	private Collection<SocialProfile>	socialProfiles;
 
+	private Collection<Message>			messages;
+
+
+	@Valid
+	@ManyToMany(cascade = javax.persistence.CascadeType.ALL)
+	public Collection<Message> getMessages() {
+		return this.messages;
+	}
+
+	public void setMessages(final Collection<Message> messages) {
+		this.messages = messages;
+	}
 
 	@Valid
 	@OneToMany(cascade = javax.persistence.CascadeType.ALL)
-	@Cascade({
-		CascadeType.ALL
-	})
 	public Collection<SocialProfile> getSocialProfiles() {
 		return this.socialProfiles;
 	}
