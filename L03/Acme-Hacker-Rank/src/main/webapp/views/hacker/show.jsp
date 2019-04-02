@@ -33,12 +33,15 @@
 				<img width="95" src="${hacker.photo}" alt="ERROR"/></td></tr>
     		</c:otherwise>
 		</c:choose>
-		<tr><td><spring:message code="hacker.name" /> <jstl:out	value="${hacker.name}"></jstl:out></td></tr>
-		<tr><td><spring:message code="hacker.surname" /> <jstl:out value="${hacker.surname}"></jstl:out></td></tr>
-		<tr><td><spring:message code="hacker.address" /> <jstl:out value="${hacker.address}"></jstl:out></td></tr>
-		<tr><td><spring:message code="hacker.email" /> <jstl:out value="${hacker.email}"></jstl:out></td></tr>
-		<tr><td><spring:message code="hacker.phone" /> <jstl:out value="${hacker.phone}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="hacker.name" /></strong> <jstl:out	value="${hacker.name}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="hacker.surname" /></strong> <jstl:out value="${hacker.surname}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="hacker.address" /></strong> <jstl:out value="${hacker.address}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="hacker.email" /></strong> <jstl:out value="${hacker.email}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="hacker.phone" /></strong> <jstl:out value="${hacker.phone}"></jstl:out></td></tr>
 	</table>
 </div>
 </security:authorize>
 <acme:cancel url=" " code="hacker.cancel"/>
+<acme:cancel url="/hacker/export.do?id=${hacker.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/hacker/delete.do?id=${hacker.id}" code="delete"/>

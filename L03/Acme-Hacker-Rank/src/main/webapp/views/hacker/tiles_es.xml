@@ -17,17 +17,17 @@
 <tiles-definitions>
 
 	<definition name="hacker/create" extends="master.page">	
-		<put-attribute name="title" value="Registro" />
+		<put-attribute name="title" value="Registro hacker" />
 		<put-attribute name="body" value="/views/hacker/create.jsp" />
 	</definition>
 	
 	<definition name="hacker/show" extends="master.page">	
-		<put-attribute name="title" value="Mostrar" />
+		<put-attribute name="title" value="Mostrar hacker" />
 		<put-attribute name="body" value="/views/hacker/show.jsp" />
 	</definition>
 	
 	<definition name="hacker/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar" />
+		<put-attribute name="title" value="Editar hacker" />
 		<put-attribute name="body" value="/views/hacker/edit.jsp" />
 	</definition>
 	

@@ -1,5 +1,5 @@
 /*
- * CurricculaHackerController.java
+ * PositionHackerController.java
  * 
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -133,8 +133,8 @@ public class PositionDataHackerController extends AbstractController {
 				Assert.notNull(hackerLogin, "No hacker is login");
 				Assert.isTrue(positionData != null, "positionData.null");
 				Assert.isTrue(this.hackerService.getHackerByCurriculaId(positionData.getCurricula()).equals(hackerLogin), "Not allow to edit a not own PositionData");
-				this.positionDataService.save(positionData);
-				result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+positionData.getCurricula().getId());
+				PositionData positionDataSave = this.positionDataService.save(positionData);
+				result = new ModelAndView("redirect:/positionData/show.do?positionDataId="+positionDataSave.getId());
 				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);

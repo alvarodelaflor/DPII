@@ -3,13 +3,17 @@ package services;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.PositionRepository;
+import security.LoginService;
+import utilities.AuthUtils;
 import domain.Position;
 
 @Service
@@ -19,6 +23,9 @@ public class PositionService {
 	@Autowired
 	private PositionRepository	positionRepository;
 
+	@Autowired
+	private CompanyService		companyService;
+
 
 	// FINDALL ---------------------------------------------------------------
 	public Collection<Position> findALL() {
@@ -26,9 +33,9 @@ public class PositionService {
 	}
 
 	// findAllPositionByCompany ---------------------------------------------------------------
-	public Collection<Position> findAllPositionByCompany(final int companyId) {
+	public Collection<Position> findAllPositionStatusTrueByCompany(final int companyId) {
 		System.out.println(companyId);
-		final Collection<Position> p = this.positionRepository.findAllPositionByCompany(companyId);
+		final Collection<Position> p = this.positionRepository.findAllPositionStatusTrueByCompany(companyId);
 		return p;
 	}
 
@@ -38,12 +45,12 @@ public class PositionService {
 		return p;
 	}
 
-	// FINDALL ---------------------------------------------------------------
+	// FINDONE ---------------------------------------------------------------
 	public Position findOne(final int id) {
 		return this.positionRepository.findOne(id);
 	}
 
-	// searhPosition ---------------------------------------------------------------
+	// searchPosition ---------------------------------------------------------------
 	public Collection<Position> search(final String palabra) {
 		final HashSet<Position> p = new HashSet<>();
 		p.addAll(this.positionRepository.findWithDescription(palabra));
@@ -99,12 +106,44 @@ public class PositionService {
 
 	public String bestPosition() {
 
-		return this.positionRepository.bestPositon();
+		final List<String> ls = this.positionRepository.bestPositon();
+		String res = "";
+		if (!ls.isEmpty())
+			res = ls.get(0);
+		return res;
 	}
 
 	public String worstPosition() {
 
-		return this.positionRepository.worstPositon();
+		final List<String> ls = this.positionRepository.worstPositon();
+		String res = "";
+		if (!ls.isEmpty())
+			res = ls.get(0);
+		return res;
 	}
 
+	public Collection<Position> findAllPositionsByLoggedCompany() {
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"));
+		final int companyId = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		return this.positionRepository.findAllPositionsByCompany(companyId);
+	}
+
+	public Position findOneLoggedIsOwner(final int positionId) {
+		Assert.isTrue(this.checkPositionOwner(positionId), "Logged company is not the owner of position " + positionId);
+		return this.positionRepository.findOne(positionId);
+	}
+	private boolean checkPositionOwner(final int positionId) {
+		final int loggedId = LoginService.getPrincipal().getId();
+		final int ownerId = this.positionRepository.findOne(positionId).getCompany().getUserAccount().getId();
+		return loggedId == ownerId;
+	}
+
+	public String findCompanyWithMorePositions() {
+
+		final List<String> ls = this.positionRepository.findCompanyWithMorePositions();
+		String res = "";
+		if (!ls.isEmpty())
+			res = ls.get(0);
+		return res;
+	}
 }

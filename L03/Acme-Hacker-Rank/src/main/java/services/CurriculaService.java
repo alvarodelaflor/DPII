@@ -3,7 +3,7 @@ package services;
 /**
  * CurriculaService.java
  * 
- * @author Álvaro de la Flor Bonilla GitHub: alvar017
+ * @author Alvaro de la Flor Bonilla GitHub: alvar017
  * 
  * CONTROL:
  * 30/03/2019 14:47 Creation
@@ -51,39 +51,42 @@ public class CurriculaService {
 
 	
 	/**
-	 * Create a CurriculaEntity. Must exist an hacker login to create it.
-	 * @author Álvaro de la Flor Bonilla
-	 * @return A curricula entity
+	 * Create a CurriculaEntity. Must exist a {@link Hacker} login to create it.
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Curricula}
 	 */
 	public Curricula create() {
-		Assert.isTrue(checkAnyLogger(), "Must exist an user login");
-		Assert.notNull(hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()), "Must exist an hacker login");
+		Assert.notNull(this.hackerService.getHackerLogin(), "Must exist an hacker login");
 		return new Curricula();
 	}
 	
 	/**
 	 * 
-	 * @author Álvaro de la Flor Bonilla
-	 * @return Return all Curricula in dataBase
+	 * Return a collection of all {@link Curricula} in database.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Curricula}>
 	 */	
 	public List<Curricula> findAll() {
 		return this.curriculaRepository.findAll();
 	}
 	
 	/**
-	 * Find a curricula in dataBase by curriculaId
-	 * @author Álvaro de la Flor Bonilla
-	 * @return A curricula entity by curriculaId
+	 * Find a curricula in dataBase by id
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Curricula}
 	 */	
 	public Curricula findOne(int curriculaId) {
 		return this.curriculaRepository.findOne(curriculaId);
 	}
 	
 	/**
-	 * Save a curricula. Check user login is the same that user who create the curricula
+	 * <p>Save a curricula. Check user login ({@link Hacker}) is the same that user who create the curricula in the case he want to edit it</p>
+	 * Curricula must not be null<br>
+	 * Must exist hacker login
 	 * 
-	 * @author Álvaro de la Flor Bonilla
-	 * @return The save curricula
+	 * @author Alvaro de la Flor Bonilla
+	 * @return The save {@link Curricula}
 	 */
 	public Curricula save(Curricula curricula) {
 		Assert.notNull(curricula, "Curricula is null");
@@ -98,12 +101,12 @@ public class CurriculaService {
 	}
 	
 	/**
-	 * Save a curricula. Check user login is the same that user who want to save the curricula
+	 * Delete a curricula.<br> Check user login ({@link Hacker}) is the same that user who created the curricula<br>
+	 * Must exist a {@link Hacker} login and curricula must not be null
 	 * 
-	 * @author Álvaro de la Flor Bonilla
+	 * @author Alvaro de la Flor Bonilla
 	 */
 	public void delete(Curricula curricula) {
-		Assert.isTrue(checkAnyLogger(), "Any user is login");
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		Assert.notNull(hackerLogin, "No hacker is login");
 		Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
@@ -125,8 +128,10 @@ public class CurriculaService {
 	// AUXILIAR METHODS
 	
 	/**
-	 * @return The reconstruct curricula
+	 * This method reconstruct a prunned {@link Curricula} and validate it
+	 * 
 	 * @author Alvaro de la Flor Bonilla
+	 * @return The reconstruct {@link Curricula}
 	 */
 	public Curricula reconstruct(Curricula curricula, BindingResult binding) {
 		Curricula result;
@@ -141,7 +146,7 @@ public class CurriculaService {
 			curricula.setId(result.getId());
 			curricula.setVersion(result.getVersion());
 			curricula.setHacker(result.getHacker());
-			curricula.setIsCopy(result.getIsCopy());
+			curricula.setIsCopy(false);
 			result = curricula;
 		}
 		this.validator.validate(result, binding);
@@ -150,19 +155,21 @@ public class CurriculaService {
 
 	/**
 	 * 
-	 * This methods create an copy of curricula and all of their educationalData and positionData
+	 * This methods create and save a copy of the curricula given and all of their educationalData and positionData<br>
+	 * Set to true the isCopy atribute of curriculum, educationalData and positionData instances that they have been copy<br>
+	 * The {@link Hacker} who create the Curricula must be login.
 	 * 
-	 * @return The reconstruct curricula
 	 * @author Alvaro de la Flor Bonilla
+	 * @return The copy {@link Curricula} instance
 	 */
-	public Curricula createCopyAndSave(Curricula curricula) {
+	public Curricula createCurriculaCopyAndSave(Curricula curricula) {
 		Hacker hackerLogin = this.hackerService.getHackerLogin();
 		Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Try to do a copy of curricula by not own hacker");
 		Curricula curriculaCopy = this.create();
 		curriculaCopy.setHacker(curricula.getHacker());
 		curriculaCopy.setIsCopy(true);
 		curriculaCopy.setLinkGitHub(curricula.getLinkGitHub());
-		curriculaCopy.setLinkGitHub(curricula.getLinkGitHub());
+		curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
 		curriculaCopy.setMiscellaneous(curricula.getMiscellaneous());
 		curriculaCopy.setName(curricula.getName());
 		curriculaCopy.setPhone(curricula.getPhone());
@@ -183,8 +190,8 @@ public class CurriculaService {
 	/**
 	 * Check that any user is login
 	 * 
-	 * @author Álvaro de la Flor Bonilla
-	 * @return True if an user is login, false in otherwise.
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Boolean}<br> True if an user is login, false in otherwise.
 	 */
 	public Boolean checkAnyLogger() {
 		Boolean res = true;
@@ -198,8 +205,10 @@ public class CurriculaService {
 	
 	/**
 	 * 
-	 * @author Álvaro de la Flor Bonilla
-	 * @return Return all Curricula in dataBase of a hacker.
+	 * Return all Curricula in dataBase of a {@link Hacker}.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Curricula}>
 	 */	
 	public Collection<Curricula> findAllByHacker(Hacker hacker) {
 		List<Curricula> res = new ArrayList<>();
@@ -211,7 +220,7 @@ public class CurriculaService {
 	
 	/**
 	 * 
-	 * @author Álvaro de la Flor Bonilla
+	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection < {@link Curricula} > not copy mode
 	 */	
 	public Collection<Curricula> findAllNotCopyByHacker(Hacker hacker) {

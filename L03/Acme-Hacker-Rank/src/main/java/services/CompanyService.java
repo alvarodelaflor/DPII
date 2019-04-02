@@ -18,6 +18,7 @@ import org.springframework.validation.Validator;
 import repositories.ActorRepository;
 import repositories.CompanyRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Company;
 import forms.RegistrationForm;
@@ -34,6 +35,9 @@ public class CompanyService {
 
 	@Autowired
 	private Validator			validator;
+
+	@Autowired
+	private ActorService		actorService;
 
 
 	// CREATE ---------------------------------------------------------------		
@@ -67,7 +71,7 @@ public class CompanyService {
 
 	private Boolean checkEmail(final Company company) {
 		Boolean res = false;
-		if (this.actorRepository.getActorByEmail(company.getEmail()) == null)
+		if (this.actorRepository.getActorByEmail(company.getEmail()).size() < 1)
 			res = true;
 		return res;
 	}
@@ -150,26 +154,44 @@ public class CompanyService {
 
 	public Company reconstructEdit(final Company company, final BindingResult binding) {
 		Company result;
+		final Company res = this.companyRepository.findOne(company.getId());
 
-		result = this.companyRepository.findOne(company.getId());
+		System.out.println("Carmen: entro en el reconstructEdict");
 
-		System.out.println(result.getName());
+		result = company;
 
+		System.out.println("Nombre: " + company.getName());
 		result.setName(company.getName());
+		System.out.println("Nombre: " + result.getName());
+
 		result.setSurname(company.getSurname());
 		result.setPhoto(company.getPhoto());
 		result.setEmail(company.getEmail());
 		result.setPhone(company.getPhone());
 		result.setAddress(company.getAddress());
 		result.setCommercialName(company.getCommercialName());
-		result.setId(company.getId());
-		result.setVersion(company.getId());
+
+		System.out.println("Carmen: voy a validar");
+
+		binding.addAllErrors(binding);
+
+		System.out.println(result);
 
 		this.validator.validate(company, binding);
 		System.out.println(binding.getAllErrors());
-		return result;
-	}
 
+		if (binding.getAllErrors().isEmpty()) {
+			res.setSurname(result.getSurname());
+			res.setPhoto(result.getPhoto());
+			res.setEmail(result.getEmail());
+			res.setPhone(result.getPhone());
+			res.setAddress(result.getAddress());
+			res.setCommercialName(result.getCommercialName());
+			res.setName(result.getName());
+		}
+
+		return res;
+	}
 	// QUERY ---------------------------------------------------------------	
 
 	public Company getCompanyByUserAccountId(final int userAccountId) {
@@ -181,15 +203,25 @@ public class CompanyService {
 	// SAVE-EDIT ---------------------------------------------------------------	
 
 	public Company saveEdit(Company company) {
-		Assert.isTrue(!this.checkEmail(company), "error.email");
 		Assert.isTrue(!this.checkEmailFormatter(company), "email.wrong");
+		Assert.isTrue(this.checkEmailEdit(company), "error.email");
+		System.out.println("hola");
 		//		if (company.getPhone().matches("^([0-9]{4,})$"))
 		//			company.setPhone("+" + //COMPLETAR//+ " " + company.getPhone());		
 		company = this.companyRepository.save(company);
 		System.out.println(company);
+
 		return company;
 	}
 
+	private Boolean checkEmailEdit(final Company company) {
+		Boolean res = false;
+		System.out.println(this.actorService.getActorByEmailE(company.getEmail()) == null);
+
+		if (this.actorService.getActorByEmailE(company.getEmail()) == null && this.actorRepository.getActorByEmail(company.getEmail()).size() <= 1)
+			res = true;
+		return res;
+	}
 	// FINDONE ---------------------------------------------------------------	
 	public Company findOne(final int id) {
 		final Company company = this.companyRepository.findOne(id);
@@ -199,6 +231,11 @@ public class CompanyService {
 	// FINDALL  ---------------------------------------------------------------	
 	public Collection<Company> findAll() {
 		return this.companyRepository.findAll();
+	}
+
+	public void delete(final Company company) {
+		Assert.isTrue(LoginService.getPrincipal().getId() == company.getUserAccount().getId());
+		this.companyRepository.delete(company);
 	}
 
 }

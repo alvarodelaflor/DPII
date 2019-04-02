@@ -17,22 +17,22 @@
 <tiles-definitions>
 
 	<definition name="company/create" extends="master.page">	
-		<put-attribute name="title" value="Registro" />
+		<put-attribute name="title" value="Registro de empresa" />
 		<put-attribute name="body" value="/views/company/create.jsp" />
 	</definition>
 	
 	<definition name="company/show" extends="master.page">	
-		<put-attribute name="title" value="Mostrar" />
+		<put-attribute name="title" value="Mostrar empresa" />
 		<put-attribute name="body" value="/views/company/show.jsp" />
 	</definition>
 	
 	<definition name="company/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar" />
+		<put-attribute name="title" value="Editar empresa" />
 		<put-attribute name="body" value="/views/company/edit.jsp" />
 	</definition>
 	
 	<definition name="company/list" extends="master.page">	
-		<put-attribute name="title" value="Listado" />
+		<put-attribute name="title" value="Listado de empresas" />
 		<put-attribute name="body" value="/views/company/list.jsp" />
 	</definition>
 	

@@ -10,9 +10,7 @@
 
 package controllers;
 
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -75,12 +74,7 @@ public class CompanyController extends AbstractController {
 				System.out.println("carmen: voy a guardar");
 				final Company a = this.companyService.saveCreate(company);
 				System.out.println(a);
-				SimpleDateFormat formatter;
-				String moment;
-				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-				moment = formatter.format(new Date());
 				result = new ModelAndView("welcome/index");
-				result.addObject("moment", moment);
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createEditModelAndView(company, "email.wrong");
@@ -149,7 +143,8 @@ public class CompanyController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
 	public ModelAndView saveEdit(Company company, final BindingResult binding) {
 		ModelAndView result;
-		System.out.println(company);
+
+		System.out.println("Company a editar" + company);
 
 		company = this.companyService.reconstructEdit(company, binding);
 
@@ -166,12 +161,21 @@ public class CompanyController extends AbstractController {
 			} catch (final Throwable oops) {
 				System.out.println(oops);
 				if (oops.getMessage().equals("email.wrong"))
-					result = this.createEditModelAndView(company, "email.wrong");
+					result = this.editModelAndView(company, "email.wrong");
 				else if (oops.getMessage().equals("error.email"))
-					result = this.createEditModelAndView(company, "error.email");
+					result = this.editModelAndView(company, "error.email");
 				else
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Company company, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("company/edit");
+		result.addObject("message", string);
+		result.addObject("company", company);
 		return result;
 	}
 
@@ -187,6 +191,38 @@ public class CompanyController extends AbstractController {
 			result.addObject("companies", companies);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody
+	Company export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Company result = new Company();
+		result = this.companyService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	//Nuevo
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int companyId) {
+		ModelAndView result;
+
+		final Company company = this.companyService.findOne(companyId);
+		System.out.println("Company encontrado: " + company);
+		if (this.companyService.findOne(companyId) == null || LoginService.getPrincipal().getId() != company.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(company, "company.null");
+
+			try {
+				this.companyService.delete(company);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
 		}
 		return result;
 	}

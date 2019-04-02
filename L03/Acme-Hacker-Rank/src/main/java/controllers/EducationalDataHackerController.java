@@ -84,6 +84,7 @@ public class EducationalDataHackerController extends AbstractController {
 		try {
 			EducationalData educationalDataDB = this.educationalDataService.findOne(educationalDataId);
 			Assert.notNull(educationalDataDB, "EducationalData not found in DB");
+			Assert.isTrue(!educationalDataDB.getIsCopy(), "Trying to edit a EducatinalData in copy mode");
 			Hacker hackerLogin = this.hackerService.getHackerLogin();
 			Assert.notNull(hackerLogin, "No hacker is login");
 			Assert.isTrue(hackerLogin.equals(educationalDataDB.getCurricula().getHacker()), "Not allow to edit not own EducationalData");
@@ -122,9 +123,10 @@ public class EducationalDataHackerController extends AbstractController {
 				Hacker hackerLogin = this.hackerService.getHackerLogin();
 				Assert.notNull(hackerLogin, "No hacker is login");
 				Assert.isTrue(educationalData != null, "educationalData.null");
+				Assert.isTrue(!educationalData.getIsCopy(), "Trying to save a EducatinalData in copy mode");
 				Assert.isTrue(this.hackerService.getHackerByCurriculaId(educationalData.getCurricula()).equals(hackerLogin), "Not allow to edit a not own EducationalData");
-				this.educationalDataService.save(educationalData);
-				result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+educationalData.getCurricula().getId());
+				EducationalData educationalDataSave = this.educationalDataService.save(educationalData);
+				result = new ModelAndView("redirect:/educationalData/show.do?educationalDataId="+educationalDataSave.getId());
 				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);

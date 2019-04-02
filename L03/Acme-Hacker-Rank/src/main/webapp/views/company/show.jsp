@@ -29,11 +29,16 @@
 				<img width="95" src="${company.photo}" alt="ERROR"/></td></tr>
     		</c:otherwise>
 		</c:choose>
-		<tr><td><spring:message code="company.name" /> <jstl:out	value="${company.name}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.surname" /> <jstl:out value="${company.surname}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.address" /> <jstl:out value="${company.address}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.email" /> <jstl:out value="${company.email}"></jstl:out></td></tr>
-		<tr><td><spring:message code="company.phone" /> <jstl:out value="${company.phone}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="company.name" /></strong> <jstl:out	value="${company.name}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="company.surname" /></strong> <jstl:out value="${company.surname}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="company.address" /></strong> <jstl:out value="${company.address}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="company.email" /></strong> <jstl:out value="${company.email}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="company.phone" /></strong> <jstl:out value="${company.phone}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="company.comercialName" /></strong> <jstl:out value="${company.commercialName}"></jstl:out></td></tr>
+
 	</table>
 </div>
 <input type="button" value="back" name="company.cancel" onclick="history.back()" />
+<acme:cancel url="/company/export.do?id=${company.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/company/delete.do?id=${company.id}" code="delete"/>

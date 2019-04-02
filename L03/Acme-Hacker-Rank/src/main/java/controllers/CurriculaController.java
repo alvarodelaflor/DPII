@@ -93,7 +93,7 @@ public class CurriculaController extends AbstractController {
 			result = new ModelAndView("curricula/show");
 			
 			Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hackerLogin!=null) {
+			if (hackerLogin!=null && curriculaDB.getHacker().equals(hackerLogin)) {
 				result.addObject("hackerLogin", true);	
 			}
 			

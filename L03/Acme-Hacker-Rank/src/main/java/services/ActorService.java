@@ -4,12 +4,12 @@ package services;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
 import repositories.ActorRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 
 @Service
@@ -34,10 +34,6 @@ public class ActorService {
 		return this.actorRepository.save(actor);
 	}
 
-	public Actor getActorByEmail(final String email) {
-		return this.actorRepository.getActorByEmail(email);
-	}
-
 	public Actor getActorByUser(final String userName) {
 		return this.actorRepository.getActorByUser(userName);
 	}
@@ -54,5 +50,17 @@ public class ActorService {
 	public Collection<Actor> getActorsThatContainsAMessage(final int messageId) {
 		return this.actorRepository.getActorsThatContainsAMessage(messageId);
 	}
+
+	// QUERYS - REGISTRO USUARIO
+	public Actor getActorByEmailE(final String email) {
+		final UserAccount user = LoginService.getPrincipal();
+		final String emailA = this.actorRepository.findByUserAccountId(user.getId()).getEmail();
+		return this.actorRepository.getActorByEmail(email, emailA);
+	}
+
+	public Collection<Actor> getActorByEmail(final String email) {
+		return this.actorRepository.getActorByEmail(email);
+	}
+	// QUERYS - REGISTRO USUARIO
 
 }

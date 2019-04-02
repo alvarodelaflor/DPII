@@ -18,7 +18,7 @@
 	
 	<!-- User accounts -->
 
-	<bean id="userAccount1" class="security.UserAccount">
+	<bean id="userAccountAdmin01" class="security.UserAccount">
 		<property name="username" value="admin" />
 		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
@@ -55,7 +55,27 @@
 	</bean>
 	
 	<!-- Other domain beans come here -->	
-	<!-- Other domain beans come here -->
+	
+	<!-- CONFIG -->
+	 <bean id="config" class="domain.Configuration">
+		<property name="systemName" value="Acme-Hacker-Rank" />
+		<property name="countryCode" value="+34"></property>
+		<property name="cacheHours" value="1" />
+		<property name="cacheAmount" value="10" /></bean>
+	<!-- CONFIG -->
+	
+	<!-- ADMIN -->
+	 <bean id="admin01" class="domain.Administrator">
+    	<property name="name" value="Admin" />
+    	<property name="surname" value="Nistrator" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="admin@admin.com" />
+        <property name="phone" value="+34123456789" />
+        <property name="address" value="Calle del Admin" />
+        <property name="userAccount" ref= "userAccountAdmin01"/>
+		<property name="creditCard"><null></null></property>
+		<property name="config" ref="config" /></bean>
+	<!-- ADMIN -->
 	
 	<!-- HACKER -->
 	 <bean id="hacker01" class="domain.Hacker">
@@ -68,8 +88,6 @@
         <property name="userAccount" ref= "userAccount4"/>
 		<property name="creditCard"><null></null></property></bean>
 	<!-- HACKER -->
-	
-	
 	
 	<!-- COMPANY -->
 	<bean id="company01" class="domain.Company">
@@ -94,7 +112,7 @@
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile01" />
         <property name="description" value= "description01"/>     
-        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
     </bean>
     
@@ -107,7 +125,7 @@
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile02" />
         <property name="description" value= "description02"/>     
-        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
     </bean>
     
@@ -120,10 +138,52 @@
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile03" />
         <property name="description" value= "description03"/>     
-        <property name="deadline" value= "2018/11/10 08:00"/>      
+        <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>       
     </bean>
 	<!-- POSITION  -->
+	
+		<!-- CURRICULA -->
+	<bean id="curricula01" class="domain.Curricula">
+    	<property name="name" value="name01" />
+    	<property name="statement" value="statement01" />
+		<property name="phone" value="123456" />
+		<property name="linkGitHub" value="https://linkGitHub01" />
+        <property name="linkLinkedin" value="https://linkLinkedin01" />    
+        <property name="miscellaneous" value= "miscellaneous01"/>   
+        <property name="hacker" ref= "hacker01"/> 
+        <property name="isCopy" value="true"/>          
+    </bean>
+	<!-- CURRICULA -->
+	
+	<!-- PROBLEM -->
+	<bean id="problem01" class="domain.Problem">
+    	<property name="title" value="title01" />
+    	<property name="statement" value="statement01" />
+		<property name="hint" value="hint01" />
+		<property name="draftMode" value="true" />
+        <property name="attachments" value="attachments01" />    
+    </bean>
+	<!-- PROBLEM -->
+	
+	<!-- APPLICATION -->
+	<bean id="application01" class="domain.Application">
+    	<property name="response" value="response01" />
+    	<property name="link" value="https://link01" />
+		<property name="status" value="ACCEPTED" />
+		<property name="position" ref="position01" />
+        <property name="problem" ref="problem01" />    
+        <property name="hacker" ref= "hacker01"/>   
+        <property name="curricula" ref= "curricula01"/>           
+    </bean>
+	<!-- APPLICATION -->
+	
+
+
+	
+	
+
+	
 	
 		
 	
