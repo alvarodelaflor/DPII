@@ -28,4 +28,17 @@
 		<tr><td><strong><spring:message code="position.title"/>: </strong><jstl:out value="${position.title}"></jstl:out></td></tr>
 	</table>
 </div>
+
+<security:authorize access="hasRole('HACKER')">
+
+		<c:choose>
+    		<c:when test="${hasProblem == true}">
+				<input type="button" value="<spring:message code='position.create' />" onclick="window.location = 'hacker/application/create.do'" /><br>				
+    		</c:when>    
+    		<c:otherwise>
+    	</c:otherwise>
+    	</c:choose>
+
+</security:authorize>
+
 <input type="button" value="back" name="position.cancel" onclick="history.back()" />

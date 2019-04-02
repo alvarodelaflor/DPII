@@ -59,12 +59,6 @@ public class PositionService {
 		return p;
 	}
 
-	// countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse ---------------------------------------------------------------
-	public Integer countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(final int id) {
-		final Integer p = this.positionRepository.countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id);
-		return p;
-	}
-
 	// findAllPositionByCompany ---------------------------------------------------------------
 	public Collection<Position> findAllPositionWithStatusTrue() {
 		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrue();

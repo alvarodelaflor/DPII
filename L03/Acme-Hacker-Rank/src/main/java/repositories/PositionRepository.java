@@ -86,10 +86,4 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select count(p) from Position p where p.ticker = ?1")
 	public int countByTicker(String ticker);
 
-	// TODO: ESTA ES LA QUERIPONSI
-	@Query("select count(p) from Application a join a.problem p where p.finalMode=1 and p.position.status=1 and p.position.cancel=0 and p.position.id=?1 and a.status!='ACCEPTED'")
-	public int countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(int positionId);
-	// select distinct count(p) from Application a join a.problem p where p.finalMode=1 and p.position.status=1 and p.position.cancel=0 and p.position.id=28 and a.status!='ACCEPTED'
-
-	// select count(a.problem) from Application a where a.position.status=true and a.position.cancel=false and a.problem.finalMode=true and a.status!='ACCEPTED' and a.position.id=28 and a.problem.position.id=28
 }

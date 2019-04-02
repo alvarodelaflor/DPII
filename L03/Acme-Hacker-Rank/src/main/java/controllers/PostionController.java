@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.PositionFormService;
 import services.PositionService;
+import services.ProblemService;
 import domain.Position;
 import forms.PositionForm;
 
@@ -34,6 +35,9 @@ public class PostionController extends AbstractController {
 
 	@Autowired
 	private PositionFormService	positionFormService;
+
+	@Autowired
+	private ProblemService		problemService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -85,12 +89,26 @@ public class PostionController extends AbstractController {
 
 		ModelAndView result;
 		final Position position;
+
+		Boolean hasProblem = false;
+
 		try {
 			position = this.positionService.findOne(id);
 			System.out.println(position);
 			Assert.notNull(position);
+
+			try {
+				System.out.println(this.problemService.countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id));
+				if (this.problemService.countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id) > 0)
+
+					hasProblem = true;
+			} catch (final Exception e) {
+				hasProblem = false;
+			}
+
 			result = new ModelAndView("position/show");
 			result.addObject("position", position);
+			result.addObject("hasProblem", hasProblem);
 			result.addObject("requestURI", "position/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
