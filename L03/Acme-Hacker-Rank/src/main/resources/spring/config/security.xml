@@ -92,6 +92,8 @@
 		<!-- HIPONA -->
 		<security:intercept-url pattern="/position/company/list.do" access="hasRole('COMPANY')" />
 		<security:intercept-url pattern="/position/company/show.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/create.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/edit.do" access="hasRole('COMPANY')" /> 
 		<!-- HIPONA -->
 		
 		<!-- FERRETE -->
