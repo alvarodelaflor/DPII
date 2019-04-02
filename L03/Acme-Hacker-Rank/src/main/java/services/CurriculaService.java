@@ -138,6 +138,7 @@ public class CurriculaService {
 
 		if (curricula.getId() == 0) {
 			curricula.setHacker(this.hackerService.getHackerLogin());
+			curricula.setLinkGitHub("https://www.github.com/" + curricula.getLinkGitHub().replaceAll("https://www.github.com/", ""));
 			curricula.setIsCopy(false);
 			result = curricula;
 		} else {
@@ -146,6 +147,7 @@ public class CurriculaService {
 			curricula.setId(result.getId());
 			curricula.setVersion(result.getVersion());
 			curricula.setHacker(result.getHacker());
+			curricula.setLinkGitHub("https://www.github.com/" + curricula.getLinkGitHub().replaceAll("https//www.github.com/", ""));
 			curricula.setIsCopy(false);
 			result = curricula;
 		}

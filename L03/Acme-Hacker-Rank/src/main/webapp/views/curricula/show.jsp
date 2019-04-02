@@ -60,7 +60,7 @@
 			</legend>
 			<p><strong>Hacker <spring:message code="hacker.name" /></strong><jstl:out value="${curricula.hacker}"></jstl:out></p>
 			<p><strong><spring:message code="curricula.phone" /></strong><jstl:out value="${curricula.phone}"></jstl:out></p>
-			<p><strong><spring:message code="curricula.linkGitHub" /></strong><a href =<jstl:out value="${curricula.linkGitHub}"></jstl:out>><jstl:out value="${curricula.linkGitHub}"></jstl:out></a></p>
+			<p><strong><spring:message code="curricula.linkGitHub" /> </strong><a href =<jstl:out value="${curricula.linkGitHub}"></jstl:out>><jstl:out value="${curricula.linkGitHub}"></jstl:out></a></p>
 			<p><strong><spring:message code="curricula.linkLinkedin" /></strong><a href =<jstl:out value="${curricula.linkLinkedin}"></jstl:out>><jstl:out value="${curricula.linkLinkedin}"></jstl:out></a></p>
 		</fieldset>
 	</fieldset>
