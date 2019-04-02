@@ -6,10 +6,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.validation.Validator;
 
 import repositories.ApplicationRepository;
+import security.LoginService;
 import domain.Application;
 
 @Service
@@ -21,6 +25,12 @@ public class ApplicationService {
 
 	@Autowired
 	private HackerService			hackerService;
+
+	@Autowired
+	private CurriculaService		curriculaService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	// DashBoard:
@@ -67,4 +77,23 @@ public class ApplicationService {
 	public Application findOne(final int id) {
 		return this.applicationRepository.findOne(id);
 	}
+
+	// CREATE ---------------------------------------------------------------		
+	public Application create() {
+		final Application application = new Application();
+
+		application.setCreationMoment(LocalDateTime.now().toDate());
+		application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
+
+		Assert.isTrue(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()) != null);
+
+		return application;
+	}
+	
+	// SAVE ---------------------------------------------------------------		
+	public Application save(final Application a) {
+		return this.applicationRepository.save(a);
+	}
+
+
 }

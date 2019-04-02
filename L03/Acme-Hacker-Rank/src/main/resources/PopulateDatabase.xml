@@ -155,7 +155,7 @@
         <property name="linkLinkedin" value="https://linkLinkedin01" />    
         <property name="miscellaneous" value= "miscellaneous01"/>   
         <property name="hacker" ref= "hacker01"/> 
-        <property name="isCopy" value="true"/>          
+        <property name="isCopy" value="false"/>          
     </bean>
 	<!-- CURRICULA -->
 	

@@ -48,7 +48,8 @@
 		
 		<security:intercept-url pattern="/application/hacker/list.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/application/hacker/show.do" access="hasRole('HACKER')" />
-		
+		<security:intercept-url pattern="/application/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/save.do" access="hasRole('HACKER')" />
 		<!-- CARMEM -->
 		
 		<!-- ANTONIO S -->
