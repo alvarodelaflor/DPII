@@ -225,6 +225,14 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.26</version>
 		</dependency>
+		
+		<!-- SAFEHTML -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.6.1</version>
+		</dependency>		
+		<!-- SAFEHTML -->
 
 		<!-- Hibernate -->
 
