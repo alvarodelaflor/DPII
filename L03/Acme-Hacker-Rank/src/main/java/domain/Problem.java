@@ -11,7 +11,7 @@ public class Problem extends DomainEntity {
 
 	private String		title, statement, hint, attachments;
 
-	private Application	application;
+	private Position	position;
 
 
 	@NotBlank
@@ -50,12 +50,11 @@ public class Problem extends DomainEntity {
 	}
 
 	@ManyToOne(optional = false)
-	public Application getApplication() {
-		return this.application;
+	public Position getPosition() {
+		return this.position;
 	}
 
-	public void setApplication(final Application application) {
-		this.application = application;
+	public void setPosition(final Position position) {
+		this.position = position;
 	}
-
 }
