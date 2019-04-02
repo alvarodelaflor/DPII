@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -28,6 +27,16 @@ public class Position extends DomainEntity {
 
 	private Company	company;
 
+	private Boolean	cancel;
+
+
+	public Boolean getCancel() {
+		return this.cancel;
+	}
+
+	public void setCancel(final Boolean cancel) {
+		this.cancel = cancel;
+	}
 
 	@NotBlank
 	public String getTicker() {

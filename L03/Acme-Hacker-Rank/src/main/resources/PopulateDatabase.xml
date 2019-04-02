@@ -113,7 +113,8 @@
         <property name="profile" value="profile01" />
         <property name="description" value= "description01"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
-        <property name="company" ref= "company01"/>       
+        <property name="company" ref= "company01"/>
+		<property name="cancel" value="false" />       
     </bean>
     
     <bean id="position02" class="domain.Position">
@@ -126,7 +127,8 @@
         <property name="profile" value="profile02" />
         <property name="description" value= "description02"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
-        <property name="company" ref= "company01"/>       
+        <property name="company" ref= "company01"/>
+		<property name="cancel" value="false" />       
     </bean>
     
     <bean id="position03" class="domain.Position">
@@ -139,7 +141,8 @@
         <property name="profile" value="profile03" />
         <property name="description" value= "description03"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
-        <property name="company" ref= "company01"/>       
+        <property name="company" ref= "company01"/>  
+		<property name="cancel" value="false" />     
     </bean>
 	<!-- POSITION  -->
 	
@@ -161,10 +164,29 @@
     	<property name="title" value="title01" />
     	<property name="statement" value="statement01" />
 		<property name="hint" value="hint01" />
-		<property name="draftMode" value="true" />
+		<property name="finalMode" value="true" />
         <property name="attachments" value="attachments01" />  
         <property name="position" ref= "position01"/> 
     </bean>
+    
+    <bean id="problem02" class="domain.Problem">
+    	<property name="title" value="title02" />
+    	<property name="statement" value="statement02" />
+		<property name="hint" value="hint02" />
+		<property name="finalMode" value="true" />
+        <property name="attachments" value="attachments02" />  
+        <property name="position" ref= "position01"/> 
+    </bean>
+    
+    <bean id="problem03" class="domain.Problem">
+    	<property name="title" value="title03" />
+    	<property name="statement" value="statement03" />
+		<property name="hint" value="hint03" />
+		<property name="finalMode" value="true" />
+        <property name="attachments" value="attachments03" />  
+        <property name="position" ref= "position01"/> 
+    </bean>
+    
 	<!-- PROBLEM -->
 	
 	<!-- APPLICATION -->
@@ -174,6 +196,56 @@
 		<property name="status" value="ACCEPTED" />
 		<property name="position" ref="position01" />
         <property name="problem" ref="problem01" />    
+        <property name="hacker" ref= "hacker01"/>   
+        <property name="curricula" ref= "curricula01"/>           
+    </bean>
+    
+    <bean id="application02" class="domain.Application">
+    	<property name="response" value="response02" />
+    	<property name="link" value="https://link02" />
+		<property name="status" value="PENDING" />
+		<property name="position" ref="position01" />
+        <property name="problem" ref="problem01" />    
+        <property name="hacker" ref= "hacker01"/>   
+        <property name="curricula" ref= "curricula01"/>           
+    </bean>
+    
+    <bean id="application03" class="domain.Application">
+    	<property name="response" value="response03" />
+    	<property name="link" value="https://link03" />
+		<property name="status" value="REJECTED" />
+		<property name="position" ref="position01" />
+        <property name="problem" ref="problem01" />    
+        <property name="hacker" ref= "hacker01"/>   
+        <property name="curricula" ref= "curricula01"/>           
+    </bean>
+    
+    <bean id="application01" class="domain.Application">
+    	<property name="response" value="response01" />
+    	<property name="link" value="https://link01" />
+		<property name="status" value="ACCEPTED" />
+		<property name="position" ref="position01" />
+        <property name="problem" ref="problem02" />    
+        <property name="hacker" ref= "hacker01"/>   
+        <property name="curricula" ref= "curricula01"/>           
+    </bean>
+    
+    <bean id="application02" class="domain.Application">
+    	<property name="response" value="response02" />
+    	<property name="link" value="https://link02" />
+		<property name="status" value="PENDING" />
+		<property name="position" ref="position01" />
+        <property name="problem" ref="problem02" />    
+        <property name="hacker" ref= "hacker01"/>   
+        <property name="curricula" ref= "curricula01"/>           
+    </bean>
+    
+    <bean id="application03" class="domain.Application">
+    	<property name="response" value="response03" />
+    	<property name="link" value="https://link03" />
+		<property name="status" value="REJECTED" />
+		<property name="position" ref="position01" />
+        <property name="problem" ref="problem03" />    
         <property name="hacker" ref= "hacker01"/>   
         <property name="curricula" ref= "curricula01"/>           
     </bean>

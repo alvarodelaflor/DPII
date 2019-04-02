@@ -53,11 +53,14 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	/////////////////////////////////////////////////////////////////////////////////
 
-	@Query("select p from Position p where p.company.id =?1 and p.status=true")
-	Collection<Position> findAllPositionStatusTrueByCompany(int companyId);
+	@Query("select p from Position p where p.company.id =?1 and p.status=true and p.cancel=false")
+	Collection<Position> findAllPositionStatusTrueCancelFalseByCompany(int companyId);
 
 	@Query("select p from Position p where p.status=true")
 	Collection<Position> findAllPositionWithStatusTrue();
+
+	@Query("select p from Position p where p.status=true and p.cancel=false")
+	Collection<Position> findAllPositionWithStatusTrueCancelFalse();
 
 	@Query("select p from Position p where p.description like %?1% and p.status=1")
 	Collection<Position> findWithDescription(String description);
@@ -83,4 +86,7 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select count(p) from Position p where p.ticker = ?1")
 	public int countByTicker(String ticker);
 
+	@Query("select count(p)from Application a join a.problem p where p.finalMode=1 and p.position.status=1 and p.position.cancel=0 and p.position.id=?1 and a.status!='ACCEPTED'")
+	public int countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(int positionId);
+	// select count(p)from Application a join a.problem p where p.finalMode=1 and p.position.status=1 and p.position.cancel=0 and p.position.id=?1 and a.status='ACCEPTED'
 }

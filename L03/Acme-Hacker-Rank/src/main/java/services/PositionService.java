@@ -46,10 +46,22 @@ public class PositionService {
 		return this.positionRepository.findAll();
 	}
 
-	// findAllPositionByCompany ---------------------------------------------------------------
-	public Collection<Position> findAllPositionStatusTrueByCompany(final int companyId) {
+	// findAllPositionStatusTrueCancelFalseByCompany ---------------------------------------------------------------
+	public Collection<Position> findAllPositionStatusTrueCancelFalseByCompany(final int companyId) {
 		System.out.println(companyId);
-		final Collection<Position> p = this.positionRepository.findAllPositionStatusTrueByCompany(companyId);
+		final Collection<Position> p = this.positionRepository.findAllPositionStatusTrueCancelFalseByCompany(companyId);
+		return p;
+	}
+
+	// findAllPositionWithStatusTrueCancelFalse ---------------------------------------------------------------
+	public Collection<Position> findAllPositionWithStatusTrueCancelFalse() {
+		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrueCancelFalse();
+		return p;
+	}
+
+	// countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse ---------------------------------------------------------------
+	public Integer countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(final int id) {
+		final Integer p = this.positionRepository.countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id);
 		return p;
 	}
 

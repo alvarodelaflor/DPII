@@ -26,6 +26,10 @@
 	
 		<display:column titleKey="application.Show">
 			<a href="application/hacker/show.do?id=${row.id}"><spring:message code="application.show" /></a></display:column>
+			
+		<display:column titleKey="application.edit">
+			<a href="application/hacker/edit.do?id=${row.id}"><spring:message code="application.edit" /></a>	
+		</display:column>
 		
 		<display:column property="status" titleKey="application.status"></display:column>
 		
@@ -39,6 +43,7 @@
 			<a href="problem/show.do?Id=${row.problem.id}"><jstl:out value="${row.problem.title}"/></a></display:column>
 	
 	</display:table>
+	
 					
 	<acme:cancel url=" " code="application.back"/>
 
