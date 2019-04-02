@@ -14,6 +14,7 @@ package controllers;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -21,13 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
+import domain.MiscellaneousAttachment;
 import domain.PositionData;
 import services.CurriculaService;
 import services.EducationalDataService;
 import services.HackerService;
+import services.MiscellaneousAttachmentService;
 import services.PositionDataService;
 
 /*
@@ -52,6 +56,8 @@ public class CurriculaController extends AbstractController {
 	@Autowired
 	private PositionDataService positionDataService;
 
+	@Autowired
+	private MiscellaneousAttachmentService miscellaneousAttachmentService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -93,8 +99,10 @@ public class CurriculaController extends AbstractController {
 			result = new ModelAndView("curricula/show");
 			
 			Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hackerLogin!=null && curriculaDB.getHacker().equals(hackerLogin)) {
+			if (hackerLogin!=null && curriculaDB.getHacker().equals(hackerLogin) && curriculaDB.getIsCopy().equals(false)) {
 				result.addObject("hackerLogin", true);	
+				MiscellaneousAttachment miscellaneousAttachment = this.miscellaneousAttachmentService.createWithHistory(curriculaDB);
+				result.addObject("miscellaneousAttachment", miscellaneousAttachment);
 			}
 			
 			result.addObject("curricula", curriculaDB);
@@ -104,6 +112,9 @@ public class CurriculaController extends AbstractController {
 			
 			List<PositionData> positionDatas = (List<PositionData>) this.positionDataService.getPositionDataFromCurricula(curriculaDB);
 			result.addObject("positionDatas", positionDatas);
+			
+			List<MiscellaneousAttachment> miscellaneousAttachments = (List<MiscellaneousAttachment>) this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
+			result.addObject("miscellaneousAttachments", miscellaneousAttachments);
 			
 			result.addObject("requestURI", "hacker/show.do");
 		} catch (final Exception e) {

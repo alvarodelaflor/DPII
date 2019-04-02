@@ -79,7 +79,6 @@ public class Curricula extends DomainEntity {
 		this.linkLinkedin = linkLinkedin;
 	}
 
-	@NotBlank
 	@SafeHtml
 	public String getMiscellaneous() {
 		return this.miscellaneous;

@@ -86,6 +86,10 @@
 		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/delete.do" access="hasRole('HACKER')" />
 		
 		<security:intercept-url pattern="/positionData/hacker/create.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/positionData/hacker/edit.do" access="hasRole('HACKER')" />

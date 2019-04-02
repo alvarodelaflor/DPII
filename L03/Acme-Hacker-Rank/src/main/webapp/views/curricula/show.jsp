@@ -58,7 +58,24 @@
 				<i><spring:message code="curricula.miscellaneous" /></i><img width="35" height="35" src="./images/att.png" alt="${row1.id}" />
 			</legend>
 			<p><strong><spring:message code="curricula.miscellaneous" /> </strong><jstl:out value="${curricula.miscellaneous}"></jstl:out></p>
-			<p><strong><spring:message code="curricula.miscellaneousAtttachments" /> </strong><jstl:out value="${curricula.miscellaneousAtttachments}"></jstl:out></p>
+			<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/hacker/edit.do">
+          		<form:hidden path="id"/>
+          		<form:hidden path="version"/>
+          		<form:hidden path="curriculaM"/>
+          		<form:hidden path="isCopy"/>
+          		<acme:textbox path="attachment" code="curricula.attachment"/>
+          		<acme:submit name="save" code="save2"/>
+			</form:form>
+			<display:table name="miscellaneousAttachments" id="row0" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<c:choose>
+					<c:when test="${hackerLogin==true}">
+						<display:column titleKey="curricula.delete">
+							<a href="miscellaneousAttachment/hacker/delete.do?miscellaneousAttachmentId=${row1.id}"><img width="35" height="35" src="./images/delete.png" alt="${row0.id}" /></a>	
+						</display:column>
+					</c:when>
+				</c:choose>
+				<display:column property="attachment" titleKey="curricula.attachment"></display:column>
+			</display:table>
 		</fieldset>
 		<fieldset>
 			<legend>
