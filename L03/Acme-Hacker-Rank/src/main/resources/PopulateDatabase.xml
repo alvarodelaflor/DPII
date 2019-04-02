@@ -220,9 +220,9 @@
         <property name="curricula" ref= "curricula01"/>           
     </bean>
     
-    <bean id="application01" class="domain.Application">
-    	<property name="response" value="response01" />
-    	<property name="link" value="https://link01" />
+    <bean id="application04" class="domain.Application">
+    	<property name="response" value="response04" />
+    	<property name="link" value="https://link04" />
 		<property name="status" value="ACCEPTED" />
 		<property name="position" ref="position01" />
         <property name="problem" ref="problem02" />    
@@ -230,9 +230,9 @@
         <property name="curricula" ref= "curricula01"/>           
     </bean>
     
-    <bean id="application02" class="domain.Application">
-    	<property name="response" value="response02" />
-    	<property name="link" value="https://link02" />
+    <bean id="application05" class="domain.Application">
+    	<property name="response" value="response05" />
+    	<property name="link" value="https://link05" />
 		<property name="status" value="PENDING" />
 		<property name="position" ref="position01" />
         <property name="problem" ref="problem02" />    
@@ -240,9 +240,9 @@
         <property name="curricula" ref= "curricula01"/>           
     </bean>
     
-    <bean id="application03" class="domain.Application">
-    	<property name="response" value="response03" />
-    	<property name="link" value="https://link03" />
+    <bean id="application06" class="domain.Application">
+    	<property name="response" value="response06" />
+    	<property name="link" value="https://link06" />
 		<property name="status" value="REJECTED" />
 		<property name="position" ref="position01" />
         <property name="problem" ref="problem03" />    
