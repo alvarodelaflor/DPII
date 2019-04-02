@@ -42,3 +42,6 @@
 </div>
 </security:authorize>
 <acme:cancel url=" " code="hacker.cancel"/>
+<acme:cancel url="/hacker/export.do?id=${hacker.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/hacker/delete.do?id=${hacker.id}" code="delete"/>
