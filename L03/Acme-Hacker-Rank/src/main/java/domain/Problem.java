@@ -2,6 +2,7 @@
 package domain;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -9,9 +10,9 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Entity
 public class Problem extends DomainEntity {
 
-	private String	title, statement, hint, attachments;
+	private String		title, statement, hint, attachments;
 
-	private Boolean	draftMode;
+	private Boolean		draftMode;
 	private Position	position;
 
 
