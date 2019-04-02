@@ -53,7 +53,13 @@
 		</c:choose>
 		<p><strong><spring:message code="curricula.name" /></strong><jstl:out value="${curricula.name}"></jstl:out></p>
 		<p><strong><spring:message code="curricula.statement" /></strong><jstl:out value="${curricula.statement}"></jstl:out></p>
-		<p><strong><spring:message code="curricula.miscellaneous" /></strong><jstl:out value="${curricula.miscellaneous}"></jstl:out></p>
+		<fieldset>
+			<legend>
+				<i><spring:message code="curricula.miscellaneous" /></i><img width="35" height="35" src="./images/att.png" alt="${row1.id}" />
+			</legend>
+			<p><strong><spring:message code="curricula.miscellaneous" /> </strong><jstl:out value="${curricula.miscellaneous}"></jstl:out></p>
+			<p><strong><spring:message code="curricula.miscellaneousAtttachments" /> </strong><jstl:out value="${curricula.miscellaneousAtttachments}"></jstl:out></p>
+		</fieldset>
 		<fieldset>
 			<legend>
 				<i><spring:message code="curricula.contact" /></i><img width="35" height="35" src="./images/phone.png" alt="${row1.id}" />	

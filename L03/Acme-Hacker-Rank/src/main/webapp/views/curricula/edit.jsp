@@ -34,6 +34,7 @@
           	<acme:textbox path="linkGitHub" code="curricula.nameGitHub"/>
           	<acme:textbox path="linkLinkedin" code="curricula.linkLinkedin"/>
           	<acme:textbox path="miscellaneous" code="curricula.miscellaneous"/>
+          	<acme:textbox path="miscellaneousAtttachments" code="curricula.miscellaneousAtttachments"/>
           	<acme:submit name="save" code="save"/>
           	<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
 		</form:form>
