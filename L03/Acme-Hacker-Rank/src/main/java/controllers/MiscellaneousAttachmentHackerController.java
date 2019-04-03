@@ -101,7 +101,7 @@ public class MiscellaneousAttachmentHackerController extends AbstractController 
 //	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView edit(MiscellaneousAttachment miscellaneousAttachment, final BindingResult binding) {
+	public ModelAndView edit(@Valid MiscellaneousAttachment miscellaneousAttachment, final BindingResult binding) {
 		ModelAndView result;
 		
 		if (binding.hasErrors()) {
@@ -111,13 +111,18 @@ public class MiscellaneousAttachmentHackerController extends AbstractController 
 			result.addObject("curricula", miscellaneousAttachment.getCurriculaM());
 		} else
 			try {
-				Hacker hackerLogin = this.hackerService.getHackerLogin();
-				Assert.notNull(hackerLogin, "No hacker is login");
-				Assert.isTrue(miscellaneousAttachment != null, "miscellaneousAttachment.null");
-				Assert.isTrue(this.hackerService.getHackerByCurriculaId(miscellaneousAttachment.getCurriculaM()).equals(hackerLogin), "Not allow to edit a not own MiscellaneousAttachment");
-				MiscellaneousAttachment miscellaneousAttachmentSave = this.miscellaneousAttachmentService.save(miscellaneousAttachment);
-				result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+miscellaneousAttachmentSave.getCurriculaM().getId());
-				result.addObject("requestURI", "curricula/list.do");
+				if (miscellaneousAttachment.getAttachment()!= null && miscellaneousAttachment.getAttachment().length()>0) {
+					Hacker hackerLogin = this.hackerService.getHackerLogin();
+					Assert.notNull(hackerLogin, "No hacker is login");
+					Assert.isTrue(miscellaneousAttachment != null, "miscellaneousAttachment.null");
+					Assert.isTrue(this.hackerService.getHackerByCurriculaId(miscellaneousAttachment.getCurriculaM()).equals(hackerLogin), "Not allow to edit a not own MiscellaneousAttachment");
+					MiscellaneousAttachment miscellaneousAttachmentSave = this.miscellaneousAttachmentService.save(miscellaneousAttachment);
+					result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+miscellaneousAttachmentSave.getCurriculaM().getId());
+					result.addObject("requestURI", "curricula/list.do");	
+				} else {
+					result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+miscellaneousAttachment.getCurriculaM().getId());
+					result.addObject("requestURI", "curricula/list.do");						
+				}
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);
 				result = new ModelAndView("miscellaneousAttachment/hacker/edit");
