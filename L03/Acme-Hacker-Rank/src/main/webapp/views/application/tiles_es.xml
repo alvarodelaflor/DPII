@@ -21,4 +21,19 @@
 		<put-attribute name="body" value="/views/application/list.jsp" />
 	</definition>
 	
+	<definition name="application/hacker/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar aplicaión" />
+		<put-attribute name="body" value="/views/application/show.jsp" />
+	</definition>
+	
+	<definition name="application/hacker/create" extends="master.page">	
+		<put-attribute name="title" value="Mostrar encargos" />
+		<put-attribute name="body" value="/views/position/show.jsp" />
+	</definition>
+	
+	<definition name="application/hacker/save" extends="master.page">	
+		<put-attribute name="title" value="Listado de aplicaciones" />
+		<put-attribute name="body" value="/views/application/list.jsp" />
+	</definition>
+	
 </tiles-definitions>

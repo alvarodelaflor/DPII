@@ -31,6 +31,9 @@ public class PositionService {
 	private CompanyService		companyService;
 
 	@Autowired
+	private ProblemService		problemService;
+
+	@Autowired
 	private Validator			validator;
 
 
@@ -43,10 +46,16 @@ public class PositionService {
 		return this.positionRepository.findAll();
 	}
 
-	// findAllPositionByCompany ---------------------------------------------------------------
-	public Collection<Position> findAllPositionStatusTrueByCompany(final int companyId) {
+	// findAllPositionStatusTrueCancelFalseByCompany ---------------------------------------------------------------
+	public Collection<Position> findAllPositionStatusTrueCancelFalseByCompany(final int companyId) {
 		System.out.println(companyId);
-		final Collection<Position> p = this.positionRepository.findAllPositionStatusTrueByCompany(companyId);
+		final Collection<Position> p = this.positionRepository.findAllPositionStatusTrueCancelFalseByCompany(companyId);
+		return p;
+	}
+
+	// findAllPositionWithStatusTrueCancelFalse ---------------------------------------------------------------
+	public Collection<Position> findAllPositionWithStatusTrueCancelFalse() {
+		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrueCancelFalse();
 		return p;
 	}
 
@@ -149,15 +158,33 @@ public class PositionService {
 		return loggedId == ownerId;
 	}
 
-	public Position reconstructCreate(final Position position, final BindingResult binding) {
-		// We are creating so position id must be 0
-		Assert.isTrue(position.getId() == 0);
-		final Position res = position;
-		final Company owner = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId());
+	public Position reconstruct(final Position position, final BindingResult binding) {
+		Position res = this.create();
+		if (position.getId() == 0) {
+			res = position;
+			final Company owner = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId());
 
-		res.setCompany(owner);
-		res.setTicker(this.getTickerForCompany(owner));
+			res.setCompany(owner);
+			res.setStatus(false);
+			res.setTicker(this.getTickerForCompany(owner));
+		} else {
+			final Position dbPosition = this.positionRepository.findOne(position.getId());
+			// These we recover from db
+			res.setId(dbPosition.getId());
+			res.setVersion(dbPosition.getVersion());
+			res.setCompany(dbPosition.getCompany());
+			res.setTicker(dbPosition.getTicker());
 
+			// These we want to modify
+			res.setDeadline(position.getDeadline());
+			res.setDescription(position.getDescription());
+			res.setProfile(position.getProfile());
+			res.setSalary(position.getSalary());
+			res.setSkills(position.getSkills());
+			res.setStatus(position.getStatus());
+			res.setTechs(position.getTechs());
+			res.setTitle(position.getTitle());
+		}
 		this.validator.validate(res, binding);
 		return res;
 	}
@@ -185,11 +212,20 @@ public class PositionService {
 	}
 
 	public void save(final Position pos) {
-		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"));
-		// TODO: Control final mode logic
-		if (pos.getId() != 0)
-			// This means position exists so we must be the owner
-			this.checkPositionOwner(pos.getId());
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"), "Logged user is not a company");
+		if (pos.getId() != 0) {
+			// Position exists so we must be the owner
+			Assert.isTrue(this.checkPositionOwner(pos.getId()));
+			final Position dbPosition = this.positionRepository.findOne(pos.getId());
+			// This has to be in draft mode
+			Assert.isTrue(!dbPosition.getStatus());
+
+			// In case we are setting this as final, we have to have at least 2 problems
+			if (pos.getStatus()) {
+				final int problemCount = this.problemService.getProblemCount(pos.getId());
+				Assert.isTrue(problemCount >= 2, "Position can't be setted to final mode because it has less than 2 problems");
+			}
+		}
 		this.positionRepository.save(pos);
 	}
 	public String findCompanyWithMorePositions() {

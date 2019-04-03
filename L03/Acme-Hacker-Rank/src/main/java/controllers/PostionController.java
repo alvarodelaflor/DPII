@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.PositionFormService;
 import services.PositionService;
+import services.ProblemService;
 import domain.Position;
 import forms.PositionForm;
 
@@ -34,6 +35,9 @@ public class PostionController extends AbstractController {
 
 	@Autowired
 	private PositionFormService	positionFormService;
+
+	@Autowired
+	private ProblemService		problemService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -49,7 +53,7 @@ public class PostionController extends AbstractController {
 		try {
 			System.out.println("entro");
 			System.out.println(id);
-			final Collection<Position> positions = this.positionService.findAllPositionStatusTrueByCompany(id);
+			final Collection<Position> positions = this.positionService.findAllPositionStatusTrueCancelFalseByCompany(id);
 			System.out.println(positions);
 			result = new ModelAndView("position/listCompany");
 			result.addObject("positions", positions);
@@ -67,7 +71,7 @@ public class PostionController extends AbstractController {
 		try {
 			final PositionForm positionForm = this.positionFormService.create();
 			System.out.println("entro");
-			final Collection<Position> positions = this.positionService.findAllPositionWithStatusTrue();
+			final Collection<Position> positions = this.positionService.findAllPositionWithStatusTrueCancelFalse();
 			System.out.println(positions);
 			result = new ModelAndView("position/list");
 			result.addObject("positions", positions);
@@ -85,12 +89,26 @@ public class PostionController extends AbstractController {
 
 		ModelAndView result;
 		final Position position;
+
+		Boolean hasProblem = false;
+
 		try {
 			position = this.positionService.findOne(id);
 			System.out.println(position);
 			Assert.notNull(position);
+
+			try {
+				System.out.println(this.problemService.countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id));
+				if (this.problemService.countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id) > 0)
+
+					hasProblem = true;
+			} catch (final Exception e) {
+				hasProblem = false;
+			}
+
 			result = new ModelAndView("position/show");
 			result.addObject("position", position);
+			result.addObject("hasProblem", hasProblem);
 			result.addObject("requestURI", "position/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

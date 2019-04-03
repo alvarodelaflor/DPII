@@ -26,6 +26,44 @@
 		<tr><td><strong><spring:message code="position.skills"/>: </strong><jstl:out value="${position.skills}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="position.techs"/>: </strong><jstl:out value="${position.techs}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="position.title"/>: </strong><jstl:out value="${position.title}"></jstl:out></td></tr>
+
+<security:authorize access="hasRole('HACKER')">
+		<c:choose>
+    		<c:when test="${hasProblem == true}">
+				<input type="button" value="<spring:message code='position.create' />" onclick="window.location = 'application/hacker/create.do?id=${position.id}'" /><br>				
+    		
+    		</c:when>    
+    	</c:choose>
+    	
+    	<c:choose>
+    					<c:when test="${res == true}">
+    						<div>
+							    	<form:form class="formularioEdicion" method="GET" modelAttribute="application" action="application/hacker/save.do">
+							          	    						
+							          	<spring:message code='application.curricula' />
+							      		<form:select path="curricula" >
+											<form:options items="${curriculas}" itemLabel="name" itemValue="id"/>
+										</form:select>
+										
+										<acme:textbox code="position.application" path="position" />
+
+							          	<acme:submit name="save" code="application.save"/>
+									</form:form>
+							</div>
+    					
+    					</c:when>    
+    					<c:otherwise> 
+			    					<c:choose>
+			    					<c:when test="${res == false}">
+	
+											<spring:message code='application.sorry.create' />
+			    					
+			    					</c:when>    
+			    					</c:choose>   					
+    					</c:otherwise>
+    					</c:choose>
+</security:authorize>
 	</table>
 </div>
+
 <input type="button" value="back" name="position.cancel" onclick="history.back()" />
