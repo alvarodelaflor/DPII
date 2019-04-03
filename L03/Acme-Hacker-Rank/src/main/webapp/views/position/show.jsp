@@ -39,14 +39,15 @@
     					<c:when test="${res == true}">
     						<div>
 							    	<form:form class="formularioEdicion" method="GET" modelAttribute="application" action="application/hacker/save.do">
-							          	    						
+										<form:hidden path="position" />
+							          	 
 							          	<spring:message code='application.curricula' />
 							      		<form:select path="curricula" >
 											<form:options items="${curriculas}" itemLabel="name" itemValue="id"/>
 										</form:select>
 										
-										<acme:textbox code="position.application" path="position" />
-
+										<br>
+										
 							          	<acme:submit name="save" code="application.save"/>
 									</form:form>
 							</div>

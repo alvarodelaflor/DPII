@@ -19,6 +19,7 @@ import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,6 +82,7 @@ public class ApplicationHackerController extends AbstractController {
 			System.out.println("Aplicaciones del hacker: " + applications);
 			result = new ModelAndView("application/hacker/list");
 			result.addObject("applications", applications);
+			result.addObject("requestURI", "application/hacker/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -149,32 +151,22 @@ public class ApplicationHackerController extends AbstractController {
 	// SAVE-CREATE ---------------------------------------------------------------		
 
 	@RequestMapping(value = "/hacker/save", method = RequestMethod.GET)
-	public ModelAndView save(@RequestParam("position") final int position, @RequestParam("curricula") final int curricula) {
+	public ModelAndView save(@RequestParam(value = "position", defaultValue = "-1") final int position, @RequestParam(value = "curricula", defaultValue = "-1") final int curricula) {
 		ModelAndView result = null;
 
 		try {
-			System.out.println("carmen: voy a guardar");
 			final Application application = this.applicationService.create();
-			System.out.println("carmen: voy a guardar");
-
-			System.out.println("curricula" + this.curriculaService.findOne(curricula));
-			System.out.println("copy" + this.curriculaService.createCurriculaCopyAndSave(this.curriculaService.findOne(curricula)));
 
 			application.setCurricula(this.curriculaService.createCurriculaCopyAndSave(this.curriculaService.findOne(curricula)));
-			System.out.println("carmen: voy a guardar" + this.curriculaService.createCurriculaCopyAndSave(this.curriculaService.findOne(curricula)));
 
 			application.setApplyMoment(LocalDate.now().toDate());
-			System.out.println("carmen: voy a guardar" + LocalDate.now().toDate());
 
 			application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
-			System.out.println("carmen: voy a guardar" + this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
 
 			application.setPosition(this.positionService.findOne(position));
-			System.out.println("carmen: voy a guardar" + application.getPosition());
 
 			final List<Problem> problems = (List<Problem>) this.problemService.allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(application.getPosition().getId());
 			Assert.isTrue(problems.size() != 0);
-			System.out.println("carmen: voy a guardar" + problems.get(0));
 			application.setProblem(problems.get(0));
 
 			application.setStatus("PENDING");
@@ -193,4 +185,64 @@ public class ApplicationHackerController extends AbstractController {
 		}
 		return result;
 	}
+
+	// EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/hacker/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam(value = "application", defaultValue = "-1") final int application) {
+		ModelAndView result;
+
+		try {
+			Hacker hacker;
+			final int idUserAccount = LoginService.getPrincipal().getId();
+			hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
+			Assert.notNull(hacker);
+
+			final Application a = this.applicationService.getApplicationHackerById(application);
+
+			result = new ModelAndView("application/hacker/edit");
+			result.addObject("a", a);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	// SAVE-EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/hacker/saveE", method = RequestMethod.GET, params = "saveE")
+	public ModelAndView save(final Application application, final BindingResult binding) {
+		ModelAndView result;
+
+		System.out.println("Carmen vamos al reconstruct");
+
+		final Application a1 = this.applicationService.reconstructEdit(application, binding);
+
+		if (binding.hasErrors())
+			result = new ModelAndView("application/hacker/edit");
+		else
+			try {
+
+				Hacker hacker;
+				final int idUserAccount = LoginService.getPrincipal().getId();
+				hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
+				Assert.notNull(hacker);
+
+				final Application a2 = this.applicationService.save(a1);
+				result = new ModelAndView("application/hacker/list.do");
+
+				System.out.println("Hacker loggeado: " + hacker);
+				final Collection<Application> applications = this.applicationService.getApplicationsByHacker(hacker.getId());
+				System.out.println("Aplicaciones del hacker: " + applications);
+				result = new ModelAndView("application/hacker/list");
+				result.addObject("applications", applications);
+				result.addObject("requestURI", "application/hacker/list.do");
+
+			} catch (final Throwable oops) {
+				System.out.println(oops);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		return result;
+	}
+
 }

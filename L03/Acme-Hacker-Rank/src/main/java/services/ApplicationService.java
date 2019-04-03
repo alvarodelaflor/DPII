@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ApplicationRepository;
@@ -89,11 +91,47 @@ public class ApplicationService {
 
 		return application;
 	}
-	
+
 	// SAVE ---------------------------------------------------------------		
 	public Application save(final Application a) {
 		return this.applicationRepository.save(a);
 	}
 
+	// getApplicationHackerById -------------------------------------------
+	public Application getApplicationHackerById(final int id) {
+		return this.applicationRepository.getApplicationHackerById(id);
+	}
+
+	// RECONSTRUCT-EDIT---------------------------------------------------------------		
+
+	public Application reconstructEdit(final Application application, final BindingResult binding) {
+		Application result;
+		final Application res = this.applicationRepository.findOne(application.getId());
+
+		System.out.println("Carmen: entro en el reconstructEdict");
+
+		result = application;
+
+		result.setCreationMoment(LocalDate.now().toDate());
+		result.setStatus("SUBMITTED");
+		result.setResponse(application.getResponse());
+		result.setLink(application.getLink());
+
+		binding.addAllErrors(binding);
+
+		System.out.println(result);
+
+		this.validator.validate(application, binding);
+		System.out.println(binding.getAllErrors());
+
+		if (binding.getAllErrors().isEmpty()) {
+			res.setCreationMoment(result.getCreationMoment());
+			res.setLink(result.getLink());
+			res.setResponse(result.getResponse());
+			res.setStatus(result.getStatus());
+		}
+
+		return res;
+	}
 
 }

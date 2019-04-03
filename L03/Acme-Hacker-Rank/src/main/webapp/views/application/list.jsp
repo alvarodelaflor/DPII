@@ -28,7 +28,7 @@
 			<a href="application/hacker/show.do?id=${row.id}"><spring:message code="application.show" /></a></display:column>
 			
 		<display:column titleKey="application.edit">
-			<a href="application/hacker/edit.do?id=${row.id}"><spring:message code="application.edit" /></a>	
+			<a href="application/hacker/edit.do?application=${row.id}"><spring:message code="application.edit" /></a>	
 		</display:column>
 		
 		<display:column property="status" titleKey="application.status"></display:column>
@@ -36,7 +36,7 @@
 		<display:column titleKey="application.position">
 			<a href="position/show.do?id=${row.position.id}"><jstl:out value="${row.position.ticker}"/></a></display:column>
 			
-		<display:column titleKey="application.curricula">
+		<display:column titleKey="application.curricula.show">
 			<a href="curricula/show.do?curriculaId=${row.curricula.id}"><jstl:out value="${row.curricula.name}"/></a></display:column>
 		
 		<display:column titleKey="application.problem">
