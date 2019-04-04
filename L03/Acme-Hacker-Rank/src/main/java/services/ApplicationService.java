@@ -96,7 +96,6 @@ public class ApplicationService {
 	public Application save(final Application a) {
 		return this.applicationRepository.save(a);
 	}
-
 	// getApplicationHackerById -------------------------------------------
 	public Application getApplicationHackerById(final int id) {
 		return this.applicationRepository.getApplicationHackerById(id);

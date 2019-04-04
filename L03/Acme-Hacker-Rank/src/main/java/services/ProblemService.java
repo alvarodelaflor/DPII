@@ -52,4 +52,9 @@ public class ProblemService {
 		return p;
 	}
 
+	// FINDONE ---------------------------------------------------------------
+	public Problem findOne(final int id) {
+		return this.problemRepository.findOne(id);
+	}
+
 }

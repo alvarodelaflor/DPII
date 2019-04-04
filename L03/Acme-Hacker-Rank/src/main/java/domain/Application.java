@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -96,6 +97,7 @@ public class Application extends DomainEntity {
 	}
 
 	@SafeHtml
+	@URL
 	public String getLink() {
 		return this.link;
 	}

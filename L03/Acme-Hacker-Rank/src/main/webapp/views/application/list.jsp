@@ -27,9 +27,21 @@
 		<display:column titleKey="application.Show">
 			<a href="application/hacker/show.do?id=${row.id}"><spring:message code="application.show" /></a></display:column>
 			
-		<display:column titleKey="application.edit">
-			<a href="application/hacker/edit.do?application=${row.id}"><spring:message code="application.edit" /></a>	
-		</display:column>
+			
+		<c:choose>
+    		<c:when test="${row.status == 'PENDING'}">
+ 					<display:column titleKey="application.edit">
+						<a href="application/hacker/edit.do?applicationid=${row.id}"><spring:message code="application.edit" /></a>	
+					</display:column>	
+    		</c:when>    
+    		<c:otherwise>
+					<display:column titleKey="application.edit">
+					</display:column>
+    		</c:otherwise>
+        </c:choose>	
+		
+			
+		
 		
 		<display:column property="status" titleKey="application.status"></display:column>
 		
@@ -40,7 +52,7 @@
 			<a href="curricula/show.do?curriculaId=${row.curricula.id}"><jstl:out value="${row.curricula.name}"/></a></display:column>
 		
 		<display:column titleKey="application.problem">
-			<a href="problem/show.do?Id=${row.problem.id}"><jstl:out value="${row.problem.title}"/></a></display:column>
+			<a href="problem/hacker/show.do?problemId=${row.problem.id}"><jstl:out value="${row.problem.title}"/></a></display:column>
 	
 	</display:table>
 	

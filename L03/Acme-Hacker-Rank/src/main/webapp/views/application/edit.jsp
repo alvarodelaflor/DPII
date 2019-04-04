@@ -24,7 +24,7 @@
 		<security:authorize access="hasRole('HACKER')"> 
 		<div class="content">
 			<form:form class="formularioEdicion" method="GET"
-				modelAttribute="a" action="application/hacker/saveE.do">
+				modelAttribute="application" action="application/hacker/saveE.do">
 				<form:hidden path="id" />
 				
 				<acme:textbox code="application.response" path="response" />

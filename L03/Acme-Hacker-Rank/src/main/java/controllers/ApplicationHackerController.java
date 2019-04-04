@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,6 +71,8 @@ public class ApplicationHackerController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		System.out.println("Carmen, entro en el list");
+
+		final Boolean res = false;
 
 		try {
 			final UserAccount user = LoginService.getPrincipal();
@@ -189,7 +192,7 @@ public class ApplicationHackerController extends AbstractController {
 	// EDIT ---------------------------------------------------------------		
 
 	@RequestMapping(value = "/hacker/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam(value = "application", defaultValue = "-1") final int application) {
+	public ModelAndView edit(@RequestParam(value = "applicationid", defaultValue = "-1") final int applicationid) {
 		ModelAndView result;
 
 		try {
@@ -197,17 +200,17 @@ public class ApplicationHackerController extends AbstractController {
 			final int idUserAccount = LoginService.getPrincipal().getId();
 			hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
 			Assert.notNull(hacker);
-
-			final Application a = this.applicationService.getApplicationHackerById(application);
-
+			final Application application = this.applicationService.getApplicationHackerById(applicationid);
+			System.out.println(application.getStatus());
+			Assert.isTrue(application.getStatus().equals("PENDING"));
 			result = new ModelAndView("application/hacker/edit");
-			result.addObject("a", a);
-		} catch (final Exception e) {
+			result.addObject("application", application);
+		} catch (final Throwable oops) {
+			System.out.println(oops);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
 	}
-
 	// SAVE-EDIT ---------------------------------------------------------------		
 
 	@RequestMapping(value = "/hacker/saveE", method = RequestMethod.GET, params = "saveE")
@@ -217,6 +220,18 @@ public class ApplicationHackerController extends AbstractController {
 		System.out.println("Carmen vamos al reconstruct");
 
 		final Application a1 = this.applicationService.reconstructEdit(application, binding);
+
+		if (application.getResponse() == "") {
+			final ObjectError error = new ObjectError("response", "");
+			binding.addError(error);
+			binding.rejectValue("response", "error.response");
+		}
+
+		if (application.getLink() == "") {
+			final ObjectError error = new ObjectError("link", "");
+			binding.addError(error);
+			binding.rejectValue("link", "error.link");
+		}
 
 		if (binding.hasErrors())
 			result = new ModelAndView("application/hacker/edit");
@@ -240,8 +255,20 @@ public class ApplicationHackerController extends AbstractController {
 
 			} catch (final Throwable oops) {
 				System.out.println(oops);
-				result = new ModelAndView("redirect:/welcome/index.do");
+				if (oops.getMessage().equals("error.response"))
+					result = this.createEditModelAndView(a1, "error.response");
+				else
+					result = new ModelAndView("redirect:/welcome/index.do");
 			}
+		return result;
+	}
+
+	private ModelAndView createEditModelAndView(final Application application, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("hacker/create");
+		result.addObject("string", string);
+		result.addObject("application", application);
 		return result;
 	}
 

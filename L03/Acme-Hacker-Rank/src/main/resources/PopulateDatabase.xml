@@ -182,7 +182,7 @@
     	<property name="title" value="title03" />
     	<property name="statement" value="statement03" />
 		<property name="hint" value="hint03" />
-		<property name="finalMode" value="true" />
+		<property name="finalMode" value="false" />
         <property name="attachments" value="attachments03" />  
         <property name="position" ref= "position03"/> 
     </bean>
@@ -191,7 +191,7 @@
 	<!-- APPLICATION -->
 	<bean id="application01" class="domain.Application">
     	<property name="response" value="response01" />
-    	<property name="link" value="https://link01" />
+    	<property name="link" value="http://link01" />
 		<property name="status" value="ACCEPTED" />
 		<property name="position" ref="position01" />
         <property name="problem" ref="problem01" />    
@@ -201,25 +201,14 @@
     
     <bean id="application02" class="domain.Application">
     	<property name="response" value="response02" />
-    	<property name="link" value="https://link02" />
-		<property name="status" value="PENDING" />
+    	<property name="link" value="http://link02" />
+		<property name="status" value="REJECTED" />
 		<property name="position" ref="position02" />
         <property name="problem" ref="problem02" />    
         <property name="hacker" ref= "hacker01"/>   
         <property name="curricula" ref= "curricula01"/>           
     </bean>
-    
-    <bean id="application03" class="domain.Application">
-    	<property name="response" value="response03" />
-    	<property name="link" value="https://link03" />
-		<property name="status" value="REJECTED" />
-		<property name="position" ref="position03" />
-        <property name="problem" ref="problem03" />    
-        <property name="hacker" ref= "hacker01"/>   
-        <property name="curricula" ref= "curricula01"/>           
-    </bean>
-
-	<!-- APPLICATION -->
+    <!-- APPLICATION -->
 	
 
 
