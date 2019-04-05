@@ -94,6 +94,10 @@
 		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/delete.do" access="hasRole('HACKER')" />
 		
 		<security:intercept-url pattern="/positionData/hacker/create.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/positionData/hacker/edit.do" access="hasRole('HACKER')" />
@@ -108,8 +112,13 @@
 		<security:intercept-url pattern="/position/company/edit.do" access="hasRole('COMPANY')" /> 
 		<!-- HIPONA -->
 		
-		<!-- FERRETE -->
+		<!-- FRAN -->						
+		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" /> 
+		<!-- FRAN -->
 		
+		<!-- FERRETE -->
 		<security:intercept-url pattern="/administrator/export.do" access="hasRole('ADMIN')" />		
 		<security:intercept-url pattern="/hacker/export.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/company/export.do" access="hasRole('COMPANY')" />
@@ -119,13 +128,6 @@
 		<!-- FERRETE -->
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
-		
-
-		<!-- FRAN -->
-		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" /> 
-		<!-- FRAN -->
 
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 

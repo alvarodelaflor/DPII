@@ -61,6 +61,7 @@ public class CompanyService {
 		//			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.companyRepository.save(company);
 	}
+
 	private Boolean checkEmailFormatter(final Company company) {
 		Boolean res = true;
 		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";

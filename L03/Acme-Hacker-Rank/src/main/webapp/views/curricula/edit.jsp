@@ -33,7 +33,12 @@
 			<acme:phonebox code="curricula.phone" path="phone" />
           	<acme:textbox path="linkGitHub" code="curricula.nameGitHub"/>
           	<acme:textbox path="linkLinkedin" code="curricula.linkLinkedin"/>
-          	<acme:textbox path="miscellaneous" code="curricula.miscellaneous"/>
+          	<fieldset>
+          		<legend>
+          			<i><spring:message code="curricula.optionalMiscellaneous" /></i><img width="35" height="35" src="./images/att.png" alt="${row1.id}" />
+          		</legend>
+          		<acme:textbox path="miscellaneous" code="curricula.miscellaneous"/>
+          	</fieldset>
           	<acme:submit name="save" code="save"/>
           	<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
 		</form:form>
