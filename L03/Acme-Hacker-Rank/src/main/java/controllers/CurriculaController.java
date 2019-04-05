@@ -10,10 +10,9 @@
 
 package controllers;
 
-
-
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -21,14 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import domain.Curricula;
-import domain.EducationalData;
-import domain.Hacker;
-import domain.PositionData;
+
 import services.CurriculaService;
 import services.EducationalDataService;
 import services.HackerService;
 import services.PositionDataService;
+import domain.Curricula;
+import domain.EducationalData;
+import domain.Hacker;
+import domain.PositionData;
 
 /*
  * CONTROL DE CAMBIOS CurriculaHackerController.java
@@ -39,18 +39,18 @@ import services.PositionDataService;
 @Controller
 @RequestMapping("/curricula")
 public class CurriculaController extends AbstractController {
-	
-	@Autowired
-	private HackerService hackerService;
 
 	@Autowired
-	private CurriculaService curriculaService;
-	
+	private HackerService			hackerService;
+
 	@Autowired
-	private EducationalDataService educationalDataService;
-	
+	private CurriculaService		curriculaService;
+
 	@Autowired
-	private PositionDataService positionDataService;
+	private EducationalDataService	educationalDataService;
+
+	@Autowired
+	private PositionDataService		positionDataService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -58,21 +58,19 @@ public class CurriculaController extends AbstractController {
 	public CurriculaController() {
 		super();
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value = "hackerId", defaultValue = "-1") final int hackerId) {
 		ModelAndView result;
 		try {
 			Hacker hacker = this.hackerService.findOne(hackerId);
-			Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hacker == null && hackerLogin!=null) {
-				hacker=hackerLogin;
-			}
+			final Hacker hackerLogin = this.hackerService.getHackerLogin();
+			if (hacker == null && hackerLogin != null)
+				hacker = hackerLogin;
 			Assert.notNull(hacker, "Not hacker found in DB");
 			result = new ModelAndView("curricula/list");
-			if (hackerLogin!= null && hacker.equals(hackerLogin)) {
+			if (hackerLogin != null && hacker.equals(hackerLogin))
 				result.addObject("hackerLogger", true);
-			}
 			Assert.notNull(hacker, "Hacker is null");
 			final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByHacker(hacker);
 			result.addObject("curriculas", curriculas);
@@ -82,29 +80,28 @@ public class CurriculaController extends AbstractController {
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
 
 		ModelAndView result;
 		try {
-			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
+			final Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Not found curricula in DB");
 			result = new ModelAndView("curricula/show");
-			
-			Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hackerLogin!=null && curriculaDB.getHacker().equals(hackerLogin)) {
-				result.addObject("hackerLogin", true);	
-			}
-			
+
+			final Hacker hackerLogin = this.hackerService.getHackerLogin();
+			if (hackerLogin != null && curriculaDB.getHacker().equals(hackerLogin) && curriculaDB.getIsCopy().equals(false))
+				result.addObject("hackerLogin", true);
+
 			result.addObject("curricula", curriculaDB);
-			
-			List<EducationalData> educationalDatas = (List<EducationalData>) this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
+
+			final List<EducationalData> educationalDatas = (List<EducationalData>) this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
 			result.addObject("educationalDatas", educationalDatas);
-			
-			List<PositionData> positionDatas = (List<PositionData>) this.positionDataService.getPositionDataFromCurricula(curriculaDB);
+
+			final List<PositionData> positionDatas = (List<PositionData>) this.positionDataService.getPositionDataFromCurricula(curriculaDB);
 			result.addObject("positionDatas", positionDatas);
-			
+
 			result.addObject("requestURI", "hacker/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

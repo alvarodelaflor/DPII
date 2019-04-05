@@ -157,6 +157,17 @@
         <property name="hacker" ref= "hacker01"/> 
         <property name="isCopy" value="false"/>          
     </bean>
+    
+    <bean id="curricula02" class="domain.Curricula">
+    	<property name="name" value="name02" />
+    	<property name="statement" value="statement02" />
+		<property name="phone" value="123456" />
+		<property name="linkGitHub" value="https://linkGitHub02" />
+        <property name="linkLinkedin" value="https://linkLinkedin02" />    
+        <property name="miscellaneous" value= "miscellaneous02"/>   
+        <property name="hacker" ref= "hacker01"/> 
+        <property name="isCopy" value="true"/>          
+    </bean>
 	<!-- CURRICULA -->
 	
 	<!-- PROBLEM -->
@@ -194,9 +205,11 @@
     	<property name="link" value="http://link01" />
 		<property name="status" value="ACCEPTED" />
 		<property name="position" ref="position01" />
-        <property name="problem" ref="problem01" />    
+        <property name="problem" ref="problem01" />
+        <property name="applyMoment" value= "2017/11/10 08:00"/>  
+        <property name="creationMoment" value= "2017/12/10 08:00"/>       
         <property name="hacker" ref= "hacker01"/>   
-        <property name="curricula" ref= "curricula01"/>           
+        <property name="curricula" ref= "curricula02"/>           
     </bean>
     
     <bean id="application02" class="domain.Application">
@@ -205,8 +218,10 @@
 		<property name="status" value="REJECTED" />
 		<property name="position" ref="position02" />
         <property name="problem" ref="problem02" />    
-        <property name="hacker" ref= "hacker01"/>   
-        <property name="curricula" ref= "curricula01"/>           
+        <property name="hacker" ref= "hacker01"/> 
+        <property name="applyMoment" value= "2018/11/10 08:00"/>  
+        <property name="creationMoment" value= "2018/12/10 08:00"/>              
+        <property name="curricula" ref= "curricula02"/>           
     </bean>
     <!-- APPLICATION -->
 	

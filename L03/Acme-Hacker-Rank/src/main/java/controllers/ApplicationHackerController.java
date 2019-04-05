@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -131,7 +130,6 @@ public class ApplicationHackerController extends AbstractController {
 				Assert.isTrue(curriculas.size() != 0);
 				System.out.println(curriculas);
 				res = true;
-				application.setCreationMoment(LocalDateTime.now().toDate());
 				application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
 			} catch (final Exception e) {
 				res = false;
@@ -162,7 +160,7 @@ public class ApplicationHackerController extends AbstractController {
 
 			application.setCurricula(this.curriculaService.createCurriculaCopyAndSave(this.curriculaService.findOne(curricula)));
 
-			application.setApplyMoment(LocalDate.now().toDate());
+			application.setApplyMoment(LocalDateTime.now().toDate());
 
 			application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
 
@@ -242,6 +240,9 @@ public class ApplicationHackerController extends AbstractController {
 				final int idUserAccount = LoginService.getPrincipal().getId();
 				hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
 				Assert.notNull(hacker);
+
+				a1.setCreationMoment(LocalDateTime.now().toDate());
+				Assert.notNull(a1.getCreationMoment());
 
 				final Application a2 = this.applicationService.save(a1);
 				result = new ModelAndView("application/hacker/list.do");

@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -84,7 +82,6 @@ public class ApplicationService {
 	public Application create() {
 		final Application application = new Application();
 
-		application.setCreationMoment(LocalDateTime.now().toDate());
 		application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
 
 		Assert.isTrue(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()) != null);
@@ -111,7 +108,6 @@ public class ApplicationService {
 
 		result = application;
 
-		result.setCreationMoment(LocalDate.now().toDate());
 		result.setStatus("SUBMITTED");
 		result.setResponse(application.getResponse());
 		result.setLink(application.getLink());
@@ -124,7 +120,6 @@ public class ApplicationService {
 		System.out.println(binding.getAllErrors());
 
 		if (binding.getAllErrors().isEmpty()) {
-			res.setCreationMoment(result.getCreationMoment());
 			res.setLink(result.getLink());
 			res.setResponse(result.getResponse());
 			res.setStatus(result.getStatus());

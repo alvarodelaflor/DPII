@@ -125,4 +125,13 @@
 </div>
 
 <br>
-<acme:cancel url="curricula/list.do?hackerId=${curricula.hacker.id}" code="back"/>
+
+		<c:choose>
+    		<c:when test="${hackerLogin==true}">
+    			<acme:cancel url="curricula/list.do?hackerId=${curricula.hacker.id}" code="back"/>  		
+    		</c:when>   
+    		<c:otherwise>
+				<input type="button" value="back" name="back" onclick="history.back()" />
+    		</c:otherwise>
+        </c:choose>	
+    			
