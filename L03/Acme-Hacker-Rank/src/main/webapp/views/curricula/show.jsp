@@ -57,6 +57,8 @@
 			<legend>
 				<i><spring:message code="curricula.miscellaneous" /></i><img width="35" height="35" src="./images/att.png" alt="${row1.id}" />
 			</legend>
+			<c:choose>
+					<c:when test="${hackerLogin==true}">
 			<p><strong><spring:message code="curricula.miscellaneous" /> </strong><jstl:out value="${curricula.miscellaneous}"></jstl:out></p>
 			<security:authorize access="hasRole('HACKER')">
 				<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/hacker/edit.do">
@@ -68,6 +70,8 @@
 	          		<acme:submit name="save" code="save2"/>
 				</form:form>
 			</security:authorize>
+					</c:when>
+				</c:choose>
 			<display:table name="miscellaneousAttachments" id="row0" requestURI="${requestURI}" pagesize="5" class="displaytag">
 				<c:choose>
 					<c:when test="${hackerLogin==true}">
