@@ -177,7 +177,13 @@
 		<property name="hint" value="hint01" />
 		<property name="finalMode" value="true" />
         <property name="attachments" value="attachments01" />  
-        <property name="position" ref= "position01"/> 
+        <property name="company" ref= "company01"/> 
+        <property name="position">
+        	<list>
+                <ref bean="position01"/>
+                <ref bean="position02"/>
+        	</list>
+        </property>
     </bean>
     
     <bean id="problem02" class="domain.Problem">
@@ -186,7 +192,13 @@
 		<property name="hint" value="hint02" />
 		<property name="finalMode" value="true" />
         <property name="attachments" value="attachments02" />  
-        <property name="position" ref= "position02"/> 
+        <property name="company" ref= "company01"/>
+        <property name="position">
+        	<list>
+                <ref bean="position01"/>
+                <ref bean="position02"/>
+        	</list>
+        </property>
     </bean>
     
     <bean id="problem03" class="domain.Problem">
@@ -195,7 +207,13 @@
 		<property name="hint" value="hint03" />
 		<property name="finalMode" value="false" />
         <property name="attachments" value="attachments03" />  
-        <property name="position" ref= "position03"/> 
+        <property name="company" ref= "company01"/> 
+        <property name="position">
+        	<list>
+                <ref bean="position01"/>
+                <ref bean="position02"/>
+        	</list>
+        </property>
     </bean>
     <!-- PROBLEM -->
 	

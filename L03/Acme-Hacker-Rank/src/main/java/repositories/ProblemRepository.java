@@ -12,15 +12,15 @@ import domain.Problem;
 @Repository
 public interface ProblemRepository extends JpaRepository<Problem, Integer> {
 
-	@Query("select count(p) from Problem p where p.position.id=?1")
-	int getProblemCount(final int positionId);
+	@Query("select count(p) from Problem p join p.position p1 where p1.id=?1 ")
+	public int getProblemCount(int positionId);
 
 	// TODO: ESTA ES LA QUERIPONSI
-	@Query("select count(a.problem) from Application a where a.position.status=true and a.position.cancel=false and a.problem.finalMode=true and a.position.id=?1 and a.problem.position.id=?1 group by a.problem having min(a.status)!='ACCEPTED'")
+	@Query("select count(p) from Problem p join p.position p1 where p1.id=?1 and p1.cancel=0 and p1.status=1 and p.finalMode=1")
 	public int countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(int positionId);
 
 	// TODO: ESTA ES LA QUERIPONSI
-	@Query("select a.problem from Application a where a.position.status=true and a.position.cancel=false and a.problem.finalMode=true and a.position.id=?1 and a.problem.position.id=?1 group by a.problem having min(a.status)!='ACCEPTED'")
+	@Query("select p from Problem p join p.position p1 where p1.id=?1 and p1.cancel=0 and p1.status=1 and p.finalMode=1")
 	public Collection<Problem> allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(int positionId);
 
 }

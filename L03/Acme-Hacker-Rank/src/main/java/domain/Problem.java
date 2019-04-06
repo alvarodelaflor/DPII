@@ -1,8 +1,11 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -11,11 +14,22 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Entity
 public class Problem extends DomainEntity {
 
-	private String		title, statement, hint, attachments;
+	private String					title, statement, hint, attachments;
 
-	private Boolean		finalMode;
-	private Position	position;
+	private Boolean					finalMode;
+	private Collection<Position>	position;
 
+	private Company					company;
+
+
+	@OneToOne
+	public Company getCompany() {
+		return this.company;
+	}
+
+	public void setCompany(final Company company) {
+		this.company = company;
+	}
 
 	@NotNull
 	public Boolean getFinalMode() {
@@ -65,12 +79,12 @@ public class Problem extends DomainEntity {
 		this.attachments = attachments;
 	}
 
-	@ManyToOne(optional = false)
-	public Position getPosition() {
+	@ManyToMany
+	public Collection<Position> getPosition() {
 		return this.position;
 	}
 
-	public void setPosition(final Position position) {
+	public void setPosition(final Collection<Position> position) {
 		this.position = position;
 	}
 }

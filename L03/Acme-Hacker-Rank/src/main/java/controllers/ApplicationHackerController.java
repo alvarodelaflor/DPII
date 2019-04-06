@@ -71,8 +71,6 @@ public class ApplicationHackerController extends AbstractController {
 		ModelAndView result;
 		System.out.println("Carmen, entro en el list");
 
-		final Boolean res = false;
-
 		try {
 			final UserAccount user = LoginService.getPrincipal();
 			System.out.println(user.getUsername());
@@ -168,7 +166,10 @@ public class ApplicationHackerController extends AbstractController {
 
 			final List<Problem> problems = (List<Problem>) this.problemService.allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(application.getPosition().getId());
 			Assert.isTrue(problems.size() != 0);
-			application.setProblem(problems.get(0));
+
+			final Integer alatorio = (int) Math.floor(Math.random() * (problems.size()));
+			final Problem seleccion = problems.get(alatorio);
+			application.setProblem(seleccion);
 
 			application.setStatus("PENDING");
 
