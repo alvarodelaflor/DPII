@@ -29,7 +29,7 @@
     				  			          			
           			<tr><td><spring:message code="msg.show.moment" /><jstl:out value="${msg.moment}"></jstl:out></td></tr>				
           			
-          			<tr><td><spring:message code="msg.show.tag" /><jstl:out value="${msg.tag}"></jstl:out></td></tr>															          			          														          			
+          			<tr><td><spring:message code="msg.show.tag" /><jstl:out value="${tag.tag}"></jstl:out></td></tr>															          			          														          			
           			</table>
           			
 		<a href="message/delete.do?id=${msg.id}" ><input type="button" value="<spring:message code='delete'></spring:message>"></a>

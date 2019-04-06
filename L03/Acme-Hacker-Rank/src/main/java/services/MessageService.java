@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +19,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.Message;
+import domain.Tag;
 
 @Service
 @Transactional
@@ -30,6 +32,9 @@ public class MessageService {
 	private ActorService			actorService;
 
 	@Autowired
+	private TagService			tagService;
+
+	@Autowired
 	private ConfigurationService	configService;
 
 	@Autowired
@@ -39,11 +44,12 @@ public class MessageService {
 	public Message reconstruct(final Message message, final BindingResult binding) {
 		Message result;
 		final Collection<String> actors = new ArrayList<>();
-
+		final List<Tag> tags = new ArrayList<>();
 		if (message.getId() == 0) {
 			message.setMoment(LocalDate.now().toDate());
 			message.setRecipient(actors);
 			message.setSender("init");
+			//		message.setTags(tags);
 			result = message;
 		} else {
 			result = this.messageRepository.findOne(message.getId());
@@ -140,23 +146,46 @@ public class MessageService {
 
 		final Actor receiver = this.actorService.findOne(receiverId);
 
+		final List<Tag> defaults = new ArrayList<>();
+		defaults.addAll(message.getTags());
+		final Tag defaultTag = defaults.get(0);
+
+		final Tag sendedTag = this.tagService.create();
+		final Tag receivedTag = this.tagService.create();
+
 		message.setSender(sender.getEmail());
-		if (!sender.getMessages().contains(message))
+		if (!sender.getMessages().contains(message)) {
+			sendedTag.setActorId(sender.getId());
+			sendedTag.setMessageId(message.getId());
+			sendedTag.setTag(defaultTag.getTag());
+			final Tag savedSend = this.tagService.save(sendedTag);
+			message.getTags().add(savedSend);
 			sender.getMessages().add(message);
+		}
 		message.getRecipient().add(receiver.getEmail());
-		if (receiverId != sender.getId())
+		if (receiverId != sender.getId()) {
+			receivedTag.setActorId(receiver.getId());
+			receivedTag.setMessageId(message.getId());
+			receivedTag.setTag(defaultTag.getTag());
+			final Tag savedReceived = this.tagService.save(receivedTag);
+			message.getTags().add(savedReceived);
 			receiver.getMessages().add(message);
+		}
+		message.getTags().remove(defaultTag);
 		return message;
 	}
 
 	public void remove(final Message message) {
 		final UserAccount userSender = LoginService.getPrincipal();
 		final Actor a = this.actorService.getActorByUserId(userSender.getId());
-		if (!message.getTag().equals("DELETED"))
-			message.setTag("DELETED");
+		final Tag tag = this.tagService.getTagByMessage(message.getId());
+		if (!tag.getTag().equals("DELETED"))
+			tag.setTag("DELETED");
 		else if (this.actorService.getActorsThatContainsAMessage(message.getId()).size() != 1)
 			a.getMessages().remove(message);
-		else
+		else {
+			a.getMessages().remove(message);
 			this.messageRepository.delete(message);
+		}
 	}
 }

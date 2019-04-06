@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -35,8 +36,8 @@ public class SocialProfileService {
 		final UserAccount user = LoginService.getPrincipal();
 		final Actor test = this.actorService.getActorByUserId(user.getId());
 		Assert.isTrue(socialProfile != null);
+		socialProfile.setActor(test);
 		final SocialProfile socialProfileSaved = this.socialProfileRepository.save(socialProfile);
-		test.getSocialProfiles().add(socialProfileSaved);
 		return socialProfileSaved;
 	}
 	public Collection<SocialProfile> findAll() {
@@ -51,13 +52,19 @@ public class SocialProfileService {
 		final Integer idUserAccount = LoginService.getPrincipal().getId();
 		Assert.notNull(idUserAccount);
 		final Actor a = this.actorService.getActorByUserId(idUserAccount);
-		Assert.isTrue(a.getSocialProfiles().contains(socialProfile));
-		a.getSocialProfiles().remove(socialProfile);
+		Assert.isTrue(socialProfile.getActor().equals(a));
+		socialProfile.setActor(null);
 		this.socialProfileRepository.delete(socialProfile);
 	}
 
 	public void flush() {
 		this.socialProfileRepository.flush();
+	}
+
+	public Collection<SocialProfile> getSocialProfilesByActor(final Integer actorId) {
+		final Collection<SocialProfile> res = new ArrayList<>();
+		res.addAll(this.socialProfileRepository.getSocialProfilesByActor(actorId));
+		return res;
 	}
 
 }

@@ -31,8 +31,10 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.MessageService;
+import services.TagService;
 import domain.Actor;
 import domain.Message;
+import domain.Tag;
 
 @Controller
 @RequestMapping("/message")
@@ -42,6 +44,8 @@ public class MessageController extends AbstractController {
 	private MessageService	messageService;
 	@Autowired
 	private ActorService	actorService;
+	@Autowired
+	private TagService		tagService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -57,8 +61,37 @@ public class MessageController extends AbstractController {
 			final UserAccount user = LoginService.getPrincipal();
 			final Actor a = this.actorService.getActorByUserId(user.getId());
 
+			final Collection<Message> sendMessages = new ArrayList<>();
+			sendMessages.addAll(a.getMessages());
+			sendMessages.retainAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+
+			final Collection<Message> receivedMessages = new ArrayList<>();
+			receivedMessages.addAll(a.getMessages());
+			receivedMessages.removeAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+
+			final List<Message> sendedMessageFilter = new ArrayList<>();
+			sendedMessageFilter.addAll(sendMessages);
+
+			for (int i = 0; i < sendedMessageFilter.size(); i++) {
+				final Tag tag = this.tagService.getTagByMessage(sendedMessageFilter.get(i).getId());
+				final Collection<Tag> tagsFilter = new ArrayList<>();
+				tagsFilter.add(tag);
+				sendedMessageFilter.get(i).getTags().retainAll(tagsFilter);
+			}
+
+			final List<Message> receiveMessageFilter = new ArrayList<>();
+			receiveMessageFilter.addAll(receivedMessages);
+
+			for (int i = 0; i < receiveMessageFilter.size(); i++) {
+				final Tag tag = this.tagService.getTagByMessage(receiveMessageFilter.get(i).getId());
+				final Collection<Tag> tagsFilter = new ArrayList<>();
+				tagsFilter.add(tag);
+				receiveMessageFilter.get(i).getTags().retainAll(tagsFilter);
+			}
+
 			result = new ModelAndView("message/list");
-			result.addObject("msgs", a.getMessages());
+			result.addObject("msgsSend", sendedMessageFilter);
+			result.addObject("msgsReceive", receiveMessageFilter);
 			result.addObject("requestURI", "message/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("welcome/index");
@@ -159,11 +192,24 @@ public class MessageController extends AbstractController {
 				for (int i = 0; i < lisRecipient.size(); i++)
 					msg = this.messageService.exchangeMessage(msg, this.actorService.getActorByEmailOnly(lisRecipient.get(i)).getId());
 				this.messageService.save(msg);
+				final List<Tag> tags = new ArrayList<>();
+				tags.addAll(msg.getTags());
+				for (int i = 0; i < tags.size(); i++)
+					tags.get(i).setMessageId(msg.getId());
 
-				result = new ModelAndView("message/list");
-
-				result.addObject("msgs", a.getMessages());
-				result.addObject("requestURI", "message/list.do");
+				//				final Collection<Message> sendMessages = new ArrayList<>();
+				//				sendMessages.addAll(a.getMessages());
+				//				sendMessages.retainAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+				//
+				//				final Collection<Message> receivedMessages = new ArrayList<>();
+				//				receivedMessages.addAll(a.getMessages());
+				//				receivedMessages.removeAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+				//
+				//				result = new ModelAndView("message/list");
+				//				result.addObject("msgsSend", sendMessages);
+				//				result.addObject("msgsReceive", receivedMessages);
+				//				result.addObject("requestURI", "message/list.do");
+				result = this.listMessages();
 
 			} catch (final Throwable oops) {
 				System.out.println("Es el oops");
@@ -178,17 +224,19 @@ public class MessageController extends AbstractController {
 	public ModelAndView show(@RequestParam(value = "messageId", defaultValue = "-1") final int messageId) {
 		ModelAndView result;
 
+		final Tag tag = this.tagService.getTagByMessage(messageId);
+
 		final Message msg = this.messageService.findOne(messageId);
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 		result = new ModelAndView("message/show");
 		result.addObject("msg", msg);
+		result.addObject("tag", tag);
 		result.addObject("language", language);
 		result.addObject("requestURI", "message/show.do");
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
-
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int id, @RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
 		ModelAndView result;
@@ -205,9 +253,18 @@ public class MessageController extends AbstractController {
 		try {
 			System.out.println("entra en el try");
 			this.messageService.remove(msg);
-			result = new ModelAndView("message/list");
-			result.addObject("msgs", a.getMessages());
-			result.addObject("requestURI", "message/list.do");
+			//			final Collection<Message> sendMessages = new ArrayList<>();
+			//			sendMessages.addAll(a.getMessages());
+			//			sendMessages.retainAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+			//
+			//			final Collection<Message> receivedMessages = new ArrayList<>();
+			//			receivedMessages.addAll(a.getMessages());
+			//			receivedMessages.removeAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+
+			result = this.listMessages();
+			//			result.addObject("msgsSend", sendMessages);
+			//			result.addObject("msgsReceive", receivedMessages);
+			//			result.addObject("requestURI", "message/list.do");
 		} catch (final Exception e) {
 			System.out.println(e);
 			System.out.println("entro en el catch");
