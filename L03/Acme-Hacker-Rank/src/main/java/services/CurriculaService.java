@@ -24,6 +24,7 @@ import org.springframework.validation.Validator;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
+import domain.MiscellaneousAttachment;
 import domain.PositionData;
 import repositories.CurriculaRepository;
 import security.LoginService;
@@ -43,6 +44,9 @@ public class CurriculaService {
 	
 	@Autowired
 	private PositionDataService positionDataService;
+	
+	@Autowired
+	private MiscellaneousAttachmentService miscellaneousAttachmentService;
 
 	@Autowired
 	private Validator					validator;
@@ -120,6 +124,10 @@ public class CurriculaService {
 		if (!positionDatas.isEmpty()) {
 			this.positionDataService.deleteAll(positionDatas);			
 		}
+		Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
+		if (!miscellaneousAttachaments.isEmpty()) {
+			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);			
+		}
 		this.curriculaRepository.delete(curricula);
 	}
 
@@ -179,6 +187,7 @@ public class CurriculaService {
 		Curricula copy = this.save(curriculaCopy);
 		this.educationalDataService.makeCopyAllEducationalDataForCurricula(curricula, copy);
 		this.positionDataService.makeCopyAllPositionDataForCurricula(curricula, copy);
+		this.miscellaneousAttachmentService.makeCopyAllMiscellaneousAttachmentForCurricula(curricula, copy);
 		return copy;
 	}
 	

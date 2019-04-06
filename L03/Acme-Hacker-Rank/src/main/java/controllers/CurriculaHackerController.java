@@ -10,8 +10,6 @@
 
 package controllers;
 
-
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import domain.Curricula;
-import domain.Hacker;
+
 import services.CurriculaService;
 import services.HackerService;
+import domain.Curricula;
+import domain.Hacker;
 
 /*
  * CONTROL DE CAMBIOS CurriculaHackerController.java
@@ -37,42 +36,42 @@ import services.HackerService;
 @Controller
 @RequestMapping("/curricula/hacker")
 public class CurriculaHackerController extends AbstractController {
-	
-	@Autowired
-	private HackerService hackerService;
 
 	@Autowired
-	private CurriculaService curriculaService;
+	private HackerService		hackerService;
+
+	@Autowired
+	private CurriculaService	curriculaService;
+
 
 	// Constructors -----------------------------------------------------------
 
 	public CurriculaHackerController() {
 		super();
 	}
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		try {
-			Hacker hackerLogin = this.hackerService.getHackerLogin();
+			final Hacker hackerLogin = this.hackerService.getHackerLogin();
 			Assert.notNull(hackerLogin, "No hacker is login");
-			Curricula curricula = this.curriculaService.create();
+			final Curricula curricula = this.curriculaService.create();
 			result = new ModelAndView("curricula/hacker/edit");
-			result.addObject("curricula", curricula);		
-		} catch (Exception e) {
+			result.addObject("curricula", curricula);
+		} catch (final Exception e) {
 			System.out.println("Error e en GET /create CurriculaController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
 	}
-	
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
 		ModelAndView result;
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
+		final Hacker hackerLogin = this.hackerService.getHackerLogin();
 		try {
-			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
+			final Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Curricula not found in DB");
 			Assert.isTrue(!curriculaDB.getIsCopy(), "Trying to edit a copyCurricula");
 			Assert.notNull(hackerLogin, "No hacker is login");
@@ -81,34 +80,33 @@ public class CurriculaHackerController extends AbstractController {
 			result = new ModelAndView("curricula/hacker/edit");
 			result.addObject("curricula", curriculaDB);
 		} catch (final Exception e) {
-			if (hackerLogin!=null) {
+			if (hackerLogin != null) {
 				result = new ModelAndView("curricula/list");
 				final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByHacker(hackerLogin);
 				result.addObject("curriculas", curriculas);
-			} else {
-				result = new ModelAndView("redirect:/welcome/index.do");	
-			}
+			} else
+				result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView edit(Curricula curricula, final BindingResult binding) {
 		ModelAndView result;
 		try {
-			curricula = this.curriculaService.reconstruct(curricula, binding);	
-		} catch (Exception e) {
+			curricula = this.curriculaService.reconstruct(curricula, binding);
+		} catch (final Exception e) {
 			System.out.println("Error e reconstruct de curricula: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 			return result;
 		}
-		
-		if (!checkLinkGitHub(curricula.getLinkGitHub())) {
+
+		if (!this.checkLinkGitHub(curricula.getLinkGitHub())) {
 			final ObjectError error = new ObjectError("linkGitHub", "Must be a GitHub link");
 			binding.addError(error);
 			binding.rejectValue("linkGitHub", "error.linkGitHub");
 		}
-		
+
 		if (binding.hasErrors()) {
 			System.out.println("Error en CurriculaHackerController.java, binding: " + binding);
 			result = new ModelAndView("curricula/hacker/create");
@@ -116,15 +114,15 @@ public class CurriculaHackerController extends AbstractController {
 			result.addObject("curricula", curricula);
 		} else
 			try {
-				Hacker hackerLogin = this.hackerService.getHackerLogin();
+				final Hacker hackerLogin = this.hackerService.getHackerLogin();
 				Assert.notNull(hackerLogin, "No hacker is login");
 				Assert.isTrue(curricula != null, "curricula.null");
 				Assert.isTrue(!curricula.getIsCopy(), "Trying to edit a copyCurricula");
-				Curricula saveCurricula = this.curriculaService.save(curricula);
+				final Curricula saveCurricula = this.curriculaService.save(curricula);
 				// CHECK COPY CURRICULA WORK
-//				this.curriculaService.createCurriculaCopyAndSave(saveCurricula);
+				//				this.curriculaService.createCurriculaCopyAndSave(saveCurricula);
 				//CHECK COPY CURRICULA WORK
-				result = new ModelAndView("redirect:/curricula/show.do?curriculaId="+saveCurricula.getId());
+				result = new ModelAndView("redirect:/curricula/show.do?curriculaId=" + saveCurricula.getId());
 				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE CurriculaHackerController.java Throwable: " + oops);
@@ -135,39 +133,37 @@ public class CurriculaHackerController extends AbstractController {
 			}
 		return result;
 	}
-	
-	private Boolean checkLinkGitHub(String linkGitHub) {
+
+	private Boolean checkLinkGitHub(final String linkGitHub) {
 		Boolean res = true;
 		try {
-			String linkTocheck = linkGitHub.replaceAll("https://www.github.com/", "");
-			if (linkTocheck.contains("<") || linkTocheck.contains(">") || linkTocheck.contains(":") || linkTocheck.contains("/") || linkTocheck.contains("|") || linkTocheck.contains("'") || linkTocheck.contains(",")) {
+			final String linkTocheck = linkGitHub.replaceAll("https://www.github.com/", "");
+			if (linkTocheck.contains("<") || linkTocheck.contains(">") || linkTocheck.contains(":") || linkTocheck.contains("/") || linkTocheck.contains("|") || linkTocheck.contains("'") || linkTocheck.contains(","))
 				res = false;
-			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;
 	}
-	
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(value = "curriculaId", defaultValue = "-1") final int curriculaId) {
 		ModelAndView result;
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		
+		final Hacker hackerLogin = this.hackerService.getHackerLogin();
+
 		try {
 			Assert.notNull(hackerLogin, "No hacker is login");
-			Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
+			final Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Not found curricula in DB");
 			Assert.isTrue(curriculaDB.getHacker().equals(hackerLogin), "Not allow to delete, diferent hacker");
 			this.curriculaService.delete(curriculaDB);
-			result = new ModelAndView("redirect:/curricula/list.do?hackerId="+hackerLogin.getId());
+			result = new ModelAndView("redirect:/curricula/list.do?hackerId=" + hackerLogin.getId());
 		} catch (final Throwable oops) {
 			System.out.println("Error en CurriculaHackerController.java Throwable: " + oops);
-			if (hackerLogin!=null) {
-				result = new ModelAndView("redirect:/curricula/list.do?hackerId="+hackerLogin.getId());				
-			} else {
+			if (hackerLogin != null)
+				result = new ModelAndView("redirect:/curricula/list.do?hackerId=" + hackerLogin.getId());
+			else
 				result = new ModelAndView("redirect:/welcome/index.do");
-			}
 			result.addObject("message", "curricula.commit.error");
 		}
 		return result;

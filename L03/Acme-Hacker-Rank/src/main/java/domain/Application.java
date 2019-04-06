@@ -8,10 +8,13 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -64,6 +67,8 @@ public class Application extends DomainEntity {
 		this.position = position;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getCreationMoment() {
 		return this.creationMoment;
 	}
@@ -72,6 +77,8 @@ public class Application extends DomainEntity {
 		this.creationMoment = creationMoment;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getApplyMoment() {
 		return this.applyMoment;
 	}
@@ -80,7 +87,6 @@ public class Application extends DomainEntity {
 		this.applyMoment = applyMoment;
 	}
 
-	@NotBlank
 	@SafeHtml
 	public String getResponse() {
 		return this.response;
@@ -90,8 +96,8 @@ public class Application extends DomainEntity {
 		this.response = response;
 	}
 
-	@NotBlank
 	@SafeHtml
+	@URL
 	public String getLink() {
 		return this.link;
 	}

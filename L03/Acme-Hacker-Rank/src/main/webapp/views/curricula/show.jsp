@@ -53,7 +53,36 @@
 		</c:choose>
 		<p><strong><spring:message code="curricula.name" /></strong><jstl:out value="${curricula.name}"></jstl:out></p>
 		<p><strong><spring:message code="curricula.statement" /></strong><jstl:out value="${curricula.statement}"></jstl:out></p>
-		<p><strong><spring:message code="curricula.miscellaneous" /></strong><jstl:out value="${curricula.miscellaneous}"></jstl:out></p>
+		<fieldset>
+			<legend>
+				<i><spring:message code="curricula.miscellaneous" /></i><img width="35" height="35" src="./images/att.png" alt="${row1.id}" />
+			</legend>
+			<c:choose>
+					<c:when test="${hackerLogin==true}">
+			<p><strong><spring:message code="curricula.miscellaneous" /> </strong><jstl:out value="${curricula.miscellaneous}"></jstl:out></p>
+			<security:authorize access="hasRole('HACKER')">
+				<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/hacker/edit.do">
+	          		<form:hidden path="id"/>
+	          		<form:hidden path="version"/>
+	          		<form:hidden path="curriculaM"/>
+	          		<form:hidden path="isCopy"/>
+	          		<acme:textbox path="attachment" code="curricula.attachment"/>
+	          		<acme:submit name="save" code="save2"/>
+				</form:form>
+			</security:authorize>
+					</c:when>
+				</c:choose>
+			<display:table name="miscellaneousAttachments" id="row0" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<c:choose>
+					<c:when test="${hackerLogin==true}">
+						<display:column titleKey="curricula.delete">
+							<a href="miscellaneousAttachment/hacker/delete.do?miscellaneousAttachmentId=${row0.id}"><img width="35" height="35" src="./images/delete.png" alt="${row0.id}" /></a>	
+						</display:column>
+					</c:when>
+				</c:choose>
+				<display:column property="attachment" titleKey="curricula.attachment"></display:column>
+			</display:table>
+		</fieldset>
 		<fieldset>
 			<legend>
 				<i><spring:message code="curricula.contact" /></i><img width="35" height="35" src="./images/phone.png" alt="${row1.id}" />	
@@ -125,4 +154,13 @@
 </div>
 
 <br>
-<acme:cancel url="curricula/list.do?hackerId=${curricula.hacker.id}" code="back"/>
+
+		<c:choose>
+    		<c:when test="${hackerLogin==true}">
+    			<acme:cancel url="curricula/list.do?hackerId=${curricula.hacker.id}" code="back"/>  		
+    		</c:when>   
+    		<c:otherwise>
+				<input type="button" value="back" name="back" onclick="history.back()" />
+    		</c:otherwise>
+        </c:choose>	
+    			

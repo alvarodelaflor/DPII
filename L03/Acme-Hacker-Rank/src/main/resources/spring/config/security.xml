@@ -48,6 +48,12 @@
 		
 		<security:intercept-url pattern="/application/hacker/list.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/application/hacker/show.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/save.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/saveE.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/edit.do" access="hasRole('HACKER')" />
+		
+		<security:intercept-url pattern="/problem/hacker/show.do" access="hasRole('HACKER')" />
 		
 		<!-- CARMEM -->
 		
@@ -88,6 +94,10 @@
 		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/delete.do" access="hasRole('HACKER')" />
 		
 		<security:intercept-url pattern="/positionData/hacker/create.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/positionData/hacker/edit.do" access="hasRole('HACKER')" />
