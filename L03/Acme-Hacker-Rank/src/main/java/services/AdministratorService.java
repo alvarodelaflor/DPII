@@ -78,11 +78,24 @@ public class AdministratorService {
 
 	public Administrator reconstruct(final ActorForm form, final BindingResult binding) {
 
+		final Administrator res = this.create();
+
+		res.setName(form.getName());
+		res.setSurname(form.getSurname());
+		res.setPhoto(form.getPhoto());
+		res.setEmail(form.getEmail());
+		res.setAddress(form.getAddress());
+		res.setPhone(form.getPhone());
+
+		System.out.println("valide1");
+
 		if (form.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
 			binding.addError(error);
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
+
+		System.out.println("valide2");
 
 		if (form.getUserName().length() <= 5 && form.getUserName().length() <= 5) {
 			final ObjectError error = new ObjectError("userName", "");
@@ -90,11 +103,15 @@ public class AdministratorService {
 			binding.rejectValue("userName", "error.userAcount");
 		}
 
+		System.out.println("valide3");
+
 		if (this.actorService.getActorByUser(form.getUserName()) != null) {
 			final ObjectError error = new ObjectError("userName", "");
 			binding.addError(error);
 			binding.rejectValue("userName", "error.userName");
 		}
+
+		System.out.println("valide3");
 
 		if (form.getConfirmPassword().length() <= 5 && form.getPassword().length() <= 5) {
 			final ObjectError error = new ObjectError("password", "");
@@ -102,29 +119,22 @@ public class AdministratorService {
 			binding.rejectValue("password", "error.password");
 		}
 
+		System.out.println("valide4");
+
 		if (!form.getConfirmPassword().equals(form.getPassword())) {
 			final ObjectError error = new ObjectError("password", "");
 			binding.addError(error);
 			binding.rejectValue("password", "error.password.confirm");
 		}
 
-		final Administrator res = this.create();
-
-		res.setPhoto(form.getPhoto());
-		res.setName(form.getName());
-		res.setSurname(form.getSurname());
-
-		res.setAddress(form.getAddress());
-		res.setPhone(form.getPhone());
-		res.setEmail(form.getEmail());
-
-		Assert.isTrue(this.checkEmail(res), "email.general.error");
-
 		res.getUserAccount().setUsername(form.getUserName());
-		final String pass = form.getPassword();
+
+		final String password = form.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-		final String hashPass = encoder.encodePassword(pass, null);
-		res.getUserAccount().setPassword(hashPass);
+		final String hashPassword = encoder.encodePassword(password, null);
+		res.getUserAccount().setPassword(hashPassword);
+
+		System.out.println("valide todo");
 
 		this.validator.validate(res, binding);
 
@@ -134,6 +144,7 @@ public class AdministratorService {
 	public Administrator save(final Administrator admin) {
 
 		Assert.isTrue(this.adminRepository.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
+		Assert.isTrue(this.checkEmail(admin), "error.email");
 		return this.adminRepository.save(admin);
 	}
 }

@@ -91,12 +91,11 @@ public class AdministratorController extends AbstractController {
 	public ModelAndView create() {
 
 		ModelAndView res;
-		final ActorForm form = new ActorForm();
 		try {
-
+			final ActorForm form = new ActorForm();
 			res = new ModelAndView("administrator/create");
 			res.addObject("form", form);
-		} catch (final Throwable oops) {
+		} catch (final Exception e) {
 
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -107,8 +106,9 @@ public class AdministratorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final ActorForm form, final BindingResult binding) {
 
-		ModelAndView res;
-		final Administrator admin = this.adminService.reconstruct(form, binding);
+		ModelAndView res = null;
+		final Administrator admin;
+		admin = this.adminService.reconstruct(form, binding);
 
 		if (binding.hasErrors())
 
@@ -121,12 +121,12 @@ public class AdministratorController extends AbstractController {
 				res = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
 
-				if (oops.getMessage().equals("email.general.error"))
-					res = this.createEditModelAndView(admin, "email.general.error");
+				if (oops.getMessage().equals("email.wrong"))
+					res = this.createEditModelAndView(admin, "email.wrong");
 				else if (oops.getMessage().equals("error.email"))
 					res = this.createEditModelAndView(admin, "error.email");
 				else
-					res = new ModelAndView("redirect:/welcome/index.do");
+					res = this.createEditModelAndView(admin, "error.html");
 			}
 
 		return res;
