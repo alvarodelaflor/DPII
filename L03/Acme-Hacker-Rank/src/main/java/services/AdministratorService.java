@@ -23,7 +23,7 @@ import forms.ActorForm;
 
 @Service
 @Transactional
-public class AdministratorService {
+public class AdministratorService extends ActorService {
 
 	@Autowired
 	private AdministratorRepository	adminRepository;
@@ -35,6 +35,7 @@ public class AdministratorService {
 	private Validator				validator;
 
 
+	@Override
 	public Administrator findOne(final int id) {
 
 		return this.adminRepository.findOne(id);

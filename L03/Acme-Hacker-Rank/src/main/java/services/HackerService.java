@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -262,4 +263,9 @@ public class HackerService {
 
 		this.hackerRepository.delete(hacker);
 	}
+
+	public Collection<Hacker> findAll() {
+		return this.hackerRepository.findAll();
+	}
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
@@ -69,4 +70,28 @@ public class ActorService {
 	}
 	// QUERYS - REGISTRO USUARIO
 
+	// Ban/Unban ------------------------------------------------------------------------------------
+	public Actor banByActorId(final Actor actor) {
+
+		// "Check that an Admin is logged"
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(auth), "user.logged.error");
+
+		// Check for Spammer flag
+		Assert.isTrue(actor.getUserAccount().getSpammerFlag() == true || actor.getUserAccount().getPolarity() < 0, "ban.error");
+
+		actor.getUserAccount().setBanned(true);
+		return this.actorRepository.save(actor);
+	}
+	public Actor unbanByActorId(final Actor actor) {
+
+		// "Check that an Admin is logged"
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(auth), "user.logged.error");
+
+		actor.getUserAccount().setBanned(false);
+		return this.actorRepository.save(actor);
+	}
 }

@@ -61,7 +61,14 @@
 		<property name="systemName" value="Acme-Hacker-Rank" />
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
-		<property name="cacheAmount" value="10" /></bean>
+		<property name="cacheAmount" value="10" />
+		<!-- <property name="spamWords">
+			<list>
+				<value type="string">Spam1</value>
+				<value type="string">Spam2</value>
+			</list>
+		</property> -->
+	</bean>
 	<!-- CONFIG -->
 	
 	<!-- ADMIN -->

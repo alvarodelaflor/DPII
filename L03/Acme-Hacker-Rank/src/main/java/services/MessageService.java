@@ -24,13 +24,16 @@ import domain.Message;
 public class MessageService {
 
 	@Autowired
-	private MessageRepository	messageRepository;
+	private MessageRepository		messageRepository;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private Validator			validator;
+	private ConfigurationService	configService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public Message reconstruct(final Message message, final BindingResult binding) {
@@ -67,7 +70,49 @@ public class MessageService {
 		return m;
 	}
 
+	private Boolean checkSuspiciousWithBoolean(final Message msg) {
+
+		Boolean res = false;
+		final Collection<String> spamWords = this.configService.getConfiguration().getSpamWords();
+
+		for (final String word : spamWords)
+			if (msg.getBody().contains(word)) {
+				res = true;
+				break;
+			}
+		return res;
+	}
+
+	// spammerFlag = true if condition is fulfilled
+	private Boolean spammerFlagCheck(final UserAccount uacc) {
+
+		Boolean res = false;
+
+		if (uacc.getMsgCounter() != 0) {
+
+			final Double ratiospam = uacc.getSpamMsgCounter() / uacc.getMsgCounter();
+			final Double percentage = uacc.getMsgCounter() * 0.1;
+			res = ratiospam > percentage;
+		}
+
+		return res;
+	}
+
 	public Message save(final Message message) {
+
+		//Capturo actor logeado seg�n su Username
+		final UserAccount uacc = LoginService.getPrincipal();
+		final Actor actor = this.actorService.getActorByUser(uacc.getUsername());
+		//Actualizo contador total de msg
+		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1.);
+		//Actualizo contador de msg de spam
+		if (this.checkSuspiciousWithBoolean(message) == true)
+			actor.getUserAccount().setSpamMsgCounter(uacc.getSpamMsgCounter() + 1.);
+		//Calculo el spammerFlag del UserAcc
+		actor.getUserAccount().setSpammerFlag(this.spammerFlagCheck(actor.getUserAccount()));
+		//Guardo Actor con el UserAcc modificado
+		this.actorService.save(actor);
+		//Guardo el Msg
 		return this.messageRepository.save(message);
 	}
 
