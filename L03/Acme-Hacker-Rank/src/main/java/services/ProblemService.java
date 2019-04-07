@@ -59,14 +59,14 @@ public class ProblemService {
 	}
 
 	public void deleteAllByPosition(final int positionId) {
-		final Collection<Problem> problems = this.problemRepo.getProblemsByPosition(positionId);
+		final Collection<Problem> problems = this.problemRepository.getProblemsByPosition(positionId);
 		if (!problems.isEmpty())
-			this.problemRepo.deleteInBatch(problems);
+			this.problemRepository.deleteInBatch(problems);
 	}
 
 	public void deleteCompanyProblems(final int id) {
-		final Collection<Problem> problems = this.problemRepo.getProblemsByCompany(id);
-		this.problemRepo.deleteInBatch(problems);
+		final Collection<Problem> problems = this.problemRepository.getProblemsByCompany(id);
+		this.problemRepository.deleteInBatch(problems);
 
 	}
 
