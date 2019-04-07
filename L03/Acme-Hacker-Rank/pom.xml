@@ -123,6 +123,14 @@
 	<!-- Dependencies -->
 
 	<dependencies>
+	
+		<!-- Jackson/JSON parser -->
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 
 		<!-- Spring Framework -->
 

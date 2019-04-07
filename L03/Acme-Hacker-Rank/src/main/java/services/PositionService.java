@@ -25,6 +25,12 @@ public class PositionService {
 	@Autowired
 	private CompanyService		companyService;
 
+	@Autowired
+	private PositionDataService	positionDataService;
+
+	@Autowired
+	private ProblemService		problemService;
+
 
 	// FINDALL ---------------------------------------------------------------
 	public Collection<Position> findALL() {
@@ -117,6 +123,17 @@ public class PositionService {
 		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"));
 		final int companyId = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		return this.positionRepository.findAllPositionsByCompany(companyId);
+	}
+
+	public void deleteCompanyPositions(final int companyId) {
+
+		final Collection<Position> positions = this.positionRepository.findAllPositionsByCompany(companyId);
+		if (!positions.isEmpty())
+			for (final Position position : positions) {
+				this.problemService.deleteAllByPosition(position.getId());
+				this.positionDataService.deleteAllByPosition(position.getId());
+				this.positionRepository.delete(position);
+			}
 	}
 
 }
