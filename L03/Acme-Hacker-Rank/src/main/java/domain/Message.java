@@ -6,25 +6,22 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /*
  * CONTROL DE CAMBIOS Message.java
  * 
- * Antonio Salvat 23/02/2019 19:49 CREACIÓN DE LA CLASE
+ * Antonio Salvat 23/02/2019 19:49 CREACIï¿½N DE LA CLASE
  */
 
 @Entity
@@ -34,49 +31,41 @@ public class Message extends DomainEntity {
 	private String				subject;
 	private String				body;
 	private Date				moment;
-	private String				tag;
-	private Actor				sender;
-	private Collection<Actor>	recipient;
+	private Collection<Tag>		tags;
+	private String				sender;
+	private Collection<String>	recipient;
 
 
-	@Valid
-	@ManyToOne(cascade = javax.persistence.CascadeType.ALL)
-	@Cascade({
-		CascadeType.ALL
-	})
-	public Actor getSender() {
+	@NotBlank
+	public String getSender() {
 		return this.sender;
 	}
 
-	@Valid
-	@ManyToMany(cascade = javax.persistence.CascadeType.ALL)
-	@Cascade({
-		CascadeType.ALL
-	})
-	public Collection<Actor> getRecipient() {
+	@ElementCollection(targetClass = String.class)
+	public Collection<String> getRecipient() {
 		return this.recipient;
 	}
 
-	public void setRecipient(final Collection<Actor> recipient) {
+	public void setRecipient(final Collection<String> recipient) {
 		this.recipient = recipient;
 	}
 
-	public void setSender(final Actor sender) {
+	public void setSender(final String sender) {
 		this.sender = sender;
 	}
 
-	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getTag() {
-		return this.tag;
+	public void setTags(final Collection<Tag> tags) {
+		this.tags = tags;
 	}
 
-	public void setTag(final String tag) {
-		this.tag = tag;
+	@Valid
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Tag.class)
+	public Collection<Tag> getTags() {
+		return this.tags;
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	//	@SafeHtml(whitistType = WhiteListTy.NONE)
 	public String getSubject() {
 		return this.subject;
 	}
@@ -86,7 +75,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	//	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}

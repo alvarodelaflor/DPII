@@ -28,6 +28,10 @@
 		<bean class="converters.StringToPositionConverter"/>
 		<bean class="converters.PositionToStringConverter"/>
 		<!-- ALVARO -->
+		<!-- ALVARO -->
+		<bean class="converters.StringToTagConverter"/>
+		<!-- ALVARO -->
+
 	</util:list>
 	
 </beans>

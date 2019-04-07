@@ -14,6 +14,9 @@ public interface PositionDataRepository extends JpaRepository<PositionData, Inte
 
 	@Query("select pd from PositionData pd join pd.curricula pdc where pdc.id=?1")
 	Collection<PositionData> getPositionDataFromCurricula(int curriculaId);
+	
+	@Query("select pd from PositionData pd join pd.curricula pdc where pdc.id=?1 and pd.isCopy=0")
+	Collection<PositionData> getPositionDataNotCopyFromCurricula(int curriculaId);
 
 	@Query("select pd from PositionData pd join pd.position pdc where pdc.id=?1")
 	Collection<PositionData> getPositionDatasFromPosition(int positionId);

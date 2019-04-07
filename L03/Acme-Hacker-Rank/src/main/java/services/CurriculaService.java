@@ -27,6 +27,7 @@ import security.LoginService;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
+import domain.MiscellaneousAttachment;
 import domain.PositionData;
 
 @Service
@@ -43,7 +44,10 @@ public class CurriculaService {
 	private EducationalDataService	educationalDataService;
 
 	@Autowired
-	private PositionDataService		positionDataService;
+	private PositionDataService positionDataService;
+	
+	@Autowired
+	private MiscellaneousAttachmentService miscellaneousAttachmentService;
 
 	@Autowired
 	private Validator				validator;
@@ -117,12 +121,18 @@ public class CurriculaService {
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		Assert.notNull(curriculaDB, "The curricula is not in DB");
 		Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to delete a not own curricula");
-		final Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
-		if (!educationalDatas.isEmpty())
-			this.educationalDataService.deleteAll(educationalDatas);
-		final Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
-		if (!positionDatas.isEmpty())
-			this.positionDataService.deleteAll(positionDatas);
+		Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
+		if (!educationalDatas.isEmpty()) {
+			this.educationalDataService.deleteAll(educationalDatas);			
+		}
+		Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
+		if (!positionDatas.isEmpty()) {
+			this.positionDataService.deleteAll(positionDatas);			
+		}
+		Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
+		if (!miscellaneousAttachaments.isEmpty()) {
+			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);			
+		}
 		this.curriculaRepository.delete(curricula);
 	}
 
@@ -141,6 +151,7 @@ public class CurriculaService {
 
 		if (curricula.getId() == 0) {
 			curricula.setHacker(this.hackerService.getHackerLogin());
+			curricula.setLinkGitHub("https://www.github.com/" + curricula.getLinkGitHub().replaceAll("https://www.github.com/", ""));
 			curricula.setIsCopy(false);
 			result = curricula;
 		} else {
@@ -149,6 +160,7 @@ public class CurriculaService {
 			curricula.setId(result.getId());
 			curricula.setVersion(result.getVersion());
 			curricula.setHacker(result.getHacker());
+			curricula.setLinkGitHub("https://www.github.com/" + curricula.getLinkGitHub().replaceAll("https//www.github.com/", ""));
 			curricula.setIsCopy(false);
 			result = curricula;
 		}
@@ -180,6 +192,7 @@ public class CurriculaService {
 		final Curricula copy = this.save(curriculaCopy);
 		this.educationalDataService.makeCopyAllEducationalDataForCurricula(curricula, copy);
 		this.positionDataService.makeCopyAllPositionDataForCurricula(curricula, copy);
+		this.miscellaneousAttachmentService.makeCopyAllMiscellaneousAttachmentForCurricula(curricula, copy);
 		return copy;
 	}
 

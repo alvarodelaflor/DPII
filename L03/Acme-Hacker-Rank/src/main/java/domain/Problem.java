@@ -78,6 +78,7 @@ public class Problem extends DomainEntity {
 	public void setAttachments(final String attachments) {
 		this.attachments = attachments;
 	}
+
 	@ManyToMany
 	public Collection<Position> getPosition() {
 		return this.position;

@@ -8,13 +8,14 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
 import security.UserAccount;
@@ -24,25 +25,22 @@ import security.UserAccount;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Actor extends DomainEntity {
 
-	String								name, surname, photo, email, phone, address;
-	CreditCard							creditCard;
+	private String				name, surname, photo, email, phone, address;
+	private CreditCard			creditCard;
 
-	private UserAccount					userAccount;
+	private UserAccount			userAccount;
 
-	private Collection<SocialProfile>	socialProfiles;
+	private Collection<Message>	messages;
 
 
 	@Valid
-	@OneToMany(cascade = javax.persistence.CascadeType.ALL)
-	@Cascade({
-		CascadeType.ALL
-	})
-	public Collection<SocialProfile> getSocialProfiles() {
-		return this.socialProfiles;
+	@ManyToMany(cascade = javax.persistence.CascadeType.ALL)
+	public Collection<Message> getMessages() {
+		return this.messages;
 	}
 
-	public void setSocialProfiles(final Collection<SocialProfile> socialProfiles) {
-		this.socialProfiles = socialProfiles;
+	public void setMessages(final Collection<Message> messages) {
+		this.messages = messages;
 	}
 
 	@ManyToOne(cascade = javax.persistence.CascadeType.ALL)
@@ -58,6 +56,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -67,6 +66,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getSurname() {
 		return this.surname;
 	}
@@ -76,6 +76,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@URL
+	@SafeHtml
 	public String getPhoto() {
 		return this.photo;
 	}
@@ -93,6 +94,7 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
+	@SafeHtml
 	public String getPhone() {
 		return this.phone;
 	}
@@ -102,6 +104,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getAddress() {
 		return this.address;
 	}

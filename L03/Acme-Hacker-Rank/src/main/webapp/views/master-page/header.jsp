@@ -23,7 +23,10 @@
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
-					<li class="arrow"></li>				
+					<li class="arrow"></li>
+					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+					<li><a href="administrator/actorList.do"><spring:message code="master.page.administrator.actorList" /></a></li>
+					<li><a href="administrator/create.do"><spring:message code="master.page.administrator.create" /></a></li>					
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
@@ -40,6 +43,7 @@
 		<li><a class="fNiv"><spring:message	code="master.page.hacker" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="application/hacker/list.do"><spring:message code="master.page.list.application" /></a></li>	
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>

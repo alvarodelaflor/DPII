@@ -45,6 +45,16 @@
 		<security:intercept-url pattern="/position/newPalabra.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/application/hacker/list.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/show.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/save.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/saveE.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/hacker/edit.do" access="hasRole('HACKER')" />
+		
+		<security:intercept-url pattern="/problem/hacker/show.do" access="hasRole('HACKER')" />
+		
 		<!-- CARMEM -->
 		
 		<!-- ANTONIO S -->
@@ -55,6 +65,10 @@
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />	
 		
 		<security:intercept-url pattern="/message/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/send.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/create.do" access="isAuthenticated()" />	
+		<security:intercept-url pattern="/message/show.do" access="isAuthenticated()" />			
+		<security:intercept-url pattern="/message/delete.do" access="isAuthenticated()" />			
 		<!-- ANTONIO S -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
@@ -80,6 +94,10 @@
 		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/create.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/hacker/delete.do" access="hasRole('HACKER')" />
 		
 		<security:intercept-url pattern="/positionData/hacker/create.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/positionData/hacker/edit.do" access="hasRole('HACKER')" />
@@ -88,11 +106,23 @@
 		<!-- ALVARO -->
 		
 		<!-- HIPONA -->
-		<security:intercept-url pattern="/position/company/list.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/list.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/show.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/create.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/edit.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/cancel.do" access="hasRole('COMPANY')" /> 
 		<!-- HIPONA -->
 		
-		<!-- FERRETE -->
+		<!-- FRAN -->						
+		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/actorList.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/banCompany.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/administrator/banHacker.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" /> 
+		<!-- FRAN -->
 		
+		<!-- FERRETE -->
 		<security:intercept-url pattern="/administrator/export.do" access="hasRole('ADMIN')" />		
 		<security:intercept-url pattern="/hacker/export.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/company/export.do" access="hasRole('COMPANY')" />
@@ -102,7 +132,10 @@
 		<!-- FERRETE -->
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
-		
+
+		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 	
 
 		<security:form-login 

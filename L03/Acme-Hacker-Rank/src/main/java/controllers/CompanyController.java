@@ -81,7 +81,7 @@ public class CompanyController extends AbstractController {
 				else if (oops.getMessage().equals("error.email"))
 					result = this.createEditModelAndView(company, "error.email");
 				else
-					result = new ModelAndView("redirect:/welcome/index.do");
+					result = this.createEditModelAndView(company, "error.html");
 			}
 		return result;
 	}

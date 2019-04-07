@@ -19,12 +19,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class CreditCard {
 
-	String	holder, make, number, CVV;
-	Date	expiration;
+	private String	holder, make, number, CVV;
+	private Date	expiration;
 
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getHolder() {
 		return this.holder;
 	}
@@ -34,7 +34,7 @@ public class CreditCard {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getMake() {
 		return this.make;
 	}
@@ -44,7 +44,7 @@ public class CreditCard {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getNumber() {
 		return this.number;
 	}
@@ -54,7 +54,7 @@ public class CreditCard {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getCVV() {
 		return this.CVV;
 	}

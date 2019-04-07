@@ -21,13 +21,36 @@
 
 <div class="content">
 	
+			<p>Sended Messages</p>
 
-			<display:table name="msgs" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+			<display:table name="msgsSend" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 				<display:column titleKey="show"> 
 					<a href="message/show.do?messageId=${row.id}">${row.subject}</a>
 				</display:column>
 				<display:column property="subject" titleKey="subjectMessage"></display:column>
+				<display:column property="tags" titleKey="tag"></display:column>
 			</display:table>	
+			
+			<br>
+			
+			<p>Received Messages</p>
+			
+			<display:table name="msgsReceive" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
+				<display:column titleKey="show"> 
+					<a href="message/show.do?messageId=${row1.id}">${row1.subject}</a>
+				</display:column>
+				<display:column property="subject" titleKey="subjectMessage"></display:column>
+				<display:column property="tags" titleKey="tag"></display:column>
+			</display:table>	
+			
+			<br>
+  	<a href="message/create.do"><spring:message code="send.msg" /></a>
+  	
+  	<br>
+  	
+  	<security:authorize access="hasRole('ADMIN')">
+  		<a href="message/createBroadcast.do"><spring:message code="send.msg.broadcast" /></a>
+	</security:authorize>
 
 	<div>
 		<form method="get" action="#">

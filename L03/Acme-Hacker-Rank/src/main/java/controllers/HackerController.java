@@ -87,7 +87,7 @@ public class HackerController extends AbstractController {
 				else if (oops.getMessage().equals("error.email"))
 					result = this.createEditModelAndView(hacker, "error.email");
 				else
-					result = new ModelAndView("redirect:/welcome/index.do");
+					result = this.createEditModelAndView(hacker, "error.html");
 			}
 		return result;
 	}

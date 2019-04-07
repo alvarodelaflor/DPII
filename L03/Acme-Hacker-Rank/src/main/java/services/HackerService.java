@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -136,7 +137,8 @@ public class HackerService {
 			binding.rejectValue("password", "error.password.confirm");
 		}
 
-		result.getUserAccount().setUsername(registrationForm.getUserName());
+		final String userName = registrationForm.getUserName();
+		result.getUserAccount().setUsername(userName);
 
 		final String password = registrationForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -209,12 +211,6 @@ public class HackerService {
 		return hacker;
 	}
 
-	// DashBoard:
-	public String findHackerWithMoreApplications() {
-
-		return this.hackerRepository.findHackerWithMoreApplications();
-	}
-
 	/**
 	 * Find a hacker by his userAccount id.
 	 * 
@@ -275,4 +271,9 @@ public class HackerService {
 		this.curriculaService.deleteHackerCurriculas(hacker.getId());
 		this.hackerRepository.delete(hacker);
 	}
+
+	public Collection<Hacker> findAll() {
+		return this.hackerRepository.findAll();
+	}
+
 }
