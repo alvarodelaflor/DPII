@@ -31,8 +31,11 @@
 		<tr><td><strong><spring:message code="position.ticker" />: </strong><jstl:out	value="${position.ticker}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="position.profile" />: </strong><jstl:out value="${position.profile}"></jstl:out></td></tr>
 	</table>
+	<jstl:if test="${position.cancel eq false }">
+		<input type="button" value="<spring:message code='position.cancel_position' />" name="position.cancel_position" onclick="window.location = 'position/company/cancel.do?positionId=${position.id}'" />
+	</jstl:if>
 </div>
-<input type="button" value="back" name="position.cancel" onclick="window.location = 'position/company/list.do'" />
+<input type="button" value="<spring:message code='position.cancel' />" name="position.cancel" onclick="window.location = 'position/company/list.do'" />
 </jstl:if>
 <!-- FORM IN CASE THIS IS NOT IN FINAL MODE -->
 <jstl:if test="${not position.status}">

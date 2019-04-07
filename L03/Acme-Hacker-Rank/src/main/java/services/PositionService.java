@@ -166,6 +166,7 @@ public class PositionService {
 
 			res.setCompany(owner);
 			res.setStatus(false);
+			res.setCancel(false);
 			res.setTicker(this.getTickerForCompany(owner));
 		} else {
 			final Position dbPosition = this.positionRepository.findOne(position.getId());
@@ -215,10 +216,10 @@ public class PositionService {
 		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"), "Logged user is not a company");
 		if (pos.getId() != 0) {
 			// Position exists so we must be the owner
-			Assert.isTrue(this.checkPositionOwner(pos.getId()));
-			final Position dbPosition = this.positionRepository.findOne(pos.getId());
-			// This has to be in draft mode
-			Assert.isTrue(!dbPosition.getStatus());
+			Assert.isTrue(this.checkPositionOwner(pos.getId()), "Logged user is not the position owner");
+
+			// Database position has to be in draft mode
+			Assert.isTrue(this.getPositionDatabaseStatus(pos.getId()) == false, "Position is in final mode");
 
 			// In case we are setting this as final, we have to have at least 2 problems
 			if (pos.getStatus()) {
@@ -228,6 +229,13 @@ public class PositionService {
 		}
 		this.positionRepository.save(pos);
 	}
+
+	private boolean getPositionDatabaseStatus(final int positionId) {
+		final Position dbPosition = this.positionRepository.findOne(positionId);
+		// Database position has to be in draft mode
+		return dbPosition.getStatus();
+	}
+
 	public String findCompanyWithMorePositions() {
 
 		final List<String> ls = this.positionRepository.findCompanyWithMorePositions();
@@ -235,5 +243,13 @@ public class PositionService {
 		if (!ls.isEmpty())
 			res = ls.get(0);
 		return res;
+	}
+
+	public void cancel(final int positionId) {
+		// We can cancel a position if it is in final mode
+		this.checkPositionOwner(positionId);
+		final Position dbPosition = this.positionRepository.findOne(positionId);
+		Assert.isTrue(dbPosition.getStatus(), "Only positions in final mode can be cancelled");
+		dbPosition.setCancel(true);
 	}
 }

@@ -121,4 +121,17 @@ public class PositionCompanyController {
 		return result;
 	}
 
+	// Cancelling a position --------------------------------------------------
+	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
+	public ModelAndView cancel(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
+		ModelAndView result;
+		try {
+			this.positionService.cancel(positionId);
+			result = new ModelAndView("redirect:/position/company/list.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
 }
