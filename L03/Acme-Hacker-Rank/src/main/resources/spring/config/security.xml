@@ -111,6 +111,7 @@
 		<security:intercept-url pattern="/position/company/create.do" access="hasRole('COMPANY')" />
 		<security:intercept-url pattern="/position/company/edit.do" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/position/company/cancel.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/delete.do" access="hasRole('COMPANY')" /> 
 		<!-- HIPONA -->
 		
 		<!-- FRAN -->						

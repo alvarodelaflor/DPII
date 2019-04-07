@@ -134,4 +134,18 @@ public class PositionCompanyController {
 
 		return result;
 	}
+
+	// Deleting a position --------------------------------------------------
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
+		ModelAndView result;
+		try {
+			this.positionService.delete(positionId);
+			result = new ModelAndView("redirect:/position/company/list.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
 }
