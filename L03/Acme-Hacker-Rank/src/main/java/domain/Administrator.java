@@ -13,7 +13,7 @@ public class Administrator extends Actor {
 	Configuration	config;
 
 
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	public Configuration getConfig() {
 		return this.config;
 	}

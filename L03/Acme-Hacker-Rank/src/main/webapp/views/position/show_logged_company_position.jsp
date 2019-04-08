@@ -65,12 +65,17 @@
 							<spring:message code="position.status.false"/>
 							<form:radiobutton path="status" value="false" checked="checked"/> 
 							</td>
+							<td>
+							<br>
+							<input type="button" value="<spring:message code='position.delete' />" name="position.delete" onclick="window.location = 'position/company/delete.do?positionId=${position.id}'" />
+							</td>
 						</tr>
 					</table>
 					<jstl:if test="${problemCountError}">
 						<span class="error"><spring:message code="position.problemCountError"/> </span>
 					</jstl:if>
 					<br>
+					
 					<acme:submit name="save" code="position.save"/>
 					<input type="button" value="<spring:message code='position.cancel' />" onclick="window.location = 'position/company/list.do'" />
 				</form:form>

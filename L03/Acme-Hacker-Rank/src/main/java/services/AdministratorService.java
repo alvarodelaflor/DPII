@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
+import repositories.ActorRepository;
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
@@ -33,6 +34,9 @@ public class AdministratorService extends ActorService {
 
 	@Autowired
 	private Validator				validator;
+
+	@Autowired
+	private ActorRepository			actorRepository;
 
 
 	@Override
@@ -56,7 +60,7 @@ public class AdministratorService extends ActorService {
 
 		final List<Authority> auths = new ArrayList<>();
 		final Authority auth = new Authority();
-		auth.setAuthority(Authority.COMPANY);
+		auth.setAuthority(Authority.ADMIN);
 		auths.add(auth);
 		uacc.setAuthorities(auths);
 		res.setUserAccount(uacc);
@@ -64,33 +68,22 @@ public class AdministratorService extends ActorService {
 		return res;
 	}
 
-	private Boolean checkEmail(final Administrator admin) {
+	// RECONSTRUCT-CREATE ---------------------------------------------------------------		
+	public Administrator reconstructCreate(final ActorForm actorForm, final BindingResult binding) {
+		final Administrator result = this.create();
 
-		Boolean res = true;
-		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		System.out.println("carmen: entron en el reconstructCreate");
 
-		if (this.actorService.getActorByEmailE(admin.getEmail()) == null && this.actorService.getActorByEmail(admin.getEmail()).size() >= 1)
-			res = false;
-		else if (admin.getEmail().matches(pattern))
-			res = false;
-
-		return res;
-	}
-
-	public Administrator reconstruct(final ActorForm form, final BindingResult binding) {
-
-		final Administrator res = this.create();
-
-		res.setName(form.getName());
-		res.setSurname(form.getSurname());
-		res.setPhoto(form.getPhoto());
-		res.setEmail(form.getEmail());
-		res.setAddress(form.getAddress());
-		res.setPhone(form.getPhone());
+		result.setName(actorForm.getName());
+		result.setSurname(actorForm.getSurname());
+		result.setPhoto(actorForm.getPhoto());
+		result.setEmail(actorForm.getEmail());
+		result.setAddress(actorForm.getAddress());
+		result.setPhone(actorForm.getPhone());
 
 		System.out.println("valide1");
 
-		if (form.getAccept() == false) {
+		if (actorForm.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
 			binding.addError(error);
 			binding.rejectValue("accept", "error.termsAndConditions");
@@ -98,7 +91,7 @@ public class AdministratorService extends ActorService {
 
 		System.out.println("valide2");
 
-		if (form.getUserName().length() <= 5 && form.getUserName().length() <= 5) {
+		if (actorForm.getUserName().length() <= 5 && actorForm.getUserName().length() <= 5) {
 			final ObjectError error = new ObjectError("userName", "");
 			binding.addError(error);
 			binding.rejectValue("userName", "error.userAcount");
@@ -106,7 +99,7 @@ public class AdministratorService extends ActorService {
 
 		System.out.println("valide3");
 
-		if (this.actorService.getActorByUser(form.getUserName()) != null) {
+		if (this.actorRepository.getActorByUser(actorForm.getUserName()) != null) {
 			final ObjectError error = new ObjectError("userName", "");
 			binding.addError(error);
 			binding.rejectValue("userName", "error.userName");
@@ -114,7 +107,7 @@ public class AdministratorService extends ActorService {
 
 		System.out.println("valide3");
 
-		if (form.getConfirmPassword().length() <= 5 && form.getPassword().length() <= 5) {
+		if (actorForm.getConfirmPassword().length() <= 5 && actorForm.getPassword().length() <= 5) {
 			final ObjectError error = new ObjectError("password", "");
 			binding.addError(error);
 			binding.rejectValue("password", "error.password");
@@ -122,30 +115,48 @@ public class AdministratorService extends ActorService {
 
 		System.out.println("valide4");
 
-		if (!form.getConfirmPassword().equals(form.getPassword())) {
+		if (!actorForm.getConfirmPassword().equals(actorForm.getPassword())) {
 			final ObjectError error = new ObjectError("password", "");
 			binding.addError(error);
 			binding.rejectValue("password", "error.password.confirm");
 		}
 
-		res.getUserAccount().setUsername(form.getUserName());
+		result.getUserAccount().setUsername(actorForm.getUserName());
 
-		final String password = form.getPassword();
+		final String password = actorForm.getPassword();
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
-		res.getUserAccount().setPassword(hashPassword);
+		result.getUserAccount().setPassword(hashPassword);
 
 		System.out.println("valide todo");
 
-		this.validator.validate(res, binding);
+		this.validator.validate(result, binding);
 
+		return result;
+	}
+
+	// SAVE-CREATE ---------------------------------------------------------------		
+	public Administrator saveCreate(final Administrator administrator) {
+		Assert.isTrue(!this.checkEmailFormatter(administrator), "email.wrong");
+		Assert.isTrue(this.checkEmail(administrator), "error.email");
+		//		if (member.getPhone().matches("^([0-9]{4,})$"))
+		//			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
+		return this.adminRepository.save(administrator);
+	}
+
+	private Boolean checkEmailFormatter(final Administrator administrator) {
+		Boolean res = true;
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		final String pattern2 = "(^((([a-zA-Z]|[0-9]){1,}[@])$)|(^(([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]>))$)";
+		if (administrator.getEmail().matches(pattern) || administrator.getEmail().matches(pattern2))
+			res = false;
 		return res;
 	}
 
-	public Administrator save(final Administrator admin) {
-
-		Assert.isTrue(this.adminRepository.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
-		Assert.isTrue(this.checkEmail(admin), "error.email");
-		return this.adminRepository.save(admin);
+	private Boolean checkEmail(final Administrator administrator) {
+		Boolean res = false;
+		if (this.actorRepository.getActorByEmail(administrator.getEmail()).size() < 1)
+			res = true;
+		return res;
 	}
 }

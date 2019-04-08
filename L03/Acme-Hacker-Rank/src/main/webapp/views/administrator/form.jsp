@@ -13,28 +13,28 @@
 	<article>
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="form"  onsubmit="return phonenumberval();" action="administrator/create.do">
+				modelAttribute="actorForm"  onsubmit="return phonenumberval();" action="administrator/create.do">
 				
-				<acme:textbox code="company.name" path="name" />
-				<acme:textbox code="company.surname" path="surname" />
-				<acme:textbox code="company.username" path="userName" />
-				<acme:password code="company.password" path="password" />
-				<acme:password code="company.passwordC" path="confirmPassword" />
-				<acme:textbox code="company.address" path="address" />
-				<acme:textbox code="company.email" path="email" />
-				<acme:textbox code="company.photo" path="photo" />
-				<acme:phonebox code="company.phone" path="phone" />
+				<acme:textbox code="admin.name" path="name" />
+				<acme:textbox code="admin.surname" path="surname" />
+				<acme:textbox code="admin.username" path="userName" />
+				<acme:password code="admin.password" path="password" />
+				<acme:password code="admin.passwordC" path="confirmPassword" />
+				<acme:textbox code="admin.address" path="address" />
+				<acme:textbox code="admin.email" path="email" />
+				<acme:textbox code="admin.photo" path="photo" />
+				<acme:phonebox code="admin.phone" path="phone" />
 				<br>
 
-				<spring:message code="company.conditions" var="termsAndConditions"/>
+				<spring:message code="admin.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
-				<a href="company/conditions.do" target="_blank"><spring:message code="company.conditions1" /></a>
+				<a href="actor/conditions.do" target="_blank"><spring:message code="admin.conditions1" /></a>
 				<form:errors path="${accept}" cssClass="error" />
 				
 				<br>
 				<br>
-				<acme:submit name="save" code="company.save"/>
-				<acme:cancel url=" " code="company.cancel"/>
+				<acme:submit name="save" code="admin.save"/>
+				<acme:cancel url=" " code="admin.cancel"/>
 			</form:form>
 		</div>
 	</article>

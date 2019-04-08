@@ -247,4 +247,8 @@ public class CompanyService {
 		this.companyRepository.delete(company);
 	}
 
+	public void flush() {
+		this.companyRepository.flush();
+	}
+
 }

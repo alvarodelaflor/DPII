@@ -30,7 +30,7 @@
 <security:authorize access="hasRole('HACKER')">
 		<c:choose>
     		<c:when test="${hasProblem == true}">
-				<input type="button" value="<spring:message code='position.create' />" onclick="window.location = 'application/hacker/create.do?id=${position.id}'" /><br>				
+				<input type="button" value="<spring:message code='application.position.create' />" onclick="window.location = 'application/hacker/create.do?id=${position.id}'" /><br>				
     		
     		</c:when>    
     	</c:choose>

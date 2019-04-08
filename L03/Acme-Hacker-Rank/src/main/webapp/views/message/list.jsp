@@ -49,7 +49,7 @@
   	<br>
   	
   	<security:authorize access="hasRole('ADMIN')">
-  		<a href="message/createBroadcast.do"><spring:message code="send.msg.broadcast" /></a>
+  		<a href="message/sendNoti.do"><spring:message code="send.msg.broadcast" /></a>
 	</security:authorize>
 
 	<div>

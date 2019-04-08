@@ -18,7 +18,7 @@ import domain.Position;
 
 @Controller
 @RequestMapping("/position/company")
-public class PositionCompanyController {
+public class PositionCompanyController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
@@ -101,9 +101,10 @@ public class PositionCompanyController {
 
 		final Position pos = this.positionService.reconstruct(position, binding);
 
-		System.out.println(binding.getAllErrors());
 		if (binding.hasErrors()) {
 			result = new ModelAndView("position/company/show");
+			// To reset the view
+			position.setStatus(false);
 			result.addObject("position", position);
 		} else
 			try {
@@ -127,6 +128,20 @@ public class PositionCompanyController {
 		ModelAndView result;
 		try {
 			this.positionService.cancel(positionId);
+			result = new ModelAndView("redirect:/position/company/list.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	// Deleting a position --------------------------------------------------
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
+		ModelAndView result;
+		try {
+			this.positionService.delete(positionId);
 			result = new ModelAndView("redirect:/position/company/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

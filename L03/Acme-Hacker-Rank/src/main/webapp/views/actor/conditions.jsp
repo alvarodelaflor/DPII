@@ -84,4 +84,3 @@
 
 <p>If you have any questions about these Terms, please contact us.</p>
 
-<acme:cancel url="member/create.do" code="actor.cancel"/>

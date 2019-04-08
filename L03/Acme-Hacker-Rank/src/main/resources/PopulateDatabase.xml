@@ -42,7 +42,7 @@
 		</property>
 	</bean>
 	
-	<bean id="userAccount4" class="security.UserAccount">
+	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="hacker" />
 		<property name="password" value="d6a6bc0db10694a2d90e3a69648f3a03" />
 		<property name="authorities">
@@ -109,7 +109,7 @@
 		<property name="email" value="antonio@alum.us.es" />
         <property name="phone" value="+34625381121" />
         <property name="address" value="Lora del río, nº5" />
-        <property name="userAccount" ref= "userAccount4"/>
+        <property name="userAccount" ref= "userAccount3"/>
 		<property name="creditCard"><null></null></property></bean>
 	<!-- HACKER -->
 	

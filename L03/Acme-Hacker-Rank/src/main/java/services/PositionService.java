@@ -248,11 +248,20 @@ public class PositionService {
 	}
 
 	public void cancel(final int positionId) {
-		// We can cancel a position if it is in final mode
-		this.checkPositionOwner(positionId);
+		// We must be the owner
+		Assert.isTrue(this.checkPositionOwner(positionId), "Logged user is not the position owner");
 		final Position dbPosition = this.positionRepository.findOne(positionId);
+		// We can cancel a position if it is in final mode
 		Assert.isTrue(dbPosition.getStatus(), "Only positions in final mode can be cancelled");
 		dbPosition.setCancel(true);
+	}
+
+	public void delete(final int positionId) {
+		// We must be the owner
+		Assert.isTrue(this.checkPositionOwner(positionId), "Logged user is not the position owner");
+		// We can delete a position if it is not in final mode
+		Assert.isTrue(this.getPositionDatabaseStatus(positionId) == false, "Position is not in draft mode");
+		this.positionRepository.delete(positionId);
 	}
 	public void deleteCompanyPositions(final int companyId) {
 
