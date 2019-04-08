@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -12,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Position extends DomainEntity {
@@ -24,6 +27,16 @@ public class Position extends DomainEntity {
 
 	private Company	company;
 
+	private Boolean	cancel;
+
+
+	public Boolean getCancel() {
+		return this.cancel;
+	}
+
+	public void setCancel(final Boolean cancel) {
+		this.cancel = cancel;
+	}
 
 	@NotBlank
 	public String getTicker() {
@@ -64,7 +77,6 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml
 	public String getProfile() {
 		return this.profile;
 	}
@@ -94,6 +106,8 @@ public class Position extends DomainEntity {
 	}
 
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	@Future
 	public Date getDeadline() {
 		return this.deadline;

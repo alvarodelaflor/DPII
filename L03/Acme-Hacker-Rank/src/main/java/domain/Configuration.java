@@ -1,8 +1,11 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -13,9 +16,20 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
 
-	String	systemName, countryCode;
-	Integer	cacheHours, cacheAmount;
+	private String				systemName, countryCode;
+	private Integer				cacheHours, cacheAmount;
 
+	private Collection<String>	spamWords;
+
+
+	@ElementCollection
+	public Collection<String> getSpamWords() {
+		return this.spamWords;
+	}
+
+	public void setSpamWords(final Collection<String> spamWords) {
+		this.spamWords = spamWords;
+	}
 
 	@NotBlank
 	@SafeHtml

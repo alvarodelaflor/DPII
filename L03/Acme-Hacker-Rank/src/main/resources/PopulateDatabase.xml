@@ -61,7 +61,14 @@
 		<property name="systemName" value="Acme-Hacker-Rank" />
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
-		<property name="cacheAmount" value="10" /></bean>
+		<property name="cacheAmount" value="10" />
+		<!-- <property name="spamWords">
+			<list>
+				<value type="string">Spam1</value>
+				<value type="string">Spam2</value>
+			</list>
+		</property> -->
+	</bean>
 	<!-- CONFIG -->
 	
 	<!-- ADMIN -->
@@ -113,20 +120,22 @@
         <property name="profile" value="profile01" />
         <property name="description" value= "description01"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
-        <property name="company" ref= "company01"/>       
+        <property name="company" ref= "company01"/>
+		<property name="cancel" value="false" />       
     </bean>
     
     <bean id="position02" class="domain.Position">
     	<property name="ticker" value="ticker02" />
     	<property name="title" value="title02" />
     	<property name="techs" value="techs02" />
-		<property name="status" value="false" />
+		<property name="status" value="true" />
         <property name="skills" value="skills02" />
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile02" />
         <property name="description" value= "description02"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
-        <property name="company" ref= "company01"/>       
+        <property name="company" ref= "company01"/>
+		<property name="cancel" value="false" />       
     </bean>
     
     <bean id="position03" class="domain.Position">
@@ -139,11 +148,12 @@
         <property name="profile" value="profile03" />
         <property name="description" value= "description03"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
-        <property name="company" ref= "company01"/>       
+        <property name="company" ref= "company01"/>  
+		<property name="cancel" value="false" />     
     </bean>
 	<!-- POSITION  -->
 	
-		<!-- CURRICULA -->
+	<!-- CURRICULA -->
 	<bean id="curricula01" class="domain.Curricula">
     	<property name="name" value="name01" />
     	<property name="statement" value="statement01" />
@@ -151,6 +161,17 @@
 		<property name="linkGitHub" value="https://linkGitHub01" />
         <property name="linkLinkedin" value="https://linkLinkedin01" />    
         <property name="miscellaneous" value= "miscellaneous01"/>   
+        <property name="hacker" ref= "hacker01"/> 
+        <property name="isCopy" value="false"/>          
+    </bean>
+    
+    <bean id="curricula02" class="domain.Curricula">
+    	<property name="name" value="name02" />
+    	<property name="statement" value="statement02" />
+		<property name="phone" value="123456" />
+		<property name="linkGitHub" value="https://linkGitHub02" />
+        <property name="linkLinkedin" value="https://linkLinkedin02" />    
+        <property name="miscellaneous" value= "miscellaneous02"/>   
         <property name="hacker" ref= "hacker01"/> 
         <property name="isCopy" value="true"/>          
     </bean>
@@ -161,22 +182,73 @@
     	<property name="title" value="title01" />
     	<property name="statement" value="statement01" />
 		<property name="hint" value="hint01" />
-		<property name="draftMode" value="true" />
-        <property name="attachments" value="attachments01" />    
+		<property name="finalMode" value="true" />
+        <property name="attachments" value="attachments01" />  
+        <property name="company" ref= "company01"/> 
+        <property name="position">
+        	<list>
+                <ref bean="position01"/>
+                <ref bean="position02"/>
+        	</list>
+        </property>
     </bean>
-	<!-- PROBLEM -->
+    
+    <bean id="problem02" class="domain.Problem">
+    	<property name="title" value="title02" />
+    	<property name="statement" value="statement02" />
+		<property name="hint" value="hint02" />
+		<property name="finalMode" value="true" />
+        <property name="attachments" value="attachments02" />  
+        <property name="company" ref= "company01"/>
+        <property name="position">
+        	<list>
+                <ref bean="position01"/>
+                <ref bean="position02"/>
+        	</list>
+        </property>
+    </bean>
+    
+    <bean id="problem03" class="domain.Problem">
+    	<property name="title" value="title03" />
+    	<property name="statement" value="statement03" />
+		<property name="hint" value="hint03" />
+		<property name="finalMode" value="false" />
+        <property name="attachments" value="attachments03" />  
+        <property name="company" ref= "company01"/> 
+        <property name="position">
+        	<list>
+                <ref bean="position01"/>
+                <ref bean="position02"/>
+        	</list>
+        </property>
+    </bean>
+    <!-- PROBLEM -->
 	
 	<!-- APPLICATION -->
 	<bean id="application01" class="domain.Application">
     	<property name="response" value="response01" />
-    	<property name="link" value="https://link01" />
+    	<property name="link" value="http://link01" />
 		<property name="status" value="ACCEPTED" />
 		<property name="position" ref="position01" />
-        <property name="problem" ref="problem01" />    
+        <property name="problem" ref="problem01" />
+        <property name="applyMoment" value= "2017/11/10 08:00"/>  
+        <property name="creationMoment" value= "2017/12/10 08:00"/>       
         <property name="hacker" ref= "hacker01"/>   
-        <property name="curricula" ref= "curricula01"/>           
+        <property name="curricula" ref= "curricula02"/>           
     </bean>
-	<!-- APPLICATION -->
+    
+    <bean id="application02" class="domain.Application">
+    	<property name="response" value="response02" />
+    	<property name="link" value="http://link02" />
+		<property name="status" value="REJECTED" />
+		<property name="position" ref="position02" />
+        <property name="problem" ref="problem02" />    
+        <property name="hacker" ref= "hacker01"/> 
+        <property name="applyMoment" value= "2018/11/10 08:00"/>  
+        <property name="creationMoment" value= "2018/12/10 08:00"/>              
+        <property name="curricula" ref= "curricula02"/>           
+    </bean>
+    <!-- APPLICATION -->
 	
 
 

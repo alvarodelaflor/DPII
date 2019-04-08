@@ -13,7 +13,7 @@
 	<article>
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="form"  onsubmit="return phonenumberval();" action="administrator/save.do">
+				modelAttribute="form"  onsubmit="return phonenumberval();" action="administrator/create.do">
 				
 				<acme:textbox code="company.name" path="name" />
 				<acme:textbox code="company.surname" path="surname" />
@@ -24,7 +24,6 @@
 				<acme:textbox code="company.email" path="email" />
 				<acme:textbox code="company.photo" path="photo" />
 				<acme:phonebox code="company.phone" path="phone" />
-				
 				<br>
 
 				<spring:message code="company.conditions" var="termsAndConditions"/>

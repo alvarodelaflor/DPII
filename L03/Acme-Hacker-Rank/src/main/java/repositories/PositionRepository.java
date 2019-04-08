@@ -53,11 +53,14 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	/////////////////////////////////////////////////////////////////////////////////
 
-	@Query("select p from Position p where p.company.id =?1 and p.status=true")
-	Collection<Position> findAllPositionStatusTrueByCompany(int companyId);
+	@Query("select p from Position p where p.company.id =?1 and p.status=true and p.cancel=false")
+	Collection<Position> findAllPositionStatusTrueCancelFalseByCompany(int companyId);
 
 	@Query("select p from Position p where p.status=true")
 	Collection<Position> findAllPositionWithStatusTrue();
+
+	@Query("select p from Position p where p.status=true and p.cancel=false")
+	Collection<Position> findAllPositionWithStatusTrueCancelFalse();
 
 	@Query("select p from Position p where p.description like %?1% and p.status=1")
 	Collection<Position> findWithDescription(String description);
@@ -79,5 +82,8 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p from Position p where p.company.id = ?1")
 	Collection<Position> findAllPositionsByCompany(int companyId);
+
+	@Query("select count(p) from Position p where p.ticker = ?1")
+	public int countByTicker(String ticker);
 
 }
