@@ -18,7 +18,7 @@ import domain.Position;
 
 @Controller
 @RequestMapping("/position/company")
-public class PositionCompanyController {
+public class PositionCompanyController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;

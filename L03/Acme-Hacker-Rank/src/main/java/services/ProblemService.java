@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.ProblemRepository;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthUtils;
 import domain.Hacker;
 import domain.Problem;
 
@@ -24,6 +25,9 @@ public class ProblemService {
 
 	@Autowired
 	private HackerService		hackerService;
+
+	@Autowired
+	private CompanyService		companyService;
 
 
 	public int getProblemCount(final int positionId) {
@@ -55,6 +59,36 @@ public class ProblemService {
 	// FINDONE ---------------------------------------------------------------
 	public Problem findOne(final int id) {
 		return this.problemRepository.findOne(id);
+	}
+
+	public Collection<Problem> findAllProblemsByLoggedCompany() {
+		// We have to be a company
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"));
+		final int companyId = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		return this.problemRepository.findFromLoggedCompany(companyId);
+	}
+
+	private boolean checkProblemOwner(final int problemId) {
+		final int loggedId = LoginService.getPrincipal().getId();
+		final int ownerId = this.problemRepository.findOne(problemId).getCompany().getUserAccount().getId();
+		return loggedId == ownerId;
+	}
+
+	public Problem findOneLoggedIsOwner(final int problemId) {
+		Assert.isTrue(this.checkProblemOwner(problemId), "Show failed: Logged user is not the owner of the company");
+		return this.problemRepository.findOne(problemId);
+	}
+
+	public void delete(final int problemId) {
+		// We must be the owner and problem can't be in final mode
+		Assert.isTrue(this.checkProblemOwner(problemId), "Delete failed: Logged user is not the owner of the company");
+		Assert.isTrue(this.getDatabaseProblemFinalMode(problemId) == false, "Delete failed: Problem is in final mode");
+
+		this.problemRepository.delete(problemId);
+	}
+
+	private boolean getDatabaseProblemFinalMode(final int problemId) {
+		return this.problemRepository.findOne(problemId).getFinalMode();
 	}
 
 	public void deleteAllByPosition(final int positionId) {

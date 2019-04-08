@@ -45,7 +45,7 @@ public class SampleTest extends AbstractTest {
 		Assert.isTrue(false);
 	}
 
-	@Test
+	//@Test
 	public void SampleDriver() {
 		final Object testingData[][] = {
 			{
@@ -54,9 +54,10 @@ public class SampleTest extends AbstractTest {
 				"userAccount2", super.getEntityId("userAccount2"), null
 			}, {
 				"userAccount3", super.getEntityId("userAccount3"), null
-			}, {
-				"non-existent", 0, AssertionError.class
 			}
+		//			, {
+		//				"non-existent", 0, AssertionError.class
+		//			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
