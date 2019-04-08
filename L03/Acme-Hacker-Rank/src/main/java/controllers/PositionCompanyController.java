@@ -101,7 +101,6 @@ public class PositionCompanyController extends AbstractController {
 
 		final Position pos = this.positionService.reconstruct(position, binding);
 
-		System.out.println(binding.getAllErrors());
 		if (binding.hasErrors()) {
 			result = new ModelAndView("position/company/show");
 			result.addObject("position", position);

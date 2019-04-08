@@ -31,4 +31,10 @@
 		<put-attribute name="body" value="/views/problem/show_logged_company_problem.jsp" />
 	</definition>
 	
+	<definition name="problem/company/form" extends="master.page">	
+		<put-attribute name="title" value="Crear problema" />
+		<put-attribute name="body" value="/views/problem/create_logged_company_problem.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>
