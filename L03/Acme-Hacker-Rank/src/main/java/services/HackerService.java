@@ -40,6 +40,12 @@ public class HackerService {
 	@Autowired
 	private ActorService		actorService;
 
+	@Autowired
+	private ApplicationService	applicationService;
+
+	@Autowired
+	private CurriculaService	curriculaService;
+
 
 	// CREATE ---------------------------------------------------------------		
 	public Hacker create() {
@@ -259,8 +265,10 @@ public class HackerService {
 	}
 
 	public void delete(final Hacker hacker) {
-		Assert.isTrue(LoginService.getPrincipal().getId() == hacker.getUserAccount().getId());
 
+		Assert.isTrue(LoginService.getPrincipal().getId() == hacker.getUserAccount().getId());
+		this.applicationService.deleteHackerApplications(hacker.getId());
+		this.curriculaService.deleteHackerCurriculas(hacker.getId());
 		this.hackerRepository.delete(hacker);
 	}
 

@@ -39,6 +39,12 @@ public class CompanyService {
 	@Autowired
 	private ActorService		actorService;
 
+	@Autowired
+	private PositionService		positionService;
+
+	@Autowired
+	private ProblemService		problemService;
+
 
 	// CREATE ---------------------------------------------------------------		
 	public Company create() {
@@ -236,6 +242,8 @@ public class CompanyService {
 
 	public void delete(final Company company) {
 		Assert.isTrue(LoginService.getPrincipal().getId() == company.getUserAccount().getId());
+		this.problemService.deleteCompanyProblems(company.getId());
+		this.positionService.deleteCompanyPositions(company.getId());
 		this.companyRepository.delete(company);
 	}
 

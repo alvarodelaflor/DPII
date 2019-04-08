@@ -128,4 +128,9 @@ public class ApplicationService {
 		return res;
 	}
 
+
+	public void deleteHackerApplications(final int hackerId) {
+		final Collection<Application> apps = this.applicationRepository.findHackerApps(hackerId);
+		this.applicationRepository.deleteInBatch(apps);
+	}
 }

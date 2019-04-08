@@ -57,4 +57,16 @@ public class ProblemService {
 		return this.problemRepository.findOne(id);
 	}
 
+	public void deleteAllByPosition(final int positionId) {
+		final Collection<Problem> problems = this.problemRepository.getProblemsByPosition(positionId);
+		if (!problems.isEmpty())
+			this.problemRepository.deleteInBatch(problems);
+	}
+
+	public void deleteCompanyProblems(final int id) {
+		final Collection<Problem> problems = this.problemRepository.getProblemsByCompany(id);
+		this.problemRepository.deleteInBatch(problems);
+
+	}
+
 }
