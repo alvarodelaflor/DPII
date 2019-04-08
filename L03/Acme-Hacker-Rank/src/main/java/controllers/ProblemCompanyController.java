@@ -65,16 +65,4 @@ public class ProblemCompanyController extends AbstractController {
 		return result;
 	}
 
-	// Delete a problem I own -----------------------------------------------
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam(value = "problemId", defaultValue = "-1") final int problemId) {
-		ModelAndView result;
-		try {
-			this.problemService.delete(problemId);
-			result = new ModelAndView("redirect:/problem/company/list.do");
-		} catch (final Exception e) {
-			result = new ModelAndView("redirect:/welcome/index.do");
-		}
-		return result;
-	}
 }
