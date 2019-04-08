@@ -2,6 +2,7 @@
 package domain;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -16,15 +17,27 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
 
-	private String				systemName, countryCode;
+	private String				systemName, countryCode, banner, systemMessageEs, systemMessageEn;
 	private Integer				cacheHours, cacheAmount;
 
 	private Collection<String>	spamWords;
+	private Collection<String>	priorities;
 
+
+	@NotBlank
+	@SafeHtml
+	public String getBanner() {
+		return this.banner;
+	}
+
+	public void setBanner(final String banner) {
+		this.banner = banner;
+	}
 
 	@ElementCollection
 	public Collection<String> getSpamWords() {
-		return this.spamWords;
+		final HashSet<String> spamWords = new HashSet<>(this.spamWords);
+		return spamWords;
 	}
 
 	public void setSpamWords(final Collection<String> spamWords) {
@@ -67,6 +80,33 @@ public class Configuration extends DomainEntity {
 
 	public void setCacheAmount(final Integer cacheAmount) {
 		this.cacheAmount = cacheAmount;
+	}
+	@ElementCollection
+	public Collection<String> getPriorities() {
+		final HashSet<String> priorities = new HashSet<>(this.priorities);
+		return priorities;
+	}
+
+	public void setPriorities(final Collection<String> priorities) {
+		this.priorities = priorities;
+	}
+	@NotBlank
+	@SafeHtml
+	public String getSystemMessageEn() {
+		return this.systemMessageEn;
+	}
+
+	public void setSystemMessageEn(final String systemMessageEn) {
+		this.systemMessageEn = systemMessageEn;
+	}
+	@NotBlank
+	@SafeHtml
+	public String getSystemMessageEs() {
+		return this.systemMessageEs;
+	}
+
+	public void setSystemMessageEs(final String systemMessageEs) {
+		this.systemMessageEs = systemMessageEs;
 	}
 
 }

@@ -62,12 +62,29 @@
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
 		<property name="cacheAmount" value="10" />
-		<!-- <property name="spamWords">
-			<list>
-				<value type="string">Spam1</value>
-				<value type="string">Spam2</value>
+		<property name="systemMessageEs" value="¡Bienvenidos a Acme Hacker Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		<property name="systemMessageEn" value="Welcome to Acme hacker Rank! We’re IT hacker’s favourite job marketplace!" />
+		<property name="spamWords">
+			<list value-type="java.lang.String">
+				<value>sex</value>
+				<value>sexo</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>Un millón</value>
+				<value>Nigeria</value>
 			</list>
-		</property> -->
+		</property>
+		
+		<property name="priorities">
+			<list value-type="java.lang.String">
+				<value>HIGH</value>
+				<value>LOW</value>
+				<value>MEDIUM</value>
+			</list>
+		</property>
+		
+		<property name="banner" value="https://i.imgur.com/7b8lu4b.png" />
 	</bean>
 	<!-- CONFIG -->
 	

@@ -11,8 +11,10 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AdministratorService;
 import services.ApplicationService;
 import services.CompanyService;
+import services.ConfigurationService;
 import services.HackerService;
 import services.PositionService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Company;
+import domain.Configuration;
 import domain.Hacker;
 import forms.ActorForm;
 
@@ -49,6 +53,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private HackerService			hackerService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -244,5 +251,454 @@ public class AdministratorController extends AbstractController {
 
 		return res;
 	}
+
+	//FERRETE
+	//CONFIGURATION
+	@RequestMapping(value = "/list")
+	public ModelAndView list2() {
+		ModelAndView result;
+		result = new ModelAndView("administrator/list");
+
+		HashSet<String> spamWords = new HashSet<>();
+		final HashSet<String> scoreWordsPos = new HashSet<>();
+		final HashSet<String> scoreWordsNeg = new HashSet<>();
+
+		//Configuration
+		// ------------------------------------------------------------
+		final Configuration configuration = this.configurationService.getConfiguration();
+		//		final Double fair = configuration.getFair();
+		//		final Double VAT = configuration.getVAT();
+		// ------------------------------------------------------------
+
+		//CreditCards'Makes
+		// ------------------------------------------------------------
+		//		HashSet<String> creditCardMakes = new HashSet<>();
+		//		if (this.configurationService.getCreditCardsMakes().size() == 0)
+		//			creditCardMakes = this.configurationService.defaultCCsMakes();
+		//		else
+		//			creditCardMakes = this.configurationService.getCreditCardsMakes();
+		//		result.addObject("creditCardMakes", creditCardMakes);
+		// ------------------------------------------------------------
+
+		//Priorities
+		// ------------------------------------------------------------
+		Collection<String> priorities = new HashSet<>();
+		priorities = configuration.getPriorities();
+		result.addObject("priorities", priorities);
+		// ------------------------------------------------------------
+		//Logo
+		final String logo = configuration.getBanner();
+
+		//Spam words
+
+		spamWords = new HashSet<>(configuration.getSpamWords());
+
+		//Score Words
+		//		if (this.configurationService.getScoreWordsPos().isEmpty())
+		//			scoreWordsPos = this.configurationService.listScoreWordsPos();
+		//		else
+		//			scoreWordsPos = this.configurationService.getScoreWordsPos();
+		//
+		//		if (this.configurationService.getScoreWordsNeg().isEmpty())
+		//			scoreWordsNeg = this.configurationService.listScoreWordsNeg();
+		//		else
+		//			scoreWordsNeg = this.configurationService.getScoreWordsNeg();
+
+		//Welcome page
+		final String ingles = configuration.getSystemMessageEn();
+		final String spanish = configuration.getSystemMessageEs();
+
+		//System
+		final String system = configuration.getSystemName();
+
+		//Phone
+		final String phone = configuration.getCountryCode();
+
+		//Country´s Phone
+		//		final String phoneCountry = this.configurationService.getCountry();
+
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+
+		System.out.println("Carmen: Entro en el list");
+
+		//		result.addObject("fair", fair);
+		//		result.addObject("VAT", VAT);
+		result.addObject("logo", logo);
+		result.addObject("ingles", ingles);
+		result.addObject("spanish", spanish);
+		result.addObject("spamWords", spamWords);
+		result.addObject("scoreWordsPos", scoreWordsPos);
+		result.addObject("scoreWordsNeg", scoreWordsNeg);
+		result.addObject("configuration", configuration);
+		result.addObject("system", system);
+		result.addObject("phone", phone);
+		//		result.addObject("phoneCountry", phoneCountry);
+		result.addObject("language", language);
+		result.addObject("requestURI", "administrator/list.do");
+		//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	// CreditCardMakes Methods:
+	// ------------------------------------------------------------
+	//	@RequestMapping(value = "/newCreditCardMake", method = RequestMethod.GET)
+	//	public ModelAndView newCreditCardMake(@RequestParam("newCreditCardMake") final String newCreditCardMake) {
+	//
+	//		final ModelAndView res = new ModelAndView("redirect:list.do");
+	//		this.configurationService.addCCMake(newCreditCardMake);
+	//		res.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//		res.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		return res;
+	//	}
+
+	//	@RequestMapping(value = "/deleteCreditCardMake", method = RequestMethod.GET)
+	//	public ModelAndView deleteCreditCardMake(@RequestParam("deleteCreditCardMake") final String deleteCreditCardMake) {
+	//		ModelAndView result = new ModelAndView("administrator/list");
+	//
+	//		try {
+	//			this.configurationService.removeCCMake(deleteCreditCardMake);
+	//			result = new ModelAndView("redirect:list.do");
+	//		} catch (final Throwable oops) {
+	//			if (oops.getMessage() == "noCCMake.error") {
+	//				result = this.list2();
+	//				result.addObject("message", "noCCMake.error");
+	//			}
+	//		}
+	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		return result;
+	//	}
+	// ------------------------------------------------------------
+	// Fair and VAT Methods:
+	// ------------------------------------------------------------
+	//	@RequestMapping(value = "/newFair", method = RequestMethod.GET)
+	//	public ModelAndView newFair(@RequestParam("newFair") final Double newFair) {
+	//
+	//		ModelAndView res = new ModelAndView("redirect:list.do");
+	//
+	//		try {
+	//
+	//			final Configuration config = this.configurationService.getConfiguration();
+	//			config.setFair(newFair);
+	//			this.configurationService.save(config);
+	//			res.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//			res.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		} catch (final Throwable oops) {
+	//
+	//			if (oops.getMessage() == "number.positive.error") {
+	//				res = new ModelAndView("redirect:list.do");
+	//				res.addObject("message", "number.positive.error");
+	//				res.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//				res.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//			}
+	//		}
+	//
+	//		return res;
+	//	}
+	//	@RequestMapping(value = "/newVAT", method = RequestMethod.GET)
+	//	public ModelAndView newVAT(@RequestParam("newVAT") final Double newVAT) {
+	//
+	//		ModelAndView res = new ModelAndView("redirect:list.do");
+	//
+	//		try {
+	//
+	//			final Configuration config = this.configurationService.getConfiguration();
+	//			config.setVAT(newVAT);
+	//			this.configurationService.save(config);
+	//			res.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//			res.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		} catch (final Throwable oops) {
+	//
+	//			if (oops.getMessage() == "number.positive.error") {
+	//				res = new ModelAndView("redirect:list.do");
+	//				res.addObject("message", "number.positive.error");
+	//				res.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//				res.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//			}
+	//		}
+	//		return res;
+	//	}
+	// ------------------------------------------------------------
+
+	// PRIORITIES
+	@RequestMapping(value = "/newPriority", method = RequestMethod.GET)
+	public ModelAndView addPriority(@RequestParam("newPriority") final String newPriority) {
+		ModelAndView result;
+
+		this.configurationService.addPriority(newPriority);
+		result = new ModelAndView("redirect:list.do");
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	@RequestMapping(value = "/deletePriority", method = RequestMethod.GET)
+	public ModelAndView deletePriority(@RequestParam("deletePriority") final String deletePriority) {
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			System.out.println("Carmen: Voy a intentar guardar");
+			this.configurationService.deletePriority(deletePriority);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noPriority.error") {
+				result = this.list2();
+				result.addObject("message", "noPriority.error");
+			}
+		}
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	@RequestMapping(value = "/newSpamWord", method = RequestMethod.GET)
+	public ModelAndView newSpamWord(@RequestParam("newSpamWord") final String newSpamWord) {
+		ModelAndView result;
+
+		System.out.println("Carmen: Voy a intentar guardar");
+		this.configurationService.newSpamWords(newSpamWord);
+		result = new ModelAndView("redirect:list.do");
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	@RequestMapping(value = "/deleteSpamWord", method = RequestMethod.GET)
+	public ModelAndView deleteSpamWord(@RequestParam("deleteSpamWord") final String spamWord) {
+		ModelAndView result = new ModelAndView("administrator/list");
+
+		try {
+			System.out.println("Carmen: Voy a intentar guardar");
+			this.configurationService.deleteSpamWords(spamWord);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "noSpamWord.error") {
+				result = this.list2();
+				result.addObject("message", "noSpamWord.error");
+			}
+		}
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	//SCORE WORDS
+	//	@RequestMapping(value = "/newScoreWordPos", method = RequestMethod.GET)
+	//	public ModelAndView newScoreWordPos(@RequestParam("newScoreWord") final String newScoreWord) {
+	//		ModelAndView result;
+	//
+	//		this.configurationService.newScoreWordsPos(newScoreWord);
+	//		result = new ModelAndView("redirect:list.do");
+	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		return result;
+	//	}
+	//
+	//	@RequestMapping(value = "/deleteScoreWordPos", method = RequestMethod.GET)
+	//	public ModelAndView deleteScoreWordPos(@RequestParam("deleteScoreWord") final String scoreWord) {
+	//
+	//		ModelAndView result = new ModelAndView("administrator/list");
+	//
+	//		try {
+	//			this.configurationService.deleteScoreWordsPos(scoreWord);
+	//			result = new ModelAndView("redirect:list.do");
+	//		} catch (final Throwable oops) {
+	//			if (oops.getMessage() == "noScoreWord.error") {
+	//				result = this.list2();
+	//				result.addObject("message", "noScoreWord.error");
+	//			}
+	//		}
+	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		return result;
+	//	}
+
+	//	//SCORE WORDS NEG
+	//	@RequestMapping(value = "/newScoreWordNeg", method = RequestMethod.GET)
+	//	public ModelAndView newScoreWord(@RequestParam("newScoreWord") final String newScoreWord) {
+	//		ModelAndView result;
+	//
+	//		this.configurationService.newScoreWordsNeg(newScoreWord);
+	//		result = new ModelAndView("redirect:list.do");
+	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		return result;
+	//	}
+
+	//	@RequestMapping(value = "/deleteScoreWordNeg", method = RequestMethod.GET)
+	//	public ModelAndView deleteScoreWord(@RequestParam("deleteScoreWord") final String scoreWord) {
+	//		ModelAndView result = new ModelAndView("administrator/list");
+	//
+	//		try {
+	//			System.out.println("Carmen: Voy a intentar guardar");
+	//			this.configurationService.deleteScoreWordsNeg(scoreWord);
+	//			result = new ModelAndView("redirect:list.do");
+	//		} catch (final Throwable oops) {
+	//			if (oops.getMessage() == "noScoreWord.error") {
+	//				result = this.list2();
+	//				result.addObject("message", "noScoreWord.error");
+	//			}
+	//		}
+	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		return result;
+	//	}
+
+	@RequestMapping(value = "/newWelcome", method = RequestMethod.GET)
+	public ModelAndView newWelcome(@RequestParam("newIngles") final String newIngles, @RequestParam("newSpanish") final String newSpanish) {
+		ModelAndView result;
+
+		System.out.println(newIngles);
+		System.out.println(newSpanish);
+
+		System.out.println("Carmen: Voy a intentar guardar");
+
+		this.configurationService.newE(newIngles);
+
+		this.configurationService.newS(newSpanish);
+
+		result = new ModelAndView("redirect:list.do");
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	@RequestMapping(value = "/newSystem", method = RequestMethod.GET)
+	public ModelAndView newSystem(@RequestParam("newSystem") final String newSystem) {
+		ModelAndView result;
+
+		System.out.println(newSystem);
+
+		System.out.println("Carmen: Voy a intentar guardar");
+
+		this.configurationService.newSystem(newSystem);
+
+		result = new ModelAndView("redirect:list.do");
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	@RequestMapping(value = "/header", method = RequestMethod.GET)
+	public ModelAndView header() {
+		ModelAndView result;
+
+		final String system = this.configurationService.getConfiguration().getSystemName();
+
+		result = new ModelAndView("master-page/header");
+
+		result.addObject("requestURI", "master-page/header.do");
+		result.addObject("system", system);
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	@RequestMapping(value = "/newLogo", method = RequestMethod.GET)
+	public ModelAndView newLogo(@RequestParam("newLogo") final String newLogo) {
+		ModelAndView result;
+		try {
+			this.configurationService.newLogo(newLogo);
+
+			System.out.println("Carmen: Voy a intentar guardar");
+
+			result = new ModelAndView("redirect:list.do");
+
+		} catch (final Exception e) {
+			result = this.createEditModelAndView(newLogo, "logo.bad");
+		}
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	private ModelAndView createEditModelAndView(final String newLogo, final String messageCode) {
+		ModelAndView result;
+		result = new ModelAndView("administrator/list");
+		final Configuration config = this.configurationService.getConfiguration();
+
+		//Logo
+		final String logo = this.configurationService.getConfiguration().getBanner();
+
+		//Priorities
+		final HashSet<String> priorities = new HashSet<>(config.getPriorities());
+
+		//Spam words
+		final HashSet<String> spamWords = new HashSet<>(config.getSpamWords());
+
+		System.out.println("Carmen: Esta es la lista de spam words");
+		System.out.println(spamWords);
+
+		//Welcome page
+		final String ingles = config.getSystemMessageEn();
+		final String spanish = config.getSystemMessageEs();
+
+		//System
+		final String system = this.configurationService.getConfiguration().getSystemName();
+
+		//Phone
+		final String phone = config.getCountryCode();
+
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+
+		//CreditCards'Makes
+		// ------------------------------------------------------------
+		//		HashSet<String> creditCardMakes = new HashSet<>();
+		//		if (this.configurationService.getCreditCardsMakes().size() == 0)
+		//			creditCardMakes = this.configurationService.defaultCCsMakes();
+		//		else
+		//			creditCardMakes = this.configurationService.getCreditCardsMakes();
+		//		result.addObject("creditCardMakes", creditCardMakes);
+		// ------------------------------------------------------------
+
+		System.out.println("Carmen: Entro en el list");
+
+		result.addObject("logo", logo);
+
+		result.addObject("ingles", ingles);
+		result.addObject("spanish", spanish);
+
+		result.addObject("priorities", priorities);
+
+		result.addObject("spamWords", spamWords);
+
+		result.addObject("system", system);
+
+		result.addObject("phone", phone);
+
+		result.addObject("language", language);
+		result.addObject("requestURI", "administrator/list.do");
+
+		result.addObject("message", messageCode);
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	@RequestMapping(value = "/newPhone", method = RequestMethod.GET)
+	public ModelAndView newPhone(@RequestParam("newPhone") final String newPhone) {
+		ModelAndView result;
+
+		this.configurationService.newPhone(newPhone);
+
+		System.out.println("Carmen: Voy a intentar guardar");
+
+		result = new ModelAndView("redirect:list.do");
+		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+		return result;
+	}
+
+	//	@RequestMapping(value = "/newPhoneCountry", method = RequestMethod.GET)
+	//	public ModelAndView newPhoneCountry(@RequestParam("newPhoneCountry") final String newPhoneCountry) {
+	//		ModelAndView result;
+	//
+	//		this.configurationService.newCountry(newPhoneCountry);
+	//		result = new ModelAndView("redirect:list.do");
+	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
+	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+	//		return result;
+	//	}
 
 }

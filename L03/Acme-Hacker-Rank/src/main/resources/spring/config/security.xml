@@ -129,6 +129,18 @@
 				<security:intercept-url pattern="/administrator/delete.do" access="hasRole('ADMIN')" />		
 		<security:intercept-url pattern="/hacker/delete.do" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/company/delete.do" access="hasRole('COMPANY')" />
+		
+		<security:intercept-url pattern="/administrator/list.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newPriority.do" access="hasRole('ADMIN')" />	
+		<security:intercept-url pattern="/administrator/deletePriority.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/deleteSpamWord.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/newSpamWord.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/newWelcome.do" access="hasRole('ADMIN')" />	
+		<security:intercept-url pattern="/administrator/newSystem.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/header.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newLogo.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newPhone.do" access="hasRole('ADMIN')" />				
+		<security:intercept-url pattern="/configuration/administrator/edit.do" access="hasRole('ADMIN')" />						
 		<!-- FERRETE -->
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

@@ -31,4 +31,10 @@
 		<put-attribute name="body" value="/views/administrator/form.jsp" />
 	</definition>
 	
+	<!-- Ferrete -->
+	<definition name="administrator/list" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Configuración" />
+		<put-attribute name="body" value="/views/administrator/list.jsp" />
+	</definition>
+	
 </tiles-definitions>
