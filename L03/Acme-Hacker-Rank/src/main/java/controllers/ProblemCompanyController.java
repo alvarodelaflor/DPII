@@ -101,4 +101,27 @@ public class ProblemCompanyController extends AbstractController {
 
 		return result;
 	}
+
+	// Creating a new position --------------------------------------------------
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public ModelAndView edit(final Problem problem, final BindingResult binding) {
+		ModelAndView result;
+
+		final Problem prob = this.problemService.reconstruct(problem, binding);
+
+		if (binding.hasErrors()) {
+			result = new ModelAndView("problem/company/show");
+			// To reset the view
+			problem.setFinalMode(false);
+			result.addObject("problem", problem);
+		} else
+			try {
+				this.problemService.save(prob);
+				result = new ModelAndView("redirect:/problem/company/list.do");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+
+		return result;
+	}
 }

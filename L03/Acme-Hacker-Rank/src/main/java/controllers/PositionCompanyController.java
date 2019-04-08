@@ -103,6 +103,8 @@ public class PositionCompanyController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("position/company/show");
+			// To reset the view
+			position.setStatus(false);
 			result.addObject("position", position);
 		} else
 			try {
