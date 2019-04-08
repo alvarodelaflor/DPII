@@ -99,59 +99,57 @@ public class AdministratorController extends AbstractController {
 		return res;
 	}
 
-	// Register New Admin ---------------------------------------------------------------
+	// CREATE ---------------------------------------------------------------		
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-
-		ModelAndView res;
+		ModelAndView result;
 		try {
-			final ActorForm form = new ActorForm();
-			res = new ModelAndView("administrator/create");
-			res.addObject("form", form);
+			final ActorForm actorForm = new ActorForm();
+			result = new ModelAndView("administrator/create");
+			result.addObject("actorForm", actorForm);
 		} catch (final Exception e) {
-
-			res = new ModelAndView("redirect:/welcome/index.do");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
-		return res;
+		return result;
 	}
+
+	// SAVE-CREATE ---------------------------------------------------------------		
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final ActorForm form, final BindingResult binding) {
+	public ModelAndView save(final ActorForm actorForm, final BindingResult binding) {
+		ModelAndView result = null;
 
-		ModelAndView res = null;
-		final Administrator admin;
-		admin = this.adminService.reconstruct(form, binding);
+		final Administrator administrator;
 
-		if (binding.hasErrors())
+		administrator = this.adminService.reconstructCreate(actorForm, binding);
 
-			res = new ModelAndView("administrator/create");
-		else
-
+		if (binding.hasErrors()) {
+			System.out.println(binding.getAllErrors());
+			result = new ModelAndView("administrator/create");
+		} else
 			try {
-
-				this.adminService.save(admin);
-				res = new ModelAndView("welcome/index");
+				System.out.println("carmen: voy a guardar");
+				final Administrator a = this.adminService.saveCreate(administrator);
+				System.out.println(a);
+				result = new ModelAndView("welcome/index");
 			} catch (final Throwable oops) {
-
 				if (oops.getMessage().equals("email.wrong"))
-					res = this.createEditModelAndView(admin, "email.wrong");
+					result = this.createEditModelAndView(administrator, "email.wrong");
 				else if (oops.getMessage().equals("error.email"))
-					res = this.createEditModelAndView(admin, "error.email");
+					result = this.createEditModelAndView(administrator, "error.email");
 				else
-					res = this.createEditModelAndView(admin, "error.html");
+					result = this.createEditModelAndView(administrator, "error.html");
 			}
-
-		return res;
+		return result;
 	}
 
-	private ModelAndView createEditModelAndView(final Administrator admin, final String string) {
+	private ModelAndView createEditModelAndView(final Administrator actor, final String string) {
 		ModelAndView result;
 
 		result = new ModelAndView("administrator/create");
 		result.addObject("message", string);
-		result.addObject("admin", admin);
+		result.addObject("actor", actor);
 		return result;
 	}
 

@@ -103,7 +103,6 @@ public class Actor extends DomainEntity {
 		this.phone = phone;
 	}
 
-	@NotBlank
 	@SafeHtml
 	public String getAddress() {
 		return this.address;

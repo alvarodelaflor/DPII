@@ -38,7 +38,7 @@
 
 				<spring:message code="hacker.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
-				<a href="hacker/conditions.do" target="_blank"><spring:message code="hacker.conditions1" /></a>
+				<a href="actor/conditions.do" target="_blank"><spring:message code="hacker.conditions1" /></a>
 				<form:errors path="${accept}" cssClass="error" />
 					
 				<acme:submit name="save" code="hacker.save"/>

@@ -278,4 +278,106 @@ public class MessageController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/sendNoti", method = RequestMethod.GET)
+	public ModelAndView editNoti(@RequestParam(value = "messageId", defaultValue = "-1") final int messageId) {
+		ModelAndView result;
+		final Message msg;
+		msg = this.messageService.create();
+		Assert.notNull(msg);
+		result = this.createEditModelAndViewNoti(msg);
+		return result;
+	}
+	@RequestMapping(value = "/sendNoti", method = RequestMethod.POST, params = "save")
+	public ModelAndView sendNoti(@ModelAttribute("msg") Message msg, final BindingResult binding) {
+		ModelAndView result;
+		msg = this.messageService.reconstruct(msg, binding);
+		if (binding.hasErrors()) {
+			System.out.println("Entro en el binding messageController");
+			final Collection<String> emails = this.actorService.getEmailOfActors();
+			System.out.println(binding.getAllErrors().get(0));
+			result = new ModelAndView("message/editNoti");
+			result.addObject("messageId", msg.getId());
+			result.addObject("actors", this.actorService.findAll());
+			result.addObject("emails", emails);
+		} else
+			try {
+				final UserAccount user = LoginService.getPrincipal();
+
+				final Actor a = this.actorService.getActorByUserId(user.getId());
+
+				final List<String> emailsReceiver = (List<String>) this.actorService.getEmailOfActors();
+
+				emailsReceiver.remove(a.getEmail());
+				System.out.println("antes de exchangeMessage");
+				final List<String> lisRecipient = new ArrayList<>();
+				lisRecipient.addAll(emailsReceiver);
+				final Tag noti = this.tagService.create();
+				noti.setTag("SYSTEM");
+				final Collection<Tag> tagsNoti = new ArrayList<>();
+				tagsNoti.add(noti);
+
+				msg.setTags(tagsNoti);
+				for (int i = 0; i < lisRecipient.size(); i++)
+					msg = this.messageService.exchangeMessage(msg, this.actorService.getActorByEmailOnly(lisRecipient.get(i)).getId());
+				this.messageService.save(msg);
+				final List<Tag> tags = new ArrayList<>();
+				tags.addAll(msg.getTags());
+				for (int i = 0; i < tags.size(); i++)
+					tags.get(i).setMessageId(msg.getId());
+
+				//				final Collection<Message> sendMessages = new ArrayList<>();
+				//				sendMessages.addAll(a.getMessages());
+				//				sendMessages.retainAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+				//
+				//				final Collection<Message> receivedMessages = new ArrayList<>();
+				//				receivedMessages.addAll(a.getMessages());
+				//				receivedMessages.removeAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
+				//
+				//				result = new ModelAndView("message/list");
+				//				result.addObject("msgsSend", sendMessages);
+				//				result.addObject("msgsReceive", receivedMessages);
+				//				result.addObject("requestURI", "message/list.do");
+				result = this.listMessages();
+
+			} catch (final Throwable oops) {
+				System.out.println("Es el oops");
+				System.out.println(oops);
+				result = this.createEditModelAndViewNoti(msg, "message.commit.error");
+			}
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndViewNoti(final Message msg) {
+		ModelAndView result;
+
+		result = this.createEditModelAndViewNoti(msg, null);
+		//		final String system = this.welcomeService.getSystem();
+		//		result.addObject("system", system);
+		//		final String logo = this.welcomeService.getLogo();
+		//		result.addObject("logo", logo);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndViewNoti(final Message msg, final String msgCode) {
+		ModelAndView result;
+		final Collection<String> emails = this.actorService.getEmailOfActors();
+
+		//		final UserAccount user = LoginService.getPrincipal();
+		//		final Actor a = this.actorService.getActorByUserId(user.getId());
+		//		
+		//		emails.remove(a.getEmail());
+
+		result = new ModelAndView("message/editNoti");
+		result.addObject("msg", msg);
+		result.addObject("emails", emails);
+		result.addObject("msgCode", msgCode);
+		//		final String system = this.welcomeService.getSystem();
+		//		result.addObject("system", system);
+		//		final String logo = this.welcomeService.getLogo();
+		//		result.addObject("logo", logo);
+
+		return result;
+	}
 }
