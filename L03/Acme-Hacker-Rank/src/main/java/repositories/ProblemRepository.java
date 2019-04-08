@@ -23,4 +23,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
 	@Query("select p from Problem p join p.position p1 where p1.id=?1 and p1.cancel=0 and p1.status=1 and p.finalMode=1")
 	public Collection<Problem> allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(int positionId);
 
+	@Query("select p from Problem p where p.company.id=?1")
+	public Collection<Problem> findFromLoggedCompany(int companyId);
+
 }
