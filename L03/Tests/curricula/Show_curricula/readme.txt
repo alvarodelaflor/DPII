@@ -1,6 +1,6 @@
 Con 75 usuarios muestra un rendimiento perfecto. Un 90% line máximo de 13.
 
-Con 100 hilo abortamos el test ya que el procesador se encontraba al 100% todo el tiempo y decidimos
+Con 100 hilos abortamos el test ya que el procesador se encontraba al 100% todo el tiempo y decidimos
 concluir este.
 
 
