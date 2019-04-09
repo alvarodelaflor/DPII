@@ -76,7 +76,7 @@ public class MiscellaneousAttachmentHackerController extends AbstractController 
 //			System.out.println("Error e en GET /create MiscellaneousAttachmentController.java: " + e);
 //			result = new ModelAndView("redirect:/welcome/index.do");
 //		}
-//		return result;
+//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 //	}
 	
 
@@ -97,7 +97,7 @@ public class MiscellaneousAttachmentHackerController extends AbstractController 
 //		} catch (final Exception e) {
 //			result = new ModelAndView("redirect:/welcome/index.do");
 //		}
-//		return result;
+//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 //	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -136,7 +136,7 @@ public class MiscellaneousAttachmentHackerController extends AbstractController 
 				}
 				result.addObject("message", "miscellaneousAttachment.commit.error");
 			}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -160,6 +160,6 @@ public class MiscellaneousAttachmentHackerController extends AbstractController 
 			}
 			result.addObject("message", "curricula.commit.error");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 }

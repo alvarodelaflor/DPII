@@ -63,7 +63,7 @@ public class CurriculaHackerController extends AbstractController {
 			System.out.println("Error e en GET /create CurriculaController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class CurriculaHackerController extends AbstractController {
 			} else
 				result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -98,7 +98,7 @@ public class CurriculaHackerController extends AbstractController {
 		} catch (final Exception e) {
 			System.out.println("Error e reconstruct de curricula: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
-			return result;
+			result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 		}
 
 		if (!this.checkLinkGitHub(curricula.getLinkGitHub())) {
@@ -131,7 +131,7 @@ public class CurriculaHackerController extends AbstractController {
 				result.addObject("curricula", curricula);
 				result.addObject("message", "curricula.commit.error");
 			}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	private Boolean checkLinkGitHub(final String linkGitHub) {
@@ -166,6 +166,6 @@ public class CurriculaHackerController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			result.addObject("message", "curricula.commit.error");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 }

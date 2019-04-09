@@ -102,7 +102,8 @@ public class AdministratorController extends AbstractController {
 		res.addObject("bestPosition", this.positionService.bestPosition());
 		res.addObject("worstPosition", this.positionService.worstPosition());
 		// Salaries
-
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
 		return res;
 	}
 
@@ -115,10 +116,13 @@ public class AdministratorController extends AbstractController {
 			final ActorForm actorForm = new ActorForm();
 			result = new ModelAndView("administrator/create");
 			result.addObject("actorForm", actorForm);
+
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// SAVE-CREATE ---------------------------------------------------------------		
@@ -148,7 +152,10 @@ public class AdministratorController extends AbstractController {
 				else
 					result = this.createEditModelAndView(administrator, "error.html");
 			}
-		return result;
+
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	private ModelAndView createEditModelAndView(final Administrator actor, final String string) {
@@ -157,7 +164,9 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("administrator/create");
 		result.addObject("message", string);
 		result.addObject("actor", actor);
-		return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Actor List ---------------------------------------------------------------
@@ -174,6 +183,8 @@ public class AdministratorController extends AbstractController {
 		res.addObject("companies", companies);
 		res.addObject("hackers", hackers);
 		res.addObject("requestURI", "administrator/actorList.do");
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
 		return res;
 	}
 
@@ -190,7 +201,9 @@ public class AdministratorController extends AbstractController {
 		result.addObject("actor", actor);
 		result.addObject("companies", companies);
 		result.addObject("hackers", hackers);
-		return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/banCompany", method = RequestMethod.GET)
@@ -218,6 +231,8 @@ public class AdministratorController extends AbstractController {
 			else
 				res = new ModelAndView("redirect:../#");
 		}
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
 
 		return res;
 	}
@@ -246,6 +261,8 @@ public class AdministratorController extends AbstractController {
 			else
 				res = new ModelAndView("redirect:../#");
 		}
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
 
 		return res;
 	}
@@ -285,7 +302,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("priorities", priorities);
 		// ------------------------------------------------------------
 		//Logo
-		final String logo = configuration.getBanner();
+		final String logo = this.getLogo();
 
 		//Spam words
 
@@ -307,7 +324,7 @@ public class AdministratorController extends AbstractController {
 		final String spanish = configuration.getSystemMessageEs();
 
 		//System
-		final String system = configuration.getSystemName();
+		final String system = this.getSystem();
 
 		//Phone
 		final String phone = configuration.getCountryCode();
@@ -333,9 +350,7 @@ public class AdministratorController extends AbstractController {
 		//		result.addObject("phoneCountry", phoneCountry);
 		result.addObject("language", language);
 		result.addObject("requestURI", "administrator/list.do");
-		//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// CreditCardMakes Methods:
@@ -365,7 +380,7 @@ public class AdministratorController extends AbstractController {
 	//		}
 	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		return result;
+	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	//	}
 	// ------------------------------------------------------------
 	// Fair and VAT Methods:
@@ -426,9 +441,9 @@ public class AdministratorController extends AbstractController {
 
 		this.configurationService.addPriority(newPriority);
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/deletePriority", method = RequestMethod.GET)
@@ -447,7 +462,7 @@ public class AdministratorController extends AbstractController {
 		}
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/newSpamWord", method = RequestMethod.GET)
@@ -459,7 +474,7 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("redirect:list.do");
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/deleteSpamWord", method = RequestMethod.GET)
@@ -478,7 +493,7 @@ public class AdministratorController extends AbstractController {
 		}
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	//SCORE WORDS
@@ -490,7 +505,7 @@ public class AdministratorController extends AbstractController {
 	//		result = new ModelAndView("redirect:list.do");
 	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		return result;
+	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	//	}
 	//
 	//	@RequestMapping(value = "/deleteScoreWordPos", method = RequestMethod.GET)
@@ -509,7 +524,7 @@ public class AdministratorController extends AbstractController {
 	//		}
 	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		return result;
+	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	//	}
 
 	//	//SCORE WORDS NEG
@@ -521,7 +536,7 @@ public class AdministratorController extends AbstractController {
 	//		result = new ModelAndView("redirect:list.do");
 	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		return result;
+	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	//	}
 
 	//	@RequestMapping(value = "/deleteScoreWordNeg", method = RequestMethod.GET)
@@ -540,7 +555,7 @@ public class AdministratorController extends AbstractController {
 	//		}
 	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		return result;
+	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	//	}
 
 	@RequestMapping(value = "/newWelcome", method = RequestMethod.GET)
@@ -559,7 +574,7 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("redirect:list.do");
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/newSystem", method = RequestMethod.GET)
@@ -575,7 +590,7 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("redirect:list.do");
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/header", method = RequestMethod.GET)
@@ -590,7 +605,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("system", system);
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/newLogo", method = RequestMethod.GET)
@@ -608,7 +623,7 @@ public class AdministratorController extends AbstractController {
 		}
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	private ModelAndView createEditModelAndView(final String newLogo, final String messageCode) {
@@ -671,7 +686,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("message", messageCode);
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/newPhone", method = RequestMethod.GET)
@@ -685,7 +700,7 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("redirect:list.do");
 		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	//	@RequestMapping(value = "/newPhoneCountry", method = RequestMethod.GET)
@@ -696,7 +711,7 @@ public class AdministratorController extends AbstractController {
 	//		result = new ModelAndView("redirect:list.do");
 	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
 	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		return result;
+	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	//	}
 
 }

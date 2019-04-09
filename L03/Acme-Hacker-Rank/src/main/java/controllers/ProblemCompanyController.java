@@ -36,7 +36,7 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Showing a problem I own -----------------------------------------------
@@ -50,7 +50,7 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Delete a problem I own -----------------------------------------------
@@ -63,7 +63,7 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Create a problem form -----------------------------------------------
@@ -77,7 +77,7 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Creating a new problem --------------------------------------------------
@@ -99,7 +99,7 @@ public class ProblemCompanyController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Creating a new position --------------------------------------------------
@@ -122,6 +122,6 @@ public class ProblemCompanyController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 }
