@@ -18,6 +18,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+
+<input type="button" value="<spring:message code='position.problemList' />" name="position.problemList" onclick="window.location='position/company/problemList.do?positionId=${position.id}'" />
+
 <jstl:if test="${position.status}">
 <div class="content">
 	<table>
@@ -31,7 +34,7 @@
 		<tr><td><strong><spring:message code="position.ticker" />: </strong><jstl:out	value="${position.ticker}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="position.profile" />: </strong><jstl:out value="${position.profile}"></jstl:out></td></tr>
 	</table>
-	<jstl:if test="${position.cancel eq false }">
+	<jstl:if test="${position.cancel eq false}">
 		<input type="button" value="<spring:message code='position.cancel_position' />" name="position.cancel_position" onclick="window.location = 'position/company/cancel.do?positionId=${position.id}'" />
 	</jstl:if>
 </div>
@@ -39,6 +42,7 @@
 </jstl:if>
 <!-- FORM IN CASE THIS IS NOT IN FINAL MODE -->
 <jstl:if test="${not position.status}">
+<br><br>
 	<section id="main-content">
 		<article>
 			<div class="content">

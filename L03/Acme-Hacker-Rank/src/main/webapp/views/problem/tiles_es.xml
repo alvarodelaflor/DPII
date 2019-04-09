@@ -26,6 +26,16 @@
 		<put-attribute name="body" value="/views/problem/list_logged_company_problems.jsp" />
 	</definition>
 	
+	<definition name="problem/company/problemList" extends="master.page">	
+		<put-attribute name="title" value="Problemas del encargo" />
+		<put-attribute name="body" value="/views/problem/position_problem_list.jsp" />
+	</definition>
+	
+	<definition name="problem/company/addList" extends="master.page">	
+		<put-attribute name="title" value="Añadir un problema al encargo" />
+		<put-attribute name="body" value="/views/problem/position_problem_list.jsp" />
+	</definition>
+	
 	<definition name="problem/company/show" extends="master.page">	
 		<put-attribute name="title" value="Mostrar problema" />
 		<put-attribute name="body" value="/views/problem/show_logged_company_problem.jsp" />

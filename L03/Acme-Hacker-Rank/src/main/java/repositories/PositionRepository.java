@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -86,4 +87,7 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select count(p) from Position p where p.ticker = ?1")
 	public int countByTicker(String ticker);
 
+	@Modifying
+	@Query("update Application a set status='REJECTED' where a.status='PENDING' and a.problem.id=?1 and a.position.id=?2")
+	public void rejectAllApplications(int problemId, int positionId);
 }

@@ -114,6 +114,10 @@
 		<security:intercept-url pattern="/position/company/edit.do" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/position/company/cancel.do" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/position/company/delete.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/problemList.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/addProblemView.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/addProblemAction.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/detachProblem.do" access="hasRole('COMPANY')" />
 		<!-- problem/company -->
 		<security:intercept-url pattern="/problem/company/list.do" access="hasRole('COMPANY')" />
 		<security:intercept-url pattern="/problem/company/show.do" access="hasRole('COMPANY')" />

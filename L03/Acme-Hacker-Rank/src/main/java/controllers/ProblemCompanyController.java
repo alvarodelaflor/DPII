@@ -124,4 +124,5 @@ public class ProblemCompanyController extends AbstractController {
 
 		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
+
 }
