@@ -10,7 +10,9 @@
 
 package hackerRankTest;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -152,9 +154,6 @@ public class CompanyServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			if (user != null)
-				super.authenticate(user);
-
 			final Company company = this.companyService.create();
 			company.setAddress("soyUnaCalle");
 			company.setCommercialName("soyUnaPrueba");
@@ -177,7 +176,7 @@ public class CompanyServiceTest extends AbstractTest {
 			position.setCancel(false);
 			position.setCompany(companySave);
 			final Date res = LocalDateTime.now().toDate();
-			res.setMonth(res.getMonth() - 1);
+			res.setMonth(res.getMonth() + 1);
 			position.setDeadline(res);
 			position.setDescription("soyUnaDescripcion");
 			position.setProfile("SoyUnPerfil");
@@ -189,6 +188,8 @@ public class CompanyServiceTest extends AbstractTest {
 			position.setTitle("soyUnTitulo");
 			final Position positionSave = this.positionService.save(position);
 
+			super.unauthenticate();
+
 			final Company companyByPosition = positionSave.getCompany();
 			companyByPosition.getAddress();
 			companyByPosition.getCommercialName();
@@ -198,10 +199,10 @@ public class CompanyServiceTest extends AbstractTest {
 			this.companyService.flush();
 
 		} catch (final Throwable oops) {
+			System.out.println(oops);
 			caught = oops.getClass();
 		} finally {
 			this.rollbackTransaction();
-			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
 	}
@@ -264,7 +265,7 @@ public class CompanyServiceTest extends AbstractTest {
 			position.setCancel(false);
 			position.setCompany(companySave);
 			final Date res = LocalDateTime.now().toDate();
-			res.setMonth(res.getMonth() - 1);
+			res.setMonth(res.getMonth() + 1);
 			position.setDeadline(res);
 			position.setDescription("soyUnaDescripcion");
 			position.setProfile("SoyUnPerfil");
@@ -306,8 +307,112 @@ public class CompanyServiceTest extends AbstractTest {
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
-			this.rollbackTransaction();
 			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 7. An actor who is not authenticated must be able to:
+	 * 3. List the companies available and navigate to the corresponding positions.
+	 * 
+	 * Analysis of sentence coverage
+	 * 19,8%
+	 * Analysis of data coverage
+	 * ~69%
+	 */
+	@Test
+	public void Diver04() {
+		final Object testingData[][] = {
+			{
+				// Test positivo: list company.
+				// Usuario
+				null, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver04((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver04(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (user != null)
+				super.authenticate(user);
+
+			final List<Company> comanys = (List<Company>) this.companyService.findAll();
+			for (final Company company : comanys) {
+				company.getAddress();
+				company.getCommercialName();
+				company.getEmail();
+			}
+
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 7. An actor who is not authenticated must be able to:
+	 * 3. List the companies available and navigate to the corresponding positions.
+	 * 
+	 * Analysis of sentence coverage
+	 * 19,8%
+	 * Analysis of data coverage
+	 * ~69%
+	 */
+	@Test
+	public void Diver05() {
+		final Object testingData[][] = {
+			{
+				// Test positivo: list company.
+				// Usuario
+				null, IndexOutOfBoundsException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver05((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver05(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (user != null)
+				super.authenticate(user);
+
+			final List<Company> comanys = new ArrayList<>();
+			comanys.get(0).getAddress();
+			comanys.get(0).getCommercialName();
+			comanys.get(0).getEmail();
+
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
 	}
