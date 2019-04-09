@@ -214,7 +214,7 @@ public class PositionService {
 		return res;
 	}
 
-	public void save(final Position pos) {
+	public Position save(final Position pos) {
 		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"), "Logged user is not a company");
 		if (pos.getId() != 0) {
 			// Position exists so we must be the owner
@@ -229,7 +229,7 @@ public class PositionService {
 				Assert.isTrue(problemCount >= 2, "Position can't be setted to final mode because it has less than 2 problems");
 			}
 		}
-		this.positionRepository.save(pos);
+		return this.positionRepository.save(pos);
 	}
 
 	private boolean getPositionDatabaseStatus(final int positionId) {
@@ -272,6 +272,10 @@ public class PositionService {
 				this.positionDataService.deleteAllByPosition(position.getId());
 				this.positionRepository.delete(position);
 			}
+	}
+
+	public void flush() {
+		this.positionRepository.flush();
 	}
 
 }

@@ -10,18 +10,24 @@
 
 package hackerRankTest;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import services.CompanyService;
+import services.PositionService;
 import utilities.AbstractTest;
 import domain.Company;
+import domain.Position;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -32,6 +38,9 @@ public class CompanyServiceTest extends AbstractTest {
 
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private PositionService	positionService;
 
 
 	/*
@@ -107,6 +116,199 @@ public class CompanyServiceTest extends AbstractTest {
 			caught = oops.getClass();
 		}
 
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 7. An actor who is not authenticated must be able to:
+	 * 
+	 * 2. List the positions available and navigate to the corresponding companies.
+	 * 
+	 * Analysis of sentence coverage
+	 * 19,8%
+	 * Analysis of data coverage
+	 * ~69%
+	 */
+	@Test
+	public void Diver02() {
+		final Object testingData[][] = {
+			{
+				// Test positivo: navigate to the corresponding companies.
+				// Usuario
+				null, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver02((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver02(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (user != null)
+				super.authenticate(user);
+
+			final Company company = this.companyService.create();
+			company.setAddress("soyUnaCalle");
+			company.setCommercialName("soyUnaPrueba");
+			company.setEmail("soyUnaPrueba@soyUnaPrueba");
+			company.setName("soyUnNombre");
+			company.setPhone("123456");
+			company.setPhoto("http://SoyUnaFoto");
+			company.setSurname("SoyUnaPreuba");
+			company.getUserAccount().setUsername("soyUnaPrueba");
+
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
+			company.getUserAccount().setPassword(hashPassword);
+
+			final Company companySave = this.companyService.saveCreate(company);
+
+			super.authenticate(company.getUserAccount().getUsername());
+
+			final Position position = this.positionService.create();
+			position.setCancel(false);
+			position.setCompany(companySave);
+			final Date res = LocalDateTime.now().toDate();
+			res.setMonth(res.getMonth() - 1);
+			position.setDeadline(res);
+			position.setDescription("soyUnaDescripcion");
+			position.setProfile("SoyUnPerfil");
+			position.setSalary(100.4);
+			position.setSkills("soyUnaHabilidad");
+			position.setStatus(true);
+			position.setTechs("soyUnTechs");
+			position.setTicker("SOYU-1234");
+			position.setTitle("soyUnTitulo");
+			final Position positionSave = this.positionService.save(position);
+
+			final Company companyByPosition = positionSave.getCompany();
+			companyByPosition.getAddress();
+			companyByPosition.getCommercialName();
+			companyByPosition.getEmail();
+
+			this.positionService.flush();
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 7. An actor who is not authenticated must be able to:
+	 * 
+	 * 2. List the positions available and navigate to the corresponding companies.
+	 * 
+	 * Analysis of sentence coverage
+	 * 19,8%
+	 * Analysis of data coverage
+	 * ~69%
+	 */
+	@Test
+	public void Diver03() {
+		final Object testingData[][] = {
+			{
+				// Test negativo: navigate to the corresponding companies.
+				// Usuario
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver03((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver03(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (user != null)
+				super.authenticate(user);
+
+			final Company company = this.companyService.create();
+			company.setAddress("soyUnaCalle");
+			company.setCommercialName("soyUnaPrueba");
+			company.setEmail("soyUnaPrueba@soyUnaPrueba");
+			company.setName("soyUnNombre");
+			company.setPhone("123456");
+			company.setPhoto("http://SoyUnaFoto");
+			company.setSurname("SoyUnaPreuba");
+			company.getUserAccount().setUsername("soyUnaPrueba");
+
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
+			company.getUserAccount().setPassword(hashPassword);
+
+			final Company companySave = this.companyService.saveCreate(company);
+
+			super.authenticate(company.getUserAccount().getUsername());
+
+			final Position position = this.positionService.create();
+			position.setCancel(false);
+			position.setCompany(companySave);
+			final Date res = LocalDateTime.now().toDate();
+			res.setMonth(res.getMonth() - 1);
+			position.setDeadline(res);
+			position.setDescription("soyUnaDescripcion");
+			position.setProfile("SoyUnPerfil");
+			position.setSalary(100.4);
+			position.setSkills("soyUnaHabilidad");
+			position.setStatus(true);
+			position.setTechs("soyUnTechs");
+			position.setTicker("SOYU-1234");
+			position.setTitle("soyUnTitulo");
+			final Position positionSave = this.positionService.save(position);
+			super.unauthenticate();
+
+			final Company companyError = this.companyService.create();
+			companyError.setAddress("companyError");
+			companyError.setCommercialName("companyError");
+			companyError.setEmail("companyError@companyError");
+			companyError.setName("companyError");
+			companyError.setPhone("123456");
+			companyError.setPhoto("http://companyError");
+			companyError.setSurname("companyError");
+			companyError.getUserAccount().setUsername("companyError");
+
+			final Md5PasswordEncoder encoder1 = new Md5PasswordEncoder();
+			final String hashPassword1 = encoder1.encodePassword("companyError", null);
+			company.getUserAccount().setPassword(hashPassword1);
+
+			final Company companyErrorSave = this.companyService.saveCreate(companyError);
+
+			// Intentar mostrar un company que no sea la position que se esta tratando
+			// Controlado en controlador no en servicio por ello añado un assert
+			Assert.isTrue(positionSave.getCompany().equals(companyErrorSave));
+			companyErrorSave.getAddress();
+			companyErrorSave.getCommercialName();
+			companyErrorSave.getEmail();
+
+			this.positionService.flush();
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
 		this.checkExceptions(expected, caught);
 	}
 
