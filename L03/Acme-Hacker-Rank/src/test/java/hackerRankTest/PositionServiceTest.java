@@ -13,6 +13,7 @@ package hackerRankTest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import services.CompanyService;
 import services.PositionService;
@@ -506,6 +508,185 @@ public class PositionServiceTest extends AbstractTest {
 			this.rollbackTransaction();
 			if (user != null)
 				super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 7. An actor who is not authenticated must be able to:
+	 * 4. Search for a position using a single key word that must be contained in its title, its description,
+	 * its profile, its skills, its technologies, or the name of the corresponding company.
+	 * 
+	 * Analysis of sentence coverage
+	 * ~10%
+	 * Analysis of data coverage
+	 * ~45%
+	 */
+	@Test
+	public void Diver07() {
+		final Object testingData[][] = {
+			{
+				// Test positivo: Finder
+				// Usuario
+				null, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver07((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver07(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			final Company company = this.companyService.create();
+			company.setAddress("soyUnaCalle");
+			company.setCommercialName("soyUnaPrueba");
+			company.setEmail("soyUnaPrueba@soyUnaPrueba");
+			company.setName("soyUnNombre");
+			company.setPhone("123456");
+			company.setPhoto("http://SoyUnaFoto");
+			company.setSurname("SoyUnaPreuba");
+			company.getUserAccount().setUsername("soyUnaPrueba");
+
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
+			company.getUserAccount().setPassword(hashPassword);
+
+			final Company companySave = this.companyService.saveCreate(company);
+
+			super.authenticate(company.getUserAccount().getUsername());
+
+			final Position position = this.positionService.create();
+			position.setCancel(false);
+			position.setCompany(companySave);
+			final Date res = LocalDateTime.now().toDate();
+			res.setMonth(res.getMonth() + 1);
+			position.setDeadline(res);
+			position.setDescription("soyUnaDescripcion");
+			position.setProfile("SoyUnPerfil");
+			position.setSalary(100.4);
+			position.setSkills("soyUnaHabilidad");
+			position.setStatus(true);
+			position.setTechs("soyUnTechs");
+			position.setTicker("SOYU-1234");
+			position.setTitle("soyUnTitulo");
+			final Position positionSave = this.positionService.save(position);
+
+			super.unauthenticate();
+
+			final HashSet<Position> positions = (HashSet<Position>) this.positionService.search("soyUnaHabilidad");
+			for (final Position positionS : positions) {
+				positionS.getDeadline();
+				positionS.getDescription();
+				positionS.getProfile();
+				positionS.getSalary();
+				positionS.getSkills();
+				positionS.getStatus();
+				positionS.getTechs();
+				positionS.getTitle();
+				positionS.getCompany();
+			}
+
+			this.positionService.flush();
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			System.out.println(oops);
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 7. An actor who is not authenticated must be able to:
+	 * 4. Search for a position using a single key word that must be contained in its title, its description,
+	 * its profile, its skills, its technologies, or the name of the corresponding company.
+	 * 
+	 * Analysis of sentence coverage
+	 * ~10%
+	 * Analysis of data coverage
+	 * ~45%
+	 */
+	@Test
+	public void Diver08() {
+		final Object testingData[][] = {
+			{
+				// Test negativo: Finder
+				// Usuario
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver08((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver08(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			final Company company = this.companyService.create();
+			company.setAddress("soyUnaCalle");
+			company.setCommercialName("soyUnaPrueba");
+			company.setEmail("soyUnaPrueba@soyUnaPrueba");
+			company.setName("soyUnNombre");
+			company.setPhone("123456");
+			company.setPhoto("http://SoyUnaFoto");
+			company.setSurname("SoyUnaPreuba");
+			company.getUserAccount().setUsername("soyUnaPrueba");
+
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
+			company.getUserAccount().setPassword(hashPassword);
+
+			final Company companySave = this.companyService.saveCreate(company);
+
+			super.authenticate(company.getUserAccount().getUsername());
+
+			final Position position = this.positionService.create();
+			position.setCancel(false);
+			position.setCompany(companySave);
+			final Date res = LocalDateTime.now().toDate();
+			res.setMonth(res.getMonth() + 1);
+			position.setDeadline(res);
+			position.setDescription("soyUnaDescripcion");
+			position.setProfile("SoyUnPerfil");
+			position.setSalary(100.4);
+			position.setSkills("soyUnaHabilidad");
+			position.setStatus(true);
+			position.setTechs("soyUnTechs");
+			position.setTicker("SOYU-1234");
+			position.setTitle("soyUnTitulo");
+			final Position positionSave = this.positionService.save(position);
+
+			super.unauthenticate();
+
+			final HashSet<Position> positions = (HashSet<Position>) this.positionService.search("SoyUnaPatataFrita");
+			// Si no ecuenrta nada, no puestro nada. Controlado en controlador no en servicio
+			Assert.isTrue(!positions.isEmpty());
+
+			this.positionService.flush();
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			System.out.println(oops);
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
 	}
