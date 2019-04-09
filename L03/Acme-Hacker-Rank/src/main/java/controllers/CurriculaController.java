@@ -86,7 +86,7 @@ public class CurriculaController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -120,6 +120,6 @@ public class CurriculaController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 }

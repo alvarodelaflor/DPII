@@ -50,6 +50,8 @@ public class LoginController extends AbstractController {
 		result = new ModelAndView("security/login");
 		result.addObject("credentials", credentials);
 		result.addObject("showError", showError);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 
 		return result;
 	}
@@ -61,6 +63,8 @@ public class LoginController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("redirect:login.do?showError=true");
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 
 		return result;
 	}

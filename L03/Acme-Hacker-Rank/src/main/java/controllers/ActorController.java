@@ -31,6 +31,11 @@ public class ActorController extends AbstractController {
 	public ModelAndView conditions() {
 		ModelAndView result;
 		result = new ModelAndView("actor/conditions");
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
+
 	}
 }

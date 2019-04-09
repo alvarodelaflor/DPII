@@ -74,7 +74,7 @@ public class EducationalDataHackerController extends AbstractController {
 			System.out.println("Error e en GET /create EducationalDataController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	
 
@@ -94,7 +94,7 @@ public class EducationalDataHackerController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -139,7 +139,7 @@ public class EducationalDataHackerController extends AbstractController {
 				}
 				result.addObject("message", "educationalData.commit.error");
 			}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -163,6 +163,6 @@ public class EducationalDataHackerController extends AbstractController {
 			}
 			result.addObject("message", "curricula.commit.error");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 }

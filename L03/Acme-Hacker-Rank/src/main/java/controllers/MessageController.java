@@ -100,7 +100,7 @@ public class MessageController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -111,7 +111,7 @@ public class MessageController extends AbstractController {
 
 		msg = this.messageService.create();
 		result = this.createEditModelAndView(msg);
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	protected ModelAndView createEditModelAndView(final Message msg) {
@@ -123,7 +123,7 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	protected ModelAndView createEditModelAndView(final Message msg, final String msgCode) {
@@ -144,7 +144,7 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/send", method = RequestMethod.GET)
@@ -168,7 +168,7 @@ public class MessageController extends AbstractController {
 			Assert.notNull(msg);
 			result = this.createEditModelAndView(msg);
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	@RequestMapping(value = "/send", method = RequestMethod.POST, params = "save")
 	public ModelAndView send(@ModelAttribute("msg") Message msg, final BindingResult binding, @RequestParam(value = "recipient", defaultValue = "null") final Collection<String> actors) {
@@ -217,7 +217,7 @@ public class MessageController extends AbstractController {
 				result = this.createEditModelAndView(msg, "message.commit.error");
 			}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -235,7 +235,7 @@ public class MessageController extends AbstractController {
 		result.addObject("requestURI", "message/show.do");
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int id, @RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
@@ -275,7 +275,7 @@ public class MessageController extends AbstractController {
 		result.addObject("language", language);
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/sendNoti", method = RequestMethod.GET)
@@ -285,7 +285,7 @@ public class MessageController extends AbstractController {
 		msg = this.messageService.create();
 		Assert.notNull(msg);
 		result = this.createEditModelAndViewNoti(msg);
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 	@RequestMapping(value = "/sendNoti", method = RequestMethod.POST, params = "save")
 	public ModelAndView sendNoti(@ModelAttribute("msg") Message msg, final BindingResult binding) {
@@ -345,7 +345,7 @@ public class MessageController extends AbstractController {
 				result = this.createEditModelAndViewNoti(msg, "message.commit.error");
 			}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	protected ModelAndView createEditModelAndViewNoti(final Message msg) {
@@ -357,7 +357,7 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	protected ModelAndView createEditModelAndViewNoti(final Message msg, final String msgCode) {
@@ -378,6 +378,6 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 }

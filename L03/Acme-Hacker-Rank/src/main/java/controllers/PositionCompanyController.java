@@ -41,7 +41,7 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Showing a position I own -----------------------------------------------
@@ -55,7 +55,7 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Getting creation form -----------------------------------------------
@@ -69,7 +69,7 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Creating a new position --------------------------------------------------
@@ -91,7 +91,7 @@ public class PositionCompanyController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Creating a new position --------------------------------------------------
@@ -119,7 +119,7 @@ public class PositionCompanyController extends AbstractController {
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Cancelling a position --------------------------------------------------
@@ -133,7 +133,7 @@ public class PositionCompanyController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	// Deleting a position --------------------------------------------------
@@ -147,6 +147,6 @@ public class PositionCompanyController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 }

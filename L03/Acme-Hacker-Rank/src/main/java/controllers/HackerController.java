@@ -54,6 +54,8 @@ public class HackerController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -89,6 +91,8 @@ public class HackerController extends AbstractController {
 				else
 					result = this.createEditModelAndView(hacker, "error.html");
 			}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -98,6 +102,8 @@ public class HackerController extends AbstractController {
 		result = new ModelAndView("hacker/create");
 		result.addObject("message", string);
 		result.addObject("actor", actor);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -117,6 +123,8 @@ public class HackerController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -136,6 +144,8 @@ public class HackerController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -168,6 +178,8 @@ public class HackerController extends AbstractController {
 				else
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -177,6 +189,8 @@ public class HackerController extends AbstractController {
 		result = new ModelAndView("hacker/edit");
 		result.addObject("message", message);
 		result.addObject("hacker", hacker);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -210,6 +224,8 @@ public class HackerController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 }

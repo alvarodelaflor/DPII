@@ -67,7 +67,7 @@ public class SocialProfileController extends AbstractController {
 		result.addObject("requestURI", "socialProfile/list.do");
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -94,7 +94,7 @@ public class SocialProfileController extends AbstractController {
 		}
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -113,7 +113,7 @@ public class SocialProfileController extends AbstractController {
 		result.addObject("socialProfile", socialProfile);
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -136,7 +136,7 @@ public class SocialProfileController extends AbstractController {
 		}
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -166,7 +166,7 @@ public class SocialProfileController extends AbstractController {
 			}
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -219,7 +219,7 @@ public class SocialProfileController extends AbstractController {
 			}
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		return result;
+		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
 	}
 
 }

@@ -53,6 +53,8 @@ public class CompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -83,6 +85,8 @@ public class CompanyController extends AbstractController {
 				else
 					result = this.createEditModelAndView(company, "error.html");
 			}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -92,6 +96,8 @@ public class CompanyController extends AbstractController {
 		result = new ModelAndView("company/create");
 		result.addObject("message", string);
 		result.addObject("actor", actor);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -116,6 +122,8 @@ public class CompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -135,6 +143,8 @@ public class CompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -167,6 +177,8 @@ public class CompanyController extends AbstractController {
 				else
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -176,6 +188,8 @@ public class CompanyController extends AbstractController {
 		result = new ModelAndView("company/edit");
 		result.addObject("message", string);
 		result.addObject("company", company);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -192,6 +206,8 @@ public class CompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -224,6 +240,8 @@ public class CompanyController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 }
