@@ -276,4 +276,8 @@ public class HackerService {
 		return this.hackerRepository.findAll();
 	}
 
+	public void flush() {
+		this.hackerRepository.flush();
+	}
+
 }
