@@ -19,6 +19,7 @@ import security.LoginService;
 import utilities.AuthUtils;
 import domain.Company;
 import domain.Position;
+import domain.Problem;
 
 @Service
 @Transactional
@@ -157,7 +158,7 @@ public class PositionService {
 		final int ownerId = this.positionRepository.findOne(positionId).getCompany().getUserAccount().getId();
 		return loggedId == ownerId;
 	}
-
+	// TODO: Rellenar el ticker con X si el nombre comercial es menor que 4
 	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position res = this.create();
 		if (position.getId() == 0) {
@@ -175,6 +176,7 @@ public class PositionService {
 			res.setVersion(dbPosition.getVersion());
 			res.setCompany(dbPosition.getCompany());
 			res.setTicker(dbPosition.getTicker());
+			res.setCancel(false);
 
 			// These we want to modify
 			res.setDeadline(position.getDeadline());
@@ -251,6 +253,9 @@ public class PositionService {
 		final Position dbPosition = this.positionRepository.findOne(positionId);
 		// We can cancel a position if it is in final mode
 		Assert.isTrue(dbPosition.getStatus(), "Only positions in final mode can be cancelled");
+		final Collection<Problem> positionProblems = this.problemService.findFromPosition(positionId);
+		for (final Problem p : positionProblems)
+			this.positionRepository.rejectAllApplications(p.getId(), positionId);
 		dbPosition.setCancel(true);
 	}
 
@@ -259,6 +264,34 @@ public class PositionService {
 		Assert.isTrue(this.checkPositionOwner(positionId), "Logged user is not the position owner");
 		// We can delete a position if it is not in final mode
 		Assert.isTrue(this.getPositionDatabaseStatus(positionId) == false, "Position is not in draft mode");
+		// We have to detach all position problems
+		this.detachAllProblems(positionId);
 		this.positionRepository.delete(positionId);
+	}
+
+	private void detachAllProblems(final int positionId) {
+		final Collection<Problem> problems = this.problemService.findFromPosition(positionId);
+		for (final Problem p : problems)
+			this.detachProblemFromPosition(p.getId(), positionId);
+	}
+	public void addProblemToPosition(final int problemId, final int positionId) {
+		// We must be the owner of both
+		final Position position = this.findOneLoggedIsOwner(positionId);
+		final Problem problem = this.problemService.findOneLoggedIsOwner(problemId);
+
+		// Position must be in draft mode and problem must be in final mode
+		Assert.isTrue(position.getStatus() == false);
+		Assert.isTrue(problem.getFinalMode() == true);
+
+		// This should persist since we are linked to the db
+		problem.getPosition().add(position);
+	}
+
+	public void detachProblemFromPosition(final int problemId, final int positionId) {
+		// We must be the owner of both
+		final Position position = this.findOneLoggedIsOwner(positionId);
+		final Problem problem = this.problemService.findOneLoggedIsOwner(problemId);
+		// This should persist since we are linked to the db
+		problem.getPosition().remove(position);
 	}
 }

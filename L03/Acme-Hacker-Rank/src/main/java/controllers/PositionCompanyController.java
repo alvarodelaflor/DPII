@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.PositionService;
 import services.ProblemService;
 import domain.Position;
+import domain.Problem;
 
 @Controller
 @RequestMapping("/position/company")
@@ -143,6 +144,78 @@ public class PositionCompanyController extends AbstractController {
 		try {
 			this.positionService.delete(positionId);
 			result = new ModelAndView("redirect:/position/company/list.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	// Add problem view
+	@RequestMapping(value = "/addProblemView", method = RequestMethod.GET)
+	public ModelAndView addProblem(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
+		ModelAndView result;
+		try {
+			// TODO: Make the view
+			result = new ModelAndView("problem/company/addList");
+
+			final Collection<Problem> problems = this.problemService.getFinalModeFromLoggedCompanyNotInPosition(positionId);
+
+			result.addObject("positionId", positionId);
+			result.addObject("finalMode", this.positionService.findOneLoggedIsOwner(positionId).getStatus());
+			result.addObject("problems", problems);
+			result.addObject("adding", true);
+			result.addObject("requestURI", "position/company/addProblem.do?positionId=" + positionId);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	// Add problem action method
+	@RequestMapping(value = "/addProblemAction", method = RequestMethod.GET)
+	public ModelAndView addProblem(@RequestParam(value = "problemId", defaultValue = "-1") final int problemId, @RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
+		ModelAndView result;
+		try {
+
+			this.positionService.addProblemToPosition(problemId, positionId);
+
+			result = new ModelAndView("redirect:/position/company/problemList.do?positionId=" + positionId);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+	// Detach problem action
+	@RequestMapping(value = "/detachProblem", method = RequestMethod.GET)
+	public ModelAndView detachProblem(@RequestParam(value = "problemId", defaultValue = "-1") final int problemId, @RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
+		ModelAndView result;
+		try {
+
+			this.positionService.detachProblemFromPosition(problemId, positionId);
+
+			result = new ModelAndView("redirect:/position/company/problemList.do?positionId=" + positionId);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	// List of problems view
+	@RequestMapping(value = "/problemList", method = RequestMethod.GET)
+	public ModelAndView problems(@RequestParam(value = "positionId", defaultValue = "-1") final int positionId) {
+		ModelAndView result;
+		try {
+			result = new ModelAndView("problem/company/problemList");
+			final Collection<Problem> problems = this.problemService.findFromPosition(positionId);
+
+			result.addObject("problems", problems);
+			result.addObject("positionId", positionId);
+			result.addObject("finalMode", this.positionService.findOneLoggedIsOwner(positionId).getStatus());
+			result.addObject("requestURI", "position/company/problemList.do?positionId=" + positionId);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

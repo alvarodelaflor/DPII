@@ -2,6 +2,8 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -31,6 +33,9 @@ public class ProblemService {
 
 	@Autowired
 	private CompanyService		companyService;
+
+	@Autowired
+	private PositionService		positionService;
 
 	@Autowired
 	private Validator			validator;
@@ -139,6 +144,17 @@ public class ProblemService {
 			Assert.isTrue(this.getDatabaseProblemFinalMode(problem.getId()) == false, "Save failed: Problem is in final mode");
 		}
 		this.problemRepository.save(problem);
+	}
+
+	public Collection<Problem> getFinalModeFromLoggedCompanyNotInPosition(final int positionId) {
+		final int companyId = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		final Set<Problem> finalModeProblems = new HashSet<>(this.problemRepository.getFinalModeFromCompany(companyId));
+		final Set<Problem> positionProblems = new HashSet<>(this.problemRepository.findFromPosition(positionId));
+		finalModeProblems.removeAll(positionProblems);
+		return finalModeProblems;
+	}
+	public Collection<Problem> findFromPosition(final int positionId) {
+		return this.problemRepository.findFromPosition(positionId);
 	}
 
 }
