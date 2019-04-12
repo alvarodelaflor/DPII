@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -405,6 +406,209 @@ public class CompanyServiceTest extends AbstractTest {
 			comanys.get(0).getAddress();
 			comanys.get(0).getCommercialName();
 			comanys.get(0).getEmail();
+
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 8. An actor who is authenticated must be able to:
+	 * 2. Edit his or her personal data.
+	 * 
+	 * * Requisitos a tener en cuenta:
+	 * 
+	 * 1.The actors of the system are administrators, companies, and hackers. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
+	 * address. The system must also store the commercial name of the companies.
+	 * 
+	 * 2.Phone numbers should adhere to the following patterns: “+CC (AC) PN”, "+CC PN", or "PN":“+CC” denotes a country code in range “+1” up to “+999”, “(AC)” denotes an area code in range “(1)” up to “(999)”, and “PN” denotes a number that must have at
+	 * least four digits. Phone numbers with pattern “PN” must be added automatically a default country, which is a parameter that can be changed by administrators. Note that phone numbers should adhere
+	 * to the previous patterns, but they are not required to. Whenever a phone number that does not match this pattern is entered, the system must ask for confirmation; if the user confirms the number, it then must be stored.
+	 * 
+	 * 3.Email addresses must adhere to any of the following patterns: "identifier@domain", "alias <identifier@domain>"; administrators may have email addresses of the form "identifier@", or "alias <identifier@>". The identifier is an alpha-numeric string,
+	 * the domain is a sequence
+	 * of alpha-numeric strings that are separated by dots, and the alias is a sequence of alpha-numeric strings that are separated by spaces.
+	 * 
+	 * Analysis of sentence coverage
+	 * 10,8%
+	 * Analysis of data coverage
+	 * ~20%
+	 */
+	@Test
+	public void Diver06() {
+		final Object testingData[][] = {
+			{
+				// Test positivo: Editar el nombre de la compañia
+				// Usuario
+				"SoyUnaPatatita", null
+			}, {
+				// Test negativo: Editar el nombre de la compañia
+				// Usuario
+				"", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver06((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver06(final String comercialName, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			final Company company = this.companyService.create();
+			company.setAddress("soyUnaCalle");
+			company.setCommercialName("soyUnaPrueba");
+			company.setEmail("soyUnaPrueba@soyUnaPrueba");
+			company.setName("soyUnNombre");
+			company.setPhone("123456");
+			company.setPhoto("http://SoyUnaFoto");
+			company.setSurname("SoyUnaPreuba");
+			company.getUserAccount().setUsername("soyUnaPrueba");
+
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
+			company.getUserAccount().setPassword(hashPassword);
+
+			final Company companySave = this.companyService.saveCreate(company);
+
+			super.authenticate(company.getUserAccount().getUsername());
+			final Company companyToEdit = companySave;
+			companyToEdit.setCommercialName(comercialName);
+			this.companyService.saveEdit(companyToEdit);
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 8. An actor who is authenticated must be able to:
+	 * 2. Edit his or her personal data. (show)
+	 * 
+	 * Analysis of sentence coverage
+	 * 40,2%
+	 * Analysis of data coverage
+	 * ~40%
+	 */
+	@Test
+	public void Diver07() {
+		final Object testingData[][] = {
+			{
+				// Test positivo: show company.
+				// Usuario
+				null, null
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver07((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver07(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (user != null)
+				super.authenticate(user);
+
+			this.startTransaction();
+
+			final Company company = this.companyService.create();
+			company.setAddress("soyUnaCalle");
+			company.setCommercialName("soyUnaPrueba");
+			company.setEmail("soyUnaPrueba@soyUnaPrueba");
+			company.setName("soyUnNombre");
+			company.setPhone("123456");
+			company.setPhoto("http://SoyUnaFoto");
+			company.setSurname("SoyUnaPreuba");
+			company.getUserAccount().setUsername("soyUnaPrueba");
+
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
+			company.getUserAccount().setPassword(hashPassword);
+
+			final Company companySave = this.companyService.saveCreate(company);
+
+			final Company companyFind = this.companyService.getCompanyByUserAccountId(companySave.getUserAccount().getId());
+
+			companyFind.getAddress();
+			companyFind.getCommercialName();
+			companyFind.getEmail();
+
+			this.companyService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 8. An actor who is authenticated must be able to:
+	 * 2. Edit his or her personal data. (show)
+	 * 
+	 * Analysis of sentence coverage
+	 * 40,2%
+	 * Analysis of data coverage
+	 * ~40%
+	 */
+	@Test
+	public void Diver08() {
+		final Object testingData[][] = {
+			{
+				// Test negativo: show company.
+				// Usuario
+				null, NullPointerException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver08((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected void Diver08(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+
+			if (user != null)
+				super.authenticate(user);
+
+			this.startTransaction();
+
+			final Company companyFind = this.companyService.getCompanyByUserAccountId(12345);
+			companyFind.getAddress();
+			companyFind.getCommercialName();
+			companyFind.getEmail();
 
 			this.companyService.flush();
 
