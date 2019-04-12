@@ -25,7 +25,10 @@
 			<form:form class="formularioEdicion" method="POST"
 				modelAttribute="registrationForm"  onsubmit="return phonenumberval();" action="hacker/create.do">
 
-				
+				<fieldset>
+				<legend>
+					<spring:message code="actor.personalDate" />
+				</legend>
 				<acme:textbox code="hacker.name" path="name"/>
 				<acme:textbox code="hacker.surname" path="surname" />
 				<acme:textbox code="hacker.username" path="userName" />
@@ -35,7 +38,19 @@
 				<acme:textbox code="hacker.email" path="email" />
 				<acme:textbox code="hacker.photo" path="photo" />
 				<acme:phonebox code="hacker.phone" path="phone" />
-
+				</fieldset>
+				<br>
+				<fieldset>
+				<legend>
+					<spring:message code="actor.creditCard" />
+				</legend>
+				<acme:phonebox code="hacker.holder" path="holder" />
+				<acme:phonebox code="hacker.make" path="make" />
+				<acme:phonebox code="hacker.number" path="number" />
+				<acme:phonebox code="hacker.CVV" path="CVV" />
+				<acme:phonebox code="hacker.expiration" path="expiration" />
+				</fieldset>
+				<br>
 				<spring:message code="hacker.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="actor/conditions.do" target="_blank"><spring:message code="hacker.conditions1" /></a>

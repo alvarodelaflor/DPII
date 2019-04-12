@@ -20,6 +20,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.CreditCard;
 import forms.ActorForm;
 
 @Service
@@ -61,6 +62,8 @@ public class AdministratorService extends ActorService {
 		final List<Authority> auths = new ArrayList<>();
 		final Authority auth = new Authority();
 		auth.setAuthority(Authority.ADMIN);
+		final CreditCard creditCard = new CreditCard();
+		res.setCreditCard(creditCard);
 		auths.add(auth);
 		uacc.setAuthorities(auths);
 		res.setUserAccount(uacc);
@@ -80,6 +83,15 @@ public class AdministratorService extends ActorService {
 		result.setEmail(actorForm.getEmail());
 		result.setAddress(actorForm.getAddress());
 		result.setPhone(actorForm.getPhone());
+
+		final CreditCard creditCard = new CreditCard();
+		creditCard.setCVV(actorForm.getCVV());
+		creditCard.setExpiration(actorForm.getExpiration());
+		creditCard.setHolder(actorForm.getHolder());
+		creditCard.setMake(actorForm.getMake());
+		creditCard.setNumber(actorForm.getNumber());
+
+		result.setCreditCard(creditCard);
 
 		System.out.println("valide1");
 

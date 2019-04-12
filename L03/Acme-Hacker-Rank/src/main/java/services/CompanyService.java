@@ -21,6 +21,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Company;
+import domain.CreditCard;
 import forms.RegistrationForm;
 
 @Service
@@ -53,6 +54,9 @@ public class CompanyService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.COMPANY);
+
+		final CreditCard creditCard = new CreditCard();
+		company.setCreditCard(creditCard);
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
 		company.setUserAccount(user);
@@ -96,6 +100,15 @@ public class CompanyService {
 		result.setAddress(registrationForm.getAddress());
 		result.setPhone(registrationForm.getPhone());
 		result.setCommercialName(registrationForm.getCompanyName());
+
+		final CreditCard creditCard = new CreditCard();
+		creditCard.setCVV(registrationForm.getCVV());
+		creditCard.setExpiration(registrationForm.getExpiration());
+		creditCard.setHolder(registrationForm.getHolder());
+		creditCard.setMake(registrationForm.getMake());
+		creditCard.setNumber(registrationForm.getNumber());
+
+		result.setCreditCard(creditCard);
 
 		System.out.println("valide1");
 
@@ -156,7 +169,6 @@ public class CompanyService {
 
 		return result;
 	}
-
 	// RECONSTRUCT-EDIT---------------------------------------------------------------		
 
 	public Company reconstructEdit(final Company company, final BindingResult binding) {

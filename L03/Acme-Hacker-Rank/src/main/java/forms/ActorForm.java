@@ -1,6 +1,8 @@
 
 package forms;
 
+import java.util.Date;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -12,6 +14,53 @@ public class ActorForm {
 	private String	password, confirmPassword, address, email, name, phone, photo, surname, userName;
 	private Boolean	accept;
 
+	private String	holder, make;
+	private String	CVV, number;
+	private Date	expiration;
+
+
+	@NotBlank
+	@SafeHtml
+	public String getHolder() {
+		return this.holder;
+	}
+
+	public void setHolder(final String holder) {
+		this.holder = holder;
+	}
+	@NotBlank
+	@SafeHtml
+	public String getMake() {
+		return this.make;
+	}
+
+	public void setMake(final String make) {
+		this.make = make;
+	}
+
+	public String getNumber() {
+		return this.number;
+	}
+
+	public void setNumber(final String number) {
+		this.number = number;
+	}
+
+	public String getCVV() {
+		return this.CVV;
+	}
+
+	public void setCVV(final String cVV) {
+		this.CVV = cVV;
+	}
+
+	public Date getExpiration() {
+		return this.expiration;
+	}
+
+	public void setExpiration(final Date expiration) {
+		this.expiration = expiration;
+	}
 
 	public Boolean getAccept() {
 		return this.accept;

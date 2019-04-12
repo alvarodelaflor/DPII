@@ -12,14 +12,14 @@ import javax.validation.constraints.Future;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
 public class CreditCard {
 
-	private String	holder, make, number, CVV;
+	private String	holder, make;
+	private String	CVV, number;
 	private Date	expiration;
 
 
@@ -43,7 +43,6 @@ public class CreditCard {
 		this.make = make;
 	}
 
-	@NotBlank
 	@SafeHtml
 	public String getNumber() {
 		return this.number;
@@ -53,7 +52,6 @@ public class CreditCard {
 		this.number = number;
 	}
 
-	@NotBlank
 	@SafeHtml
 	public String getCVV() {
 		return this.CVV;

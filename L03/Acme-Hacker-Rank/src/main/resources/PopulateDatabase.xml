@@ -97,8 +97,9 @@
         <property name="phone" value="+34123456789" />
         <property name="address" value="Calle del Admin" />
         <property name="userAccount" ref= "userAccountAdmin01"/>
-		<property name="creditCard"><null></null></property>
-		<property name="config" ref="config" /></bean>
+		<property name="config" ref="config" />
+		<property name="creditCard" ref="creditCard03" />
+		</bean>
 	<!-- ADMIN -->
 	
 	<!-- HACKER -->
@@ -110,7 +111,8 @@
         <property name="phone" value="+34625381121" />
         <property name="address" value="Lora del río, nº5" />
         <property name="userAccount" ref= "userAccount3"/>
-		<property name="creditCard"><null></null></property></bean>
+		<property name="creditCard" ref="creditCard02" />
+		</bean>
 	<!-- HACKER -->
 	
 	<!-- COMPANY -->
@@ -122,7 +124,8 @@
         <property name="phone" value="+3423456789" />
         <property name="address" value="Lora de Río, Nº5. Carmona" />
         <property name="commercialName" value="Carmen" />
-        <property name="userAccount" ref= "userAccount2"/>      
+        <property name="userAccount" ref= "userAccount2"/> 
+        <property name="creditCard" ref="creditCard01" />     
     </bean>
 	<!-- COMPANY -->	
 	
@@ -267,6 +270,32 @@
     </bean>
     <!-- APPLICATION -->
 	
+	<!-- CRECIT CARD -->
+	<bean id="creditCard01" class="domain.CreditCard">
+    	<property name="holder" value= "Carmen Fernández Benjumea"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1234567891234567"/>
+    	<property name="CVV" value= "234"/>
+ 		<property name="expiration" value= "2039/12/12 23:59"/>
+    </bean>
+    
+    <bean id="creditCard02" class="domain.CreditCard">
+    	<property name="holder" value= "Antonio Manuel Salvat"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1234567891234567"/>
+    	<property name="CVV" value= "234"/>
+ 		<property name="expiration" value= "2039/12/12 23:59"/>
+    </bean>
+    
+    <bean id="creditCard03" class="domain.CreditCard">
+    	<property name="holder" value= "Manuel Ruiz de Lopera"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1234567891234567"/>
+    	<property name="CVV" value= "234"/>
+ 		<property name="expiration" value= "2039/12/12 23:59"/>
+    </bean>
+    <!-- CRECIT CARD -->
+    
 
 
 	

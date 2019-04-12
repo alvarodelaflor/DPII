@@ -88,6 +88,6 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	public int countByTicker(String ticker);
 
 	@Modifying
-	@Query("update Application a set status='REJECTED' where a.status='PENDING' and a.problem.id=?1 and a.position.id=?2")
+	@Query("update Application a set status='REJECTED' where (a.status='PENDING' or a.status='SUBMITTED') and a.problem.id=?1 and a.position.id=?2")
 	public void rejectAllApplications(int problemId, int positionId);
 }

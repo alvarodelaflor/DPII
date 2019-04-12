@@ -24,8 +24,11 @@
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
 				modelAttribute="registrationForm"  onsubmit="return phonenumberval();" action="company/create.do">
-
 				
+				<fieldset>
+				<legend>
+					<spring:message code="actor.personalDate" />
+				</legend>
 				<acme:textbox code="company.name" path="name" />
 				<acme:textbox code="company.surname" path="surname" />
 				<acme:textbox code="company.username" path="userName" />
@@ -36,13 +39,23 @@
 				<acme:textbox code="company.photo" path="photo" />
 				<acme:phonebox code="company.phone" path="phone" />
 				<acme:phonebox code="company.comercialName" path="companyName" />
-				
-
+				</fieldset>
+				<br>
+				<fieldset>
+				<legend>
+					<spring:message code="actor.creditCard" />
+				</legend>
+				<acme:phonebox code="company.holder" path="holder" />
+				<acme:phonebox code="company.make" path="make" />
+				<acme:phonebox code="company.number" path="number" />
+				<acme:phonebox code="company.CVV" path="CVV" />
+				<acme:phonebox code="company.expiration" path="expiration" />
+				</fieldset>
+				<br>
 				<spring:message code="company.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="actor/conditions.do" target="_blank"><spring:message code="company.conditions1" /></a>
 				<form:errors path="${accept}" cssClass="error" />
-					
 				<acme:submit name="save" code="company.save"/>
 				<acme:cancel url=" " code="company.cancel"/>
 			</form:form>

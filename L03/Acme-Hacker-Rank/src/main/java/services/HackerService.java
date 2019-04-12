@@ -20,6 +20,7 @@ import repositories.HackerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.CreditCard;
 import domain.Curricula;
 import domain.Hacker;
 import forms.RegistrationForm;
@@ -57,6 +58,8 @@ public class HackerService {
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
 		hacker.setUserAccount(user);
+		final CreditCard creditCard = new CreditCard();
+		hacker.setCreditCard(creditCard);
 		return hacker;
 	}
 
@@ -96,6 +99,15 @@ public class HackerService {
 		result.setEmail(registrationForm.getEmail());
 		result.setAddress(registrationForm.getAddress());
 		result.setPhone(registrationForm.getPhone());
+
+		final CreditCard creditCard = new CreditCard();
+		creditCard.setCVV(registrationForm.getCVV());
+		creditCard.setExpiration(registrationForm.getExpiration());
+		creditCard.setHolder(registrationForm.getHolder());
+		creditCard.setMake(registrationForm.getMake());
+		creditCard.setNumber(registrationForm.getNumber());
+
+		result.setCreditCard(creditCard);
 
 		System.out.println("valide1");
 

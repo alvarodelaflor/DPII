@@ -15,6 +15,10 @@
 			<form:form class="formularioEdicion" method="POST"
 				modelAttribute="actorForm"  onsubmit="return phonenumberval();" action="administrator/create.do">
 				
+				<fieldset>
+				<legend>
+					<spring:message code="actor.personalDate" />
+				</legend>
 				<acme:textbox code="admin.name" path="name" />
 				<acme:textbox code="admin.surname" path="surname" />
 				<acme:textbox code="admin.username" path="userName" />
@@ -25,14 +29,22 @@
 				<acme:textbox code="admin.photo" path="photo" />
 				<acme:phonebox code="admin.phone" path="phone" />
 				<br>
-
+				</fieldset>
+				<fieldset>
+				<legend>
+					<spring:message code="actor.creditCard" />
+				</legend>
+				<acme:phonebox code="admin.holder" path="holder" />
+				<acme:phonebox code="admin.make" path="make" />
+				<acme:phonebox code="admin.number" path="number" />
+				<acme:phonebox code="admin.CVV" path="CVV" />
+				<acme:phonebox code="admin.expiration" path="expiration" />
+				</fieldset>
+				<br>
 				<spring:message code="admin.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="actor/conditions.do" target="_blank"><spring:message code="admin.conditions1" /></a>
 				<form:errors path="${accept}" cssClass="error" />
-				
-				<br>
-				<br>
 				<acme:submit name="save" code="admin.save"/>
 				<acme:cancel url=" " code="admin.cancel"/>
 			</form:form>

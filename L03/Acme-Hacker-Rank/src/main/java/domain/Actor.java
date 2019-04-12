@@ -11,6 +11,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -112,6 +113,7 @@ public class Actor extends DomainEntity {
 		this.address = address;
 	}
 
+	@NotNull
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
