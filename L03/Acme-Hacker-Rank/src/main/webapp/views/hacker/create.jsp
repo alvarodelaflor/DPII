@@ -44,18 +44,19 @@
 				<legend>
 					<spring:message code="actor.creditCard" />
 				</legend>
-				<acme:phonebox code="hacker.holder" path="holder" />
-				<acme:phonebox code="hacker.make" path="make" />
-				<acme:phonebox code="hacker.number" path="number" />
-				<acme:phonebox code="hacker.CVV" path="CVV" />
-				<acme:phonebox code="hacker.expiration" path="expiration" />
+				<acme:textbox code="hacker.holder" path="holder" />
+				<acme:textbox code="hacker.make" path="make" />
+				<acme:textbox code="hacker.number" path="number" />
+				<acme:textbox code="hacker.CVV" path="CVV" />
+				<acme:textboxMoment code="hacker.expiration" path="expiration" />
 				</fieldset>
 				<br>
 				<spring:message code="hacker.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="actor/conditions.do" target="_blank"><spring:message code="hacker.conditions1" /></a>
 				<form:errors path="${accept}" cssClass="error" />
-					
+				<br>
+				<br>					
 				<acme:submit name="save" code="hacker.save"/>
 				<acme:cancel url=" " code="hacker.cancel"/>
 			</form:form>

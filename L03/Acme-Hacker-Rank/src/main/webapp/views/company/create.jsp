@@ -45,17 +45,19 @@
 				<legend>
 					<spring:message code="actor.creditCard" />
 				</legend>
-				<acme:phonebox code="company.holder" path="holder" />
-				<acme:phonebox code="company.make" path="make" />
-				<acme:phonebox code="company.number" path="number" />
-				<acme:phonebox code="company.CVV" path="CVV" />
-				<acme:phonebox code="company.expiration" path="expiration" />
+				<acme:textbox code="company.holder" path="holder" />
+				<acme:textbox code="company.make" path="make" />
+				<acme:textbox code="company.number" path="number" />
+				<acme:textbox code="company.CVV" path="CVV" />
+				<acme:textboxMoment code="company.expiration" path="expiration" />
 				</fieldset>
 				<br>
 				<spring:message code="company.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="actor/conditions.do" target="_blank"><spring:message code="company.conditions1" /></a>
 				<form:errors path="${accept}" cssClass="error" />
+				<br>
+				<br>
 				<acme:submit name="save" code="company.save"/>
 				<acme:cancel url=" " code="company.cancel"/>
 			</form:form>

@@ -110,50 +110,55 @@ public class CompanyService {
 
 		result.setCreditCard(creditCard);
 
-		System.out.println("valide1");
+		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5)
+			binding.rejectValue("userName", "error.userAcount");
+		//			final ObjectError error = new ObjectError("userName", "Invalid size");
+		//			binding.addError(error);
+
+		if (this.actorRepository.getActorByUser(registrationForm.getUserName()) != null)
+			//			final ObjectError error = new ObjectError("userName", "Must be blank");
+			//			binding.addError(error);
+			binding.rejectValue("userName", "error.userName");
+
+		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5)
+			//			final ObjectError error = new ObjectError("password", "Invalid size");
+			//			binding.addError(error);
+			binding.rejectValue("password", "error.password");
+
+		if (!registrationForm.getConfirmPassword().equals(registrationForm.getPassword()))
+			//			final ObjectError error = new ObjectError("password", "Not equal");
+			//			binding.addError(error);
+			binding.rejectValue("password", "error.password.confirm");
+
+		if (registrationForm.getCompanyName() == "")
+			//			final ObjectError error = new ObjectError("companyName", "Must be blank");
+			//			binding.addError(error);
+			binding.rejectValue("companyName", "error.companyName");
+
+		if (!registrationForm.getNumber().matches("([0-9]){16}"))
+			//			final ObjectError error = new ObjectError("number", "Invalid number");
+			//			binding.addError(error);
+			binding.rejectValue("number", "error.numberCredictCard");
+
+		if (!registrationForm.getCVV().matches("([0-9]){3}"))
+			//			final ObjectError error = new ObjectError("CVV", "Invalid CVV");
+			//			binding.addError(error);
+			binding.rejectValue("CVV", "error.CVVCredictCard");
+
+		if (registrationForm.getHolder() == "")
+			//			final ObjectError error = new ObjectError("holder", "Must be blank");
+			//			binding.addError(error);
+			binding.rejectValue("holder", "error.holderCredictCard");
+
+		if (registrationForm.getMake() == "")
+			//			final ObjectError error = new ObjectError("make", "Must be blank");
+			//			binding.addError(error);
+			binding.rejectValue("make", "error.makeCredictCard");
 
 		if (registrationForm.getAccept() == false) {
-			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
+			final ObjectError error = new ObjectError("accept", "You have to accept terms and condictions");
 			binding.addError(error);
 			binding.rejectValue("accept", "error.termsAndConditions");
-		}
-
-		System.out.println("valide2");
-
-		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5) {
-			final ObjectError error = new ObjectError("userName", "");
-			binding.addError(error);
-			binding.rejectValue("userName", "error.userAcount");
-		}
-
-		System.out.println("valide3");
-
-		if (this.actorRepository.getActorByUser(registrationForm.getUserName()) != null) {
-			final ObjectError error = new ObjectError("userName", "");
-			binding.addError(error);
-			binding.rejectValue("userName", "error.userName");
-		}
-
-		System.out.println("valide3");
-
-		if (registrationForm.getConfirmPassword().length() <= 5 && registrationForm.getPassword().length() <= 5) {
-			final ObjectError error = new ObjectError("password", "");
-			binding.addError(error);
-			binding.rejectValue("password", "error.password");
-		}
-
-		System.out.println("valide4");
-
-		if (!registrationForm.getConfirmPassword().equals(registrationForm.getPassword())) {
-			final ObjectError error = new ObjectError("password", "");
-			binding.addError(error);
-			binding.rejectValue("password", "error.password.confirm");
-		}
-
-		if (registrationForm.getCompanyName() == "") {
-			final ObjectError error = new ObjectError("companyName", "");
-			binding.addError(error);
-			binding.rejectValue("companyName", "error.companyName");
 		}
 
 		result.getUserAccount().setUsername(registrationForm.getUserName());

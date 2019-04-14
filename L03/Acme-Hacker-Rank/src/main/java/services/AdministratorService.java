@@ -93,45 +93,51 @@ public class AdministratorService extends ActorService {
 
 		result.setCreditCard(creditCard);
 
-		System.out.println("valide1");
-
 		if (actorForm.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
 			binding.addError(error);
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
 
-		System.out.println("valide2");
-
-		if (actorForm.getUserName().length() <= 5 && actorForm.getUserName().length() <= 5) {
-			final ObjectError error = new ObjectError("userName", "");
-			binding.addError(error);
+		if (actorForm.getUserName().length() <= 5 && actorForm.getUserName().length() <= 5)
+			//			final ObjectError error = new ObjectError("userName", "");
+			//			binding.addError(error);
 			binding.rejectValue("userName", "error.userAcount");
-		}
 
-		System.out.println("valide3");
-
-		if (this.actorRepository.getActorByUser(actorForm.getUserName()) != null) {
-			final ObjectError error = new ObjectError("userName", "");
-			binding.addError(error);
+		if (this.actorRepository.getActorByUser(actorForm.getUserName()) != null)
+			//			final ObjectError error = new ObjectError("userName", "");
+			//			binding.addError(error);
 			binding.rejectValue("userName", "error.userName");
-		}
 
-		System.out.println("valide3");
-
-		if (actorForm.getConfirmPassword().length() <= 5 && actorForm.getPassword().length() <= 5) {
-			final ObjectError error = new ObjectError("password", "");
-			binding.addError(error);
+		if (actorForm.getConfirmPassword().length() <= 5 && actorForm.getPassword().length() <= 5)
+			//			final ObjectError error = new ObjectError("password", "");
+			//			binding.addError(error);
 			binding.rejectValue("password", "error.password");
-		}
 
-		System.out.println("valide4");
-
-		if (!actorForm.getConfirmPassword().equals(actorForm.getPassword())) {
-			final ObjectError error = new ObjectError("password", "");
-			binding.addError(error);
+		if (!actorForm.getConfirmPassword().equals(actorForm.getPassword()))
+			//			final ObjectError error = new ObjectError("password", "");
+			//			binding.addError(error);
 			binding.rejectValue("password", "error.password.confirm");
-		}
+
+		if (!actorForm.getNumber().matches("([0-9]){16}"))
+			//			final ObjectError error = new ObjectError("number", "");
+			//			binding.addError(error);
+			binding.rejectValue("number", "error.numberCredictCard");
+
+		if (!actorForm.getCVV().matches("([0-9]){3}"))
+			//			final ObjectError error = new ObjectError("CVV", "");
+			//			binding.addError(error);
+			binding.rejectValue("CVV", "error.CVVCredictCard");
+
+		if (actorForm.getHolder() == "")
+			//			final ObjectError error = new ObjectError("holder", " ");
+			//			binding.addError(error);
+			binding.rejectValue("holder", "error.holderCredictCard");
+
+		if (actorForm.getMake() == "")
+			//			final ObjectError error = new ObjectError("make", " ");
+			//			binding.addError(error);
+			binding.rejectValue("make", "error.makeCredictCard");
 
 		result.getUserAccount().setUsername(actorForm.getUserName());
 
