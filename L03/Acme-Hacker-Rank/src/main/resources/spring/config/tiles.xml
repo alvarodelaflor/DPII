@@ -25,6 +25,7 @@
 		
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
+		<value>/views/finder/tiles.xml</value>
 		
 		<!-- ALVARO -->
 		<value>/views/curricula/tiles.xml</value>

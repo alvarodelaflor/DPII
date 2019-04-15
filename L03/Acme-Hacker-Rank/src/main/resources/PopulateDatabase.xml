@@ -112,6 +112,7 @@
         <property name="address" value="Lora del río, nº5" />
         <property name="userAccount" ref= "userAccount3"/>
 		<property name="creditCard" ref="creditCard02" />
+		<property name="finder" ref="finder01" />
 		</bean>
 	<!-- HACKER -->
 	
@@ -295,6 +296,40 @@
  		<property name="expiration" value= "2039/12/12 23:59"/>
     </bean>
     <!-- CRECIT CARD -->
+    
+    <!-- FINDER -->
+    <bean id="finder01" class="domain.Finder">
+    	<property name="keyword" value=""/>
+    	<property name="expirationDate">
+    		<null/>
+    	</property>
+    	<property name="minSalary">
+    		<null/>
+    	</property>
+    	<property name="maxSalary">
+    		<null/>
+    	</property>
+    	<property name="deadline">
+    		<null/>
+    	</property>
+    </bean>
+    
+    <bean id="finder02" class="domain.Finder">
+    	<property name="keyword" value=""/>
+    	<property name="expirationDate">
+    		<null/>
+    	</property>
+    	<property name="minSalary">
+    		<null/>
+    	</property>
+    	<property name="maxSalary">
+    		<null/>
+    	</property>
+    	<property name="deadline">
+    		<null/>
+    	</property>
+    </bean>
+	<!-- FINDER -->
     
 
 
