@@ -124,6 +124,8 @@
 		<security:intercept-url pattern="/problem/company/create.do" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/problem/company/edit.do" access="hasRole('COMPANY')" />
 		<security:intercept-url pattern="/problem/company/delete.do" access="hasRole('COMPANY')" />
+		<!-- application/company -->
+		<security:intercept-url pattern="/application/company/list.do" access="hasRole('COMPANY')" />
 		<!-- HIPONA -->
 		
 		<!-- FRAN -->						

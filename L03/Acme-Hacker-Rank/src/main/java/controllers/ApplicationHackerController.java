@@ -86,7 +86,9 @@ public class ApplicationHackerController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// SHOW ---------------------------------------------------------------		
@@ -104,7 +106,9 @@ public class ApplicationHackerController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// CREATE ---------------------------------------------------------------		
@@ -144,7 +148,9 @@ public class ApplicationHackerController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// SAVE-CREATE ---------------------------------------------------------------		
@@ -185,7 +191,9 @@ public class ApplicationHackerController extends AbstractController {
 			System.out.println(oops);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// EDIT ---------------------------------------------------------------		
@@ -208,7 +216,9 @@ public class ApplicationHackerController extends AbstractController {
 			System.out.println(oops);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 	// SAVE-EDIT ---------------------------------------------------------------		
 
@@ -262,7 +272,9 @@ public class ApplicationHackerController extends AbstractController {
 				else
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	private ModelAndView createEditModelAndView(final Application application, final String string) {
@@ -271,7 +283,9 @@ public class ApplicationHackerController extends AbstractController {
 		result = new ModelAndView("hacker/create");
 		result.addObject("string", string);
 		result.addObject("application", application);
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 }

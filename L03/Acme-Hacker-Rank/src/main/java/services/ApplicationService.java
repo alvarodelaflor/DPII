@@ -32,6 +32,9 @@ public class ApplicationService {
 	@Autowired
 	private Validator				validator;
 
+	@Autowired
+	private CompanyService			companyService;
+
 
 	// DashBoard:
 	public Float avgApplicationPerHacker() {
@@ -137,4 +140,21 @@ public class ApplicationService {
 		this.applicationRepository.flush();
 	}
 
+	public Collection<Application> getSubmittedApplicationsByLoggedCompany() {
+		final int loggedId = LoginService.getPrincipal().getId();
+		final int companyId = this.companyService.getCompanyByUserAccountId(loggedId).getId();
+		return this.applicationRepository.getSubmittedApplicationsByLoggedCompany(companyId);
+	}
+
+	public Collection<Application> getAcceptedApplicationsByLoggedCompany() {
+		final int loggedId = LoginService.getPrincipal().getId();
+		final int companyId = this.companyService.getCompanyByUserAccountId(loggedId).getId();
+		return this.applicationRepository.getAcceptedApplicationsByLoggedCompany(companyId);
+	}
+
+	public Collection<Application> getRejectedApplicationsByLoggedCompany() {
+		final int loggedId = LoginService.getPrincipal().getId();
+		final int companyId = this.companyService.getCompanyByUserAccountId(loggedId).getId();
+		return this.applicationRepository.getRejectedApplicationsByLoggedCompany(companyId);
+	}
 }
