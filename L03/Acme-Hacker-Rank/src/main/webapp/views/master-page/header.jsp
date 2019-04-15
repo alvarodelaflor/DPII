@@ -63,7 +63,8 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="position/company/list.do"><spring:message code="master.page.list.logged_company_positions" /></a></li>
-					<li><a href="problem/company/list.do"><spring:message code="master.page.list.logged_company_problems" /></a></li>	
+					<li><a href="problem/company/list.do"><spring:message code="master.page.list.logged_company_problems" /></a></li>
+					<li><a href="application/company/list.do"><spring:message code="master.page.list.logged_company_applications" /></a></li>
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>

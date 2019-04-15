@@ -10,7 +10,9 @@
 
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,6 +79,11 @@ public class CompanyController extends AbstractController {
 				final Company a = this.companyService.saveCreate(company);
 				System.out.println(a);
 				result = new ModelAndView("welcome/index");
+				final SimpleDateFormat formatter;
+				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				final String moment = formatter.format(new Date());
+				result.addObject("moment", moment);
+
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
 					result = this.createEditModelAndView(company, "email.wrong");

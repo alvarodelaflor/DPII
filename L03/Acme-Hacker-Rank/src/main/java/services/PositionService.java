@@ -196,7 +196,12 @@ public class PositionService {
 
 	private String getTickerForCompany(final Company owner) {
 		String ticker = "";
-		final String croppedName = owner.getCommercialName().substring(0, 4).toUpperCase();
+		final String commercialName = owner.getCommercialName();
+		String croppedName;
+		if (commercialName.length() >= 4)
+			croppedName = commercialName.substring(0, 4).toUpperCase();
+		else
+			croppedName = commercialName + "XXXX".substring(commercialName.length());
 
 		int validTicker = 1;
 
@@ -207,7 +212,6 @@ public class PositionService {
 		}
 		return ticker;
 	}
-
 	private String generateRandomNumber() {
 		String res = "";
 		final Random random = new Random();
@@ -284,7 +288,6 @@ public class PositionService {
 	public void flush() {
 		this.positionRepository.flush();
 	}
-
 
 	private void detachAllProblems(final int positionId) {
 		final Collection<Problem> problems = this.problemService.findFromPosition(positionId);
