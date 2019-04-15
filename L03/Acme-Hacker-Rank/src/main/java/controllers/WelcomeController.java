@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.ConfigurationService;
 import domain.Actor;
 
 @Controller
@@ -29,7 +31,10 @@ import domain.Actor;
 public class WelcomeController extends AbstractController {
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -66,6 +71,13 @@ public class WelcomeController extends AbstractController {
 		result.addObject("surname", surname);
 		result.addObject("moment", moment);
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		String message = this.configurationService.getConfiguration().getSystemMessageEn();
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+		if (language.equals("Spanish"))
+			message = this.configurationService.getConfiguration().getSystemMessageEs();
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		result.addObject("systemMessage", message);
+		return result;
 	}
 }

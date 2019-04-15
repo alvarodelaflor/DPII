@@ -22,6 +22,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.CreditCard;
 import domain.Curricula;
+import domain.Finder;
 import domain.Hacker;
 import forms.RegistrationForm;
 
@@ -47,6 +48,9 @@ public class HackerService {
 	@Autowired
 	private CurriculaService	curriculaService;
 
+	@Autowired
+	private FinderService		finderService;
+
 
 	// CREATE ---------------------------------------------------------------		
 	public Hacker create() {
@@ -67,6 +71,9 @@ public class HackerService {
 	public Hacker saveCreate(final Hacker hacker) {
 		Assert.isTrue(!this.checkEmailFormatter(hacker), "email.wrong");
 		Assert.isTrue(this.checkEmail(hacker), "error.email");
+		final Finder finder = this.finderService.create();
+		this.finderService.save(finder);
+		hacker.setFinder(finder);
 		//		if (member.getPhone().matches("^([0-9]{4,})$"))
 		//			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
 		return this.hackerRepository.save(hacker);
