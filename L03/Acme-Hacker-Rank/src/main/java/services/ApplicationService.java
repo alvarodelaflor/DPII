@@ -157,4 +157,29 @@ public class ApplicationService {
 		final int companyId = this.companyService.getCompanyByUserAccountId(loggedId).getId();
 		return this.applicationRepository.getRejectedApplicationsByLoggedCompany(companyId);
 	}
+
+	public Application getCompanyApplication(final int applicationId) {
+		final Application application = this.applicationRepository.findOne(applicationId);
+		this.checkApplicationOwner(application);
+		return application;
+	}
+
+	private void checkApplicationOwner(final Application application) {
+		final int loggedId = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		Assert.isTrue(application.getProblem().getCompany().getId() == loggedId);
+	}
+
+	public void accept(final int applicationId) {
+		final Application application = this.applicationRepository.findOne(applicationId);
+		this.checkApplicationOwner(application);
+		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
+		application.setStatus("ACCEPTED");
+	}
+
+	public void reject(final int applicationId) {
+		final Application application = this.applicationRepository.findOne(applicationId);
+		this.checkApplicationOwner(application);
+		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
+		application.setStatus("REJECTED");
+	}
 }
