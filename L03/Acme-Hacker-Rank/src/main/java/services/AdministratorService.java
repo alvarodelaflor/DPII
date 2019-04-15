@@ -39,6 +39,9 @@ public class AdministratorService extends ActorService {
 	@Autowired
 	private ActorRepository			actorRepository;
 
+	@Autowired
+	private ConfigurationService	configurationService;
+
 
 	@Override
 	public Administrator findOne(final int id) {
@@ -157,8 +160,8 @@ public class AdministratorService extends ActorService {
 	public Administrator saveCreate(final Administrator administrator) {
 		Assert.isTrue(!this.checkEmailFormatter(administrator), "email.wrong");
 		Assert.isTrue(this.checkEmail(administrator), "error.email");
-		//		if (member.getPhone().matches("^([0-9]{4,})$"))
-		//			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
+		if (administrator.getPhone().matches("^([0-9]{4,})$"))
+			administrator.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + administrator.getPhone());
 		return this.adminRepository.save(administrator);
 	}
 

@@ -31,25 +31,28 @@ import forms.RegistrationForm;
 public class HackerService {
 
 	@Autowired
-	private HackerRepository	hackerRepository;
+	private HackerRepository		hackerRepository;
 
 	@Autowired
-	private ActorRepository		actorRepository;
+	private ActorRepository			actorRepository;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private ApplicationService	applicationService;
+	private ApplicationService		applicationService;
 
 	@Autowired
-	private CurriculaService	curriculaService;
+	private CurriculaService		curriculaService;
 
 	@Autowired
-	private FinderService		finderService;
+	private FinderService			finderService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// CREATE ---------------------------------------------------------------		
@@ -74,8 +77,9 @@ public class HackerService {
 		final Finder finder = this.finderService.create();
 		this.finderService.save(finder);
 		hacker.setFinder(finder);
-		//		if (member.getPhone().matches("^([0-9]{4,})$"))
-		//			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
+		if (hacker.getPhone().matches("^([0-9]{4,})$"))
+			hacker.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + hacker.getPhone());
+
 		return this.hackerRepository.save(hacker);
 	}
 	private Boolean checkEmailFormatter(final Hacker hacker) {
@@ -211,9 +215,9 @@ public class HackerService {
 
 	public Hacker saveEdit(Hacker hacker) {
 		Assert.isTrue(!this.checkEmailFormatter(hacker), "email.wrong");
-		Assert.isTrue(this.checkEmailEdit(hacker), "error.email");
-		//		if (hacker.getPhone().matches("^([0-9]{4,})$"))
-		//			hacker.setPhone("+" + //COMPLETAR//+ " " + hacker.getPhone());		
+		if (hacker.getPhone().matches("^([0-9]{4,})$"))
+			hacker.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + hacker.getPhone());
+
 		hacker = this.hackerRepository.save(hacker);
 		System.out.println(hacker);
 		return hacker;

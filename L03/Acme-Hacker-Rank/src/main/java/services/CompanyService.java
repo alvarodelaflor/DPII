@@ -29,22 +29,25 @@ import forms.RegistrationForm;
 public class CompanyService {
 
 	@Autowired
-	private CompanyRepository	companyRepository;
+	private CompanyRepository		companyRepository;
 
 	@Autowired
-	private ActorRepository		actorRepository;
+	private ActorRepository			actorRepository;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private PositionService		positionService;
+	private PositionService			positionService;
 
 	@Autowired
-	private ProblemService		problemService;
+	private ProblemService			problemService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// CREATE ---------------------------------------------------------------		
@@ -67,8 +70,8 @@ public class CompanyService {
 	public Company saveCreate(final Company company) {
 		Assert.isTrue(!this.checkEmailFormatter(company), "email.wrong");
 		Assert.isTrue(this.checkEmail(company), "error.email");
-		//		if (member.getPhone().matches("^([0-9]{4,})$"))
-		//			member.setPhone("+" + this.welcomeService.getPhone() + " " + member.getPhone());
+		if (company.getPhone().matches("^([0-9]{4,})$"))
+			company.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + company.getPhone());
 		return this.companyRepository.save(company);
 	}
 
@@ -230,8 +233,9 @@ public class CompanyService {
 		Assert.isTrue(!this.checkEmailFormatter(company), "email.wrong");
 		Assert.isTrue(this.checkEmailEdit(company), "error.email");
 		System.out.println("hola");
-		//		if (company.getPhone().matches("^([0-9]{4,})$"))
-		//			company.setPhone("+" + //COMPLETAR//+ " " + company.getPhone());		
+		if (company.getPhone().matches("^([0-9]{4,})$"))
+			company.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + company.getPhone());
+
 		company = this.companyRepository.save(company);
 		System.out.println(company);
 
