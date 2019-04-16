@@ -129,7 +129,6 @@ public class HackerController extends AbstractController {
 	}
 
 	// EDIT ---------------------------------------------------------------		
-
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		ModelAndView result;
@@ -150,7 +149,6 @@ public class HackerController extends AbstractController {
 	}
 
 	// SAVE-EDIT ---------------------------------------------------------------		
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
 	public ModelAndView saveEdit(Hacker hacker, final BindingResult binding) {
 		ModelAndView result;

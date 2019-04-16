@@ -21,11 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Curricula;
-import domain.EducationalData;
-import domain.Hacker;
-import domain.MiscellaneousAttachment;
-import domain.PositionData;
 import services.CurriculaService;
 import services.EducationalDataService;
 import services.HackerService;
@@ -34,6 +29,7 @@ import services.PositionDataService;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
+import domain.MiscellaneousAttachment;
 import domain.PositionData;
 
 /*
@@ -47,19 +43,20 @@ import domain.PositionData;
 public class CurriculaController extends AbstractController {
 
 	@Autowired
-	private HackerService			hackerService;
+	private HackerService					hackerService;
 
 	@Autowired
-	private CurriculaService		curriculaService;
+	private CurriculaService				curriculaService;
 
 	@Autowired
-	private EducationalDataService	educationalDataService;
+	private EducationalDataService			educationalDataService;
 
 	@Autowired
-	private PositionDataService		positionDataService;
+	private PositionDataService				positionDataService;
 
 	@Autowired
-	private MiscellaneousAttachmentService miscellaneousAttachmentService;
+	private MiscellaneousAttachmentService	miscellaneousAttachmentService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -86,7 +83,9 @@ public class CurriculaController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -97,14 +96,14 @@ public class CurriculaController extends AbstractController {
 			final Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
 			Assert.notNull(curriculaDB, "Not found curricula in DB");
 			result = new ModelAndView("curricula/show");
-			
-			Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hackerLogin!=null && curriculaDB.getHacker().equals(hackerLogin) && curriculaDB.getIsCopy().equals(false)) {
-				result.addObject("hackerLogin", true);	
-				MiscellaneousAttachment miscellaneousAttachment = this.miscellaneousAttachmentService.createWithHistory(curriculaDB);
+
+			final Hacker hackerLogin = this.hackerService.getHackerLogin();
+			if (hackerLogin != null && curriculaDB.getHacker().equals(hackerLogin) && curriculaDB.getIsCopy().equals(false)) {
+				result.addObject("hackerLogin", true);
+				final MiscellaneousAttachment miscellaneousAttachment = this.miscellaneousAttachmentService.createWithHistory(curriculaDB);
 				result.addObject("miscellaneousAttachment", miscellaneousAttachment);
 			}
-			
+
 			result.addObject("curricula", curriculaDB);
 
 			final List<EducationalData> educationalDatas = (List<EducationalData>) this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
@@ -112,14 +111,16 @@ public class CurriculaController extends AbstractController {
 
 			final List<PositionData> positionDatas = (List<PositionData>) this.positionDataService.getPositionDataFromCurricula(curriculaDB);
 			result.addObject("positionDatas", positionDatas);
-			
-			List<MiscellaneousAttachment> miscellaneousAttachments = (List<MiscellaneousAttachment>) this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
+
+			final List<MiscellaneousAttachment> miscellaneousAttachments = (List<MiscellaneousAttachment>) this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
 			result.addObject("miscellaneousAttachments", miscellaneousAttachments);
-			
+
 			result.addObject("requestURI", "hacker/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 }
