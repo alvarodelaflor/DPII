@@ -60,7 +60,7 @@
 	<display:column property="description" titleKey="position.description"></display:column>
 	<display:column property="salary" titleKey="position.salary"></display:column>
 	<display:column titleKey="position.ticker">
-		<a href="position/show.do?positionId=${row.id}">${row.ticker}</a>
+		<a href="position/show.do?id=${row.id}">${row.ticker}</a>
 	</display:column>
 	
 </display:table>

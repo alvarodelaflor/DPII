@@ -41,10 +41,10 @@
 
 <h2><spring:message code="hackers" /></h2>	
 	<h3><spring:message code="applicationsPerHacker" /></h3>
-		<p><spring:message code="avg" /> <jstl:out value="${avgApplicationPerHacker}"></jstl:out></p>		
-		<p><spring:message code="min" /> <jstl:out value="${minApplicationPerHacker}"></jstl:out></p>		
-		<p><spring:message code="max" /> <jstl:out value="${maxApplicationPerHacker}"></jstl:out></p>		
-		<p><spring:message code="stddev" /> <jstl:out value="${stddevApplicationPerHacker}"></jstl:out></p>
+		<p><spring:message code="avg" /> <jstl:out value="${avgApplicationsPerHacker}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minApplicationsPerHacker}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxApplicationsPerHacker}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${stddevApplicationsPerHacker}"></jstl:out></p>
 	<br>
 	
 	<h3><spring:message code="hackerMoreApplications" /></h3>

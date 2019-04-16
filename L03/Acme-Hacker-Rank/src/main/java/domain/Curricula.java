@@ -57,7 +57,6 @@ public class Curricula extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
-	@URL
 	// Hay que hacer un patron para las url de git
 	public String getLinkGitHub() {
 		return this.linkGitHub;
