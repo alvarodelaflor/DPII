@@ -98,7 +98,12 @@ public class ApplicationHackerController extends AbstractController {
 		ModelAndView result;
 		final Application application;
 		try {
+			final UserAccount user = LoginService.getPrincipal();
+			System.out.println(user.getUsername());
+			final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
+			Assert.notNull(hacker);
 			application = this.applicationService.findOne(id);
+			Assert.isTrue(application.getHacker().equals(hacker));
 			System.out.println(application);
 			Assert.notNull(application);
 			result = new ModelAndView("application/hacker/show");
@@ -121,6 +126,12 @@ public class ApplicationHackerController extends AbstractController {
 		Collection<Curricula> curriculas = new ArrayList<>();
 
 		try {
+
+			final UserAccount user = LoginService.getPrincipal();
+			System.out.println(user.getUsername());
+			final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
+			Assert.notNull(hacker);
+
 			System.out.println("Postion a aplicar: " + id);
 			final Application application = this.applicationService.create();
 
@@ -155,11 +166,17 @@ public class ApplicationHackerController extends AbstractController {
 
 	// SAVE-CREATE ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/hacker/save", method = RequestMethod.GET)
+	@RequestMapping(value = "/hacker/save", method = RequestMethod.POST)
 	public ModelAndView save(@RequestParam(value = "position", defaultValue = "-1") final int position, @RequestParam(value = "curricula", defaultValue = "-1") final int curricula) {
 		ModelAndView result = null;
 
 		try {
+
+			final UserAccount user = LoginService.getPrincipal();
+			System.out.println(user.getUsername());
+			final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
+			Assert.notNull(hacker);
+
 			final Application application = this.applicationService.create();
 
 			application.setCurricula(this.curriculaService.createCurriculaCopyAndSave(this.curriculaService.findOne(curricula)));
@@ -183,7 +200,7 @@ public class ApplicationHackerController extends AbstractController {
 
 			final Application a1 = this.applicationService.save(application);
 			System.out.println(a1);
-			result = new ModelAndView("application/hacker/list");
+			result = new ModelAndView("redirect:/application/hacker/list.do");
 			final Collection<Application> applications = this.applicationService.getApplicationsByHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()).getId());
 			result.addObject("applications", applications);
 
@@ -208,6 +225,7 @@ public class ApplicationHackerController extends AbstractController {
 			hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
 			Assert.notNull(hacker);
 			final Application application = this.applicationService.getApplicationHackerById(applicationid);
+			Assert.isTrue(application.getHacker().equals(hacker));
 			System.out.println(application.getStatus());
 			Assert.isTrue(application.getStatus().equals("PENDING"));
 			result = new ModelAndView("application/hacker/edit");
@@ -222,7 +240,7 @@ public class ApplicationHackerController extends AbstractController {
 	}
 	// SAVE-EDIT ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/hacker/saveE", method = RequestMethod.GET, params = "saveE")
+	@RequestMapping(value = "/hacker/saveE", method = RequestMethod.POST, params = "saveE")
 	public ModelAndView save(final Application application, final BindingResult binding) {
 		ModelAndView result;
 
@@ -252,25 +270,26 @@ public class ApplicationHackerController extends AbstractController {
 				hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
 				Assert.notNull(hacker);
 
+				Assert.isTrue(application.getHacker().equals(hacker));
+
 				a1.setCreationMoment(LocalDateTime.now().toDate());
 				Assert.notNull(a1.getCreationMoment());
-
+				// We can only set an application to SUBMITTED when it is pending
+				a1.setStatus("SUBMITTED");
 				final Application a2 = this.applicationService.save(a1);
-				result = new ModelAndView("application/hacker/list.do");
+				//result = new ModelAndView("application/hacker/list.do");
 
 				System.out.println("Hacker loggeado: " + hacker);
 				final Collection<Application> applications = this.applicationService.getApplicationsByHacker(hacker.getId());
 				System.out.println("Aplicaciones del hacker: " + applications);
-				result = new ModelAndView("application/hacker/list");
-				result.addObject("applications", applications);
-				result.addObject("requestURI", "application/hacker/list.do");
+				result = new ModelAndView("redirect:/application/hacker/list.do");
 
 			} catch (final Throwable oops) {
 				System.out.println(oops);
-				if (oops.getMessage().equals("error.response"))
-					result = this.createEditModelAndView(a1, "error.response");
-				else
-					result = new ModelAndView("redirect:/welcome/index.do");
+				//				if (oops.getMessage().equals("error.response"))
+				//					result = this.createEditModelAndView(a1, "error.response");
+				//				else
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());

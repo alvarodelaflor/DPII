@@ -35,22 +35,25 @@ import domain.PositionData;
 public class CurriculaService {
 
 	@Autowired
-	private CurriculaRepository		curriculaRepository;
+	private CurriculaRepository				curriculaRepository;
 
 	@Autowired
-	private HackerService			hackerService;
+	private HackerService					hackerService;
 
 	@Autowired
-	private EducationalDataService	educationalDataService;
+	private EducationalDataService			educationalDataService;
 
 	@Autowired
-	private PositionDataService positionDataService;
-	
-	@Autowired
-	private MiscellaneousAttachmentService miscellaneousAttachmentService;
+	private PositionDataService				positionDataService;
 
 	@Autowired
-	private Validator				validator;
+	private MiscellaneousAttachmentService	miscellaneousAttachmentService;
+
+	@Autowired
+	private Validator						validator;
+
+	@Autowired
+	private ConfigurationService			configurationService;
 
 
 	// CRUD Methods
@@ -105,6 +108,10 @@ public class CurriculaService {
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		if (curriculaDB != null)
 			Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to edit a not own curricula");
+
+		if (curricula.getPhone().matches("^([0-9]{4,})$"))
+			curricula.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + curricula.getPhone());
+
 		return this.curriculaRepository.save(curricula);
 	}
 
@@ -121,18 +128,15 @@ public class CurriculaService {
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		Assert.notNull(curriculaDB, "The curricula is not in DB");
 		Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to delete a not own curricula");
-		Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
-		if (!educationalDatas.isEmpty()) {
-			this.educationalDataService.deleteAll(educationalDatas);			
-		}
-		Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
-		if (!positionDatas.isEmpty()) {
-			this.positionDataService.deleteAll(positionDatas);			
-		}
-		Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
-		if (!miscellaneousAttachaments.isEmpty()) {
-			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);			
-		}
+		final Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
+		if (!educationalDatas.isEmpty())
+			this.educationalDataService.deleteAll(educationalDatas);
+		final Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
+		if (!positionDatas.isEmpty())
+			this.positionDataService.deleteAll(positionDatas);
+		final Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
+		if (!miscellaneousAttachaments.isEmpty())
+			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);
 		this.curriculaRepository.delete(curricula);
 	}
 

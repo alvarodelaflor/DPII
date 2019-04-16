@@ -25,7 +25,7 @@
 <body>
 
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="curricula" action="curricula/hacker/edit.do">
+    	<form:form class="formularioEdicion" method="POST" onsubmit="return phonenumberval();" modelAttribute="curricula" action="curricula/hacker/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	<acme:textbox path="name" code="curricula.name"/>
@@ -40,7 +40,14 @@
           		<acme:textbox path="miscellaneous" code="curricula.miscellaneous"/>
           	</fieldset>
           	<acme:submit name="save" code="save"/>
-          	<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
+          	<c:choose>
+          		<c:when test="${curricula.id == 0}">
+          			<acme:cancel url="curricula/list.do?" code="back"/>
+          		</c:when>
+          		<c:otherwise>
+          			<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
+          		</c:otherwise>
+          	</c:choose>
 		</form:form>
 	</div>
 </body>

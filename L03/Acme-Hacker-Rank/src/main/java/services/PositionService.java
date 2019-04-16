@@ -291,8 +291,12 @@ public class PositionService {
 
 	private void detachAllProblems(final int positionId) {
 		final Collection<Problem> problems = this.problemService.findFromPosition(positionId);
-		for (final Problem p : problems)
-			this.detachProblemFromPosition(p.getId(), positionId);
+		for (final Problem p : problems) {
+			final Position position = this.findOneLoggedIsOwner(positionId);
+			final Problem problem = this.problemService.findOneLoggedIsOwner(p.getId());
+			// This should persist since we are linked to the db
+			problem.getPosition().remove(position);
+		}
 	}
 	public void addProblemToPosition(final int problemId, final int positionId) {
 		// We must be the owner of both
@@ -311,6 +315,9 @@ public class PositionService {
 		// We must be the owner of both
 		final Position position = this.findOneLoggedIsOwner(positionId);
 		final Problem problem = this.problemService.findOneLoggedIsOwner(problemId);
+		// Position must be in draft mode and problem must be in final mode
+		Assert.isTrue(position.getStatus() == false);
+		Assert.isTrue(problem.getFinalMode() == true);
 		// This should persist since we are linked to the db
 		problem.getPosition().remove(position);
 	}
