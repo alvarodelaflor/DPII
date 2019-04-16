@@ -25,7 +25,7 @@
 		<tr><td><strong><spring:message code="problem.statement" />: </strong><jstl:out value="${problem.statement}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="problem.hint" />: </strong><jstl:out value="${problem.hint}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="problem.attachments" />: </strong><jstl:out value="${problem.attachments}"/></td></tr>
-		<tr><td><strong><spring:message code="problem.finalMode" />: </strong><jstl:out value="${problem.finalMode}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="problem.finalMode" />: </strong><spring:message code="problem.finalMode.${problem.finalMode}"/></td></tr>
 	</table>
 </div>
 <input type="button" value="<spring:message code='problem.back' />" name="problem.back" onclick="window.location = 'problem/company/list.do'" />

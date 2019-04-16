@@ -25,14 +25,14 @@
 <display:table name="positions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<display:column property="title" titleKey="position.title"></display:column>
 	<display:column property="salary" titleKey="position.salary"></display:column>
-	<display:column titleKey="position.status">
-		<spring:message code="position.status.${row.status}"/>
-	</display:column>
 	<display:column property="deadline" titleKey="position.deadline"></display:column>
 	<display:column property="skills" titleKey="position.skills"></display:column>
 	<display:column property="techs" titleKey="position.techs"></display:column>
 	<display:column property="ticker" titleKey="position.ticker"></display:column>
-	<display:column property="cancel" titleKey="position.cancelled">
+	<display:column titleKey="position.status">
+		<spring:message code="position.status.${row.status}"/>
+	</display:column>
+	<display:column titleKey="position.cancelled">
 		<spring:message code="position.cancel.${row.cancel}"/>
 	</display:column>
 	<display:column titleKey="position.show">

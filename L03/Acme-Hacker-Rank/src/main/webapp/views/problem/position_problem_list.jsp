@@ -31,15 +31,18 @@
 	<display:column titleKey="problem.finalMode">
 		<spring:message code="problem.finalMode.${row.finalMode}"/>
 	</display:column>
-	<display:column>
 	<jstl:if test="${not finalMode}">
+	<display:column>
 	<jstl:if test="${adding }">
 		<a href="position/company/addProblemAction.do?problemId=${row.id}&positionId=${positionId}"><spring:message code="problem.add"/></a>
 	</jstl:if>
 	<jstl:if test="${not adding}">
 		<a href="position/company/detachProblem.do?problemId=${row.id}&positionId=${positionId}"><spring:message code="problem.detach"/></a>
 	</jstl:if>
+	</display:column>
 	</jstl:if>
+	<display:column titleKey="problem.show">
+		<a href="problem/company/show.do?problemId=${row.id}"><spring:message code="problem.show"/></a>
 	</display:column>
 </display:table>
 <br>
