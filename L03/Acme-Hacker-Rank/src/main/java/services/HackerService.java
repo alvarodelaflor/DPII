@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -210,6 +211,11 @@ public class HackerService {
 
 	}
 	// QUERY ---------------------------------------------------------------	
+
+	public Collection<Hacker> findHackerRegardlessFinder(final String keyword, final Double salary, final Date deadline, final String description) {
+
+		return this.hackerRepository.findHackerRegardlessFinder(keyword, salary, deadline, description);
+	}
 
 	// SAVE-EDIT ---------------------------------------------------------------	
 

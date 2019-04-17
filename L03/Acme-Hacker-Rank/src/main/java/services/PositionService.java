@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,8 @@ import repositories.PositionRepository;
 import security.LoginService;
 import utilities.AuthUtils;
 import domain.Company;
+import domain.Hacker;
+import domain.Message;
 import domain.Position;
 import domain.Problem;
 
@@ -32,7 +35,14 @@ public class PositionService {
 	private CompanyService		companyService;
 
 	@Autowired
+	private HackerService		hackerService;
+
+	@Autowired
+	private MessageService		msgService;
+
+	@Autowired
 	private PositionDataService	positionDataService;
+
 	@Autowired
 	private ProblemService		problemService;
 
@@ -233,11 +243,24 @@ public class PositionService {
 			if (pos.getStatus()) {
 				final int problemCount = this.problemService.getProblemCount(pos.getId());
 				Assert.isTrue(problemCount >= 2, "Position can't be setted to final mode because it has less than 2 problems");
+
+				final Collection<Hacker> hackers = this.hackerService.findHackerRegardlessFinder(pos.getTitle(), pos.getSalary(), pos.getDeadline(), pos.getDescription());
+
+				final Message msg = this.msgService.create();
+				msg.setSubject("New Suitable Position 4 U tt");
+				msg.setBody("New Position: " + pos.getTitle());
+				msg.setRecipient(new ArrayList<String>());
+				for (final Hacker hacker : hackers) {
+
+					msg.getRecipient().add(hacker.getEmail());
+					this.msgService.exchangeMessage(msg, hacker.getId());
+					this.msgService.save(msg);
+				}
+
 			}
 		}
 		return this.positionRepository.save(pos);
 	}
-
 	private boolean getPositionDatabaseStatus(final int positionId) {
 		final Position dbPosition = this.positionRepository.findOne(positionId);
 		// Database position has to be in draft mode
