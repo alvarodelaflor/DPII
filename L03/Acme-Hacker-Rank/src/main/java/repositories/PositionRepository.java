@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Curricula;
 import domain.Position;
 
 @Repository
@@ -90,4 +91,14 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Modifying
 	@Query("update Application a set status='REJECTED' where (a.status='PENDING' or a.status='SUBMITTED') and a.problem.id=?1 and a.position.id=?2")
 	public void rejectAllApplications(int problemId, int positionId);
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} in database that is valid for a curricula.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	@Query("select p from Application a join a.position p where p.status=1 and a.status='ACCEPTED' and a.hacker.id = ?1")
+	Collection<Position> findValidPositionToCurriculaByHackerId(int hackerId);
 }

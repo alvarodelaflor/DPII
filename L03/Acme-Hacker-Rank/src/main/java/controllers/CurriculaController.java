@@ -21,16 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CurriculaService;
-import services.EducationalDataService;
-import services.HackerService;
-import services.MiscellaneousAttachmentService;
-import services.PositionDataService;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
 import domain.MiscellaneousAttachment;
 import domain.PositionData;
+import services.CurriculaService;
+import services.EducationalDataService;
+import services.HackerService;
+import services.MiscellaneousAttachmentService;
+import services.PositionDataService;
+import services.PositionService;
 
 /*
  * CONTROL DE CAMBIOS CurriculaHackerController.java
@@ -53,6 +54,9 @@ public class CurriculaController extends AbstractController {
 
 	@Autowired
 	private PositionDataService				positionDataService;
+	
+	@Autowired
+	private PositionService positionService;
 
 	@Autowired
 	private MiscellaneousAttachmentService	miscellaneousAttachmentService;
@@ -102,6 +106,8 @@ public class CurriculaController extends AbstractController {
 				result.addObject("hackerLogin", true);
 				final MiscellaneousAttachment miscellaneousAttachment = this.miscellaneousAttachmentService.createWithHistory(curriculaDB);
 				result.addObject("miscellaneousAttachment", miscellaneousAttachment);
+				Boolean validPositionData = !this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()).isEmpty();
+				result.addObject("validPositionData", validPositionData);
 			}
 
 			result.addObject("curricula", curriculaDB);

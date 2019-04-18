@@ -344,4 +344,23 @@ public class PositionService {
 		// This should persist since we are linked to the db
 		problem.getPosition().remove(position);
 	}
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} in database that is valid for a curricula.<br>
+	 * An empty collection if any hacker is logger
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	public Collection<Position> findValidPositionToCurriculaByHackerId(int hackerId) {
+		Hacker hacker = this.hackerService.getHackerLogin();
+		Collection<Position> res = new ArrayList<>();
+		if (hacker != null && hacker.getId()==hackerId) {
+			res =  this.positionRepository.findValidPositionToCurriculaByHackerId(hackerId);	
+		} else {
+			System.out.println("Any hacker is logger, system can not find any valid position");
+		}
+		return res;
+	}
 }
