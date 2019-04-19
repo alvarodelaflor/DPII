@@ -1,18 +1,12 @@
 
 package domain;
 
-import java.util.Date;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -20,7 +14,7 @@ public class CreditCard {
 
 	private String	holder, make;
 	private String	CVV, number;
-	private Date	expiration;
+	private String	expiration;
 
 
 	@NotBlank
@@ -61,14 +55,11 @@ public class CreditCard {
 		this.CVV = cVV;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
-	@Future
-	public Date getExpiration() {
+	public String getExpiration() {
 		return this.expiration;
 	}
 
-	public void setExpiration(final Date expiration) {
+	public void setExpiration(final String expiration) {
 		this.expiration = expiration;
 	}
 

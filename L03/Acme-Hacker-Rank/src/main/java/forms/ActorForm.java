@@ -1,8 +1,6 @@
 
 package forms;
 
-import java.util.Date;
-
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -16,7 +14,7 @@ public class ActorForm {
 
 	private String	holder, make;
 	private String	CVV, number;
-	private Date	expiration;
+	private String	expiration;
 
 
 	@NotBlank
@@ -54,11 +52,11 @@ public class ActorForm {
 		this.CVV = cVV;
 	}
 
-	public Date getExpiration() {
+	public String getExpiration() {
 		return this.expiration;
 	}
 
-	public void setExpiration(final Date expiration) {
+	public void setExpiration(final String expiration) {
 		this.expiration = expiration;
 	}
 
