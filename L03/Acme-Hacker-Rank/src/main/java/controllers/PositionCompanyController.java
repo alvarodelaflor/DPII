@@ -42,7 +42,9 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Showing a position I own -----------------------------------------------
@@ -56,7 +58,9 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Getting creation form -----------------------------------------------
@@ -70,15 +74,21 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Creating a new position --------------------------------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView create(final Position position, final BindingResult binding) {
 		ModelAndView result;
-
-		final Position pos = this.positionService.reconstruct(position, binding);
+		Position pos = null;
+		try {
+			pos = this.positionService.reconstruct(position, binding);
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		System.out.println(binding.getAllErrors());
 		if (binding.hasErrors()) {
@@ -92,16 +102,21 @@ public class PositionCompanyController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Creating a new position --------------------------------------------------
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ModelAndView edit(final Position position, final BindingResult binding, final RedirectAttributes redirectAttributes) {
 		ModelAndView result;
-
-		final Position pos = this.positionService.reconstruct(position, binding);
-
+		Position pos = null;
+		try {
+			pos = this.positionService.reconstruct(position, binding);
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/welcome/index.do");
+		}
 		if (binding.hasErrors()) {
 			result = new ModelAndView("position/company/show");
 			// To reset the view
@@ -120,7 +135,9 @@ public class PositionCompanyController extends AbstractController {
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Cancelling a position --------------------------------------------------
@@ -134,7 +151,9 @@ public class PositionCompanyController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Deleting a position --------------------------------------------------
@@ -148,7 +167,9 @@ public class PositionCompanyController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Add problem view
@@ -169,7 +190,8 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -185,7 +207,8 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 	// Detach problem action
@@ -200,7 +223,8 @@ public class PositionCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -220,6 +244,8 @@ public class PositionCompanyController extends AbstractController {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
 		return result;
 	}
 }

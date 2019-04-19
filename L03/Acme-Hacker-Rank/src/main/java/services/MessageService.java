@@ -32,7 +32,7 @@ public class MessageService {
 	private ActorService			actorService;
 
 	@Autowired
-	private TagService			tagService;
+	private TagService				tagService;
 
 	@Autowired
 	private ConfigurationService	configService;

@@ -94,7 +94,10 @@ public class ApplicationService {
 
 	// SAVE ---------------------------------------------------------------		
 	public Application save(final Application a) {
-		return this.applicationRepository.save(a);
+		final Application app = this.applicationRepository.save(a);
+		this.applicationRepository.flush();
+		return app;
+
 	}
 	// getApplicationHackerById -------------------------------------------
 	public Application getApplicationHackerById(final int id) {
@@ -111,7 +114,6 @@ public class ApplicationService {
 
 		result = application;
 
-		result.setStatus("SUBMITTED");
 		result.setResponse(application.getResponse());
 		result.setLink(application.getLink());
 

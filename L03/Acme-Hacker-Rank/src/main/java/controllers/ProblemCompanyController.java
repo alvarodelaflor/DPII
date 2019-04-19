@@ -36,7 +36,9 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Showing a problem I own -----------------------------------------------
@@ -50,7 +52,9 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Delete a problem I own -----------------------------------------------
@@ -63,7 +67,9 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Create a problem form -----------------------------------------------
@@ -77,7 +83,9 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Creating a new problem --------------------------------------------------
@@ -85,9 +93,13 @@ public class ProblemCompanyController extends AbstractController {
 	public ModelAndView create(final Problem problem, final BindingResult binding) {
 		ModelAndView result;
 
-		final Problem prob = this.problemService.reconstruct(problem, binding);
+		final Problem prob = null;
+		try {
+			this.problemService.reconstruct(problem, binding);
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/welcome/index.do");
+		}
 
-		System.out.println(binding.getAllErrors());
 		if (binding.hasErrors()) {
 			result = new ModelAndView("problem/company/form");
 			result.addObject("problem", problem);
@@ -99,7 +111,9 @@ public class ProblemCompanyController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	// Creating a new position --------------------------------------------------
@@ -107,7 +121,12 @@ public class ProblemCompanyController extends AbstractController {
 	public ModelAndView edit(final Problem problem, final BindingResult binding) {
 		ModelAndView result;
 
-		final Problem prob = this.problemService.reconstruct(problem, binding);
+		final Problem prob = null;
+		try {
+			this.problemService.reconstruct(problem, binding);
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("problem/company/show");
@@ -122,7 +141,9 @@ public class ProblemCompanyController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 }

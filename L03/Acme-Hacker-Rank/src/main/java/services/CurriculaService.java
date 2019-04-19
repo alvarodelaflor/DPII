@@ -53,6 +53,9 @@ public class CurriculaService {
 	@Autowired
 	private Validator						validator;
 
+	@Autowired
+	private ConfigurationService			configurationService;
+
 
 	// CRUD Methods
 
@@ -106,6 +109,10 @@ public class CurriculaService {
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		if (curriculaDB != null)
 			Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to edit a not own curricula");
+
+		if (curricula.getPhone().matches("^([0-9]{4,})$"))
+			curricula.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + curricula.getPhone());
+
 		return this.curriculaRepository.save(curricula);
 	}
 

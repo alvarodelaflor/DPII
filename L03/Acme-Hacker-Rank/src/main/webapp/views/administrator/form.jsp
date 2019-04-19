@@ -38,7 +38,7 @@
 				<acme:textbox code="admin.make" path="make" />
 				<acme:textbox code="admin.number" path="number" />
 				<acme:textbox code="admin.CVV" path="CVV" />
-				<acme:textboxMoment code="admin.expiration" path="expiration" />
+				<acme:textboxExpiration code="admin.expiration" path="expiration" />
 				</fieldset>
 				<br>
 				<spring:message code="admin.conditions" var="termsAndConditions"/>

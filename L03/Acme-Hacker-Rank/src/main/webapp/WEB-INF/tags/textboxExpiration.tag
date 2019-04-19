@@ -20,37 +20,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-
-<!-- script  -->
-		<header>
-			<script type="text/javascript">
-				function phonenumberval() {
-					var phoneNumber;
-					phoneNumber = document.getElementById("phoneNumber").value;
-					var res = false;
-					if (/(\+[0-9]{1,3})[ ](\([0-9]{1,3}\))[ ]([0-9]{4,})$/.test(phoneNumber)) {
-						res = true;
-					}
-					if (/(\+[0-9]{1,3})\s([0-9]{4,})$/.test(phoneNumber)) {
-				res = true;
-					}
-					if (/^([0-9]{4,})\:(\+[0-9]{1,3})$/.test(phoneNumber)) {
-						res = true;
-					}
-					if (/^([0-9]{4,})$/.test(phoneNumber)) {
-						res = true;
-						alert("<spring:message code='PN' />");
-					}
-					if (res == false) {
-						var conf = confirm("<spring:message code='PNconf' />");
-						return conf;
-					}
-				}
-			</script>
-		</header>
-<!-- script  -->
-
-
 <%-- Attributes --%> 
  
 <%@ attribute name="path" required="true" %>
@@ -63,10 +32,11 @@
 </jstl:if>
 
 <%-- Definition --%>
+
 <div>
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<form:input path="${path}" id="phoneNumber" />	
+	<form:input path="${path}" readonly="${readonly}" placeholder="02/22"/>	
 	<form:errors path="${path}" cssClass="error" />
-</div>
+</div>	

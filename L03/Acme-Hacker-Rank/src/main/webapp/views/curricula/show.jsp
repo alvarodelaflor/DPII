@@ -98,11 +98,24 @@
 			<spring:message code="curricula.attachments" />
 		</legend>
 		<strong><spring:message code="curricula.positionData" /></strong>
-		<jstl:if test="${hackerLogin==true}">
-			<form method="get" action="/Acme-Hacker-Rank/positionData/hacker/create.do">
-				<button  name="curriculaId" value="${curricula.id}"><spring:message code="positionData.create"/></button>
-			</form>
-		</jstl:if>
+		<c:choose>
+			<c:when test="${hackerLogin==true and validPositionData==true}">
+				<form method="get" action="/Acme-Hacker-Rank/positionData/hacker/create.do">
+					<button  name="curriculaId" value="${curricula.id}"><spring:message code="positionData.create"/></button>
+				</form>			
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${hackerLogin==true and validPositionData == false}">
+						<br>
+						<strong><spring:message code="curricula.positionData.emptyPosition" /></strong>			
+					</c:when>
+					<c:otherwise>
+					
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
 		<br>
 		<display:table name="positionDatas" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
 			<c:choose>
