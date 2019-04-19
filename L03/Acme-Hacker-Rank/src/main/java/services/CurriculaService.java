@@ -23,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.CurriculaRepository;
+import security.Authority;
 import security.LoginService;
 import domain.Curricula;
 import domain.EducationalData;
@@ -35,22 +36,22 @@ import domain.PositionData;
 public class CurriculaService {
 
 	@Autowired
-	private CurriculaRepository		curriculaRepository;
+	private CurriculaRepository				curriculaRepository;
 
 	@Autowired
-	private HackerService			hackerService;
+	private HackerService					hackerService;
 
 	@Autowired
-	private EducationalDataService	educationalDataService;
+	private EducationalDataService			educationalDataService;
 
 	@Autowired
-	private PositionDataService positionDataService;
-	
-	@Autowired
-	private MiscellaneousAttachmentService miscellaneousAttachmentService;
+	private PositionDataService				positionDataService;
 
 	@Autowired
-	private Validator				validator;
+	private MiscellaneousAttachmentService	miscellaneousAttachmentService;
+
+	@Autowired
+	private Validator						validator;
 
 
 	// CRUD Methods
@@ -121,18 +122,15 @@ public class CurriculaService {
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		Assert.notNull(curriculaDB, "The curricula is not in DB");
 		Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to delete a not own curricula");
-		Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
-		if (!educationalDatas.isEmpty()) {
-			this.educationalDataService.deleteAll(educationalDatas);			
-		}
-		Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
-		if (!positionDatas.isEmpty()) {
-			this.positionDataService.deleteAll(positionDatas);			
-		}
-		Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
-		if (!miscellaneousAttachaments.isEmpty()) {
-			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);			
-		}
+		final Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
+		if (!educationalDatas.isEmpty())
+			this.educationalDataService.deleteAll(educationalDatas);
+		final Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
+		if (!positionDatas.isEmpty())
+			this.positionDataService.deleteAll(positionDatas);
+		final Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
+		if (!miscellaneousAttachaments.isEmpty())
+			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);
 		this.curriculaRepository.delete(curricula);
 	}
 
@@ -252,6 +250,34 @@ public class CurriculaService {
 		if (!curriculas.isEmpty())
 			for (final Curricula curricula : curriculas)
 				this.delete(curricula);
+	}
+
+	public Float minNumberOfResultHistory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.curriculaRepository.minCurriculaPerHacker();
+	}
+
+	public Float maxNumberOfResultHistory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.curriculaRepository.maxCurriculaPerHacker();
+	}
+
+	public Float avgNumberOfResultHsitory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.curriculaRepository.avgCurriculaPerHacker();
+	}
+
+	public Float stddevNumberOfResultHistory() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.curriculaRepository.sttdevCurriculaPerHacker();
 	}
 
 	// AUXILIAR METHODS
