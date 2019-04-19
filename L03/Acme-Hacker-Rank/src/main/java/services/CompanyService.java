@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,37 @@ public class CompanyService {
 		creditCard.setNumber(registrationForm.getNumber());
 
 		result.setCreditCard(creditCard);
+
+		//AÑADIDO
+
+		if (!registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
+			binding.rejectValue("expiration", "error.expirationFormatter");
+
+		if (registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}")) {
+			final String[] parts = registrationForm.getExpiration().split("/");
+			final String part1 = parts[0]; // MM
+			final String part2 = parts[1]; // YY
+
+			final int monthRigthNow = LocalDateTime.now().toDate().getMonth();
+			final int monthCreditCard = Integer.parseInt(part1);
+
+			int yearRigthNow = LocalDateTime.now().toDate().getYear();
+			yearRigthNow = yearRigthNow % 100;
+			final int yearCredictCard = Integer.parseInt(part2);
+
+			System.out.println(monthCreditCard);
+			System.out.println(monthRigthNow);
+			System.out.println(yearCredictCard);
+			System.out.println(yearRigthNow);
+
+			System.out.println(yearCredictCard >= yearRigthNow);
+			System.out.println(monthCreditCard > monthRigthNow);
+
+			if (yearCredictCard < yearRigthNow || monthCreditCard < monthRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
+				binding.rejectValue("expiration", "error.expirationFuture");
+		}
+
+		//AÑADIDO
 
 		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5)
 			binding.rejectValue("userName", "error.userAcount");

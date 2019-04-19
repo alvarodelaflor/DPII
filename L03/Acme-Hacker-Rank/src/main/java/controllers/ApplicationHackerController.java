@@ -27,16 +27,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import security.UserAccount;
+import services.ActorService;
 import services.ApplicationService;
 import services.CurriculaService;
 import services.HackerService;
+import services.MessageService;
 import services.PositionService;
 import services.ProblemService;
+import services.TagService;
 import domain.Application;
 import domain.Curricula;
 import domain.Hacker;
+import domain.Message;
 import domain.Position;
 import domain.Problem;
+import domain.Tag;
 
 @Controller
 @RequestMapping("/application")
@@ -56,6 +61,15 @@ public class ApplicationHackerController extends AbstractController {
 
 	@Autowired
 	private CurriculaService	curriculaService;
+
+	@Autowired
+	private MessageService		msgService;
+
+	@Autowired
+	private TagService			tagService;
+
+	@Autowired
+	ActorService				actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -270,18 +284,51 @@ public class ApplicationHackerController extends AbstractController {
 				hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
 				Assert.notNull(hacker);
 
-				Assert.isTrue(application.getHacker().equals(hacker));
+				System.out.println(a1.getHacker().equals(hacker));
+				Assert.isTrue(a1.getHacker().equals(hacker));
 
 				a1.setCreationMoment(LocalDateTime.now().toDate());
+				System.out.println(a1.getCreationMoment());
 				Assert.notNull(a1.getCreationMoment());
+
 				// We can only set an application to SUBMITTED when it is pending
 				a1.setStatus("SUBMITTED");
+
+				System.out.println("voy a guardar");
 				final Application a2 = this.applicationService.save(a1);
 				//result = new ModelAndView("application/hacker/list.do");
 
 				System.out.println("Hacker loggeado: " + hacker);
 				final Collection<Application> applications = this.applicationService.getApplicationsByHacker(hacker.getId());
 				System.out.println("Aplicaciones del hacker: " + applications);
+
+				// NOTIFICATION
+				final Message msg = this.msgService.create();
+				msg.setSubject("Application with new status");
+				msg.setBody("The application sent about " + a2.getApplyMoment() + " ,right now has submitted status");
+				msg.setRecipient(new ArrayList<String>());
+				msg.getRecipient().add(hacker.getEmail());
+				msg.setSender(hacker.getEmail());
+
+				final Tag tag = this.tagService.create();
+				tag.setActorId(hacker.getId());
+				tag.setMessageId(msg.getId());
+				tag.setTag("Notification");
+				final Tag tagSave = this.tagService.save(tag);
+
+				msg.setTags(new ArrayList<Tag>());
+				msg.getTags().add(tagSave);
+
+				this.msgService.exchangeMessage(msg, hacker.getId());
+
+				System.out.println("CARMEN LLEGO 3");
+				msg.getTags().add(tagSave);
+				final Message msgSave1 = this.msgService.save(msg);
+
+				tagSave.setMessageId(msgSave1.getId());
+				this.tagService.save(tagSave);
+				// NOTIFICATION
+
 				result = new ModelAndView("redirect:/application/hacker/list.do");
 
 			} catch (final Throwable oops) {
@@ -299,7 +346,7 @@ public class ApplicationHackerController extends AbstractController {
 	private ModelAndView createEditModelAndView(final Application application, final String string) {
 		ModelAndView result;
 
-		result = new ModelAndView("hacker/create");
+		result = new ModelAndView("application/hacker/edit");
 		result.addObject("string", string);
 		result.addObject("application", application);
 		result.addObject("logo", this.getLogo());
