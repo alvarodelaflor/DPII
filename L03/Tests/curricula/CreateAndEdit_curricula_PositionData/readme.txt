@@ -1,0 +1,9 @@
+Establecemos el tope de nuestra aplicación en 150 usuarios ya que comienzan a aumentar el percentil
+a cifras mayores de 2.2 segundos, algo inviable en una web de día a día para crear un objeto.
+
+
+Prestaciones:
+
+HP ay150ns, intel i7 7500U con SSD Samsung EVO 860 como memoria principal y 16 GB de memoria RAM.
+
+No se usa la máquina virtual, JMETER y Tomcat directo sobre Windows 10.
