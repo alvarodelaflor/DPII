@@ -236,7 +236,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
@@ -404,7 +404,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
@@ -492,7 +492,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
@@ -580,7 +580,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
