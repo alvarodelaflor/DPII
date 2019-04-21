@@ -170,7 +170,6 @@ public class PositionService {
 		final int ownerId = this.positionRepository.findOne(positionId).getCompany().getUserAccount().getId();
 		return loggedId == ownerId;
 	}
-	// TODO: Rellenar el ticker con X si el nombre comercial es menor que 4
 	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position res = this.create();
 		if (position.getId() == 0) {
@@ -214,10 +213,12 @@ public class PositionService {
 			croppedName = commercialName + "XXXX".substring(commercialName.length());
 
 		int validTicker = 1;
-
+		Integer randomNumber = new Integer(this.generateRandomNumber());
 		while (validTicker != 0) {
 			validTicker = 0;
-			ticker = croppedName + "-" + this.generateRandomNumber();
+			final String number = String.valueOf(randomNumber);
+			ticker = croppedName + "-" + "0000".substring(0, 4 - number.length()) + number;
+			randomNumber = randomNumber == 9999 ? 0 : randomNumber + 1;
 			validTicker += this.positionRepository.countByTicker(ticker);
 		}
 		return ticker;
