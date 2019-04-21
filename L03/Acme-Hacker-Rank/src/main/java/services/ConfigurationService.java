@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
-import repositories.ConfigurationRepository;
 import domain.Configuration;
+import repositories.ConfigurationRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -17,6 +19,9 @@ public class ConfigurationService {
 
 	@Autowired
 	private ConfigurationRepository	configurationRepository;
+
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	public Configuration getConfiguration() {
@@ -28,7 +33,7 @@ public class ConfigurationService {
 		return this.configurationRepository.save(configuration);
 	}
 	public void addPriority(final String newPriority) {
-
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final HashSet<String> priorities = new HashSet<>(this.getConfiguration().getPriorities());
 		priorities.add(newPriority);
 		final Configuration config = this.getConfiguration();
@@ -36,6 +41,7 @@ public class ConfigurationService {
 		this.configurationRepository.save(config);
 	}
 	public void deletePriority(final String deletePriority) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final HashSet<String> priorities = new HashSet<>(this.getConfiguration().getPriorities());
 		priorities.remove(deletePriority);
 		final Configuration config = this.getConfiguration();
@@ -43,31 +49,37 @@ public class ConfigurationService {
 		this.configurationRepository.save(config);
 	}
 	public void newPhone(final String newPhone) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setCountryCode(newPhone);
 		this.configurationRepository.save(config);
 	}
 	public void newLogo(final String newLogo) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setBanner(newLogo);
 		this.configurationRepository.save(config);
 	}
 	public void newSystem(final String newSystem) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setSystemName(newSystem);
 		this.configurationRepository.save(config);
 	}
 	public void newE(final String newIngles) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setSystemMessageEn(newIngles);
 		this.configurationRepository.save(config);
 	}
 	public void newS(final String newSpanish) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setSystemMessageEs(newSpanish);
 		this.configurationRepository.save(config);
 	}
 	public void newSpamWords(final String newSpamWord) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final HashSet<String> spamWords = new HashSet<>(this.getConfiguration().getSpamWords());
 		spamWords.add(newSpamWord);
 		final Configuration config = this.getConfiguration();
@@ -76,6 +88,7 @@ public class ConfigurationService {
 
 	}
 	public void deleteSpamWords(final String newSpamWord) {
+		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final HashSet<String> spamWords = new HashSet<>(this.getConfiguration().getSpamWords());
 		spamWords.remove(newSpamWord);
 		final Configuration config = this.getConfiguration();
