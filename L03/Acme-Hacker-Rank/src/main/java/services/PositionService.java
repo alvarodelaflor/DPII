@@ -293,8 +293,12 @@ public class PositionService {
 		// We can cancel a position if it is in final mode
 		Assert.isTrue(dbPosition.getStatus(), "Only positions in final mode can be cancelled");
 		final Collection<Problem> positionProblems = this.problemService.findFromPosition(positionId);
-		for (final Problem p : positionProblems)
+		for (final Problem p : positionProblems) {
 			this.positionRepository.rejectAllApplications(p.getId(), positionId);
+			// TODO: notify all hackers in this collection
+			final Collection<Hacker> hacker = this.hackerService.findByProblem(p.getId());
+		}
+
 		dbPosition.setCancel(true);
 	}
 
@@ -354,7 +358,7 @@ public class PositionService {
 		// This should persist since we are linked to the db
 		problem.getPosition().remove(position);
 	}
-	
+
 	/**
 	 * 
 	 * Return a collection of all {@link Position} in database that is valid for a curricula.<br>
@@ -363,14 +367,13 @@ public class PositionService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Position}>
 	 */
-	public Collection<Position> findValidPositionToCurriculaByHackerId(int hackerId) {
-		Hacker hacker = this.hackerService.getHackerLogin();
+	public Collection<Position> findValidPositionToCurriculaByHackerId(final int hackerId) {
+		final Hacker hacker = this.hackerService.getHackerLogin();
 		Collection<Position> res = new ArrayList<>();
-		if (hacker != null && hacker.getId()==hackerId) {
-			res =  this.positionRepository.findValidPositionToCurriculaByHackerId(hackerId);	
-		} else {
+		if (hacker != null && hacker.getId() == hackerId)
+			res = this.positionRepository.findValidPositionToCurriculaByHackerId(hackerId);
+		else
 			System.out.println("Any hacker is logger, system can not find any valid position");
-		}
 		return res;
 	}
 }

@@ -15,6 +15,7 @@ import org.springframework.validation.Validator;
 import repositories.ApplicationRepository;
 import security.LoginService;
 import domain.Application;
+import domain.Hacker;
 
 @Service
 @Transactional
@@ -34,6 +35,15 @@ public class ApplicationService {
 
 	@Autowired
 	private CompanyService			companyService;
+
+	@Autowired
+	private MessageService			messageService;
+
+	@Autowired
+	private TagService				tagService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	// DashBoard:
@@ -176,12 +186,16 @@ public class ApplicationService {
 		this.checkApplicationOwner(application);
 		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
 		application.setStatus("ACCEPTED");
-	}
 
+		// TODO: Notify this hacker
+		final Hacker hacker = application.getHacker();
+	}
 	public void reject(final int applicationId) {
 		final Application application = this.applicationRepository.findOne(applicationId);
 		this.checkApplicationOwner(application);
 		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
 		application.setStatus("REJECTED");
+		// TODO: Notify this hacker
+		final Hacker hacker = application.getHacker();
 	}
 }
