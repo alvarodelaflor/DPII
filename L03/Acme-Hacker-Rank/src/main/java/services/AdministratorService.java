@@ -54,7 +54,7 @@ public class AdministratorService extends ActorService {
 		return this.adminRepository.findOneByUserAccount(id);
 	}
 
-	private Administrator create() {
+	public Administrator create() {
 
 		Assert.isTrue(this.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 
