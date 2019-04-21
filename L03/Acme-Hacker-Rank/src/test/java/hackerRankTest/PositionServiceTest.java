@@ -691,4 +691,266 @@ public class PositionServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	// -------------- Req 9.1
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. List their positions
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void Driver09() {
+		final Object testingData[][] = {
+			{
+				"company", "list", null
+			}, {
+				"company", "insertAndList", null
+			}, {
+				"company", "updateAndList", null
+			}, {
+				"company", "deleteAndList", null
+			}, {
+				"company", "notEmpty", null
+			},
+		//			{
+		//				"hacker", "list", null
+		//			}, {
+		//				"admin", "list", null
+		//			}, {
+		//				"hacker", "insertAndList", null
+		//			}, {
+		//				"admin", "updateAndList", null
+		//			}, {
+		//				"hacker", "deleteAndList", null
+		//			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver09((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	private void Driver09(final String user, final String mode, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+
+			Collection<Position> positions = null;
+			Position position = null;
+			boolean isInList = false;
+
+			switch (mode) {
+			case "list":
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				break;
+			case "insertAndList":
+				position = this.testPosition();
+				this.positionService.save(position);
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+
+				isInList = false;
+				for (final Position p : positions)
+					if (p.getTitle().equals(position.getTitle())) {
+						isInList = true;
+						break;
+					}
+				Assert.isTrue(isInList);
+				break;
+			case "updateAndList":
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				position = this.positionService.findOne(positions.iterator().next().getId());
+				position.setTitle("Aquí está");
+				isInList = false;
+				for (final Position p : positions)
+					if (p.getTitle().equals("Aquí está")) {
+						isInList = true;
+						break;
+					}
+				Assert.isTrue(isInList);
+				break;
+			case "deleteAndList":
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				position = this.positionService.findOne(positions.iterator().next().getId());
+				this.positionService.delete(position.getId());
+				isInList = false;
+				for (final Position p : positions)
+					if (p.getTitle().equals(position.getTitle())) {
+						isInList = true;
+						break;
+					}
+				Assert.isTrue(isInList == false);
+				break;
+			case "notEmpty":
+				position = this.testPosition();
+				this.positionService.save(position);
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				Assert.isTrue(positions.size() > 0);
+				break;
+			default:
+				break;
+			}
+
+		} catch (final Exception e) {
+			caught = e.getClass();
+			e.printStackTrace();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	private Position testPosition() {
+		final Position position = new Position();
+		// TODO position.setDeadline(Calendar.getInstance().add(, amount));
+		position.setDescription("Test");
+		position.setProfile("Test");
+		position.setSalary(10d);
+		position.setSkills("Test");
+		position.setTechs("Test");
+		position.setTitle("Testing position");
+		position.setStatus(false);
+		position.setCancel(false);
+		position.setTicker("I am an impossible ticker");
+		return position;
+	}
+
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. Show their positions
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void Driver10() {
+		final Object testingData[][] = {
+			{
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver10((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+	private void Driver10(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. Create their positions
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void Driver11() {
+		final Object testingData[][] = {
+			{
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver11((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+	private void Driver11(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. Update their positions
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void Driver12() {
+		final Object testingData[][] = {
+			{
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver12((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	private void Driver12(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. Delete their positions
+	 * Analysis of sentence coverage
+	 * TODO
+	 * Analysis of data coverage
+	 * TODO
+	 */
+	@Test
+	public void Driver13() {
+		final Object testingData[][] = {
+			{
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver13((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+	private void Driver13(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
 }
