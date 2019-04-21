@@ -3,7 +3,6 @@ package hackerRankTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -244,8 +243,7 @@ public class AdminServiceTest extends AbstractTest {
 			admin.getCreditCard().setMake("VISA");
 			admin.getCreditCard().setNumber("123412341234");
 			admin.getCreditCard().setCVV("123");
-			final Date validDate = new Date(9999, 01, 22);
-			admin.getCreditCard().setExpiration(validDate);
+			admin.getCreditCard().setExpiration("03/2020");
 			this.adminService.saveCreate(admin);
 
 		} catch (final Throwable oops) {
@@ -333,13 +331,10 @@ public class AdminServiceTest extends AbstractTest {
 			form.setMake(make);
 			form.setNumber(number);
 			form.setCVV(cvv);
-			if (expDate == 0) {
-				final Date validDate = new Date(9999, 01, 22);
-				form.setExpiration(validDate);
-			} else {
-				final Date invalidDate = new Date(0001, 01, 22);
-				form.setExpiration(invalidDate);
-			}
+			if (expDate == 0)
+				form.setExpiration("03/2020");
+			else
+				form.setExpiration("03/2000");
 			form.setAccept(agreed);
 
 			this.authenticate(username);
