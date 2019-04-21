@@ -228,12 +228,16 @@ public class PositionService {
 
 			// Database position has to be in draft mode
 			Assert.isTrue(this.getPositionDatabaseStatus(pos.getId()) == false, "Position is in final mode");
+			Assert.isTrue(this.getPositionDatabaseCancel(pos.getId()) == false, "Position is cancelled");
 
 			// In case we are setting this as final, we have to have at least 2 problems
 			if (pos.getStatus()) {
 				final int problemCount = this.problemService.getProblemCount(pos.getId());
 				Assert.isTrue(problemCount >= 2, "Position can't be setted to final mode because it has less than 2 problems");
 			}
+		} else {
+			Assert.isTrue(pos.getStatus() == false);
+			Assert.isTrue(pos.getCancel() == false);
 		}
 		return this.positionRepository.save(pos);
 	}
@@ -242,6 +246,12 @@ public class PositionService {
 		final Position dbPosition = this.positionRepository.findOne(positionId);
 		// Database position has to be in draft mode
 		return dbPosition.getStatus();
+	}
+
+	private boolean getPositionDatabaseCancel(final int positionId) {
+		final Position dbPosition = this.positionRepository.findOne(positionId);
+		// Database position has to be in draft mode
+		return dbPosition.getCancel();
 	}
 
 	public String findCompanyWithMorePositions() {
