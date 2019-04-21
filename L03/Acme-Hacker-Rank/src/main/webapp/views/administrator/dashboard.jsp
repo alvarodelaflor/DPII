@@ -51,3 +51,23 @@
 		<p><spring:message code="findHackerMoreApplications" /> <jstl:out value="${findHackerMoreApplications}"></jstl:out></p>
 	<br>
 	
+	<h2><spring:message code="finder" /></h2>
+	<h3><spring:message code="numberOfresult" /></h3>
+		<p><spring:message code="avg" /> <jstl:out value="${avgNumberOfResultFinder}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minNumberOfResultFinder}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxNumberOfResultFinder}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${stddevNumberOfResultFinder}"></jstl:out></p>
+		<p><spring:message code="ratio" /> <jstl:out value="${ratioResultFinder}"></jstl:out></p>
+	<br>
+	
+	<h2><spring:message code="curriculas" /></h2>
+	<h3><spring:message code="numberOfHistory" /></h3>
+		<p><spring:message code="avg" /> <jstl:out value="${avgNumberOfHistory}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minNumberOfHistory}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxNumberOfHistory}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${stddevNumberOfHistory}"></jstl:out></p>
+	<br>
+	
+		<acme:cancel url=" " code="Back" />
+	
+	

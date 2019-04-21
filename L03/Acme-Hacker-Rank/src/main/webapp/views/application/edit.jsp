@@ -23,7 +23,7 @@
 	<article>
 		<security:authorize access="hasRole('HACKER')"> 
 		<div class="content">
-			<form:form class="formularioEdicion" method="GET"
+			<form:form class="formularioEdicion" method="POST"
 				modelAttribute="application" action="application/hacker/saveE.do">
 				<form:hidden path="id" />
 				

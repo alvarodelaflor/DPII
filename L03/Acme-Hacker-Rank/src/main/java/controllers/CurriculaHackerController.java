@@ -108,6 +108,7 @@ public class CurriculaHackerController extends AbstractController {
 		}
 
 		if (!this.checkLinkGitHub(curricula.getLinkGitHub())) {
+			curricula.setLinkGitHub(curricula.getLinkGitHub().replaceAll("https://www.github.com/", ""));
 			final ObjectError error = new ObjectError("linkGitHub", "Must be a GitHub link");
 			binding.addError(error);
 			binding.rejectValue("linkGitHub", "error.linkGitHub");

@@ -25,7 +25,7 @@ public class Application extends DomainEntity {
 
 	private Hacker		hacker;
 	private Position	position;
-
+	// select distinct p from Application a join a.position p where a.hacker.id=?1 and a.status='ACCEPTED' 
 	private Problem		problem;
 
 	private Curricula	curricula;

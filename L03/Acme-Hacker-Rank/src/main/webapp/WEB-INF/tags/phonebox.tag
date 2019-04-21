@@ -28,7 +28,7 @@
 					var phoneNumber;
 					phoneNumber = document.getElementById("phoneNumber").value;
 					var res = false;
-					if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumber)) {
+					if (/(\+[0-9]{1,3})[ ](\([0-9]{1,3}\))[ ]([0-9]{4,})$/.test(phoneNumber)) {
 						res = true;
 					}
 					if (/(\+[0-9]{1,3})\s([0-9]{4,})$/.test(phoneNumber)) {

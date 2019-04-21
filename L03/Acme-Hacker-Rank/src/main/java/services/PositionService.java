@@ -170,7 +170,6 @@ public class PositionService {
 		final int ownerId = this.positionRepository.findOne(positionId).getCompany().getUserAccount().getId();
 		return loggedId == ownerId;
 	}
-	// TODO: Rellenar el ticker con X si el nombre comercial es menor que 4
 	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position res = this.create();
 		if (position.getId() == 0) {
@@ -214,10 +213,12 @@ public class PositionService {
 			croppedName = commercialName + "XXXX".substring(commercialName.length());
 
 		int validTicker = 1;
-
+		Integer randomNumber = new Integer(this.generateRandomNumber());
 		while (validTicker != 0) {
 			validTicker = 0;
-			ticker = croppedName + "-" + this.generateRandomNumber();
+			final String number = String.valueOf(randomNumber);
+			ticker = croppedName + "-" + "0000".substring(0, 4 - number.length()) + number;
+			randomNumber = randomNumber == 9999 ? 0 : randomNumber + 1;
 			validTicker += this.positionRepository.countByTicker(ticker);
 		}
 		return ticker;
@@ -238,6 +239,7 @@ public class PositionService {
 
 			// Database position has to be in draft mode
 			Assert.isTrue(this.getPositionDatabaseStatus(pos.getId()) == false, "Position is in final mode");
+			Assert.isTrue(this.getPositionDatabaseCancel(pos.getId()) == false, "Position is cancelled");
 
 			// In case we are setting this as final, we have to have at least 2 problems
 			if (pos.getStatus()) {
@@ -258,6 +260,9 @@ public class PositionService {
 				}
 
 			}
+		} else {
+			Assert.isTrue(pos.getStatus() == false);
+			Assert.isTrue(pos.getCancel() == false);
 		}
 		return this.positionRepository.save(pos);
 	}
@@ -265,6 +270,12 @@ public class PositionService {
 		final Position dbPosition = this.positionRepository.findOne(positionId);
 		// Database position has to be in draft mode
 		return dbPosition.getStatus();
+	}
+
+	private boolean getPositionDatabaseCancel(final int positionId) {
+		final Position dbPosition = this.positionRepository.findOne(positionId);
+		// Database position has to be in draft mode
+		return dbPosition.getCancel();
 	}
 
 	public String findCompanyWithMorePositions() {
@@ -283,8 +294,12 @@ public class PositionService {
 		// We can cancel a position if it is in final mode
 		Assert.isTrue(dbPosition.getStatus(), "Only positions in final mode can be cancelled");
 		final Collection<Problem> positionProblems = this.problemService.findFromPosition(positionId);
-		for (final Problem p : positionProblems)
+		for (final Problem p : positionProblems) {
 			this.positionRepository.rejectAllApplications(p.getId(), positionId);
+			// TODO: notify all hackers in this collection
+			final Collection<Hacker> hacker = this.hackerService.findByProblem(p.getId());
+		}
+
 		dbPosition.setCancel(true);
 	}
 
@@ -314,8 +329,12 @@ public class PositionService {
 
 	private void detachAllProblems(final int positionId) {
 		final Collection<Problem> problems = this.problemService.findFromPosition(positionId);
-		for (final Problem p : problems)
-			this.detachProblemFromPosition(p.getId(), positionId);
+		for (final Problem p : problems) {
+			final Position position = this.findOneLoggedIsOwner(positionId);
+			final Problem problem = this.problemService.findOneLoggedIsOwner(p.getId());
+			// This should persist since we are linked to the db
+			problem.getPosition().remove(position);
+		}
 	}
 	public void addProblemToPosition(final int problemId, final int positionId) {
 		// We must be the owner of both
@@ -334,7 +353,28 @@ public class PositionService {
 		// We must be the owner of both
 		final Position position = this.findOneLoggedIsOwner(positionId);
 		final Problem problem = this.problemService.findOneLoggedIsOwner(problemId);
+		// Position must be in draft mode and problem must be in final mode
+		Assert.isTrue(position.getStatus() == false);
+		Assert.isTrue(problem.getFinalMode() == true);
 		// This should persist since we are linked to the db
 		problem.getPosition().remove(position);
+	}
+
+	/**
+	 * 
+	 * Return a collection of all {@link Position} in database that is valid for a curricula.<br>
+	 * An empty collection if any hacker is logger
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	public Collection<Position> findValidPositionToCurriculaByHackerId(final int hackerId) {
+		final Hacker hacker = this.hackerService.getHackerLogin();
+		Collection<Position> res = new ArrayList<>();
+		if (hacker != null && hacker.getId() == hackerId)
+			res = this.positionRepository.findValidPositionToCurriculaByHackerId(hackerId);
+		else
+			System.out.println("Any hacker is logger, system can not find any valid position");
+		return res;
 	}
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -154,6 +155,37 @@ public class HackerService {
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
+
+		//AÑADIDO
+
+		if (!registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
+			binding.rejectValue("expiration", "error.expirationFormatter");
+
+		if (registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}")) {
+			final String[] parts = registrationForm.getExpiration().split("/");
+			final String part1 = parts[0]; // MM
+			final String part2 = parts[1]; // YY
+
+			final int monthRigthNow = LocalDateTime.now().toDate().getMonth();
+			final int monthCreditCard = Integer.parseInt(part1);
+
+			int yearRigthNow = LocalDateTime.now().toDate().getYear();
+			yearRigthNow = yearRigthNow % 100;
+			final int yearCredictCard = Integer.parseInt(part2);
+
+			System.out.println(monthCreditCard);
+			System.out.println(monthRigthNow);
+			System.out.println(yearCredictCard);
+			System.out.println(yearRigthNow);
+
+			System.out.println(yearCredictCard >= yearRigthNow);
+			System.out.println(monthCreditCard > monthRigthNow);
+
+			if (yearCredictCard < yearRigthNow || monthCreditCard < monthRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
+				binding.rejectValue("expiration", "error.expirationFuture");
+		}
+
+		//AÑADIDO
 
 		if (!registrationForm.getNumber().matches("([0-9]){16}"))
 			//			final ObjectError error = new ObjectError("number", "");
@@ -313,4 +345,7 @@ public class HackerService {
 		this.hackerRepository.flush();
 	}
 
+	public Collection<Hacker> findByProblem(final int problemId) {
+		return this.hackerRepository.findByProblem(problemId);
+	}
 }

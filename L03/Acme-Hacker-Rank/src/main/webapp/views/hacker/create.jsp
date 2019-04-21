@@ -48,7 +48,7 @@
 				<acme:textbox code="hacker.make" path="make" />
 				<acme:textbox code="hacker.number" path="number" />
 				<acme:textbox code="hacker.CVV" path="CVV" />
-				<acme:textboxMoment code="hacker.expiration" path="expiration" />
+				<acme:textboxExpiration code="hacker.expiration" path="expiration" />
 				</fieldset>
 				<br>
 				<spring:message code="hacker.conditions" var="termsAndConditions"/>
