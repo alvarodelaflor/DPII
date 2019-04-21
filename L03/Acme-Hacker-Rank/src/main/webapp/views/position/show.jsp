@@ -38,7 +38,7 @@
     	<c:choose>
     					<c:when test="${res == true}">
     						<div>
-							    	<form:form class="formularioEdicion" method="GET" modelAttribute="application" action="application/hacker/save.do">
+							    	<form:form class="formularioEdicion" method="POST" modelAttribute="application" action="application/hacker/save.do">
 										<form:hidden path="position" />
 							          	 
 							          	<spring:message code='application.curricula' />

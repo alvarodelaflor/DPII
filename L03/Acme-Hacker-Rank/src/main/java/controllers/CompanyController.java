@@ -114,17 +114,20 @@ public class CompanyController extends AbstractController {
 
 		ModelAndView result;
 		final Company company;
+		Boolean checkCompany = false;
 		try {
 			if (id == -1) {
 				final int userLoggin = LoginService.getPrincipal().getId();
 				company = this.companyService.getCompanyByUserAccountId(userLoggin);
 				Assert.isTrue(company != null);
+				checkCompany = true;
 			} else {
 				company = this.companyService.findOne(id);
 				Assert.isTrue(company != null);
 			}
 			result = new ModelAndView("company/show");
 			result.addObject("company", company);
+			result.addObject("checkCompany", checkCompany);
 			result.addObject("requestURI", "company/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

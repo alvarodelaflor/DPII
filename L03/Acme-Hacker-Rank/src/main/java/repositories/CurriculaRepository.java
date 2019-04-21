@@ -18,4 +18,16 @@ public interface CurriculaRepository extends JpaRepository<Curricula, Integer> {
 	@Query("select c from Curricula c where c.hacker.id=?1 and c.isCopy=0")
 	Collection<Curricula> getCurriculasNotCopyOfHacker(int hackerId);
 
+	@Query("select min(cast((select count(c) from Curricula c where c.hacker = h) as float)) from Hacker h")
+	Float minCurriculaPerHacker();
+
+	@Query("select max(cast((select count(c) from Curricula c where c.hacker = h) as float)) from Hacker h")
+	Float maxCurriculaPerHacker();
+
+	@Query("select avg(cast((select count(c) from Curricula c where c.hacker = h) as float)) from Hacker h")
+	Float avgCurriculaPerHacker();
+
+	@Query("select stddev(cast((select count(c) from Curricula c where c.hacker = h) as float)) from Hacker h")
+	Float sttdevCurriculaPerHacker();
+
 }

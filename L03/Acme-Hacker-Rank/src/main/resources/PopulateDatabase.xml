@@ -277,7 +277,7 @@
     	<property name="make" value= "VISA"/>
     	<property name="number" value= "1234567891234567"/>
     	<property name="CVV" value= "234"/>
- 		<property name="expiration" value= "2039/12/12 23:59"/>
+ 		<property name="expiration" value= "22/10"/>
     </bean>
     
     <bean id="creditCard02" class="domain.CreditCard">
@@ -285,7 +285,7 @@
     	<property name="make" value= "VISA"/>
     	<property name="number" value= "1234567891234567"/>
     	<property name="CVV" value= "234"/>
- 		<property name="expiration" value= "2039/12/12 23:59"/>
+ 		<property name="expiration" value= "22/10"/>
     </bean>
     
     <bean id="creditCard03" class="domain.CreditCard">
@@ -293,7 +293,7 @@
     	<property name="make" value= "VISA"/>
     	<property name="number" value= "1234567891234567"/>
     	<property name="CVV" value= "234"/>
- 		<property name="expiration" value= "2039/12/12 23:59"/>
+ 		<property name="expiration" value= "22/10"/>
     </bean>
     <!-- CRECIT CARD -->
     

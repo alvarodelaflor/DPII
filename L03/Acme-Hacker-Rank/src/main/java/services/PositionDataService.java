@@ -29,13 +29,16 @@ public class PositionDataService {
 
 	@Autowired
 	private CurriculaService		curriculumService;
+	
+	@Autowired
+	private PositionService positionService;
 
 
 	// CRUD Methods
 
 	/**
 	 * Crete a new PositionData<br>
-	 * Must exist a {@link Hacker} login and this hacker must have an curriculum
+	 * Must exist a {@link Hacker} login and this hacker must have an curriculum and a valid position
 	 * 
 	 * @return {@link PositionData}
 	 * @author Alvaro de la Flor Bonilla
@@ -43,7 +46,8 @@ public class PositionDataService {
 	public PositionData create() {
 		final Hacker hackerLogin = this.hackerService.getHackerLogin();
 		Assert.notNull(hackerLogin, "No hacker is login");
-		Assert.isTrue(!this.curriculumService.findAllByHacker(hackerLogin).isEmpty(), "This hacker have not any curriculum in database");
+		Assert.isTrue(!this.curriculumService.findAllByHacker(hackerLogin).isEmpty(), "This hacker has not any curriculum in database");
+		Assert.isTrue(!this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()).isEmpty(), "This hacker has not any position with accepted application");
 		return new PositionData();
 	}
 
@@ -97,6 +101,7 @@ public class PositionDataService {
 		Assert.notNull(positionData, "Null positionData");
 		Assert.isTrue(hackerLogin.equals(positionData.getCurricula().getHacker()), "Not allow to edit not own EducationalData");
 		Assert.isTrue(!this.checkDate(positionData.getStartDate(), positionData.getEndDate()), "Not valid date configuaration");
+		Assert.isTrue(this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()).contains(positionData.getPosition()), "Postion of the PositionData not valid");
 		return this.positionDataRepository.save(positionData);
 	}
 

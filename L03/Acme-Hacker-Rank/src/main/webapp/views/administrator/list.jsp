@@ -262,7 +262,7 @@
 <form:form class="formularioEdicion" method="GET"
 	action="administrator/newPhone.do?newPhone='${newPhone}'.do">
 	<spring:message code="phoneM" />
-	<input type="number" name="newPhone" required="required" />
+	<input type="text" name="newPhone" required="required" />
 	<acme:submit name="save" code="saveNewSpamWord" />
 </form:form>
 <!-- PHONE -->
@@ -306,3 +306,6 @@
 </form:form>
 -->
 <!-- PHONE -->
+	<br>
+	<acme:cancel url=" " code="Back" />
+

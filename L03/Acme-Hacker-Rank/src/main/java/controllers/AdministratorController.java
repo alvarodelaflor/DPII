@@ -28,6 +28,8 @@ import services.AdministratorService;
 import services.ApplicationService;
 import services.CompanyService;
 import services.ConfigurationService;
+import services.CurriculaService;
+import services.FinderService;
 import services.HackerService;
 import services.PositionService;
 import domain.Actor;
@@ -48,6 +50,9 @@ public class AdministratorController extends AbstractController {
 	private PositionService			positionService;
 
 	@Autowired
+	private FinderService			finderService;
+
+	@Autowired
 	private ApplicationService		applicationService;
 
 	@Autowired
@@ -55,6 +60,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private HackerService			hackerService;
+
+	@Autowired
+	private CurriculaService		curriculaService;
 
 	@Autowired
 	private ConfigurationService	configurationService;
@@ -104,6 +112,17 @@ public class AdministratorController extends AbstractController {
 		res.addObject("bestPosition", this.positionService.bestPosition());
 		res.addObject("worstPosition", this.positionService.worstPosition());
 		// Salaries
+		//AM
+		res.addObject("minNumberOfResultFinder", this.finderService.minNumberOfResult());
+		res.addObject("maxNumberOfResultFinder", this.finderService.maxNumberOfResult());
+		res.addObject("avgNumberOfResultFinder", this.finderService.avgNumberOfResult());
+		res.addObject("stddevNumberOfResultFinder", this.finderService.stddevNumberOfResult());
+		res.addObject("ratioResultFinder", this.finderService.ratioResult());
+		res.addObject("minNumberOfHistory", this.curriculaService.minNumberOfResultHistory());
+		res.addObject("maxNumberOfHistory", this.curriculaService.maxNumberOfResultHistory());
+		res.addObject("avgNumberOfHistory", this.curriculaService.avgNumberOfResultHsitory());
+		res.addObject("stddevNumberOfHistory", this.curriculaService.stddevNumberOfResultHistory());
+		//AM
 		res.addObject("logo", this.getLogo());
 		res.addObject("system", this.getSystem());
 		return res;

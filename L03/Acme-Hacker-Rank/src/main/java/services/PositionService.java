@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,8 @@ import repositories.PositionRepository;
 import security.LoginService;
 import utilities.AuthUtils;
 import domain.Company;
+import domain.Hacker;
+import domain.Message;
 import domain.Position;
 import domain.Problem;
 
@@ -32,7 +35,14 @@ public class PositionService {
 	private CompanyService		companyService;
 
 	@Autowired
+	private HackerService		hackerService;
+
+	@Autowired
+	private MessageService		msgService;
+
+	@Autowired
 	private PositionDataService	positionDataService;
+
 	@Autowired
 	private ProblemService		problemService;
 
@@ -234,6 +244,20 @@ public class PositionService {
 			if (pos.getStatus()) {
 				final int problemCount = this.problemService.getProblemCount(pos.getId());
 				Assert.isTrue(problemCount >= 2, "Position can't be setted to final mode because it has less than 2 problems");
+
+				final Collection<Hacker> hackers = this.hackerService.findHackerRegardlessFinder(pos.getTitle(), pos.getSalary(), pos.getDeadline(), pos.getDescription());
+
+				final Message msg = this.msgService.create();
+				msg.setSubject("New Suitable Position 4 U tt");
+				msg.setBody("New Position: " + pos.getTitle());
+				msg.setRecipient(new ArrayList<String>());
+				for (final Hacker hacker : hackers) {
+
+					msg.getRecipient().add(hacker.getEmail());
+					this.msgService.exchangeMessage(msg, hacker.getId());
+					this.msgService.save(msg);
+				}
+
 			}
 		} else {
 			Assert.isTrue(pos.getStatus() == false);
@@ -241,7 +265,6 @@ public class PositionService {
 		}
 		return this.positionRepository.save(pos);
 	}
-
 	private boolean getPositionDatabaseStatus(final int positionId) {
 		final Position dbPosition = this.positionRepository.findOne(positionId);
 		// Database position has to be in draft mode
@@ -301,8 +324,12 @@ public class PositionService {
 
 	private void detachAllProblems(final int positionId) {
 		final Collection<Problem> problems = this.problemService.findFromPosition(positionId);
-		for (final Problem p : problems)
-			this.detachProblemFromPosition(p.getId(), positionId);
+		for (final Problem p : problems) {
+			final Position position = this.findOneLoggedIsOwner(positionId);
+			final Problem problem = this.problemService.findOneLoggedIsOwner(p.getId());
+			// This should persist since we are linked to the db
+			problem.getPosition().remove(position);
+		}
 	}
 	public void addProblemToPosition(final int problemId, final int positionId) {
 		// We must be the owner of both
@@ -321,7 +348,29 @@ public class PositionService {
 		// We must be the owner of both
 		final Position position = this.findOneLoggedIsOwner(positionId);
 		final Problem problem = this.problemService.findOneLoggedIsOwner(problemId);
+		// Position must be in draft mode and problem must be in final mode
+		Assert.isTrue(position.getStatus() == false);
+		Assert.isTrue(problem.getFinalMode() == true);
 		// This should persist since we are linked to the db
 		problem.getPosition().remove(position);
+	}
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} in database that is valid for a curricula.<br>
+	 * An empty collection if any hacker is logger
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	public Collection<Position> findValidPositionToCurriculaByHackerId(int hackerId) {
+		Hacker hacker = this.hackerService.getHackerLogin();
+		Collection<Position> res = new ArrayList<>();
+		if (hacker != null && hacker.getId()==hackerId) {
+			res =  this.positionRepository.findValidPositionToCurriculaByHackerId(hackerId);	
+		} else {
+			System.out.println("Any hacker is logger, system can not find any valid position");
+		}
+		return res;
 	}
 }

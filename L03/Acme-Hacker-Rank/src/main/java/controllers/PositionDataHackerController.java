@@ -74,8 +74,7 @@ public class PositionDataHackerController extends AbstractController {
 			result = new ModelAndView("positionData/hacker/create");
 			result.addObject("positionData", positionData);	
 			result.addObject("curricula", curriculaDB);
-			// TODO En este método solo serán añadidos las positiones validas
-			result.addObject("positions", this.positionService.findALL());
+			result.addObject("positions", this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()));
 		} catch (Exception e) {
 			System.out.println("Error e en GET /create PositionDataController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -96,8 +95,7 @@ public class PositionDataHackerController extends AbstractController {
 			result = new ModelAndView("positionData/hacker/edit");
 			result.addObject("positionData", positionDataDB);
 			result.addObject("curricula", positionDataDB.getCurricula());
-			// TODO En este método solo serán añadidos las positiones validas
-			result.addObject("positions", this.positionService.findALL());
+			result.addObject("positions", this.positionService.findValidPositionToCurriculaByHackerId(positionDataDB.getCurricula().getHacker().getId()));
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -126,7 +124,7 @@ public class PositionDataHackerController extends AbstractController {
 			result.addObject("positionData", positionData);
 			result.addObject("curricula", positionData.getCurricula());
 			// TODO En este método solo serán añadidos las positiones validas
-			result.addObject("positions", this.positionService.findALL());
+			result.addObject("positions", this.positionService.findValidPositionToCurriculaByHackerId(positionData.getCurricula().getHacker().getId()));
 		} else
 			try {
 				Hacker hackerLogin = this.hackerService.getHackerLogin();

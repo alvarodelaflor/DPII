@@ -49,7 +49,7 @@
 				<acme:textbox code="company.make" path="make" />
 				<acme:textbox code="company.number" path="number" />
 				<acme:textbox code="company.CVV" path="CVV" />
-				<acme:textboxMoment code="company.expiration" path="expiration" />
+				<acme:textboxExpiration code="company.expiration" path="expiration" />
 				</fieldset>
 				<br>
 				<spring:message code="company.conditions" var="termsAndConditions"/>
