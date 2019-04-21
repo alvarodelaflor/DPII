@@ -17,6 +17,8 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
+data.xml
+persistance.xml
 
 ##########################
 ## IntelliJ

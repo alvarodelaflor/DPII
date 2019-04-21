@@ -1,8 +1,8 @@
 /*
  * AdministratorController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -24,6 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Actor;
+import domain.Administrator;
+import domain.Company;
+import domain.Configuration;
+import domain.Hacker;
+import forms.ActorForm;
 import services.AdministratorService;
 import services.ApplicationService;
 import services.CompanyService;
@@ -32,12 +38,6 @@ import services.CurriculaService;
 import services.FinderService;
 import services.HackerService;
 import services.PositionService;
-import domain.Actor;
-import domain.Administrator;
-import domain.Company;
-import domain.Configuration;
-import domain.Hacker;
-import forms.ActorForm;
 
 @Controller
 @RequestMapping("/administrator")
@@ -128,7 +128,7 @@ public class AdministratorController extends AbstractController {
 		return res;
 	}
 
-	// CREATE ---------------------------------------------------------------		
+	// CREATE ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -148,7 +148,7 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
-	// SAVE-CREATE ---------------------------------------------------------------		
+	// SAVE-CREATE ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final ActorForm actorForm, final BindingResult binding) {
@@ -314,18 +314,7 @@ public class AdministratorController extends AbstractController {
 		//Configuration
 		// ------------------------------------------------------------
 		final Configuration configuration = this.configurationService.getConfiguration();
-		//		final Double fair = configuration.getFair();
-		//		final Double VAT = configuration.getVAT();
-		// ------------------------------------------------------------
 
-		//CreditCards'Makes
-		// ------------------------------------------------------------
-		//		HashSet<String> creditCardMakes = new HashSet<>();
-		//		if (this.configurationService.getCreditCardsMakes().size() == 0)
-		//			creditCardMakes = this.configurationService.defaultCCsMakes();
-		//		else
-		//			creditCardMakes = this.configurationService.getCreditCardsMakes();
-		//		result.addObject("creditCardMakes", creditCardMakes);
 		// ------------------------------------------------------------
 
 		//Priorities
@@ -341,17 +330,6 @@ public class AdministratorController extends AbstractController {
 
 		spamWords = new HashSet<>(configuration.getSpamWords());
 
-		//Score Words
-		//		if (this.configurationService.getScoreWordsPos().isEmpty())
-		//			scoreWordsPos = this.configurationService.listScoreWordsPos();
-		//		else
-		//			scoreWordsPos = this.configurationService.getScoreWordsPos();
-		//
-		//		if (this.configurationService.getScoreWordsNeg().isEmpty())
-		//			scoreWordsNeg = this.configurationService.listScoreWordsNeg();
-		//		else
-		//			scoreWordsNeg = this.configurationService.getScoreWordsNeg();
-
 		//Welcome page
 		final String ingles = configuration.getSystemMessageEn();
 		final String spanish = configuration.getSystemMessageEs();
@@ -362,13 +340,8 @@ public class AdministratorController extends AbstractController {
 		//Phone
 		final String phone = configuration.getCountryCode();
 
-		//Country´s Phone
-		//		final String phoneCountry = this.configurationService.getCountry();
-
 		System.out.println("Carmen: Entro en el list");
 
-		//		result.addObject("fair", fair);
-		//		result.addObject("VAT", VAT);
 		result.addObject("logo", logo);
 		result.addObject("ingles", ingles);
 		result.addObject("spanish", spanish);
@@ -378,93 +351,11 @@ public class AdministratorController extends AbstractController {
 		result.addObject("configuration", configuration);
 		result.addObject("system", system);
 		result.addObject("phone", phone);
-		//		result.addObject("phoneCountry", phoneCountry);
 		result.addObject("requestURI", "administrator/list.do");
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
 	}
-
-	// CreditCardMakes Methods:
-	// ------------------------------------------------------------
-	//	@RequestMapping(value = "/newCreditCardMake", method = RequestMethod.GET)
-	//	public ModelAndView newCreditCardMake(@RequestParam("newCreditCardMake") final String newCreditCardMake) {
-	//
-	//		final ModelAndView res = new ModelAndView("redirect:list.do");
-	//		this.configurationService.addCCMake(newCreditCardMake);
-	//		res.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//		res.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		return res;
-	//	}
-
-	//	@RequestMapping(value = "/deleteCreditCardMake", method = RequestMethod.GET)
-	//	public ModelAndView deleteCreditCardMake(@RequestParam("deleteCreditCardMake") final String deleteCreditCardMake) {
-	//		ModelAndView result = new ModelAndView("administrator/list");
-	//
-	//		try {
-	//			this.configurationService.removeCCMake(deleteCreditCardMake);
-	//			result = new ModelAndView("redirect:list.do");
-	//		} catch (final Throwable oops) {
-	//			if (oops.getMessage() == "noCCMake.error") {
-	//				result = this.list2();
-	//				result.addObject("message", "noCCMake.error");
-	//			}
-	//		}
-	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
-	//	}
-	// ------------------------------------------------------------
-	// Fair and VAT Methods:
-	// ------------------------------------------------------------
-	//	@RequestMapping(value = "/newFair", method = RequestMethod.GET)
-	//	public ModelAndView newFair(@RequestParam("newFair") final Double newFair) {
-	//
-	//		ModelAndView res = new ModelAndView("redirect:list.do");
-	//
-	//		try {
-	//
-	//			final Configuration config = this.configurationService.getConfiguration();
-	//			config.setFair(newFair);
-	//			this.configurationService.save(config);
-	//			res.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//			res.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		} catch (final Throwable oops) {
-	//
-	//			if (oops.getMessage() == "number.positive.error") {
-	//				res = new ModelAndView("redirect:list.do");
-	//				res.addObject("message", "number.positive.error");
-	//				res.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//				res.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//			}
-	//		}
-	//
-	//		return res;
-	//	}
-	//	@RequestMapping(value = "/newVAT", method = RequestMethod.GET)
-	//	public ModelAndView newVAT(@RequestParam("newVAT") final Double newVAT) {
-	//
-	//		ModelAndView res = new ModelAndView("redirect:list.do");
-	//
-	//		try {
-	//
-	//			final Configuration config = this.configurationService.getConfiguration();
-	//			config.setVAT(newVAT);
-	//			this.configurationService.save(config);
-	//			res.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//			res.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		} catch (final Throwable oops) {
-	//
-	//			if (oops.getMessage() == "number.positive.error") {
-	//				res = new ModelAndView("redirect:list.do");
-	//				res.addObject("message", "number.positive.error");
-	//				res.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//				res.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//			}
-	//		}
-	//		return res;
-	//	}
-	// ------------------------------------------------------------
 
 	// PRIORITIES
 	@RequestMapping(value = "/newPriority", method = RequestMethod.GET)
@@ -535,68 +426,6 @@ public class AdministratorController extends AbstractController {
 		result.addObject("system", this.getSystem());
 		return result;
 	}
-
-	//SCORE WORDS
-	//	@RequestMapping(value = "/newScoreWordPos", method = RequestMethod.GET)
-	//	public ModelAndView newScoreWordPos(@RequestParam("newScoreWord") final String newScoreWord) {
-	//		ModelAndView result;
-	//
-	//		this.configurationService.newScoreWordsPos(newScoreWord);
-	//		result = new ModelAndView("redirect:list.do");
-	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
-	//	}
-	//
-	//	@RequestMapping(value = "/deleteScoreWordPos", method = RequestMethod.GET)
-	//	public ModelAndView deleteScoreWordPos(@RequestParam("deleteScoreWord") final String scoreWord) {
-	//
-	//		ModelAndView result = new ModelAndView("administrator/list");
-	//
-	//		try {
-	//			this.configurationService.deleteScoreWordsPos(scoreWord);
-	//			result = new ModelAndView("redirect:list.do");
-	//		} catch (final Throwable oops) {
-	//			if (oops.getMessage() == "noScoreWord.error") {
-	//				result = this.list2();
-	//				result.addObject("message", "noScoreWord.error");
-	//			}
-	//		}
-	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
-	//	}
-
-	//	//SCORE WORDS NEG
-	//	@RequestMapping(value = "/newScoreWordNeg", method = RequestMethod.GET)
-	//	public ModelAndView newScoreWord(@RequestParam("newScoreWord") final String newScoreWord) {
-	//		ModelAndView result;
-	//
-	//		this.configurationService.newScoreWordsNeg(newScoreWord);
-	//		result = new ModelAndView("redirect:list.do");
-	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
-	//	}
-
-	//	@RequestMapping(value = "/deleteScoreWordNeg", method = RequestMethod.GET)
-	//	public ModelAndView deleteScoreWord(@RequestParam("deleteScoreWord") final String scoreWord) {
-	//		ModelAndView result = new ModelAndView("administrator/list");
-	//
-	//		try {
-	//			System.out.println("Carmen: Voy a intentar guardar");
-	//			this.configurationService.deleteScoreWordsNeg(scoreWord);
-	//			result = new ModelAndView("redirect:list.do");
-	//		} catch (final Throwable oops) {
-	//			if (oops.getMessage() == "noScoreWord.error") {
-	//				result = this.list2();
-	//				result.addObject("message", "noScoreWord.error");
-	//			}
-	//		}
-	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
-	//	}
 
 	@RequestMapping(value = "/newWelcome", method = RequestMethod.GET)
 	public ModelAndView newWelcome(@RequestParam("newIngles") final String newIngles, @RequestParam("newSpanish") final String newSpanish) {
@@ -702,16 +531,6 @@ public class AdministratorController extends AbstractController {
 		final String phone = config.getCountryCode();
 
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
-
-		//CreditCards'Makes
-		// ------------------------------------------------------------
-		//		HashSet<String> creditCardMakes = new HashSet<>();
-		//		if (this.configurationService.getCreditCardsMakes().size() == 0)
-		//			creditCardMakes = this.configurationService.defaultCCsMakes();
-		//		else
-		//			creditCardMakes = this.configurationService.getCreditCardsMakes();
-		//		result.addObject("creditCardMakes", creditCardMakes);
-		// ------------------------------------------------------------
 
 		System.out.println("Carmen: Entro en el list");
 
