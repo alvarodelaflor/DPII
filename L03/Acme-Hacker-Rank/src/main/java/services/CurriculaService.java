@@ -3,9 +3,9 @@ package services;
 
 /**
  * CurriculaService.java
- * 
+ *
  * @author Alvaro de la Flor Bonilla GitHub: alvar017
- * 
+ *
  *         CONTROL:
  *         30/03/2019 14:47 Creation
  */
@@ -22,14 +22,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.CurriculaRepository;
-import security.Authority;
-import security.LoginService;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.Hacker;
 import domain.MiscellaneousAttachment;
 import domain.PositionData;
+import repositories.CurriculaRepository;
+import security.Authority;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -61,19 +61,20 @@ public class CurriculaService {
 
 	/**
 	 * Create a CurriculaEntity. Must exist a {@link Hacker} login to create it.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Curricula}
 	 */
 	public Curricula create() {
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.notNull(this.hackerService.getHackerLogin(), "Must exist an hacker login");
 		return new Curricula();
 	}
 
 	/**
-	 * 
+	 *
 	 * Return a collection of all {@link Curricula} in database.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Curricula}>
 	 */
@@ -83,7 +84,7 @@ public class CurriculaService {
 
 	/**
 	 * Find a curricula in dataBase by id
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Curricula}
 	 */
@@ -97,7 +98,7 @@ public class CurriculaService {
 	 * </p>
 	 * Curricula must not be null<br>
 	 * Must exist hacker login
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The save {@link Curricula}
 	 */
@@ -120,7 +121,7 @@ public class CurriculaService {
 	 * Delete a curricula.<br>
 	 * Check user login ({@link Hacker}) is the same that user who created the curricula<br>
 	 * Must exist a {@link Hacker} login and curricula must not be null
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public void delete(final Curricula curricula) {
@@ -147,7 +148,7 @@ public class CurriculaService {
 
 	/**
 	 * This method reconstruct a prunned {@link Curricula} and validate it
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The reconstruct {@link Curricula}
 	 */
@@ -174,11 +175,11 @@ public class CurriculaService {
 	}
 
 	/**
-	 * 
+	 *
 	 * This methods create and save a copy of the curricula given and all of their educationalData and positionData<br>
 	 * Set to true the isCopy atribute of curriculum, educationalData and positionData instances that they have been copy<br>
 	 * The {@link Hacker} who create the Curricula must be login.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The copy {@link Curricula} instance
 	 */
@@ -210,7 +211,7 @@ public class CurriculaService {
 
 	/**
 	 * Check that any user is login
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Boolean}<br>
 	 *         True if an user is login, false in otherwise.
@@ -226,9 +227,9 @@ public class CurriculaService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Return all Curricula in dataBase of a {@link Hacker}.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Curricula}>
 	 */
@@ -240,7 +241,7 @@ public class CurriculaService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection < {@link Curricula} > not copy mode
 	 */
