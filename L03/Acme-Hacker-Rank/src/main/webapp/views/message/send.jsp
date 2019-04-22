@@ -30,14 +30,17 @@
 
               	<acme:textbox code="message.subject" path="subject"/>
           		<acme:textbox code="message.body" path="body"/>
-          		<acme:textbox code="message.tag" path="tags"/>
+          		<p><spring:message code="multipleTags" /></p> 
+          		<form:label path="tags"><spring:message code="message.tag" /></form:label>
+				<form:input value="${tag}" path="tags"/>
+				<form:errors cssClass="error" path="tags"/><br>
           		<br />
 		
 				<form:label path="recipient">
 				<spring:message code="recipient.email" />:
 				</form:label>
 				<form:select multiple="false" path="recipient">
-   		 		<form:options items="${emails}" />
+   		 		<form:options items="${emails}" required="required"/>
 				</form:select>
 				<form:errors cssClass="error" path="recipient" />
           	<acme:cancel url="message/list.do" code="cancel"/>
