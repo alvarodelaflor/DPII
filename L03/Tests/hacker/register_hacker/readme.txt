@@ -7,7 +7,7 @@ En conclusión, establecemos que el número máximo de usuarios que se pueden regis
 usuarios.
 
 Para realizar estas pruebas hemos tenido que hacer uso de un csv, ya que, el nombre de usuario y el email de un
-actor deben ser único. Para general el csv hemos utilizado un pequeño programa que se encuentar en la carpeta 
+actor deben ser único. Para generar el csv hemos utilizado un pequeño programa que se encuentra en la carpeta 
 generateUserNameEmail y los diferentes archivos generados para hacer las pruebas se encuentran en archivos generados.
 
 Prestaciones:

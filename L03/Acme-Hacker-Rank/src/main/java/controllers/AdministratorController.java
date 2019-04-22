@@ -1,8 +1,8 @@
 /*
  * AdministratorController.java
- *
+ * 
  * Copyright (C) 2018 Universidad de Sevilla
- *
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -24,12 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Administrator;
-import domain.Company;
-import domain.Configuration;
-import domain.Hacker;
-import forms.ActorForm;
 import services.AdministratorService;
 import services.ApplicationService;
 import services.CompanyService;
@@ -38,6 +32,12 @@ import services.CurriculaService;
 import services.FinderService;
 import services.HackerService;
 import services.PositionService;
+import domain.Actor;
+import domain.Administrator;
+import domain.Company;
+import domain.Configuration;
+import domain.Hacker;
+import forms.ActorForm;
 
 @Controller
 @RequestMapping("/administrator")
@@ -180,8 +180,6 @@ public class AdministratorController extends AbstractController {
 					result = this.createEditModelAndView(administrator, "error.html");
 			}
 
-		result.addObject("logo", this.getLogo());
-		result.addObject("system", this.getSystem());
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
