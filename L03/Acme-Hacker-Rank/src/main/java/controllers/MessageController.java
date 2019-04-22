@@ -21,6 +21,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -100,7 +101,9 @@ public class MessageController extends AbstractController {
 		//		result.addObject("system", system);
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -111,7 +114,9 @@ public class MessageController extends AbstractController {
 
 		msg = this.messageService.create();
 		result = this.createEditModelAndView(msg);
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	protected ModelAndView createEditModelAndView(final Message msg) {
@@ -123,7 +128,9 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	protected ModelAndView createEditModelAndView(final Message msg, final String msgCode) {
@@ -144,7 +151,9 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	@RequestMapping(value = "/send", method = RequestMethod.GET)
@@ -168,17 +177,32 @@ public class MessageController extends AbstractController {
 			Assert.notNull(msg);
 			result = this.createEditModelAndView(msg);
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 	@RequestMapping(value = "/send", method = RequestMethod.POST, params = "save")
 	public ModelAndView send(@ModelAttribute("msg") Message msg, final BindingResult binding, @RequestParam(value = "recipient", defaultValue = "null") final Collection<String> actors) {
 		ModelAndView result;
 		msg = this.messageService.reconstruct(msg, binding);
+		final List<Tag> tags = new ArrayList<>();
+		tags.addAll(msg.getTags());
+
+		if (actors.contains("null")) {
+			final ObjectError error = new ObjectError("actorNull", "Must be choose an actor");
+			binding.addError(error);
+			binding.rejectValue("recipient", "error.actorNull");
+		}
+
 		if (binding.hasErrors()) {
+			if (tags.size() == 0)
+				msg.setTags(null);
 			System.out.println("Entro en el binding messageController");
 			final Collection<String> emails = this.actorService.getEmailOfActors();
 			System.out.println(binding.getAllErrors().get(0));
 			result = new ModelAndView("message/edit");
+			if (tags.size() > 0)
+				result.addObject("tag", tags.get(0).getTag());
 			result.addObject("messageId", msg.getId());
 			result.addObject("actors", this.actorService.findAll());
 			result.addObject("emails", emails);
@@ -192,10 +216,10 @@ public class MessageController extends AbstractController {
 				for (int i = 0; i < lisRecipient.size(); i++)
 					msg = this.messageService.exchangeMessage(msg, this.actorService.getActorByEmailOnly(lisRecipient.get(i)).getId());
 				this.messageService.save(msg);
-				final List<Tag> tags = new ArrayList<>();
-				tags.addAll(msg.getTags());
-				for (int i = 0; i < tags.size(); i++)
-					tags.get(i).setMessageId(msg.getId());
+				final List<Tag> tags2 = new ArrayList<>();
+				tags2.addAll(msg.getTags());
+				for (int i = 0; i < tags2.size(); i++)
+					tags2.get(i).setMessageId(msg.getId());
 
 				//				final Collection<Message> sendMessages = new ArrayList<>();
 				//				sendMessages.addAll(a.getMessages());
@@ -213,13 +237,20 @@ public class MessageController extends AbstractController {
 
 			} catch (final Throwable oops) {
 				System.out.println("Es el oops");
+				final Collection<String> emails = this.actorService.getEmailOfActors();
 				System.out.println(oops);
-				result = this.createEditModelAndView(msg, "message.commit.error");
+				result = new ModelAndView("message/edit");
+				if (tags.size() > 0)
+					result.addObject("tag", tags.get(0).getTag());
+				result.addObject("messageId", msg.getId());
+				result.addObject("actors", this.actorService.findAll());
+				result.addObject("emails", emails);
 			}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
-
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "messageId", defaultValue = "-1") final int messageId) {
 		ModelAndView result;
@@ -235,7 +266,9 @@ public class MessageController extends AbstractController {
 		result.addObject("requestURI", "message/show.do");
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int id, @RequestParam(value = "messageBoxId", defaultValue = "-1") final int messageBoxId) {
@@ -275,7 +308,9 @@ public class MessageController extends AbstractController {
 		result.addObject("language", language);
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	@RequestMapping(value = "/sendNoti", method = RequestMethod.GET)
@@ -285,7 +320,9 @@ public class MessageController extends AbstractController {
 		msg = this.messageService.create();
 		Assert.notNull(msg);
 		result = this.createEditModelAndViewNoti(msg);
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 	@RequestMapping(value = "/sendNoti", method = RequestMethod.POST, params = "save")
 	public ModelAndView sendNoti(@ModelAttribute("msg") Message msg, final BindingResult binding) {
@@ -345,7 +382,9 @@ public class MessageController extends AbstractController {
 				result = this.createEditModelAndViewNoti(msg, "message.commit.error");
 			}
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	protected ModelAndView createEditModelAndViewNoti(final Message msg) {
@@ -357,7 +396,9 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 	protected ModelAndView createEditModelAndViewNoti(final Message msg, final String msgCode) {
@@ -378,6 +419,8 @@ public class MessageController extends AbstractController {
 		//		final String logo = this.welcomeService.getLogo();
 		//		result.addObject("logo", logo);
 
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 }
