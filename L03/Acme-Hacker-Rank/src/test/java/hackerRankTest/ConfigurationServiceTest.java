@@ -6,12 +6,9 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import domain.Administrator;
-import services.AdministratorService;
 import services.ConfigurationService;
 import utilities.AbstractTest;
 
@@ -23,9 +20,7 @@ import utilities.AbstractTest;
 public class ConfigurationServiceTest extends AbstractTest {
 
 	@Autowired
-	private ConfigurationService	configurationService;
-	@Autowired
-	private AdministratorService	adminService;
+	private ConfigurationService configurationService;
 
 
 	/*
@@ -60,28 +55,16 @@ public class ConfigurationServiceTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Administrator administrator = this.adminService.create();
-			administrator.setAddress("soyUnaCalle");
-			administrator.setEmail("soyUnaPrueba@soyUnaPrueba");
-			administrator.setName("soyUnNombre");
-			administrator.setPhone("123456");
-			administrator.setPhoto("http://SoyUnaFoto");
-			administrator.setSurname("SoyUnaPreuba");
-			administrator.getUserAccount().setUsername("soyUnaPrueba");
+			super.authenticate("admin");
 
-			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			administrator.getUserAccount().setPassword(hashPassword);
-
-			final Administrator administratorSave = this.adminService.saveCreate(administrator);
-
-			this.configurationService.newLogo("PRUEBA LOGO");
+			this.configurationService.newLogo("http://www.pruebalogo.com");
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
-			this.rollbackTransaction();
 			super.unauthenticate();
+			this.rollbackTransaction();
+
 		}
 
 		this.checkExceptions(expected, caught);
@@ -103,7 +86,7 @@ public class ConfigurationServiceTest extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.Diver01((Class<?>) testingData[i][0]);
+			this.Diver02((Class<?>) testingData[i][0]);
 
 	}
 
@@ -113,24 +96,9 @@ public class ConfigurationServiceTest extends AbstractTest {
 		Class<?> caught = null;
 
 		try {
+			super.unauthenticate();
 			this.startTransaction();
-
-			final Administrator administrator = this.adminService.create();
-			administrator.setAddress("soyUnaCalle");
-			administrator.setEmail("soyUnaPrueba@soyUnaPrueba");
-			administrator.setName("soyUnNombre");
-			administrator.setPhone("123456");
-			administrator.setPhoto("http://SoyUnaFoto");
-			administrator.setSurname("SoyUnaPreuba");
-			administrator.getUserAccount().setUsername("soyUnaPrueba");
-
-			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			administrator.getUserAccount().setPassword(hashPassword);
-
-			final Administrator administratorSave = this.adminService.saveCreate(administrator);
-
-			this.configurationService.newLogo("PRUEBA LOGO");
+			this.configurationService.newLogo("http://www.pruebalogo.com");
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -155,13 +123,13 @@ public class ConfigurationServiceTest extends AbstractTest {
 			{
 				// // Positive Test: Only admins can change the system's default phone prefix
 				//
-				IllegalArgumentException.class
+				null
 			}
 
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.Diver01((Class<?>) testingData[i][0]);
+			this.Diver03((Class<?>) testingData[i][0]);
 
 	}
 
@@ -172,29 +140,14 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-
-			final Administrator administrator = this.adminService.create();
-			administrator.setAddress("soyUnaCalle");
-			administrator.setEmail("soyUnaPrueba@soyUnaPrueba");
-			administrator.setName("soyUnNombre");
-			administrator.setPhone("123456");
-			administrator.setPhoto("http://SoyUnaFoto");
-			administrator.setSurname("SoyUnaPreuba");
-			administrator.getUserAccount().setUsername("soyUnaPrueba");
-
-			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			administrator.getUserAccount().setPassword(hashPassword);
-
-			final Administrator administratorSave = this.adminService.saveCreate(administrator);
-			super.authenticate(administrator.getUserAccount().getUsername());
+			super.authenticate("admin");
 			this.configurationService.newPhone("+23");
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
-			this.rollbackTransaction();
 			super.unauthenticate();
+			this.rollbackTransaction();
 		}
 
 		this.checkExceptions(expected, caught);
@@ -220,7 +173,7 @@ public class ConfigurationServiceTest extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.Diver01((Class<?>) testingData[i][0]);
+			this.Diver04((Class<?>) testingData[i][0]);
 
 	}
 
@@ -231,21 +184,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-
-			final Administrator administrator = this.adminService.create();
-			administrator.setAddress("soyUnaCalle");
-			administrator.setEmail("soyUnaPrueba@soyUnaPrueba");
-			administrator.setName("soyUnNombre");
-			administrator.setPhone("123456");
-			administrator.setPhoto("http://SoyUnaFoto");
-			administrator.setSurname("SoyUnaPreuba");
-			administrator.getUserAccount().setUsername("soyUnaPrueba");
-
-			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			administrator.getUserAccount().setPassword(hashPassword);
-
-			final Administrator administratorSave = this.adminService.saveCreate(administrator);
 
 			this.configurationService.newPhone("+23");
 
@@ -272,13 +210,13 @@ public class ConfigurationServiceTest extends AbstractTest {
 			{
 				// // Positive Test: Only admins can change the system's name
 				//
-				IllegalArgumentException.class
+				null
 			}
 
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.Diver01((Class<?>) testingData[i][0]);
+			this.Diver05((Class<?>) testingData[i][0]);
 
 	}
 
@@ -289,29 +227,15 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-
-			final Administrator administrator = this.adminService.create();
-			administrator.setAddress("soyUnaCalle");
-			administrator.setEmail("soyUnaPrueba@soyUnaPrueba");
-			administrator.setName("soyUnNombre");
-			administrator.setPhone("123456");
-			administrator.setPhoto("http://SoyUnaFoto");
-			administrator.setSurname("SoyUnaPreuba");
-			administrator.getUserAccount().setUsername("soyUnaPrueba");
-
-			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			administrator.getUserAccount().setPassword(hashPassword);
-
-			final Administrator administratorSave = this.adminService.saveCreate(administrator);
-			super.authenticate(administrator.getUserAccount().getUsername());
+			super.authenticate("admin");
 			this.configurationService.newSystem("PRUEBA");
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
-			this.rollbackTransaction();
 			super.unauthenticate();
+			this.rollbackTransaction();
+
 		}
 
 		this.checkExceptions(expected, caught);
@@ -337,7 +261,7 @@ public class ConfigurationServiceTest extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.Diver01((Class<?>) testingData[i][0]);
+			this.Diver06((Class<?>) testingData[i][0]);
 
 	}
 
@@ -348,21 +272,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-
-			final Administrator administrator = this.adminService.create();
-			administrator.setAddress("soyUnaCalle");
-			administrator.setEmail("soyUnaPrueba@soyUnaPrueba");
-			administrator.setName("soyUnNombre");
-			administrator.setPhone("123456");
-			administrator.setPhoto("http://SoyUnaFoto");
-			administrator.setSurname("SoyUnaPreuba");
-			administrator.getUserAccount().setUsername("soyUnaPrueba");
-
-			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			administrator.getUserAccount().setPassword(hashPassword);
-
-			final Administrator administratorSave = this.adminService.saveCreate(administrator);
 
 			this.configurationService.newSystem("PRUEBA");
 
