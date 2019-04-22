@@ -11,6 +11,7 @@
 package hackerRankTest;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -27,11 +28,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.LoginService;
 import services.CompanyService;
 import services.PositionService;
+import services.ProblemService;
 import utilities.AbstractTest;
 import domain.Company;
 import domain.Position;
+import domain.Problem;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -45,6 +49,9 @@ public class PositionServiceTest extends AbstractTest {
 
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private ProblemService	problemService;
 
 
 	/*
@@ -229,7 +236,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
@@ -397,7 +404,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
@@ -485,7 +492,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
@@ -573,7 +580,7 @@ public class PositionServiceTest extends AbstractTest {
 			position.setProfile("SoyUnPerfil");
 			position.setSalary(100.4);
 			position.setSkills("soyUnaHabilidad");
-			position.setStatus(true);
+			position.setStatus(false);
 			position.setTechs("soyUnTechs");
 			position.setTicker("SOYU-1234");
 			position.setTitle("soyUnTitulo");
@@ -691,4 +698,484 @@ public class PositionServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	// -------------- Req 9.1
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. List their positions and show them
+	 * (We are not testing show in a different driver because we consider that it is tested in this one.
+	 * Also, everyone can see positions, but view is different for the company. We can't test that here.)
+	 * 
+	 * Analysis of sentence coverage
+	 * ~16%
+	 * Analysis of data coverage
+	 * ~90%
+	 */
+	@Test
+	public void Driver09() {
+		final Object testingData[][] = {
+			{
+				"company", "list", null
+			}, {
+				"company", "insertAndList", null
+			}, {
+				"company", "updateAndList", null
+			}, {
+				"company", "deleteAndList", null
+			}, {
+				"company", "notEmpty", null
+			}, {
+				"hacker", "list", IllegalArgumentException.class
+			}, {
+				"admin", "list", IllegalArgumentException.class
+			}, {
+				"hacker", "insertAndList", IllegalArgumentException.class
+			}, {
+				"admin", "updateAndList", IllegalArgumentException.class
+			}, {
+				"hacker", "deleteAndList", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver09((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+	private void Driver09(final String user, final String mode, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+
+			Collection<Position> positions = null;
+			Position position = null;
+			boolean isInList = false;
+
+			switch (mode) {
+			case "list":
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				break;
+			case "insertAndList":
+				position = this.testPosition();
+				this.positionService.save(position);
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+
+				isInList = false;
+				for (final Position p : positions)
+					if (p.getTitle().equals(position.getTitle())) {
+						isInList = true;
+						break;
+					}
+				Assert.isTrue(isInList);
+				break;
+			case "updateAndList":
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				position = this.positionService.findOne(positions.iterator().next().getId());
+				position.setTitle("Random123");
+				isInList = false;
+				for (final Position p : positions)
+					if (p.getTitle().equals("Random123")) {
+						isInList = true;
+						break;
+					}
+				Assert.isTrue(isInList);
+				break;
+			case "deleteAndList":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				this.positionService.delete(position.getId());
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				isInList = false;
+				for (final Position p : positions)
+					if (p.getTitle().equals(position.getTitle())) {
+						isInList = true;
+						break;
+					}
+				Assert.isTrue(isInList == false);
+				break;
+			case "notEmpty":
+				position = this.testPosition();
+				this.positionService.save(position);
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				Assert.isTrue(positions.size() > 0);
+				break;
+			default:
+				break;
+			}
+
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	private Position testPosition() {
+		final Position position = new Position();
+		final Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		position.setDeadline(calendar.getTime());
+		position.setCompany(this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId()));
+		position.setDescription("Test");
+		position.setProfile("Test");
+		position.setSalary(10d);
+		position.setSkills("Test");
+		position.setTechs("Test");
+		position.setTitle("Testing position");
+		position.setStatus(false);
+		position.setCancel(false);
+		position.setTicker("I am an impossible ticker");
+		return position;
+	}
+
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. Create their positions
+	 * Analysis of sentence coverage
+	 * ~26.9%
+	 * Analysis of data coverage
+	 * ~50%
+	 */
+	@Test
+	public void Driver10() {
+		final Object testingData[][] = {
+			{
+				"company", "create", null
+			}, {
+				"company", "createAndFind", null
+			}, {
+				"company", "createFinalWithProblems", null
+			}, {
+				"company", "createAndUpdate", null
+			}, {
+				"company", "createAndDelete", null
+			}, {
+				"company", "createFinalWithNoProblems", IllegalArgumentException.class
+			}, {
+				"admin", "create", IllegalArgumentException.class
+			}, {
+				"hacker", "create", IllegalArgumentException.class
+			}, {
+				"admin", "createAndFind", IllegalArgumentException.class
+			}, {
+				"hacker", "createAndFind", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver10((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+	private void Driver10(final String user, final String mode, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+			Position position = null;
+			Collection<Problem> problems = null;
+			Position posCopy = null;
+			switch (mode) {
+			case "create":
+				position = this.testPosition();
+				this.positionService.save(position);
+				break;
+			case "createAndFind":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				position = this.positionService.findOne(position.getId());
+				Assert.notNull(position);
+				break;
+			case "createFinalWithProblems":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				problems = this.problemService.getFinalModeFromLoggedCompanyNotInPosition(position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setStatus(true);
+				position = this.positionService.save(posCopy);
+				break;
+			case "createAndUpdate":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				position.setTitle("tested");
+				position = this.positionService.save(position);
+				break;
+			case "createAndDelete":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				this.positionService.delete(position.getId());
+				break;
+			case "createFinalWithNoProblems":
+				position = this.testPosition();
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setStatus(true);
+				position = this.positionService.save(posCopy);
+				break;
+			default:
+				break;
+			}
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. Update their positions
+	 * Analysis of sentence coverage
+	 * ~29.2%
+	 * Analysis of data coverage
+	 * ~30%
+	 */
+	@Test
+	public void Driver11() {
+		final Object testingData[][] = {
+			{
+				"company", "update", null
+			}, {
+				"company", "updateAndFind", null
+			}, {
+				"company", "updateFinalWithProblems", null
+			}, {
+				"company", "updateCancel", null
+			}, {
+				"company", "updateAndDelete", null
+			}, {
+				"company", "updateAlreadyFinal", IllegalArgumentException.class
+			}, {
+				"company", "updateAlreadyCancelled", IllegalArgumentException.class
+			}, {
+				"hacker", "update", IllegalArgumentException.class
+			}, {
+				"admin", "update", IllegalArgumentException.class
+			}, {
+				"hacker", "updateAndFind", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver11((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	private void Driver11(final String user, final String mode, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+
+			Position position = null;
+			Collection<Problem> problems = null;
+			Position posCopy = null;
+			switch (mode) {
+			case "update":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				position.setTitle("tested");
+				position = this.positionService.save(position);
+				break;
+			case "updateAndFind":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				position.setTitle("tested");
+				position = this.positionService.save(position);
+				position = this.positionService.findOne(position.getId());
+				Assert.notNull(position);
+				break;
+			case "updateFinalWithProblems":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				problems = this.problemService.getFinalModeFromLoggedCompanyNotInPosition(position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setStatus(true);
+				position = this.positionService.save(posCopy);
+				break;
+			case "updateCancel":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				problems = this.problemService.getFinalModeFromLoggedCompanyNotInPosition(position.getId());
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setCancel(true);
+				position = this.positionService.save(posCopy);
+				break;
+			case "updateAndDelete":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				position.setTechs("updating");
+				this.positionService.delete(position.getId());
+				break;
+			case "updateAlreadyFinal":
+				position = this.testPosition();
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setStatus(true);
+				position = this.positionService.save(posCopy);
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setCancel(true);
+				position = this.positionService.save(posCopy);
+				break;
+			case "updateAlreadyCancelled":
+				position = this.testPosition();
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setCancel(true);
+				position = this.positionService.save(posCopy);
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				posCopy.setStatus(true);
+				position = this.positionService.save(posCopy);
+				break;
+			default:
+				break;
+			}
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.rollbackTransaction();
+			this.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 1. Delete their positions
+	 * Analysis of sentence coverage
+	 * ~31.1%
+	 * Analysis of data coverage
+	 * ~80%
+	 */
+	@Test
+	public void Driver12() {
+		final Object testingData[][] = {
+			{
+				"company", "createAndDelete", null
+			}, {
+				"company", "updateAndDelete", null
+			}, {
+				"company", "deleteAndList", null
+			}, {
+				"company", "deleteAndTryFind", null
+			}, {
+				"company", "deleteAndTryFindInList", null
+			}, {
+				"company", "deleteAlreadyFinal", IllegalArgumentException.class
+			}, {
+				"company", "deleteAlreadyCancelled", IllegalArgumentException.class
+			}, {
+				"hacker", "createAndDelete", IllegalArgumentException.class
+			}, {
+				"admin", "createAndDelete", IllegalArgumentException.class
+			}, {
+				"hacker", "deleteAndTryFind", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver12((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+	private void Driver12(final String user, final String mode, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+
+			Position position = null;
+			Collection<Problem> problems = null;
+			Collection<Position> positions = null;
+			Position posCopy = null;
+			switch (mode) {
+			case "createAndDelete":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				this.positionService.delete(position.getId());
+				break;
+			case "updateAndDelete":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				position.setTechs("updating");
+				this.positionService.delete(position.getId());
+				break;
+			case "deleteAndList":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				this.positionService.delete(position.getId());
+				this.positionService.findAllPositionsByLoggedCompany();
+				break;
+			case "deleteAndTryFind":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				this.positionService.delete(position.getId());
+				position = this.positionService.findOne(position.getId());
+				Assert.isNull(position);
+				break;
+			case "deleteAndTryFindInList":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				this.positionService.delete(position.getId());
+				positions = this.positionService.findAllPositionsByLoggedCompany();
+				for (final Position pos : positions)
+					Assert.isTrue(pos.equals(position) == false);
+				break;
+			case "deleteAlreadyFinal":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				problems = this.problemService.getFinalModeFromLoggedCompanyNotInPosition(position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				posCopy.setStatus(true);
+				position = this.positionService.save(posCopy);
+				this.positionService.delete(position.getId());
+				break;
+			case "deleteAlreadyCancelled":
+				position = this.testPosition();
+				position = this.positionService.save(position);
+				posCopy = this.testPosition();
+				posCopy.setId(position.getId());
+				posCopy.setVersion(position.getVersion());
+				problems = this.problemService.getFinalModeFromLoggedCompanyNotInPosition(position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				this.positionService.addProblemToPosition(problems.iterator().next().getId(), position.getId());
+				posCopy.setStatus(true);
+				posCopy.setCancel(true);
+				position = this.positionService.save(posCopy);
+				this.positionService.delete(position.getId());
+				break;
+			default:
+				break;
+			}
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.rollbackTransaction();
+			this.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
 }

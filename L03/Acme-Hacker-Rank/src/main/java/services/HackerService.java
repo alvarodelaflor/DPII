@@ -345,4 +345,7 @@ public class HackerService {
 		this.hackerRepository.flush();
 	}
 
+	public Collection<Hacker> findByProblem(final int problemId) {
+		return this.hackerRepository.findByProblem(problemId);
+	}
 }
