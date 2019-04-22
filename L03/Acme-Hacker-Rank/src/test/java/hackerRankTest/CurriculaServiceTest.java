@@ -288,14 +288,91 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 17.1 An actor who is authenticated as a hacker must be able to:
-	 * Manage his or her curricula, which includes listing, showing, creating, updating, and
-	 * deleting them.
-	 * //
+	 * 18 . An actor who is authenticated as an administrator must be able to:
+	 * Display a dashboard with the following information:
+	 * The minimum, the maximum, the average, and the standard deviation of the number of curricula per hacker.
+	 * The minimum, the maximum, the average, and the standard deviation of the number of results in the finders
+	 * // The ratio of empty versus non-empty finders.
 	 * * * Analysis of sentence coverage
 	 * 10.3%
 	 * Analysis of data coverage
 	 * ~15%
 	 */
+	@Test
+	public void Diver05() {
+		final Object testingData[][] = {
+			{
+				// // Positive Test: Only admins can display the dashboard stats
+				//
+				null
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver05((Class<?>) testingData[i][0]);
+
+	}
+
+	//Ancillary methods------------------------------------------------------
+
+	protected void Diver05(final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.curriculaService.stddevNumberOfResultHistory();
+			this.curriculaService.avgNumberOfResultHsitory();
+			this.curriculaService.maxNumberOfResultHistory();
+			this.curriculaService.minNumberOfResultHistory();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	@Test
+	public void Diver06() {
+		final Object testingData[][] = {
+			{
+				// Negative Test:  Only admins can display the dashboard stats
+				//
+				IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver06((Class<?>) testingData[i][0]);
+
+	}
+
+	//Ancillary methods------------------------------------------------------
+
+	protected void Diver06(final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+
+			this.curriculaService.stddevNumberOfResultHistory();
+			this.curriculaService.avgNumberOfResultHsitory();
+			this.curriculaService.maxNumberOfResultHistory();
+			this.curriculaService.minNumberOfResultHistory();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 
 }
