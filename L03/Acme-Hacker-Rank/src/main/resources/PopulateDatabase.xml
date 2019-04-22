@@ -132,7 +132,7 @@
 	
 	<!-- POSITION  -->
 	<bean id="position01" class="domain.Position">
-    	<property name="ticker" value="ticker01" />
+    	<property name="ticker" value="CARM-4399" />
     	<property name="title" value="title01" />
     	<property name="techs" value="techs01" />
 		<property name="status" value="true" />
@@ -146,7 +146,7 @@
     </bean>
     
     <bean id="position02" class="domain.Position">
-    	<property name="ticker" value="ticker02" />
+    	<property name="ticker" value="CARM-7160" />
     	<property name="title" value="title02" />
     	<property name="techs" value="techs02" />
 		<property name="status" value="true" />
@@ -160,13 +160,26 @@
     </bean>
     
     <bean id="position03" class="domain.Position">
-    	<property name="ticker" value="ticker03" />
+    	<property name="ticker" value="CARM-6123" />
     	<property name="title" value="title03" />
     	<property name="techs" value="techs03" />
 		<property name="status" value="true" />
         <property name="skills" value="skills03" />
         <property name="salary" value= "20.0" />
         <property name="profile" value="profile03" />
+        <property name="description" value= "description03"/>     
+        <property name="deadline" value= "2020/11/10 08:00"/>      
+        <property name="company" ref= "company01"/>  
+		<property name="cancel" value="false" />     
+    </bean>
+    <bean id="position04" class="domain.Position">
+    	<property name="ticker" value="CARM-0167" />
+    	<property name="title" value="title04" />
+    	<property name="techs" value="techs04" />
+		<property name="status" value="false" />
+        <property name="skills" value="skills04" />
+        <property name="salary" value= "20.0" />
+        <property name="profile" value="profile04" />
         <property name="description" value= "description03"/>     
         <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>  

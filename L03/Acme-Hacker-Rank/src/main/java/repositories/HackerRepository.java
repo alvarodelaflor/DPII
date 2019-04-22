@@ -27,4 +27,6 @@ public interface HackerRepository extends JpaRepository<Hacker, Integer> {
 	@Query("select h from Hacker h join h.finder hf where (?1 like (concat('%', hf.keyword, '%')) or ?4 like (concat('%', hf.keyword, '%'))) and (?2 between hf.minSalary and hf.maxSalary) and ?3 > hf.deadline")
 	public Collection<Hacker> findHackerRegardlessFinder(String title, Double salary, Date deadline, String description);
 
+	@Query("select distinct a.hacker from Application a where a.problem.id = ?1")
+	Collection<Hacker> findByProblem(int problemId);
 }

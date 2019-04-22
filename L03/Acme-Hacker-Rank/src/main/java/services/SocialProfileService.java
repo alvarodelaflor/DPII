@@ -28,6 +28,7 @@ public class SocialProfileService {
 
 
 	public SocialProfile create() {
+		Assert.isTrue(LoginService.getPrincipal() != null);
 		final SocialProfile socialProfile = new SocialProfile();
 		return socialProfile;
 	}
