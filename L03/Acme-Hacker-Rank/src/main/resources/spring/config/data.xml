@@ -24,7 +24,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"> 
 		<property name="driverClass" value="com.mysql.jdbc.Driver" /> 
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Acme-Hacker-Rank" /> 
-		<property name="user" value="acmeuser" /> 
+		<property name="user" value="acme-user" /> 
 		<property name="password" value="ACME-Us3r-P@ssw0rd" /> 
 		<property name="minPoolSize" value="1" /> 
 		<property name="maxPoolSize" value="5" /> 

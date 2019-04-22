@@ -13,7 +13,7 @@
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Acme-Hacker-Rank" />
-			<property name="javax.persistence.jdbc.user" value="acmemanager" />
+			<property name="javax.persistence.jdbc.user" value="acme-manager" />
 			<property name="javax.persistence.jdbc.password" value="ACME-M@n@ger-6874" />
 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
