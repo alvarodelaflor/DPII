@@ -1,12 +1,14 @@
 Las pruebas se han realizado para medir el rendimiento con respecto al 
-requisito 24.2
+requisito 11.1
 
 ================================================================================
 Información General:
 
-Todas las pruebas se han realizado con #loops=10.
-Todas las pruebas se han realizado con constante de 1500 y desviación de 100 ms 
-en el "login", en el "actorList" y en "banActor"("Gaussian Random Timer").
+Todas las pruebas se han realizado con #loops=FOREVER.
+Todas las pruebas se han realizado con constante de 1500ms y desviación de 100 ms 
+en el "login"("Gaussian Random Timer").
+Todas las pruebas se han realizado con constante de 4000ms y desviación de 2000 ms 
+en el "registerAdmin"("Gaussian Random Timer").
 ================================================================================
 
 ================================================================================
@@ -32,17 +34,24 @@ Prueba 2:
 
 #usuariosConcurrentes = 100;
    - Error%: aparecen una pequeña cantidad de errores.
-   - 90%Line: los "delays" siguen siendo aceptables (±2000ms).
+   - 90%Line: Los "delays" son superiores a 4 segundos. Inaceptables.
 ================================================================================
 Prueba 3: 
 
-#usuariosConcurrentes = 130;
+#usuariosConcurrentes = 80;
    - Error%: aparecen una pequeña cantidad de errores.
-   - 90%Line: Altos. El "delay" en "login"(2717ms), el "delay en "actorList"
-     (2682ms) y el "delay" en "banActor"(2650ms) son excesivos.
+   - 90%Line: Altos. Los "delays" se encuentran ligeramente por debajo de 4 
+     segundos. Tiempos muy superiores al umbral válido.
+================================================================================
+Prueba 4: 
+
+#usuariosConcurrentes = 65;
+   - Error%: aparecen una pequeña cantidad de errores.
+   - 90%Line: Altos. Los "delays" son cercanos a 3 segundos. Algo mas aceptables,
+     pero muy altos.
 ================================================================================
 --CONCLUSIÓN--
 ================================================================================
-El nº de usuarios concurrentes válido recomendado es unos 110 usuarios según las
-prubas realizadas. 
+El nº de usuarios concurrentes válido recomendado es unos 55 usuarios según las
+pruebas realizadas. 
 ================================================================================
