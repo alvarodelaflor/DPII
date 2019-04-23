@@ -181,8 +181,13 @@ public class HackerService {
 			System.out.println(yearCredictCard >= yearRigthNow);
 			System.out.println(monthCreditCard > monthRigthNow);
 
-			if (yearCredictCard < yearRigthNow || monthCreditCard < monthRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
+			if (yearCredictCard < yearRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
 				binding.rejectValue("expiration", "error.expirationFuture");
+
+			if (yearCredictCard >= yearRigthNow && monthCreditCard != 00 && monthCreditCard > 12)
+				if (yearCredictCard == yearRigthNow)
+					if (monthCreditCard < monthRigthNow)
+						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
 		//AÑADIDO
