@@ -1,11 +1,13 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -14,8 +16,12 @@ import org.springframework.validation.Validator;
 
 import repositories.ApplicationRepository;
 import security.LoginService;
+import security.UserAccount;
+import domain.Actor;
 import domain.Application;
 import domain.Hacker;
+import domain.Message;
+import domain.Tag;
 
 @Service
 @Transactional
@@ -189,6 +195,9 @@ public class ApplicationService {
 
 		// TODO: Notify this hacker
 		final Hacker hacker = application.getHacker();
+		final Collection<Hacker> hackers = new ArrayList<>();
+		hackers.add(hacker);
+		this.notifyHackers(hackers, application, "accepted");
 	}
 	public void reject(final int applicationId) {
 		final Application application = this.applicationRepository.findOne(applicationId);
@@ -197,5 +206,58 @@ public class ApplicationService {
 		application.setStatus("REJECTED");
 		// TODO: Notify this hacker
 		final Hacker hacker = application.getHacker();
+		final Collection<Hacker> hackers = new ArrayList<>();
+		hackers.add(hacker);
+		this.notifyHackers(hackers, application, "rejected");
+
+	}
+
+	public void notifyHackers(final Collection<Hacker> hackers, final Application application, final String state) {
+		final UserAccount log = LoginService.getPrincipal();
+		final Actor logged = this.actorService.getActorByUserId(log.getId());
+
+		final List<Hacker> hackerReceiverList = new ArrayList<>();
+		hackerReceiverList.addAll(hackers);
+
+		final List<String> emails = new ArrayList<>();
+		for (int i = 0; i < hackerReceiverList.size(); i++)
+			emails.add(hackerReceiverList.get(i).getEmail());
+
+		Message sended = this.messageService.create();
+		sended.setSubject("Change in application state");
+		final Collection<String> me = new ArrayList<>();
+		sended.setRecipient(me);
+		sended.setBody("The application for a position" + application.getPosition().getTicker() + " have been " + state);
+		sended.setMoment(LocalDate.now().toDate());
+
+		final Tag noti = this.tagService.create();
+		noti.setTag("SYSTEM");
+		final Collection<Tag> tags = new ArrayList<>();
+		tags.add(noti);
+		sended.setTags(tags);
+		for (int i = 0; i < emails.size(); i++) {
+			final Actor a = this.actorService.getActorByEmailOnly(emails.get(i));
+			sended = this.messageService.exchangeMessage(sended, a.getId());
+		}
+		sended.setSender("null");
+
+		final List<Tag> listTag = new ArrayList<>();
+		listTag.addAll(sended.getTags());
+		for (int i = 0; i < listTag.size(); i++)
+			if (logged.getId() == listTag.get(i).getActorId()) {
+				final Integer idTag = listTag.get(i).getId();
+				listTag.remove(listTag.get(i));
+				logged.getMessages().remove(sended);
+				this.tagService.delete(this.tagService.findOne(idTag));
+			}
+		sended.setTags(listTag);
+		this.messageService.save(sended);
+
+		final List<Tag> newList = new ArrayList<>();
+		newList.addAll(sended.getTags());
+		for (int i = 0; i < listTag.size(); i++) {
+			listTag.get(i).setMessageId(sended.getId());
+			final Tag save = this.tagService.save(listTag.get(i));
+		}
 	}
 }

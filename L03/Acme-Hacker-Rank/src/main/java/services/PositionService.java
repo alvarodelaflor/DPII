@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -17,12 +18,15 @@ import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
 import security.LoginService;
+import security.UserAccount;
 import utilities.AuthUtils;
+import domain.Actor;
 import domain.Company;
 import domain.Hacker;
 import domain.Message;
 import domain.Position;
 import domain.Problem;
+import domain.Tag;
 
 @Service
 @Transactional
@@ -39,6 +43,12 @@ public class PositionService {
 
 	@Autowired
 	private MessageService		msgService;
+
+	@Autowired
+	private TagService			tagService;
+
+	@Autowired
+	private ActorService		actorService;
 
 	@Autowired
 	private PositionDataService	positionDataService;
@@ -294,13 +304,69 @@ public class PositionService {
 		// We can cancel a position if it is in final mode
 		Assert.isTrue(dbPosition.getStatus(), "Only positions in final mode can be cancelled");
 		final Collection<Problem> positionProblems = this.problemService.findFromPosition(positionId);
+		final Collection<Hacker> hackers = new ArrayList<>();
 		for (final Problem p : positionProblems) {
 			this.positionRepository.rejectAllApplications(p.getId(), positionId);
 			// TODO: notify all hackers in this collection
-			final Collection<Hacker> hacker = this.hackerService.findByProblem(p.getId());
+			hackers.addAll(this.hackerService.findByProblem(p.getId()));
 		}
 
+		this.notifyHackers(hackers, dbPosition);
+
 		dbPosition.setCancel(true);
+	}
+
+	public void notifyHackers(final Collection<Hacker> hackers, final Position position) {
+		final UserAccount log = LoginService.getPrincipal();
+		final Actor logged = this.actorService.getActorByUserId(log.getId());
+
+		final List<Hacker> hackerReceiverList = new ArrayList<>();
+		hackerReceiverList.addAll(hackers);
+
+		for (int i = 0; i < hackerReceiverList.size() - 1; i++)
+			if (hackerReceiverList.get(i).getId() == hackerReceiverList.get(i + 1).getId())
+				hackerReceiverList.remove(hackerReceiverList.get(i + 1));
+
+		final List<String> emails = new ArrayList<>();
+		for (int i = 0; i < hackerReceiverList.size(); i++)
+			emails.add(hackerReceiverList.get(i).getEmail());
+
+		Message sended = this.msgService.create();
+		sended.setSubject("Position cancelled");
+		final Collection<String> me = new ArrayList<>();
+		sended.setRecipient(me);
+		sended.setBody("The position " + position.getTicker() + " have been cancelled");
+		sended.setMoment(LocalDate.now().toDate());
+
+		final Tag noti = this.tagService.create();
+		noti.setTag("SYSTEM");
+		final Collection<Tag> tags = new ArrayList<>();
+		tags.add(noti);
+		sended.setTags(tags);
+		for (int i = 0; i < emails.size(); i++) {
+			final Actor a = this.actorService.getActorByEmailOnly(emails.get(i));
+			sended = this.msgService.exchangeMessage(sended, a.getId());
+		}
+		sended.setSender("null");
+
+		final List<Tag> listTag = new ArrayList<>();
+		listTag.addAll(sended.getTags());
+		for (int i = 0; i < listTag.size(); i++)
+			if (logged.getId() == listTag.get(i).getActorId()) {
+				final Integer idTag = listTag.get(i).getId();
+				listTag.remove(listTag.get(i));
+				logged.getMessages().remove(sended);
+				this.tagService.delete(this.tagService.findOne(idTag));
+			}
+		sended.setTags(listTag);
+		this.msgService.save(sended);
+
+		final List<Tag> newList = new ArrayList<>();
+		newList.addAll(sended.getTags());
+		for (int i = 0; i < listTag.size(); i++) {
+			listTag.get(i).setMessageId(sended.getId());
+			final Tag save = this.tagService.save(listTag.get(i));
+		}
 	}
 
 	public void delete(final int positionId) {

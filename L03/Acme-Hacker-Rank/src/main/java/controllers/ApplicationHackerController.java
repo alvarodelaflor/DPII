@@ -313,7 +313,7 @@ public class ApplicationHackerController extends AbstractController {
 				final Tag tag = this.tagService.create();
 				tag.setActorId(hacker.getId());
 				tag.setMessageId(msg.getId());
-				tag.setTag("Notification");
+				tag.setTag("SYSTEM");
 				final Tag tagSave = this.tagService.save(tag);
 
 				msg.setTags(new ArrayList<Tag>());
