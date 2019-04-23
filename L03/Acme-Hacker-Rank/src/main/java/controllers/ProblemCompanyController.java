@@ -93,9 +93,9 @@ public class ProblemCompanyController extends AbstractController {
 	public ModelAndView create(final Problem problem, final BindingResult binding) {
 		ModelAndView result;
 
-		final Problem prob = null;
+		Problem prob = null;
 		try {
-			this.problemService.reconstruct(problem, binding);
+			prob = this.problemService.reconstruct(problem, binding);
 		} catch (final Exception e) {
 			return new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -121,9 +121,9 @@ public class ProblemCompanyController extends AbstractController {
 	public ModelAndView edit(final Problem problem, final BindingResult binding) {
 		ModelAndView result;
 
-		final Problem prob = null;
+		Problem prob = null;
 		try {
-			this.problemService.reconstruct(problem, binding);
+			prob = this.problemService.reconstruct(problem, binding);
 		} catch (final Exception e) {
 			return new ModelAndView("redirect:/welcome/index.do");
 		}
