@@ -1,6 +1,6 @@
-Entendemos como 220 usuarios, 20 bucles y 4400 registros educacionales a borrar el límite de nuestra aplicación.
+Entendemos como 180 usuarios, 20 bucles y 3600 registros educacionales a borrar el límite de nuestra aplicación.
 
-A partir de este porcentaje de usuarios comienzan a darse errores de login, entendiéndose que hemos alcanzado
+A partir de este porcentaje de usuarios comienzan a darse tiempos de 3 segundos en login, entendiéndose que hemos alcanzado
 nuestro límite.
 
 El procedimiento ha sido crear un número de registros educacionales (hilos * iteraciones) usando el programa java 
