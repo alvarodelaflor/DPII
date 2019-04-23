@@ -33,6 +33,7 @@ public class ConfigurationService {
 		return this.configurationRepository.save(configuration);
 	}
 	public void addPriority(final String newPriority) {
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final HashSet<String> priorities = new HashSet<>(this.getConfiguration().getPriorities());
 		priorities.add(newPriority);
@@ -41,6 +42,7 @@ public class ConfigurationService {
 		this.configurationRepository.save(config);
 	}
 	public void deletePriority(final String deletePriority) {
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final HashSet<String> priorities = new HashSet<>(this.getConfiguration().getPriorities());
 		priorities.remove(deletePriority);
@@ -49,18 +51,22 @@ public class ConfigurationService {
 		this.configurationRepository.save(config);
 	}
 	public void newPhone(final String newPhone) {
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setCountryCode(newPhone);
 		this.configurationRepository.save(config);
 	}
 	public void newLogo(final String newLogo) {
+		System.out.println(LoginService.getPrincipal());
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setBanner(newLogo);
 		this.configurationRepository.save(config);
 	}
 	public void newSystem(final String newSystem) {
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setSystemName(newSystem);
@@ -73,12 +79,14 @@ public class ConfigurationService {
 		this.configurationRepository.save(config);
 	}
 	public void newS(final String newSpanish) {
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final Configuration config = this.getConfiguration();
 		config.setSystemMessageEs(newSpanish);
 		this.configurationRepository.save(config);
 	}
 	public void newSpamWords(final String newSpamWord) {
+		Assert.notNull(LoginService.getPrincipal());
 		Assert.isTrue(this.administratorService.findOneByUserAccount(LoginService.getPrincipal().getId()) != null);
 		final HashSet<String> spamWords = new HashSet<>(this.getConfiguration().getSpamWords());
 		spamWords.add(newSpamWord);
