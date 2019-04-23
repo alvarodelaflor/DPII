@@ -1,7 +1,7 @@
-Establecemos como límite los 170 usuario ya que comprendemos que una acción de crear no debe tomar más
-de 2 segundos.
+Establecemos como límite los 180 usuario ya que comprendemos que una acción de iniciar sesión no debe tomar más
+de 3 segundos.
 
-Los parámetros de esta prueba han sido 170 usuarios con 100 bucles.
+Los parámetros de esta prueba han sido 180 usuarios con 20 bucles.
 
 
 Prestaciones:

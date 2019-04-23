@@ -1,5 +1,5 @@
-Establecemos el tope de nuestra aplicación en 150 usuarios ya que comienzan a aumentar el percentil
-a cifras mayores de 2.2 segundos, algo inviable en una web de día a día para crear un objeto.
+Establecemos el tope de nuestra aplicación en 200 usuarios ya que comienzan a aumentar el percentil
+a cifras mayores de 3 segundos, algo inviable en una web de día a día para crear un objeto.
 
 
 Prestaciones:
