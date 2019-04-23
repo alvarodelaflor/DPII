@@ -1,15 +1,12 @@
 
 package services;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -106,23 +103,32 @@ public class AdministratorService extends ActorService {
 			binding.rejectValue("expiration", "error.expirationFormatter");
 
 		if (actorForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}")) {
+			final String[] parts = actorForm.getExpiration().split("/");
+			final String part1 = parts[0]; // MM
+			final String part2 = parts[1]; // YY
 
-			final SimpleDateFormat f = new SimpleDateFormat("MM/yy");
-			Date ed = null;
-			Date now = new Date();
-			final Calendar c = Calendar.getInstance();
-			c.setTime(now);
-			now = c.getTime();
-			try {
+			final int monthRigthNow = LocalDateTime.now().toDate().getMonth();
+			final int monthCreditCard = Integer.parseInt(part1);
 
-				ed = f.parse(actorForm.getExpiration());
-			} catch (final ParseException oops) {
+			int yearRigthNow = LocalDateTime.now().toDate().getYear();
+			yearRigthNow = yearRigthNow % 100;
+			final int yearCredictCard = Integer.parseInt(part2);
 
-				Assert.isTrue(false, "parser.date.error");
-			}
-			if (ed.before(now))
+			System.out.println(monthCreditCard);
+			System.out.println(monthRigthNow);
+			System.out.println(yearCredictCard);
+			System.out.println(yearRigthNow);
+
+			System.out.println(yearCredictCard >= yearRigthNow);
+			System.out.println(monthCreditCard > monthRigthNow);
+
+			if (yearCredictCard < yearRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
 				binding.rejectValue("expiration", "error.expirationFuture");
 
+			if (yearCredictCard >= yearRigthNow && monthCreditCard != 00 && monthCreditCard > 12)
+				if (yearCredictCard == yearRigthNow)
+					if (monthCreditCard < monthRigthNow)
+						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
 		//AÑADIDO
