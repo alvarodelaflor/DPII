@@ -55,3 +55,5 @@ Prueba 4:
 El nº de usuarios concurrentes válido recomendado es unos 55 usuarios según las
 pruebas realizadas. 
 ================================================================================
+Nota: se ha usado el campo FOREVER para poder realizar una prueba suficientemente
+larga como para que se estabilizaran los tiempos en el "aggregate report".
