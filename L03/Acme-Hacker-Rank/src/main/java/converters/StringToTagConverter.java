@@ -12,7 +12,6 @@ import services.TagService;
 import domain.Tag;
 
 @Component
-@Transactional
 public class StringToTagConverter implements Converter<String, Tag> {
 
 	@Autowired

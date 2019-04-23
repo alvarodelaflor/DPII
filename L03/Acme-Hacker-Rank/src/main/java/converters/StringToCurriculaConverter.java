@@ -12,7 +12,6 @@ import domain.Curricula;
 import repositories.CurriculaRepository;
 
 @Component
-@Transactional
 public class StringToCurriculaConverter implements Converter<String, Curricula> {
 
 	@Autowired

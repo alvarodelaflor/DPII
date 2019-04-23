@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import domain.Position;
 
 @Component
-@Transactional
 public class PositionToStringConverter implements Converter<Position, String> {
 
 	@Override

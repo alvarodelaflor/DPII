@@ -12,7 +12,6 @@ import domain.Position;
 import repositories.PositionRepository;
 
 @Component
-@Transactional
 public class StringToPositionConverter implements Converter<String, Position> {
 
 	@Autowired
