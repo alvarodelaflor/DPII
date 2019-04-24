@@ -2,7 +2,7 @@ Con 100 usuarios muestra un rendimiento adecuado. Un 90% line máximo de 974ms.
 
 Con 150 usuarios muestra un rendimiento aceptable hasta cierto punto, ya que hay un 90% line máximo de 2344ms, así que tomaremos este número como la carga máxima en este caso.
 
-Con 175 usuarios y 100 loops abortamos el test ya que el porcentaje de error comenzó a aumentar frenéticamente.
+Con 175 usuarios y 100 loops abortamos el test ya que el porcentaje de error comenzó a aumentar frenéticamente debido a un error de red.
 
 
 Prestaciones:
