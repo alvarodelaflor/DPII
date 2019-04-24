@@ -1,9 +1,7 @@
-Con 100 usuarios muestra un rendimiento adecuado. Un 90% line máximo de 974ms.
+Con 150 usuarios muestra un rendimiento adecuado. Un 90% line máximo de 933ms.
 
-Con 150 usuarios muestra un rendimiento aceptable hasta cierto punto, ya que hay un 90% line máximo de 2344ms, así que tomaremos este número como la carga máxima en este caso.
-
-Con 175 usuarios y 100 loops abortamos el test ya que el porcentaje de error comenzó a aumentar frenéticamente.
-
+Con 175 usuarios y 50 loops abortamos el test ya que el porcentaje de error comenzó a aumentar debido a un fallo de red.
+En concreto: I/O exception (java.net.BindException) caught when connecting to the target host: Address already in use: connect
 
 Prestaciones:
  == Ordenador Físico ==
