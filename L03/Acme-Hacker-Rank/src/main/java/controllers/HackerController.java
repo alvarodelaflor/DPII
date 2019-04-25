@@ -219,7 +219,7 @@ public class HackerController extends AbstractController {
 				this.hackerService.delete(hacker);
 				result = new ModelAndView("redirect:/j_spring_security_logout");
 			} catch (final Exception e) {
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/j_spring_security_logout");
 			}
 		}
 		result.addObject("logo", this.getLogo());

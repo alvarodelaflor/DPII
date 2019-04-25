@@ -100,7 +100,9 @@ public class PositionDataService {
 		Assert.notNull(hackerLogin, "No hacker login");
 		Assert.notNull(positionData, "Null positionData");
 		Assert.isTrue(hackerLogin.equals(positionData.getCurricula().getHacker()), "Not allow to edit not own EducationalData");
-		Assert.isTrue(!this.checkDate(positionData.getStartDate(), positionData.getEndDate()), "Not valid date configuaration");
+		if (positionData.getEndDate()!=null) {
+			Assert.isTrue(!this.checkDate(positionData.getStartDate(), positionData.getEndDate()), "Not valid date configuaration");		
+		}
 		Assert.isTrue(this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()).contains(positionData.getPosition()), "Postion of the PositionData not valid");
 		return this.positionDataRepository.save(positionData);
 	}
