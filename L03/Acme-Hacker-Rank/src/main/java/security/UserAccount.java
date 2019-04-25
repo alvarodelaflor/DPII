@@ -172,7 +172,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Transient
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return !this.spammerFlag;
 	}
 
 }

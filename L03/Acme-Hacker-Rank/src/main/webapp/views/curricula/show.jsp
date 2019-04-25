@@ -28,10 +28,10 @@
 
 	<div>
 		<jstl:if test="${hackerLogin==true}">
-			<form method="get" action="/Acme-Hacker-Rank/curricula/hacker/delete.do">
+			<form method="get" action="curricula/hacker/delete.do">
 				<button class="linea" name="curriculaId" value="${curricula.id}"><spring:message code="curricula.delete"/></button>
 			</form>
-			<form method="get" action="/Acme-Hacker-Rank/curricula/hacker/edit.do">
+			<form method="get" action="curricula/hacker/edit.do">
 				<button name="curriculaId" value="${curricula.id}"><spring:message code="curricula.edit"/></button>
 			</form>
 			<br>	
