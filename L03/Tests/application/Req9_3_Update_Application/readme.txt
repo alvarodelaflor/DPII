@@ -2,7 +2,7 @@ Para la realización de este test ha sido necesario generar los datos a borrar po
 > python3 application_bean_generator.py 8750
 8750 es el número de beans a crear.
 
-Con 150 usuarios muestra un rendimiento adecuado. Un 90% line máximo de 1831ms.
+Con 150 usuarios muestra un rendimiento adecuado. Un 90% line máximo de 1517ms.
 
 Con 175 usuarios y 50 loops abortamos el test ya que el porcentaje de error comenzó a aumentar frenéticamente.
 
