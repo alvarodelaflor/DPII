@@ -100,7 +100,7 @@
 		<strong><spring:message code="curricula.positionData" /></strong>
 		<c:choose>
 			<c:when test="${hackerLogin==true and validPositionData==true}">
-				<form method="get" action="/Acme-Hacker-Rank/positionData/hacker/create.do">
+				<form method="get" action="positionData/hacker/create.do">
 					<button  name="curriculaId" value="${curricula.id}"><spring:message code="positionData.create"/></button>
 				</form>			
 			</c:when>
@@ -140,7 +140,7 @@
 		</jstl:if>
 		<strong><spring:message code="curricula.educationalData" /></strong>
 		<jstl:if test="${hackerLogin==true}">
-			<form method="get" action="/Acme-Hacker-Rank/educationalData/hacker/create.do">
+			<form method="get" action="educationalData/hacker/create.do">
 				<button name="curriculaId" value="${curricula.id}"><spring:message code="educationalData.create"/></button>
 			</form>
 		</jstl:if>
