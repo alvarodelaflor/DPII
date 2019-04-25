@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /*
@@ -65,7 +66,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	//	@SafeHtml(whitistType = WhiteListTy.NONE)
+	@SafeHtml
 	public String getSubject() {
 		return this.subject;
 	}
@@ -75,7 +76,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	//	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getBody() {
 		return this.body;
 	}
@@ -83,6 +84,7 @@ public class Message extends DomainEntity {
 	public void setBody(final String body) {
 		this.body = body;
 	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	@NotNull
