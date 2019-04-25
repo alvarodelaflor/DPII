@@ -11,11 +11,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.hibernate.validator.constraints.URL;
 
 import security.UserAccount;
@@ -25,13 +27,24 @@ import security.UserAccount;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Actor extends DomainEntity {
 
-	private String				name, surname, photo, email, phone, address;
+	private String				name, surname, photo, email, phone, address, vatNumber;
 	private CreditCard			creditCard;
 
 	private UserAccount			userAccount;
 
 	private Collection<Message>	messages;
 
+
+	@Pattern(regexp = "^([a-zA-z]{2}[0-9]{2,8}[a-zA-z]{1})$")
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@NotBlank
+	public String getVatNumber() {
+		return this.vatNumber;
+	}
+
+	public void setVatNumber(final String vatNumber) {
+		this.vatNumber = vatNumber;
+	}
 
 	@Valid
 	@ManyToMany(cascade = javax.persistence.CascadeType.ALL)

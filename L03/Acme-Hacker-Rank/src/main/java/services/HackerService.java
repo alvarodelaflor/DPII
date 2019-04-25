@@ -112,6 +112,7 @@ public class HackerService {
 		result.setEmail(registrationForm.getEmail());
 		result.setAddress(registrationForm.getAddress());
 		result.setPhone(registrationForm.getPhone());
+		result.setVatNumber(registrationForm.getVatNumber());
 
 		final CreditCard creditCard = new CreditCard();
 		creditCard.setCVV(registrationForm.getCVV());

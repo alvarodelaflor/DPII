@@ -87,6 +87,7 @@ public class AdministratorService extends ActorService {
 		result.setEmail(actorForm.getEmail());
 		result.setAddress(actorForm.getAddress());
 		result.setPhone(actorForm.getPhone());
+		result.setVatNumber(actorForm.getVatNumber());
 
 		final CreditCard creditCard = new CreditCard();
 		creditCard.setCVV(actorForm.getCVV());

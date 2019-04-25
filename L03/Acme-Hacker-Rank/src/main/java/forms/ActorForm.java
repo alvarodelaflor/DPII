@@ -1,21 +1,34 @@
 
 package forms;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 public class ActorForm {
 
-	private String	password, confirmPassword, address, email, name, phone, photo, surname, userName;
+	private String	password, confirmPassword, address, email, name, phone, photo, surname, userName, vatNumber;
 	private Boolean	accept;
 
 	private String	holder, make;
 	private String	CVV, number;
 	private String	expiration;
 
+
+	@Pattern(regexp = "^([a-zA-z]{2}[0-9]{2,8}[a-zA-z]{1})$")
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@NotBlank
+	public String getVatNumber() {
+		return this.vatNumber;
+	}
+
+	public void setVatNumber(final String vatNumber) {
+		this.vatNumber = vatNumber;
+	}
 
 	@NotBlank
 	@SafeHtml

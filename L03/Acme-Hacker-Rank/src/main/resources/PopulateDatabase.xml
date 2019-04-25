@@ -99,6 +99,7 @@
         <property name="userAccount" ref= "userAccountAdmin01"/>
 		<property name="config" ref="config" />
 		<property name="creditCard" ref="creditCard03" />
+		<property name="vatNumber" value="ee44f" />
 		</bean>
 	<!-- ADMIN -->
 	
@@ -113,6 +114,7 @@
         <property name="userAccount" ref= "userAccount3"/>
 		<property name="creditCard" ref="creditCard02" />
 		<property name="finder" ref="finder01" />
+		<property name="vatNumber" value="Es12345678s" />
 		</bean>
 	<!-- HACKER -->
 	
@@ -126,7 +128,8 @@
         <property name="address" value="Lora de Río, Nº5. Carmona" />
         <property name="commercialName" value="Carmen" />
         <property name="userAccount" ref= "userAccount2"/> 
-        <property name="creditCard" ref="creditCard01" />     
+        <property name="creditCard" ref="creditCard01" /> 
+		<property name="vatNumber" value="Es12345678s" />
     </bean>
 	<!-- COMPANY -->	
 	
