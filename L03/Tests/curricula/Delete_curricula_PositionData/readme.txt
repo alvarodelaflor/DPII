@@ -1,4 +1,4 @@
-Entendemos como 240 usuarios, 20 bucles y 4800 registro a borrar el límite de nuestra aplicación.
+Entendemos como 210 usuarios, 20 bucles y 4200 registro a borrar el límite de nuestra aplicación.
 
 A partir de esta configuración el login se eleva a casi dos segundos y medios, simililar al resto de acciones,
 un valor demasiado elevado para un uso habitual.

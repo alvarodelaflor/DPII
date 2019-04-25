@@ -4,6 +4,11 @@ Con 200 hilos abortamos el test ya que el procesador se encontraba al 100% todo 
 concluir este, aunque el porcentaje de error aún era 0.00%, pero nos arriesgabamos a deteriorar el 
 prcesador.
 
+La principal causa de abortar este fue debido a que el PC comenzó a bloquearse al completo, no dejaba mover ni
+el mouse.
+
+Debido a lo explicado anteriormente podemos concluir que el cuello de botella en este caso fue nuestra CPU.
+
 
 Prestaciones:
 
