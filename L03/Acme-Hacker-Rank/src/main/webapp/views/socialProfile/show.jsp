@@ -16,6 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <body>
 
@@ -29,5 +30,5 @@
   																          			
           			</table>
           			
-          			
+          			<acme:cancel url=" " code="cancel"/>
       			</div>

@@ -6,6 +6,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -25,6 +26,7 @@ public class Tag extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml
 	public String getTag() {
 		return this.tag;
 	}

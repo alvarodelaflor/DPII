@@ -12,6 +12,7 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.AdministratorService;
 import services.MessageService;
 import services.TagService;
 import domain.Actor;
@@ -42,11 +44,13 @@ import domain.Tag;
 public class MessageController extends AbstractController {
 
 	@Autowired
-	private MessageService	messageService;
+	private MessageService			messageService;
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
 	@Autowired
-	private TagService		tagService;
+	private AdministratorService	adminService;
+	@Autowired
+	private TagService				tagService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -70,7 +74,7 @@ public class MessageController extends AbstractController {
 			receivedMessages.addAll(a.getMessages());
 			receivedMessages.removeAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
 
-			final List<Message> sendedMessageFilter = new ArrayList<>();
+			List<Message> sendedMessageFilter = new ArrayList<>();
 			sendedMessageFilter.addAll(sendMessages);
 
 			for (int i = 0; i < sendedMessageFilter.size(); i++) {
@@ -80,7 +84,7 @@ public class MessageController extends AbstractController {
 				sendedMessageFilter.get(i).getTags().retainAll(tagsFilter);
 			}
 
-			final List<Message> receiveMessageFilter = new ArrayList<>();
+			List<Message> receiveMessageFilter = new ArrayList<>();
 			receiveMessageFilter.addAll(receivedMessages);
 
 			for (int i = 0; i < receiveMessageFilter.size(); i++) {
@@ -91,6 +95,16 @@ public class MessageController extends AbstractController {
 			}
 
 			result = new ModelAndView("message/list");
+
+			if (sendedMessageFilter.size() > 0) {
+				final Message[] arraySended = sendedMessageFilter.toArray(new Message[sendedMessageFilter.size()]);
+				Arrays.sort(arraySended);
+				sendedMessageFilter = Arrays.asList(arraySended);
+			} else if (receiveMessageFilter.size() > 0) {
+				final Message[] arrayReceive = receiveMessageFilter.toArray(new Message[receiveMessageFilter.size()]);
+				Arrays.sort(arrayReceive);
+				receiveMessageFilter = Arrays.asList(arrayReceive);
+			}
 			result.addObject("msgsSend", sendedMessageFilter);
 			result.addObject("msgsReceive", receiveMessageFilter);
 			result.addObject("requestURI", "message/list.do");
@@ -339,7 +353,7 @@ public class MessageController extends AbstractController {
 		} else
 			try {
 				final UserAccount user = LoginService.getPrincipal();
-
+				Assert.notNull(this.adminService.findOneByUserAccount(user.getId()));
 				final Actor a = this.actorService.getActorByUserId(user.getId());
 
 				final List<String> emailsReceiver = (List<String>) this.actorService.getEmailOfActors();

@@ -1,8 +1,10 @@
 
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /*
@@ -26,7 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Message extends DomainEntity {
+public class Message extends DomainEntity implements Comparable<Message> {
 
 	private String				subject;
 	private String				body;
@@ -65,7 +68,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	//	@SafeHtml(whitistType = WhiteListTy.NONE)
+	@SafeHtml
 	public String getSubject() {
 		return this.subject;
 	}
@@ -75,7 +78,7 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	//	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@SafeHtml
 	public String getBody() {
 		return this.body;
 	}
@@ -83,6 +86,7 @@ public class Message extends DomainEntity {
 	public void setBody(final String body) {
 		this.body = body;
 	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	@NotNull
@@ -92,6 +96,21 @@ public class Message extends DomainEntity {
 
 	public void setMoment(final Date moment) {
 		this.moment = moment;
+	}
+
+	@Override
+	public int compareTo(final Message o) {
+		final List<Tag> tags1 = new ArrayList<>();
+		final List<Tag> tags2 = new ArrayList<>();
+		tags1.addAll(o.getTags());
+		tags2.addAll(this.tags);
+		final Tag tag1 = tags1.get(0);
+		final Tag tag2 = tags2.get(0);
+		if (tag1.getTag().compareTo(tag2.getTag()) < 0)
+			return 1;
+		else if (tag1.getTag().compareTo(tag2.getTag()) > 0)
+			return -1;
+		return 0;
 	}
 
 }
