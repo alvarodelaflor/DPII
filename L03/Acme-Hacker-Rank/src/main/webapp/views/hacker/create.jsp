@@ -51,6 +51,13 @@
 				<acme:textboxExpiration code="hacker.expiration" path="expiration" />
 				</fieldset>
 				<br>
+				<fieldset>
+				<legend>
+					<spring:message code="actor.vatNumer" />
+				</legend>
+				<acme:textbox code="actor.vat" path="vatNumber" placeholder="CAR1234567r"/>	
+				</fieldset>
+				<br>
 				<spring:message code="hacker.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="actor/conditions.do" target="_blank"><spring:message code="hacker.conditions1" /></a>
