@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import domain.Curricula;
 
 @Component
-@Transactional
 public class CurriculaToStringConverter implements Converter<Curricula, String> {
 
 	@Override
