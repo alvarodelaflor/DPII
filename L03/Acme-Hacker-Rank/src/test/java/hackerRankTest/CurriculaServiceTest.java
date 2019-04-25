@@ -321,6 +321,7 @@ public class CurriculaServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
+			super.authenticate("admin");
 			this.curriculaService.stddevNumberOfResultHistory();
 			this.curriculaService.avgNumberOfResultHsitory();
 			this.curriculaService.maxNumberOfResultHistory();
