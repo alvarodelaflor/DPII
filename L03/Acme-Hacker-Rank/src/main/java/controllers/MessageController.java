@@ -94,6 +94,22 @@ public class MessageController extends AbstractController {
 				receiveMessageFilter.get(i).getTags().retainAll(tagsFilter);
 			}
 
+			for (int i = 0; i < sendedMessageFilter.size(); i++)
+				if (sendedMessageFilter.get(i).getTags().size() == 0) {
+					final Tag update = this.tagService.getTagByMessage(sendedMessageFilter.get(i).getId());
+					final Collection<Tag> tags = new ArrayList<>();
+					tags.add(update);
+					sendedMessageFilter.get(i).setTags(tags);
+				}
+
+			for (int i = 0; i < receiveMessageFilter.size(); i++)
+				if (receiveMessageFilter.get(i).getTags().size() == 0) {
+					final Tag update = this.tagService.getTagByMessage(receiveMessageFilter.get(i).getId());
+					final Collection<Tag> tags = new ArrayList<>();
+					tags.add(update);
+					receiveMessageFilter.get(i).setTags(tags);
+				}
+
 			result = new ModelAndView("message/list");
 
 			if (sendedMessageFilter.size() > 0) {
@@ -234,19 +250,6 @@ public class MessageController extends AbstractController {
 				tags2.addAll(msg.getTags());
 				for (int i = 0; i < tags2.size(); i++)
 					tags2.get(i).setMessageId(msg.getId());
-
-				//				final Collection<Message> sendMessages = new ArrayList<>();
-				//				sendMessages.addAll(a.getMessages());
-				//				sendMessages.retainAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
-				//
-				//				final Collection<Message> receivedMessages = new ArrayList<>();
-				//				receivedMessages.addAll(a.getMessages());
-				//				receivedMessages.removeAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
-				//
-				//				result = new ModelAndView("message/list");
-				//				result.addObject("msgsSend", sendMessages);
-				//				result.addObject("msgsReceive", receivedMessages);
-				//				result.addObject("requestURI", "message/list.do");
 				result = this.listMessages();
 
 			} catch (final Throwable oops) {
@@ -342,6 +345,21 @@ public class MessageController extends AbstractController {
 	public ModelAndView sendNoti(@ModelAttribute("msg") Message msg, final BindingResult binding) {
 		ModelAndView result;
 		msg = this.messageService.reconstruct(msg, binding);
+
+		final UserAccount user = LoginService.getPrincipal();
+		Assert.notNull(this.adminService.findOneByUserAccount(user.getId()));
+		final Actor a = this.actorService.getActorByUserId(user.getId());
+
+		final List<String> emailsReceiver = (List<String>) this.actorService.getEmailOfActors();
+
+		emailsReceiver.remove(a.getEmail());
+
+		if (emailsReceiver.size() == 0) {
+			final ObjectError error = new ObjectError("actorNull", "Must be minimum one actor");
+			binding.addError(error);
+			binding.rejectValue("recipient", "error.actorNull");
+		}
+
 		if (binding.hasErrors()) {
 			System.out.println("Entro en el binding messageController");
 			final Collection<String> emails = this.actorService.getEmailOfActors();
@@ -352,13 +370,7 @@ public class MessageController extends AbstractController {
 			result.addObject("emails", emails);
 		} else
 			try {
-				final UserAccount user = LoginService.getPrincipal();
-				Assert.notNull(this.adminService.findOneByUserAccount(user.getId()));
-				final Actor a = this.actorService.getActorByUserId(user.getId());
 
-				final List<String> emailsReceiver = (List<String>) this.actorService.getEmailOfActors();
-
-				emailsReceiver.remove(a.getEmail());
 				System.out.println("antes de exchangeMessage");
 				final List<String> lisRecipient = new ArrayList<>();
 				lisRecipient.addAll(emailsReceiver);
@@ -371,23 +383,10 @@ public class MessageController extends AbstractController {
 				for (int i = 0; i < lisRecipient.size(); i++)
 					msg = this.messageService.exchangeMessage(msg, this.actorService.getActorByEmailOnly(lisRecipient.get(i)).getId());
 				this.messageService.save(msg);
-				final List<Tag> tags = new ArrayList<>();
-				tags.addAll(msg.getTags());
-				for (int i = 0; i < tags.size(); i++)
-					tags.get(i).setMessageId(msg.getId());
-
-				//				final Collection<Message> sendMessages = new ArrayList<>();
-				//				sendMessages.addAll(a.getMessages());
-				//				sendMessages.retainAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
-				//
-				//				final Collection<Message> receivedMessages = new ArrayList<>();
-				//				receivedMessages.addAll(a.getMessages());
-				//				receivedMessages.removeAll(this.messageService.getSendedMessagesByActor(a.getEmail()));
-				//
-				//				result = new ModelAndView("message/list");
-				//				result.addObject("msgsSend", sendMessages);
-				//				result.addObject("msgsReceive", receivedMessages);
-				//				result.addObject("requestURI", "message/list.do");
+				final List<Tag> tags2 = new ArrayList<>();
+				tags2.addAll(msg.getTags());
+				for (int i = 0; i < tags2.size(); i++)
+					tags2.get(i).setMessageId(msg.getId());
 				result = this.listMessages();
 
 			} catch (final Throwable oops) {

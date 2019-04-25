@@ -148,7 +148,15 @@ public class MessageService {
 
 		final List<Tag> defaults = new ArrayList<>();
 		defaults.addAll(message.getTags());
-		final Tag defaultTag = defaults.get(0);
+
+		Tag defaultTag = this.tagService.create();
+
+		if (defaults.size() > 0)
+			defaultTag = defaults.get(0);
+		else {
+			defaultTag = this.tagService.create();
+			defaultTag.setTag(" ");
+		}
 
 		final Tag sendedTag = this.tagService.create();
 		final Tag receivedTag = this.tagService.create();
@@ -171,10 +179,12 @@ public class MessageService {
 			message.getTags().add(savedReceived);
 			receiver.getMessages().add(message);
 		}
-		message.getTags().remove(defaultTag);
+
+		if (defaultTag.getActorId() == 0)
+			message.getTags().remove(defaultTag);
+
 		return message;
 	}
-
 	public void remove(final Message message) {
 		final UserAccount userSender = LoginService.getPrincipal();
 		final Actor a = this.actorService.getActorByUserId(userSender.getId());
