@@ -10,4 +10,4 @@ Prestaciones:
  - Disco Duro: HGST HTS721010A9E630 HDD (1TB)
  == Máquina virtual ==
  - CPUs: 4
- - RAM: 3GB
+ - RAM: 4GB
