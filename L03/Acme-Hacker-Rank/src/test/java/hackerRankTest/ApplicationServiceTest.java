@@ -524,4 +524,86 @@ public class ApplicationServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 3. List and show their applications
+	 * Analysis of sentence coverage
+	 * ~8.9%
+	 * Analysis of data coverage
+	 * ~10%
+	 */
+	@Test
+	public void Driver07() {
+		final Object testingData[][] = {
+			{ // Positive
+				"company", null
+			}, { // Negative
+				"hacker", NullPointerException.class
+			},
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver07((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	private void Driver07(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+			this.applicationService.getAcceptedApplicationsByLoggedCompany();
+			this.applicationService.getRejectedApplicationsByLoggedCompany();
+			this.applicationService.getSubmittedApplicationsByLoggedCompany();
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 9 An actor who is authenticated as a company must be able to:
+	 * 3. Update their applications
+	 * Analysis of sentence coverage
+	 * ~3.4%
+	 * Analysis of data coverage
+	 * ~5%
+	 */
+	@Test
+	public void Driver08() {
+		final Object testingData[][] = {
+			{ // Positive
+				"company", null
+			}, { // Negative
+				"hacker", NullPointerException.class
+			},
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Driver08((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	private void Driver08(final String user, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+			final Collection<Application> apps = this.applicationService.getSubmittedApplicationsByLoggedCompany();
+			if (apps.size() > 0)
+				this.applicationService.accept(apps.iterator().next().getId());
+
+		} catch (final Exception e) {
+			caught = e.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
 }
