@@ -63,22 +63,22 @@ public class HackerServiceTest extends AbstractTest {
 			{
 				// Test positivo: Create a Hacker
 				// name, surname, photo, email, phone, address, userName, password, commercialName
-				"pruebaCreateHacker", "pruebaCreateHacker", "http://pruebaCreateHacker", "pruebaCreateHacker@pruebaCreateHacker", "123456", "", "pruebaCreateHacker", "pruebaCreateHacker", "pruebaCreateHacker", null
+				"pruebaCreateHacker", "pruebaCreateHacker", "http://pruebaCreateHacker", "pruebaCreateHacker@pruebaCreateHacker", "123456", "", "pruebaCreateHacker", "pruebaCreateHacker", "pruebaCreateHacker", "dd322d", null
 			}, {
 				// Test negativo: Create a Hacker
 				// name, surname, photo, email, phone, address, userName, password, commercialName
-				"", "", "pruebaCreateHacker", "pruebaCreateHacker", "", "", "", "", "", IllegalArgumentException.class
+				"", "", "pruebaCreateHacker", "pruebaCreateHacker", "", "", "", "", "", "ss22d", IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
 			this.Diver01((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6], (String) testingData[i][7],
-				(String) testingData[i][8], (Class<?>) testingData[i][9]);
+				(String) testingData[i][8], (String) testingData[i][9], (Class<?>) testingData[i][10]);
 	}
-
 	// Ancillary methods ------------------------------------------------------
 
-	protected void Diver01(final String name, final String surname, final String photo, final String email, final String phone, final String address, final String userName, final String password, final String comercialName, final Class<?> expected) {
+	protected void Diver01(final String name, final String surname, final String photo, final String email, final String phone, final String address, final String userName, final String password, final String comercialName, final String vat,
+		final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
@@ -91,6 +91,7 @@ public class HackerServiceTest extends AbstractTest {
 			hacker.setPhone(phone);
 			hacker.setPhoto(photo);
 			hacker.setSurname(surname);
+			hacker.setVatNumber(vat);
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword(password, null);
@@ -166,6 +167,7 @@ public class HackerServiceTest extends AbstractTest {
 			hacker.setPhone("123456");
 			hacker.setPhoto("http://SoyUnaFoto");
 			hacker.setSurname("SoyUnaPreuba");
+			hacker.setVatNumber("dd33d");
 			hacker.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -233,6 +235,7 @@ public class HackerServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("dd33d");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();

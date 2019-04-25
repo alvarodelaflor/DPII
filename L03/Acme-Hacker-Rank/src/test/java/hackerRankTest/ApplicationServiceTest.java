@@ -163,6 +163,7 @@ public class ApplicationServiceTest extends AbstractTest {
 			hacker.setPhone("123456");
 			hacker.setPhoto("http://SoyUnaFoto");
 			hacker.setSurname("SoyUnaPreuba");
+			hacker.setVatNumber("dd33f");
 			hacker.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -235,6 +236,7 @@ public class ApplicationServiceTest extends AbstractTest {
 			hacker.setPhone("123456");
 			hacker.setPhoto("http://SoyUnaFoto");
 			hacker.setSurname("SoyUnaPreuba");
+			hacker.setVatNumber("dd33f");
 			hacker.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -315,6 +317,7 @@ public class ApplicationServiceTest extends AbstractTest {
 			hacker.setPhone("123456");
 			hacker.setPhoto("http://SoyUnaFoto");
 			hacker.setSurname("SoyUnaPreuba");
+			hacker.setVatNumber("dd33f");
 			hacker.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -397,6 +400,8 @@ public class ApplicationServiceTest extends AbstractTest {
 			hacker.setPhone("123456");
 			hacker.setPhoto("http://SoyUnaFoto");
 			hacker.setSurname("SoyUnaPreuba");
+			hacker.setVatNumber("dd33f");
+
 			hacker.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -484,6 +489,8 @@ public class ApplicationServiceTest extends AbstractTest {
 			hacker.setPhone("123456");
 			hacker.setPhoto("http://SoyUnaFoto");
 			hacker.setSurname("SoyUnaPreuba");
+			hacker.setVatNumber("dd33f");
+
 			hacker.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();

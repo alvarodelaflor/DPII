@@ -139,6 +139,7 @@ public class MessageServiceTest extends AbstractTest {
 			hacker.setEmail("elcejas@hacker.com");
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
+			hacker.setVatNumber("hh55g");
 			hacker.setSurname("hackersurname");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
@@ -196,6 +197,7 @@ public class MessageServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("hh55g");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			this.hackerService.saveCreate(hacker);

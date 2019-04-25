@@ -239,6 +239,7 @@ public class AdminServiceTest extends AbstractTest {
 			admin.setAddress("calle de los 2 vasos de agua");
 			admin.setEmail(email);
 			admin.setPhone("1234");
+			admin.setVatNumber("hh33h");
 			admin.getCreditCard().setHolder("holder");
 			admin.getCreditCard().setMake("VISA");
 			admin.getCreditCard().setNumber("123412341234");
@@ -275,6 +276,8 @@ public class AdminServiceTest extends AbstractTest {
 				hacker.setName("hackername");
 				hacker.setPhone("123456789");
 				hacker.setSurname("hackersurname");
+				hacker.setVatNumber("dd33e");
+
 				hacker.getUserAccount().setUsername("hackeruser");
 				hacker.getUserAccount().setPassword("hackerpass");
 				this.hackerService.saveCreate(hacker);
@@ -313,6 +316,7 @@ public class AdminServiceTest extends AbstractTest {
 				hacker.setName("hackername");
 				hacker.setPhone("123456789");
 				hacker.setSurname("hackersurname");
+				hacker.setVatNumber("dd33f");
 				hacker.getUserAccount().setUsername("hackeruser");
 				hacker.getUserAccount().setPassword("hackerpass");
 				this.hackerService.saveCreate(hacker);
@@ -329,12 +333,13 @@ public class AdminServiceTest extends AbstractTest {
 			form.setPhone(phone);
 			form.setHolder(holder);
 			form.setMake(make);
+			form.setVatNumber("dd32f");
 			form.setNumber(number);
 			form.setCVV(cvv);
 			if (expDate == 0)
-				form.setExpiration("03/2020");
+				form.setExpiration("03/22");
 			else
-				form.setExpiration("03/2000");
+				form.setExpiration("03/22");
 			form.setAccept(agreed);
 
 			this.authenticate(username);
@@ -367,6 +372,7 @@ public class AdminServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("aa32d");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			final Hacker savedHacker = this.hackerService.saveCreate(hacker);
@@ -415,6 +421,7 @@ public class AdminServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("hh33h");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			if (spammer == 1)
@@ -452,6 +459,7 @@ public class AdminServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("hh33h");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			hacker.getUserAccount().setSpammerFlag(true);

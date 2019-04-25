@@ -216,6 +216,7 @@ public class PositionServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("hh55g");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -310,6 +311,7 @@ public class PositionServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("hh55g");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -384,6 +386,7 @@ public class PositionServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("hh55g");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -472,6 +475,7 @@ public class PositionServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("hh55g");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -560,6 +564,7 @@ public class PositionServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("hh55g");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -654,6 +659,7 @@ public class PositionServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("hh55g");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
