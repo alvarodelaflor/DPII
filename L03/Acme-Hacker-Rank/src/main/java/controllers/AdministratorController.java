@@ -418,8 +418,7 @@ public class AdministratorController extends AbstractController {
 				result.addObject("message", "noSpamWord.error");
 			}
 		}
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
@@ -439,8 +438,7 @@ public class AdministratorController extends AbstractController {
 		this.configurationService.newS(newSpanish);
 
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
@@ -457,8 +455,7 @@ public class AdministratorController extends AbstractController {
 		this.configurationService.newSystem(newSystem);
 
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
@@ -474,8 +471,7 @@ public class AdministratorController extends AbstractController {
 
 		result.addObject("requestURI", "master-page/header.do");
 		result.addObject("system", system);
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
@@ -494,8 +490,7 @@ public class AdministratorController extends AbstractController {
 		} catch (final Exception e) {
 			result = this.createEditModelAndView(newLogo, "logo.bad");
 		}
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
@@ -549,8 +544,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("requestURI", "administrator/list.do");
 
 		result.addObject("message", messageCode);
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
@@ -565,8 +559,7 @@ public class AdministratorController extends AbstractController {
 		System.out.println("Carmen: Voy a intentar guardar");
 
 		result = new ModelAndView("redirect:list.do");
-		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
+
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;

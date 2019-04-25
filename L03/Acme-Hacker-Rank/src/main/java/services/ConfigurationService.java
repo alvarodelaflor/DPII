@@ -3,22 +3,19 @@ package services;
 
 import java.util.HashSet;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Configuration;
 import repositories.ConfigurationRepository;
 import security.LoginService;
+import domain.Configuration;
 
 @Service
-@Transactional
 public class ConfigurationService {
 
 	@Autowired
-	private ConfigurationRepository	configurationRepository;
+	public ConfigurationRepository	configurationRepository;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -28,6 +25,7 @@ public class ConfigurationService {
 
 		return this.configurationRepository.findAll().iterator().next();
 	}
+
 	public Configuration save(final Configuration configuration) {
 
 		return this.configurationRepository.save(configuration);
