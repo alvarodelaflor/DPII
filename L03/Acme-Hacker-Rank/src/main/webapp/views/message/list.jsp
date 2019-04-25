@@ -44,7 +44,7 @@
 			</display:table>	
 			
 			<br>
-  	<a href="message/create.do"><spring:message code="send.msg" /></a>
+  		<a href="message/create.do"><spring:message code="send.msg" /></a>
   	
   	<br>
   	

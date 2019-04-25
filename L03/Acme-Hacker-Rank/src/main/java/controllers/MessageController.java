@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.AdministratorService;
 import services.MessageService;
 import services.TagService;
 import domain.Actor;
@@ -42,11 +43,13 @@ import domain.Tag;
 public class MessageController extends AbstractController {
 
 	@Autowired
-	private MessageService	messageService;
+	private MessageService			messageService;
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
 	@Autowired
-	private TagService		tagService;
+	private AdministratorService	adminService;
+	@Autowired
+	private TagService				tagService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -339,7 +342,7 @@ public class MessageController extends AbstractController {
 		} else
 			try {
 				final UserAccount user = LoginService.getPrincipal();
-
+				Assert.notNull(this.adminService.findOneByUserAccount(user.getId()));
 				final Actor a = this.actorService.getActorByUserId(user.getId());
 
 				final List<String> emailsReceiver = (List<String>) this.actorService.getEmailOfActors();

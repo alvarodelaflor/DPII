@@ -43,7 +43,7 @@ public class FinderService {
 		final Finder res = new Finder();
 		res.setKeyword("");
 		res.setMinSalary(0.);
-		res.setMaxSalary(Double.MAX_VALUE);
+		res.setMaxSalary(99999.99);
 		res.setDeadline(new GregorianCalendar(0, Calendar.JANUARY, 1).getTime());
 		return res;
 	}
