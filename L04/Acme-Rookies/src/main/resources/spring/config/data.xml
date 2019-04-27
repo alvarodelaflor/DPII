@@ -23,7 +23,7 @@
 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"> 
 		<property name="driverClass" value="com.mysql.jdbc.Driver" /> 
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Acme-Hacker-Rank" /> 
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Acme-Rookies" /> 
 		<property name="user" value="acme-user" /> 
 		<property name="password" value="ACME-Us3r-P@ssw0rd" /> 
 		<property name="minPoolSize" value="1" /> 
@@ -34,7 +34,7 @@
 	<!-- JPA -->
 
 	<bean id="persistenceUnit" class="java.lang.String">
-		<constructor-arg value="Acme-Hacker-Rank" />
+		<constructor-arg value="Acme-Rookies" />
 	</bean>
 
 	<bean id="sqlDialect" class="java.lang.String">

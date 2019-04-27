@@ -49,7 +49,7 @@
 	
 	<!-- CONFIG -->
 	 <bean id="config" class="domain.Configuration">
-		<property name="systemName" value="Acme-Hacker-Rank" />
+		<property name="systemName" value="Acme-Rookies" />
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
 		<property name="cacheAmount" value="10" />
