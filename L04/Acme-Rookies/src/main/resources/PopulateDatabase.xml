@@ -54,6 +54,18 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="provider" />
+		<property name="password" value="9e9f3d70bd8c8957627eada96d967706" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PROVIDER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- Other domain beans come here -->	
 	
 	<!-- CONFIG -->
@@ -311,6 +323,15 @@
     	<property name="CVV" value= "234"/>
  		<property name="expiration" value= "22/10"/>
     </bean>
+    
+    
+    <bean id="creditCard04" class="domain.CreditCard">
+    	<property name="holder" value= "Jose Antonio Ferrete"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1234567891234567"/>
+    	<property name="CVV" value= "134"/>
+ 		<property name="expiration" value= "22/10"/>
+    </bean>
     <!-- CRECIT CARD -->
     
     <!-- FINDER -->
@@ -346,6 +367,41 @@
     	</property>
     </bean>
 	<!-- FINDER -->
+	
+	<!-- PROVIDER -->
+	<bean id="provider01" class="domain.Provider">
+    	<property name="name" value="Ferrete" />
+    	<property name="surname" value="Ferrete Ferrete" />
+    	<property name="photo" value="https://www.megaidea.net/wp-content/uploads/2018/07/DORAEMON-18.png" />
+		<property name="email" value="ferrete@carferben" />
+        <property name="phone" value="+3423456789" />
+        <property name="address" value="Lora ESPAÑA, Nº5. Carmona" />
+        <property name="commercialName" value="FerreteKiller" />
+        <property name="userAccount" ref= "userAccount4"/> 
+        <property name="creditCard" ref="creditCard04" /> 
+		<property name="vatNumber" value="Es12345679s" />
+    </bean>
+	<!-- PROVIDER -->	
+	
+	<!-- ITEM -->
+	<bean id="item01" class="domain.Item">
+    	<property name="name" value= "Escoba"/>
+    	<property name="description" value= "Una escoba para barrer las miguitas de las galletas"/>
+    	<property name="link" value= "https://www.google.com/"/>
+    	<property name="pictures" value= "234"/>
+ 		<property name="provider" ref= "provider01"/>
+    </bean>
+    
+   	<bean id="item02" class="domain.Item">
+    	<property name="name" value= "Teclado"/>
+    	<property name="description" value= "Un teclado para teclear"/>
+    	<property name="link" value= "https://www.google.com/"/>
+    	<property name="pictures" value= "234"/>
+ 		<property name="provider" ref= "provider01"/>
+    </bean>
+    
+ 
+    <!-- ITEM -->
 
 
 </beans>
