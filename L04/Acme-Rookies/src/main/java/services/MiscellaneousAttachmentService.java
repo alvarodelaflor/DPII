@@ -1,3 +1,4 @@
+
 package services;
 
 /**
@@ -5,195 +6,185 @@ package services;
  * 
  * @author Alvaro de la Flor Bonilla GitHub: alvar017
  * 
- * CONTROL:
- * 30/03/2019 16:47 Creation
+ *         CONTROL:
+ *         30/03/2019 16:47 Creation
  */
 
 import java.util.ArrayList;
-
-/**
- * PositionDataServie.java
- * 
- * @author Álvaro de la Flor Bonilla GitHub: alvar017
- * 
- * CONTROL:
- * 30/03/2019 16:35 Creation
- */
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import repositories.MiscellaneousAttachmentRepository;
 import domain.Curricula;
 import domain.MiscellaneousAttachment;
-import domain.Hacker;
-import repositories.MiscellaneousAttachmentRepository;
+import domain.Rookie;
 
 @Service
 @Transactional
 public class MiscellaneousAttachmentService {
 
 	@Autowired
-	private MiscellaneousAttachmentRepository miscellaneousAttachmentRepository;
-	
+	private MiscellaneousAttachmentRepository	miscellaneousAttachmentRepository;
+
 	@Autowired
-	private HackerService hackerService;
+	private RookieService						rookieService;
+
 
 	// CRUD Methods
 
 	/**
 	 * Create a {@link MiscellaneousAttachment} instance<br>
-	 * Must exist an {@link Hacker} login
+	 * Must exist an {@link Rookie} login
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link MiscellaneousAttachment}
 	 */
 	public MiscellaneousAttachment create() {
-		Assert.notNull(this.hackerService.getHackerLogin());
+		Assert.notNull(this.rookieService.getRookieLogin());
 		return new MiscellaneousAttachment();
 	}
-	
+
 	/**
-	 * Crete a new MiscellaneousAttachment with the given curricula<br> Atributes isCopy: false and the curricula given are setted by default
+	 * Crete a new MiscellaneousAttachment with the given curricula<br>
+	 * Atributes isCopy: false and the curricula given are setted by default
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link MiscellaneousAttachment}
 	 */
-	public MiscellaneousAttachment createWithHistory(Curricula curricula) {
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
-		Hacker hackerCurricula = this.hackerService.getHackerByCurriculaId(curricula);
-		Assert.notNull(hackerCurricula, "No hacker for this curricula");
-		Assert.isTrue(hackerCurricula.equals(hackerLogin), "Login and hacker curricula are diferent");
-		MiscellaneousAttachment res = new MiscellaneousAttachment();
+	public MiscellaneousAttachment createWithHistory(final Curricula curricula) {
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
+		final Rookie rookieCurricula = this.rookieService.getRookieByCurriculaId(curricula);
+		Assert.notNull(rookieCurricula, "No rookie for this curricula");
+		Assert.isTrue(rookieCurricula.equals(rookieLogin), "Login and rookie curricula are diferent");
+		final MiscellaneousAttachment res = new MiscellaneousAttachment();
 		res.setCurriculaM(curricula);
 		res.setIsCopy(false);
 		return res;
 	}
 
 	/**
-	 * Save a MiscellaneousAttachment  given <br> 
+	 * Save a MiscellaneousAttachment given <br>
 	 * 
-	 * Must be a {@link Hacker} login and the owner of the educationalDate to save must be this hacker
+	 * Must be a {@link Rookie} login and the owner of the educationalDate to save must be this rookie
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link MiscellaneousAttachment}
 	 */
-	public MiscellaneousAttachment save(MiscellaneousAttachment miscellaneousAttachment) {
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker login");
+	public MiscellaneousAttachment save(final MiscellaneousAttachment miscellaneousAttachment) {
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie login");
 		Assert.notNull(miscellaneousAttachment, "Null miscellaneousAttachment");
-		Assert.isTrue(hackerLogin.equals(miscellaneousAttachment.getCurriculaM().getHacker()), "Not allow to edit not own MiscellaneousAttachment");
+		Assert.isTrue(rookieLogin.equals(miscellaneousAttachment.getCurriculaM().getRookie()), "Not allow to edit not own MiscellaneousAttachment");
 		return this.miscellaneousAttachmentRepository.save(miscellaneousAttachment);
 	}
-	
+
 	/**
-	 * Save a collection of MiscellaneousAttachment given <br> 
+	 * Save a collection of MiscellaneousAttachment given <br>
 	 * 
-	 * Must be a {@link Hacker} login and the owner of the educationalDate to save must be this hacker
+	 * Must be a {@link Rookie} login and the owner of the educationalDate to save must be this rookie
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link MiscellaneousAttachment}<{@link MiscellaneousAttachment}>
-	 */	
-	public Collection<MiscellaneousAttachment> savaAll(Collection<MiscellaneousAttachment> educationalsData) {
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
+	 */
+	public Collection<MiscellaneousAttachment> savaAll(final Collection<MiscellaneousAttachment> educationalsData) {
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
 		Assert.isTrue(!educationalsData.isEmpty(), "Empty collection of educationalsData");
-		Assert.isTrue(educationalsData.iterator().next().getCurriculaM().getHacker().equals(hackerLogin), "No valid hacker to save");
+		Assert.isTrue(educationalsData.iterator().next().getCurriculaM().getRookie().equals(rookieLogin), "No valid rookie to save");
 		return this.miscellaneousAttachmentRepository.save(educationalsData);
 	}
 
 	/**
-	 * Find a MiscellaneousAttachment in the DataBase 
+	 * Find a MiscellaneousAttachment in the DataBase
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link MiscellaneousAttachment}
-	 */	
-	public MiscellaneousAttachment findOne(int miscellaneousAttachmentId) {
+	 */
+	public MiscellaneousAttachment findOne(final int miscellaneousAttachmentId) {
 		return this.miscellaneousAttachmentRepository.findOne(miscellaneousAttachmentId);
 	}
-	
+
 	/**
-	 * Delete a MiscellaneousAttachment given <br> 
+	 * Delete a MiscellaneousAttachment given <br>
 	 * 
-	 * Must be a {@link Hacker} login and the owner of the educationalDate to delete must be this hacker
+	 * Must be a {@link Rookie} login and the owner of the educationalDate to delete must be this rookie
 	 * 
 	 * @author Alvaro de la Flor Bonilla
-	 */	
-	public void delete(MiscellaneousAttachment miscellaneousAttachment) {
+	 */
+	public void delete(final MiscellaneousAttachment miscellaneousAttachment) {
 		Assert.notNull(miscellaneousAttachment);
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
-		Assert.isTrue(miscellaneousAttachment.getCurriculaM().getHacker().equals(hackerLogin), "Not allow to delete a miscellaneousAttachment of another hacker");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
+		Assert.isTrue(miscellaneousAttachment.getCurriculaM().getRookie().equals(rookieLogin), "Not allow to delete a miscellaneousAttachment of another rookie");
 		this.miscellaneousAttachmentRepository.delete(miscellaneousAttachment);
 	}
-	
+
 	/**
-	 * Delete a Collection of MiscellaneousAttachment given <br> 
+	 * Delete a Collection of MiscellaneousAttachment given <br>
 	 * 
-	 * Must be a {@link Hacker} login and the owner of the educationalDate to delete must be this hacker
+	 * Must be a {@link Rookie} login and the owner of the educationalDate to delete must be this rookie
 	 * 
 	 * @author Alvaro de la Flor Bonilla
-	 */	
-	public void deleteAll(Collection<MiscellaneousAttachment> miscellaneousAttachments) {
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin);
-		Assert.isTrue(hackerLogin.equals(this.hackerService.getHackerByCurriculaId(((List<MiscellaneousAttachment>) miscellaneousAttachments).get(0).getCurriculaM())), "Diferent hackers");
-		if (!miscellaneousAttachments.isEmpty()) {
+	 */
+	public void deleteAll(final Collection<MiscellaneousAttachment> miscellaneousAttachments) {
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin);
+		Assert.isTrue(rookieLogin.equals(this.rookieService.getRookieByCurriculaId(((List<MiscellaneousAttachment>) miscellaneousAttachments).get(0).getCurriculaM())), "Diferent rookies");
+		if (!miscellaneousAttachments.isEmpty())
 			this.miscellaneousAttachmentRepository.delete(miscellaneousAttachments);
-		}
 	}
-	
-	
-	
+
 	// CRUD Methods
-	
+
 	// AUXILIAR METHODS
-	
+
 	/**
 	 * @return The reconstruct curricula
 	 * @author Alvaro de la Flor Bonilla
 	 */
-	public Collection<MiscellaneousAttachment> getMiscellaneousAttachmentFromCurricula(Curricula curricula) {
+	public Collection<MiscellaneousAttachment> getMiscellaneousAttachmentFromCurricula(final Curricula curricula) {
 		return this.miscellaneousAttachmentRepository.getMiscellaneousAttachmentFromCurriculaId(curricula.getId());
 	}
-	
-	public void makeCopyAllMiscellaneousAttachmentForCurricula(Curricula origen, Curricula copy) {
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
+
+	public void makeCopyAllMiscellaneousAttachmentForCurricula(final Curricula origen, final Curricula copy) {
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
 		Assert.isTrue(origen.getIsCopy().equals(false) && copy.getIsCopy().equals(true), "Origen can not be copyMode and copy must be copyMode");
-		Assert.isTrue(origen.getHacker().equals(copy.getHacker()), "Diferent hacker origen-copy");
-		Assert.isTrue(origen.getHacker().equals(hackerLogin), "Diferent hacker origen-login");
-		List<MiscellaneousAttachment> educationalsData = (List<MiscellaneousAttachment>) this.miscellaneousAttachmentRepository.getMiscellaneousAttachmentFromCurriculaId(origen.getId());
+		Assert.isTrue(origen.getRookie().equals(copy.getRookie()), "Diferent rookie origen-copy");
+		Assert.isTrue(origen.getRookie().equals(rookieLogin), "Diferent rookie origen-login");
+		final List<MiscellaneousAttachment> educationalsData = (List<MiscellaneousAttachment>) this.miscellaneousAttachmentRepository.getMiscellaneousAttachmentFromCurriculaId(origen.getId());
 		if (!educationalsData.isEmpty()) {
-			Collection<MiscellaneousAttachment> educationalsDataCopy = new ArrayList<>();
-			for (MiscellaneousAttachment miscellaneousAttachment : educationalsData) {
-				educationalsDataCopy.add(getCopy(miscellaneousAttachment, copy));
-			}
-			this.savaAll(educationalsDataCopy);	
+			final Collection<MiscellaneousAttachment> educationalsDataCopy = new ArrayList<>();
+			for (final MiscellaneousAttachment miscellaneousAttachment : educationalsData)
+				educationalsDataCopy.add(this.getCopy(miscellaneousAttachment, copy));
+			this.savaAll(educationalsDataCopy);
 		}
 	}
-	
-	public MiscellaneousAttachment getCopy(MiscellaneousAttachment miscellaneousAttachment, Curricula copy) {
-		Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
-		Assert.isTrue(miscellaneousAttachment.getCurriculaM().getHacker().equals(copy.getHacker()));
-		Assert.isTrue(hackerLogin.equals(miscellaneousAttachment.getCurriculaM().getHacker()), "Hacker curricula is diferent to hacker miscellaneousAttachment");
-		MiscellaneousAttachment miscellaneousAttachmentCopy = this.create();
+
+	public MiscellaneousAttachment getCopy(final MiscellaneousAttachment miscellaneousAttachment, final Curricula copy) {
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
+		Assert.isTrue(miscellaneousAttachment.getCurriculaM().getRookie().equals(copy.getRookie()));
+		Assert.isTrue(rookieLogin.equals(miscellaneousAttachment.getCurriculaM().getRookie()), "Rookie curricula is diferent to rookie miscellaneousAttachment");
+		final MiscellaneousAttachment miscellaneousAttachmentCopy = this.create();
 		miscellaneousAttachmentCopy.setCurriculaM(copy);
 		miscellaneousAttachmentCopy.setAttachment(miscellaneousAttachment.getAttachment());
 		miscellaneousAttachmentCopy.setIsCopy(true);
 		return miscellaneousAttachmentCopy;
 	}
-	
-	public Boolean checkDate(Date startDate, Date endDate) {
+
+	public Boolean checkDate(final Date startDate, final Date endDate) {
 		Boolean res = true;
-		if (startDate.before(endDate)) {
+		if (startDate.before(endDate))
 			res = false;
-		}
 		return res;
 	}
 

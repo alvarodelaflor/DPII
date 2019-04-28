@@ -1,5 +1,5 @@
 
-package hackerRankTest;
+package rookiesTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,12 +15,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import security.LoginService;
-import services.HackerService;
 import services.MessageService;
+import services.RookieService;
 import services.TagService;
 import utilities.AbstractTest;
-import domain.Hacker;
 import domain.Message;
+import domain.Rookie;
 import domain.Tag;
 
 @ContextConfiguration(locations = {
@@ -37,7 +37,7 @@ public class MessageServiceTest extends AbstractTest {
 	TagService		tagService;
 
 	@Autowired
-	HackerService	hackerService;
+	RookieService	rookieService;
 
 
 	////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ public class MessageServiceTest extends AbstractTest {
 	 * POSITIVE TEST
 	 * Actor creates a message
 	 * 
-	 * Requirement under test: 23 (Acme-Hacker-Rank)
+	 * Requirement under test: 23 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 70%
 	 * Analysis of data coverage: 85%
@@ -76,7 +76,7 @@ public class MessageServiceTest extends AbstractTest {
 	 * POSITIVE TEST
 	 * Actor saves a message
 	 * 
-	 * Requirement under test: 23 (Acme-Hacker-Rank)
+	 * Requirement under test: 23 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 70%
 	 * Analysis of data coverage: 70%
@@ -102,7 +102,7 @@ public class MessageServiceTest extends AbstractTest {
 	 * Actor removes a message (message <- DELETED tag)
 	 * Actor removes a message from the system
 	 * 
-	 * Requirement under test: 23 (Acme-Hacker-Rank)
+	 * Requirement under test: 23 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 70%
 	 * Analysis of data coverage: 85%
@@ -133,24 +133,24 @@ public class MessageServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setVatNumber("hh55g");
-			hacker.setSurname("hackersurname");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setVatNumber("hh55g");
+			rookie.setSurname("rookiesurname");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			this.rookieService.saveCreate(rookie);
 
 			this.authenticate("admin");
 			final Message msg = this.msgService.create();
 			msg.setSubject("subject");
 			msg.setBody("body");
 			final Collection<String> recipients = new ArrayList<String>();
-			recipients.add("elcejas@hacker.com");
+			recipients.add("elcejas@rookie.com");
 			msg.setRecipient(recipients);
 			final Collection<Tag> tags = new ArrayList<>();
 			msg.setTags(tags);
@@ -190,24 +190,24 @@ public class MessageServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("hh55g");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("hh55g");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			this.rookieService.saveCreate(rookie);
 
 			this.authenticate("admin");
 			final Message msg = this.msgService.create();
 			msg.setSubject("subject");
 			msg.setBody("body");
 			final Collection<String> recipients = new ArrayList<String>();
-			recipients.add("elcejas@hacker.com");
+			recipients.add("elcejas@rookie.com");
 			msg.setRecipient(recipients);
 			this.msgService.save(msg);
 		} catch (final Throwable oops) {

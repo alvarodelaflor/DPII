@@ -1,5 +1,5 @@
 
-package hackerRankTest;
+package rookiesTest;
 
 import javax.transaction.Transactional;
 
@@ -10,10 +10,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import services.FinderService;
-import services.HackerService;
+import services.RookieService;
 import utilities.AbstractTest;
 import domain.Finder;
-import domain.Hacker;
+import domain.Rookie;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -26,11 +26,11 @@ public class FinderServiceTest extends AbstractTest {
 	private FinderService	finderService;
 
 	@Autowired
-	private HackerService	hackerService;
+	private RookieService	rookieService;
 
 
 	/*
-	 * 17.2 An actor who is authenticated as a hacker must be able to:
+	 * 17.2 An actor who is authenticated as a rookie must be able to:
 	 * Manage his or her finder, which involves updating the search criteria, listing its contents, and clearing it.
 	 * 
 	 * Analysis of sentence coverage
@@ -42,7 +42,7 @@ public class FinderServiceTest extends AbstractTest {
 	public void Diver01() {
 		final Object testingData[][] = {
 			{
-				// Test positivo: A hacker updates his finder's search criteria
+				// Test positivo: A rookie updates his finder's search criteria
 				null
 			}
 
@@ -61,19 +61,19 @@ public class FinderServiceTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("dd33f");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			final Hacker saved = this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("dd33f");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			final Rookie saved = this.rookieService.saveCreate(rookie);
 
-			super.authenticate("hackeruser");
+			super.authenticate("rookieuser");
 			final Finder finder = saved.getFinder();
 			final Finder newFinder = this.finderService.create();
 			newFinder.setDeadline(finder.getDeadline());
@@ -99,14 +99,14 @@ public class FinderServiceTest extends AbstractTest {
 
 	/*
 	 * 
-	 * 17.2 An actor who is authenticated as a hacker must be able to:
+	 * 17.2 An actor who is authenticated as a rookie must be able to:
 	 * Manage his or her finder, which involves updating the search criteria, listing its contents, and clearing it.
 	 */
 	@Test
 	public void Diver02() {
 		final Object testingData[][] = {
 			{
-				// Negative Test: User trying to update another hacker's finder
+				// Negative Test: User trying to update another rookie's finder
 				//
 				IllegalArgumentException.class
 			}
@@ -125,17 +125,17 @@ public class FinderServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("dd33f");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			final Hacker saved = this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("dd33f");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			final Rookie saved = this.rookieService.saveCreate(rookie);
 
 			final Finder finder = saved.getFinder();
 			final Finder newFinder = this.finderService.create();
@@ -160,7 +160,7 @@ public class FinderServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 17.2 An actor who is authenticated as a hacker must be able to:
+	 * 17.2 An actor who is authenticated as a rookie must be able to:
 	 * Manage his or her finder, which involves updating the search criteria, listing its contents, and clearing it.
 	 * Analysis of sentence coverage
 	 * 12.7%
@@ -171,7 +171,7 @@ public class FinderServiceTest extends AbstractTest {
 	public void Diver03() {
 		final Object testingData[][] = {
 			{
-				// // Positive Test: Listing hacker's finder results
+				// // Positive Test: Listing rookie's finder results
 				//
 				null
 			}
@@ -190,19 +190,19 @@ public class FinderServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("dd33f");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("dd33f");
 
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			final Hacker saved = this.hackerService.saveCreate(hacker);
-			super.authenticate("hackeruser");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			final Rookie saved = this.rookieService.saveCreate(rookie);
+			super.authenticate("rookieuser");
 
 			final Finder finder = saved.getFinder();
 			finder.setKeyword("techs");
@@ -220,7 +220,7 @@ public class FinderServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 17.2 An actor who is authenticated as a hacker must be able to:
+	 * 17.2 An actor who is authenticated as a rookie must be able to:
 	 * Manage his or her finder, which involves updating the search criteria, listing its contents, and clearing it.
 	 * 12.7%
 	 * Analysis of data coverage
@@ -230,7 +230,7 @@ public class FinderServiceTest extends AbstractTest {
 	public void Diver04() {
 		final Object testingData[][] = {
 			{
-				// Negative Test: Non logged user trying to list hacker finder results
+				// Negative Test: Non logged user trying to list rookie finder results
 				//
 				IllegalArgumentException.class
 			}
@@ -249,18 +249,18 @@ public class FinderServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("dd33f");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("dd33f");
 
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			final Hacker saved = this.hackerService.saveCreate(hacker);
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			final Rookie saved = this.rookieService.saveCreate(rookie);
 
 			final Finder finder = saved.getFinder();
 			finder.setKeyword("techs");
@@ -278,7 +278,7 @@ public class FinderServiceTest extends AbstractTest {
 	/*
 	 * 18 . An actor who is authenticated as an administrator must be able to:
 	 * Display a dashboard with the following information:
-	 * The minimum, the maximum, the average, and the standard deviation of the number of curricula per hacker.
+	 * The minimum, the maximum, the average, and the standard deviation of the number of curricula per rookie.
 	 * The minimum, the maximum, the average, and the standard deviation of the number of results in the finders
 	 * // The ratio of empty versus non-empty finders.
 	 * * * Analysis of sentence coverage

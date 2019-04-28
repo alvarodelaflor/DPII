@@ -18,8 +18,8 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.AuthUtils;
 import domain.Company;
-import domain.Hacker;
 import domain.Problem;
+import domain.Rookie;
 
 @Service
 @Transactional
@@ -29,7 +29,7 @@ public class ProblemService {
 	private ProblemRepository	problemRepository;
 
 	@Autowired
-	private HackerService		hackerService;
+	private RookieService		rookieService;
 
 	@Autowired
 	private CompanyService		companyService;
@@ -54,8 +54,8 @@ public class ProblemService {
 	public Integer countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(final int id) {
 
 		final UserAccount user = LoginService.getPrincipal();
-		final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
-		Assert.isTrue(hacker != null);
+		final Rookie rookie = this.rookieService.getRookieByUserAccountId(user.getId());
+		Assert.isTrue(rookie != null);
 
 		final Integer p = this.problemRepository.countAllProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id);
 		return p;
@@ -65,8 +65,8 @@ public class ProblemService {
 	public Collection<Problem> allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(final int id) {
 
 		final UserAccount user = LoginService.getPrincipal();
-		final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
-		Assert.isTrue(hacker != null);
+		final Rookie rookie = this.rookieService.getRookieByUserAccountId(user.getId());
+		Assert.isTrue(rookie != null);
 
 		final Collection<Problem> p = this.problemRepository.allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(id);
 		return p;

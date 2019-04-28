@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  */
 
-package hackerRankTest;
+package rookiesTest;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,14 +27,14 @@ import org.springframework.util.Assert;
 import security.Authority;
 import security.LoginService;
 import services.ApplicationService;
-import services.HackerService;
 import services.PositionService;
 import services.ProblemService;
+import services.RookieService;
 import utilities.AbstractTest;
 import domain.Application;
-import domain.Hacker;
 import domain.Position;
 import domain.Problem;
+import domain.Rookie;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -47,7 +47,7 @@ public class ApplicationServiceTest extends AbstractTest {
 	private ApplicationService	applicationService;
 
 	@Autowired
-	private HackerService		hackerService;
+	private RookieService		rookieService;
 
 	@Autowired
 	private ProblemService		problemService;
@@ -57,7 +57,7 @@ public class ApplicationServiceTest extends AbstractTest {
 
 
 	/*
-	 * 10. An actor who is authenticated as a hacker must be able to:
+	 * 10. An actor who is authenticated as a rookie must be able to:
 	 * 
 	 * 1. Manage his or her applications, which includes listing them grouped by status, showing them,
 	 * creating them, and updating them. When an application is created, the system assigns an arbitrary
@@ -97,10 +97,10 @@ public class ApplicationServiceTest extends AbstractTest {
 			super.authenticate(user);
 
 			final Authority authority = new Authority();
-			authority.setAuthority(Authority.HACKER);
+			authority.setAuthority(Authority.ROOKIE);
 			Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 
-			final Collection<Application> applications = this.applicationService.getApplicationsByHacker(1234);
+			final Collection<Application> applications = this.applicationService.getApplicationsByRookie(1234);
 			for (final Application application : applications) {
 				application.getApplyMoment();
 				application.getCurricula();
@@ -119,7 +119,7 @@ public class ApplicationServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 10. An actor who is authenticated as a hacker must be able to:
+	 * 10. An actor who is authenticated as a rookie must be able to:
 	 * 
 	 * 1. Manage his or her applications, which includes listing them grouped by status, showing them,
 	 * creating them, and updating them. When an application is created, the system assigns an arbitrary
@@ -156,30 +156,30 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("soyUnaCalle");
-			hacker.setEmail("soyUnaPrueba@soyUnaPrueba");
-			hacker.setName("soyUnNombre");
-			hacker.setPhone("123456");
-			hacker.setPhoto("http://SoyUnaFoto");
-			hacker.setSurname("SoyUnaPreuba");
-			hacker.setVatNumber("dd33f");
-			hacker.getUserAccount().setUsername("soyUnaPrueba");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("soyUnaCalle");
+			rookie.setEmail("soyUnaPrueba@soyUnaPrueba");
+			rookie.setName("soyUnNombre");
+			rookie.setPhone("123456");
+			rookie.setPhoto("http://SoyUnaFoto");
+			rookie.setSurname("SoyUnaPreuba");
+			rookie.setVatNumber("dd33f");
+			rookie.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			hacker.getUserAccount().setPassword(hashPassword);
+			rookie.getUserAccount().setPassword(hashPassword);
 
-			final Hacker hackerSave = this.hackerService.saveCreate(hacker);
+			final Rookie rookieSave = this.rookieService.saveCreate(rookie);
 
-			final Collection<Application> applications = this.applicationService.getApplicationsByHacker(hackerSave.getId());
+			final Collection<Application> applications = this.applicationService.getApplicationsByRookie(rookieSave.getId());
 			for (final Application application : applications) {
 				application.getApplyMoment();
 				application.getCurricula();
 				application.getLink();
 			}
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 			this.applicationService.flush();
 
 		} catch (final Throwable oops) {
@@ -192,7 +192,7 @@ public class ApplicationServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 10. An actor who is authenticated as a hacker must be able to:
+	 * 10. An actor who is authenticated as a rookie must be able to:
 	 * 
 	 * 1. Manage his or her applications, which includes listing them grouped by status, showing them,
 	 * creating them, and updating them. When an application is created, the system assigns an arbitrary
@@ -229,26 +229,26 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("soyUnaCalle");
-			hacker.setEmail("soyUnaPrueba@soyUnaPrueba");
-			hacker.setName("soyUnNombre");
-			hacker.setPhone("123456");
-			hacker.setPhoto("http://SoyUnaFoto");
-			hacker.setSurname("SoyUnaPreuba");
-			hacker.setVatNumber("dd33f");
-			hacker.getUserAccount().setUsername("soyUnaPrueba");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("soyUnaCalle");
+			rookie.setEmail("soyUnaPrueba@soyUnaPrueba");
+			rookie.setName("soyUnNombre");
+			rookie.setPhone("123456");
+			rookie.setPhoto("http://SoyUnaFoto");
+			rookie.setSurname("SoyUnaPreuba");
+			rookie.setVatNumber("dd33f");
+			rookie.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			hacker.getUserAccount().setPassword(hashPassword);
+			rookie.getUserAccount().setPassword(hashPassword);
 
-			final Hacker hackerSave = this.hackerService.saveCreate(hacker);
+			final Rookie rookieSave = this.rookieService.saveCreate(rookie);
 
 			final Application application = this.applicationService.create();
 			final List<Position> position = (List<Position>) this.positionService.findALL();
 			application.setPosition(position.get(0));
-			application.setHacker(hackerSave);
+			application.setRookie(rookieSave);
 			application.setCreationMoment(LocalDate.now().toDate());
 
 			final List<Problem> problems = (List<Problem>) this.problemService.allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(application.getPosition().getId());
@@ -259,7 +259,7 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			final Application applicationSave = this.applicationService.save(application);
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 			this.applicationService.flush();
 
 		} catch (final Throwable oops) {
@@ -273,7 +273,7 @@ public class ApplicationServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 10. An actor who is authenticated as a hacker must be able to:
+	 * 10. An actor who is authenticated as a rookie must be able to:
 	 * 
 	 * 1. Manage his or her applications, which includes listing them grouped by status, showing them,
 	 * creating them, and updating them. When an application is created, the system assigns an arbitrary
@@ -310,28 +310,28 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("soyUnaCalle");
-			hacker.setEmail("soyUnaPrueba@soyUnaPrueba");
-			hacker.setName("soyUnNombre");
-			hacker.setPhone("123456");
-			hacker.setPhoto("http://SoyUnaFoto");
-			hacker.setSurname("SoyUnaPreuba");
-			hacker.setVatNumber("dd33f");
-			hacker.getUserAccount().setUsername("soyUnaPrueba");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("soyUnaCalle");
+			rookie.setEmail("soyUnaPrueba@soyUnaPrueba");
+			rookie.setName("soyUnNombre");
+			rookie.setPhone("123456");
+			rookie.setPhoto("http://SoyUnaFoto");
+			rookie.setSurname("SoyUnaPreuba");
+			rookie.setVatNumber("dd33f");
+			rookie.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			hacker.getUserAccount().setPassword(hashPassword);
+			rookie.getUserAccount().setPassword(hashPassword);
 
-			final Hacker hackerSave = this.hackerService.saveCreate(hacker);
+			final Rookie rookieSave = this.rookieService.saveCreate(rookie);
 
-			super.authenticate(hackerSave.getUserAccount().getUsername());
+			super.authenticate(rookieSave.getUserAccount().getUsername());
 
 			final Application application = this.applicationService.create();
 			final List<Position> position = (List<Position>) this.positionService.findALL();
 			application.setPosition(position.get(0));
-			application.setHacker(hackerSave);
+			application.setRookie(rookieSave);
 			application.setCreationMoment(LocalDate.now().toDate());
 
 			final List<Problem> problems = (List<Problem>) this.problemService.allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(application.getPosition().getId());
@@ -342,7 +342,7 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			final Application applicationSave = this.applicationService.save(application);
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 			this.applicationService.flush();
 
 		} catch (final Throwable oops) {
@@ -356,7 +356,7 @@ public class ApplicationServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 10. An actor who is authenticated as a hacker must be able to:
+	 * 10. An actor who is authenticated as a rookie must be able to:
 	 * 
 	 * 1. Manage his or her applications, which includes listing them grouped by status, showing them,
 	 * creating them, and updating them. When an application is created, the system assigns an arbitrary
@@ -393,29 +393,29 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("soyUnaCalle");
-			hacker.setEmail("soyUnaPrueba@soyUnaPrueba");
-			hacker.setName("soyUnNombre");
-			hacker.setPhone("123456");
-			hacker.setPhoto("http://SoyUnaFoto");
-			hacker.setSurname("SoyUnaPreuba");
-			hacker.setVatNumber("dd33f");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("soyUnaCalle");
+			rookie.setEmail("soyUnaPrueba@soyUnaPrueba");
+			rookie.setName("soyUnNombre");
+			rookie.setPhone("123456");
+			rookie.setPhoto("http://SoyUnaFoto");
+			rookie.setSurname("SoyUnaPreuba");
+			rookie.setVatNumber("dd33f");
 
-			hacker.getUserAccount().setUsername("soyUnaPrueba");
+			rookie.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			hacker.getUserAccount().setPassword(hashPassword);
+			rookie.getUserAccount().setPassword(hashPassword);
 
-			final Hacker hackerSave = this.hackerService.saveCreate(hacker);
+			final Rookie rookieSave = this.rookieService.saveCreate(rookie);
 
-			super.authenticate(hackerSave.getUserAccount().getUsername());
+			super.authenticate(rookieSave.getUserAccount().getUsername());
 
 			final Application application = this.applicationService.create();
 			final List<Position> position = (List<Position>) this.positionService.findALL();
 			application.setPosition(position.get(0));
-			application.setHacker(hackerSave);
+			application.setRookie(rookieSave);
 			application.setCreationMoment(LocalDate.now().toDate());
 
 			final List<Problem> problems = (List<Problem>) this.problemService.allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(application.getPosition().getId());
@@ -431,7 +431,7 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			final Application applicationSave1 = this.applicationService.save(applicationSave);
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 			this.applicationService.flush();
 
 		} catch (final Throwable oops) {
@@ -445,7 +445,7 @@ public class ApplicationServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 10. An actor who is authenticated as a hacker must be able to:
+	 * 10. An actor who is authenticated as a rookie must be able to:
 	 * 
 	 * 1. Manage his or her applications, which includes listing them grouped by status, showing them,
 	 * creating them, and updating them. When an application is created, the system assigns an arbitrary
@@ -482,27 +482,27 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("soyUnaCalle");
-			hacker.setEmail("soyUnaPrueba@soyUnaPrueba");
-			hacker.setName("soyUnNombre");
-			hacker.setPhone("123456");
-			hacker.setPhoto("http://SoyUnaFoto");
-			hacker.setSurname("SoyUnaPreuba");
-			hacker.setVatNumber("dd33f");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("soyUnaCalle");
+			rookie.setEmail("soyUnaPrueba@soyUnaPrueba");
+			rookie.setName("soyUnNombre");
+			rookie.setPhone("123456");
+			rookie.setPhoto("http://SoyUnaFoto");
+			rookie.setSurname("SoyUnaPreuba");
+			rookie.setVatNumber("dd33f");
 
-			hacker.getUserAccount().setUsername("soyUnaPrueba");
+			rookie.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			hacker.getUserAccount().setPassword(hashPassword);
+			rookie.getUserAccount().setPassword(hashPassword);
 
-			final Hacker hackerSave = this.hackerService.saveCreate(hacker);
+			final Rookie rookieSave = this.rookieService.saveCreate(rookie);
 
 			final Application application = this.applicationService.create();
 			final List<Position> position = (List<Position>) this.positionService.findALL();
 			application.setPosition(position.get(0));
-			application.setHacker(hackerSave);
+			application.setRookie(rookieSave);
 			application.setCreationMoment(LocalDate.now().toDate());
 
 			final List<Problem> problems = (List<Problem>) this.problemService.allProblemFinalModeTrueWithPositionStatusTrueCancelFalse(application.getPosition().getId());
@@ -518,7 +518,7 @@ public class ApplicationServiceTest extends AbstractTest {
 
 			final Application applicationSave1 = this.applicationService.save(applicationSave);
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 			this.applicationService.flush();
 
 		} catch (final Throwable oops) {
@@ -545,7 +545,7 @@ public class ApplicationServiceTest extends AbstractTest {
 			{ // Positive
 				"company", null
 			}, { // Negative
-				"hacker", NullPointerException.class
+				"rookie", NullPointerException.class
 			},
 
 		};
@@ -586,7 +586,7 @@ public class ApplicationServiceTest extends AbstractTest {
 			{ // Positive
 				"company", null
 			}, { // Negative
-				"hacker", NullPointerException.class
+				"rookie", NullPointerException.class
 			},
 
 		};

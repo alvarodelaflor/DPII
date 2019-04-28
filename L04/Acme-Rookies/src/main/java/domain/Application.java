@@ -23,9 +23,9 @@ public class Application extends DomainEntity {
 	private Date		creationMoment, applyMoment;
 	private String		response, link, status;
 
-	private Hacker		hacker;
+	private Rookie		rookie;
 	private Position	position;
-	// select distinct p from Application a join a.position p where a.hacker.id=?1 and a.status='ACCEPTED' 
+	// select distinct p from Application a join a.position p where a.rookie.id=?1 and a.status='ACCEPTED' 
 	private Problem		problem;
 
 	private Curricula	curricula;
@@ -50,12 +50,12 @@ public class Application extends DomainEntity {
 	}
 
 	@ManyToOne(optional = false)
-	public Hacker getHacker() {
-		return this.hacker;
+	public Rookie getRookie() {
+		return this.rookie;
 	}
 
-	public void setHacker(final Hacker hacker) {
-		this.hacker = hacker;
+	public void setRookie(final Rookie rookie) {
+		this.rookie = rookie;
 	}
 
 	@ManyToOne(optional = false)

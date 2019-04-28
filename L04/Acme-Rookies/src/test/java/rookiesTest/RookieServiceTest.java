@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  */
 
-package hackerRankTest;
+package rookiesTest;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
@@ -20,31 +20,32 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import services.HackerService;
+import services.RookieService;
 import utilities.AbstractTest;
-import domain.Hacker;
+import domain.Rookie;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class HackerServiceTest extends AbstractTest {
+public class RookieServiceTest extends AbstractTest {
 
 	@Autowired
-	private HackerService	hackerService;
+	private RookieService	rookieService;
 
 
 	/*
 	 * 7. An actor who is not authenticated must be able to:
-	 * 1. Register to the system as a hacker.
+	 * 1. Register to the system as a rookie.
 	 * 
 	 * Requisitos a tener en cuenta:
 	 * 
-	 * 1.The actors of the system are administrators, companies, and hackers. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
+	 * 1.The actors of the system are administrators, companies, and rookies. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
 	 * address. The system must also store the commercial name of the companies.
 	 * 
-	 * 2.Phone numbers should adhere to the following patterns: “+CC (AC) PN”, "+CC PN", or "PN":“+CC” denotes a country code in range “+1” up to “+999”, “(AC)” denotes an area code in range “(1)” up to “(999)”, and “PN” denotes a number that must have at
+	 * 2.Phone numbers should adhere to the following patterns: “+CC (AC) PN”, "+CC PN", or "PN":“+CC” denotes a country code in range “+1” up to “+999”, “(AC)” denotes an area code in range “(1)” up to “(999)”, and “PN”
+	 * denotes a number that must have at
 	 * least four digits. Phone numbers with pattern “PN” must be added automatically a default country, which is a parameter that can be changed by administrators. Note that phone numbers should adhere
 	 * to the previous patterns, but they are not required to. Whenever a phone number that does not match this pattern is entered, the system must ask for confirmation; if the user confirms the number, it then must be stored.
 	 * 
@@ -61,13 +62,13 @@ public class HackerServiceTest extends AbstractTest {
 	public void Diver01() {
 		final Object testingData[][] = {
 			{
-				// Test positivo: Create a Hacker
+				// Test positivo: Create a Rookie
 				// name, surname, photo, email, phone, address, userName, password, commercialName
-				"pruebaCreateHacker", "pruebaCreateHacker", "http://pruebaCreateHacker", "pruebaCreateHacker@pruebaCreateHacker", "123456", "", "pruebaCreateHacker", "pruebaCreateHacker", "pruebaCreateHacker", "dd322d", null
+				"pruebaCreateRookie", "pruebaCreateRookie", "http://pruebaCreateRookie", "pruebaCreateRookie@pruebaCreateRookie", "123456", "", "pruebaCreateRookie", "pruebaCreateRookie", "pruebaCreateRookie", "dd322d", null
 			}, {
-				// Test negativo: Create a Hacker
+				// Test negativo: Create a Rookie
 				// name, surname, photo, email, phone, address, userName, password, commercialName
-				"", "", "pruebaCreateHacker", "pruebaCreateHacker", "", "", "", "", "", "ss22d", IllegalArgumentException.class
+				"", "", "pruebaCreateRookie", "pruebaCreateRookie", "", "", "", "", "", "ss22d", IllegalArgumentException.class
 			}
 		};
 
@@ -83,26 +84,26 @@ public class HackerServiceTest extends AbstractTest {
 
 		try {
 
-			final Hacker hacker = this.hackerService.create();
+			final Rookie rookie = this.rookieService.create();
 
-			hacker.setAddress(address);
-			hacker.setEmail(email);
-			hacker.setName(name);
-			hacker.setPhone(phone);
-			hacker.setPhoto(photo);
-			hacker.setSurname(surname);
-			hacker.setVatNumber(vat);
+			rookie.setAddress(address);
+			rookie.setEmail(email);
+			rookie.setName(name);
+			rookie.setPhone(phone);
+			rookie.setPhoto(photo);
+			rookie.setSurname(surname);
+			rookie.setVatNumber(vat);
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword(password, null);
-			hacker.getUserAccount().setPassword(hashPassword);
+			rookie.getUserAccount().setPassword(hashPassword);
 
-			hacker.getUserAccount().setUsername(userName);
+			rookie.getUserAccount().setUsername(userName);
 
-			this.hackerService.saveCreate(hacker);
-			System.out.println(hacker);
+			this.rookieService.saveCreate(rookie);
+			System.out.println(rookie);
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -117,10 +118,11 @@ public class HackerServiceTest extends AbstractTest {
 	 * 
 	 * * Requisitos a tener en cuenta:
 	 * 
-	 * 1.The actors of the system are administrators, companies, and hackers. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
+	 * 1.The actors of the system are administrators, companies, and rookies. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
 	 * address. The system must also store the commercial name of the companies.
 	 * 
-	 * 2.Phone numbers should adhere to the following patterns: “+CC (AC) PN”, "+CC PN", or "PN":“+CC” denotes a country code in range “+1” up to “+999”, “(AC)” denotes an area code in range “(1)” up to “(999)”, and “PN” denotes a number that must have at
+	 * 2.Phone numbers should adhere to the following patterns: “+CC (AC) PN”, "+CC PN", or "PN":“+CC” denotes a country code in range “+1” up to “+999”, “(AC)” denotes an area code in range “(1)” up to “(999)”, and “PN”
+	 * denotes a number that must have at
 	 * least four digits. Phone numbers with pattern “PN” must be added automatically a default country, which is a parameter that can be changed by administrators. Note that phone numbers should adhere
 	 * to the previous patterns, but they are not required to. Whenever a phone number that does not match this pattern is entered, the system must ask for confirmation; if the user confirms the number, it then must be stored.
 	 * 
@@ -160,27 +162,27 @@ public class HackerServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("soyUnaCalle");
-			hacker.setEmail("soyUnaPrueba@soyUnaPrueba");
-			hacker.setName("soyUnNombre");
-			hacker.setPhone("123456");
-			hacker.setPhoto("http://SoyUnaFoto");
-			hacker.setSurname("SoyUnaPreuba");
-			hacker.setVatNumber("dd33d");
-			hacker.getUserAccount().setUsername("soyUnaPrueba");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("soyUnaCalle");
+			rookie.setEmail("soyUnaPrueba@soyUnaPrueba");
+			rookie.setName("soyUnNombre");
+			rookie.setPhone("123456");
+			rookie.setPhoto("http://SoyUnaFoto");
+			rookie.setSurname("SoyUnaPreuba");
+			rookie.setVatNumber("dd33d");
+			rookie.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
-			hacker.getUserAccount().setPassword(hashPassword);
+			rookie.getUserAccount().setPassword(hashPassword);
 
-			final Hacker hackerSave = this.hackerService.saveCreate(hacker);
+			final Rookie rookieSave = this.rookieService.saveCreate(rookie);
 
-			super.authenticate(hacker.getUserAccount().getUsername());
-			final Hacker hackerToEdit = hackerSave;
-			hackerToEdit.setName(name);
-			this.hackerService.saveEdit(hackerToEdit);
-			this.hackerService.flush();
+			super.authenticate(rookie.getUserAccount().getUsername());
+			final Rookie rookieToEdit = rookieSave;
+			rookieToEdit.setName(name);
+			this.rookieService.saveEdit(rookieToEdit);
+			this.rookieService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -228,7 +230,7 @@ public class HackerServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker company = this.hackerService.create();
+			final Rookie company = this.rookieService.create();
 			company.setAddress("soyUnaCalle");
 			company.setEmail("soyUnaPrueba@soyUnaPrueba");
 			company.setName("soyUnNombre");
@@ -242,14 +244,14 @@ public class HackerServiceTest extends AbstractTest {
 			final String hashPassword = encoder.encodePassword("soyUnaContrasena", null);
 			company.getUserAccount().setPassword(hashPassword);
 
-			final Hacker companySave = this.hackerService.saveCreate(company);
+			final Rookie companySave = this.rookieService.saveCreate(company);
 
-			final Hacker hackerFind = this.hackerService.getHackerByUserAccountId(companySave.getUserAccount().getId());
+			final Rookie rookieFind = this.rookieService.getRookieByUserAccountId(companySave.getUserAccount().getId());
 
-			hackerFind.getAddress();
-			hackerFind.getEmail();
+			rookieFind.getAddress();
+			rookieFind.getEmail();
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -297,11 +299,11 @@ public class HackerServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hackerFind = this.hackerService.getHackerByUserAccountId(12345);
-			hackerFind.getAddress();
-			hackerFind.getEmail();
+			final Rookie rookieFind = this.rookieService.getRookieByUserAccountId(12345);
+			rookieFind.getAddress();
+			rookieFind.getEmail();
 
-			this.hackerService.flush();
+			this.rookieService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

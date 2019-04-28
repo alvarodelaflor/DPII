@@ -19,8 +19,8 @@ import repositories.FinderRepository;
 import security.Authority;
 import security.LoginService;
 import domain.Finder;
-import domain.Hacker;
 import domain.Position;
+import domain.Rookie;
 
 @Service
 @Transactional
@@ -30,7 +30,7 @@ public class FinderService {
 	private FinderRepository		finderRepository;
 
 	@Autowired
-	private HackerService			hackerService;
+	private RookieService			rookieService;
 
 	@Autowired
 	private Validator				validator;
@@ -53,12 +53,12 @@ public class FinderService {
 	 * 
 	 * @return Finder con los datos de la cach� o nuevos si ha expirado
 	 */
-	public Finder findByLoggedHackerWithCache() {
-		// We have to check hacker authority
-		Assert.isTrue(this.checkAuthority("HACKER"));
+	public Finder findByLoggedRookieWithCache() {
+		// We have to check rookie authority
+		Assert.isTrue(this.checkAuthority("ROOKIE"));
 
-		final Hacker hacker = this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId());
-		final Finder res = this.finderRepository.getByHacker(hacker.getId());
+		final Rookie rookie = this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId());
+		final Finder res = this.finderRepository.getByRookie(rookie.getId());
 		// Si la cach� ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
 			final Collection<Position> positions = this.findByFilter(res.getKeyword(), res.getMinSalary(), res.getMaxSalary(), res.getDeadline());
@@ -76,8 +76,8 @@ public class FinderService {
 	 * @return Finder con los datos nuevos
 	 */
 	public Finder findNoCache(final Finder finder) {
-		// We have to check hacker authority
-		Assert.isTrue(this.checkAuthority("HACKER"));
+		// We have to check rookie authority
+		Assert.isTrue(this.checkAuthority("ROOKIE"));
 		final Collection<Position> positions = this.findByFilter(finder.getKeyword(), finder.getMinSalary(), finder.getMaxSalary(), finder.getDeadline());
 		finder.setPositions(this.getPositionAmount(positions));
 		final Calendar c = Calendar.getInstance();
@@ -88,12 +88,12 @@ public class FinderService {
 
 	public Finder save(final Finder finder) {
 		if (finder.getId() != 0)
-			Assert.isTrue(this.checkAuthority("HACKER"));
+			Assert.isTrue(this.checkAuthority("ROOKIE"));
 		return this.finderRepository.save(finder);
 	}
 
 	public Finder reconstructWithCache(final Finder finder, final BindingResult binding) {
-		final Finder aux = this.findByLoggedHackerWithCache();
+		final Finder aux = this.findByLoggedRookieWithCache();
 		finder.setId(aux.getId());
 		finder.setVersion(aux.getVersion());
 		finder.setExpirationDate(aux.getExpirationDate());
@@ -102,8 +102,8 @@ public class FinderService {
 	}
 
 	public Finder reconstructNoCache(final Finder finder, final BindingResult binding) {
-		final Hacker hacker = this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId());
-		final Finder aux = this.finderRepository.getByHacker(hacker.getId());
+		final Rookie rookie = this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId());
+		final Finder aux = this.finderRepository.getByRookie(rookie.getId());
 		finder.setId(aux.getId());
 		finder.setVersion(aux.getVersion());
 		finder.setExpirationDate(aux.getExpirationDate());

@@ -25,7 +25,7 @@
 <body>
 
 	<div>
-    	<form:form class="formularioEdicion" method="POST" onsubmit="return phonenumberval();" modelAttribute="curricula" action="curricula/hacker/edit.do">
+    	<form:form class="formularioEdicion" method="POST" onsubmit="return phonenumberval();" modelAttribute="curricula" action="curricula/rookie/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	<acme:textbox path="name" code="curricula.name"/>

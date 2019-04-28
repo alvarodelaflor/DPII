@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  */
 
-package hackerRankTest;
+package rookiesTest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +52,7 @@ public class CompanyServiceTest extends AbstractTest {
 	 * 
 	 * Requisitos a tener en cuenta:
 	 * 
-	 * 1.The actors of the system are administrators, companies, and hackers. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
+	 * 1.The actors of the system are administrators, companies, and rookies. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
 	 * address. The system must also store the commercial name of the companies.
 	 * 
 	 * 2.Phone numbers should adhere to the following patterns: “+CC (AC) PN”, "+CC PN", or "PN":“+CC” denotes a country code in range “+1” up to “+999”, “(AC)” denotes an area code in range “(1)” up to “(999)”, and “PN”
@@ -430,7 +430,7 @@ public class CompanyServiceTest extends AbstractTest {
 	 * 
 	 * * Requisitos a tener en cuenta:
 	 * 
-	 * 1.The actors of the system are administrators, companies, and hackers. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
+	 * 1.The actors of the system are administrators, companies, and rookies. For every actor, the system must store a name, one or more surnames, a VAT number, a valid credit card, an optional photo, an email, an optional phone number, and an optional
 	 * address. The system must also store the commercial name of the companies.
 	 * 
 	 * 2.Phone numbers should adhere to the following patterns: “+CC (AC) PN”, "+CC PN", or "PN":“+CC” denotes a country code in range “+1” up to “+999”, “(AC)” denotes an area code in range “(1)” up to “(999)”, and “PN”

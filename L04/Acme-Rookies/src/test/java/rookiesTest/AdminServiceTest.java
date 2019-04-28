@@ -1,5 +1,5 @@
 
-package hackerRankTest;
+package rookiesTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,12 +15,12 @@ import org.springframework.util.Assert;
 
 import services.ActorService;
 import services.AdministratorService;
-import services.HackerService;
 import services.MessageService;
+import services.RookieService;
 import utilities.AbstractTest;
 import domain.Administrator;
-import domain.Hacker;
 import domain.Message;
+import domain.Rookie;
 import forms.ActorForm;
 
 @ContextConfiguration(locations = {
@@ -34,7 +34,7 @@ public class AdminServiceTest extends AbstractTest {
 	private AdministratorService	adminService;
 
 	@Autowired
-	private HackerService			hackerService;
+	private RookieService			rookieService;
 
 	@Autowired
 	private ActorService			actorService;
@@ -53,7 +53,7 @@ public class AdminServiceTest extends AbstractTest {
 	 * NEGATIVE TEST
 	 * Actor sends spam and is setted to spammer.
 	 * 
-	 * Requirement under test: 24 (Acme-Hacker-Rank)
+	 * Requirement under test: 24 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 90%
 	 * Analysis of data coverage: 27%
@@ -84,7 +84,7 @@ public class AdminServiceTest extends AbstractTest {
 	 * Logged Admin tries to ban an "good" actor.
 	 * Logged User (NON-Admin) tries to ban.
 	 * 
-	 * Requirement under test: 24 (Acme-Hacker-Rank)
+	 * Requirement under test: 24 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 90%
 	 * Analysis of data coverage: 75%
@@ -95,9 +95,9 @@ public class AdminServiceTest extends AbstractTest {
 			{
 				"admin", 0, IllegalArgumentException.class
 			}, {
-				"hackeruser", 0, IllegalArgumentException.class
+				"rookieuser", 0, IllegalArgumentException.class
 			}, {
-				"hackeruser", 1, IllegalArgumentException.class
+				"rookieuser", 1, IllegalArgumentException.class
 			}, {
 				"admin", 1, null
 			}
@@ -117,7 +117,7 @@ public class AdminServiceTest extends AbstractTest {
 	 * NEGATIVE TEST
 	 * Logged User(NON-Admin) tries to unban.
 	 * 
-	 * Requirement under test: 24 (Acme-Hacker-Rank)
+	 * Requirement under test: 24 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 80%
 	 * Analysis of data coverage: 75%
@@ -129,7 +129,7 @@ public class AdminServiceTest extends AbstractTest {
 			{
 				"admin", null
 			}, {
-				"hackeruser", IllegalArgumentException.class
+				"rookieuser", IllegalArgumentException.class
 			}
 		};
 
@@ -147,7 +147,7 @@ public class AdminServiceTest extends AbstractTest {
 	 * NEGATIVE TEST
 	 * Logged User (NON-Admin) tries to register a new admin.
 	 * 
-	 * Requirement under test: 11 (Acme-Hacker-Rank)
+	 * Requirement under test: 11 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 75%
 	 * Analysis of data coverage: 75%
@@ -159,7 +159,7 @@ public class AdminServiceTest extends AbstractTest {
 			{
 				"admin", "name", "surname", "formUsername", "password", "password", "address", "adminemail@validEmail.com", "123456789", "holder", "VISA", "1234123412341234", "234", 0, true, null
 			}, {
-				"hackeruser", "name", "surname", "formUsername", "password", "password", "address", "adminemail@validEmail.com", "123456789", "holder", "VISA", "1234123412341234", "234", 0, true, IllegalArgumentException.class
+				"rookieuser", "name", "surname", "formUsername", "password", "password", "address", "adminemail@validEmail.com", "123456789", "holder", "VISA", "1234123412341234", "234", 0, true, IllegalArgumentException.class
 			}
 		};
 
@@ -179,7 +179,7 @@ public class AdminServiceTest extends AbstractTest {
 	 * NEGATIVE TEST
 	 * Logged User (NON-Admin) tries to register a new admin.
 	 * 
-	 * Requirement under test: 11 (Acme-Hacker-Rank)
+	 * Requirement under test: 11 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 75%
 	 * Analysis of data coverage: 75%
@@ -191,7 +191,7 @@ public class AdminServiceTest extends AbstractTest {
 			{
 				"admin", null
 			}, {
-				"hackeruser", IllegalArgumentException.class
+				"rookieuser", IllegalArgumentException.class
 			}
 		};
 
@@ -269,18 +269,18 @@ public class AdminServiceTest extends AbstractTest {
 
 			if (username != "admin") {
 
-				final Hacker hacker = this.hackerService.create();
-				hacker.setAddress("calle hacker test");
-				hacker.setCreditCard(null);
-				hacker.setEmail("elcejas@hacker.com");
-				hacker.setName("hackername");
-				hacker.setPhone("123456789");
-				hacker.setSurname("hackersurname");
-				hacker.setVatNumber("dd33e");
+				final Rookie rookie = this.rookieService.create();
+				rookie.setAddress("calle rookie test");
+				rookie.setCreditCard(null);
+				rookie.setEmail("elcejas@rookie.com");
+				rookie.setName("rookiename");
+				rookie.setPhone("123456789");
+				rookie.setSurname("rookiesurname");
+				rookie.setVatNumber("dd33e");
 
-				hacker.getUserAccount().setUsername("hackeruser");
-				hacker.getUserAccount().setPassword("hackerpass");
-				this.hackerService.saveCreate(hacker);
+				rookie.getUserAccount().setUsername("rookieuser");
+				rookie.getUserAccount().setPassword("rookiepass");
+				this.rookieService.saveCreate(rookie);
 			}
 
 			this.authenticate(username);
@@ -309,17 +309,17 @@ public class AdminServiceTest extends AbstractTest {
 
 			if (username != "admin") {
 
-				final Hacker hacker = this.hackerService.create();
-				hacker.setAddress("calle hacker test");
-				hacker.setCreditCard(null);
-				hacker.setEmail("elcejas@hacker.com");
-				hacker.setName("hackername");
-				hacker.setPhone("123456789");
-				hacker.setSurname("hackersurname");
-				hacker.setVatNumber("dd33f");
-				hacker.getUserAccount().setUsername("hackeruser");
-				hacker.getUserAccount().setPassword("hackerpass");
-				this.hackerService.saveCreate(hacker);
+				final Rookie rookie = this.rookieService.create();
+				rookie.setAddress("calle rookie test");
+				rookie.setCreditCard(null);
+				rookie.setEmail("elcejas@rookie.com");
+				rookie.setName("rookiename");
+				rookie.setPhone("123456789");
+				rookie.setSurname("rookiesurname");
+				rookie.setVatNumber("dd33f");
+				rookie.getUserAccount().setUsername("rookieuser");
+				rookie.getUserAccount().setPassword("rookiepass");
+				this.rookieService.saveCreate(rookie);
 			}
 
 			final ActorForm form = new ActorForm();
@@ -365,18 +365,18 @@ public class AdminServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("aa32d");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			final Hacker savedHacker = this.hackerService.saveCreate(hacker);
-			this.authenticate("hackeruser");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("aa32d");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			final Rookie savedRookie = this.rookieService.saveCreate(rookie);
+			this.authenticate("rookieuser");
 
 			final Message msg = this.msgService.create();
 			msg.setSubject("subject");
@@ -391,7 +391,7 @@ public class AdminServiceTest extends AbstractTest {
 			msg.setRecipient(recipient);
 			this.msgService.save(msg);
 
-			Assert.isTrue(!savedHacker.getUserAccount().getSpammerFlag());
+			Assert.isTrue(!savedRookie.getUserAccount().getSpammerFlag());
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -414,22 +414,22 @@ public class AdminServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("hh33h");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("hh33h");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
 			if (spammer == 1)
-				hacker.getUserAccount().setSpammerFlag(true);
-			final Hacker savedHacker = this.hackerService.saveCreate(hacker);
+				rookie.getUserAccount().setSpammerFlag(true);
+			final Rookie savedRookie = this.rookieService.saveCreate(rookie);
 
 			this.authenticate(username);
-			this.actorService.banByActorId(savedHacker);
+			this.actorService.banByActorId(savedRookie);
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -452,21 +452,21 @@ public class AdminServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("hh33h");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			hacker.getUserAccount().setSpammerFlag(true);
-			final Hacker savedHacker = this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("hh33h");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			rookie.getUserAccount().setSpammerFlag(true);
+			final Rookie savedRookie = this.rookieService.saveCreate(rookie);
 
 			this.authenticate(username);
-			this.actorService.unbanByActorId(savedHacker);
+			this.actorService.unbanByActorId(savedRookie);
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

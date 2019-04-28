@@ -16,4 +16,4 @@
 
 <hr />
 
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Hacker-Rank Co., Inc.</b>
+<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Rookie-Rank Co., Inc.</b>

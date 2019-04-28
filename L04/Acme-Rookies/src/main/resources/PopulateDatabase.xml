@@ -43,12 +43,12 @@
 	</bean>
 	
 	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="hacker" />
-		<property name="password" value="d6a6bc0db10694a2d90e3a69648f3a03" />
+		<property name="username" value="rookie" />
+		<property name="password" value="891fbc7a93834f52f62785c3dddcda05" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="HACKER" />
+					<property name="authority" value="ROOKIE" />
 				</bean>
 			</list>
 		</property>
@@ -62,8 +62,8 @@
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
 		<property name="cacheAmount" value="10" />
-		<property name="systemMessageEs" value="¡Bienvenidos a Acme Hacker Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
-		<property name="systemMessageEn" value="Welcome to Acme hacker Rank! We’re IT hacker’s favourite job marketplace!" />
+		<property name="systemMessageEs" value="¡Bienvenidos a Acme Rookie Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		<property name="systemMessageEn" value="Welcome to Acme rookie Rank! We’re IT rookie’s favourite job marketplace!" />
 		<property name="spamWords">
 			<list value-type="java.lang.String">
 				<value>sex</value>
@@ -103,8 +103,8 @@
 		</bean>
 	<!-- ADMIN -->
 	
-	<!-- HACKER -->
-	 <bean id="hacker01" class="domain.Hacker">
+	<!-- ROOKIE -->
+	 <bean id="rookie01" class="domain.Rookie">
     	<property name="name" value="Antonio" />
     	<property name="surname" value="Salvat" />
     	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
@@ -116,7 +116,7 @@
 		<property name="finder" ref="finder01" />
 		<property name="vatNumber" value="Es12345678s" />
 		</bean>
-	<!-- HACKER -->
+	<!-- ROOKIE -->
 	
 	<!-- COMPANY -->
 	<bean id="company01" class="domain.Company">
@@ -198,7 +198,7 @@
 		<property name="linkGitHub" value="https://linkGitHub01" />
         <property name="linkLinkedin" value="https://linkLinkedin01" />    
         <property name="miscellaneous" value= "miscellaneous01"/>   
-        <property name="hacker" ref= "hacker01"/> 
+        <property name="rookie" ref= "rookie01"/> 
         <property name="isCopy" value="false"/>          
     </bean>
     
@@ -209,7 +209,7 @@
 		<property name="linkGitHub" value="https://linkGitHub02" />
         <property name="linkLinkedin" value="https://linkLinkedin02" />    
         <property name="miscellaneous" value= "miscellaneous02"/>   
-        <property name="hacker" ref= "hacker01"/> 
+        <property name="rookie" ref= "rookie01"/> 
         <property name="isCopy" value="true"/>          
     </bean>
 	<!-- CURRICULA -->
@@ -270,7 +270,7 @@
         <property name="problem" ref="problem01" />
         <property name="applyMoment" value= "2017/11/10 08:00"/>  
         <property name="creationMoment" value= "2017/12/10 08:00"/>       
-        <property name="hacker" ref= "hacker01"/>   
+        <property name="rookie" ref= "rookie01"/>   
         <property name="curricula" ref= "curricula02"/>           
     </bean>
     
@@ -280,7 +280,7 @@
 		<property name="status" value="REJECTED" />
 		<property name="position" ref="position02" />
         <property name="problem" ref="problem02" />    
-        <property name="hacker" ref= "hacker01"/> 
+        <property name="rookie" ref= "rookie01"/> 
         <property name="applyMoment" value= "2018/11/10 08:00"/>  
         <property name="creationMoment" value= "2018/12/10 08:00"/>              
         <property name="curricula" ref= "curricula02"/>           

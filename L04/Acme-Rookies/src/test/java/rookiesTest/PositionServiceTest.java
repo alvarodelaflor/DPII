@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  */
 
-package hackerRankTest;
+package rookiesTest;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -730,15 +730,15 @@ public class PositionServiceTest extends AbstractTest {
 			}, {
 				"company", "notEmpty", null
 			}, {
-				"hacker", "list", IllegalArgumentException.class
+				"rookie", "list", IllegalArgumentException.class
 			}, {
 				"admin", "list", IllegalArgumentException.class
 			}, {
-				"hacker", "insertAndList", IllegalArgumentException.class
+				"rookie", "insertAndList", IllegalArgumentException.class
 			}, {
 				"admin", "updateAndList", IllegalArgumentException.class
 			}, {
-				"hacker", "deleteAndList", IllegalArgumentException.class
+				"rookie", "deleteAndList", IllegalArgumentException.class
 			}
 		};
 
@@ -862,11 +862,11 @@ public class PositionServiceTest extends AbstractTest {
 			}, {
 				"admin", "create", IllegalArgumentException.class
 			}, {
-				"hacker", "create", IllegalArgumentException.class
+				"rookie", "create", IllegalArgumentException.class
 			}, {
 				"admin", "createAndFind", IllegalArgumentException.class
 			}, {
-				"hacker", "createAndFind", IllegalArgumentException.class
+				"rookie", "createAndFind", IllegalArgumentException.class
 			}
 
 		};
@@ -963,11 +963,11 @@ public class PositionServiceTest extends AbstractTest {
 			}, {
 				"company", "updateAlreadyCancelled", IllegalArgumentException.class
 			}, {
-				"hacker", "update", IllegalArgumentException.class
+				"rookie", "update", IllegalArgumentException.class
 			}, {
 				"admin", "update", IllegalArgumentException.class
 			}, {
-				"hacker", "updateAndFind", IllegalArgumentException.class
+				"rookie", "updateAndFind", IllegalArgumentException.class
 			}
 		};
 
@@ -1091,11 +1091,11 @@ public class PositionServiceTest extends AbstractTest {
 			}, {
 				"company", "deleteAlreadyCancelled", IllegalArgumentException.class
 			}, {
-				"hacker", "createAndDelete", IllegalArgumentException.class
+				"rookie", "createAndDelete", IllegalArgumentException.class
 			}, {
 				"admin", "createAndDelete", IllegalArgumentException.class
 			}, {
-				"hacker", "deleteAndTryFind", IllegalArgumentException.class
+				"rookie", "deleteAndTryFind", IllegalArgumentException.class
 			}
 		};
 

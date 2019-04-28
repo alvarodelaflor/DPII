@@ -67,10 +67,10 @@
 				</display:table>
 			</div>
 			<div>
-			<p><h2><spring:message code="hackers"></spring:message></h2></p>
-				<display:table name="hackers" id="row" requestURI="${requestURI}"
+			<p><h2><spring:message code="rookies"></spring:message></h2></p>
+				<display:table name="rookies" id="row" requestURI="${requestURI}"
 					pagesize="5" class="displaytag">
-					<display:column property="name" titleKey="hacker.name"></display:column>
+					<display:column property="name" titleKey="rookie.name"></display:column>
 					
 					<c:choose>
 					<c:when test="${row.userAccount.spammerFlag == false}">
@@ -103,12 +103,12 @@
 					<c:choose>
 					<c:when test="${row.userAccount.banned == false}">
 						<display:column  titleKey="ban?">							
-						<a href="administrator/banHacker.do?actorId=${row.id}"><spring:message	code="admin.ban" /></a>
+						<a href="administrator/banRookie.do?actorId=${row.id}"><spring:message	code="admin.ban" /></a>
 						</display:column>
 					</c:when>
 					<c:otherwise>
 						<display:column  titleKey="ban?">						
-						<a href="administrator/banHacker.do?actorId=${row.id}"><spring:message	code="admin.Unban" /></a>
+						<a href="administrator/banRookie.do?actorId=${row.id}"><spring:message	code="admin.Unban" /></a>
 						</display:column>
 					</c:otherwise>
 					</c:choose>

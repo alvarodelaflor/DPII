@@ -30,28 +30,28 @@ import security.UserAccount;
 import services.ActorService;
 import services.ApplicationService;
 import services.CurriculaService;
-import services.HackerService;
 import services.MessageService;
 import services.PositionService;
 import services.ProblemService;
+import services.RookieService;
 import services.TagService;
 import domain.Application;
 import domain.Curricula;
-import domain.Hacker;
 import domain.Message;
 import domain.Position;
 import domain.Problem;
+import domain.Rookie;
 import domain.Tag;
 
 @Controller
 @RequestMapping("/application")
-public class ApplicationHackerController extends AbstractController {
+public class ApplicationRookieController extends AbstractController {
 
 	@Autowired
 	private ApplicationService	applicationService;
 
 	@Autowired
-	private HackerService		hackerService;
+	private RookieService		rookieService;
 
 	@Autowired
 	private PositionService		positionService;
@@ -74,13 +74,13 @@ public class ApplicationHackerController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public ApplicationHackerController() {
+	public ApplicationRookieController() {
 		super();
 	}
 
 	// LIST ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/hacker/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/rookie/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		System.out.println("Carmen, entro en el list");
@@ -88,15 +88,15 @@ public class ApplicationHackerController extends AbstractController {
 		try {
 			final UserAccount user = LoginService.getPrincipal();
 			System.out.println(user.getUsername());
-			final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
-			System.out.println("Hacker loggeado: " + hacker);
-			Assert.isTrue(hacker != null);
-			System.out.println("Hacker loggeado: " + hacker);
-			final Collection<Application> applications = this.applicationService.getApplicationsByHacker(hacker.getId());
-			System.out.println("Aplicaciones del hacker: " + applications);
-			result = new ModelAndView("application/hacker/list");
+			final Rookie rookie = this.rookieService.getRookieByUserAccountId(user.getId());
+			System.out.println("Rookie loggeado: " + rookie);
+			Assert.isTrue(rookie != null);
+			System.out.println("Rookie loggeado: " + rookie);
+			final Collection<Application> applications = this.applicationService.getApplicationsByRookie(rookie.getId());
+			System.out.println("Aplicaciones del rookie: " + applications);
+			result = new ModelAndView("application/rookie/list");
 			result.addObject("applications", applications);
-			result.addObject("requestURI", "application/hacker/list.do");
+			result.addObject("requestURI", "application/rookie/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -106,7 +106,7 @@ public class ApplicationHackerController extends AbstractController {
 	}
 
 	// SHOW ---------------------------------------------------------------		
-	@RequestMapping(value = "/hacker/show", method = RequestMethod.GET)
+	@RequestMapping(value = "/rookie/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 
 		ModelAndView result;
@@ -114,13 +114,13 @@ public class ApplicationHackerController extends AbstractController {
 		try {
 			final UserAccount user = LoginService.getPrincipal();
 			System.out.println(user.getUsername());
-			final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
-			Assert.notNull(hacker);
+			final Rookie rookie = this.rookieService.getRookieByUserAccountId(user.getId());
+			Assert.notNull(rookie);
 			application = this.applicationService.findOne(id);
-			Assert.isTrue(application.getHacker().equals(hacker));
+			Assert.isTrue(application.getRookie().equals(rookie));
 			System.out.println(application);
 			Assert.notNull(application);
-			result = new ModelAndView("application/hacker/show");
+			result = new ModelAndView("application/rookie/show");
 			result.addObject("application", application);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -132,7 +132,7 @@ public class ApplicationHackerController extends AbstractController {
 
 	// CREATE ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/hacker/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/rookie/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam("id") final int id) {
 		ModelAndView result;
 
@@ -143,8 +143,8 @@ public class ApplicationHackerController extends AbstractController {
 
 			final UserAccount user = LoginService.getPrincipal();
 			System.out.println(user.getUsername());
-			final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
-			Assert.notNull(hacker);
+			final Rookie rookie = this.rookieService.getRookieByUserAccountId(user.getId());
+			Assert.notNull(rookie);
 
 			System.out.println("Postion a aplicar: " + id);
 			final Application application = this.applicationService.create();
@@ -153,11 +153,11 @@ public class ApplicationHackerController extends AbstractController {
 			application.setPosition(position);
 
 			try {
-				curriculas = this.curriculaService.findAllNotCopyByHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
+				curriculas = this.curriculaService.findAllNotCopyByRookie(this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId()));
 				Assert.isTrue(curriculas.size() != 0);
 				System.out.println(curriculas);
 				res = true;
-				application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
+				application.setRookie(this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId()));
 			} catch (final Exception e) {
 				res = false;
 			}
@@ -180,7 +180,7 @@ public class ApplicationHackerController extends AbstractController {
 
 	// SAVE-CREATE ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/hacker/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/rookie/save", method = RequestMethod.POST)
 	public ModelAndView save(@RequestParam(value = "position", defaultValue = "-1") final int position, @RequestParam(value = "curricula", defaultValue = "-1") final int curricula) {
 		ModelAndView result = null;
 
@@ -188,8 +188,8 @@ public class ApplicationHackerController extends AbstractController {
 
 			final UserAccount user = LoginService.getPrincipal();
 			System.out.println(user.getUsername());
-			final Hacker hacker = this.hackerService.getHackerByUserAccountId(user.getId());
-			Assert.notNull(hacker);
+			final Rookie rookie = this.rookieService.getRookieByUserAccountId(user.getId());
+			Assert.notNull(rookie);
 
 			final Application application = this.applicationService.create();
 
@@ -197,7 +197,7 @@ public class ApplicationHackerController extends AbstractController {
 
 			application.setApplyMoment(LocalDateTime.now().toDate());
 
-			application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
+			application.setRookie(this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId()));
 
 			application.setPosition(this.positionService.findOne(position));
 
@@ -214,8 +214,8 @@ public class ApplicationHackerController extends AbstractController {
 
 			final Application a1 = this.applicationService.save(application);
 			System.out.println(a1);
-			result = new ModelAndView("redirect:/application/hacker/list.do");
-			final Collection<Application> applications = this.applicationService.getApplicationsByHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()).getId());
+			result = new ModelAndView("redirect:/application/rookie/list.do");
+			final Collection<Application> applications = this.applicationService.getApplicationsByRookie(this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId()).getId());
 			result.addObject("applications", applications);
 
 		} catch (final Throwable oops) {
@@ -229,20 +229,20 @@ public class ApplicationHackerController extends AbstractController {
 
 	// EDIT ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/hacker/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/rookie/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "applicationid", defaultValue = "-1") final int applicationid) {
 		ModelAndView result;
 
 		try {
-			Hacker hacker;
+			Rookie rookie;
 			final int idUserAccount = LoginService.getPrincipal().getId();
-			hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
-			Assert.notNull(hacker);
-			final Application application = this.applicationService.getApplicationHackerById(applicationid);
-			Assert.isTrue(application.getHacker().equals(hacker));
+			rookie = this.rookieService.getRookieByUserAccountId(idUserAccount);
+			Assert.notNull(rookie);
+			final Application application = this.applicationService.getApplicationRookieById(applicationid);
+			Assert.isTrue(application.getRookie().equals(rookie));
 			System.out.println(application.getStatus());
 			Assert.isTrue(application.getStatus().equals("PENDING"));
-			result = new ModelAndView("application/hacker/edit");
+			result = new ModelAndView("application/rookie/edit");
 			result.addObject("application", application);
 		} catch (final Throwable oops) {
 			System.out.println(oops);
@@ -254,7 +254,7 @@ public class ApplicationHackerController extends AbstractController {
 	}
 	// SAVE-EDIT ---------------------------------------------------------------		
 
-	@RequestMapping(value = "/hacker/saveE", method = RequestMethod.POST, params = "saveE")
+	@RequestMapping(value = "/rookie/saveE", method = RequestMethod.POST, params = "saveE")
 	public ModelAndView save(final Application application, final BindingResult binding) {
 		ModelAndView result;
 
@@ -275,17 +275,17 @@ public class ApplicationHackerController extends AbstractController {
 		}
 
 		if (binding.hasErrors())
-			result = new ModelAndView("application/hacker/edit");
+			result = new ModelAndView("application/rookie/edit");
 		else
 			try {
 
-				Hacker hacker;
+				Rookie rookie;
 				final int idUserAccount = LoginService.getPrincipal().getId();
-				hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
-				Assert.notNull(hacker);
+				rookie = this.rookieService.getRookieByUserAccountId(idUserAccount);
+				Assert.notNull(rookie);
 
-				System.out.println(a1.getHacker().equals(hacker));
-				Assert.isTrue(a1.getHacker().equals(hacker));
+				System.out.println(a1.getRookie().equals(rookie));
+				Assert.isTrue(a1.getRookie().equals(rookie));
 
 				a1.setCreationMoment(LocalDateTime.now().toDate());
 				System.out.println(a1.getCreationMoment());
@@ -296,22 +296,22 @@ public class ApplicationHackerController extends AbstractController {
 
 				System.out.println("voy a guardar");
 				final Application a2 = this.applicationService.save(a1);
-				//result = new ModelAndView("application/hacker/list.do");
+				//result = new ModelAndView("application/rookie/list.do");
 
-				System.out.println("Hacker loggeado: " + hacker);
-				final Collection<Application> applications = this.applicationService.getApplicationsByHacker(hacker.getId());
-				System.out.println("Aplicaciones del hacker: " + applications);
+				System.out.println("Rookie loggeado: " + rookie);
+				final Collection<Application> applications = this.applicationService.getApplicationsByRookie(rookie.getId());
+				System.out.println("Aplicaciones del rookie: " + applications);
 
 				// NOTIFICATION
 				final Message msg = this.msgService.create();
 				msg.setSubject("Application with new status");
 				msg.setBody("The application sent about " + a2.getApplyMoment() + " ,right now has submitted status");
 				msg.setRecipient(new ArrayList<String>());
-				msg.getRecipient().add(hacker.getEmail());
-				msg.setSender(hacker.getEmail());
+				msg.getRecipient().add(rookie.getEmail());
+				msg.setSender(rookie.getEmail());
 
 				final Tag tag = this.tagService.create();
-				tag.setActorId(hacker.getId());
+				tag.setActorId(rookie.getId());
 				tag.setMessageId(msg.getId());
 				tag.setTag("SYSTEM");
 				final Tag tagSave = this.tagService.save(tag);
@@ -319,7 +319,7 @@ public class ApplicationHackerController extends AbstractController {
 				msg.setTags(new ArrayList<Tag>());
 				msg.getTags().add(tagSave);
 
-				this.msgService.exchangeMessage(msg, hacker.getId());
+				this.msgService.exchangeMessage(msg, rookie.getId());
 
 				System.out.println("CARMEN LLEGO 3");
 				msg.getTags().add(tagSave);
@@ -329,7 +329,7 @@ public class ApplicationHackerController extends AbstractController {
 				this.tagService.save(tagSave);
 				// NOTIFICATION
 
-				result = new ModelAndView("redirect:/application/hacker/list.do");
+				result = new ModelAndView("redirect:/application/rookie/list.do");
 
 			} catch (final Throwable oops) {
 				System.out.println(oops);
@@ -346,7 +346,7 @@ public class ApplicationHackerController extends AbstractController {
 	private ModelAndView createEditModelAndView(final Application application, final String string) {
 		ModelAndView result;
 
-		result = new ModelAndView("application/hacker/edit");
+		result = new ModelAndView("application/rookie/edit");
 		result.addObject("string", string);
 		result.addObject("application", application);
 		result.addObject("logo", this.getLogo());

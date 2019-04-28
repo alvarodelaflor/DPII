@@ -30,13 +30,13 @@ import services.CompanyService;
 import services.ConfigurationService;
 import services.CurriculaService;
 import services.FinderService;
-import services.HackerService;
 import services.PositionService;
+import services.RookieService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Company;
 import domain.Configuration;
-import domain.Hacker;
+import domain.Rookie;
 import forms.ActorForm;
 
 @Controller
@@ -59,7 +59,7 @@ public class AdministratorController extends AbstractController {
 	private CompanyService			companyService;
 
 	@Autowired
-	private HackerService			hackerService;
+	private RookieService			rookieService;
 
 	@Autowired
 	private CurriculaService		curriculaService;
@@ -89,20 +89,20 @@ public class AdministratorController extends AbstractController {
 		res.addObject("stddevPositionPerCompany", this.positionService.stddevPositionPerCompany());
 		// PositionsPerCompany
 
-		// ApplicationPerHacker
-		res.addObject("avgApplicationsPerHacker", this.applicationService.avgApplicationPerHacker());
-		res.addObject("minApplicationsPerHacker", this.applicationService.minApplicationPerHacker());
-		res.addObject("maxApplicationsPerHacker", this.applicationService.maxApplicationPerHacker());
-		res.addObject("stddevApplicationsPerHacker", this.applicationService.stddevApplicationPerHacker());
-		// ApplicationPerHacker
+		// ApplicationPerRookie
+		res.addObject("avgApplicationsPerRookie", this.applicationService.avgApplicationPerRookie());
+		res.addObject("minApplicationsPerRookie", this.applicationService.minApplicationPerRookie());
+		res.addObject("maxApplicationsPerRookie", this.applicationService.maxApplicationPerRookie());
+		res.addObject("stddevApplicationsPerRookie", this.applicationService.stddevApplicationPerRookie());
+		// ApplicationPerRookie
 
 		// CompaniesMorePositions
 		res.addObject("findCompanyWithMorePositions", this.positionService.findCompanyWithMorePositions());
 		// CompaniesMorePositions
 
-		// HackerMoreApplications
-		res.addObject("findHackerMoreApplications", this.applicationService.findHackerWithMoreApplications());
-		// HackerMoreApplications
+		// RookieMoreApplications
+		res.addObject("findRookieMoreApplications", this.applicationService.findRookieWithMoreApplications());
+		// RookieMoreApplications
 
 		// Salaries
 		res.addObject("avgSalaryPerPosition", this.positionService.avgSalaryPerPosition());
@@ -205,12 +205,12 @@ public class AdministratorController extends AbstractController {
 		final ModelAndView res;
 
 		final Collection<Company> companies = this.companyService.findAll();
-		final Collection<Hacker> hackers = this.hackerService.findAll();
+		final Collection<Rookie> rookies = this.rookieService.findAll();
 
 		res = new ModelAndView("administrator/actorList");
 
 		res.addObject("companies", companies);
-		res.addObject("hackers", hackers);
+		res.addObject("rookies", rookies);
 		res.addObject("requestURI", "administrator/actorList.do");
 		res.addObject("logo", this.getLogo());
 		res.addObject("system", this.getSystem());
@@ -223,13 +223,13 @@ public class AdministratorController extends AbstractController {
 		ModelAndView result;
 
 		final Collection<Company> companies = this.companyService.findAll();
-		final Collection<Hacker> hackers = this.hackerService.findAll();
+		final Collection<Rookie> rookies = this.rookieService.findAll();
 
 		result = new ModelAndView("administrator/actorList");
 		result.addObject("message", string);
 		result.addObject("actor", actor);
 		result.addObject("companies", companies);
-		result.addObject("hackers", hackers);
+		result.addObject("rookies", rookies);
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		result.addObject("logo", this.getLogo());
@@ -267,13 +267,13 @@ public class AdministratorController extends AbstractController {
 
 		return res;
 	}
-	@RequestMapping(value = "/banHacker", method = RequestMethod.GET)
+	@RequestMapping(value = "/banRookie", method = RequestMethod.GET)
 	public ModelAndView banBrotherhood(@RequestParam(value = "actorId", defaultValue = "-1") final int actorId) {
 
 		ModelAndView res;
 
 		try {
-			final Actor actor = this.hackerService.findOne(actorId);
+			final Actor actor = this.rookieService.findOne(actorId);
 
 			if (actor.getUserAccount().getBanned() == false) {
 
@@ -286,7 +286,7 @@ public class AdministratorController extends AbstractController {
 			}
 		} catch (final Throwable oops) {
 
-			final Actor actor = this.hackerService.findOne(actorId);
+			final Actor actor = this.rookieService.findOne(actorId);
 			if (oops.getMessage() == "ban.error")
 				res = this.createEditModelAndView2(actor, "ban.error");
 			else

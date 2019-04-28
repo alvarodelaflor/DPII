@@ -18,7 +18,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<security:authorize access="hasRole('HACKER')"> 
+<security:authorize access="hasRole('ROOKIE')"> 
 <div class="content">
 
 	<table>

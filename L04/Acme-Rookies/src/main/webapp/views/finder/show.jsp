@@ -19,7 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form class="formularioEdicion" modelAttribute="finder" method="POST" action="finder/hacker/refresh.do">
+<form:form class="formularioEdicion" modelAttribute="finder" method="POST" action="finder/rookie/refresh.do">
 	<form:hidden path="id" />
 	<strong>
 		<form:label path="keyword"><spring:message code="finder.keyword" />:</form:label>

@@ -30,9 +30,9 @@
 		<security:intercept-url pattern="/" access="permitAll" /> 
 		
 		<!-- CARMEM -->
-		<security:intercept-url pattern="/hacker/create.do" access="permitAll" /> 
-		<security:intercept-url pattern="/hacker/show.do" access="permitAll" /> 
-		<security:intercept-url pattern="/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/rookie/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/rookie/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/rookie/edit.do" access="hasRole('ROOKIE')" />
 		
 		<security:intercept-url pattern="/company/create.do" access="permitAll" /> 
 		<security:intercept-url pattern="/company/show.do" access="permitAll" /> 
@@ -46,14 +46,14 @@
 
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
 		
-		<security:intercept-url pattern="/application/hacker/list.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/application/hacker/show.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/application/hacker/create.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/application/hacker/save.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/application/hacker/saveE.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/application/hacker/edit.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/application/rookie/list.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/show.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/save.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/saveE.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/edit.do" access="hasRole('ROOKIE')" />
 		
-		<security:intercept-url pattern="/problem/hacker/show.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/problem/rookie/show.do" access="hasRole('ROOKIE')" />
 		
 		<!-- CARMEM -->
 		
@@ -85,24 +85,24 @@
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 		
 		<!-- ALVARO -->
-		<security:intercept-url pattern="/curricula/hacker/create.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/curricula/hacker/edit.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/curricula/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/curricula/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/curricula/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/curricula/rookie/delete.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
 		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
 		
-		<security:intercept-url pattern="/educationalData/hacker/create.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/educationalData/hacker/edit.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/educationalData/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/educationalData/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/educationalData/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/educationalData/rookie/delete.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
 
-		<security:intercept-url pattern="/miscellaneousAttachment/hacker/create.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/miscellaneousAttachment/hacker/edit.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/miscellaneousAttachment/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/rookie/delete.do" access="hasRole('ROOKIE')" />
 		
-		<security:intercept-url pattern="/positionData/hacker/create.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/positionData/hacker/edit.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/positionData/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/positionData/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/positionData/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/positionData/rookie/delete.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/positionData/show.do" access="permitAll" />
 		<!-- ALVARO -->
 		
@@ -135,17 +135,17 @@
 		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/administrator/actorList.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/administrator/banCompany.do" access="hasRole('ADMIN')"/>
-		<security:intercept-url pattern="/administrator/banHacker.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/administrator/banRookie.do" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" /> 
 		<!-- FRAN -->
 		
 		<!-- FERRETE -->
 		<security:intercept-url pattern="/administrator/export.do" access="hasRole('ADMIN')" />		
-		<security:intercept-url pattern="/hacker/export.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/rookie/export.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/company/export.do" access="hasRole('COMPANY')" />
 				<security:intercept-url pattern="/administrator/delete.do" access="hasRole('ADMIN')" />		
-		<security:intercept-url pattern="/hacker/delete.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/rookie/delete.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/company/delete.do" access="hasRole('COMPANY')" />
 		
 		<security:intercept-url pattern="/administrator/list.do" access="hasRole('ADMIN')" />
@@ -160,8 +160,8 @@
 		<security:intercept-url pattern="/administrator/newPhone.do" access="hasRole('ADMIN')" />				
 		<security:intercept-url pattern="/configuration/administrator/edit.do" access="hasRole('ADMIN')" />	
 		
-		<security:intercept-url pattern="/finder/hacker/show.do" access="hasRole('HACKER')" />
-		<security:intercept-url pattern="/finder/hacker/refresh.do" access="hasRole('HACKER')" />
+		<security:intercept-url pattern="/finder/rookie/show.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/finder/rookie/refresh.do" access="hasRole('ROOKIE')" />
 		<!-- FERRETE -->
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

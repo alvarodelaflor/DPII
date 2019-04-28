@@ -13,8 +13,8 @@ import services.FinderService;
 import domain.Finder;
 
 @Controller
-@RequestMapping("/finder/hacker")
-public class FinderHackerController extends AbstractController {
+@RequestMapping("/finder/rookie")
+public class FinderRookieController extends AbstractController {
 
 	@Autowired
 	private FinderService			finderService;
@@ -27,11 +27,11 @@ public class FinderHackerController extends AbstractController {
 		ModelAndView result;
 
 		try {
-			final Finder finder = this.finderService.findByLoggedHackerWithCache();
+			final Finder finder = this.finderService.findByLoggedRookieWithCache();
 			result = new ModelAndView("finder/show");
 
 			result.addObject("finder", finder);
-			result.addObject("requestURI", "finder/hacker/show.do");
+			result.addObject("requestURI", "finder/rookie/show.do");
 		} catch (final Exception e) {
 			e.printStackTrace();
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -55,7 +55,7 @@ public class FinderHackerController extends AbstractController {
 				final Finder saved = this.finderService.save(res);
 				result = new ModelAndView("finder/show");
 				result.addObject("finder", saved);
-				result.addObject("requestURI", "finder/hacker/show.do");
+				result.addObject("requestURI", "finder/rookie/show.do");
 				result.addObject("finderError", "");
 			} catch (final Exception e) {
 				e.printStackTrace();

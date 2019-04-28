@@ -23,32 +23,32 @@
 	<article>
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="registrationForm"  onsubmit="return phonenumberval();" action="hacker/create.do">
+				modelAttribute="registrationForm"  onsubmit="return phonenumberval();" action="rookie/create.do">
 
 				<fieldset>
 				<legend>
 					<spring:message code="actor.personalDate" />
 				</legend>
-				<acme:textbox code="hacker.name" path="name"/>
-				<acme:textbox code="hacker.surname" path="surname" />
-				<acme:textbox code="hacker.username" path="userName" />
-				<acme:password code="hacker.password" path="password" />
-				<acme:password code="hacker.passwordC" path="confirmPassword" />
-				<acme:textbox code="hacker.address" path="address" />
-				<acme:textbox code="hacker.email" path="email" />
-				<acme:textbox code="hacker.photo" path="photo" />
-				<acme:phonebox code="hacker.phone" path="phone" />
+				<acme:textbox code="rookie.name" path="name"/>
+				<acme:textbox code="rookie.surname" path="surname" />
+				<acme:textbox code="rookie.username" path="userName" />
+				<acme:password code="rookie.password" path="password" />
+				<acme:password code="rookie.passwordC" path="confirmPassword" />
+				<acme:textbox code="rookie.address" path="address" />
+				<acme:textbox code="rookie.email" path="email" />
+				<acme:textbox code="rookie.photo" path="photo" />
+				<acme:phonebox code="rookie.phone" path="phone" />
 				</fieldset>
 				<br>
 				<fieldset>
 				<legend>
 					<spring:message code="actor.creditCard" />
 				</legend>
-				<acme:textbox code="hacker.holder" path="holder" />
-				<acme:textbox code="hacker.make" path="make" />
-				<acme:textbox code="hacker.number" path="number" />
-				<acme:textbox code="hacker.CVV" path="CVV" />
-				<acme:textboxExpiration code="hacker.expiration" path="expiration" />
+				<acme:textbox code="rookie.holder" path="holder" />
+				<acme:textbox code="rookie.make" path="make" />
+				<acme:textbox code="rookie.number" path="number" />
+				<acme:textbox code="rookie.CVV" path="CVV" />
+				<acme:textboxExpiration code="rookie.expiration" path="expiration" />
 				</fieldset>
 				<br>
 				<fieldset>
@@ -58,14 +58,14 @@
 				<acme:textbox code="actor.vat" path="vatNumber" placeholder="CA1234567r"/>	
 				</fieldset>
 				<br>
-				<spring:message code="hacker.conditions" var="termsAndConditions"/>
+				<spring:message code="rookie.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
-				<a href="actor/conditions.do" target="_blank"><spring:message code="hacker.conditions1" /></a>
+				<a href="actor/conditions.do" target="_blank"><spring:message code="rookie.conditions1" /></a>
 				<form:errors path="${accept}" cssClass="error" />
 				<br>
 				<br>					
-				<acme:submit name="save" code="hacker.save"/>
-				<acme:cancel url=" " code="hacker.cancel"/>
+				<acme:submit name="save" code="rookie.save"/>
+				<acme:cancel url=" " code="rookie.cancel"/>
 			</form:form>
 		</div>
 	</article>

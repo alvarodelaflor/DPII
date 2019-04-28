@@ -19,8 +19,8 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.Application;
-import domain.Hacker;
 import domain.Message;
+import domain.Rookie;
 import domain.Tag;
 
 @Service
@@ -31,7 +31,7 @@ public class ApplicationService {
 	private ApplicationRepository	applicationRepository;
 
 	@Autowired
-	private HackerService			hackerService;
+	private RookieService			rookieService;
 
 	@Autowired
 	private CurriculaService		curriculaService;
@@ -53,29 +53,29 @@ public class ApplicationService {
 
 
 	// DashBoard:
-	public Float avgApplicationPerHacker() {
+	public Float avgApplicationPerRookie() {
 
-		return this.applicationRepository.avgApplicationPerHacker();
+		return this.applicationRepository.avgApplicationPerRookie();
 	}
 
-	public Float minApplicationPerHacker() {
+	public Float minApplicationPerRookie() {
 
-		return this.applicationRepository.minApplicationPerHacker();
+		return this.applicationRepository.minApplicationPerRookie();
 	}
 
-	public Float maxApplicationPerHacker() {
+	public Float maxApplicationPerRookie() {
 
-		return this.applicationRepository.maxApplicationPerHacker();
+		return this.applicationRepository.maxApplicationPerRookie();
 	}
 
-	public Float stddevApplicationPerHacker() {
+	public Float stddevApplicationPerRookie() {
 
-		return this.applicationRepository.stddevApplicationPerHacker();
+		return this.applicationRepository.stddevApplicationPerRookie();
 	}
 
-	public String findHackerWithMoreApplications() {
+	public String findRookieWithMoreApplications() {
 
-		final List<String> ls = this.applicationRepository.findHackerWithMoreApplications();
+		final List<String> ls = this.applicationRepository.findRookieWithMoreApplications();
 		String res = "";
 		if (!ls.isEmpty())
 			res = ls.get(0);
@@ -87,9 +87,9 @@ public class ApplicationService {
 		return this.applicationRepository.findAll();
 	}
 
-	// getApplicationsByHacker  ---------------------------------------------------------------	
-	public Collection<Application> getApplicationsByHacker(final int id) {
-		return this.applicationRepository.getApplicationsByHacker(id);
+	// getApplicationsByRookie  ---------------------------------------------------------------	
+	public Collection<Application> getApplicationsByRookie(final int id) {
+		return this.applicationRepository.getApplicationsByRookie(id);
 	}
 
 	// FINDONE  ---------------------------------------------------------------	
@@ -101,9 +101,9 @@ public class ApplicationService {
 	public Application create() {
 		final Application application = new Application();
 
-		application.setHacker(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()));
+		application.setRookie(this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId()));
 
-		Assert.isTrue(this.hackerService.getHackerByUserAccountId(LoginService.getPrincipal().getId()) != null);
+		Assert.isTrue(this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId()) != null);
 
 		return application;
 	}
@@ -115,9 +115,9 @@ public class ApplicationService {
 		return app;
 
 	}
-	// getApplicationHackerById -------------------------------------------
-	public Application getApplicationHackerById(final int id) {
-		return this.applicationRepository.getApplicationHackerById(id);
+	// getApplicationRookieById -------------------------------------------
+	public Application getApplicationRookieById(final int id) {
+		return this.applicationRepository.getApplicationRookieById(id);
 	}
 
 	// RECONSTRUCT-EDIT---------------------------------------------------------------		
@@ -149,8 +149,8 @@ public class ApplicationService {
 		return res;
 	}
 
-	public void deleteHackerApplications(final int hackerId) {
-		final Collection<Application> apps = this.applicationRepository.findHackerApps(hackerId);
+	public void deleteRookieApplications(final int rookieId) {
+		final Collection<Application> apps = this.applicationRepository.findRookieApps(rookieId);
 		this.applicationRepository.deleteInBatch(apps);
 	}
 
@@ -193,35 +193,35 @@ public class ApplicationService {
 		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
 		application.setStatus("ACCEPTED");
 
-		// TODO: Notify this hacker
-		final Hacker hacker = application.getHacker();
-		final Collection<Hacker> hackers = new ArrayList<>();
-		hackers.add(hacker);
-		this.notifyHackers(hackers, application, "accepted");
+		// TODO: Notify this rookie
+		final Rookie rookie = application.getRookie();
+		final Collection<Rookie> rookies = new ArrayList<>();
+		rookies.add(rookie);
+		this.notifyRookies(rookies, application, "accepted");
 	}
 	public void reject(final int applicationId) {
 		final Application application = this.applicationRepository.findOne(applicationId);
 		this.checkApplicationOwner(application);
 		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
 		application.setStatus("REJECTED");
-		// TODO: Notify this hacker
-		final Hacker hacker = application.getHacker();
-		final Collection<Hacker> hackers = new ArrayList<>();
-		hackers.add(hacker);
-		this.notifyHackers(hackers, application, "rejected");
+		// TODO: Notify this rookie
+		final Rookie rookie = application.getRookie();
+		final Collection<Rookie> rookies = new ArrayList<>();
+		rookies.add(rookie);
+		this.notifyRookies(rookies, application, "rejected");
 
 	}
 
-	public void notifyHackers(final Collection<Hacker> hackers, final Application application, final String state) {
+	public void notifyRookies(final Collection<Rookie> rookies, final Application application, final String state) {
 		final UserAccount log = LoginService.getPrincipal();
 		final Actor logged = this.actorService.getActorByUserId(log.getId());
 
-		final List<Hacker> hackerReceiverList = new ArrayList<>();
-		hackerReceiverList.addAll(hackers);
+		final List<Rookie> rookieReceiverList = new ArrayList<>();
+		rookieReceiverList.addAll(rookies);
 
 		final List<String> emails = new ArrayList<>();
-		for (int i = 0; i < hackerReceiverList.size(); i++)
-			emails.add(hackerReceiverList.get(i).getEmail());
+		for (int i = 0; i < rookieReceiverList.size(); i++)
+			emails.add(rookieReceiverList.get(i).getEmail());
 
 		Message sended = this.messageService.create();
 		sended.setSubject("Change in application state");

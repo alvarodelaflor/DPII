@@ -27,10 +27,10 @@
 		<tr><td><strong><spring:message code="position.techs"/>: </strong><jstl:out value="${position.techs}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="position.title"/>: </strong><jstl:out value="${position.title}"></jstl:out></td></tr>
 
-<security:authorize access="hasRole('HACKER')">
+<security:authorize access="hasRole('ROOKIE')">
 		<c:choose>
     		<c:when test="${hasProblem == true}">
-				<input type="button" value="<spring:message code='application.position.create' />" onclick="window.location = 'application/hacker/create.do?id=${position.id}'" /><br>				
+				<input type="button" value="<spring:message code='application.position.create' />" onclick="window.location = 'application/rookie/create.do?id=${position.id}'" /><br>				
     		
     		</c:when>    
     	</c:choose>
@@ -38,7 +38,7 @@
     	<c:choose>
     					<c:when test="${res == true}">
     						<div>
-							    	<form:form class="formularioEdicion" method="POST" modelAttribute="application" action="application/hacker/save.do">
+							    	<form:form class="formularioEdicion" method="POST" modelAttribute="application" action="application/rookie/save.do">
 										<form:hidden path="position" />
 							          	 
 							          	<spring:message code='application.curricula' />

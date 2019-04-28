@@ -1,5 +1,5 @@
 
-package hackerRankTest;
+package rookiesTest;
 
 import javax.transaction.Transactional;
 

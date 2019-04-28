@@ -1,5 +1,5 @@
 
-package hackerRankTest;
+package rookiesTest;
 
 import javax.transaction.Transactional;
 
@@ -44,7 +44,7 @@ public class ProblemServiceTest extends AbstractTest {
 			{ // Positive
 				"company", null
 			}, { // Negative
-				"hacker", IllegalArgumentException.class
+				"rookie", IllegalArgumentException.class
 			},
 
 		};
@@ -83,7 +83,7 @@ public class ProblemServiceTest extends AbstractTest {
 			{ // Positive
 				"company", null
 			}, { // Negative
-				"hacker", IllegalArgumentException.class
+				"rookie", IllegalArgumentException.class
 			},
 
 		};
@@ -122,7 +122,7 @@ public class ProblemServiceTest extends AbstractTest {
 			{ // Positive
 				"company", null
 			}, { // Negative
-				"hacker", IllegalArgumentException.class
+				"rookie", IllegalArgumentException.class
 			},
 
 		};
@@ -164,7 +164,7 @@ public class ProblemServiceTest extends AbstractTest {
 			{ // Positive
 				"company", null
 			}, { // Negative
-				"hacker", IllegalArgumentException.class
+				"rookie", IllegalArgumentException.class
 			},
 
 		};

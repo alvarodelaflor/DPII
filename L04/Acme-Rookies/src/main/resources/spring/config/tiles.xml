@@ -34,7 +34,7 @@
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->
-		<value>/views/hacker/tiles.xml</value>
+		<value>/views/rookie/tiles.xml</value>
 		<value>/views/company/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
 		<value>/views/position/tiles.xml</value>

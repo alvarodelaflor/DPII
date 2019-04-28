@@ -18,7 +18,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<security:authorize access="hasRole('HACKER')">
+<security:authorize access="hasRole('ROOKIE')">
 	<style>
 		.linea
 		{
@@ -27,11 +27,11 @@
 	</style>
 
 	<div>
-		<jstl:if test="${hackerLogin==true}">
-			<form method="get" action="educationalData/hacker/delete.do">
+		<jstl:if test="${rookieLogin==true}">
+			<form method="get" action="educationalData/rookie/delete.do">
 				<button class="linea" name="educationalDataId" value="${educationalData.id}"><spring:message code="curricula.delete"/></button>
 			</form>
-			<form method="get" action="educationalData/hacker/edit.do">
+			<form method="get" action="educationalData/rookie/edit.do">
 				<button name="educationalDataId" value="${educationalData.id}"><spring:message code="curricula.edit"/></button>
 			</form>
 			<br>	

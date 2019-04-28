@@ -22,10 +22,10 @@ import security.UserAccount;
 import utilities.AuthUtils;
 import domain.Actor;
 import domain.Company;
-import domain.Hacker;
 import domain.Message;
 import domain.Position;
 import domain.Problem;
+import domain.Rookie;
 import domain.Tag;
 
 @Service
@@ -39,7 +39,7 @@ public class PositionService {
 	private CompanyService		companyService;
 
 	@Autowired
-	private HackerService		hackerService;
+	private RookieService		rookieService;
 
 	@Autowired
 	private MessageService		msgService;
@@ -256,16 +256,16 @@ public class PositionService {
 				final int problemCount = this.problemService.getProblemCount(pos.getId());
 				Assert.isTrue(problemCount >= 2, "Position can't be setted to final mode because it has less than 2 problems");
 
-				final Collection<Hacker> hackers = this.hackerService.findHackerRegardlessFinder(pos.getTitle(), pos.getSalary(), pos.getDeadline(), pos.getDescription());
+				final Collection<Rookie> rookies = this.rookieService.findRookieRegardlessFinder(pos.getTitle(), pos.getSalary(), pos.getDeadline(), pos.getDescription());
 
 				final Message msg = this.msgService.create();
 				msg.setSubject("New Suitable Position 4 U tt");
 				msg.setBody("New Position: " + pos.getTitle());
 				msg.setRecipient(new ArrayList<String>());
-				for (final Hacker hacker : hackers) {
+				for (final Rookie rookie : rookies) {
 
-					msg.getRecipient().add(hacker.getEmail());
-					this.msgService.exchangeMessage(msg, hacker.getId());
+					msg.getRecipient().add(rookie.getEmail());
+					this.msgService.exchangeMessage(msg, rookie.getId());
 					this.msgService.save(msg);
 				}
 
@@ -304,32 +304,32 @@ public class PositionService {
 		// We can cancel a position if it is in final mode
 		Assert.isTrue(dbPosition.getStatus(), "Only positions in final mode can be cancelled");
 		final Collection<Problem> positionProblems = this.problemService.findFromPosition(positionId);
-		final Collection<Hacker> hackers = new ArrayList<>();
+		final Collection<Rookie> rookies = new ArrayList<>();
 		for (final Problem p : positionProblems) {
 			this.positionRepository.rejectAllApplications(p.getId(), positionId);
-			// TODO: notify all hackers in this collection
-			hackers.addAll(this.hackerService.findByProblem(p.getId()));
+			// TODO: notify all rookies in this collection
+			rookies.addAll(this.rookieService.findByProblem(p.getId()));
 		}
 
-		this.notifyHackers(hackers, dbPosition);
+		this.notifyRookies(rookies, dbPosition);
 
 		dbPosition.setCancel(true);
 	}
 
-	public void notifyHackers(final Collection<Hacker> hackers, final Position position) {
+	public void notifyRookies(final Collection<Rookie> rookies, final Position position) {
 		final UserAccount log = LoginService.getPrincipal();
 		final Actor logged = this.actorService.getActorByUserId(log.getId());
 
-		final List<Hacker> hackerReceiverList = new ArrayList<>();
-		hackerReceiverList.addAll(hackers);
+		final List<Rookie> rookieReceiverList = new ArrayList<>();
+		rookieReceiverList.addAll(rookies);
 
-		for (int i = 0; i < hackerReceiverList.size() - 1; i++)
-			if (hackerReceiverList.get(i).getId() == hackerReceiverList.get(i + 1).getId())
-				hackerReceiverList.remove(hackerReceiverList.get(i + 1));
+		for (int i = 0; i < rookieReceiverList.size() - 1; i++)
+			if (rookieReceiverList.get(i).getId() == rookieReceiverList.get(i + 1).getId())
+				rookieReceiverList.remove(rookieReceiverList.get(i + 1));
 
 		final List<String> emails = new ArrayList<>();
-		for (int i = 0; i < hackerReceiverList.size(); i++)
-			emails.add(hackerReceiverList.get(i).getEmail());
+		for (int i = 0; i < rookieReceiverList.size(); i++)
+			emails.add(rookieReceiverList.get(i).getEmail());
 
 		Message sended = this.msgService.create();
 		sended.setSubject("Position cancelled");
@@ -429,18 +429,18 @@ public class PositionService {
 	/**
 	 * 
 	 * Return a collection of all {@link Position} in database that is valid for a curricula.<br>
-	 * An empty collection if any hacker is logger
+	 * An empty collection if any rookie is logger
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Position}>
 	 */
-	public Collection<Position> findValidPositionToCurriculaByHackerId(final int hackerId) {
-		final Hacker hacker = this.hackerService.getHackerLogin();
+	public Collection<Position> findValidPositionToCurriculaByRookieId(final int rookieId) {
+		final Rookie rookie = this.rookieService.getRookieLogin();
 		Collection<Position> res = new ArrayList<>();
-		if (hacker != null && hacker.getId() == hackerId)
-			res = this.positionRepository.findValidPositionToCurriculaByHackerId(hackerId);
+		if (rookie != null && rookie.getId() == rookieId)
+			res = this.positionRepository.findValidPositionToCurriculaByRookieId(rookieId);
 		else
-			System.out.println("Any hacker is logger, system can not find any valid position");
+			System.out.println("Any rookie is logger, system can not find any valid position");
 		return res;
 	}
 }

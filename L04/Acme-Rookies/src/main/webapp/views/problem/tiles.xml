@@ -16,7 +16,7 @@
        
 <tiles-definitions>
 
-	<definition name="problem/hacker/show" extends="master.page">	
+	<definition name="problem/rookie/show" extends="master.page">	
 		<put-attribute name="title" value="Show problem" />
 		<put-attribute name="body" value="/views/problem/show.jsp" />
 	</definition>

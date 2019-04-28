@@ -10,7 +10,6 @@
 
 package controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -18,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import domain.Hacker;
-import domain.EducationalData;
-import services.HackerService;
+
 import services.EducationalDataService;
+import services.RookieService;
+import domain.EducationalData;
+import domain.Rookie;
 
 /*
- * CONTROL DE CAMBIOS CurriculaHackerController.java
+ * CONTROL DE CAMBIOS CurriculaRookieController.java
  * 
  * ALVARO 09/03/2019 11:30 CREACION DE LA CLASE
  */
@@ -32,12 +32,12 @@ import services.EducationalDataService;
 @Controller
 @RequestMapping("/educationalData")
 public class EducationalDataController extends AbstractController {
-	
+
 	@Autowired
-	private HackerService hackerService;
-	
+	private RookieService			rookieService;
+
 	@Autowired
-	private EducationalDataService educationalDataService;
+	private EducationalDataService	educationalDataService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -45,27 +45,28 @@ public class EducationalDataController extends AbstractController {
 	public EducationalDataController() {
 		super();
 	}
-	
+
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "educationalDataId", defaultValue = "-1") final int educationalDataId) {
 
 		ModelAndView result;
 		try {
-			EducationalData educationalDataDB = this.educationalDataService.findOne(educationalDataId);
+			final EducationalData educationalDataDB = this.educationalDataService.findOne(educationalDataId);
 			Assert.notNull(educationalDataDB, "Not found educational in DB");
 			result = new ModelAndView("educationalData/show");
-			
-			Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hackerLogin!=null && educationalDataDB.getCurricula().getHacker().equals(hackerLogin)) {
-				result.addObject("hackerLogin", true);	
-			}
-			
+
+			final Rookie rookieLogin = this.rookieService.getRookieLogin();
+			if (rookieLogin != null && educationalDataDB.getCurricula().getRookie().equals(rookieLogin))
+				result.addObject("rookieLogin", true);
+
 			result.addObject("educationalData", educationalDataDB);
-						
+
 			result.addObject("requestURI", "educationalData/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 }

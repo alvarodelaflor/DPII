@@ -16,19 +16,19 @@
       
 <tiles-definitions>
 
-	<definition name="hacker/create" extends="master.page">	
-		<put-attribute name="title" value="Registro hacker" />
-		<put-attribute name="body" value="/views/hacker/create.jsp" />
+	<definition name="rookie/create" extends="master.page">	
+		<put-attribute name="title" value="Registro rookie" />
+		<put-attribute name="body" value="/views/rookie/create.jsp" />
 	</definition>
 	
-	<definition name="hacker/show" extends="master.page">	
-		<put-attribute name="title" value="Mostrar hacker" />
-		<put-attribute name="body" value="/views/hacker/show.jsp" />
+	<definition name="rookie/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar rookie" />
+		<put-attribute name="body" value="/views/rookie/show.jsp" />
 	</definition>
 	
-	<definition name="hacker/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar hacker" />
-		<put-attribute name="body" value="/views/hacker/edit.jsp" />
+	<definition name="rookie/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar rookie" />
+		<put-attribute name="body" value="/views/rookie/edit.jsp" />
 	</definition>
 	
 </tiles-definitions>

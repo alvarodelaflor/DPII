@@ -1,5 +1,5 @@
 
-package hackerRankTest;
+package rookiesTest;
 
 import javax.transaction.Transactional;
 
@@ -10,10 +10,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import services.CurriculaService;
-import services.HackerService;
+import services.RookieService;
 import utilities.AbstractTest;
 import domain.Curricula;
-import domain.Hacker;
+import domain.Rookie;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -26,7 +26,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	private CurriculaService	curriculaService;
 
 	@Autowired
-	private HackerService		hackerService;
+	private RookieService		rookieService;
 
 
 	/*
@@ -61,26 +61,26 @@ public class CurriculaServiceTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.setVatNumber("dd33f");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			final Hacker saved = this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.setVatNumber("dd33f");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			final Rookie saved = this.rookieService.saveCreate(rookie);
 
-			super.authenticate("hackeruser");
+			super.authenticate("rookieuser");
 
 			final Curricula curricula = this.curriculaService.create();
 			curricula.setName("curriculatest");
 			curricula.setIsCopy(false);
 			curricula.setLinkGitHub("jose");
 			curricula.setLinkLinkedin("http://www.prueba.com");
-			curricula.setHacker(saved);
+			curricula.setRookie(saved);
 			curricula.setMiscellaneous("test");
 			curricula.setPhone("695456123");
 			curricula.setStatement("Test statement");
@@ -98,7 +98,7 @@ public class CurriculaServiceTest extends AbstractTest {
 
 	/*
 	 * 17.1.
-	 * . An actor who is authenticated as a hacker must be able to:
+	 * . An actor who is authenticated as a rookie must be able to:
 	 * Manage his or her curricula, which includes listing, showing, creating, updating, and
 	 * deleting them.
 	 */
@@ -125,24 +125,24 @@ public class CurriculaServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setVatNumber("dd33f");
-			hacker.setSurname("hackersurname");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setVatNumber("dd33f");
+			rookie.setSurname("rookiesurname");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			this.rookieService.saveCreate(rookie);
 
 			final Curricula curricula = this.curriculaService.create();
 			curricula.setName("curriculatest");
 			curricula.setIsCopy(false);
 			curricula.setLinkGitHub("jose");
 			curricula.setLinkLinkedin("http://www.prueba.com");
-			curricula.setHacker(hacker);
+			curricula.setRookie(rookie);
 			curricula.setMiscellaneous("test");
 			curricula.setPhone("695456123");
 			curricula.setStatement("Test statement");
@@ -158,7 +158,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 17.1 An actor who is authenticated as a hacker must be able to:
+	 * 17.1 An actor who is authenticated as a rookie must be able to:
 	 * Manage his or her curricula, which includes listing, showing, creating, updating, and
 	 * deleting them.
 	 * //
@@ -171,7 +171,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	public void Diver03() {
 		final Object testingData[][] = {
 			{
-				// // Positive Test: Hackers can list their curriculas
+				// // Positive Test: Rookies can list their curriculas
 				//
 				null
 			}
@@ -190,33 +190,33 @@ public class CurriculaServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setVatNumber("dd33f");
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setVatNumber("dd33f");
 
-			hacker.setSurname("hackersurname");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			final Hacker saved = this.hackerService.saveCreate(hacker);
+			rookie.setSurname("rookiesurname");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			final Rookie saved = this.rookieService.saveCreate(rookie);
 
-			super.authenticate("hackeruser");
+			super.authenticate("rookieuser");
 
 			final Curricula curricula = this.curriculaService.create();
 			curricula.setName("curriculatest");
 			curricula.setIsCopy(false);
 			curricula.setLinkGitHub("jose");
 			curricula.setLinkLinkedin("http://www.prueba.com");
-			curricula.setHacker(saved);
+			curricula.setRookie(saved);
 			curricula.setMiscellaneous("test");
 			curricula.setPhone("695456123");
 			curricula.setStatement("Test statement");
 			this.curriculaService.save(curricula);
 
-			this.curriculaService.findAllByHacker(hacker);
+			this.curriculaService.findAllByRookie(rookie);
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
@@ -228,7 +228,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * 17.1 An actor who is authenticated as a hacker must be able to:
+	 * 17.1 An actor who is authenticated as a rookie must be able to:
 	 * Manage his or her curricula, which includes listing, showing, creating, updating, and
 	 * deleting them.
 	 * 12.7%
@@ -239,7 +239,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	public void Diver04() {
 		final Object testingData[][] = {
 			{
-				// Negative Test: Non logged user trying to list another hacker curriculas
+				// Negative Test: Non logged user trying to list another rookie curriculas
 				//
 				IllegalArgumentException.class
 			}
@@ -258,30 +258,30 @@ public class CurriculaServiceTest extends AbstractTest {
 
 		try {
 			this.startTransaction();
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setVatNumber("dd33f");
-			hacker.setSurname("hackersurname");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setVatNumber("dd33f");
+			rookie.setSurname("rookiesurname");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			this.rookieService.saveCreate(rookie);
 
 			final Curricula curricula = this.curriculaService.create();
 			curricula.setIsCopy(false);
 			curricula.setName("curriculatest");
 			curricula.setLinkGitHub("jose");
 			curricula.setLinkLinkedin("http://www.prueba.com");
-			curricula.setHacker(hacker);
+			curricula.setRookie(rookie);
 			curricula.setMiscellaneous("test");
 			curricula.setPhone("695456123");
 			curricula.setStatement("Test statement");
 			this.curriculaService.save(curricula);
 
-			this.curriculaService.findAllByHacker(hacker);
+			this.curriculaService.findAllByRookie(rookie);
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -295,7 +295,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	/*
 	 * 18 . An actor who is authenticated as an administrator must be able to:
 	 * Display a dashboard with the following information:
-	 * The minimum, the maximum, the average, and the standard deviation of the number of curricula per hacker.
+	 * The minimum, the maximum, the average, and the standard deviation of the number of curricula per rookie.
 	 * The minimum, the maximum, the average, and the standard deviation of the number of results in the finders
 	 * // The ratio of empty versus non-empty finders.
 	 * * * Analysis of sentence coverage

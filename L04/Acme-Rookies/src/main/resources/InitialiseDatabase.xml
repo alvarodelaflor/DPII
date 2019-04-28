@@ -53,8 +53,8 @@
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
 		<property name="cacheAmount" value="10" />
-		<property name="systemMessageEs" value="¡Bienvenidos a Acme Hacker Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
-		<property name="systemMessageEn" value="Welcome to Acme hacker Rank! We’re IT hacker’s favourite job marketplace!" />
+		<property name="systemMessageEs" value="¡Bienvenidos a Acme Rookie Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		<property name="systemMessageEn" value="Welcome to Acme rookie Rank! We’re IT rookie’s favourite job marketplace!" />
 		<property name="spamWords">
 			<list value-type="java.lang.String">
 				<value>sex</value>

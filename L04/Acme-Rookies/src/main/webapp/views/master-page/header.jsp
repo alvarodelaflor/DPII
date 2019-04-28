@@ -40,12 +40,12 @@
 			
 		</security:authorize>
 		
-		<security:authorize access="hasRole('HACKER')">
-		<li><a class="fNiv"><spring:message	code="master.page.hacker" /></a>
+		<security:authorize access="hasRole('ROOKIE')">
+		<li><a class="fNiv"><spring:message	code="master.page.rookie" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="application/hacker/list.do"><spring:message code="master.page.list.application" /></a></li>
-					<li><a href="finder/hacker/show.do"><spring:message code="master.page.finder" /></a></li>		
+					<li><a href="application/rookie/list.do"><spring:message code="master.page.list.application" /></a></li>
+					<li><a href="finder/rookie/show.do"><spring:message code="master.page.finder" /></a></li>		
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
@@ -83,7 +83,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.rgister" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="hacker/create.do"><spring:message code="master.page.register.hacker" /></a></li>
+					<li><a href="rookie/create.do"><spring:message code="master.page.register.rookie" /></a></li>
 					<li><a href="company/create.do"><spring:message code="master.page.register.company" /></a></li>				
 				</ul>
 			</li>
@@ -109,9 +109,9 @@
 					<li class="arrow"></li>
 					<li><a href="socialProfile/list.do"><spring:message code="master.page.socialProfile.list" /></a></li>					
 					<li><a href="message/list.do"><spring:message code="master.page.message.list" /></a></li>					
-					<security:authorize access="hasRole('HACKER')">
-						<li><a href="hacker/show.do"><spring:message code="master.page.hacker.show" /></a></li>
-						<li><a href="hacker/edit.do"><spring:message code="master.page.hacker.edit" /></a></li>	
+					<security:authorize access="hasRole('ROOKIE')">
+						<li><a href="rookie/show.do"><spring:message code="master.page.rookie.show" /></a></li>
+						<li><a href="rookie/edit.do"><spring:message code="master.page.rookie.edit" /></a></li>	
 					</security:authorize>	
 					<security:authorize access="hasRole('COMPANY')">
 						<li><a href="company/show.do"><spring:message code="master.page.company.show" /></a></li>

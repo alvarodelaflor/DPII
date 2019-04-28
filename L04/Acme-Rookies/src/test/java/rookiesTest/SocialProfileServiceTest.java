@@ -1,5 +1,5 @@
 
-package hackerRankTest;
+package rookiesTest;
 
 import javax.transaction.Transactional;
 
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import services.HackerService;
+import services.RookieService;
 import services.SocialProfileService;
 import utilities.AbstractTest;
-import domain.Hacker;
+import domain.Rookie;
 import domain.SocialProfile;
 
 @ContextConfiguration(locations = {
@@ -26,7 +26,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	SocialProfileService	socialService;
 
 	@Autowired
-	HackerService			hackerService;
+	RookieService			rookieService;
 
 
 	////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	 * NEGATIVE TEST
 	 * Unauthenticated actor tries to create a new social profile
 	 * 
-	 * Requirement under test: 23 (Acme-Hacker-Rank)
+	 * Requirement under test: 23 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 90%
 	 * Analysis of data coverage: 100%
@@ -71,7 +71,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	 * NEGATIVE TEST
 	 * Actor tries to save null
 	 * 
-	 * Requirement under test: 23 (Acme-Hacker-Rank)
+	 * Requirement under test: 23 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 90%
 	 * Analysis of data coverage: 100%
@@ -101,7 +101,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 	 * NEGATIVE TEST
 	 * Actor tries to delete a social profile of which it is not the owner
 	 * 
-	 * Requirement under test: 23 (Acme-Hacker-Rank)
+	 * Requirement under test: 23 (Acme-Rookie-Rank)
 	 * 
 	 * Analysis of sentence coverage: 90%
 	 * Analysis of data coverage: 100%
@@ -131,17 +131,17 @@ public class SocialProfileServiceTest extends AbstractTest {
 
 			this.startTransaction();
 
-			final Hacker hacker = this.hackerService.create();
-			hacker.setAddress("calle hacker test");
-			hacker.setCreditCard(null);
-			hacker.setEmail("elcejas@hacker.com");
-			hacker.setName("hackername");
-			hacker.setPhone("123456789");
-			hacker.setSurname("hackersurname");
-			hacker.getUserAccount().setUsername("hackeruser");
-			hacker.getUserAccount().setPassword("hackerpass");
-			hacker.getUserAccount().setSpammerFlag(true);
-			this.hackerService.saveCreate(hacker);
+			final Rookie rookie = this.rookieService.create();
+			rookie.setAddress("calle rookie test");
+			rookie.setCreditCard(null);
+			rookie.setEmail("elcejas@rookie.com");
+			rookie.setName("rookiename");
+			rookie.setPhone("123456789");
+			rookie.setSurname("rookiesurname");
+			rookie.getUserAccount().setUsername("rookieuser");
+			rookie.getUserAccount().setPassword("rookiepass");
+			rookie.getUserAccount().setSpammerFlag(true);
+			this.rookieService.saveCreate(rookie);
 
 			this.authenticate("admin");
 			final SocialProfile sp = this.socialService.create();
@@ -150,7 +150,7 @@ public class SocialProfileServiceTest extends AbstractTest {
 			sp.setNick("eldelosdosvasosdeagua");
 			final SocialProfile savedSp = this.socialService.save(sp);
 			if (!owner)
-				this.authenticate("hackeruser");
+				this.authenticate("rookieuser");
 			this.socialService.delete(savedSp);
 		} catch (final Throwable oops) {
 

@@ -13,31 +13,31 @@ import domain.Application;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
-	// Application per Hacker:
-	@Query("select avg(cast((select count(a) from Application a where a.hacker = h) as float)) from Hacker h")
-	public Float avgApplicationPerHacker();
+	// Application per Rookie:
+	@Query("select avg(cast((select count(a) from Application a where a.rookie = h) as float)) from Rookie h")
+	public Float avgApplicationPerRookie();
 
-	@Query("select min(cast((select count(a) from Application a where a.hacker = h) as float)) from Hacker h")
-	public Float minApplicationPerHacker();
+	@Query("select min(cast((select count(a) from Application a where a.rookie = h) as float)) from Rookie h")
+	public Float minApplicationPerRookie();
 
-	@Query("select max(cast((select count(a) from Application a where a.hacker = h) as float)) from Hacker h")
-	public Float maxApplicationPerHacker();
+	@Query("select max(cast((select count(a) from Application a where a.rookie = h) as float)) from Rookie h")
+	public Float maxApplicationPerRookie();
 
-	@Query("select stddev(cast((select count(a) from Application a where a.hacker = h) as float)) from Hacker h")
-	public Float stddevApplicationPerHacker();
+	@Query("select stddev(cast((select count(a) from Application a where a.rookie = h) as float)) from Rookie h")
+	public Float stddevApplicationPerRookie();
 
-	// Hackers who have made more applications:
-	@Query("select a.hacker.name from Application a group by a.hacker.id order by count(a.hacker.id) desc")
-	public List<String> findHackerWithMoreApplications();
+	// Rookies who have made more applications:
+	@Query("select a.rookie.name from Application a group by a.rookie.id order by count(a.rookie.id) desc")
+	public List<String> findRookieWithMoreApplications();
 
-	@Query("select a from Application a where a.hacker.id = ?1")
-	public Collection<Application> getApplicationsByHacker(int id);
+	@Query("select a from Application a where a.rookie.id = ?1")
+	public Collection<Application> getApplicationsByRookie(int id);
 
 	@Query("select a from Application a where a.id=?1")
-	public Application getApplicationHackerById(int id);
+	public Application getApplicationRookieById(int id);
 
-	@Query("select a from Application a where a.hacker.id = ?1")
-	public Collection<Application> findHackerApps(int hackerId);
+	@Query("select a from Application a where a.rookie.id = ?1")
+	public Collection<Application> findRookieApps(int rookieId);
 
 	@Query("select a from Application a where a.status = 'SUBMITTED' and a.problem.company.id = ?1")
 	public Collection<Application> getSubmittedApplicationsByLoggedCompany(int companyId);

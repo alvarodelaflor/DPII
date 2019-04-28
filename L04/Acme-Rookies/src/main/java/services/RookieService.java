@@ -18,22 +18,22 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 import repositories.ActorRepository;
-import repositories.HackerRepository;
+import repositories.RookieRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.CreditCard;
 import domain.Curricula;
 import domain.Finder;
-import domain.Hacker;
+import domain.Rookie;
 import forms.RegistrationForm;
 
 @Service
 @Transactional
-public class HackerService {
+public class RookieService {
 
 	@Autowired
-	private HackerRepository		hackerRepository;
+	private RookieRepository		rookieRepository;
 
 	@Autowired
 	private ActorRepository			actorRepository;
@@ -58,51 +58,51 @@ public class HackerService {
 
 
 	// CREATE ---------------------------------------------------------------		
-	public Hacker create() {
-		final Hacker hacker = new Hacker();
+	public Rookie create() {
+		final Rookie rookie = new Rookie();
 		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
-		authority.setAuthority(Authority.HACKER);
+		authority.setAuthority(Authority.ROOKIE);
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
-		hacker.setUserAccount(user);
+		rookie.setUserAccount(user);
 		final CreditCard creditCard = new CreditCard();
-		hacker.setCreditCard(creditCard);
-		return hacker;
+		rookie.setCreditCard(creditCard);
+		return rookie;
 	}
 
 	// SAVE-CREATE ---------------------------------------------------------------		
-	public Hacker saveCreate(final Hacker hacker) {
-		Assert.isTrue(!this.checkEmailFormatter(hacker), "email.wrong");
-		Assert.isTrue(this.checkEmail(hacker), "error.email");
+	public Rookie saveCreate(final Rookie rookie) {
+		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
+		Assert.isTrue(this.checkEmail(rookie), "error.email");
 		final Finder finder = this.finderService.create();
 		this.finderService.save(finder);
-		hacker.setFinder(finder);
-		if (hacker.getPhone().matches("^([0-9]{4,})$"))
-			hacker.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + hacker.getPhone());
+		rookie.setFinder(finder);
+		if (rookie.getPhone().matches("^([0-9]{4,})$"))
+			rookie.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + rookie.getPhone());
 
-		return this.hackerRepository.save(hacker);
+		return this.rookieRepository.save(rookie);
 	}
-	private Boolean checkEmailFormatter(final Hacker hacker) {
+	private Boolean checkEmailFormatter(final Rookie rookie) {
 		Boolean res = true;
 		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-		if (hacker.getEmail().matches(pattern))
+		if (rookie.getEmail().matches(pattern))
 			res = false;
 		return res;
 	}
 
-	private Boolean checkEmail(final Hacker hacker) {
+	private Boolean checkEmail(final Rookie rookie) {
 		Boolean res = false;
-		System.out.println(this.actorRepository.getActorByEmail(hacker.getEmail()).size());
-		if (this.actorRepository.getActorByEmail(hacker.getEmail()).size() < 1)
+		System.out.println(this.actorRepository.getActorByEmail(rookie.getEmail()).size());
+		if (this.actorRepository.getActorByEmail(rookie.getEmail()).size() < 1)
 			res = true;
 		return res;
 	}
 
 	// RECONSTRUCT-CREATE ---------------------------------------------------------------		
-	public Hacker reconstructCreate(final RegistrationForm registrationForm, final BindingResult binding) {
-		final Hacker result = this.create();
+	public Rookie reconstructCreate(final RegistrationForm registrationForm, final BindingResult binding) {
+		final Rookie result = this.create();
 
 		System.out.println("carmen: entron en el reconstructCreate");
 
@@ -220,18 +220,18 @@ public class HackerService {
 	}
 	// RECONSTRUCT-EDIT---------------------------------------------------------------		
 
-	public Hacker reconstructEdit(final Hacker hacker, final BindingResult binding) {
-		Hacker result;
-		final Hacker res = this.hackerRepository.findOne(hacker.getId());
+	public Rookie reconstructEdit(final Rookie rookie, final BindingResult binding) {
+		Rookie result;
+		final Rookie res = this.rookieRepository.findOne(rookie.getId());
 
-		result = hacker;
+		result = rookie;
 
-		result.setName(hacker.getName());
-		result.setSurname(hacker.getSurname());
-		result.setPhoto(hacker.getPhoto());
-		result.setEmail(hacker.getEmail());
-		result.setPhone(hacker.getPhone());
-		result.setAddress(hacker.getAddress());
+		result.setName(rookie.getName());
+		result.setSurname(rookie.getSurname());
+		result.setPhoto(rookie.getPhoto());
+		result.setEmail(rookie.getEmail());
+		result.setPhone(rookie.getPhone());
+		result.setAddress(rookie.getAddress());
 
 		this.validator.validate(result, binding);
 		System.out.println(binding.getAllErrors());
@@ -250,46 +250,46 @@ public class HackerService {
 	}
 	// QUERY ---------------------------------------------------------------	
 
-	public Collection<Hacker> findHackerRegardlessFinder(final String keyword, final Double salary, final Date deadline, final String description) {
+	public Collection<Rookie> findRookieRegardlessFinder(final String keyword, final Double salary, final Date deadline, final String description) {
 
-		return this.hackerRepository.findHackerRegardlessFinder(keyword, salary, deadline, description);
+		return this.rookieRepository.findRookieRegardlessFinder(keyword, salary, deadline, description);
 	}
 
 	// SAVE-EDIT ---------------------------------------------------------------	
 
-	public Hacker saveEdit(Hacker hacker) {
-		Assert.isTrue(!this.checkEmailFormatter(hacker), "email.wrong");
-		if (hacker.getPhone().matches("^([0-9]{4,})$"))
-			hacker.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + hacker.getPhone());
+	public Rookie saveEdit(Rookie rookie) {
+		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
+		if (rookie.getPhone().matches("^([0-9]{4,})$"))
+			rookie.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + rookie.getPhone());
 
-		hacker = this.hackerRepository.save(hacker);
-		System.out.println(hacker);
-		return hacker;
+		rookie = this.rookieRepository.save(rookie);
+		System.out.println(rookie);
+		return rookie;
 	}
 
-	private Boolean checkEmailEdit(final Hacker hacker) {
+	private Boolean checkEmailEdit(final Rookie rookie) {
 		Boolean res = false;
-		System.out.println(this.actorService.getActorByEmailE(hacker.getEmail()) == null);
+		System.out.println(this.actorService.getActorByEmailE(rookie.getEmail()) == null);
 
-		if (this.actorService.getActorByEmailE(hacker.getEmail()) == null && this.actorRepository.getActorByEmail(hacker.getEmail()).size() <= 1)
+		if (this.actorService.getActorByEmailE(rookie.getEmail()) == null && this.actorRepository.getActorByEmail(rookie.getEmail()).size() <= 1)
 			res = true;
 		return res;
 	}
 
 	// FINDONE ---------------------------------------------------------------	
-	public Hacker findOne(final int id) {
-		final Hacker hacker = this.hackerRepository.findOne(id);
-		return hacker;
+	public Rookie findOne(final int id) {
+		final Rookie rookie = this.rookieRepository.findOne(id);
+		return rookie;
 	}
 
 	/**
-	 * Find a hacker by his userAccount id.
+	 * Find a rookie by his userAccount id.
 	 * 
 	 * @author �lvaro de la Flor Bonilla
-	 * @return Hacker with the given userAccountId.
+	 * @return Rookie with the given userAccountId.
 	 */
-	public Hacker getHackerByUserAccountId(final int userAccountId) {
-		return this.hackerRepository.getHackerByUserAccountId(userAccountId);
+	public Rookie getRookieByUserAccountId(final int userAccountId) {
+		return this.rookieRepository.getRookieByUserAccountId(userAccountId);
 	}
 
 	/**
@@ -309,15 +309,15 @@ public class HackerService {
 	}
 
 	/**
-	 * Get the hackerLogin. Must exits an user login.
+	 * Get the rookieLogin. Must exits an user login.
 	 * 
 	 * @author �lvaro de la Flor Bonilla
-	 * @return The hacker login. Null if the user not is a hacker.
+	 * @return The rookie login. Null if the user not is a rookie.
 	 */
-	public Hacker getHackerLogin() {
-		Hacker res;
+	public Rookie getRookieLogin() {
+		Rookie res;
 		try {
-			res = this.getHackerByUserAccountId(LoginService.getPrincipal().getId());
+			res = this.getRookieByUserAccountId(LoginService.getPrincipal().getId());
 		} catch (final Exception e) {
 			res = null;
 		}
@@ -328,30 +328,30 @@ public class HackerService {
 	 * Must exits the curricula
 	 * 
 	 * @author �lvaro de la Flor Bonilla
-	 * @return The hacker of the given curricula
+	 * @return The rookie of the given curricula
 	 */
-	public Hacker getHackerByCurriculaId(final Curricula curricula) {
+	public Rookie getRookieByCurriculaId(final Curricula curricula) {
 		Assert.notNull(curricula);
-		return this.hackerRepository.getHackerByCurriculaId(curricula.getId());
+		return this.rookieRepository.getRookieByCurriculaId(curricula.getId());
 	}
 
-	public void delete(final Hacker hacker) {
+	public void delete(final Rookie rookie) {
 
-		Assert.isTrue(LoginService.getPrincipal().getId() == hacker.getUserAccount().getId());
-		this.applicationService.deleteHackerApplications(hacker.getId());
-		this.curriculaService.deleteHackerCurriculas(hacker.getId());
-		this.hackerRepository.delete(hacker);
+		Assert.isTrue(LoginService.getPrincipal().getId() == rookie.getUserAccount().getId());
+		this.applicationService.deleteRookieApplications(rookie.getId());
+		this.curriculaService.deleteRookieCurriculas(rookie.getId());
+		this.rookieRepository.delete(rookie);
 	}
 
-	public Collection<Hacker> findAll() {
-		return this.hackerRepository.findAll();
+	public Collection<Rookie> findAll() {
+		return this.rookieRepository.findAll();
 	}
 
 	public void flush() {
-		this.hackerRepository.flush();
+		this.rookieRepository.flush();
 	}
 
-	public Collection<Hacker> findByProblem(final int problemId) {
-		return this.hackerRepository.findByProblem(problemId);
+	public Collection<Rookie> findByProblem(final int problemId) {
+		return this.rookieRepository.findByProblem(problemId);
 	}
 }

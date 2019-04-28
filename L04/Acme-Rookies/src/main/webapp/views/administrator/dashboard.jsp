@@ -39,16 +39,16 @@
 	<p><spring:message code="findCompanyWithMorePositions" /> <jstl:out value="${findCompanyWithMorePositions}"></jstl:out></p>
 	<br>
 
-<h2><spring:message code="hackers" /></h2>	
-	<h3><spring:message code="applicationsPerHacker" /></h3>
-		<p><spring:message code="avg" /> <jstl:out value="${avgApplicationsPerHacker}"></jstl:out></p>		
-		<p><spring:message code="min" /> <jstl:out value="${minApplicationsPerHacker}"></jstl:out></p>		
-		<p><spring:message code="max" /> <jstl:out value="${maxApplicationsPerHacker}"></jstl:out></p>		
-		<p><spring:message code="stddev" /> <jstl:out value="${stddevApplicationsPerHacker}"></jstl:out></p>
+<h2><spring:message code="rookies" /></h2>	
+	<h3><spring:message code="applicationsPerRookie" /></h3>
+		<p><spring:message code="avg" /> <jstl:out value="${avgApplicationsPerRookie}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minApplicationsPerRookie}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxApplicationsPerRookie}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${stddevApplicationsPerRookie}"></jstl:out></p>
 	<br>
 	
-	<h3><spring:message code="hackerMoreApplications" /></h3>
-		<p><spring:message code="findHackerMoreApplications" /> <jstl:out value="${findHackerMoreApplications}"></jstl:out></p>
+	<h3><spring:message code="rookieMoreApplications" /></h3>
+		<p><spring:message code="findRookieMoreApplications" /> <jstl:out value="${findRookieMoreApplications}"></jstl:out></p>
 	<br>
 	
 	<h2><spring:message code="finder" /></h2>

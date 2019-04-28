@@ -37,8 +37,8 @@ public interface FinderRepository extends JpaRepository<Finder, Integer> {
 	@Query("select distinct((select count(f) from Finder f where f.positions.size = 0 ) / (select count(f1) from Finder f1 where f1.positions.size > 0)) from Finder f2")
 	Float ratioFinder();
 
-	@Query("select m.finder from Hacker m where m.id=?1")
-	Finder getByHacker(int id);
+	@Query("select m.finder from Rookie m where m.id=?1")
+	Finder getByRookie(int id);
 
 	@Query("select f from Finder f join f.positions p where p.id=?1")
 	Collection<Finder> getFindersWithPosition(int id);

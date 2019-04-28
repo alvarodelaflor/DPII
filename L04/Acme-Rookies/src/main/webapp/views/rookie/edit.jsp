@@ -21,24 +21,24 @@
 
 <section id="main-content">
 	<article>
-		<security:authorize access="hasRole('HACKER')"> 
+		<security:authorize access="hasRole('ROOKIE')"> 
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="hacker"  onsubmit="return phonenumberval();" action="hacker/edit.do">
+				modelAttribute="rookie"  onsubmit="return phonenumberval();" action="rookie/edit.do">
 				
 				<form:hidden path="id" />
 				
 
 				
-				<acme:textbox code="hacker.name" path="name" />
-				<acme:textbox code="hacker.surname" path="surname" />
-				<acme:textbox code="hacker.address" path="address" />
-				<acme:textbox code="hacker.email" path="email" />
-				<acme:textbox code="hacker.photo" path="photo" />
-				<acme:phonebox code="hacker.phone" path="phone" />
+				<acme:textbox code="rookie.name" path="name" />
+				<acme:textbox code="rookie.surname" path="surname" />
+				<acme:textbox code="rookie.address" path="address" />
+				<acme:textbox code="rookie.email" path="email" />
+				<acme:textbox code="rookie.photo" path="photo" />
+				<acme:phonebox code="rookie.phone" path="phone" />
 					
-				<acme:submit name="saveEdit" code="hacker.save"/>
-				<acme:cancel url=" " code="hacker.cancel"/>
+				<acme:submit name="saveEdit" code="rookie.save"/>
+				<acme:cancel url=" " code="rookie.cancel"/>
 			</form:form>
 		</div>
 		</security:authorize>

@@ -1,5 +1,5 @@
 /*
- * CurricculaHackerController.java
+ * CurricculaRookieController.java
  * 
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -23,18 +23,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CurriculaService;
 import services.EducationalDataService;
-import services.HackerService;
 import services.MiscellaneousAttachmentService;
 import services.PositionDataService;
 import services.PositionService;
+import services.RookieService;
 import domain.Curricula;
 import domain.EducationalData;
-import domain.Hacker;
 import domain.MiscellaneousAttachment;
 import domain.PositionData;
+import domain.Rookie;
 
 /*
- * CONTROL DE CAMBIOS CurriculaHackerController.java
+ * CONTROL DE CAMBIOS CurriculaRookieController.java
  * 
  * ALVARO 09/03/2019 11:30 CREACION DE LA CLASE
  */
@@ -44,7 +44,7 @@ import domain.PositionData;
 public class CurriculaController extends AbstractController {
 
 	@Autowired
-	private HackerService					hackerService;
+	private RookieService					rookieService;
 
 	@Autowired
 	private CurriculaService				curriculaService;
@@ -69,19 +69,19 @@ public class CurriculaController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(value = "hackerId", defaultValue = "-1") final int hackerId) {
+	public ModelAndView list(@RequestParam(value = "rookieId", defaultValue = "-1") final int rookieId) {
 		ModelAndView result;
 		try {
-			Hacker hacker = this.hackerService.findOne(hackerId);
-			final Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hacker == null && hackerLogin != null)
-				hacker = hackerLogin;
-			Assert.notNull(hacker, "Not hacker found in DB");
+			Rookie rookie = this.rookieService.findOne(rookieId);
+			final Rookie rookieLogin = this.rookieService.getRookieLogin();
+			if (rookie == null && rookieLogin != null)
+				rookie = rookieLogin;
+			Assert.notNull(rookie, "Not rookie found in DB");
 			result = new ModelAndView("curricula/list");
-			if (hackerLogin != null && hacker.equals(hackerLogin))
-				result.addObject("hackerLogger", true);
-			Assert.notNull(hacker, "Hacker is null");
-			final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByHacker(hacker);
+			if (rookieLogin != null && rookie.equals(rookieLogin))
+				result.addObject("rookieLogger", true);
+			Assert.notNull(rookie, "Rookie is null");
+			final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByRookie(rookie);
 			result.addObject("curriculas", curriculas);
 			result.addObject("requestURI", "curriculas/list.do");
 		} catch (final Exception e) {
@@ -101,12 +101,12 @@ public class CurriculaController extends AbstractController {
 			Assert.notNull(curriculaDB, "Not found curricula in DB");
 			result = new ModelAndView("curricula/show");
 
-			final Hacker hackerLogin = this.hackerService.getHackerLogin();
-			if (hackerLogin != null && curriculaDB.getHacker().equals(hackerLogin) && curriculaDB.getIsCopy().equals(false)) {
-				result.addObject("hackerLogin", true);
+			final Rookie rookieLogin = this.rookieService.getRookieLogin();
+			if (rookieLogin != null && curriculaDB.getRookie().equals(rookieLogin) && curriculaDB.getIsCopy().equals(false)) {
+				result.addObject("rookieLogin", true);
 				final MiscellaneousAttachment miscellaneousAttachment = this.miscellaneousAttachmentService.createWithHistory(curriculaDB);
 				result.addObject("miscellaneousAttachment", miscellaneousAttachment);
-				final Boolean validPositionData = !this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()).isEmpty();
+				final Boolean validPositionData = !this.positionService.findValidPositionToCurriculaByRookieId(rookieLogin.getId()).isEmpty();
 				result.addObject("validPositionData", validPositionData);
 			}
 

@@ -24,21 +24,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
-import services.HackerService;
-import domain.Hacker;
+import services.RookieService;
+import domain.Rookie;
 import forms.RegistrationForm;
 
 @Controller
-@RequestMapping("/hacker")
-public class HackerController extends AbstractController {
+@RequestMapping("/rookie")
+public class RookieController extends AbstractController {
 
 	@Autowired
-	private HackerService	hackerService;
+	private RookieService	rookieService;
 
 
 	// Constructors -----------------------------------------------------------
 
-	public HackerController() {
+	public RookieController() {
 		super();
 	}
 
@@ -49,7 +49,7 @@ public class HackerController extends AbstractController {
 		ModelAndView result;
 		try {
 			final RegistrationForm registrationForm = new RegistrationForm();
-			result = new ModelAndView("hacker/create");
+			result = new ModelAndView("rookie/create");
 			result.addObject("registrationForm", registrationForm);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -65,17 +65,17 @@ public class HackerController extends AbstractController {
 	public ModelAndView save(final RegistrationForm registrationForm, final BindingResult binding) {
 		ModelAndView result = null;
 
-		final Hacker hacker;
+		final Rookie rookie;
 
-		hacker = this.hackerService.reconstructCreate(registrationForm, binding);
+		rookie = this.rookieService.reconstructCreate(registrationForm, binding);
 
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors());
-			result = new ModelAndView("hacker/create");
+			result = new ModelAndView("rookie/create");
 		} else
 			try {
 				System.out.println("carmen: voy a guardar");
-				final Hacker a = this.hackerService.saveCreate(hacker);
+				final Rookie a = this.rookieService.saveCreate(rookie);
 				System.out.println(a);
 				SimpleDateFormat formatter;
 				String moment;
@@ -85,21 +85,21 @@ public class HackerController extends AbstractController {
 				result.addObject("moment", moment);
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("email.wrong"))
-					result = this.createEditModelAndView(hacker, "email.wrong");
+					result = this.createEditModelAndView(rookie, "email.wrong");
 				else if (oops.getMessage().equals("error.email"))
-					result = this.createEditModelAndView(hacker, "error.email");
+					result = this.createEditModelAndView(rookie, "error.email");
 				else
-					result = this.createEditModelAndView(hacker, "error.html");
+					result = this.createEditModelAndView(rookie, "error.html");
 			}
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
 	}
 
-	private ModelAndView createEditModelAndView(final Hacker actor, final String string) {
+	private ModelAndView createEditModelAndView(final Rookie actor, final String string) {
 		ModelAndView result;
 
-		result = new ModelAndView("hacker/create");
+		result = new ModelAndView("rookie/create");
 		result.addObject("message", string);
 		result.addObject("actor", actor);
 		result.addObject("logo", this.getLogo());
@@ -114,12 +114,12 @@ public class HackerController extends AbstractController {
 		ModelAndView result;
 		try {
 			final int userLoggin = LoginService.getPrincipal().getId();
-			final Hacker hacker;
-			hacker = this.hackerService.getHackerByUserAccountId(userLoggin);
-			Assert.isTrue(hacker != null);
-			result = new ModelAndView("hacker/show");
-			result.addObject("hacker", hacker);
-			result.addObject("requestURI", "hacker/show.do");
+			final Rookie rookie;
+			rookie = this.rookieService.getRookieByUserAccountId(userLoggin);
+			Assert.isTrue(rookie != null);
+			result = new ModelAndView("rookie/show");
+			result.addObject("rookie", rookie);
+			result.addObject("requestURI", "rookie/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -134,12 +134,12 @@ public class HackerController extends AbstractController {
 		ModelAndView result;
 
 		try {
-			Hacker hacker;
+			Rookie rookie;
 			final int idUserAccount = LoginService.getPrincipal().getId();
-			hacker = this.hackerService.getHackerByUserAccountId(idUserAccount);
-			Assert.notNull(hacker);
-			result = new ModelAndView("hacker/edit");
-			result.addObject("hacker", hacker);
+			rookie = this.rookieService.getRookieByUserAccountId(idUserAccount);
+			Assert.notNull(rookie);
+			result = new ModelAndView("rookie/edit");
+			result.addObject("rookie", rookie);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -150,29 +150,29 @@ public class HackerController extends AbstractController {
 
 	// SAVE-EDIT ---------------------------------------------------------------		
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
-	public ModelAndView saveEdit(Hacker hacker, final BindingResult binding) {
+	public ModelAndView saveEdit(Rookie rookie, final BindingResult binding) {
 		ModelAndView result;
-		System.out.println(hacker);
+		System.out.println(rookie);
 
-		hacker = this.hackerService.reconstructEdit(hacker, binding);
+		rookie = this.rookieService.reconstructEdit(rookie, binding);
 
 		System.out.println("c" + binding.getAllErrors());
 
 		if (binding.hasErrors()) {
 			System.out.println("Carmen: Hay fallos " + binding);
-			result = new ModelAndView("hacker/edit");
+			result = new ModelAndView("rookie/edit");
 		} else
 			try {
-				hacker = this.hackerService.saveEdit(hacker);
+				rookie = this.rookieService.saveEdit(rookie);
 				result = new ModelAndView("redirect:show.do");
-				System.out.println(hacker);
-				result.addObject("hacker", hacker);
+				System.out.println(rookie);
+				result.addObject("rookie", rookie);
 			} catch (final Throwable oops) {
 				System.out.println(oops);
 				if (oops.getMessage().equals("email.wrong"))
-					result = this.editModelAndView(hacker, "email.wrong");
+					result = this.editModelAndView(rookie, "email.wrong");
 				else if (oops.getMessage().equals("error.email"))
-					result = this.editModelAndView(hacker, "error.email");
+					result = this.editModelAndView(rookie, "error.email");
 				else
 					result = new ModelAndView("redirect:/welcome/index.do");
 			}
@@ -181,12 +181,12 @@ public class HackerController extends AbstractController {
 		return result;
 	}
 
-	private ModelAndView editModelAndView(final Hacker hacker, final String message) {
+	private ModelAndView editModelAndView(final Rookie rookie, final String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("hacker/edit");
+		result = new ModelAndView("rookie/edit");
 		result.addObject("message", message);
-		result.addObject("hacker", hacker);
+		result.addObject("rookie", rookie);
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
@@ -194,9 +194,9 @@ public class HackerController extends AbstractController {
 
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public @ResponseBody
-	Hacker export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
-		Hacker result = new Hacker();
-		result = this.hackerService.findOne(id);
+	Rookie export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Rookie result = new Rookie();
+		result = this.rookieService.findOne(id);
 		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
 			return null;
 		System.out.println(result);
@@ -205,18 +205,18 @@ public class HackerController extends AbstractController {
 
 	//Nuevo
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int hackerId) {
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int rookieId) {
 		ModelAndView result;
 
-		final Hacker hacker = this.hackerService.findOne(hackerId);
-		System.out.println("Hacker encontrado: " + hacker);
-		if (this.hackerService.findOne(hackerId) == null || LoginService.getPrincipal().getId() != hacker.getUserAccount().getId())
+		final Rookie rookie = this.rookieService.findOne(rookieId);
+		System.out.println("Rookie encontrado: " + rookie);
+		if (this.rookieService.findOne(rookieId) == null || LoginService.getPrincipal().getId() != rookie.getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
 		else {
-			Assert.notNull(hacker, "hacker.null");
+			Assert.notNull(rookie, "rookie.null");
 
 			try {
-				this.hackerService.delete(hacker);
+				this.rookieService.delete(rookie);
 				result = new ModelAndView("redirect:/j_spring_security_logout");
 			} catch (final Exception e) {
 				result = new ModelAndView("redirect:/j_spring_security_logout");

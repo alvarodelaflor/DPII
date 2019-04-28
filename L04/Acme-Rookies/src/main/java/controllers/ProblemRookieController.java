@@ -23,7 +23,7 @@ import domain.Problem;
 
 @Controller
 @RequestMapping("/problem")
-public class ProblemHackerController extends AbstractController {
+public class ProblemRookieController extends AbstractController {
 
 	@Autowired
 	private ProblemService	problemService;
@@ -31,12 +31,12 @@ public class ProblemHackerController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public ProblemHackerController() {
+	public ProblemRookieController() {
 		super();
 	}
 
 	// SHOW ---------------------------------------------------------------		
-	@RequestMapping(value = "/hacker/show", method = RequestMethod.GET)
+	@RequestMapping(value = "/rookie/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "problemId", defaultValue = "-1") final int problemId) {
 
 		ModelAndView result;
@@ -46,12 +46,14 @@ public class ProblemHackerController extends AbstractController {
 			problem = this.problemService.findOne(problemId);
 			System.out.println(problem);
 			Assert.notNull(problem);
-			result = new ModelAndView("problem/hacker/show");
+			result = new ModelAndView("problem/rookie/show");
 			result.addObject("problem", problem);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
 	}
 
 }

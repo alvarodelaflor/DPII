@@ -24,7 +24,7 @@
 <body>
 
 	<div>
-    	<form:form class="formularioEdicion" method="POST" modelAttribute="positionData" action="positionData/hacker/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="positionData" action="positionData/rookie/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	<form:hidden path="curricula"/>

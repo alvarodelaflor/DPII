@@ -18,7 +18,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<security:authorize access="hasRole('HACKER')">
+<security:authorize access="hasRole('ROOKIE')">
 	<style>
 		.linea
 		{
@@ -27,11 +27,11 @@
 	</style>
 
 	<div>
-		<jstl:if test="${hackerLogin==true}">
-			<form method="get" action="curricula/hacker/delete.do">
+		<jstl:if test="${rookieLogin==true}">
+			<form method="get" action="curricula/rookie/delete.do">
 				<button class="linea" name="curriculaId" value="${curricula.id}"><spring:message code="curricula.delete"/></button>
 			</form>
-			<form method="get" action="curricula/hacker/edit.do">
+			<form method="get" action="curricula/rookie/edit.do">
 				<button name="curriculaId" value="${curricula.id}"><spring:message code="curricula.edit"/></button>
 			</form>
 			<br>	
@@ -44,11 +44,11 @@
 			<spring:message code="curricula.data" />
 		</legend>
 		<c:choose>
-    		<c:when test="${curricula.hacker.photo=='' or curricula.hacker.photo==null}">
-				<img width="95" src="./images/hacker.png" alt="ERROR"/>
+    		<c:when test="${curricula.rookie.photo=='' or curricula.rookie.photo==null}">
+				<img width="95" src="./images/rookie.png" alt="ERROR"/>
     		</c:when>    
     		<c:otherwise>
-				<img width="95" src="${curricula.hacker.photo}" alt="ERROR"/>
+				<img width="95" src="${curricula.rookie.photo}" alt="ERROR"/>
     		</c:otherwise>
 		</c:choose>
 		<p><strong><spring:message code="curricula.name" /></strong><jstl:out value="${curricula.name}"></jstl:out></p>
@@ -58,10 +58,10 @@
 				<i><spring:message code="curricula.miscellaneous" /></i><img width="35" height="35" src="./images/att.png" alt="${row1.id}" />
 			</legend>
 			<c:choose>
-					<c:when test="${hackerLogin==true}">
+					<c:when test="${rookieLogin==true}">
 			<p><strong><spring:message code="curricula.miscellaneous" /> </strong><jstl:out value="${curricula.miscellaneous}"></jstl:out></p>
-			<security:authorize access="hasRole('HACKER')">
-				<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/hacker/edit.do">
+			<security:authorize access="hasRole('ROOKIE')">
+				<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/rookie/edit.do">
 	          		<form:hidden path="id"/>
 	          		<form:hidden path="version"/>
 	          		<form:hidden path="curriculaM"/>
@@ -74,9 +74,9 @@
 				</c:choose>
 			<display:table name="miscellaneousAttachments" id="row0" requestURI="${requestURI}" pagesize="5" class="displaytag">
 				<c:choose>
-					<c:when test="${hackerLogin==true}">
+					<c:when test="${rookieLogin==true}">
 						<display:column titleKey="curricula.delete">
-							<a href="miscellaneousAttachment/hacker/delete.do?miscellaneousAttachmentId=${row0.id}"><img width="35" height="35" src="./images/delete.png" alt="${row0.id}" /></a>	
+							<a href="miscellaneousAttachment/rookie/delete.do?miscellaneousAttachmentId=${row0.id}"><img width="35" height="35" src="./images/delete.png" alt="${row0.id}" /></a>	
 						</display:column>
 					</c:when>
 				</c:choose>
@@ -87,7 +87,7 @@
 			<legend>
 				<i><spring:message code="curricula.contact" /></i><img width="35" height="35" src="./images/phone.png" alt="${row1.id}" />	
 			</legend>
-			<p><strong>Hacker <spring:message code="hacker.name" /></strong><jstl:out value="${curricula.hacker}"></jstl:out></p>
+			<p><strong>Rookie <spring:message code="rookie.name" /></strong><jstl:out value="${curricula.rookie}"></jstl:out></p>
 			<p><strong><spring:message code="curricula.phone" /></strong><jstl:out value="${curricula.phone}"></jstl:out></p>
 			<p><strong><spring:message code="curricula.linkGitHub" /> </strong><a href =<jstl:out value="${curricula.linkGitHub}"></jstl:out>><jstl:out value="${curricula.linkGitHub}"></jstl:out></a></p>
 			<p><strong><spring:message code="curricula.linkLinkedin" /></strong><a href =<jstl:out value="${curricula.linkLinkedin}"></jstl:out>><jstl:out value="${curricula.linkLinkedin}"></jstl:out></a></p>
@@ -99,14 +99,14 @@
 		</legend>
 		<strong><spring:message code="curricula.positionData" /></strong>
 		<c:choose>
-			<c:when test="${hackerLogin==true and validPositionData==true}">
-				<form method="get" action="positionData/hacker/create.do">
+			<c:when test="${rookieLogin==true and validPositionData==true}">
+				<form method="get" action="positionData/rookie/create.do">
 					<button  name="curriculaId" value="${curricula.id}"><spring:message code="positionData.create"/></button>
 				</form>			
 			</c:when>
 			<c:otherwise>
 				<c:choose>
-					<c:when test="${hackerLogin==true and validPositionData == false}">
+					<c:when test="${rookieLogin==true and validPositionData == false}">
 						<br>
 						<strong><spring:message code="curricula.positionData.emptyPosition" /></strong>			
 					</c:when>
@@ -119,12 +119,12 @@
 		<br>
 		<display:table name="positionDatas" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
 			<c:choose>
-				<c:when test="${hackerLogin==true}">
+				<c:when test="${rookieLogin==true}">
 					<display:column titleKey="curricula.edit">
-						<a href="positionData/hacker/edit.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/edit.png" alt="${row1.id}" /></a>	
+						<a href="positionData/rookie/edit.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/edit.png" alt="${row1.id}" /></a>	
 					</display:column>
 					<display:column titleKey="curricula.delete">
-						<a href="positionData/hacker/delete.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/delete.png" alt="${row1.id}" /></a>	
+						<a href="positionData/rookie/delete.do?positionDataId=${row1.id}"><img width="35" height="35" src="./images/delete.png" alt="${row1.id}" /></a>	
 					</display:column>
 				</c:when>
 			</c:choose>
@@ -139,20 +139,20 @@
 			<br>
 		</jstl:if>
 		<strong><spring:message code="curricula.educationalData" /></strong>
-		<jstl:if test="${hackerLogin==true}">
-			<form method="get" action="educationalData/hacker/create.do">
+		<jstl:if test="${rookieLogin==true}">
+			<form method="get" action="educationalData/rookie/create.do">
 				<button name="curriculaId" value="${curricula.id}"><spring:message code="educationalData.create"/></button>
 			</form>
 		</jstl:if>
 		<br>
 		<display:table name="educationalDatas" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag">
 			<c:choose>
-				<c:when test="${hackerLogin==true}">
+				<c:when test="${rookieLogin==true}">
 					<display:column titleKey="curricula.edit">
-						<a href="educationalData/hacker/edit.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/edit.png" alt="${row2.id}" /></a>	
+						<a href="educationalData/rookie/edit.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/edit.png" alt="${row2.id}" /></a>	
 					</display:column>
 					<display:column titleKey="curricula.delete">
-						<a href="educationalData/hacker/delete.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/delete.png" alt="${row2.id}" /></a>	
+						<a href="educationalData/rookie/delete.do?educationalDataId=${row2.id}"><img width="35" height="35" src="./images/delete.png" alt="${row2.id}" /></a>	
 					</display:column>
 				</c:when>
 			</c:choose>
@@ -169,8 +169,8 @@
 <br>
 
 		<c:choose>
-    		<c:when test="${hackerLogin==true}">
-    			<acme:cancel url="curricula/list.do?hackerId=${curricula.hacker.id}" code="back"/>  		
+    		<c:when test="${rookieLogin==true}">
+    			<acme:cancel url="curricula/list.do?rookieId=${curricula.rookie.id}" code="back"/>  		
     		</c:when>   
     		<c:otherwise>
 				<input type="button" value="back" name="back" onclick="history.back()" />

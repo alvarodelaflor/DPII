@@ -14,8 +14,8 @@ import org.springframework.util.Assert;
 
 import repositories.PositionDataRepository;
 import domain.Curricula;
-import domain.Hacker;
 import domain.PositionData;
+import domain.Rookie;
 
 @Service
 @Transactional
@@ -25,29 +25,29 @@ public class PositionDataService {
 	private PositionDataRepository	positionDataRepository;
 
 	@Autowired
-	private HackerService			hackerService;
+	private RookieService			rookieService;
 
 	@Autowired
 	private CurriculaService		curriculumService;
-	
+
 	@Autowired
-	private PositionService positionService;
+	private PositionService			positionService;
 
 
 	// CRUD Methods
 
 	/**
 	 * Crete a new PositionData<br>
-	 * Must exist a {@link Hacker} login and this hacker must have an curriculum and a valid position
+	 * Must exist a {@link Rookie} login and this rookie must have an curriculum and a valid position
 	 * 
 	 * @return {@link PositionData}
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public PositionData create() {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
-		Assert.isTrue(!this.curriculumService.findAllByHacker(hackerLogin).isEmpty(), "This hacker has not any curriculum in database");
-		Assert.isTrue(!this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()).isEmpty(), "This hacker has not any position with accepted application");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
+		Assert.isTrue(!this.curriculumService.findAllByRookie(rookieLogin).isEmpty(), "This rookie has not any curriculum in database");
+		Assert.isTrue(!this.positionService.findValidPositionToCurriculaByRookieId(rookieLogin.getId()).isEmpty(), "This rookie has not any position with accepted application");
 		return new PositionData();
 	}
 
@@ -58,11 +58,11 @@ public class PositionDataService {
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public PositionData createWithHistory(final Curricula curricula) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		final Hacker hackerCurricula = this.hackerService.getHackerByCurriculaId(curricula);
-		Assert.notNull(hackerCurricula, "No hacker for this curricula");
-		Assert.notNull(hackerLogin, "No hacker is login");
-		Assert.isTrue(hackerCurricula.equals(hackerLogin), "Login and hacker curricula are diferent");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		final Rookie rookieCurricula = this.rookieService.getRookieByCurriculaId(curricula);
+		Assert.notNull(rookieCurricula, "No rookie for this curricula");
+		Assert.notNull(rookieLogin, "No rookie is login");
+		Assert.isTrue(rookieCurricula.equals(rookieLogin), "Login and rookie curricula are diferent");
 		final PositionData res = new PositionData();
 		res.setCurricula(curricula);
 		res.setIsCopy(false);
@@ -71,16 +71,16 @@ public class PositionDataService {
 
 	/**
 	 * Save Collection of PositionData given<br>
-	 * The hacker is trying to save must be the onwer of the positionsdata
+	 * The rookie is trying to save must be the onwer of the positionsdata
 	 * 
 	 * @return {@link Collection}<{@link PositionData}>
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public Collection<PositionData> savaAll(final Collection<PositionData> positionsData) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
 		Assert.isTrue(!positionsData.isEmpty(), "Empty collection of positionsData");
-		Assert.isTrue(positionsData.iterator().next().getCurricula().getHacker().equals(hackerLogin), "No valid hacker to save");
+		Assert.isTrue(positionsData.iterator().next().getCurricula().getRookie().equals(rookieLogin), "No valid rookie to save");
 		return this.positionDataRepository.save(positionsData);
 	}
 
@@ -90,47 +90,46 @@ public class PositionDataService {
 
 	/**
 	 * Save the position given<br>
-	 * The hacker is trying to save must be the onwer of the positiondata
+	 * The rookie is trying to save must be the onwer of the positiondata
 	 * 
 	 * @return {@link PositionData}
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public PositionData save(final PositionData positionData) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker login");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie login");
 		Assert.notNull(positionData, "Null positionData");
-		Assert.isTrue(hackerLogin.equals(positionData.getCurricula().getHacker()), "Not allow to edit not own EducationalData");
-		if (positionData.getEndDate()!=null) {
-			Assert.isTrue(!this.checkDate(positionData.getStartDate(), positionData.getEndDate()), "Not valid date configuaration");		
-		}
-		Assert.isTrue(this.positionService.findValidPositionToCurriculaByHackerId(hackerLogin.getId()).contains(positionData.getPosition()), "Postion of the PositionData not valid");
+		Assert.isTrue(rookieLogin.equals(positionData.getCurricula().getRookie()), "Not allow to edit not own EducationalData");
+		if (positionData.getEndDate() != null)
+			Assert.isTrue(!this.checkDate(positionData.getStartDate(), positionData.getEndDate()), "Not valid date configuaration");
+		Assert.isTrue(this.positionService.findValidPositionToCurriculaByRookieId(rookieLogin.getId()).contains(positionData.getPosition()), "Postion of the PositionData not valid");
 		return this.positionDataRepository.save(positionData);
 	}
 
 	/**
 	 * Delete the position given<br>
-	 * The hacker is trying to delete must be the onwer of the positiondata
+	 * The rookie is trying to delete must be the onwer of the positiondata
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public void delete(final PositionData positionData) {
 		Assert.notNull(positionData);
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.isTrue(positionData.getCurricula().getHacker().equals(hackerLogin), "Not allow to delete a educationalData of another hacker");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.isTrue(positionData.getCurricula().getRookie().equals(rookieLogin), "Not allow to delete a educationalData of another rookie");
 		this.positionDataRepository.delete(positionData);
 	}
 
 	/**
 	 * Delete the collection of position given<br>
-	 * The hacker is trying to delete must be the onwer of the positiondata
+	 * The rookie is trying to delete must be the onwer of the positiondata
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public void deleteAll(final Collection<PositionData> positionDatas) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
 		Assert.isTrue(!positionDatas.isEmpty(), "Empty collection of positionsData");
-		Assert.isTrue(positionDatas.iterator().next().getCurricula().getHacker().equals(hackerLogin), "No valid hacker to save");
+		Assert.isTrue(positionDatas.iterator().next().getCurricula().getRookie().equals(rookieLogin), "No valid rookie to save");
 		if (!positionDatas.isEmpty())
 			this.positionDataRepository.delete(positionDatas);
 	}
@@ -161,11 +160,11 @@ public class PositionDataService {
 	//	}
 
 	public void makeCopyAllPositionDataForCurricula(final Curricula origen, final Curricula copy) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
 		Assert.isTrue(origen.getIsCopy().equals(false) && copy.getIsCopy().equals(true), "Origen can not be copyMode and copy must be copyMode");
-		Assert.isTrue(origen.getHacker().equals(copy.getHacker()), "Diferent hacker origen-copy");
-		Assert.isTrue(origen.getHacker().equals(hackerLogin), "Diferent hacker origen-login");
+		Assert.isTrue(origen.getRookie().equals(copy.getRookie()), "Diferent rookie origen-copy");
+		Assert.isTrue(origen.getRookie().equals(rookieLogin), "Diferent rookie origen-login");
 		final List<PositionData> positionsData = (List<PositionData>) this.positionDataRepository.getPositionDataFromCurricula(origen.getId());
 		final Collection<PositionData> positionsDataCopy = new ArrayList<>();
 		if (!positionsData.isEmpty()) {
@@ -176,10 +175,10 @@ public class PositionDataService {
 	}
 
 	public PositionData getCopy(final PositionData positionData, final Curricula copy) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
-		Assert.isTrue(positionData.getCurricula().getHacker().equals(copy.getHacker()));
-		Assert.isTrue(hackerLogin.equals(positionData.getCurricula().getHacker()), "Hacker curricula is diferent to hacker positionData");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
+		Assert.isTrue(positionData.getCurricula().getRookie().equals(copy.getRookie()));
+		Assert.isTrue(rookieLogin.equals(positionData.getCurricula().getRookie()), "Rookie curricula is diferent to rookie positionData");
 		final PositionData positionDataCopy = this.create();
 		positionDataCopy.setCurricula(copy);
 		positionDataCopy.setDescription(positionData.getDescription());

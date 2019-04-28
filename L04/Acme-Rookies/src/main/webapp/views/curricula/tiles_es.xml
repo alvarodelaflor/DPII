@@ -22,12 +22,12 @@
       
 <tiles-definitions>
 
-	<definition name="curricula/hacker/create" extends="master.page">	
+	<definition name="curricula/rookie/create" extends="master.page">	
 		<put-attribute name="title" value="Crear un curriculum" />
 		<put-attribute name="body" value="/views/curricula/edit.jsp" />
 	</definition>
 	
-	<definition name="curricula/hacker/edit" extends="master.page">	
+	<definition name="curricula/rookie/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar un curriculum" />
 		<put-attribute name="body" value="/views/curricula/edit.jsp" />
 	</definition>

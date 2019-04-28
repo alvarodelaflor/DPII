@@ -3,9 +3,9 @@ package services;
 
 /**
  * CurriculaService.java
- *
+ * 
  * @author Alvaro de la Flor Bonilla GitHub: alvar017
- *
+ * 
  *         CONTROL:
  *         30/03/2019 14:47 Creation
  */
@@ -22,14 +22,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Curricula;
-import domain.EducationalData;
-import domain.Hacker;
-import domain.MiscellaneousAttachment;
-import domain.PositionData;
 import repositories.CurriculaRepository;
 import security.Authority;
 import security.LoginService;
+import domain.Curricula;
+import domain.EducationalData;
+import domain.MiscellaneousAttachment;
+import domain.PositionData;
+import domain.Rookie;
 
 @Service
 @Transactional
@@ -39,7 +39,7 @@ public class CurriculaService {
 	private CurriculaRepository				curriculaRepository;
 
 	@Autowired
-	private HackerService					hackerService;
+	private RookieService					rookieService;
 
 	@Autowired
 	private EducationalDataService			educationalDataService;
@@ -60,21 +60,21 @@ public class CurriculaService {
 	// CRUD Methods
 
 	/**
-	 * Create a CurriculaEntity. Must exist a {@link Hacker} login to create it.
-	 *
+	 * Create a CurriculaEntity. Must exist a {@link Rookie} login to create it.
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Curricula}
 	 */
 	public Curricula create() {
 		Assert.notNull(LoginService.getPrincipal());
-		Assert.notNull(this.hackerService.getHackerLogin(), "Must exist an hacker login");
+		Assert.notNull(this.rookieService.getRookieLogin(), "Must exist an rookie login");
 		return new Curricula();
 	}
 
 	/**
-	 *
+	 * 
 	 * Return a collection of all {@link Curricula} in database.
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Curricula}>
 	 */
@@ -84,7 +84,7 @@ public class CurriculaService {
 
 	/**
 	 * Find a curricula in dataBase by id
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Curricula}
 	 */
@@ -94,22 +94,22 @@ public class CurriculaService {
 
 	/**
 	 * <p>
-	 * Save a curricula. Check user login ({@link Hacker}) is the same that user who create the curricula in the case he want to edit it
+	 * Save a curricula. Check user login ({@link Rookie}) is the same that user who create the curricula in the case he want to edit it
 	 * </p>
 	 * Curricula must not be null<br>
-	 * Must exist hacker login
-	 *
+	 * Must exist rookie login
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The save {@link Curricula}
 	 */
 	public Curricula save(final Curricula curricula) {
 		Assert.notNull(curricula, "Curricula is null");
 		Assert.isTrue(this.checkAnyLogger(), "Any user is login");
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		if (curriculaDB != null)
-			Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to edit a not own curricula");
+			Assert.isTrue(curricula.getRookie().equals(rookieLogin), "Not allow to edit a not own curricula");
 
 		if (curricula.getPhone().matches("^([0-9]{4,})$"))
 			curricula.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + curricula.getPhone());
@@ -119,17 +119,17 @@ public class CurriculaService {
 
 	/**
 	 * Delete a curricula.<br>
-	 * Check user login ({@link Hacker}) is the same that user who created the curricula<br>
-	 * Must exist a {@link Hacker} login and curricula must not be null
-	 *
+	 * Check user login ({@link Rookie}) is the same that user who created the curricula<br>
+	 * Must exist a {@link Rookie} login and curricula must not be null
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public void delete(final Curricula curricula) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.notNull(hackerLogin, "No hacker is login");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.notNull(rookieLogin, "No rookie is login");
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		Assert.notNull(curriculaDB, "The curricula is not in DB");
-		Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Not allow to delete a not own curricula");
+		Assert.isTrue(curricula.getRookie().equals(rookieLogin), "Not allow to delete a not own curricula");
 		final Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
 		if (!educationalDatas.isEmpty())
 			this.educationalDataService.deleteAll(educationalDatas);
@@ -148,7 +148,7 @@ public class CurriculaService {
 
 	/**
 	 * This method reconstruct a prunned {@link Curricula} and validate it
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The reconstruct {@link Curricula}
 	 */
@@ -156,7 +156,7 @@ public class CurriculaService {
 		Curricula result;
 
 		if (curricula.getId() == 0) {
-			curricula.setHacker(this.hackerService.getHackerLogin());
+			curricula.setRookie(this.rookieService.getRookieLogin());
 			curricula.setLinkGitHub("https://www.github.com/" + curricula.getLinkGitHub().replaceAll("https://www.github.com/", ""));
 			curricula.setIsCopy(false);
 			result = curricula;
@@ -165,7 +165,7 @@ public class CurriculaService {
 			Assert.notNull(result, "Float is null");
 			curricula.setId(result.getId());
 			curricula.setVersion(result.getVersion());
-			curricula.setHacker(result.getHacker());
+			curricula.setRookie(result.getRookie());
 			curricula.setLinkGitHub("https://www.github.com/" + curricula.getLinkGitHub().replaceAll("https//www.github.com/", ""));
 			curricula.setIsCopy(false);
 			result = curricula;
@@ -175,19 +175,19 @@ public class CurriculaService {
 	}
 
 	/**
-	 *
+	 * 
 	 * This methods create and save a copy of the curricula given and all of their educationalData and positionData<br>
 	 * Set to true the isCopy atribute of curriculum, educationalData and positionData instances that they have been copy<br>
-	 * The {@link Hacker} who create the Curricula must be login.
-	 *
+	 * The {@link Rookie} who create the Curricula must be login.
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The copy {@link Curricula} instance
 	 */
 	public Curricula createCurriculaCopyAndSave(final Curricula curricula) {
-		final Hacker hackerLogin = this.hackerService.getHackerLogin();
-		Assert.isTrue(curricula.getHacker().equals(hackerLogin), "Try to do a copy of curricula by not own hacker");
+		final Rookie rookieLogin = this.rookieService.getRookieLogin();
+		Assert.isTrue(curricula.getRookie().equals(rookieLogin), "Try to do a copy of curricula by not own rookie");
 		final Curricula curriculaCopy = this.create();
-		curriculaCopy.setHacker(curricula.getHacker());
+		curriculaCopy.setRookie(curricula.getRookie());
 		curriculaCopy.setIsCopy(true);
 		curriculaCopy.setLinkGitHub(curricula.getLinkGitHub());
 		curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
@@ -211,7 +211,7 @@ public class CurriculaService {
 
 	/**
 	 * Check that any user is login
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Boolean}<br>
 	 *         True if an user is login, false in otherwise.
@@ -227,34 +227,34 @@ public class CurriculaService {
 	}
 
 	/**
-	 *
-	 * Return all Curricula in dataBase of a {@link Hacker}.
-	 *
+	 * 
+	 * Return all Curricula in dataBase of a {@link Rookie}.
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Curricula}>
 	 */
-	public Collection<Curricula> findAllByHacker(final Hacker hacker) {
+	public Collection<Curricula> findAllByRookie(final Rookie rookie) {
 		List<Curricula> res = new ArrayList<>();
-		if (hacker != null)
-			res = (List<Curricula>) this.curriculaRepository.getCurriculasOfHacker(hacker.getId());
+		if (rookie != null)
+			res = (List<Curricula>) this.curriculaRepository.getCurriculasOfRookie(rookie.getId());
 		return res;
 	}
 
 	/**
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection < {@link Curricula} > not copy mode
 	 */
-	public Collection<Curricula> findAllNotCopyByHacker(final Hacker hacker) {
+	public Collection<Curricula> findAllNotCopyByRookie(final Rookie rookie) {
 		List<Curricula> res = new ArrayList<>();
-		if (hacker != null)
-			res = (List<Curricula>) this.curriculaRepository.getCurriculasNotCopyOfHacker(hacker.getId());
+		if (rookie != null)
+			res = (List<Curricula>) this.curriculaRepository.getCurriculasNotCopyOfRookie(rookie.getId());
 		return res;
 	}
 
-	public void deleteHackerCurriculas(final int hackerId) {
+	public void deleteRookieCurriculas(final int rookieId) {
 
-		final Collection<Curricula> curriculas = this.curriculaRepository.getCurriculasOfHacker(hackerId);
+		final Collection<Curricula> curriculas = this.curriculaRepository.getCurriculasOfRookie(rookieId);
 		if (!curriculas.isEmpty())
 			for (final Curricula curricula : curriculas)
 				this.delete(curricula);
@@ -264,28 +264,28 @@ public class CurriculaService {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
-		return this.curriculaRepository.minCurriculaPerHacker();
+		return this.curriculaRepository.minCurriculaPerRookie();
 	}
 
 	public Float maxNumberOfResultHistory() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
-		return this.curriculaRepository.maxCurriculaPerHacker();
+		return this.curriculaRepository.maxCurriculaPerRookie();
 	}
 
 	public Float avgNumberOfResultHsitory() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
-		return this.curriculaRepository.avgCurriculaPerHacker();
+		return this.curriculaRepository.avgCurriculaPerRookie();
 	}
 
 	public Float stddevNumberOfResultHistory() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
-		return this.curriculaRepository.sttdevCurriculaPerHacker();
+		return this.curriculaRepository.sttdevCurriculaPerRookie();
 	}
 
 	// AUXILIAR METHODS

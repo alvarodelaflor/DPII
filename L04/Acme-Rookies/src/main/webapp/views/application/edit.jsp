@@ -21,10 +21,10 @@
 
 <section id="main-content">
 	<article>
-		<security:authorize access="hasRole('HACKER')"> 
+		<security:authorize access="hasRole('ROOKIE')"> 
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="application" action="application/hacker/saveE.do">
+				modelAttribute="application" action="application/rookie/saveE.do">
 				<form:hidden path="id" />
 				
 				<acme:textbox code="application.response" path="response" />

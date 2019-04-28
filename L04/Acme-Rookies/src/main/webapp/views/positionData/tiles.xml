@@ -21,12 +21,12 @@
        
 <tiles-definitions>	
 
-	<definition name="positionData/hacker/create" extends="master.page">	
+	<definition name="positionData/rookie/create" extends="master.page">	
 		<put-attribute name="title" value="Create Position Data" />
 		<put-attribute name="body" value="/views/positionData/edit.jsp" />
 	</definition>
 	
-	<definition name="positionData/hacker/edit" extends="master.page">	
+	<definition name="positionData/rookie/edit" extends="master.page">	
 		<put-attribute name="title" value="Edit Position Data" />
 		<put-attribute name="body" value="/views/positionData/edit.jsp" />
 	</definition>

@@ -18,16 +18,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
-import services.HackerService;
 import services.MessageService;
 import services.PositionService;
 import services.ProblemService;
+import services.RookieService;
 import services.TagService;
 import domain.Actor;
-import domain.Hacker;
 import domain.Message;
 import domain.Position;
 import domain.Problem;
+import domain.Rookie;
 import domain.Tag;
 
 @Controller
@@ -41,7 +41,7 @@ public class PositionCompanyController extends AbstractController {
 	private ProblemService	problemService;
 
 	@Autowired
-	private HackerService	hackerService;
+	private RookieService	rookieService;
 
 	@Autowired
 	private MessageService	messageService;
@@ -123,13 +123,13 @@ public class PositionCompanyController extends AbstractController {
 			result.addObject("position", position);
 		} else
 			try {
-				final Collection<Hacker> hackerReceiver = this.hackerService.findHackerRegardlessFinder(pos.getTitle(), pos.getSalary(), pos.getDeadline(), pos.getDescription());
-				final List<Hacker> hackerReceiverList = new ArrayList<>();
-				hackerReceiverList.addAll(hackerReceiver);
+				final Collection<Rookie> rookieReceiver = this.rookieService.findRookieRegardlessFinder(pos.getTitle(), pos.getSalary(), pos.getDeadline(), pos.getDescription());
+				final List<Rookie> rookieReceiverList = new ArrayList<>();
+				rookieReceiverList.addAll(rookieReceiver);
 
 				final List<String> emails = new ArrayList<>();
-				for (int i = 0; i < hackerReceiverList.size(); i++)
-					emails.add(hackerReceiverList.get(i).getEmail());
+				for (int i = 0; i < rookieReceiverList.size(); i++)
+					emails.add(rookieReceiverList.get(i).getEmail());
 
 				Message sended = this.messageService.create();
 				sended.setBody("A position with your preferences have been created");

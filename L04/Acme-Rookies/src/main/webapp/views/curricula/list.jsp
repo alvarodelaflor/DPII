@@ -18,8 +18,8 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jstl:if test="${hackerLogger==true}">
-	<form method="get" action="curricula/hacker/create.do">
+<jstl:if test="${rookieLogger==true}">
+	<form method="get" action="curricula/rookie/create.do">
 		<button>
 			<spring:message code="createCurricula" />
 		</button>
@@ -28,12 +28,12 @@
 </jstl:if>
 
 <display:table name="curriculas" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<jstl:if test="${hackerLogger==true}">
+	<jstl:if test="${rookieLogger==true}">
 		<display:column titleKey="curricula.edit">
-			<a href="curricula/hacker/edit.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/edit.png" alt="${row.id}" /></a>	
+			<a href="curricula/rookie/edit.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/edit.png" alt="${row.id}" /></a>	
 		</display:column>
 		<display:column titleKey="curricula.delete">
-			<a href="curricula/hacker/delete.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/delete.png" alt="${row.id}" /></a>	
+			<a href="curricula/rookie/delete.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/delete.png" alt="${row.id}" /></a>	
 		</display:column>
 	</jstl:if>
 	<display:column titleKey="curricula.show">
@@ -45,8 +45,8 @@
 <br>
 <br>
 <c:choose>
-	<c:when test="${hackerLogger==true}">
-		<acme:cancel url="hacker/show.do?hackerId=${curricula.hacker.id}" code="back"/>
+	<c:when test="${rookieLogger==true}">
+		<acme:cancel url="rookie/show.do?rookieId=${curricula.rookie.id}" code="back"/>
 	</c:when>
 	<c:otherwise>
 		<input type="button" value=<spring:message code="curricula.back" /> name="curricula.back" onclick="history.back()" />
