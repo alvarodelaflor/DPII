@@ -53,6 +53,18 @@
 			</list>
 		</property>
 	</bean>
+
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="auditor" />
+		<property name="password" value="f7d07071ed9431ecae3a8d45b4c82bb2" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- Other domain beans come here -->	
 	
@@ -311,6 +323,14 @@
     	<property name="CVV" value= "234"/>
  		<property name="expiration" value= "22/10"/>
     </bean>
+
+	<bean id="creditCard04" class="domain.CreditCard">
+    	<property name="holder" value= "Jesús Crespo Ruiz"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1234567891234567"/>
+    	<property name="CVV" value= "234"/>
+ 		<property name="expiration" value= "22/10"/>
+    </bean>
     <!-- CRECIT CARD -->
     
     <!-- FINDER -->
@@ -346,6 +366,18 @@
     	</property>
     </bean>
 	<!-- FINDER -->
-
+	<!-- AUDITOR -->
+		<bean id="auditor01" class="domain.Auditor">
+    	<property name="name" value="Auditor" />
+    	<property name="surname" value="Señor Pruebas" />
+    	<property name="photo" value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jim_Carrey_2008.jpg/220px-Jim_Carrey_2008.jpg" />
+		<property name="email" value="auditor@auditor" />
+        <property name="phone" value="+34 123456789" />
+        <property name="address" value="La luna" />
+        <property name="userAccount" ref= "userAccount4"/> 
+        <property name="creditCard" ref="creditCard04" /> 
+		<property name="vatNumber" value="Es12345678s" />
+    </bean>
+	<!-- AUDITOR -->
 
 </beans>

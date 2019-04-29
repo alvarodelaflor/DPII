@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -19,12 +20,12 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Audit {
+public class Audit extends DomainEntity {
 
 	// Attributes
 	private Date		creationMoment;
 	private String		text;
-	private BigDecimal		score;
+	private BigDecimal	score;
 
 	// Relations
 	private Auditor		auditor;
@@ -60,7 +61,7 @@ public class Audit {
 		this.score = score;
 	}
 
-	@NotNull
+	@ManyToOne(optional = false)
 	public Auditor getAuditor() {
 		return this.auditor;
 	}
@@ -69,7 +70,7 @@ public class Audit {
 		this.auditor = auditor;
 	}
 
-	@NotNull
+	@ManyToOne(optional = false)
 	public Position getPosition() {
 		return this.position;
 	}
