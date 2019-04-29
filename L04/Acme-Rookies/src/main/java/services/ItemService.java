@@ -67,4 +67,10 @@ public class ItemService {
 		this.itemRepository.flush();
 	}
 
+	public void delete(final Item item) {
+		Assert.isTrue(this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId()).getId() == item.getProvider().getId());
+		this.itemRepository.delete(item);
+
+	}
+
 }
