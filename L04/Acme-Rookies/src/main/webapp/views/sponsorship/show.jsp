@@ -14,15 +14,17 @@
 	<div>
 		<security:authorize access="hasRole('PROVIDER')">
 			<div>
+				<h2><spring:message code="sgi" /></h2>
 				<display:table name="sponsorship" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 					<display:column property="provider.name" titleKey="provider.name" />
 					<display:column property="position.title" titleKey="position.title" />
-					<display:column property="banner" titleKey="banner" />
-					<display:column property="target" titleKey="target" />
+					<display:column property="banner" titleKey="sponsorship.banner" />
+					<display:column property="target" titleKey="sponsorship.target" />
 				</display:table>
 				<br />
 			</div>
 			<div>
+				<h2><spring:message code="cci" /></h2>
 				<display:table name="sponsorship" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 					<display:column property="creditCard.holder" titleKey="creditCard.holder" />
 					<display:column property="creditCard.make" titleKey="creditCard.make" />
@@ -33,9 +35,9 @@
 				<br />
 			</div>
 			<div>
-				<acme:cancel url="provider/sponsorship/edit.do?sponsorshipId=${row.id}" code="edit"/>
-				<acme:cancel url="provider/sponsorship/delete.do?sponsorshipId=${row.id}" code="delete"/>
-				<acme:cancel url="provider/sponsorship/list.do" code="back"/>
+				<acme:cancel url="sponsorship/provider/edit.do?sponsorshipId=${row.id}" code="edit"/>
+				<acme:cancel url="sponsorship/provider/delete.do?sponsorshipId=${row.id}" code="delete"/>
+				<acme:cancel url="sponsorship/provider/list.do" code="back"/>
 			</div>
 		</security:authorize>
 	</div>

@@ -3,7 +3,7 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,13 +39,13 @@ public class SponsorshipProviderController extends AbstractController {
 	public ModelAndView list() {
 
 		ModelAndView res;
-		final Provider logged = this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId());
 
 		try {
 
+			final Provider logged = this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId());
 			final Collection<Sponsorship> sponsorships;
 			sponsorships = this.sponsorshipService.findAllByProviderId(logged.getId());
-			res = new ModelAndView("provider/sponsorship/list");
+			res = new ModelAndView("sponsorship/provider/list");
 			res.addObject("sponsorships", sponsorships);
 		} catch (final Throwable oops) {
 
@@ -65,7 +65,7 @@ public class SponsorshipProviderController extends AbstractController {
 		try {
 
 			final Sponsorship ss = this.sponsorshipService.findOne(sponsorshipId);
-			res = new ModelAndView("provider/sponsorship/show.do");
+			res = new ModelAndView("sponsorship/provider/show");
 			res.addObject("sponsorship", ss);
 		} catch (final Throwable oops) {
 
@@ -85,17 +85,12 @@ public class SponsorshipProviderController extends AbstractController {
 		try {
 
 			final Sponsorship ss = this.sponsorshipService.create();
-			res = new ModelAndView("/sponsorship/provider/edit");
-			res.addObject("sponsorship", ss);
-			final Collection<Position> positions = this.positionService.findALL();
-			res.addObject("positions", positions);
+			res = this.createEditModelAndView(ss);
 		} catch (final Throwable oops) {
 
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		res.addObject("logo", this.getLogo());
-		res.addObject("system", this.getSystem());
 		return res;
 	}
 
@@ -106,40 +101,37 @@ public class SponsorshipProviderController extends AbstractController {
 
 		try {
 
-			res = new ModelAndView("/sponsorship/provider/edit");
 			final Sponsorship ss = this.sponsorshipService.findOne(sponsorshipId);
-			res.addObject("sponsorship", ss);
-			final Collection<Position> positions = this.positionService.findALL();
-			res.addObject("positions", positions);
+			res = this.createEditModelAndView(ss);
 		} catch (final Throwable oops) {
 
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
 
-		res.addObject("logo", this.getLogo());
-		res.addObject("system", this.getSystem());
 		return res;
 	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Sponsorship sponsorship, final BindingResult binding) {
+	public ModelAndView save(final Sponsorship sponsorship, final BindingResult binding) {
 
 		ModelAndView res;
 
-		if (binding.hasErrors())
+		try {
+
+			final Sponsorship reconstructed = this.sponsorshipService.reconstruct(sponsorship, binding);
+			this.sponsorshipService.save(reconstructed);
+			res = new ModelAndView("redirect:list.do");
+			res.addObject("requestURI", "sponsorship/provider/list.do");
+			res.addObject("logo", this.getLogo());
+			res.addObject("system", this.getSystem());
+		} catch (final ValidationException oops) {
+
 			res = this.createEditModelAndView(sponsorship);
-		else
-			try {
+		} catch (final Throwable oops) {
 
-				this.sponsorshipService.save(sponsorship);
-				res = new ModelAndView("redirect:list.do");
-				res.addObject("requestURI", "sponsorship/provider/list.do");
-			} catch (final Throwable oops) {
+			res = this.createEditModelAndView(sponsorship, "ss.commit.error");
+		}
 
-				res = this.createEditModelAndView(sponsorship, "ss.commit.error");
-			}
-
-		res.addObject("logo", this.getLogo());
-		res.addObject("system", this.getSystem());
 		return res;
 	}
 
@@ -152,14 +144,14 @@ public class SponsorshipProviderController extends AbstractController {
 
 			this.sponsorshipService.delete(sponsorshipId);
 			res = new ModelAndView("redirect:list.do");
+			res.addObject("logo", this.getLogo());
+			res.addObject("system", this.getSystem());
 		} catch (final Throwable oops) {
 
 			final Sponsorship sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 			res = this.createEditModelAndView(sponsorship, "ss.commit.error");
 		}
 
-		res.addObject("logo", this.getLogo());
-		res.addObject("system", this.getSystem());
 		return res;
 	}
 
@@ -174,7 +166,7 @@ public class SponsorshipProviderController extends AbstractController {
 
 		final ModelAndView res;
 
-		res = new ModelAndView("provider/sponsorship/edit");
+		res = new ModelAndView("sponsorship/provider/edit");
 		res.addObject("sponsorship", sponsorship);
 		final Collection<Position> positions = this.positionService.findALL();
 		res.addObject("positions", positions);

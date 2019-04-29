@@ -17,13 +17,14 @@
 				<display:column property="provider.name" titleKey="provider.name" />
 				<display:column property="position.title" titleKey="position.title" />
 				<display:column>
-					<a href="provider/sponsorship/show.do?sponsorshipId=${row.id}">
+					<a href="sponsorship/provider/show.do?sponsorshipId=${row.id}">
 						<spring:message	code="show" />
 					</a>
 				</display:column>
 			</display:table>
 			<br />
-			<acme:cancel url="provider/sponsorship/create.do" code="create"/>
+			<br />
+			<acme:cancel url="sponsorship/provider/create.do" code="create"/>
 		</security:authorize>
 	</div>
 </body>

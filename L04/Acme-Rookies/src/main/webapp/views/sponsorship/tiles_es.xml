@@ -16,22 +16,22 @@
       
 <tiles-definitions>
 
-	<definition name="provider/sponsorship/list" extends="master.page">	
+	<definition name="sponsorship/provider/list" extends="master.page">	
 		<put-attribute name="title" value="Lista de Patrocinios" />
 		<put-attribute name="body" value="/views/sponsorship/list.jsp" />
 	</definition>
 	
-	<definition name="provider/sponsorship/show" extends="master.page">	
+	<definition name="sponsorship/provider/show" extends="master.page">	
 		<put-attribute name="title" value="Detalles del Patrocinio" />
 		<put-attribute name="body" value="/views/sponsorship/show.jsp" />
 	</definition>
 	
-	<definition name="provider/sponsorship/create" extends="master.page">	
+	<definition name="sponsorship/provider/create" extends="master.page">	
 		<put-attribute name="title" value="Crear Patrocinio" />
 		<put-attribute name="body" value="/views/sponsorship/edit.jsp" />
 	</definition>
 	
-	<definition name="provider/sponsorship/edit" extends="master.page">	
+	<definition name="sponsorship/provider/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar Patrocinio" />
 		<put-attribute name="body" value="/views/sponsorship/edit.jsp" />
 	</definition>
