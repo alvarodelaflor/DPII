@@ -41,12 +41,14 @@
 		<value>/views/position/messages</value>
 		<value>/views/application/messages</value>
 		<value>/views/problem/messages</value>
+		<value>/views/provider/messages</value>
 		<!-- CARMEN -->
 		<!-- ANTONIO S -->
 		<value>/views/socialProfile/messages</value>
 		<value>/views/message/messages</value>
 		<!-- ANTONIO S -->
 		<value>/views/finder/messages</value>
+		<value>/views/sponsorship/messages</value>
 	</util:list>
 
 </beans>

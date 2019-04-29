@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -19,10 +20,31 @@ public class Configuration extends DomainEntity {
 
 	private String				systemName, countryCode, banner, systemMessageEs, systemMessageEn;
 	private Integer				cacheHours, cacheAmount;
+	private Double				fair, VAT;
 
 	private Collection<String>	spamWords;
 	private Collection<String>	priorities;
 
+
+	@Min(0)
+	@NotNull
+	public Double getFair() {
+		return this.fair;
+	}
+
+	public void setFair(final Double fair) {
+		this.fair = fair;
+	}
+
+	@Min(0)
+	@NotNull
+	public Double getVAT() {
+		return this.VAT;
+	}
+
+	public void setVAT(final Double vAT) {
+		this.VAT = vAT;
+	}
 
 	@NotBlank
 	@SafeHtml
