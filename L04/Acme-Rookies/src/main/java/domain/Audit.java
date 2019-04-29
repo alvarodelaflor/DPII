@@ -26,6 +26,7 @@ public class Audit extends DomainEntity {
 	private Date		creationMoment;
 	private String		text;
 	private BigDecimal	score;
+	private Boolean status; // True if audit is in final mode, false if audit is not in final mode, null otherwise
 
 	// Relations
 	private Auditor		auditor;
@@ -77,5 +78,13 @@ public class Audit extends DomainEntity {
 
 	public void setPosition(final Position position) {
 		this.position = position;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 }
