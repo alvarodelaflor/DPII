@@ -46,6 +46,7 @@
 		<value>/views/socialProfile/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>		
 		<!-- ANTONIO S -->
+		<value>/views/sponsorship/tiles.xml</value>
 	</util:list>
 
 </beans>

@@ -26,6 +26,7 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
 					<li><a href="administrator/actorList.do"><spring:message code="master.page.administrator.actorList" /></a></li>
+					<li><a href="administrator/listSponsorships.do"><spring:message code="master.page.list.sponsorships" /></a></li>
 					<li><a href="administrator/create.do"><spring:message code="master.page.administrator.create" /></a></li>		
 					<li><a href="administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>				
 				</ul>
@@ -46,6 +47,23 @@
 					<li class="arrow"></li>
 					<li><a href="application/rookie/list.do"><spring:message code="master.page.list.application" /></a></li>
 					<li><a href="finder/rookie/show.do"><spring:message code="master.page.finder" /></a></li>		
+				</ul>
+		</li>
+		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+				</ul>
+		</li>
+
+		</security:authorize>
+		
+		<security:authorize access="hasRole('PROVIDER')">
+		<li><a class="fNiv"><spring:message	code="master.page.provider" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="sponsorship/provider/list.do"><spring:message code="master.page.list.sponsorships" /></a></li>
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>

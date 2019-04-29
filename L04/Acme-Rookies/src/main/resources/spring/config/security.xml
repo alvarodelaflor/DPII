@@ -144,7 +144,15 @@
 		<security:intercept-url pattern="/administrator/banCompany.do" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/administrator/banRookie.do" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newFair.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/newVAT.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/collect.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/sponsorship/provider/list.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/sponsorship/provider/create.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/sponsorship/provider/show.do" access="hasRole('PROVIDER')" />  
+		<security:intercept-url pattern="/sponsorship/provider/edit.do" access="hasRole('PROVIDER')" /> 
+		<security:intercept-url pattern="/sponsorship/provider/delete.do" access="hasRole('PROVIDER')" /> 
 		<!-- FRAN -->
 		
 		<!-- FERRETE -->
@@ -161,7 +169,8 @@
 		<security:intercept-url pattern="/administrator/deleteSpamWord.do" access="hasRole('ADMIN')" />		
 		<security:intercept-url pattern="/administrator/newSpamWord.do" access="hasRole('ADMIN')" />		
 		<security:intercept-url pattern="/administrator/newWelcome.do" access="hasRole('ADMIN')" />	
-		<security:intercept-url pattern="/administrator/newSystem.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/newSystem.do" access="hasRole('ADMIN')" />	
+		<security:intercept-url pattern="/administrator/listSponsorships.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/administrator/header.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/administrator/newLogo.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/administrator/newPhone.do" access="hasRole('ADMIN')" />				
