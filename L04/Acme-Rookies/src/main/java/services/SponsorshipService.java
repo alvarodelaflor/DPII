@@ -1,7 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
@@ -13,7 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.SponsorshipRepository;
+import security.Authority;
 import security.LoginService;
+import domain.Actor;
 import domain.CreditCard;
 import domain.Provider;
 import domain.Sponsorship;
@@ -29,9 +34,10 @@ public class SponsorshipService {
 	ProviderService			providerService;
 
 	@Autowired
-	Validator				validator;
+	ActorService			actorService;
 
-	Provider				logged	= this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId());
+	@Autowired
+	Validator				validator;
 
 
 	public Sponsorship create() {
@@ -67,10 +73,12 @@ public class SponsorshipService {
 	}
 	public Sponsorship save(final Sponsorship sponsorship) {
 
-		Assert.isTrue(sponsorship.getProvider().getId() == this.logged.getId(), "user.logged.doesnt.match");
+		final Actor logged = this.actorService.getActorByUserId(LoginService.getPrincipal().getId());
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(sponsorship.getProvider().getId() == logged.getId() || logged.getUserAccount().getAuthorities().contains(auth), "user.logged.doesnt.match");
 		return this.sponsorshipRepo.save(sponsorship);
 	}
-
 	public Sponsorship findOne(final int id) {
 
 		return this.sponsorshipRepo.findOne(id);
@@ -78,12 +86,32 @@ public class SponsorshipService {
 
 	public void delete(final int id) {
 
-		Assert.isTrue(this.sponsorshipRepo.findOne(id).getProvider().getId() == this.logged.getId(), "user.logged.doesnt.match");
+		final Provider logged = this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.isTrue(this.sponsorshipRepo.findOne(id).getProvider().getId() == logged.getId(), "user.logged.doesnt.match");
 		this.sponsorshipRepo.delete(id);
 	}
 
 	public Collection<Sponsorship> findAllByProviderId(final int id) {
 
 		return this.sponsorshipRepo.findAllByProviderId(id);
+	}
+
+	public Sponsorship randomSponsorship(final int id) {
+
+		Sponsorship res = null;
+		final List<Sponsorship> shs = new ArrayList<>(this.sponsorshipRepo.findAllByPositionId(id));
+		final Random r = new Random();
+
+		if (!shs.isEmpty()) {
+			res = shs.get(r.nextInt(shs.size()));
+			res.setBannerCount((res.getBannerCount() + 1));
+			res = this.sponsorshipRepo.save(res);
+		}
+		return res;
+	}
+
+	public Collection<Sponsorship> findAll() {
+
+		return this.sponsorshipRepo.findAll();
 	}
 }

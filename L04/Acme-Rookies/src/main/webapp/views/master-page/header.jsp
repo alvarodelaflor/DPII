@@ -26,6 +26,7 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
 					<li><a href="administrator/actorList.do"><spring:message code="master.page.administrator.actorList" /></a></li>
+					<li><a href="administrator/listSponsorships.do"><spring:message code="master.page.list.sponsorships" /></a></li>
 					<li><a href="administrator/create.do"><spring:message code="master.page.administrator.create" /></a></li>		
 					<li><a href="administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>				
 				</ul>

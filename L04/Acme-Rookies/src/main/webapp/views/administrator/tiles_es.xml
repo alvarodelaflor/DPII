@@ -21,7 +21,7 @@
 		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
 	</definition>
 	
-		<definition name="administrator/actorList" extends="master.page">	
+	<definition name="administrator/actorList" extends="master.page">	
 		<put-attribute name="title" value="Administrator: Lista de Usuarios" />
 		<put-attribute name="body" value="/views/administrator/actorList.jsp" />
 	</definition>
@@ -29,6 +29,11 @@
 	<definition name="administrator/create" extends="master.page">	
 		<put-attribute name="title" value="Administrador:" />
 		<put-attribute name="body" value="/views/administrator/form.jsp" />
+	</definition>
+	
+	<definition name="administrator/listSponsorships" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Patrocinios" />
+		<put-attribute name="body" value="/views/sponsorship/list.jsp" />
 	</definition>
 	
 	<!-- Ferrete -->

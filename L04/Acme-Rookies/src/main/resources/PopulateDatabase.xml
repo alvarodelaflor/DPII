@@ -85,6 +85,8 @@
 		<property name="systemName" value="Acme-Rookies" />
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
+		<property name="fair" value="150.0" />
+		<property name="VAT" value="21.0" />
 		<property name="cacheAmount" value="10" />
 		<property name="systemMessageEs" value="¡Bienvenidos a Acme Rookie Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
 		<property name="systemMessageEn" value="Welcome to Acme rookie Rank! We’re IT rookie’s favourite job marketplace!" />
