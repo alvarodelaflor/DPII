@@ -74,4 +74,8 @@ public class Audit extends DomainEntity {
 	public Position getPosition() {
 		return this.position;
 	}
+
+	public void setPosition(final Position position) {
+		this.position = position;
+	}
 }
