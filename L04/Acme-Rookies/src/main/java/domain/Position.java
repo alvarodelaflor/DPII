@@ -24,9 +24,7 @@ public class Position extends DomainEntity {
 	private Date	deadline;
 	private Double	salary;
 	private Boolean	status;
-
 	private Company	company;
-
 	private Boolean	cancel;
 
 
