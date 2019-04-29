@@ -66,7 +66,7 @@
 		</property>
 	</bean>
 	
-	<bean id="userAccount4" class="security.UserAccount">
+	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="provider" />
 		<property name="password" value="9e9f3d70bd8c8957627eada96d967706" />
 		<property name="authorities">
