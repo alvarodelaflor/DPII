@@ -58,6 +58,23 @@
 
 		</security:authorize>
 		
+		<security:authorize access="hasRole('PROVIDER')">
+		<li><a class="fNiv"><spring:message	code="master.page.provider" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="provider/sponsorship/list.do"><spring:message code="master.page.list.sponsorships" /></a></li>
+				</ul>
+		</li>
+		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+				</ul>
+		</li>
+
+		</security:authorize>
+		
 		<security:authorize access="hasRole('COMPANY')">
 		<li><a class="fNiv"><spring:message	code="master.page.company" /></a>
 				<ul>
