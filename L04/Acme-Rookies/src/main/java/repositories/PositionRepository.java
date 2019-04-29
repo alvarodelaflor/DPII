@@ -59,6 +59,13 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p from Position p where p.status=true")
 	Collection<Position> findAllPositionWithStatusTrue();
+	
+	// ALVARO 29/04/2019 22:44
+	
+	@Query("select p from Position p where p.status=true and p.cancel=false and not exists (select p2 from Audit a2 join a2.position p2)")
+	Collection<Position> findAllPositionWithStatusTrueNotCancelNotAudit();
+	
+	// ALVARO
 
 	@Query("select p from Position p where p.status=true and p.cancel=false")
 	Collection<Position> findAllPositionWithStatusTrueCancelFalse();

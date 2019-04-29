@@ -43,14 +43,6 @@
 		<legend>
 			<spring:message code="audit.data" />
 		</legend>
-		<c:choose>
-    		<c:when test="${audit.auditor.photo=='' or audit.auditor.photo==null}">
-				<img width="95" src="./images/rookie.png" alt="ERROR"/>
-    		</c:when>    
-    		<c:otherwise>
-				<img width="95" src="${audit.auditor.photo}" alt="ERROR"/>
-    		</c:otherwise>
-		</c:choose>
 		<p><strong><spring:message code="audit.text" /> </strong><jstl:out value="${audit.text}"></jstl:out></p>
 		<p><strong><spring:message code="audit.creationMoment" /> </strong><jstl:out value="${audit.creationMoment}"></jstl:out></p>
 		<p><strong><spring:message code="audit.score" /> </strong><jstl:out value="${audit.score}"></jstl:out></p>
@@ -59,6 +51,14 @@
 			<legend>
 				<i><spring:message code="audit.auditor.data" /></i><img width="35" height="35" src="./images/phone.png" alt="${row1.id}" />	
 			</legend>
+			<c:choose>
+	    		<c:when test="${audit.auditor.photo=='' or audit.auditor.photo==null}">
+					<img width="95" src="./images/rookie.png" alt="ERROR"/>
+	    		</c:when>    
+	    		<c:otherwise>
+					<img width="95" src="${audit.auditor.photo}" alt="ERROR"/>
+	    		</c:otherwise>
+			</c:choose>
 			<p><strong><spring:message code="audit.auditor.name" /> </strong><jstl:out value="${audit.auditor.name}">></jstl:out> <jstl:out value="${audit.auditor.surname}"></jstl:out></p>
 			<p><strong><spring:message code="audit.auditor.email" /> </strong><jstl:out value="${audit.auditor.email}">></jstl:out></p>
 			<p><strong><spring:message code="audit.auditor.phone" /> </strong><jstl:out value="${audit.auditor.phone}">></jstl:out></p>

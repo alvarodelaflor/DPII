@@ -83,7 +83,7 @@ public class AuditController extends AbstractController {
 			Assert.notNull(auditDB, notFoundAudit);
 			result = new ModelAndView("audit/show");
 			result.addObject("audit", auditDB);
-			if (auditDB.getAuditor()!=null && auditDB.getAuditor().equals(auditorLogger)) {
+			if (auditDB.getAuditor()!=null && auditDB.getAuditor().equals(auditorLogger) && auditDB.getStatus()!=null && auditDB.getStatus().equals(false)) {
 				result.addObject("auditLogin", true);
 			}
 			
