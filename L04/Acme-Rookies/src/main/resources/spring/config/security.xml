@@ -55,6 +55,7 @@
 		
 		<security:intercept-url pattern="/problem/rookie/show.do" access="hasRole('ROOKIE')" />
 		
+		<security:intercept-url pattern="/provider/create.do" access="permitAll" /> 
 		<!-- CARMEM -->
 		
 		<!-- ANTONIO S -->
