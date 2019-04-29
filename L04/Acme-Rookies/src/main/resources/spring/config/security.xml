@@ -104,6 +104,12 @@
 		<security:intercept-url pattern="/positionData/rookie/edit.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/positionData/rookie/delete.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/positionData/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/audit/auditor/create.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/auditor/edit.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/auditor/delete.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/list.do" access="permitAll" />
+		<security:intercept-url pattern="/audit/show.do" access="permitAll" />
 		<!-- ALVARO -->
 		
 		<!-- HIPONA -->

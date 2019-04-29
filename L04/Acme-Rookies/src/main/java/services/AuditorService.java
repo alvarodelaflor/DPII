@@ -16,6 +16,16 @@ public class AuditorService {
 	private AuditorRepository		auditorRepository;
 
 	// CRUD METHODS
+
+	/**
+	 * Get an auditor by auditorId
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Audit}
+	 */
+	public Auditor findOne(int auditorId) {
+		return this.auditorRepository.findOne(auditorId);
+	}
 	
 	// CRUD METHODS
 	

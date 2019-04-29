@@ -19,6 +19,9 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+
 import domain.Audit;
 import domain.Auditor;
 import repositories.AuditRepository;
@@ -34,6 +37,9 @@ public class AuditService {
 	// Services
 	@Autowired
 	private AuditorService auditorService;
+	
+	@Autowired
+	private Validator						validator;
 	
 	// Default messages
 	private String notAuditorLogin = "No auditor is login";
@@ -82,8 +88,13 @@ public class AuditService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Map}< {@link Boolean} , {@link Audit} >
 	 */
-	public Map<Boolean, List<Audit>> findAllByAuditorLogin() {
-		Auditor auditor = this.auditorService.getAuditorLogin();
+	public Map<Boolean, List<Audit>> findAllByAuditorLogin(Integer auditorId) {
+		Auditor auditor = null;
+		if (auditorId == null) {
+			auditor = this.auditorService.getAuditorLogin();			
+		} else {
+			auditor = this.auditorService.findOne(auditorId);
+		}
 		Assert.notNull(auditor, notAuditorLogin);
 		Map<Boolean, List<Audit>> res = new HashMap<>();
 		List<Audit> finalMode = new ArrayList<>();
@@ -136,26 +147,23 @@ public class AuditService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
-	public Audit reconstruc(Audit audit) {
-		try {
-			Auditor auditorLogin = this.auditorService.getAuditorLogin();
-			Assert.notNull(auditorLogin, notAuditorLogin);
-			if (audit.getId()==0) {
-				audit.setAuditor(auditorLogin);
-				audit.setCreationMoment(DateTime.now().toDate());
-			} else {
-				Audit auditDB = this.findOne(audit.getId());
-				Assert.notNull(auditDB, "No audit in database with that ID");
-				Assert.isTrue(auditDB.getStatus().equals(false), notDraftMode);
-				Assert.isTrue(auditDB.getAuditor().equals(auditorLogin), diferentAuditor);
-				audit.setVersion(auditDB.getVersion());
-				audit.setAuditor(auditDB.getAuditor());
-				audit.setCreationMoment(auditDB.getCreationMoment());
-			}
-		} catch (Exception e) {
-			
-		}
+	public Audit reconstruct(Audit audit, BindingResult binding) {
+		Auditor auditorLogin = this.auditorService.getAuditorLogin();
+		Assert.notNull(auditorLogin, notAuditorLogin);
 		
+		if (audit.getId()==0) {
+			audit.setAuditor(auditorLogin);
+			audit.setCreationMoment(DateTime.now().toDate());
+		} else {
+			Audit auditDB = this.findOne(audit.getId());
+			Assert.notNull(auditDB, "No audit in database with that ID");
+			Assert.isTrue(auditDB.getStatus().equals(false), notDraftMode);
+			Assert.isTrue(auditDB.getAuditor().equals(auditorLogin), diferentAuditor);
+			audit.setVersion(auditDB.getVersion());
+			audit.setAuditor(auditDB.getAuditor());
+			audit.setCreationMoment(auditDB.getCreationMoment());
+		}
+		this.validator.validate(audit, binding);
 		return audit;
 	}
 	
