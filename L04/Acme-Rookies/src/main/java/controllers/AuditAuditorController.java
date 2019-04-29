@@ -10,6 +10,7 @@
 
 package controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -22,6 +23,7 @@ import domain.Audit;
 import domain.Auditor;
 import services.AuditService;
 import services.AuditorService;
+import services.PositionService;
 
 /*
  * CONTROL DE CAMBIOS CurriculaRookieController.java
@@ -36,7 +38,10 @@ public class AuditAuditorController extends AbstractController {
 	// Suporter Services
 	@Autowired
 	private AuditorService		auditorService;
+	@Autowired
 	private AuditService auditService;
+	@Autowired
+	private PositionService positionService;
 
 	// Default Messages
 	private String welcomeIndex = "redirect:/welcome/index.do";
@@ -53,21 +58,26 @@ public class AuditAuditorController extends AbstractController {
 	}
 	
 	private void setConfig(ModelAndView result) {
+		Auditor auditor = this.auditorService.getAuditorLogin();
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
+		if (auditor!=null) {
+			result.addObject("auditorLogger", true);		
+		}
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		try {
-			final Auditor auditorLogin = this.auditorService.getAuditorLogin();
+			Auditor auditorLogin = this.auditorService.getAuditorLogin();
 			Assert.notNull(auditorLogin, notAuditorLogin);
-			final Audit audit = this.auditService.create();
+			Audit audit = this.auditService.create();
 			result = new ModelAndView("audit/auditor/edit");
+			result.addObject("posFinal", this.positionService.findAllPositionWithStatusTrue());
 			result.addObject("audit", audit);
 		} catch (final Exception e) {
-			System.out.println("Error e en GET /create AuditAuditorController.java: " + e);
+			System.out.println("Error e en GET /create AuditAuditorController.java: " + e.getMessage());
 			result = new ModelAndView(welcomeIndex);
 		}
 		this.setConfig(result);
@@ -86,6 +96,7 @@ public class AuditAuditorController extends AbstractController {
 			Assert.isTrue(auditorLogin.equals(auditDB.getAuditor()));
 			result = new ModelAndView("audit/auditor/edit");
 			result.addObject("audit", auditDB);
+			result.addObject("posFinal", this.positionService.findAllPositionWithStatusTrue());
 		} catch (final Exception e) {
 			if (auditorLogin != null) {
 				result = new ModelAndView("audit/list");
@@ -116,6 +127,7 @@ public class AuditAuditorController extends AbstractController {
 			System.out.println("Error en AuditAuditorController.java, binding: " + binding);
 			result = new ModelAndView("audit/auditor/create");
 			result.addObject("audit", audit);
+			result.addObject("posFinal", this.positionService.findAllPositionWithStatusTrue());
 		} else {
 			try {
 				Auditor auditorLogin = this.auditorService.getAuditorLogin();

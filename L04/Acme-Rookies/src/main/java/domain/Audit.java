@@ -72,6 +72,7 @@ public class Audit extends DomainEntity {
 	}
 
 	@ManyToOne(optional = false)
+	@NotNull
 	public Position getPosition() {
 		return this.position;
 	}

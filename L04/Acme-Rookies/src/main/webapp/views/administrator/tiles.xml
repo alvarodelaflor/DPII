@@ -31,7 +31,12 @@
 		<put-attribute name="body" value="/views/administrator/form.jsp" />
 	</definition>
 	
-	<!--  Ferrete -->
+	<definition name="administrator/listSponsorships" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Sponsorships" />
+		<put-attribute name="body" value="/views/sponsorship/list.jsp" />
+	</definition>
+	
+	<!-- Ferrete -->
 	<definition name="administrator/list" extends="master.page">	
 		<put-attribute name="title" value="Administrator: Configuration" />
 		<put-attribute name="body" value="/views/administrator/list.jsp" />

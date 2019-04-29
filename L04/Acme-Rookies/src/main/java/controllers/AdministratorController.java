@@ -32,11 +32,13 @@ import services.CurriculaService;
 import services.FinderService;
 import services.PositionService;
 import services.RookieService;
+import services.SponsorshipService;
 import domain.Actor;
 import domain.Administrator;
 import domain.Company;
 import domain.Configuration;
 import domain.Rookie;
+import domain.Sponsorship;
 import forms.ActorForm;
 
 @Controller
@@ -66,6 +68,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private SponsorshipService		sponsorshipService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -312,6 +317,9 @@ public class AdministratorController extends AbstractController {
 		//Configuration
 		// ------------------------------------------------------------
 		final Configuration configuration = this.configurationService.getConfiguration();
+		final Double fair = configuration.getFair();
+		final Double VAT = configuration.getVAT();
+		// ------------------------------------------------------------
 
 		// ------------------------------------------------------------
 
@@ -340,6 +348,8 @@ public class AdministratorController extends AbstractController {
 
 		System.out.println("Carmen: Entro en el list");
 
+		result.addObject("fair", fair);
+		result.addObject("VAT", VAT);
 		result.addObject("logo", logo);
 		result.addObject("ingles", ingles);
 		result.addObject("spanish", spanish);
@@ -565,15 +575,88 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
-	//	@RequestMapping(value = "/newPhoneCountry", method = RequestMethod.GET)
-	//	public ModelAndView newPhoneCountry(@RequestParam("newPhoneCountry") final String newPhoneCountry) {
-	//		ModelAndView result;
-	//
-	//		this.configurationService.newCountry(newPhoneCountry);
-	//		result = new ModelAndView("redirect:list.do");
-	//		result.addObject("logo", this.configurationService.getConfiguration().getBanner());
-	//		result.addObject("system", this.configurationService.getConfiguration().getSystemName());
-	//		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;
-	//	}
+	// ------------------------------------------------------------
+	// Fair and VAT Methods:
+	// ------------------------------------------------------------
+	@RequestMapping(value = "/newFair", method = RequestMethod.GET)
+	public ModelAndView newFair(@RequestParam("newFair") final Double newFair) {
 
+		ModelAndView res = new ModelAndView("redirect:list.do");
+
+		try {
+
+			final Configuration config = this.configurationService.getConfiguration();
+			config.setFair(newFair);
+			this.configurationService.save(config);
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "number.positive.error") {
+				res = new ModelAndView("redirect:list.do");
+				res.addObject("message", "number.positive.error");
+
+			}
+		}
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
+		return res;
+	}
+
+	@RequestMapping(value = "/newVAT", method = RequestMethod.GET)
+	public ModelAndView newVAT(@RequestParam("newVAT") final Double newVAT) {
+
+		ModelAndView res = new ModelAndView("redirect:list.do");
+
+		try {
+
+			final Configuration config = this.configurationService.getConfiguration();
+			config.setVAT(newVAT);
+			this.configurationService.save(config);
+
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "number.positive.error") {
+				res = new ModelAndView("redirect:list.do");
+				res.addObject("message", "number.positive.error");
+			}
+		}
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
+		return res;
+	}
+
+	@RequestMapping(value = "/collect", method = RequestMethod.GET)
+	public ModelAndView collect(@RequestParam(value = "sponsorshipId", defaultValue = "-1") final int sponsorshipId) {
+
+		final ModelAndView res = new ModelAndView("redirect:listSponsorships.do");
+
+		final Sponsorship s = this.sponsorshipService.findOne(sponsorshipId);
+		s.setBannerCount(0);
+		this.sponsorshipService.save(s);
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
+		return res;
+	}
+
+	@RequestMapping(value = "/listSponsorships", method = RequestMethod.GET)
+	public ModelAndView listSponsorships() {
+
+		ModelAndView res;
+
+		try {
+
+			final Collection<Sponsorship> sponsorships;
+			sponsorships = this.sponsorshipService.findAll();
+			res = new ModelAndView("administrator/listSponsorships");
+			res.addObject("sponsorships", sponsorships);
+			final Configuration config = this.configurationService.getConfiguration();
+			res.addObject("config", config);
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		res.addObject("logo", this.getLogo());
+		res.addObject("system", this.getSystem());
+		return res;
+	}
 }

@@ -21,15 +21,32 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="acme"%>
 
-
 <br>
 
+<!-- FINDER -->
+<security:authorize access="hasRole('ADMIN')">
+	<div>
+		<display:table name="configuration" id="row"
+			requestURI="${requestURI}" pagesize="5" class="displaytag">
+			<display:column property="cacheHours"
+				titleKey="configuration.cacheHours" />
+			<display:column property="cacheAmount"
+				titleKey="configuration.cacheAmount" />
+			<display:column titleKey="edit">
+				<a
+					href="configuration/administrator/edit.do?configurationId=${row.id}"><spring:message
+						code="edit" /></a>
+			</display:column>
+		</display:table>
+	</div>
+</security:authorize>
+<!-- FINDER -->
+
 <!--FAIR-->
-<!-- 
 <h3>
 	<i><spring:message code="admin.fair" /></i>
 </h3>
-<p>${fair}</p>
+<p>${fair} u.m.</p>
 <security:authorize access="hasRole('ADMIN')">
 	<form:form class="formularioEdicion" method="GET"
 		action="administrator/newFair.do?newFair='${newFair}'.do">
@@ -38,8 +55,10 @@
 		<acme:submit name="save" code="saveNewFair" />
 	</form:form>
 </security:authorize>
-
-<p>${VAT}</p>
+<h3>
+	<i><spring:message code="admin.VAT" /></i>
+</h3>
+<p>${VAT} %</p>
 <security:authorize access="hasRole('ADMIN')">
 	<form:form class="formularioEdicion" method="GET"
 		action="administrator/newVAT.do?newVAT='${newVAT}'.do">
@@ -49,22 +68,8 @@
 		<acme:submit name="save" code="saveNewVAT" />
 	</form:form>
 </security:authorize>
- -->
+
 <!--FAIR-->
-<!-- FINDER -->
-<security:authorize access="hasRole('ADMIN')">
-	<div>
-		<display:table name="configuration" id="row" requestURI="${requestURI}"
-			pagesize="5" class="displaytag">
-			<display:column property="cacheHours" titleKey="configuration.cacheHours" />
-			<display:column property="cacheAmount" titleKey="configuration.cacheAmount" />
-			<display:column titleKey="edit">
-				<a href="configuration/administrator/edit.do?configurationId=${row.id}"><spring:message code="edit"/></a>
-			</display:column>
-		</display:table>
-	</div>
-</security:authorize>
-<!-- FINDER -->
 
 <!-- CREDITCARDSMAKES -->
 <!-- 
@@ -74,8 +79,8 @@
 <p>${creditCardMakes}</p>
 <security:authorize access="hasRole('ADMIN')">
  -->
-	<!-- Add CCMake -->
-	<!-- 
+<!-- Add CCMake -->
+<!-- 
 	<form:form class="formularioEdicion" method="GET"
 		action="administrator/newCreditCardMake.do?newCreditCardMake='${newCreditCardMake}'.do">
 		<spring:message code="newCreditCardMake" />
@@ -83,8 +88,8 @@
 		<acme:submit name="save" code="newCreditCardMake" />
 	</form:form>
 	-->
-	<!-- Remove CCMake -->
-	<!-- 
+<!-- Remove CCMake -->
+<!-- 
 	<form:form class="formularioEdicion" method="GET"
 		action="administrator/deleteCreditCardMake.do?deleteCreditCardMake='${deleteCreditCardMake}'.do">
 		<spring:message code="deleteCreditCardMake" />
@@ -306,6 +311,6 @@
 </form:form>
 -->
 <!-- PHONE -->
-	<br>
-	<acme:cancel url=" " code="Back" />
+<br>
+<acme:cancel url=" " code="Back" />
 

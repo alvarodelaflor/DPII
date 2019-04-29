@@ -31,6 +31,7 @@
 		<value>/views/curricula/tiles.xml</value>
 		<value>/views/educationalData/tiles.xml</value>
 		<value>/views/positionData/tiles.xml</value>
+		<value>/views/audit/tiles.xml</value>
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->
@@ -40,11 +41,13 @@
 		<value>/views/position/tiles.xml</value>
 		<value>/views/application/tiles.xml</value>
 		<value>/views/problem/tiles.xml</value>
+		<value>/views/provider/tiles.xml</value>
 		<!-- CARMEN -->
 		<!-- ANTONIO S -->
 		<value>/views/socialProfile/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>		
 		<!-- ANTONIO S -->
+		<value>/views/sponsorship/tiles.xml</value>
 	</util:list>
 
 </beans>
