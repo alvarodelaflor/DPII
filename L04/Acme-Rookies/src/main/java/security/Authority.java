@@ -1,8 +1,8 @@
 /*
  * Authority.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -27,7 +27,7 @@ public class Authority implements GrantedAuthority {
 
 	// Constructors -----------------------------------------------------------
 
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 
 	public Authority() {
@@ -37,9 +37,10 @@ public class Authority implements GrantedAuthority {
 
 	// Values -----------------------------------------------------------------
 
-	public static final String	ADMIN	= "ADMIN";
-	public static final String	ROOKIE	= "ROOKIE";
-	public static final String	COMPANY	= "COMPANY";
+	public static final String	ADMIN		= "ADMIN";
+	public static final String	HACKER		= "HACKER";
+	public static final String	COMPANY		= "COMPANY";
+	public static final String	PROVIDER	= "PROVIDER";
 
 	// Attributes -------------------------------------------------------------
 
@@ -47,7 +48,7 @@ public class Authority implements GrantedAuthority {
 
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.ROOKIE + "|" + Authority.COMPANY + "$")
+	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.HACKER + "|" + Authority.COMPANY + "|" + Authority.PROVIDER + "$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
@@ -73,6 +74,10 @@ public class Authority implements GrantedAuthority {
 
 		authority = new Authority();
 		authority.setAuthority(Authority.COMPANY);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.PROVIDER);
 		result.add(authority);
 
 		return result;
