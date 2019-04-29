@@ -49,20 +49,24 @@ public class AuditController extends AbstractController {
 	}
 	
 	private void setConfig(ModelAndView result) {
+		Auditor auditor = this.auditorService.getAuditorLogin();
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
+		if (auditor!=null) {
+			result.addObject("auditorLogger", true);		
+		}
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value = "auditorId", defaultValue = "-1") final int auditorId) {
 		ModelAndView result;
 		try {
-			Auditor auditor = this.auditorService.findOne(auditorId);
 			result = new ModelAndView("audit/list");
-			result.addObject("finalAudits", this.auditService.findAllByAuditorLogin(auditor.getId()).get(true));
-			result.addObject("draftAudits", this.auditService.findAllByAuditorLogin(auditor.getId()).get(false));
+			result.addObject("finalAudits", this.auditService.findAllByAuditorLogin(auditorId).get(true));
+			result.addObject("draftAudits", this.auditService.findAllByAuditorLogin(auditorId).get(false));
 			result.addObject("requestURI", "audit/list.do");
 		} catch (final Exception e) {
+			System.out.println("Error e en list Audit/Controller: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		this.setConfig(result);
@@ -74,12 +78,15 @@ public class AuditController extends AbstractController {
 
 		ModelAndView result;
 		try {
+			Auditor auditorLogger = this.auditorService.getAuditorLogin();
 			final Audit auditDB = this.auditService.findOne(auditId);
 			Assert.notNull(auditDB, notFoundAudit);
 			result = new ModelAndView("audit/show");
-
 			result.addObject("audit", auditDB);
-
+			if (auditDB.getAuditor()!=null && auditDB.getAuditor().equals(auditorLogger)) {
+				result.addObject("auditLogin", true);
+			}
+			
 			result.addObject("requestURI", "audit/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

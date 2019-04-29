@@ -88,17 +88,17 @@ public class AuditService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Map}< {@link Boolean} , {@link Audit} >
 	 */
-	public Map<Boolean, List<Audit>> findAllByAuditorLogin(Integer auditorId) {
+	public Map<Boolean, Collection<Audit>> findAllByAuditorLogin(Integer auditorId) {
 		Auditor auditor = null;
-		if (auditorId == null) {
+		if (auditorId == -1) {
 			auditor = this.auditorService.getAuditorLogin();			
 		} else {
 			auditor = this.auditorService.findOne(auditorId);
 		}
 		Assert.notNull(auditor, notAuditorLogin);
-		Map<Boolean, List<Audit>> res = new HashMap<>();
-		List<Audit> finalMode = new ArrayList<>();
-		List<Audit> draftMode = new ArrayList<>();
+		Map<Boolean, Collection<Audit>> res = new HashMap<>();
+		Collection<Audit> finalMode = new ArrayList<>(this.getAuditByStatusAndAuditorId(true, auditor.getId()));
+		Collection<Audit> draftMode = new ArrayList<>(this.getAuditByStatusAndAuditorId(false, auditor.getId()));
 		res.put(true, finalMode);
 		res.put(false, draftMode);
 		return res;
@@ -166,7 +166,16 @@ public class AuditService {
 		this.validator.validate(audit, binding);
 		return audit;
 	}
-	
+
+	/**
+	 * Return a collection of audit filter by status and auditorId
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection} < {@link Audit} >
+	 */
+	public Collection<Audit> getAuditByStatusAndAuditorId(Boolean status, int auditorId) {
+		return this.auditRepository.getAuditByStatusAndAuditorId(status, auditorId);
+	}
 	// AUXILIAR METHODS
 
 }
