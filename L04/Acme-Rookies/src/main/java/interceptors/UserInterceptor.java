@@ -4,8 +4,6 @@ package interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -13,8 +11,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import services.ConfigurationService;
 
 public class UserInterceptor extends HandlerInterceptorAdapter {
-
-	private static Logger			log	= LoggerFactory.getLogger(UserInterceptor.class);
 
 	@Autowired
 	private ConfigurationService	configurationService;
