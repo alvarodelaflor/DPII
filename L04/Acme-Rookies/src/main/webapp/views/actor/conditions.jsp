@@ -28,11 +28,11 @@
 <p>Last updated: February 19, 2019</p>
 
 
-<p>Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the http://www.Acme-Rookie-Rank.com website (the "Service") operated by Acme-Rookie-Rank ("us", "we", or "our").</p>
+<p>Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the http://www.Acme-Rookie.com website (the "Service") operated by Acme-Rookie ("us", "we", or "our").</p>
 
 <p>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.</p>
 
-<p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. The Terms and Conditions agreement  for Acme-Rookie-Rank has been created with the help of <a href="https://termsfeed.com/">TermsFeed</a>.</p>
+<p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. The Terms and Conditions agreement  for Acme-Rookie has been created with the help of <a href="https://termsfeed.com/">TermsFeed</a>.</p>
 
 
 <h2>Accounts</h2>
@@ -46,9 +46,9 @@
 
 <h2>Links To Other Web Sites</h2>
 
-<p>Our Service may contain links to third-party web sites or services that are not owned or controlled by Acme-Rookie-Rank.</p>
+<p>Our Service may contain links to third-party web sites or services that are not owned or controlled by Acme-Rookie.</p>
 
-<p>Acme-Rookie-Rank has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Acme-Rookie-Rank shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
+<p>Acme-Rookie has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Acme-Rookie shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
 
 <p>We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit.</p>
 

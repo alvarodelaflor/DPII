@@ -60,8 +60,8 @@
 		<security:intercept-url pattern="/provider/list.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/item/listByProvider.do" access="permitAll" /> 
-		<security:intercept-url pattern="/item/list.do" access="permitAll" /> 	 	 
-		<security:intercept-url pattern="/item/show.do" access="permitAll" /> 	 	 	 	 
+
+		<security:intercept-url pattern="/auditor/create.do" access="permitAll" />  	 	 	 
 		<!-- CARMEM -->
 		
 		<!-- ANTONIO S -->
