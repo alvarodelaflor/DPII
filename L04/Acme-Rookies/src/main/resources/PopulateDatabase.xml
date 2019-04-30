@@ -423,7 +423,7 @@
     	<property name="name" value= "Escoba"/>
     	<property name="description" value= "Una escoba para barrer las miguitas de las galletas"/>
     	<property name="link" value= "https://www.google.com/"/>
-    	<property name="pictures" value= "234"/>
+    	<property name="pictures" value= "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jim_Carrey_2008.jpg/220px-Jim_Carrey_2008.jpg'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jim_Carrey_2008.jpg/220px-Jim_Carrey_2008.jpg"/>
  		<property name="provider" ref= "provider01"/>
     </bean>
     
@@ -431,7 +431,7 @@
     	<property name="name" value= "Teclado"/>
     	<property name="description" value= "Un teclado para teclear"/>
     	<property name="link" value= "https://www.google.com/"/>
-    	<property name="pictures" value= "234"/>
+    	<property name="pictures" value= "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jim_Carrey_2008.jpg/220px-Jim_Carrey_2008.jpg"/>
  		<property name="provider" ref= "provider01"/>
     </bean>
     

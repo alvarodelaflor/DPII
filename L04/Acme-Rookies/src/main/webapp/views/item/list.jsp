@@ -15,40 +15,14 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jstl:if test="${providerLogger==true}">
-	<form method="get" action="item/provider/create.do">
-		<button>
-			<spring:message code="createCurricula" />
-		</button>
-	</form>
-	<br>
-</jstl:if>
 
-<display:table name="items" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<jstl:if test="${providerLogger==true}">
-		<display:column titleKey="item.edit">
-			<a href="item/provider/edit.do?itemId=${row.id}"><img width="35" height="35" src="./images/edit.png" alt="${row.id}" /></a>	
-		</display:column>
-		<display:column titleKey="item.delete">
-			<a href="item/provider/delete.do?itemId=${row.id}"><img width="35" height="35" src="./images/delete.png" alt="${row.id}" /></a>	
-		</display:column>
-	</jstl:if>
-	<display:column titleKey="item.show">
-		<a href="item/show.do?itemId=${row.id}"><img width="35" height="35" src="./images/show.png" alt="${row.id}" /></a>	
-	</display:column>
-	<display:column property="name" titleKey="item.name"></display:column>
-	<display:column property="statement" titleKey="item.statement"></display:column>
-</display:table>
-<br>
-<br>
-<c:choose>
-	<c:when test="${providerLogger==true}">
-		<acme:cancel url="provider/show.do?providerId=${item.provider.id}" code="back"/>
-	</c:when>
-	<c:otherwise>
-		<input type="button" value=<spring:message code="item.back" /> name="item.back" onclick="history.back()" />
-	</c:otherwise>
-</c:choose>
+	<display:table name="items" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+		<display:column titleKey="item.name">
+			<a href="item/show.do?id=${row.id}"><jstl:out value="${row.name}"/></a></display:column>
+		<display:column titleKey="item.provider" ><a href="provider/show.do?id=${row.provider.id}"><spring:message code="item.provider.show" /></a></display:column>
+	</display:table>
+					
+<input type="button" value=<spring:message code="item.back" /> name="item.back" onclick="history.back()" />

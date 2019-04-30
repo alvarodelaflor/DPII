@@ -1,8 +1,8 @@
 /*
- * CurricculaProviderController.java
- *
- * Copyright (C) 2019 Universidad de Sevilla
- *
+ * p * CustomerController.java
+ * 
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -10,7 +10,10 @@
 
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,28 +23,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Item;
-import domain.Provider;
-import security.LoginService;
-import security.UserAccount;
 import services.ItemService;
 import services.ProviderService;
-
-/*
- * CONTROL DE CAMBIOS ItemProviderController.java
- *
- * ALVARO 09/03/2019 11:30 CREACION DE LA CLASE
- */
+import domain.Item;
+import domain.Provider;
 
 @Controller
 @RequestMapping("/item")
 public class ItemController extends AbstractController {
 
 	@Autowired
-	private ProviderService	providerService;
+	private ItemService		itemService;
 
 	@Autowired
-	private ItemService		itemService;
+	private ProviderService	providerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -50,22 +45,22 @@ public class ItemController extends AbstractController {
 		super();
 	}
 
-	@RequestMapping(value = "/providerList", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(value = "providerId", defaultValue = "-1") final int providerId) {
+	// listByProvider ---------------------------------------------------------------		
+	@RequestMapping(value = "/listByProvider", method = RequestMethod.GET)
+	public ModelAndView listByProvider(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+
 		ModelAndView result;
+		final Provider provider;
+
 		try {
-			Provider provider = this.providerService.findOne(providerId);
-			final Provider providerLogin = this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId());
-			if (provider == null && providerLogin != null)
-				provider = providerLogin;
-			Assert.notNull(provider, "Not provider found in DB");
-			result = new ModelAndView("item/list");
-			if (providerLogin != null && provider.equals(providerLogin))
-				result.addObject("providerLogger", true);
-			Assert.notNull(provider, "Provider is null");
-			final Collection<Item> items = this.itemService.getProviderItems(provider.getId());
+			provider = this.providerService.findOne(id);
+			Assert.isTrue(provider != null);
+
+			final Collection<domain.Item> items = this.itemService.getProviderItems(id);
+
+			result = new ModelAndView("item/listByProvider");
 			result.addObject("items", items);
-			result.addObject("requestURI", "items/listProvider.do?providerId=" + provider.getId());
+			result.addObject("requestURI", "item/listByProvider.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -74,19 +69,40 @@ public class ItemController extends AbstractController {
 		return result;
 	}
 
+	// LIST ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+
+		try {
+			final Collection<Item> items = this.itemService.findAll();
+			result = new ModelAndView("item/list");
+			result.addObject("items", items);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// SHOW ---------------------------------------------------------------		
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam(value = "itemId", defaultValue = "-1") final int itemId) {
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 
 		ModelAndView result;
 		try {
-			final Item itemDB = this.itemService.findOne(itemId);
-			Assert.notNull(itemDB, "Not found item in DB");
-			result = new ModelAndView("item/show");
-			result.addObject("item", itemDB);
-			final UserAccount logged = LoginService.getPrincipal();
-			if (logged != null && this.providerService.getProviderByUserAccountId(logged.getId()) != null && this.providerService.getProviderByUserAccountId(logged.getId()).equals(itemDB.getProvider()))
-				result.addObject("providerLogin", true);
 
+			final Item item = this.itemService.findOne(id);
+			List<String> pictures = new ArrayList<>();
+
+			if (item.getPictures() != null)
+				pictures = Arrays.asList(item.getPictures().split("'"));
+
+			result = new ModelAndView("item/show");
+			result.addObject("pictures", pictures);
+			result.addObject("item", item);
 			result.addObject("requestURI", "item/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

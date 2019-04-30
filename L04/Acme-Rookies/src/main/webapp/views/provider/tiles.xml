@@ -20,5 +20,15 @@
 		<put-attribute name="title" value="Register proveedor" />
 		<put-attribute name="body" value="/views/provider/create.jsp" />
 	</definition>
+	
+		<definition name="provider/list" extends="master.page">	
+		<put-attribute name="title" value="List providers" />
+		<put-attribute name="body" value="/views/provider/list.jsp" />
+	</definition>
+	
+	<definition name="provider/show" extends="master.page">	
+		<put-attribute name="title" value="Show provider" />
+		<put-attribute name="body" value="/views/provider/show.jsp" />
+	</definition>
 
 </tiles-definitions>

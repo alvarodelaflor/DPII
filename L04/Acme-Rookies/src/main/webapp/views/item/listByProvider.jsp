@@ -18,20 +18,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<div class="content">
-	<table>
-		<tr><td><strong><spring:message code="item.name" />:</strong> <jstl:out	value="${item.name}"></jstl:out></td></tr>
-		<tr><td><strong><spring:message code="item.description" />:</strong> <jstl:out value="${item.description}"></jstl:out></td></tr>
-		<tr><td><strong><spring:message code="item.link" />:</strong> <jstl:out value="${item.link}"></jstl:out></td></tr>
-	</table>
-</div>
-<br>
 
-<display:table pagesize="5" name="${pictures}" id="picture"
-	requestURI="${requestURI}">
-	<display:column titleKey="item.pictures">
-		<img width="300" src="${picture.trim()}" alt="Error" >
-	</display:column>
-</display:table>
+	<display:table name="items" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+		<display:column property="name" titleKey="item.name"></display:column>
+		<display:column property="description" titleKey="item.description"></display:column>
+		<display:column property="link" titleKey="item.link"></display:column>
+	</display:table>
+					
 <input type="button" value=<spring:message code="item.back" /> name="item.back" onclick="history.back()" />
-

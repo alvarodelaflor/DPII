@@ -46,5 +46,19 @@
 		<put-attribute name="title" value="Detalles de Objeto" />
 		<put-attribute name="body" value="/views/item/show.jsp" />
 	</definition>
+	<definition name="item/listByProvider" extends="master.page">	
+		<put-attribute name="title" value="Listado de objetos" />
+		<put-attribute name="body" value="/views/item/listByProvider.jsp" />
+	</definition>
 	
+	<definition name="item/list" extends="master.page">	
+		<put-attribute name="title" value="Listado de objetos" />
+		<put-attribute name="body" value="/views/item/list.jsp" />
+	</definition>
+	
+	<definition name="item/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar objeto" />
+		<put-attribute name="body" value="/views/item/show.jsp" />
+	</definition>
+
 </tiles-definitions>

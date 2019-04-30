@@ -20,14 +20,11 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
-	<display:table name="positions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-		<display:column property="ticker" titleKey="position.ticker"></display:column>
-		<display:column property="title" titleKey="position.title"></display:column>
-		<display:column property="skills" titleKey="position.skills"></display:column>
-		<display:column property="deadline" titleKey="position.deadline"></display:column>
-		<display:column property="techs" titleKey="position.techs"></display:column>
-		<display:column property="salary" titleKey="position.salary"></display:column>
+	<display:table name="providers" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+		<display:column titleKey="provider.comercialName">
+			<a href="provider/show.do?id=${row.id}"><jstl:out value="${row.commercialName}"/></a></display:column>
+		<display:column titleKey="provider.item" ><a href="item/listByProvider.do?id=${row.id}"><spring:message code="provider.item.show" /></a></display:column>
 	</display:table>
 					
-<input type="button" value="<spring:message code="position.cancel" />" name="position.cancel" onclick="history.back()" />
+	<acme:cancel url=" " code="provider.cancel"/>
 
