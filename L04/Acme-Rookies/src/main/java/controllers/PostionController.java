@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Audit;
+import domain.Position;
+import forms.PositionForm;
+import services.AuditService;
 import services.PositionFormService;
 import services.PositionService;
 import services.ProblemService;
-import domain.Position;
-import forms.PositionForm;
 
 @Controller
 @RequestMapping("/position")
@@ -38,6 +40,9 @@ public class PostionController extends AbstractController {
 
 	@Autowired
 	private ProblemService		problemService;
+	
+	@Autowired
+	private AuditService auditService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -112,6 +117,7 @@ public class PostionController extends AbstractController {
 
 			result = new ModelAndView("position/show");
 			result.addObject("position", position);
+			this.setAuditOfPosition(position.getId(), result);
 			result.addObject("hasProblem", hasProblem);
 			result.addObject("requestURI", "position/show.do");
 		} catch (final Exception e) {
@@ -120,6 +126,26 @@ public class PostionController extends AbstractController {
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
+	}
+	
+	
+	/**
+	 * 
+	 * This method set audit to the view if the position has one
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 */
+	private void setAuditOfPosition(int positionId, ModelAndView result) {
+		try {
+			Audit audit = this.auditService.getAuditByPositionId(positionId);
+			if (audit!=null && audit.getStatus()!= null && audit.getStatus().equals(true)) {
+				result.addObject("audit", audit);
+			} else {
+				result.addObject("audit", null);
+			}
+		} catch (Exception e) {
+			result.addObject("audit", null);
+		}
 	}
 
 	// SAVE ---------------------------------------------------------------		

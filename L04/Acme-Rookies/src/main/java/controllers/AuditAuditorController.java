@@ -10,7 +10,6 @@
 
 package controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -23,7 +22,6 @@ import domain.Audit;
 import domain.Auditor;
 import services.AuditService;
 import services.AuditorService;
-import services.PositionService;
 
 /*
  * CONTROL DE CAMBIOS CurriculaRookieController.java
@@ -40,8 +38,6 @@ public class AuditAuditorController extends AbstractController {
 	private AuditorService		auditorService;
 	@Autowired
 	private AuditService auditService;
-	@Autowired
-	private PositionService positionService;
 
 	// Default Messages
 	private String welcomeIndex = "redirect:/welcome/index.do";
@@ -74,7 +70,7 @@ public class AuditAuditorController extends AbstractController {
 			Assert.notNull(auditorLogin, notAuditorLogin);
 			Audit audit = this.auditService.create();
 			result = new ModelAndView("audit/auditor/edit");
-			result.addObject("posFinal", this.positionService.findAllPositionWithStatusTrue());
+			result.addObject("posFinal", this.auditService.getPositionAvailable(audit));
 			result.addObject("audit", audit);
 		} catch (final Exception e) {
 			System.out.println("Error e en GET /create AuditAuditorController.java: " + e.getMessage());
@@ -96,7 +92,7 @@ public class AuditAuditorController extends AbstractController {
 			Assert.isTrue(auditorLogin.equals(auditDB.getAuditor()));
 			result = new ModelAndView("audit/auditor/edit");
 			result.addObject("audit", auditDB);
-			result.addObject("posFinal", this.positionService.findAllPositionWithStatusTrue());
+			result.addObject("posFinal", this.auditService.getPositionAvailable(auditDB));
 		} catch (final Exception e) {
 			if (auditorLogin != null) {
 				result = new ModelAndView("audit/list");
@@ -127,7 +123,7 @@ public class AuditAuditorController extends AbstractController {
 			System.out.println("Error en AuditAuditorController.java, binding: " + binding);
 			result = new ModelAndView("audit/auditor/create");
 			result.addObject("audit", audit);
-			result.addObject("posFinal", this.positionService.findAllPositionWithStatusTrue());
+			result.addObject("posFinal", this.auditService.getPositionAvailable(audit));
 		} else {
 			try {
 				Auditor auditorLogin = this.auditorService.getAuditorLogin();
@@ -141,6 +137,7 @@ public class AuditAuditorController extends AbstractController {
 				System.out.println("Error en SAVE AuditAuditorController.java Throwable: " + oops);
 				result = new ModelAndView("audit/auditor/edit");
 				result.addObject("audit", audit);
+				result.addObject("posFinal", this.auditService.getPositionAvailable(audit));
 				result.addObject("message", "audit.commit.error");
 			}
 		}

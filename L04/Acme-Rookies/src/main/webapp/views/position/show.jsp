@@ -65,6 +65,20 @@
     					</c:choose>
 </security:authorize>
 	</table>
+	<jstl:if test="${audit != null}">
+		<fieldset>
+			<legend>
+				<spring:message code="audit.data" />	
+			</legend>
+			<p><strong><spring:message code="audit.text" /> </strong><jstl:out value="${audit.text}"></jstl:out></p>
+			<p><strong><spring:message code="audit.creationMoment" /> </strong><jstl:out value="${audit.creationMoment}"></jstl:out></p>
+			<p><strong><spring:message code="audit.score" /> </strong><jstl:out value="${audit.score}"></jstl:out></p>
+			<p><strong><spring:message code="audit.status" /></strong><jstl:out value="${audit.status}"></jstl:out></p>
+			<form method="get" action="audit/show.do">
+				<button name="auditId" value="${audit.id}"><spring:message code="audit.goLink"/></button>
+			</form>
+		</fieldset>
+	</jstl:if>
 </div>
 
 <input type="button" value="back" name="position.cancel" onclick="history.back()" />

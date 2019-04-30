@@ -58,6 +58,16 @@
 		</li>
 
 		</security:authorize>
+
+		<security:authorize access="hasRole('AUDITOR')">
+		<li><a class="fNiv"><spring:message	code="master.page.audit.util" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="audit/list.do"><spring:message code="master.page.audit.list" /></a></li>							
+				</ul>
+		</li>
+
+		</security:authorize>
 		
 		<security:authorize access="hasRole('PROVIDER')">
 		<li><a class="fNiv"><spring:message	code="master.page.provider" /></a>

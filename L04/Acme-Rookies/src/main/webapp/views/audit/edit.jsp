@@ -29,9 +29,9 @@
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	<acme:textbox path="text" code="audit.text"/>
-          	<acme:numberbox code="audit.score" path="score"/>
+          	<acme:numberbox code="audit.score" path="score" step="0.1"/>
 			<acme:selectTrueFalse code="audit" path="status"/>
-			<acme:select items="${posFinal}" itemLabel="title" code="audit.position" path="position"/>
+			<acme:select items="${posFinal}" itemLabel="ticker" code="audit.position" path="position"/>
 			
 			<acme:submit name="save" code="save"/>
 			<acme:cancel url="audit/list.do?" code="back"/>

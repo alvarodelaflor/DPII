@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import domain.Audit;
 import domain.Auditor;
 import services.AuditService;
 import services.AuditorService;
+import services.PositionService;
 
 /*
  * CONTROL DE CAMBIOS CurriculaRookieController.java
@@ -37,6 +39,8 @@ public class AuditController extends AbstractController {
 	private AuditService auditService;
 	@Autowired
 	private AuditorService auditorService;
+	@Autowired
+	private PositionService positionService;
 	
 	// Default Messages
 	private String notFoundAudit = "The audit has not been found in database by ID.";
@@ -64,6 +68,10 @@ public class AuditController extends AbstractController {
 			result = new ModelAndView("audit/list");
 			result.addObject("finalAudits", this.auditService.findAllByAuditorLogin(auditorId).get(true));
 			result.addObject("draftAudits", this.auditService.findAllByAuditorLogin(auditorId).get(false));
+			Auditor auditor = this.auditorService.getAuditorLogin();
+			if (auditor!=null) {				
+				result.addObject("positions", this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit());
+			}
 			result.addObject("requestURI", "audit/list.do");
 		} catch (final Exception e) {
 			System.out.println("Error e en list Audit/Controller: " + e);

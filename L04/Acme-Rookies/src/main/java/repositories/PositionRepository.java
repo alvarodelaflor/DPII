@@ -60,13 +60,6 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.status=true")
 	Collection<Position> findAllPositionWithStatusTrue();
 	
-	// ALVARO 29/04/2019 22:44
-	
-	@Query("select p from Position p where p.status=true and p.cancel=false and not exists (select p2 from Audit a2 join a2.position p2)")
-	Collection<Position> findAllPositionWithStatusTrueNotCancelNotAudit();
-	
-	// ALVARO
-
 	@Query("select p from Position p where p.status=true and p.cancel=false")
 	Collection<Position> findAllPositionWithStatusTrueCancelFalse();
 
@@ -107,4 +100,15 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	 */
 	@Query("select p from Application a join a.position p where p.status=1 and a.status='ACCEPTED' and a.rookie.id = ?1")
 	Collection<Position> findValidPositionToCurriculaByRookieId(int rookieId);
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} in final mode no cancel that it has not
+	 * audit asociated
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	@Query("select p from Audit a right join a.position p where p.status=true and p.cancel=false and a.status is null")
+	Collection<Position> findAllPositionWithStatusTrueNotCancelNotAudit();
 }

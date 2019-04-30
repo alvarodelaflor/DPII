@@ -21,6 +21,7 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.AuthUtils;
 import domain.Actor;
+import domain.Auditor;
 import domain.Company;
 import domain.Message;
 import domain.Position;
@@ -55,6 +56,9 @@ public class PositionService {
 
 	@Autowired
 	private ProblemService		problemService;
+	
+	@Autowired
+	private AuditorService auditorService;
 
 	@Autowired
 	private Validator			validator;
@@ -442,5 +446,19 @@ public class PositionService {
 		else
 			System.out.println("Any rookie is logger, system can not find any valid position");
 		return res;
+	}
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} in final mode no cancel that it has not
+	 * audit asociated
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	public Collection<Position> findAllPositionWithStatusTrueNotCancelNotAudit() {
+		Auditor auditor = this.auditorService.getAuditorLogin();
+		Assert.notNull(auditor, "No auditor is login");
+		return this.positionRepository.findAllPositionWithStatusTrueNotCancelNotAudit();
 	}
 }
