@@ -48,6 +48,10 @@
 		<value>/views/message/tiles.xml</value>		
 		<!-- ANTONIO S -->
 		<value>/views/sponsorship/tiles.xml</value>
+
+		<!-- HIPONA -->
+		<value>/views/auditor/tiles.xml</value>		
+		<!-- HIPONA -->
 	</util:list>
 
 </beans>
