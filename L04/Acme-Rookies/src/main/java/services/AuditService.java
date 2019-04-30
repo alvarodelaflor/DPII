@@ -116,7 +116,10 @@ public class AuditService {
 	 * @return {@link Collection} < {@link Position} >
 	 */
 	public Collection<Position> getPositionAvailable(Audit audit) {
-		Collection<Position> res = new ArrayList<>(this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit());
+		Collection<Position> res = new ArrayList<>(this.positionService.findAllPositionWithStatusTrueCancelFalse());
+		Auditor auditor = this.auditorService.getAuditorLogin();
+		Assert.notNull(auditor, notAuditor);
+		res.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));
 		Audit auditDB = this.findOne(audit.getId());
 		if (auditDB!= null && audit.getStatus()!=null && audit.getStatus().equals(false)) {
 			Assert.isTrue(auditDB.getPosition().equals(audit.getPosition()) || res.contains(audit.getPosition()));

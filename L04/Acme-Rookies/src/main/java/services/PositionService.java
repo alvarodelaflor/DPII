@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -460,5 +461,16 @@ public class PositionService {
 		Auditor auditor = this.auditorService.getAuditorLogin();
 		Assert.notNull(auditor, "No auditor is login");
 		return this.positionRepository.findAllPositionWithStatusTrueNotCancelNotAudit();
+	}
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} by auditor ID.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	public Collection<Position> findAllPositionByAuditor(int auditorId) {
+		return this.positionRepository.findAllPositionByAuditor(auditorId);
 	}
 }

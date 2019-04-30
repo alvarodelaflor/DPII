@@ -111,4 +111,14 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	 */
 	@Query("select p from Audit a right join a.position p where p.status=true and p.cancel=false and a.status is null")
 	Collection<Position> findAllPositionWithStatusTrueNotCancelNotAudit();
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} by auditor ID.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	@Query("select p from Audit a join a.position p where p.status=true and p.cancel=false and a.auditor.id=?1")
+	Collection<Position> findAllPositionByAuditor(int auditorId);
 }
