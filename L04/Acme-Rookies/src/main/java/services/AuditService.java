@@ -12,9 +12,10 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 import javax.transaction.Transactional;
+
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import org.springframework.validation.Validator;
 
 import domain.Audit;
 import domain.Auditor;
+import domain.Position;
 import repositories.AuditRepository;
 
 @Service
@@ -37,6 +39,9 @@ public class AuditService {
 	// Services
 	@Autowired
 	private AuditorService auditorService;
+	
+	@Autowired
+	private PositionService positionService;
 	
 	@Autowired
 	private Validator						validator;
@@ -101,6 +106,22 @@ public class AuditService {
 		Collection<Audit> draftMode = new ArrayList<>(this.getAuditByStatusAndAuditorId(false, auditor.getId()));
 		res.put(true, finalMode);
 		res.put(false, draftMode);
+		return res;
+	}
+
+	/**
+	 * Get all Position available by an audit
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection} < {@link Position} >
+	 */
+	public Collection<Position> getPositionAvailable(Audit audit) {
+		Collection<Position> res = new ArrayList<>(this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit());
+		Audit auditDB = this.findOne(audit.getId());
+		if (auditDB!= null && audit.getStatus()!=null && audit.getStatus().equals(false)) {
+			Assert.isTrue(auditDB.getPosition().equals(audit.getPosition()) || res.contains(audit.getPosition()));
+			res.add(auditDB.getPosition());
+		}
 		return res;
 	}
 	
@@ -175,6 +196,16 @@ public class AuditService {
 	 */
 	public Collection<Audit> getAuditByStatusAndAuditorId(Boolean status, int auditorId) {
 		return this.auditRepository.getAuditByStatusAndAuditorId(status, auditorId);
+	}
+
+	/**
+	 * Return an audit of a position
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection} < {@link Audit} >
+	 */
+	public Audit getAuditByPositionId(int positionId) {
+		return this.auditRepository.getAuditByPositionId(positionId);
 	}
 	// AUXILIAR METHODS
 

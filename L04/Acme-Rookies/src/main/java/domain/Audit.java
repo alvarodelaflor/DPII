@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -34,7 +33,6 @@ public class Audit extends DomainEntity {
 
 
 	@NotNull
-	@Past
 	public Date getCreationMoment() {
 		return this.creationMoment;
 	}

@@ -25,17 +25,22 @@
 <body>
 
 	<div>
-    	<form:form class="formularioEdicion" method="POST" onsubmit="return phonenumberval();" modelAttribute="audit" action="audit/auditor/edit.do">
+    	<form:form class="formularioEdicion" method="POST" modelAttribute="item" action="item/provider/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox path="text" code="audit.text"/>
-          	<acme:numberbox code="audit.score" path="score" step="0.1"/>
-			<acme:selectTrueFalse code="audit" path="status"/>
-			<acme:select items="${posFinal}" itemLabel="ticker" code="audit.position" path="position"/>
-			
-			<acme:submit name="save" code="save"/>
-			<acme:cancel url="audit/list.do?" code="back"/>
-
+          	<acme:textbox path="name" code="item.name"/>
+          	<acme:textbox path="description" code="item.description"/>
+			<acme:textbox code="item.link" path="link" />
+			<acme:textbox code="item.pictures" path="pictures" />
+          	<acme:submit name="save" code="save"/>
+          	<c:choose>
+          		<c:when test="${item.id == 0}">
+          			<acme:cancel url="item/listProvider.do?providerId=${provider.id}"  code="back"/>
+          		</c:when>
+          		<c:otherwise>
+          			<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
+          		</c:otherwise>
+          	</c:choose>
 		</form:form>
 	</div>
 </body>

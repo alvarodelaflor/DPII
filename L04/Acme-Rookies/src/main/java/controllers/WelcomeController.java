@@ -75,8 +75,6 @@ public class WelcomeController extends AbstractController {
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 		if (language.equals("Spanish"))
 			message = this.configurationService.getConfiguration().getSystemMessageEs();
-		result.addObject("logo", this.getLogo());
-		result.addObject("system", this.getSystem());
 		result.addObject("systemMessage", message);
 		return result;
 	}

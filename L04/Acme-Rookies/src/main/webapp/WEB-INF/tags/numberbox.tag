@@ -26,17 +26,20 @@
 <%@ attribute name="code" required="true" %>
 
 <%@ attribute name="readonly" required="false" %>
+<%@ attribute name="step" required="false" %>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
 </jstl:if>
-
+<jstl:if test="${step == null}">
+	<jstl:set var="step" value="1" />
+</jstl:if>
 <%-- Definition --%>
 
 <div>
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<form:input type="number" path="${path}" readonly="${readonly}" />	
+	<form:input type="number" path="${path}" readonly="${readonly}" step="${step}" />	
 	<form:errors path="${path}" cssClass="error" />
 </div>	

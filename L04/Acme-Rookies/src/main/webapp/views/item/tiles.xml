@@ -31,4 +31,16 @@
 		<put-attribute name="body" value="/views/item/show.jsp" />
 	</definition>
 
+	<definition name="item/provider/create" extends="master.page">	
+		<put-attribute name="title" value="Create an Item" />
+		<put-attribute name="body" value="/views/item/edit.jsp" />
+	</definition>
+	<definition name="item/provider/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit an Item" />
+		<put-attribute name="body" value="/views/item/edit.jsp" />
+	</definition>
+	<definition name="item/listProvider" extends="master.page">	
+		<put-attribute name="title" value="List Provider Items" />
+		<put-attribute name="body" value="/views/item/listProvider.jsp" />
+	</definition>
 </tiles-definitions>

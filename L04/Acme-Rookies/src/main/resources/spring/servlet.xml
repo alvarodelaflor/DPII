@@ -47,11 +47,16 @@
 
 	<bean id="openEntityManagerInViewInterceptor"
 		class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
-
+	
+	<bean id="userInterceptor" class="interceptors.UserInterceptor"/>
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*.do" />
 			<ref bean="openEntityManagerInViewInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*.do" />
+			<ref bean="userInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 
