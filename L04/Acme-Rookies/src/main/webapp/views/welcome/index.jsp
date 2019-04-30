@@ -16,6 +16,6 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p>${systemMessage}</p>
+<p>${systemMessage} ${interceptorTesting}</p>
 
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
