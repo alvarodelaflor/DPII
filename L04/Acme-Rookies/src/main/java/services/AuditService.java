@@ -207,8 +207,8 @@ public class AuditService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection} < {@link Audit} >
 	 */
-	public Audit getAuditByPositionId(int positionId) {
-		return this.auditRepository.getAuditByPositionId(positionId);
+	public Collection<Audit> getAuditByPositionId(int positionId) {
+		return this.auditRepository.findAllAuditByPositionId(positionId);
 	}
 	// AUXILIAR METHODS
 

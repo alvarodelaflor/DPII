@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.Audit;
 import domain.Auditor;
+import domain.Position;
 import services.AuditService;
 import services.AuditorService;
 import services.PositionService;
@@ -66,12 +69,16 @@ public class AuditController extends AbstractController {
 		ModelAndView result;
 		try {
 			result = new ModelAndView("audit/list");
-			result.addObject("finalAudits", this.auditService.findAllByAuditorLogin(auditorId).get(true));
-			result.addObject("draftAudits", this.auditService.findAllByAuditorLogin(auditorId).get(false));
-			Auditor auditor = this.auditorService.getAuditorLogin();
-			if (auditor!=null) {				
-				result.addObject("positions", this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit());
+			Auditor auditor = this.auditorService.findOne(auditorId);
+			Auditor auditorLogger = this.auditorService.getAuditorLogin();
+			if (auditor == null || (auditor!=null && auditorLogger != null && auditor.equals(auditorLogger)) ) {
+				auditor = auditorLogger;
+				Collection<Position> aux = this.positionService.findAllPositionWithStatusTrueCancelFalse();
+				aux.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));
+				result.addObject("positions", aux);
 			}
+			result.addObject("finalAudits", this.auditService.findAllByAuditorLogin(auditor.getId()).get(true));
+			result.addObject("draftAudits", this.auditService.findAllByAuditorLogin(auditor.getId()).get(false));
 			result.addObject("requestURI", "audit/list.do");
 		} catch (final Exception e) {
 			System.out.println("Error e en list Audit/Controller: " + e);
