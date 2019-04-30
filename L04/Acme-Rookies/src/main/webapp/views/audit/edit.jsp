@@ -29,7 +29,7 @@
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
           	<acme:textbox path="text" code="audit.text"/>
-          	<acme:numberbox code="audit.score" path="score" step="0.1"/>
+          	<acme:numberbox code="audit.score" path="score" step="0.01"/>
 			<acme:selectTrueFalse code="audit" path="status"/>
 			<acme:select items="${posFinal}" itemLabel="ticker" code="audit.position" path="position"/>
 			
