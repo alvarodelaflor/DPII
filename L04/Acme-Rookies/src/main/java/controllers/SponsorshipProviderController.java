@@ -168,7 +168,7 @@ public class SponsorshipProviderController extends AbstractController {
 
 		res = new ModelAndView("sponsorship/provider/edit");
 		res.addObject("sponsorship", sponsorship);
-		final Collection<Position> positions = this.positionService.findALL();
+		final Collection<Position> positions = this.positionService.findAllPositionWithStatusTrueCancelFalse();
 		res.addObject("positions", positions);
 		res.addObject("requestURI", "sponsorship/provider/list.do");
 		res.addObject("message", code);
