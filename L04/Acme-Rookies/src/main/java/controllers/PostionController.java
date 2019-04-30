@@ -23,7 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 import services.PositionFormService;
 import services.PositionService;
 import services.ProblemService;
+import services.SponsorshipService;
 import domain.Position;
+import domain.Sponsorship;
 import forms.PositionForm;
 
 @Controller
@@ -38,6 +40,9 @@ public class PostionController extends AbstractController {
 
 	@Autowired
 	private ProblemService		problemService;
+
+	@Autowired
+	private SponsorshipService	sponsorshipService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -98,6 +103,7 @@ public class PostionController extends AbstractController {
 
 		try {
 			position = this.positionService.findOne(id);
+			final Sponsorship s = this.sponsorshipService.randomSponsorship(id);
 			System.out.println(position);
 			Assert.notNull(position);
 
