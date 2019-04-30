@@ -23,7 +23,6 @@ public class Company extends Actor {
 		this.commercialName = commercialName;
 	}
 
-	@NotBlank
 	public Double getAuditScore() {
 		return this.auditScore;
 	}
