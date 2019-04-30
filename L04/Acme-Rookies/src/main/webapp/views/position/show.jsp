@@ -67,4 +67,4 @@
 	</table>
 </div>
 
-<input type="button" value="back" name="position.cancel" onclick="history.back()" />
+<input type="button" value="<spring:message code="position.cancel" />" name="position.cancel" onclick="history.back()" />

@@ -12,7 +12,8 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Company extends Actor {
 
 	String	commercialName;
-	Double auditScore;
+	Double	auditScore;
+
 
 	@NotBlank
 	public String getCommercialName() {
@@ -23,14 +24,12 @@ public class Company extends Actor {
 		this.commercialName = commercialName;
 	}
 
-	@NotBlank
 	public Double getAuditScore() {
 		return this.auditScore;
 	}
 
-	public void setAuditScore(Double auditScore) {
+	public void setAuditScore(final Double auditScore) {
 		this.auditScore = auditScore;
 	}
-	
 
 }

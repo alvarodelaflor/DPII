@@ -16,19 +16,19 @@
       
 <tiles-definitions>
 
-	<definition name="provider/create" extends="master.page">	
-		<put-attribute name="title" value="Registro provider" />
-		<put-attribute name="body" value="/views/provider/create.jsp" />
+	<definition name="item/listByProvider" extends="master.page">	
+		<put-attribute name="title" value="Listado de objetos" />
+		<put-attribute name="body" value="/views/item/listByProvider.jsp" />
 	</definition>
 	
-	<definition name="provider/list" extends="master.page">	
-		<put-attribute name="title" value="Listado proveedor" />
-		<put-attribute name="body" value="/views/provider/list.jsp" />
+	<definition name="item/list" extends="master.page">	
+		<put-attribute name="title" value="Listado de objetos" />
+		<put-attribute name="body" value="/views/item/list.jsp" />
 	</definition>
 	
-	<definition name="provider/show" extends="master.page">	
-		<put-attribute name="title" value="Mostrar proveedor" />
-		<put-attribute name="body" value="/views/provider/show.jsp" />
+	<definition name="item/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar objeto" />
+		<put-attribute name="body" value="/views/item/show.jsp" />
 	</definition>
-	
+
 </tiles-definitions>

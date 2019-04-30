@@ -11,15 +11,19 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.ProviderService;
 import domain.Provider;
 import forms.RegistrationForm;
@@ -98,6 +102,53 @@ public class ProviderController extends AbstractController {
 		result = new ModelAndView("provider/create");
 		result.addObject("message", string);
 		result.addObject("actor", actor);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// LIST ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+
+		try {
+			final Collection<Provider> providers = this.providerService.findAll();
+			result = new ModelAndView("provider/list");
+			result.addObject("providers", providers);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// SHOW ---------------------------------------------------------------		
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+
+		ModelAndView result;
+		final Provider provider;
+		Boolean checkprovider = false;
+		try {
+			if (id == -1) {
+				final int userLoggin = LoginService.getPrincipal().getId();
+				provider = this.providerService.getProviderByUserAccountId(userLoggin);
+				Assert.isTrue(provider != null);
+				checkprovider = true;
+			} else {
+				provider = this.providerService.findOne(id);
+				Assert.isTrue(provider != null);
+			}
+			result = new ModelAndView("provider/show");
+			result.addObject("provider", provider);
+			result.addObject("checkprovider", checkprovider);
+			result.addObject("requestURI", "provider/show.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;

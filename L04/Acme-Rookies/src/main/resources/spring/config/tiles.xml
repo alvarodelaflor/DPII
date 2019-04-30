@@ -42,6 +42,7 @@
 		<value>/views/application/tiles.xml</value>
 		<value>/views/problem/tiles.xml</value>
 		<value>/views/provider/tiles.xml</value>
+		<value>/views/item/tiles.xml</value>
 		<!-- CARMEN -->
 		<!-- ANTONIO S -->
 		<value>/views/socialProfile/tiles.xml</value>

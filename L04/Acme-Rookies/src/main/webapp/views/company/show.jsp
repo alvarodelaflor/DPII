@@ -38,7 +38,7 @@
 
 	</table>
 </div>
-<input type="button" value="back" name="company.cancel" onclick="history.back()" />
+<input type="button" value="<spring:message code="company.cancel" />" name="company.cancel" onclick="history.back()" />
 <jstl:if test="${checkCompany}">
 <acme:cancel url="/company/export.do?id=${company.id}" code="export"/><br>
 <spring:message code="delete.actor"></spring:message><br>
