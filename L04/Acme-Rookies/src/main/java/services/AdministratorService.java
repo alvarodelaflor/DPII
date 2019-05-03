@@ -240,10 +240,12 @@ public class AdministratorService extends ActorService {
 		// Now we can iterate through each company and set its score (range 0..1)
 		// mappedScore = (score - min) / (max - min)
 		for (final Object[] o : scoresAndCompanies) {
-			final Double mappedScore = ((Double) o[0] - min) / (max - min);
+			final Double score = (Double) o[0];
+			final Double mappedScore = (score - min) / (max - min);
 			Company company = (Company) o[1];
 			company = this.companyService.findOne(company.getId());
 			company.setAuditScore(mappedScore);
+			System.out.println(("max = " + max + ", min = " + min + ", score = " + score + ", mappedScore = " + mappedScore));
 		}
 	}
 }
