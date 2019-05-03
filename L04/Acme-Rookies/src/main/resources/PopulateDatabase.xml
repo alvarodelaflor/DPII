@@ -78,6 +78,17 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="katana" />
+		<property name="password" value="c6983b366e2ff8a0ab159d6778cff745" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	<!-- Other domain beans come here -->	
 	
 	<!-- CONFIG -->
@@ -157,6 +168,18 @@
         <property name="creditCard" ref="creditCard01" /> 
 		<property name="vatNumber" value="Es12345678s" />
     </bean>
+	<bean id="company02" class="domain.Company">
+    	<property name="name" value="Katana" />
+    	<property name="surname" value="Ruiseñor de Torreblanca" />
+    	<property name="photo" value="https://www.megaidea.net/wp-content/uploads/2018/07/DORAEMON-18.png" />
+		<property name="email" value="katana@katana" />
+        <property name="phone" value="+34 666666666" />
+        <property name="address" value="Torreblanca" />
+        <property name="commercialName" value="Katana" />
+        <property name="userAccount" ref= "userAccount6"/> 
+        <property name="creditCard" ref="creditCard06" /> 
+		<property name="vatNumber" value="Es12345678s" />
+    </bean>
 	<!-- COMPANY -->	
 	
 	<!-- POSITION  -->
@@ -213,6 +236,46 @@
         <property name="deadline" value= "2020/11/10 08:00"/>      
         <property name="company" ref= "company01"/>  
 		<property name="cancel" value="false" />     
+    </bean>
+
+	<bean id="position05" class="domain.Position">
+    	<property name="ticker" value="KATA-4399" />
+    	<property name="title" value="title01" />
+    	<property name="techs" value="techs01" />
+		<property name="status" value="true" />
+        <property name="skills" value="skills01" />
+        <property name="salary" value= "20.0" />
+        <property name="profile" value="profile01" />
+        <property name="description" value= "description01"/>     
+        <property name="deadline" value= "2020/11/10 08:00"/>      
+        <property name="company" ref= "company02"/>
+		<property name="cancel" value="false" />       
+    </bean>
+	<bean id="position06" class="domain.Position">
+    	<property name="ticker" value="KATA-4399" />
+    	<property name="title" value="title01" />
+    	<property name="techs" value="techs01" />
+		<property name="status" value="true" />
+        <property name="skills" value="skills01" />
+        <property name="salary" value= "20.0" />
+        <property name="profile" value="profile01" />
+        <property name="description" value= "description01"/>     
+        <property name="deadline" value= "2020/11/10 08:00"/>      
+        <property name="company" ref= "company02"/>
+		<property name="cancel" value="false" />       
+    </bean>
+	<bean id="position07" class="domain.Position">
+    	<property name="ticker" value="KATA-4399" />
+    	<property name="title" value="title01" />
+    	<property name="techs" value="techs01" />
+		<property name="status" value="true" />
+        <property name="skills" value="skills01" />
+        <property name="salary" value= "20.0" />
+        <property name="profile" value="profile01" />
+        <property name="description" value= "description01"/>     
+        <property name="deadline" value= "2020/11/10 08:00"/>      
+        <property name="company" ref= "company02"/>
+		<property name="cancel" value="false" />       
     </bean>
 	<!-- POSITION  -->
 	
@@ -346,9 +409,15 @@
  		<property name="expiration" value= "22/10"/>
     </bean>
     
-    
     <bean id="creditCard05" class="domain.CreditCard">
     	<property name="holder" value= "Jose Antonio Ferrete"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1234567891234567"/>
+    	<property name="CVV" value= "134"/>
+ 		<property name="expiration" value= "22/10"/>
+    </bean>
+	<bean id="creditCard06" class="domain.CreditCard">
+    	<property name="holder" value= "Antonio Salva"/>
     	<property name="make" value= "VISA"/>
     	<property name="number" value= "1234567891234567"/>
     	<property name="CVV" value= "134"/>
@@ -437,5 +506,54 @@
     
  
     <!-- ITEM -->
-
+	<!-- AUDIT -->
+	<bean id="audit01" class="domain.Audit">
+    	<property name="creationMoment" value= "2019/01/10 08:00"/>
+    	<property name="text" value= "Texto de prueba"/>
+    	<property name="score" value= "7"/>
+    	<property name="status" value= "true"/>
+ 		<property name="auditor" ref="auditor01"/>
+		<property name="position" ref="position01"/>
+    </bean>
+	<bean id="audit02" class="domain.Audit">
+    	<property name="creationMoment" value= "2019/01/10 09:00"/>
+    	<property name="text" value= "Texto de prueba 2"/>
+    	<property name="score" value= "5"/>
+    	<property name="status" value= "true"/>
+ 		<property name="auditor" ref="auditor01"/>
+		<property name="position" ref="position02"/>
+    </bean>
+	<bean id="audit03" class="domain.Audit">
+    	<property name="creationMoment" value= "2019/01/10 10:00"/>
+    	<property name="text" value= "Texto de prueba 3"/>
+    	<property name="score" value= "9"/>
+    	<property name="status" value= "true"/>
+ 		<property name="auditor" ref="auditor01"/>
+		<property name="position" ref="position03"/>
+    </bean>
+	<bean id="audit04" class="domain.Audit">
+    	<property name="creationMoment" value= "2019/01/10 10:00"/>
+    	<property name="text" value= "Texto de prueba 3"/>
+    	<property name="score" value= "1"/>
+    	<property name="status" value= "true"/>
+ 		<property name="auditor" ref="auditor01"/>
+		<property name="position" ref="position05"/>
+    </bean>
+	<bean id="audit05" class="domain.Audit">
+    	<property name="creationMoment" value= "2019/01/10 10:00"/>
+    	<property name="text" value= "Texto de prueba 3"/>
+    	<property name="score" value= "3"/>
+    	<property name="status" value= "true"/>
+ 		<property name="auditor" ref="auditor01"/>
+		<property name="position" ref="position06"/>
+    </bean>
+	<bean id="audit06" class="domain.Audit">
+    	<property name="creationMoment" value= "2019/01/10 10:00"/>
+    	<property name="text" value= "Texto de prueba 3"/>
+    	<property name="score" value= "5"/>
+    	<property name="status" value= "false"/>
+ 		<property name="auditor" ref="auditor01"/>
+		<property name="position" ref="position07"/>
+    </bean>
+	<!-- AUDIT -->
 </beans>

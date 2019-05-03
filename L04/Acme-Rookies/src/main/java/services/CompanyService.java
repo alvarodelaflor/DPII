@@ -309,5 +309,4 @@ public class CompanyService {
 	public void flush() {
 		this.companyRepository.flush();
 	}
-
 }

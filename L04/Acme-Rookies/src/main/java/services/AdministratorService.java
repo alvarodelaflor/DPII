@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -21,6 +22,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.Company;
 import domain.CreditCard;
 import forms.ActorForm;
 
@@ -42,6 +44,9 @@ public class AdministratorService extends ActorService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private CompanyService			companyService;
 
 
 	@Override
@@ -75,7 +80,8 @@ public class AdministratorService extends ActorService {
 		return res;
 	}
 
-	// RECONSTRUCT-CREATE ---------------------------------------------------------------
+	// RECONSTRUCT-CREATE
+	// ---------------------------------------------------------------
 	public Administrator reconstructCreate(final ActorForm actorForm, final BindingResult binding) {
 		final Administrator result = this.create();
 
@@ -98,7 +104,7 @@ public class AdministratorService extends ActorService {
 
 		result.setCreditCard(creditCard);
 
-		//A�ADIDO
+		// Aï¿½ADIDO
 
 		if (!actorForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
 			binding.rejectValue("expiration", "error.expirationFormatter");
@@ -132,7 +138,7 @@ public class AdministratorService extends ActorService {
 						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
-		//A�ADIDO
+		// Aï¿½ADIDO
 
 		if (actorForm.getAccept() == false) {
 			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
@@ -141,43 +147,43 @@ public class AdministratorService extends ActorService {
 		}
 
 		if (actorForm.getUserName().length() <= 5 && actorForm.getUserName().length() <= 5)
-			//			final ObjectError error = new ObjectError("userName", "");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("userName", "");
+			// binding.addError(error);
 			binding.rejectValue("userName", "error.userAcount");
 
 		if (this.actorRepository.getActorByUser(actorForm.getUserName()) != null)
-			//			final ObjectError error = new ObjectError("userName", "");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("userName", "");
+			// binding.addError(error);
 			binding.rejectValue("userName", "error.userName");
 
 		if (actorForm.getConfirmPassword().length() <= 5 && actorForm.getPassword().length() <= 5)
-			//			final ObjectError error = new ObjectError("password", "");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("password", "");
+			// binding.addError(error);
 			binding.rejectValue("password", "error.password");
 
 		if (!actorForm.getConfirmPassword().equals(actorForm.getPassword()))
-			//			final ObjectError error = new ObjectError("password", "");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("password", "");
+			// binding.addError(error);
 			binding.rejectValue("password", "error.password.confirm");
 
 		if (!actorForm.getNumber().matches("([0-9]){16}"))
-			//			final ObjectError error = new ObjectError("number", "");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("number", "");
+			// binding.addError(error);
 			binding.rejectValue("number", "error.numberCredictCard");
 
 		if (!actorForm.getCVV().matches("([0-9]){3}"))
-			//			final ObjectError error = new ObjectError("CVV", "");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("CVV", "");
+			// binding.addError(error);
 			binding.rejectValue("CVV", "error.CVVCredictCard");
 
 		if (actorForm.getHolder() == "")
-			//			final ObjectError error = new ObjectError("holder", " ");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("holder", " ");
+			// binding.addError(error);
 			binding.rejectValue("holder", "error.holderCredictCard");
 
 		if (actorForm.getMake() == "")
-			//			final ObjectError error = new ObjectError("make", " ");
-			//			binding.addError(error);
+			// final ObjectError error = new ObjectError("make", " ");
+			// binding.addError(error);
 			binding.rejectValue("make", "error.makeCredictCard");
 
 		result.getUserAccount().setUsername(actorForm.getUserName());
@@ -219,4 +225,25 @@ public class AdministratorService extends ActorService {
 		return res;
 	}
 
+	public void calculateCompaniesScore() {
+		final Collection<Object[]> scoresAndCompanies = this.adminRepository.getCompaniesScores();
+		Double min = Double.MAX_VALUE;
+		Double max = 0d;
+		// We get the minimum and maximum (to map them min->0 max->1)
+		for (final Object[] o : scoresAndCompanies) {
+			final Double aux = (Double) o[0];
+			if (aux < min)
+				min = aux;
+			if (aux > max)
+				max = aux;
+		}
+		// Now we can iterate through each company and set its score (range 0..1)
+		// mappedScore = (score - min) / (max - min)
+		for (final Object[] o : scoresAndCompanies) {
+			final Double mappedScore = ((Double) o[0] - min) / (max - min);
+			Company company = (Company) o[1];
+			company = this.companyService.findOne(company.getId());
+			company.setAuditScore(mappedScore);
+		}
+	}
 }
