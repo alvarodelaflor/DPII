@@ -2,7 +2,8 @@
 package rookiesTest;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import domain.Audit;
-import domain.Auditor;
 import domain.Position;
 import services.AuditService;
 import services.AuditorService;
@@ -35,86 +35,81 @@ public class AuditServiceTest extends AbstractTest {
 	private PositionService positionService;
 
 
-	/*
-	 * IR
-	 * Auditors write audits on the positions published by the companies. For every audit, the system must store the moment when 
-	 * it's written, a piece of text, and a score in range 0..10 points.
-	 * 
-	 * FR
-	 * 
-	 * Create an audit
-	 * 
-	 * Analysis of sentence coverage
-	 * TODO
-	 * Analysis of data coverage
-	 * TODO
-	 */
-	@Test
-	public void Driver01() {
-		this.authenticate("auditor");
-		Position position = new ArrayList<>(this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit()).get(0);
-		this.unauthenticate();
-		
-		final Object testingData[][] = {
-			{ // Positive
-				"auditor", "Hola bro", 2, false,  position ,null
-			}, {
-				"auditor", "Hola bro", 2.4, true, position ,null
-			}, {
-				"auditor", "Hola bro", 2.15, true, position ,null
-			}, { // Negative
-				"auditor", "Hola bro", -8, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", -0.1, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", -0.18, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", -0.189, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", 0.178, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", 11, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", 10.1, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", 10.12, true, position, IllegalArgumentException.class
-			}, {
-				"auditor", "Hola bro", 10.123, true, position, IllegalArgumentException.class
-			},
+	// Tests ------------------------------------------------------------------
 
+	@Test
+	public void test01() {
+		/*
+		 * POSITIVE TEST
+		 * 
+		 * In this test we will test the creation of records in a history that already had an inception Record.
+		 * 
+		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records,
+		 * zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it.
+		 * For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every
+		 * legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood
+		 * with which the original brotherhood is linked.
+		 * 
+		 * 3. An actor who is authenticated as a brotherhood must be able to:
+		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 * 
+		 * Analysis of sentence coverage
+		 * 92%
+		 * Analysis of data coverage
+		 * 99%
+		 */
+		final Object testingData[][] = { 
+			{
+				// Positive
+				"auditor", "Hola bro", 3l, false, null
+			}, {
+				"auditor", "Hola bro", 3l, true, null
+			}, {
+				// Negative
+				"auditor", "Hola bro", -8l, false, IllegalArgumentException.class
+			}, {
+				"auditor", "Hola bro", 11l, false, IllegalArgumentException.class
+			}, {
+				"admin", "Hola bro", 6l, false, IllegalArgumentException.class
+			}, {
+				"auditor", null, 6l, false, IllegalArgumentException.class
+			}, {
+				"auditor", "Hola bro", 7l, true, IllegalArgumentException.class
+			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.checkDriver01((String) testingData[i][0], (String) testingData[i][1], (BigDecimal) testingData[i][2], (Boolean) testingData[i][3], (Position) testingData[i][4],(Class<?>) testingData[i][5]);
+			this.checkTest((String) testingData[i][0], (String) testingData[i][1], (Long) testingData[i][2], (Boolean) testingData[i][3], (Class<?>) testingData[i][4]);
 	}
 
-	private void checkDriver01(final String user, String text, BigDecimal score, Boolean status, Position position, final Class<?> expected) {
+
+	protected void checkTest(final String userName, final String text, final Long score, final Boolean status, final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
 			this.startTransaction();
-			this.authenticate(user);
+			super.authenticate(userName);
 
-			Audit savedAudit = this.auditService.save(this.createAudit(text, score, status, position));
-			this.auditService.delete(savedAudit);
-		} catch (final Exception e) {
-			caught = e.getClass();
+			Position position = ((List<Position>) this.positionService.findAllPositionWithStatusTrueCancelFalse()).get(0);
+			Audit audit = this.auditService.create();
+			audit.setAuditor(this.auditorService.getAuditorLogin());
+			audit.setCreationMoment(DateTime.now().toDate());
+			audit.setPosition(position);
+			audit.setScore(BigDecimal.valueOf(score));
+			audit.setText(text);
+			audit.setStatus(status);
+			Audit saveAudit = this.auditService.save(audit);
+			if (expected!=null) {				
+				this.auditService.delete(saveAudit);
+			}
+			
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
 		} finally {
-			this.unauthenticate();
 			this.rollbackTransaction();
+			super.unauthenticate();
 		}
 		this.checkExceptions(expected, caught);
-	}
-
-	private Audit createAudit(String text, BigDecimal score, Boolean status, Position position) {
-		final Audit audit = this.auditService.create();
-		final Auditor auditor = this.auditorService.getAuditorLogin();
-		audit.setCreationMoment(DateTime.now().toDate());
-		audit.setText(text);
-		audit.setScore(score);
-		audit.setStatus(status);
-		audit.setAuditor(auditor);
-		audit.setPosition(position);
-		return audit;
 	}
 }

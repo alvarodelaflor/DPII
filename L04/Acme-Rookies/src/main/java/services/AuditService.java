@@ -1,4 +1,5 @@
 package services;
+import java.math.BigDecimal;
 
 /**
  * AuditService.java
@@ -140,6 +141,9 @@ public class AuditService {
 		Assert.notNull(audit.getPosition(), "Audit has not got position");
 		Assert.notNull(audit.getAuditor(), notAuditor);
 		Assert.isTrue(audit.getAuditor().equals(auditorLogin), diferentAuditor);
+		Assert.isTrue(audit.getScore().signum()!=-1, "Value is less than 0");
+		Assert.isTrue(audit.getScore().doubleValue()<10., "Valu is more than 10");
+		Assert.isTrue(audit == null || (audit.getText() != null && audit.getText().length()>0), "No valid text");
 		audit.setAuditor(auditorLogin);
 		audit.setCreationMoment(DateTime.now().toDate());
 		return this.auditRepository.save(audit);
