@@ -242,4 +242,9 @@ public class AuditorService {
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
 	}
+	
+	
+	public void flush() {
+		this.auditorRepository.flush();
+	}
 }
