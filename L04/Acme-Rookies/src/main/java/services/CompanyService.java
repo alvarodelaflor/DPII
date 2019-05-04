@@ -226,6 +226,8 @@ public class CompanyService {
 		System.out.println("Carmen: entro en el reconstructEdict");
 
 		result = company;
+		
+		System.out.println(res.getVatNumber());
 
 		System.out.println("Nombre: " + company.getName());
 		result.setName(company.getName());
@@ -237,6 +239,7 @@ public class CompanyService {
 		result.setPhone(company.getPhone());
 		result.setAddress(company.getAddress());
 		result.setCommercialName(company.getCommercialName());
+		result.setVatNumber(res.getVatNumber());
 
 		System.out.println("Carmen: voy a validar");
 
@@ -273,9 +276,19 @@ public class CompanyService {
 		Assert.isTrue(!this.checkEmailFormatter(company), "email.wrong");
 		Assert.isTrue(this.checkEmailEdit(company), "error.email");
 		System.out.println("hola");
-		if (company.getPhone().matches("^([0-9]{4,})$"))
+		/* BUG INSERTED 
+		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * @author Carmen
+		 */
+		if (company.getPhone().matches("^([0-9]{4,})$")) {
+			String phoneM = company.getPhone() + "6";
+			company.setPhone(phoneM);
 			company.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + company.getPhone());
-
+		}
+		/* BUG INSERTED 
+		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * @author Carmen
+		 */
 		company = this.companyRepository.save(company);
 		System.out.println(company);
 
