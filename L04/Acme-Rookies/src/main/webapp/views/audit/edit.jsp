@@ -28,8 +28,8 @@
     	<form:form class="formularioEdicion" method="POST" onsubmit="return phonenumberval();" modelAttribute="audit" action="audit/auditor/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox path="text" code="audit.text"/>
-          	<acme:numberbox code="audit.score" path="score" step="0.01"/>
+          	<acme:textbox path="text" code="audit.text" placeholder="Lorem ipsum dolor sit amet."/>
+          	<acme:numberbox code="audit.score" path="score" step="0.01" placeholder="4.99"/>
 			<acme:selectTrueFalse code="audit" path="status"/>
 			<acme:select items="${posFinal}" itemLabel="ticker" code="audit.position" path="position"/>
 			

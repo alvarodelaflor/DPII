@@ -21,6 +21,8 @@ import repositories.CompanyRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Audit;
+import domain.Auditor;
 import domain.Company;
 import domain.CreditCard;
 import forms.RegistrationForm;
@@ -308,5 +310,22 @@ public class CompanyService {
 
 	public void flush() {
 		this.companyRepository.flush();
+	}
+	
+	/**
+	 * Get the company login.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Company} if is login, null otherwise.
+	 */
+	public Company getCompanyLogin() {
+		Company res;
+		try {
+			final int aux = LoginService.getPrincipal().getId();
+			res = this.getCompanyByUserAccountId(aux);
+		} catch (final Exception e) {
+			res = null;
+		}
+		return res;
 	}
 }

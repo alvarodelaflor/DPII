@@ -1,5 +1,4 @@
 package services;
-import java.math.BigDecimal;
 
 /**
  * AuditService.java
@@ -26,7 +25,9 @@ import org.springframework.validation.Validator;
 
 import domain.Audit;
 import domain.Auditor;
+import domain.Company;
 import domain.Position;
+import domain.Rookie;
 import repositories.AuditRepository;
 
 @Service
@@ -43,6 +44,12 @@ public class AuditService {
 	
 	@Autowired
 	private PositionService positionService;
+	
+	@Autowired
+	private CompanyService companyService;
+	
+	@Autowired
+	private RookieService rookieService;
 	
 	@Autowired
 	private Validator						validator;
@@ -74,7 +81,16 @@ public class AuditService {
 	 * @return {@link Audit}
 	 */
 	public Audit findOne(Integer auditId) {
-		return this.auditRepository.findOne(auditId);
+		Audit audit = this.auditRepository.findOne(auditId);
+		Auditor auditor = this.auditorService.getAuditorLogin();
+		Company company = this.companyService.getCompanyLogin();
+		Rookie rookie = this.rookieService.getRookieLogin();
+		Assert.isTrue(auditor!=null || company!=null || rookie!=null, "Login is required, must be an auditor, a company or a rookie");
+		if (audit!=null && audit.getStatus()!=null && audit.getStatus().equals(false)) {
+			Assert.notNull(auditor, notAuditorLogin);
+			Assert.isTrue(audit.getAuditor().equals(auditor), diferentAuditor);
+		}
+		return audit;
 	}
 
 	/**
@@ -138,14 +154,18 @@ public class AuditService {
 	public Audit save(Audit audit) {
 		Auditor auditorLogin = this.auditorService.getAuditorLogin();
 		Assert.notNull(auditorLogin, notAuditorLogin);
+		Assert.notNull(audit, "Audit is null");
+		Assert.isTrue(audit.getStatus()!=null && (audit.getStatus().equals(true) || audit.getStatus().equals(false)));
 		Assert.notNull(audit.getPosition(), "Audit has not got position");
 		Assert.notNull(audit.getAuditor(), notAuditor);
 		Assert.isTrue(audit.getAuditor().equals(auditorLogin), diferentAuditor);
-		Assert.isTrue(audit.getScore().signum()!=-1, "Value is less than 0");
-		Assert.isTrue(audit.getScore().doubleValue()<10., "Valu is more than 10");
-		Assert.isTrue(audit == null || (audit.getText() != null && audit.getText().length()>0), "No valid text");
+		if (audit.getScore()!=null) {
+			Assert.isTrue(audit.getScore().signum()!=-1, "Value is less than 0");
+			Assert.isTrue(audit.getScore().doubleValue()<=10., "Value is more than 10");
+			Assert.isTrue(audit.getScore().precision()==1 || audit.getScore().precision()==2 || audit.getScore().precision()==3, "Not valid precision");
+		}
+		Assert.isTrue(audit.getText()!=null && audit.getText().length()>0, "No valid text");
 		audit.setAuditor(auditorLogin);
-		audit.setCreationMoment(DateTime.now().toDate());
 		return this.auditRepository.save(audit);
 	}
 	
@@ -181,7 +201,14 @@ public class AuditService {
 		
 		if (audit.getId()==0) {
 			audit.setAuditor(auditorLogin);
-			audit.setCreationMoment(DateTime.now().toDate());
+//			audit.setCreationMoment(DateTime.now().toDate());
+			// * BUG INSERTED * ALVARO 04/05/2019 14:35
+			/**
+			 * At the time of creation it has been subtracted 30 minutes from the current time.
+			 * @author Alvaro de la Flor Bonilla 
+			 */
+			audit.setCreationMoment(DateTime.now().minusMinutes(20).toDate());
+			// * BUG INSERTED * ALVARO 04/05/2019 14:35
 		} else {
 			Audit auditDB = this.findOne(audit.getId());
 			Assert.notNull(auditDB, "No audit in database with that ID");

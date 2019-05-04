@@ -2,16 +2,21 @@
 package rookiesTest;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import domain.Audit;
+import domain.Auditor;
 import domain.Position;
 import services.AuditService;
 import services.AuditorService;
@@ -40,23 +45,27 @@ public class AuditServiceTest extends AbstractTest {
 	@Test
 	public void test01() {
 		/*
-		 * POSITIVE TEST
+		 * CREATE, EDIT AND DELETE AUDIT
 		 * 
-		 * In this test we will test the creation of records in a history that already had an inception Record.
+		 * In this test we will test the creation and delete of a new audit
 		 * 
-		 * 1. Brotherhoods can manage their histories. A history is composed of one inception record, ze-ro or more period records, zero or more legal records,
-		 * zero or more link records, and zero or more miscellaneous records. For every record, the system must store its title and a piece of text that describes it.
-		 * For every inception record, it must also store some photos; for every period record, it must also store a start year, an end year, and some photos; for every
-		 * legal record, it must also store a legal name, a VAT number, and the applicable laws; for every link record, it must also store a link to another brotherhood
-		 * with which the original brotherhood is linked.
+		 * Information Requirements
 		 * 
-		 * 3. An actor who is authenticated as a brotherhood must be able to:
-		 * 1. Manage their history, which includes listing, displaying, creating, updating, and de-leting its records.
+		 * Auditors write audits on the positions published by the companies. For every audit, the sys-tem must store the moment when it's written, 
+		 * a piece of text, and a score in range 0..10 points.
+		 * 
+		 * 
+		 * Funcional Requirements
+		 * An actor who is authenticated as an auditor must be able to:
+		 * 
+		 *		1. Self-assign a position to audit it. 
+		 *		2. Manage his or her audits, which includes listing them, showing them, creating them, updating, and deleting them. An audit can be 
+		 *		   updated or deleted as long as it's saved in draft mode.
 		 * 
 		 * Analysis of sentence coverage
-		 * 92%
+		 * 80%
 		 * Analysis of data coverage
-		 * 99%
+		 * 12%
 		 */
 		final Object testingData[][] = { 
 			{
@@ -79,11 +88,11 @@ public class AuditServiceTest extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.checkTest((String) testingData[i][0], (String) testingData[i][1], (Long) testingData[i][2], (Boolean) testingData[i][3], (Class<?>) testingData[i][4]);
+			this.checkTest01((String) testingData[i][0], (String) testingData[i][1], (Long) testingData[i][2], (Boolean) testingData[i][3], (Class<?>) testingData[i][4]);
 	}
 
 
-	protected void checkTest(final String userName, final String text, final Long score, final Boolean status, final Class<?> expected) {
+	protected void checkTest01(final String userName, final String text, final Long score, final Boolean status, final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
@@ -93,16 +102,107 @@ public class AuditServiceTest extends AbstractTest {
 			Position position = ((List<Position>) this.positionService.findAllPositionWithStatusTrueCancelFalse()).get(0);
 			Audit audit = this.auditService.create();
 			audit.setAuditor(this.auditorService.getAuditorLogin());
-			audit.setCreationMoment(DateTime.now().toDate());
 			audit.setPosition(position);
 			audit.setScore(BigDecimal.valueOf(score));
 			audit.setText(text);
 			audit.setStatus(status);
+			audit.setCreationMoment(DateTime.now().toDate());
 			Audit saveAudit = this.auditService.save(audit);
 			if (expected!=null) {				
 				this.auditService.delete(saveAudit);
 			}
 			
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	
+	@Test
+	public void test02() {
+		/*
+		 * LIST AND SHOW AUDIT
+		 * 
+		 * In this test we will test list audit and showing it.
+		 * 
+		 * Information Requirement
+		 * 
+		 * Auditors write audits on the positions published by the companies. For every audit, the sys-tem must store the moment when it's written, 
+		 * a piece of text, and a score in range 0..10 points.
+		 * 
+		 * Funtional Requirements
+		 * 
+		 * An actor who is authenticated as an auditor must be able to:
+		 * 
+		 *		1. Self-assign a position to audit it. 
+		 *		2. Manage his or her audits, which includes listing them, showing them, creating them, updating, and deleting them. An audit can be 
+		 *		   updated or deleted as long as it's saved in draft mode.
+		 * 
+		 * Analysis of sentence coverage
+		 * 75%
+		 * Analysis of data coverage
+		 * 80%
+		 */
+		final Object testingData[][] = { 
+			{
+				// Positive
+				"auditor", true, null
+			}, {
+				"company", false, null
+			}, {
+				"rookie", false, null
+			}, {
+				// Negative
+				"company", true, IllegalArgumentException.class
+			}, {
+				"rookie", true, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.checkTest02((String) testingData[i][0], (Boolean) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+
+	protected void checkTest02(final String userName, final Boolean show, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			
+			super.authenticate("auditor");
+			Position position = ((List<Position>) this.positionService.findAllPositionWithStatusTrueCancelFalse()).get(0);
+			Auditor auditor = ((List<Auditor>) this.auditorService.findAll()).get(0);
+			Audit audit = this.auditService.create();
+			audit.setAuditor(auditor);
+			audit.setPosition(position);
+			audit.setScore(BigDecimal.valueOf(8l));
+			audit.setText("El Viso del Alcor S. L.");
+			audit.setStatus(true);
+			audit.setCreationMoment(DateTime.now().toDate());
+			Audit saveAudit = this.auditService.save(audit);
+			Collection<Audit> auditsList = new ArrayList<Audit>();
+			// Get all audit created by the auditor with the username "auditor". Audit can be in final mode and in draft mode
+			for (Collection<Audit> aux : this.auditService.findAllByAuditorLogin(auditor.getId()).values()) {
+				auditsList.addAll(aux);
+			}
+			super.unauthenticate();
+			
+			super.authenticate(userName);
+			this.auditorService.findOne(saveAudit.getId());
+			if (show.equals(true)) { // Try to show all audit, draft mode audits are incluyed				
+				for (Audit auditToShow : auditsList) {
+					/*
+					 * If user try to show a draft audit and he not is his owner
+					 * a IllegalArgumentException appear
+					 */
+					this.auditService.findOne(auditToShow.getId());
+				}
+			}
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

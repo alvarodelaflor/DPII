@@ -17,16 +17,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
-import repositories.ActorRepository;
-import repositories.RookieRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.CreditCard;
 import domain.Curricula;
 import domain.Finder;
 import domain.Rookie;
 import forms.RegistrationForm;
+import repositories.ActorRepository;
+import repositories.RookieRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -353,5 +353,22 @@ public class RookieService {
 
 	public Collection<Rookie> findByProblem(final int problemId) {
 		return this.rookieRepository.findByProblem(problemId);
+	}
+	
+	/**
+	 * Get the rookie login.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Hacker} if is login, null otherwise.
+	 */
+	public Rookie getHackerLogin() {
+		Rookie res;
+		try {
+			final int aux = LoginService.getPrincipal().getId();
+			res = this.getRookieByUserAccountId(aux);
+		} catch (final Exception e) {
+			res = null;
+		}
+		return res;
 	}
 }

@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -20,6 +21,7 @@ import repositories.AuditorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Audit;
 import domain.Auditor;
 import domain.CreditCard;
@@ -58,6 +60,16 @@ public class AuditorService {
 		final CreditCard creditCard = new CreditCard();
 		auditor.setCreditCard(creditCard);
 		return auditor;
+	}
+	
+	/**
+	 * Get a collection with all {@link Actor} in database with {@link Auditor} authority.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection} <{@link Audit}>
+	 */
+	public Collection<Auditor> findAll() {
+		return this.auditorRepository.findAll();
 	}
 
 	/**
