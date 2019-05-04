@@ -45,11 +45,11 @@ public class AuditService {
 	@Autowired
 	private PositionService positionService;
 	
-	@Autowired
-	private CompanyService companyService;
+//	@Autowired
+//	private CompanyService companyService;
 	
-	@Autowired
-	private RookieService rookieService;
+//	@Autowired
+//	private RookieService rookieService;
 	
 	@Autowired
 	private Validator						validator;
@@ -83,9 +83,9 @@ public class AuditService {
 	public Audit findOne(Integer auditId) {
 		Audit audit = this.auditRepository.findOne(auditId);
 		Auditor auditor = this.auditorService.getAuditorLogin();
-		Company company = this.companyService.getCompanyLogin();
-		Rookie rookie = this.rookieService.getRookieLogin();
-		Assert.isTrue(auditor!=null || company!=null || rookie!=null, "Login is required, must be an auditor, a company or a rookie");
+//		Company company = this.companyService.getCompanyLogin();
+//		Rookie rookie = this.rookieService.getRookieLogin();
+//		Assert.isTrue(auditor!=null || company!=null || rookie!=null, "Login is required, must be an auditor, a company or a rookie");
 		if (audit!=null && audit.getStatus()!=null && audit.getStatus().equals(false)) {
 			Assert.notNull(auditor, notAuditorLogin);
 			Assert.isTrue(audit.getAuditor().equals(auditor), diferentAuditor);
