@@ -232,6 +232,7 @@ public class RookieService {
 		result.setEmail(rookie.getEmail());
 		result.setPhone(rookie.getPhone());
 		result.setAddress(rookie.getAddress());
+		result.setVatNumber(res.getVatNumber());
 
 		this.validator.validate(result, binding);
 		System.out.println(binding.getAllErrors());
@@ -243,6 +244,8 @@ public class RookieService {
 			res.setEmail(result.getEmail());
 			res.setPhone(result.getPhone());
 			res.setAddress(result.getAddress());
+			res.setName(result.getName());
+
 		}
 
 		return res;
@@ -259,9 +262,20 @@ public class RookieService {
 
 	public Rookie saveEdit(Rookie rookie) {
 		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
-		if (rookie.getPhone().matches("^([0-9]{4,})$"))
+		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
+		/* BUG INSERTED 
+		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * @author Carmen
+		 */
+		if (rookie.getPhone().matches("^([0-9]{4,})$")) {
+			String phoneM = rookie.getPhone() + "6";
+			rookie.setPhone(phoneM);
 			rookie.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + rookie.getPhone());
-
+		}
+		/* BUG INSERTED 
+		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * @author Carmen
+		 */
 		rookie = this.rookieRepository.save(rookie);
 		System.out.println(rookie);
 		return rookie;
