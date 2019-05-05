@@ -30,15 +30,15 @@
           	<form:hidden path="version"/>
           	<acme:textbox path="name" code="item.name"/>
           	<acme:textbox path="description" code="item.description"/>
-			<acme:textbox code="item.link" path="link" />
-			<acme:textbox code="item.pictures" path="pictures" />
+			<acme:textbox code="item.link" path="link" placeholder="https://www.smth.com/..." />
+			<acme:textbox code="item.pictures" path="pictures" placeholder="https://www.smth.com/...'https://www.smth.com/2..." />
           	<acme:submit name="save" code="save"/>
           	<c:choose>
           		<c:when test="${item.id == 0}">
-          			<acme:cancel url="item/listProvider.do?providerId=${provider.id}"  code="back"/>
+          			<acme:cancel url="item/provider/list.do"  code="back"/>
           		</c:when>
           		<c:otherwise>
-          			<acme:cancel url="curricula/show.do?curriculaId=${curricula.id}" code="back"/>
+          			<acme:cancel url="item/show.do?itemId=${item.id}" code="back"/>
           		</c:otherwise>
           	</c:choose>
 		</form:form>

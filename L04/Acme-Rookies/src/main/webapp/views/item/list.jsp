@@ -26,4 +26,4 @@
 		<display:column titleKey="item.provider" ><a href="provider/show.do?id=${row.provider.id}"><spring:message code="item.provider.show" /></a></display:column>
 	</display:table>
 					
-<input type="button" value=<spring:message code="item.back" /> name="item.back" onclick="history.back()" />
+<acme:cancel url=" " code="rookie.cancel"/>

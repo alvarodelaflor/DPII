@@ -149,7 +149,13 @@
 					<security:authorize access="hasRole('COMPANY')">
 						<li><a href="company/show.do"><spring:message code="master.page.company.show" /></a></li>
 						<li><a href="company/edit.do"><spring:message code="master.page.company.edit" /></a></li>	
-					</security:authorize>			
+					</security:authorize>		
+					<security:authorize access="hasRole('PROVIDER')">
+						<li><a href="provider/show.do"><spring:message code="master.page.rookie.show" /></a></li>
+					</security:authorize>	
+					<security:authorize access="hasRole('AUDITOR')">
+						<li><a href="auditor/show.do"><spring:message code="master.page.rookie.show" /></a></li>
+					</security:authorize>		
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

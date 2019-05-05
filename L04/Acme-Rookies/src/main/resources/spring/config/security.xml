@@ -192,6 +192,13 @@
 		<security:intercept-url pattern="/item/provider/edit.do" access="hasRole('PROVIDER')" />
 		<security:intercept-url pattern="/item/listProvider.do" access="hasRole('PROVIDER')" />
 		<security:intercept-url pattern="/item/provider/list.do" access="hasRole('PROVIDER')" />
+		
+		<security:intercept-url pattern="/provider/export.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/provider/delete.do" access="hasRole('PROVIDER')" />
+		
+		<security:intercept-url pattern="/auditor/export.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/auditor/delete.do" access="hasRole('AUDITOR')" />
+		
 		<security:intercept-url pattern="/item/show.do" access="permitAll" />
 		<security:intercept-url pattern="/item/list.do" access="permitAll" />
 		<!-- FERRETE -->
@@ -203,7 +210,7 @@
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 		
 	
-
+	
 		<security:form-login 
 			login-page="/security/login.do"
 			password-parameter="password" 
