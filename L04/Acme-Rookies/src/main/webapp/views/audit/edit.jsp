@@ -28,11 +28,24 @@
     	<form:form class="formularioEdicion" method="POST" onsubmit="return phonenumberval();" modelAttribute="audit" action="audit/auditor/edit.do">
           	<form:hidden path="id"/>
           	<form:hidden path="version"/>
-          	<acme:textbox path="text" code="audit.text" placeholder="Lorem ipsum dolor sit amet."/>
-          	<acme:numberbox code="audit.score" path="score" step="0.01" placeholder="4.99"/>
-			<acme:selectTrueFalse code="audit" path="status"/>
-			<acme:select items="${posFinal}" itemLabel="ticker" code="audit.position" path="position"/>
-			
+		    <fieldset>
+				<legend>
+					<spring:message code="audit.data" />
+				</legend>
+          		<acme:textarea path="text" code="audit.text" placeholder="Lorem ipsum dolor sit amet."/>
+          		<acme:numberbox code="audit.score" path="score" step="0.01" placeholder="4.99"/>
+          		<br>
+          		<i><spring:message code="audit.verifyPosition" /></i>
+				<acme:select items="${posFinal}" itemLabel="ticker" code="audit.position" path="position"/>
+			</fieldset>
+			<fieldset>
+				<legend>
+					<spring:message code="audit.configuration" />
+				</legend>
+				<i><spring:message code="audit.configuration.statusMode" /></i>
+				<br><br>
+				<acme:selectTrueFalse code="audit" path="status"/>
+			</fieldset>
 			<acme:submit name="save" code="save"/>
 			<acme:cancel url="audit/list.do?" code="back"/>
 
