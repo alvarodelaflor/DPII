@@ -59,9 +59,6 @@ public class AuditController extends AbstractController {
 		Auditor auditor = this.auditorService.getAuditorLogin();
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
-		if (auditor!=null) {
-			result.addObject("auditorLogger", true);		
-		}
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -76,6 +73,7 @@ public class AuditController extends AbstractController {
 				Collection<Position> aux = this.positionService.findAllPositionWithStatusTrueCancelFalse();
 				aux.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));
 				result.addObject("positions", aux);
+				result.addObject("auditorLogger", true);
 			}
 			result.addObject("finalAudits", this.auditService.findAllByAuditorLogin(auditor.getId()).get(true));
 			result.addObject("draftAudits", this.auditService.findAllByAuditorLogin(auditor.getId()).get(false));
@@ -100,6 +98,7 @@ public class AuditController extends AbstractController {
 			result.addObject("audit", auditDB);
 			if (auditDB.getAuditor()!=null && auditDB.getAuditor().equals(auditorLogger) && auditDB.getStatus()!=null && auditDB.getStatus().equals(false)) {
 				result.addObject("auditLogin", true);
+				result.addObject("auditorLogger", true);
 			}
 			
 			result.addObject("requestURI", "audit/show.do");
