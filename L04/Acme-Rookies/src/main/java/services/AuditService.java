@@ -12,6 +12,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -25,9 +26,7 @@ import org.springframework.validation.Validator;
 
 import domain.Audit;
 import domain.Auditor;
-import domain.Company;
 import domain.Position;
-import domain.Rookie;
 import repositories.AuditRepository;
 
 @Service
@@ -44,13 +43,7 @@ public class AuditService {
 	
 	@Autowired
 	private PositionService positionService;
-	
-//	@Autowired
-//	private CompanyService companyService;
-	
-//	@Autowired
-//	private RookieService rookieService;
-	
+		
 	@Autowired
 	private Validator						validator;
 	
@@ -83,9 +76,6 @@ public class AuditService {
 	public Audit findOne(Integer auditId) {
 		Audit audit = this.auditRepository.findOne(auditId);
 		Auditor auditor = this.auditorService.getAuditorLogin();
-//		Company company = this.companyService.getCompanyLogin();
-//		Rookie rookie = this.rookieService.getRookieLogin();
-//		Assert.isTrue(auditor!=null || company!=null || rookie!=null, "Login is required, must be an auditor, a company or a rookie");
 		if (audit!=null && audit.getStatus()!=null && audit.getStatus().equals(false)) {
 			Assert.notNull(auditor, notAuditorLogin);
 			Assert.isTrue(audit.getAuditor().equals(auditor), diferentAuditor);
@@ -159,6 +149,13 @@ public class AuditService {
 		Assert.notNull(audit.getPosition(), "Audit has not got position");
 		Assert.notNull(audit.getAuditor(), notAuditor);
 		Assert.isTrue(audit.getAuditor().equals(auditorLogin), diferentAuditor);
+		List<Position> positionsByAudit = (List<Position>)this.positionService.findAllPositionByAuditor(auditorLogin.getId());
+		Audit auditDB = this.findOne(audit.getId());
+		if (auditDB!=null) {
+			Assert.isTrue(!auditDB.getStatus(), notDraftMode);
+		} else {
+			Assert.isTrue(!positionsByAudit.contains(audit.getPosition()), "Audit has an already exits position");
+		}
 		if (audit.getScore()!=null) {
 			Assert.isTrue(audit.getScore().signum()!=-1, "Value is less than 0");
 			Assert.isTrue(audit.getScore().doubleValue()<=10., "Value is more than 10");
