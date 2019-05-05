@@ -71,7 +71,7 @@ public class AuditController extends AbstractController {
 			result = new ModelAndView("audit/list");
 			Auditor auditor = this.auditorService.findOne(auditorId);
 			Auditor auditorLogger = this.auditorService.getAuditorLogin();
-			if (auditor == null || (auditor!=null && auditorLogger != null && auditor.equals(auditorLogger)) ) {
+			if (auditor == null || (auditorLogger != null && auditor.equals(auditorLogger)) ) {
 				auditor = auditorLogger;
 				Collection<Position> aux = this.positionService.findAllPositionWithStatusTrueCancelFalse();
 				aux.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));

@@ -130,6 +130,10 @@ public class AuditAuditorController extends AbstractController {
 				Assert.notNull(auditorLogin, notAuditorLogin);
 				Assert.notNull(audit, nullAudit);
 				Assert.isTrue(auditorLogin.equals(audit.getAuditor()), auditorNotOwner);
+				Audit auditToSave = this.auditService.findOne(audit.getId());
+				if (auditToSave!=null) {
+					Assert.isTrue(auditToSave.getStatus().equals(false), "Audit is not in draft mode");
+				}
 				final Audit saveAudit = this.auditService.save(audit);
 				result = new ModelAndView("redirect:/audit/show.do?auditId=" + saveAudit.getId());
 				result.addObject("requestURI", "audit/show.do");

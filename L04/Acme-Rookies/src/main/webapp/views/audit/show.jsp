@@ -53,10 +53,10 @@
 			</legend>
 			<c:choose>
 	    		<c:when test="${audit.auditor.photo=='' or audit.auditor.photo==null}">
-					<img width="95" src="./images/rookie.png" alt="ERROR"/>
+					<img width="95" src="./images/rookie.png" alt=" "/>
 	    		</c:when>    
 	    		<c:otherwise>
-					<img width="95" src="${audit.auditor.photo}" alt="ERROR"/>
+					<img width="95" src="${audit.auditor.photo}" alt=" "/>
 	    		</c:otherwise>
 			</c:choose>
 			<p><strong><spring:message code="audit.auditor.name" /> </strong><jstl:out value="${audit.auditor.name}">></jstl:out> <jstl:out value="${audit.auditor.surname}"></jstl:out></p>

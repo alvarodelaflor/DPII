@@ -17,16 +17,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
-import repositories.ActorRepository;
-import repositories.RookieRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.CreditCard;
 import domain.Curricula;
 import domain.Finder;
 import domain.Rookie;
 import forms.RegistrationForm;
+import repositories.ActorRepository;
+import repositories.RookieRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -232,6 +232,7 @@ public class RookieService {
 		result.setEmail(rookie.getEmail());
 		result.setPhone(rookie.getPhone());
 		result.setAddress(rookie.getAddress());
+		result.setVatNumber(res.getVatNumber());
 
 		this.validator.validate(result, binding);
 		System.out.println(binding.getAllErrors());
@@ -243,6 +244,8 @@ public class RookieService {
 			res.setEmail(result.getEmail());
 			res.setPhone(result.getPhone());
 			res.setAddress(result.getAddress());
+			res.setName(result.getName());
+
 		}
 
 		return res;
@@ -259,9 +262,20 @@ public class RookieService {
 
 	public Rookie saveEdit(Rookie rookie) {
 		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
-		if (rookie.getPhone().matches("^([0-9]{4,})$"))
+		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
+		/* BUG INSERTED 
+		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * @author Carmen
+		 */
+		if (rookie.getPhone().matches("^([0-9]{4,})$")) {
+			String phoneM = rookie.getPhone() + "6";
+			rookie.setPhone(phoneM);
 			rookie.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + rookie.getPhone());
-
+		}
+		/* BUG INSERTED 
+		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * @author Carmen
+		 */
 		rookie = this.rookieRepository.save(rookie);
 		System.out.println(rookie);
 		return rookie;
@@ -353,5 +367,22 @@ public class RookieService {
 
 	public Collection<Rookie> findByProblem(final int problemId) {
 		return this.rookieRepository.findByProblem(problemId);
+	}
+	
+	/**
+	 * Get the rookie login.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Hacker} if is login, null otherwise.
+	 */
+	public Rookie getHackerLogin() {
+		Rookie res;
+		try {
+			final int aux = LoginService.getPrincipal().getId();
+			res = this.getRookieByUserAccountId(aux);
+		} catch (final Exception e) {
+			res = null;
+		}
+		return res;
 	}
 }

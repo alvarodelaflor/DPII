@@ -18,6 +18,10 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <br>
+<div>
+	<h2><spring:message code="admin.calculateCompaniesScores"/></h2>
+	<input type="button" value="<spring:message code='admin.calculate' />" onclick="window.location = 'administrator/calculateCompaniesScores.do'" />
+</div>
 <h2><spring:message code="companies" /></h2>
 	<h3><spring:message code="positionsPerCompany" /></h3>
 		<p><spring:message code="avg" /> <jstl:out value="${avgPositionPerCompany}"></jstl:out></p>		

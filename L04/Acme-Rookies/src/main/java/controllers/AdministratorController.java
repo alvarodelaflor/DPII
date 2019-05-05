@@ -659,4 +659,19 @@ public class AdministratorController extends AbstractController {
 		res.addObject("system", this.getSystem());
 		return res;
 	}
+
+	@RequestMapping(value = "/calculateCompaniesScores", method = RequestMethod.GET)
+	public ModelAndView calculateCompaniesScores() {
+
+		ModelAndView res;
+
+		try {
+			this.adminService.calculateCompaniesScore();
+			res = new ModelAndView("redirect:/administrator/dashboard.do");
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return res;
+	}
 }
