@@ -21,8 +21,6 @@ import repositories.CompanyRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Audit;
-import domain.Auditor;
 import domain.Company;
 import domain.CreditCard;
 import forms.RegistrationForm;
@@ -226,7 +224,7 @@ public class CompanyService {
 		System.out.println("Carmen: entro en el reconstructEdict");
 
 		result = company;
-		
+
 		System.out.println(res.getVatNumber());
 
 		System.out.println("Nombre: " + company.getName());
@@ -276,17 +274,21 @@ public class CompanyService {
 		Assert.isTrue(!this.checkEmailFormatter(company), "email.wrong");
 		Assert.isTrue(this.checkEmailEdit(company), "error.email");
 		System.out.println("hola");
-		/* BUG INSERTED 
+		/*
+		 * BUG INSERTED
 		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * 
 		 * @author Carmen
 		 */
 		if (company.getPhone().matches("^([0-9]{4,})$")) {
-			String phoneM = company.getPhone() + "6";
+			final String phoneM = company.getPhone() + "6";
 			company.setPhone(phoneM);
 			company.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + company.getPhone());
 		}
-		/* BUG INSERTED 
+		/*
+		 * BUG INSERTED
 		 * If the phone is equal with the pattern, we will add a 6 to the phone
+		 * 
 		 * @author Carmen
 		 */
 		company = this.companyRepository.save(company);
@@ -324,7 +326,7 @@ public class CompanyService {
 	public void flush() {
 		this.companyRepository.flush();
 	}
-	
+
 	/**
 	 * Get the company login.
 	 * 
@@ -339,6 +341,43 @@ public class CompanyService {
 		} catch (final Exception e) {
 			res = null;
 		}
+		return res;
+	}
+
+	/**
+	 * <p>
+	 * <b>THIS DATA SHOULD NOT BE DISPLAYED.
+	 * </p>
+	 * Calculates the score of the companies (not mapped to 0..1) ordered by the score.
+	 * <p>
+	 * <b>Note:</b> The first element of the list is the company with the biggest score and the last is the company with the lowest score.
+	 * </p>
+	 * 
+	 * @return A list of Object[] where Object[0]=company score and Object[1]=company
+	 */
+	public List<Object[]> getCompaniesScores() {
+		return this.companyRepository.getCompaniesScores();
+	}
+
+	public List<Company> getCompaniesWithHighestAuditScore() {
+		final List<Company> companies = this.companyRepository.getCompaniesOrderedByAuditScore();
+		List<Company> res = null;
+		if (companies.size() > 5)
+			res = new ArrayList<>(companies.subList(0, 6));
+		else
+			res = new ArrayList<>(companies);
+		return res;
+	}
+
+	public Object[] avgMinMaxStddevCompanyAuditScore() {
+		return this.companyRepository.avgMinMaxStddevCompanyAuditScore().get(0);
+	}
+
+	public Double avgSalaryOfCompanyHighestScore() {
+		final List<Company> companies = this.companyRepository.getCompaniesOrderedByAuditScore();
+		Double res = null;
+		if (companies.size() > 0)
+			res = this.companyRepository.avgSalaryOfCompany(companies.get(0).getId());
 		return res;
 	}
 }

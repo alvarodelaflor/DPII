@@ -80,6 +80,17 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p from Position p where p.title like %?1% and p.status=1")
 	Collection<Position> findWithTitle(String title);
+	
+	/**
+	 * 
+	 * This query return all the position with a ticker that contains the string ginven<br>
+	 * CHANGE CONTROL: 05/05/2019 19:16 Create the method
+	 * 
+	 * @return {@link Collection}<{@link Position}>
+	 * @author Alvaro de la Flor Bonilla
+	 */
+	@Query("select p from Position p where p.ticker like %?1% and p.status=1")
+	Collection<Position> findWithTicker(String ticker);
 
 	@Query("select p from Position p where p.company.id = ?1")
 	Collection<Position> findAllPositionsByCompany(int companyId);
@@ -121,4 +132,12 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	 */
 	@Query("select p from Audit a join a.position p where p.status=true and p.cancel=false and a.auditor.id=?1")
 	Collection<Position> findAllPositionByAuditor(int auditorId);
+
+	/* The average, the minimum, the maximum, and the standard deviation of the
+	 * audit score of the positions stored in the system
+	 */
+	@Query("select avg(a.score), min(a.score), max(a.score), stddev(a.score) from Audit a where a.status = true")
+	public List<Object[]> avgMinMaxStddevPositionAuditScore();
+
+
 }

@@ -35,7 +35,7 @@
 				<acme:password code="auditor.password" path="password" />
 				<acme:password code="auditor.passwordC" path="confirmPassword" />
 				<acme:textbox code="auditor.address" path="address" />
-				<acme:textbox code="auditor.email" path="email" />
+				<acme:textbox code="auditor.email" path="email" placeholder="ej: benju12@gmail.com"/>
 				<acme:textbox code="auditor.photo" path="photo" />
 				<acme:phonebox code="auditor.phone" path="phone" />
 				</fieldset>
@@ -44,10 +44,10 @@
 				<legend>
 					<spring:message code="actor.creditCard" />
 				</legend>
-				<acme:textbox code="auditor.holder" path="holder" />
-				<acme:textbox code="auditor.make" path="make" />
-				<acme:textbox code="auditor.number" path="number" />
-				<acme:textbox code="auditor.CVV" path="CVV" />
+				<acme:textbox code="auditor.holder" path="holder" placeholder="Doña Benjumea"/>
+				<acme:textbox code="auditor.make" path="make" placeholder="VISA"/>
+				<acme:textbox code="auditor.number" path="number" placeholder="1234567890987654"/>
+				<acme:textbox code="auditor.CVV" path="CVV" placeholder="123"/>
 				<acme:textboxExpiration code="auditor.expiration" path="expiration" />
 				</fieldset>
 				<br>

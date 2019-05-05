@@ -107,6 +107,15 @@ public class PositionService {
 		p.addAll(this.positionRepository.findWithSkills(palabra));
 		p.addAll(this.positionRepository.findWithTitle(palabra));
 		p.addAll(this.positionRepository.findWithTechs(palabra));
+		/**
+		 * It does not ask for it in the requirements, but it would be nice to have a 
+		 * search by ticker implemented, in case it was necessary, it is done in the 
+		 * absence of uncommenting the line next to this comment.
+		 * 
+		 * p.addAll(this.positionRepository.findWithTicker(palabra));
+		 * 
+		 * @author Alvaro de la Flor Bonilla
+		 */
 		System.out.println(p);
 		return p;
 	}
@@ -472,5 +481,9 @@ public class PositionService {
 	 */
 	public Collection<Position> findAllPositionByAuditor(int auditorId) {
 		return this.positionRepository.findAllPositionByAuditor(auditorId);
+	}
+
+	public Object[] avgMinMaxStddevPositionAuditScore(){
+		return this.positionRepository.avgMinMaxStddevPositionAuditScore().get(0);
 	}
 }

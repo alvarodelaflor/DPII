@@ -226,17 +226,13 @@ public class AdministratorService extends ActorService {
 	}
 
 	public void calculateCompaniesScore() {
-		final Collection<Object[]> scoresAndCompanies = this.adminRepository.getCompaniesScores();
-		Double min = Double.MAX_VALUE;
-		Double max = 0d;
+		final List<Object[]> scoresAndCompanies = this.companyService.getCompaniesScores();
+		if (scoresAndCompanies.isEmpty()) return;
+
 		// We get the minimum and maximum (to map them min->0 max->1)
-		for (final Object[] o : scoresAndCompanies) {
-			final Double aux = (Double) o[0];
-			if (aux < min)
-				min = aux;
-			if (aux > max)
-				max = aux;
-		}
+		Double max = (Double) scoresAndCompanies.get(0)[0];
+		Double min = (Double) scoresAndCompanies.get(scoresAndCompanies.size() - 1)[0];
+
 		// Now we can iterate through each company and set its score (range 0..1)
 		// mappedScore = (score - min) / (max - min)
 		for (final Object[] o : scoresAndCompanies) {

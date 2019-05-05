@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -128,8 +129,29 @@ public class AdministratorController extends AbstractController {
 		res.addObject("avgNumberOfHistory", this.curriculaService.avgNumberOfResultHsitory());
 		res.addObject("stddevNumberOfHistory", this.curriculaService.stddevNumberOfResultHistory());
 		//AM
-		res.addObject("logo", this.getLogo());
-		res.addObject("system", this.getSystem());
+
+		// The average, the minimum, the maximum, and the standard deviation of the
+		// audit score of the positions stored in the system
+		Object[] positionScoreStats = this.positionService.avgMinMaxStddevPositionAuditScore();
+		res.addObject("avgPositionScore", positionScoreStats[0]);
+		res.addObject("minPositionScore", positionScoreStats[1]);
+		res.addObject("maxPositionScore", positionScoreStats[2]);
+		res.addObject("stddevPositionScore", positionScoreStats[3]);
+		
+		// The average, the minimum, the maximum, and the standard deviation of the
+		// audit score of the companies that are registered in the system.
+		Object[] companyScoreStats = this.companyService.avgMinMaxStddevCompanyAuditScore();
+		res.addObject("avgCompanyScore", companyScoreStats[0]);
+		res.addObject("minCompanyScore", companyScoreStats[1]);
+		res.addObject("maxCompanyScore", companyScoreStats[2]);
+		res.addObject("stddevCompanyScore", companyScoreStats[3]);
+
+		// The companies with the highest audit score
+		res.addObject("companiesHighestScore", this.companyService.getCompaniesWithHighestAuditScore());
+
+		// The average salary offered by the positions that have the highest average
+		// audit score (This translates to the avg salary of the company with highest audit score)
+		res.addObject("avgSalaryCompanyHighestScore", this.companyService.avgSalaryOfCompanyHighestScore());
 		return res;
 	}
 
