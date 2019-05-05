@@ -482,4 +482,8 @@ public class PositionService {
 	public Collection<Position> findAllPositionByAuditor(int auditorId) {
 		return this.positionRepository.findAllPositionByAuditor(auditorId);
 	}
+
+	public Object[] avgMinMaxStddevPositionAuditScore(){
+		return this.positionRepository.avgMinMaxStddevPositionAuditScore().get(0);
+	}
 }

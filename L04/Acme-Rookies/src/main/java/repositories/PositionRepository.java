@@ -132,4 +132,12 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	 */
 	@Query("select p from Audit a join a.position p where p.status=true and p.cancel=false and a.auditor.id=?1")
 	Collection<Position> findAllPositionByAuditor(int auditorId);
+
+	/* The average, the minimum, the maximum, and the standard deviation of the
+	 * audit score of the positions stored in the system
+	 */
+	@Query("select avg(a.score), min(a.score), max(a.score), stddev(a.score) from Audit a where a.status = true")
+	public List<Object[]> avgMinMaxStddevPositionAuditScore();
+
+
 }
