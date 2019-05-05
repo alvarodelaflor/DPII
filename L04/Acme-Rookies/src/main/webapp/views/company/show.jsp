@@ -35,7 +35,7 @@
 		<tr><td><strong><spring:message code="company.email" /></strong> <jstl:out value="${company.email}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="company.phone" /></strong> <jstl:out value="${company.phone}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="company.comercialName" /></strong> <jstl:out value="${company.commercialName}"></jstl:out></td></tr>
-
+		<tr><td><strong><spring:message code="company.auditScore" />: </strong> <jstl:out value="${company.auditScore}"></jstl:out></td></tr>
 	</table>
 </div>
 <input type="button" value="<spring:message code="company.cancel" />" name="company.cancel" onclick="history.back()" />
