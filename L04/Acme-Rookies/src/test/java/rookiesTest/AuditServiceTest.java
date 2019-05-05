@@ -79,7 +79,7 @@ public class AuditServiceTest extends AbstractTest {
 			}, {
 				"auditor", "Hola bro", 11l, false, IllegalArgumentException.class
 			}, {
-				"admin", "Hola bro", 6l, false, IllegalArgumentException.class
+				"admin", "Hola bro", 6l, false, NullPointerException.class
 			}, {
 				"auditor", null, 6l, false, IllegalArgumentException.class
 			}, {
@@ -98,8 +98,9 @@ public class AuditServiceTest extends AbstractTest {
 		try {
 			this.startTransaction();
 			super.authenticate(userName);
-
-			Position position = ((List<Position>) this.positionService.findAllPositionWithStatusTrueCancelFalse()).get(0);
+			Collection<Audit> audits = this.auditService.findAllByAuditorLogin(this.auditorService.getAuditorLogin().getId()).get(false);
+			this.auditService.delete(audits.iterator().next());
+			Position position = ((List<Position>) this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit()).get(0);
 			Audit audit = this.auditService.create();
 			audit.setAuditor(this.auditorService.getAuditorLogin());
 			audit.setPosition(position);
@@ -175,14 +176,16 @@ public class AuditServiceTest extends AbstractTest {
 			this.startTransaction();
 			
 			super.authenticate("auditor");
-			Position position = ((List<Position>) this.positionService.findAllPositionWithStatusTrueCancelFalse()).get(0);
+			Collection<Audit> audits = this.auditService.findAllByAuditorLogin(this.auditorService.getAuditorLogin().getId()).get(false);
+			this.auditService.delete(audits.iterator().next());
+			Position position = ((List<Position>) this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit()).get(0);
 			Auditor auditor = ((List<Auditor>) this.auditorService.findAll()).get(0);
 			Audit audit = this.auditService.create();
 			audit.setAuditor(auditor);
 			audit.setPosition(position);
 			audit.setScore(BigDecimal.valueOf(8l));
 			audit.setText("El Viso del Alcor S. L.");
-			audit.setStatus(true);
+			audit.setStatus(false);
 			audit.setCreationMoment(DateTime.now().toDate());
 			Audit saveAudit = this.auditService.save(audit);
 			Collection<Audit> auditsList = new ArrayList<Audit>();

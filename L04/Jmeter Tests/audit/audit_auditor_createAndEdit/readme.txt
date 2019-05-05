@@ -18,6 +18,15 @@ de creación es muy engorrosa hemos decidido crear un usuario por cada hilo que u
 archivo CSV) y por cada uno de estos usuarios serán creadas 5 "Audits" cada una de ellas referenciando a una
 "Position" diferente siendo aquí el elementos contador necesario para la diferenciación de cada una de ellas.
 
+En primer lugar tendremos que usar dos archivos utilizando los pequeños métodos Java incluidos en el
+paquete "generate_data.zip" el cual incluye dos clases, una para generar un añadido para el 
+PopulateDataBase.xml, en esta primera clase le indicaremos el número de usuarios que queremos y nos
+generará por consola los bean necesarios que tendremos que inyectar a nuestro Populate (userAccount, 
+Auditor y CreditCard). La segunda clase la utilizaremos para el archivo CSV, le indicaremos el número
+de usuarios (debe ser coherente con lo anterior) y el número de repeticiones. Crearemos un archivo .txt
+en el cual pegaremos lo generado por consola con este método.Posteriormente pegamos el archivo en la ruta
+corrrecta para interactuar con jMeter y posteriormente le cambiamos la extensión a .csv
+
 Para una mejor comprensión de lo expresado anteriormente se recomienda una vez más la visión del vídeo 
 "example_video.mp4"
 **************************************************************************************************************
