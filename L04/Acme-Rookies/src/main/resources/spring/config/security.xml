@@ -191,6 +191,7 @@
 		<security:intercept-url pattern="/item/provider/create.do" access="hasRole('PROVIDER')" />
 		<security:intercept-url pattern="/item/provider/edit.do" access="hasRole('PROVIDER')" />
 		<security:intercept-url pattern="/item/listProvider.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/item/provider/list.do" access="hasRole('PROVIDER')" />
 		<security:intercept-url pattern="/item/show.do" access="permitAll" />
 		<security:intercept-url pattern="/item/list.do" access="permitAll" />
 		<!-- FERRETE -->

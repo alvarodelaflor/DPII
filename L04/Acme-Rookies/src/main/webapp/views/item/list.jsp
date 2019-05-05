@@ -18,6 +18,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+	
 
 	<display:table name="items" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 		<display:column titleKey="item.name">

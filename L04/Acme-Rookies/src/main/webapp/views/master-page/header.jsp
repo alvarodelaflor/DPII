@@ -74,6 +74,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="sponsorship/provider/list.do"><spring:message code="master.page.list.sponsorships" /></a></li>
+					<li><a href="item/provider/list.do"><spring:message code="master.page.list.item" /></a></li>
 				</ul>
 		</li>
 		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
