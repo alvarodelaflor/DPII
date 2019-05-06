@@ -56,7 +56,6 @@ public class AuditController extends AbstractController {
 	}
 	
 	private void setConfig(ModelAndView result) {
-		Auditor auditor = this.auditorService.getAuditorLogin();
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 	}
