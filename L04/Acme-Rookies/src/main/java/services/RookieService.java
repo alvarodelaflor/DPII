@@ -263,19 +263,11 @@ public class RookieService {
 	public Rookie saveEdit(Rookie rookie) {
 		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
 		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
-		/* BUG INSERTED 
-		 * If the phone is equal with the pattern, we will add a 6 to the phone
-		 * @author Carmen
-		 */
 		if (rookie.getPhone().matches("^([0-9]{4,})$")) {
 			String phoneM = rookie.getPhone() + "6";
 			rookie.setPhone(phoneM);
 			rookie.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + rookie.getPhone());
 		}
-		/* BUG INSERTED 
-		 * If the phone is equal with the pattern, we will add a 6 to the phone
-		 * @author Carmen
-		 */
 		rookie = this.rookieRepository.save(rookie);
 		System.out.println(rookie);
 		return rookie;
