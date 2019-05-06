@@ -49,6 +49,9 @@ public class AuditorService {
 	 * @return {@link Auditor}
 	 */
 	public Auditor create() {
+		final Authority authority1 = new Authority();
+		authority1.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority1));
 		final Auditor auditor = new Auditor();
 		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();

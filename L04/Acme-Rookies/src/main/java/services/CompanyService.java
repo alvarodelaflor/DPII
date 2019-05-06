@@ -274,23 +274,11 @@ public class CompanyService {
 		Assert.isTrue(!this.checkEmailFormatter(company), "email.wrong");
 		Assert.isTrue(this.checkEmailEdit(company), "error.email");
 		System.out.println("hola");
-		/*
-		 * BUG INSERTED
-		 * If the phone is equal with the pattern, we will add a 6 to the phone
-		 * 
-		 * @author Carmen
-		 */
 		if (company.getPhone().matches("^([0-9]{4,})$")) {
 			final String phoneM = company.getPhone() + "6";
 			company.setPhone(phoneM);
 			company.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + company.getPhone());
 		}
-		/*
-		 * BUG INSERTED
-		 * If the phone is equal with the pattern, we will add a 6 to the phone
-		 * 
-		 * @author Carmen
-		 */
 		company = this.companyRepository.save(company);
 		System.out.println(company);
 

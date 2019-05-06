@@ -133,17 +133,8 @@ public class ApplicationService {
 
 		result.setResponse(application.getResponse());
 		result.setLink(application.getLink());
-		
-		/* BUG INSERTED 
-		 * The applyMoment and the creationMoment(request) are exchanged
-		 * @author Carmen
-		 */
 		result.setCreationMoment(res.getApplyMoment());
 		result.setApplyMoment(DateTime.now().toDate());
-		/* BUG INSERTED 
-		 * The applyMoment and the creationMoment(request) are exchanged
-		 * @author Carmen
-		 */
 		
 		binding.addAllErrors(binding);
 
