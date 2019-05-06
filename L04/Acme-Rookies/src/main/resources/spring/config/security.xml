@@ -61,7 +61,7 @@
 
 		<security:intercept-url pattern="/item/listByProvider.do" access="permitAll" /> 
 
-		<security:intercept-url pattern="/auditor/create.do" access="permitAll" />  	 	 	 
+		<security:intercept-url pattern="/auditor/create.do" access="hasRole('ADMIN')" /> 	 	 	 
 		<!-- CARMEM -->
 		
 		<!-- ANTONIO S -->
