@@ -115,8 +115,8 @@ public class SponsorshipService {
 		return this.sponsorshipRepo.findAll();
 	}
 	public Float minSponsorshipPerProvider() {
-		authority.setAuthority(Authority.ADMIN);
 		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.sponsorshipRepo.minSponsorshipPerProvider();
 	}
@@ -131,8 +131,8 @@ public class SponsorshipService {
 	public Float avgSponsorshipPerProvider() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
-		return this.sponsorshipRepo.avgSponsorshipPerProvider();
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.avgSponsorshipPerProvider();
 	}
 
 	public Float sttdevSponsorshipPerProvider() {

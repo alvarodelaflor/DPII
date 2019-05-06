@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ItemRepository;
+import security.Authority;
 import security.LoginService;
 import domain.Item;
 

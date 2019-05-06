@@ -43,6 +43,9 @@ public class ProviderService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+	
+	@Autowired
+	private SponsorshipService	sponsorshipRepository;
 
 
 	// CREATE ---------------------------------------------------------------
@@ -245,8 +248,6 @@ public class ProviderService {
 		return result;
 	}
 
-}
-
 	public Collection<Provider> sponsorshipProvider() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
@@ -268,3 +269,5 @@ public class ProviderService {
 		return res;
 	}
 }
+
+

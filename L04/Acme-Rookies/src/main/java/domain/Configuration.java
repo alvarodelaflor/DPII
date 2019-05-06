@@ -131,8 +131,6 @@ public class Configuration extends DomainEntity {
 		this.systemMessageEs = systemMessageEs;
 	}
 
-}
-
 	private Integer				firsTime;
 	public Integer getFirsTime() {
 		return this.firsTime;
@@ -141,3 +139,5 @@ public class Configuration extends DomainEntity {
 
 		this.firsTime = firsTime;
 	}
+	
+}

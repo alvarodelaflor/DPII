@@ -77,6 +77,8 @@
 		<security:intercept-url pattern="/message/create.do" access="isAuthenticated()" />	
 		<security:intercept-url pattern="/message/show.do" access="isAuthenticated()" />			
 		<security:intercept-url pattern="/message/delete.do" access="isAuthenticated()" />			
+
+		<security:intercept-url pattern="/message/sendRebranding.do" access="hasRole('ADMIN')" />				
 		<!-- ANTONIO S -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
@@ -223,5 +225,4 @@
 	</security:http>
 
 		
-		<security:intercept-url pattern="/message/sendRebranding.do" access="hasRole('ADMIN')" />				
 </beans>
