@@ -370,6 +370,15 @@
         </property>
     </bean>
     
+    <bean id="problem11" class="domain.Problem">
+    	<property name="title" value="title11" />
+    	<property name="statement" value="statement11" />
+		<property name="hint" value="hint11" />
+		<property name="finalMode" value="false" />
+        <property name="attachments" value="attachments11" />  
+        <property name="company" ref= "company01"/> 
+    </bean>
+    
     <bean id="problem02" class="domain.Problem">
     	<property name="title" value="title02" />
     	<property name="statement" value="statement02" />
