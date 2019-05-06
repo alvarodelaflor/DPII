@@ -114,4 +114,60 @@ public class SponsorshipService {
 
 		return this.sponsorshipRepo.findAll();
 	}
+	public Float minSponsorshipPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.minSponsorshipPerProvider();
+	}
+
+	public Float maxSponsorshipPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.maxSponsorshipPerProvider();
+	}
+
+	public Float avgSponsorshipPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.avgSponsorshipPerProvider();
+	}
+
+	public Float sttdevSponsorshipPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.stddevSponsorshipPerProvider();
+
+	}
+	public Float minSponsorshipPerPosition() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.minSponsorshipPerPosition();
+	}
+
+	public Float maxSponsorshipPerPosition() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.maxSponsorshipPerPosition();
+	}
+	public Float avgSponsorshipPerPosition() {
+
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.avgSponsorshipPerPosition();
+	}
+
+	public Float sttdevSponsorshipPerPosition() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.sponsorshipRepo.stddevSponsorshipPerPosition();
+	}
+
 }

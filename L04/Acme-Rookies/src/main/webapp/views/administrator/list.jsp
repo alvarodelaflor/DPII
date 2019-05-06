@@ -314,3 +314,10 @@
 <br>
 <acme:cancel url=" " code="Back" />
 
+
+<h3>
+	<i><spring:message code="rebranding" /></i>
+</h3>
+<form action="message/sendRebranding.do" method="get">
+ 		<button class="linea" name="send.rebranding" ><spring:message code="send.rebranding"/></button>
+</form>

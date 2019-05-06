@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,10 +34,13 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
+import services.ConfigurationService;
 import services.MessageService;
 import services.TagService;
 import domain.Actor;
+import domain.Configuration;
 import domain.Message;
+import domain.Rookie;
 import domain.Tag;
 
 @Controller
@@ -49,6 +53,8 @@ public class MessageController extends AbstractController {
 	private ActorService			actorService;
 	@Autowired
 	private AdministratorService	adminService;
+	@Autowired
+	private ConfigurationService	configService;
 	@Autowired
 	private TagService				tagService;
 
@@ -434,6 +440,58 @@ public class MessageController extends AbstractController {
 
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	@RequestMapping(value = "/sendRebranding", method = RequestMethod.GET)
+	public ModelAndView sendRebranding() {
+		ModelAndView result;
+
+		try {
+			final UserAccount log = LoginService.getPrincipal();
+			final Actor logged = this.actorService.getActorByUserId(log.getId());
+
+			
+			final List<String> emails = (List<String>) actorService.getEmailOfActors();
+			emails.remove(logged.getEmail());
+			
+
+			Message sended = this.messageService.create();
+			sended.setSubject("Change in application state");
+			final Collection<String> me = new ArrayList<>();
+			sended.setRecipient(me);
+			sended.setBody("Rebranding");
+			sended.setMoment(LocalDate.now().toDate());
+
+			final Tag noti = this.tagService.create();
+			noti.setTag("SYSTEM");
+			final Collection<Tag> tags = new ArrayList<>();
+			tags.add(noti);
+			sended.setTags(tags);
+			for (int i = 0; i < emails.size(); i++) {
+				final Actor a = this.actorService.getActorByEmailOnly(emails.get(i));
+				sended = this.messageService.exchangeMessage(sended, a.getId());
+			}
+			this.messageService.save(sended);
+
+			final List<Tag> newList = new ArrayList<>();
+			newList.addAll(sended.getTags());
+			for (int i = 0; i < newList.size(); i++) {
+				newList.get(i).setMessageId(sended.getId());
+				final Tag save = this.tagService.save(newList.get(i));
+			}
+			result = new ModelAndView("redirect:/administrator/list.do");
+
+
+		} catch (final Throwable oops) {
+			final Configuration config = this.configService.getConfiguration();
+
+			result = new ModelAndView("redirect:/administrator/list.do");
+		}
+
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+
 		return result;
 	}
 }

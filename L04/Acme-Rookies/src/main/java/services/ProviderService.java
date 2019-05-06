@@ -43,6 +43,9 @@ public class ProviderService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+	
+	@Autowired
+	private SponsorshipService	sponsorshipRepository;
 
 
 	// CREATE ---------------------------------------------------------------
@@ -140,7 +143,7 @@ public class ProviderService {
 
 		result.setCreditCard(creditCard);
 
-		//AÑADIDO
+		//Aï¿½ADIDO
 
 		if (!registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
 			binding.rejectValue("expiration", "error.expirationFormatter");
@@ -174,7 +177,7 @@ public class ProviderService {
 						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
-		//AÑADIDO
+		//Aï¿½ADIDO
 
 		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5)
 			binding.rejectValue("userName", "error.userAcount");
@@ -245,4 +248,26 @@ public class ProviderService {
 		return result;
 	}
 
+	public Collection<Provider> sponsorshipProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		final Collection<Provider> res = new ArrayList<>();
+
+		final List<Object[]> collection = this.providerRepository.sponsorshipProvider();
+
+		for (int i = 0; i < collection.size(); i++) {
+
+			final Provider c = (Provider) collection.get(i)[0];
+
+			final Double valor = (Double) collection.get(i)[1];
+			if (valor > this.sponsorshipRepository.avgSponsorshipPerProvider())
+				res.add(c);
+		}
+		System.out.println(res);
+
+		return res;
+	}
 }
+
+
