@@ -482,6 +482,18 @@
         <property name="creationMoment" value= "2018/12/10 08:00"/>              
         <property name="curricula" ref= "curricula02"/>           
     </bean>
+    
+    <bean id="application03" class="domain.Application">
+    	<property name="response" value="response03" />
+    	<property name="link" value="http://link03" />
+		<property name="status" value="SUBMITTED" />
+		<property name="position" ref="position03" />
+        <property name="problem" ref="problem02" />    
+        <property name="rookie" ref= "rookie01"/> 
+        <property name="applyMoment" value= "2018/11/10 08:00"/>  
+        <property name="creationMoment" value= "2018/12/10 08:00"/>              
+        <property name="curricula" ref= "curricula02"/>           
+    </bean>
     <!-- APPLICATION -->
 	
 	<!-- CRECIT CARD -->
