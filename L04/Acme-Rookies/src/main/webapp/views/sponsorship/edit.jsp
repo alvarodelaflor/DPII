@@ -34,7 +34,9 @@
 			<br />
 			
 			<acme:submit name="save" code="submit"/>
-			<acme:cancel url="sponsorship/provider/list.do" code="cancel"/>
+			<acme:cancel url=" " code="cancel"/>
+			<!-- B00651u31351351g3546832gDe3543831te65621ct351681352ed -->
+			<%-- <acme:cancel url="sponsorship/provider/list.do" code="cancel"/> --%>
 			</form:form>
 			
 		</security:authorize>

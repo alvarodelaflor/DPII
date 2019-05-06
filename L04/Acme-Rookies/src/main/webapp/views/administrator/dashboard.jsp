@@ -101,6 +101,33 @@
 	<br>
 
 
+	<h2><spring:message code="items" /></h2>
+	<h3><spring:message code="itemsPerProvider" /></h3>
+		<p><spring:message code="avg" /> <jstl:out value="${avgItemPerProvider}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minItemPerProvider}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxItemPerProvider}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${sttdevItemPerProvider}"></jstl:out></p>
+	<br>
+	
+	<h2><spring:message code="sponsorships" /></h2>
+	<h3><spring:message code="sponsorshipsPerProvider" /></h3>
+		<p><spring:message code="avg" /> <jstl:out value="${avgSponsorshipPerProvider}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minSponsorshipPerProvider}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${sttdevSponsorshipPerProvider}"></jstl:out></p>
+		<p><spring:message code="max" /> <jstl:out value="${maxSponsorshipPerProvider}"></jstl:out></p>		
+	<br>
+	<h3><spring:message code="sponsorshipsPerPosition" /></h3>
+		<p><spring:message code="avg" /> <jstl:out value="${avgSponsorshipPerPosition}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minSponsorshipPerPosition}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxSponsorshipPerPosition}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${sttdevSponsorshipPerPosition}"></jstl:out></p>
+	<br>
+	
+	<h2><spring:message code="providers" /></h2>
+	<h3><spring:message code="providersMoreSponsorshipTanAverage" /></h3>
+		<p><spring:message code="list" /> <jstl:out value="${sponsorshipProvider}"></jstl:out></p>		
+	<br>
+	
 		<acme:cancel url=" " code="Back" />
 	
 	

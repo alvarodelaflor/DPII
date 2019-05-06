@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ItemRepository;
+import security.Authority;
 import security.LoginService;
 import domain.Item;
 
@@ -100,6 +101,33 @@ public class ItemService {
 		Assert.isTrue(this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId()).getId() == item.getProvider().getId());
 		this.itemRepository.delete(item);
 
+	}
+	public Float minItemPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.itemRepository.minItemPerProvider();
+	}
+
+	public Float maxItemPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.itemRepository.maxItemPerProvider();
+	}
+
+	public Float avgItemPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.itemRepository.avgItemPerProvider();
+	}
+
+	public Float sttdevItemPerProvider() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		return this.itemRepository.stddevItemPerProvider();
 	}
 
 }

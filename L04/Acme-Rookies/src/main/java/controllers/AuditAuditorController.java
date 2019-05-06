@@ -135,7 +135,11 @@ public class AuditAuditorController extends AbstractController {
 					Assert.isTrue(auditToSave.getStatus().equals(false), "Audit is not in draft mode");
 				}
 				final Audit saveAudit = this.auditService.save(audit);
-				result = new ModelAndView("redirect:/audit/show.do?auditId=" + saveAudit.getId());
+				result = new ModelAndView("audit/show");
+				result.addObject("auditId", saveAudit.getId());
+				result.addObject("noHistoryBack", true);
+				result.addObject("auditLogin", true);
+				result.addObject("auditorLogger", true);
 				result.addObject("requestURI", "audit/show.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE AuditAuditorController.java Throwable: " + oops);
