@@ -30,13 +30,13 @@
 	<strong>
 	<form:label path="minSalary"><spring:message code="finder.minSalary" />:</form:label>
 	</strong>
-	<form:input path="minSalary"/>	
+	<form:input type="number" path="minSalary"/>	
 	<form:errors path="minSalary" cssClass="error" />
 	
 	<strong>
 	<form:label path="maxSalary"><spring:message code="finder.maxSalary" />:</form:label>
 	</strong>	
-	<form:input path="maxSalary"/>	
+	<form:input type="number" path="maxSalary"/>	
 	<form:errors path="maxSalary" cssClass="error" />
 	
 	<strong>
