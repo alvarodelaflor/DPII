@@ -31,7 +31,9 @@ import services.CompanyService;
 import services.ConfigurationService;
 import services.CurriculaService;
 import services.FinderService;
+import services.ItemService;
 import services.PositionService;
+import services.ProviderService;
 import services.RookieService;
 import services.SponsorshipService;
 import domain.Actor;
@@ -72,6 +74,12 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private SponsorshipService		sponsorshipService;
+	
+	@Autowired
+	private ItemService			itemService;
+	
+	@Autowired
+	private ProviderService			providerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -152,6 +160,24 @@ public class AdministratorController extends AbstractController {
 		// The average salary offered by the positions that have the highest average
 		// audit score (This translates to the avg salary of the company with highest audit score)
 		res.addObject("avgSalaryCompanyHighestScore", this.companyService.avgSalaryOfCompanyHighestScore());
+		
+		res.addObject("minItemPerProvider", this.itemService.minItemPerProvider());
+		res.addObject("maxItemPerProvider", this.itemService.maxItemPerProvider());
+		res.addObject("avgItemPerProvider", this.itemService.avgItemPerProvider());
+		res.addObject("sttdevItemPerProvider", this.itemService.sttdevItemPerProvider());
+
+		res.addObject("minSponsorshipPerProvider", this.sponsorshipService.minSponsorshipPerProvider());
+		res.addObject("maxSponsorshipPerProvider", this.sponsorshipService.maxSponsorshipPerProvider());
+		res.addObject("avgSponsorshipPerProvider", this.sponsorshipService.avgSponsorshipPerProvider());
+		res.addObject("sttdevSponsorshipPerProvider", this.sponsorshipService.sttdevSponsorshipPerProvider());
+
+		res.addObject("minSponsorshipPerPosition", this.sponsorshipService.minSponsorshipPerPosition());
+		res.addObject("maxSponsorshipPerPosition", this.sponsorshipService.maxSponsorshipPerPosition());
+		res.addObject("avgSponsorshipPerPosition", this.sponsorshipService.avgSponsorshipPerPosition());
+		res.addObject("sttdevSponsorshipPerPosition", this.sponsorshipService.sttdevSponsorshipPerPosition());
+
+		res.addObject("sponsorshipProvider", this.providerService.sponsorshipProvider());
+		//AM2
 		return res;
 	}
 
@@ -697,3 +723,5 @@ public class AdministratorController extends AbstractController {
 		return res;
 	}
 }
+
+	

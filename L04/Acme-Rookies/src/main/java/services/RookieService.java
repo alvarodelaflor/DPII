@@ -157,7 +157,7 @@ public class RookieService {
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
 
-		//AÑADIDO
+		//Aï¿½ADIDO
 
 		if (!registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
 			binding.rejectValue("expiration", "error.expirationFormatter");
@@ -191,7 +191,7 @@ public class RookieService {
 						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
-		//AÑADIDO
+		//Aï¿½ADIDO
 
 		if (!registrationForm.getNumber().matches("([0-9]){16}"))
 			//			final ObjectError error = new ObjectError("number", "");

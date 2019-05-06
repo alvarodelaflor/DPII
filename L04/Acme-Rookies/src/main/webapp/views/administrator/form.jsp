@@ -34,7 +34,7 @@
 				<legend>
 					<spring:message code="actor.creditCard" />
 				</legend>
-				<acme:textbox code="admin.holder" path="holder" placeholder="Doña Benjumea"/>
+				<acme:textbox code="admin.holder" path="holder" placeholder="Doï¿½a Benjumea"/>
 				<acme:textbox code="admin.make" path="make"  placeholder="VISA"/>
 				<acme:textbox code="admin.number" path="number" placeholder="1234567890987654" />
 				<acme:textbox code="admin.CVV" path="CVV" placeholder="123" />
