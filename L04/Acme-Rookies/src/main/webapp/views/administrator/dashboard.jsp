@@ -18,6 +18,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <br>
+
 <h2><spring:message code="companies" /></h2>
 	<h3><spring:message code="positionsPerCompany" /></h3>
 		<p><spring:message code="avg" /> <jstl:out value="${avgPositionPerCompany}"></jstl:out></p>		
@@ -68,6 +69,38 @@
 		<p><spring:message code="stddev" /> <jstl:out value="${stddevNumberOfHistory}"></jstl:out></p>
 	<br>
 	
+	<h2><spring:message code="audits" /></h2>
+
+	<h3><spring:message code="positionScore" /></h3>
+		<p><spring:message code="avg" /> <jstl:out value="${avgPositionScore}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minPositionScore}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxPositionScore}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${stddevPositionScore}"></jstl:out></p>
+	<br>
+
+	<h3><spring:message code="companyScore" /></h3>
+		<div>
+			<b><spring:message code="admin.calculateCompaniesScores"/>: </b>
+			<input type="button" value="<spring:message code='admin.calculate' />" onclick="window.location = 'administrator/calculateCompaniesScores.do'" />
+		</div>
+		<p><spring:message code="avg" /> <jstl:out value="${avgCompanyScore}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${minCompanyScore}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${maxCompanyScore}"></jstl:out></p>		
+		<p><spring:message code="stddev" /> <jstl:out value="${stddevCompanyScore}"></jstl:out></p>
+	<br>
+	
+	<h3><spring:message code="companiesHighestAuditScore" /></h3>
+		<p><spring:message code="avgSalaryCompanyHighestScore" /> <jstl:out value="${avgSalaryCompanyHighestScore}"></jstl:out></p>
+		<display:table name="companiesHighestScore" id="row" class="displaytag">
+			<display:column titleKey="company.comercialName">
+				<a href="company/show.do?id=${row.id}"><jstl:out value="${row.commercialName}"/></a></display:column>
+			<display:column titleKey="company.position" ><a href="position/listCompany.do?id=${row.id}"><spring:message code="company.position.show" /></a></display:column>
+			<display:column titleKey="company.auditScore" property="auditScore"/>
+			
+		</display:table>
+	<br>
+
+
 		<acme:cancel url=" " code="Back" />
 	
 	

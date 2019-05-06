@@ -10,6 +10,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,11 +146,17 @@ public class PostionController extends AbstractController {
 	 */
 	private void setAuditOfPosition(int positionId, ModelAndView result) {
 		try {
-			Audit audit = this.auditService.getAuditByPositionId(positionId);
-			if (audit!=null && audit.getStatus()!= null && audit.getStatus().equals(true)) {
-				result.addObject("audit", audit);
+			Collection<Audit> audits = this.auditService.getAuditByPositionId(positionId);
+			Collection<Audit> aux = new ArrayList<Audit>();
+			for (Audit audit : audits) {				
+				if (audit!=null && audit.getStatus()!= null && audit.getStatus().equals(true)) {
+					aux.add(audit);
+				}
+			}
+			if (!aux.isEmpty()) {
+				result.addObject("audits", aux);
 			} else {
-				result.addObject("audit", null);
+				result.addObject("audits", null);
 			}
 		} catch (Exception e) {
 			result.addObject("audit", null);

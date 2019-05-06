@@ -541,8 +541,6 @@ public class CompanyServiceTest extends AbstractTest {
 			if (user != null)
 				super.authenticate(user);
 
-			this.startTransaction();
-
 			final Company company = this.companyService.create();
 			company.setAddress("soyUnaCalle");
 			company.setCommercialName("soyUnaPrueba");

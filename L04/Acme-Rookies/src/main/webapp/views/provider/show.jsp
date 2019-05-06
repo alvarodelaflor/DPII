@@ -37,5 +37,9 @@
 		<tr><td><strong><spring:message code="provider.comercialName" /></strong> <jstl:out value="${provider.commercialName}"></jstl:out></td></tr>
 	</table>
 </div>
-<input type="button" value=<spring:message code="provider.cancel" /> name="provider.cancel" onclick="history.back()" />
-
+<acme:cancel url=" " code="rookie.cancel"/>
+<jstl:if test = "${owner}">
+<acme:cancel url="/provider/export.do?id=${provider.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/provider/delete.do?id=${provider.id}" code="delete"/>
+</jstl:if>

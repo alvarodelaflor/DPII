@@ -12,6 +12,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -42,7 +43,7 @@ public class AuditService {
 	
 	@Autowired
 	private PositionService positionService;
-	
+		
 	@Autowired
 	private Validator						validator;
 	
@@ -73,7 +74,13 @@ public class AuditService {
 	 * @return {@link Audit}
 	 */
 	public Audit findOne(Integer auditId) {
-		return this.auditRepository.findOne(auditId);
+		Audit audit = this.auditRepository.findOne(auditId);
+		Auditor auditor = this.auditorService.getAuditorLogin();
+		if (audit!=null && audit.getStatus()!=null && audit.getStatus().equals(false)) {
+			Assert.notNull(auditor, notAuditorLogin);
+			Assert.isTrue(audit.getAuditor().equals(auditor), diferentAuditor);
+		}
+		return audit;
 	}
 
 	/**
@@ -116,7 +123,10 @@ public class AuditService {
 	 * @return {@link Collection} < {@link Position} >
 	 */
 	public Collection<Position> getPositionAvailable(Audit audit) {
-		Collection<Position> res = new ArrayList<>(this.positionService.findAllPositionWithStatusTrueNotCancelNotAudit());
+		Collection<Position> res = new ArrayList<>(this.positionService.findAllPositionWithStatusTrueCancelFalse());
+		Auditor auditor = this.auditorService.getAuditorLogin();
+		Assert.notNull(auditor, notAuditor);
+		res.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));
 		Audit auditDB = this.findOne(audit.getId());
 		if (auditDB!= null && audit.getStatus()!=null && audit.getStatus().equals(false)) {
 			Assert.isTrue(auditDB.getPosition().equals(audit.getPosition()) || res.contains(audit.getPosition()));
@@ -134,11 +144,25 @@ public class AuditService {
 	public Audit save(Audit audit) {
 		Auditor auditorLogin = this.auditorService.getAuditorLogin();
 		Assert.notNull(auditorLogin, notAuditorLogin);
+		Assert.notNull(audit, "Audit is null");
+		Assert.isTrue(audit.getStatus()!=null && (audit.getStatus().equals(true) || audit.getStatus().equals(false)));
 		Assert.notNull(audit.getPosition(), "Audit has not got position");
 		Assert.notNull(audit.getAuditor(), notAuditor);
 		Assert.isTrue(audit.getAuditor().equals(auditorLogin), diferentAuditor);
+		List<Position> positionsByAudit = (List<Position>)this.positionService.findAllPositionByAuditor(auditorLogin.getId());
+		Audit auditDB = this.findOne(audit.getId());
+		if (auditDB!=null) {
+			Assert.isTrue(!auditDB.getStatus(), notDraftMode);
+		} else {
+			Assert.isTrue(!positionsByAudit.contains(audit.getPosition()), "Audit has an already exits position");
+		}
+		if (audit.getScore()!=null) {
+			Assert.isTrue(audit.getScore().signum()!=-1, "Value is less than 0");
+			Assert.isTrue(audit.getScore().doubleValue()<=10., "Value is more than 10");
+			Assert.isTrue(audit.getScore().precision()==1 || audit.getScore().precision()==2 || audit.getScore().precision()==3, "Not valid precision");
+		}
+		Assert.isTrue(audit.getText()!=null && audit.getText().length()>0, "No valid text");
 		audit.setAuditor(auditorLogin);
-		audit.setCreationMoment(DateTime.now().toDate());
 		return this.auditRepository.save(audit);
 	}
 	
@@ -174,7 +198,14 @@ public class AuditService {
 		
 		if (audit.getId()==0) {
 			audit.setAuditor(auditorLogin);
-			audit.setCreationMoment(DateTime.now().toDate());
+//			audit.setCreationMoment(DateTime.now().toDate());
+			// * BUG INSERTED * ALVARO 04/05/2019 14:35
+			/**
+			 * At the time of creation it has been subtracted 30 minutes from the current time.
+			 * @author Alvaro de la Flor Bonilla 
+			 */
+			audit.setCreationMoment(DateTime.now().minusMinutes(20).toDate());
+			// * BUG INSERTED * ALVARO 04/05/2019 14:35
 		} else {
 			Audit auditDB = this.findOne(audit.getId());
 			Assert.notNull(auditDB, "No audit in database with that ID");
@@ -204,8 +235,8 @@ public class AuditService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection} < {@link Audit} >
 	 */
-	public Audit getAuditByPositionId(int positionId) {
-		return this.auditRepository.getAuditByPositionId(positionId);
+	public Collection<Audit> getAuditByPositionId(int positionId) {
+		return this.auditRepository.findAllAuditByPositionId(positionId);
 	}
 	// AUXILIAR METHODS
 

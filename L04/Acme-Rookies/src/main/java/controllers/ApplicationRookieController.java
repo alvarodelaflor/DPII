@@ -287,8 +287,9 @@ public class ApplicationRookieController extends AbstractController {
 				System.out.println(a1.getRookie().equals(rookie));
 				Assert.isTrue(a1.getRookie().equals(rookie));
 
-				a1.setCreationMoment(LocalDateTime.now().toDate());
+//				a1.setCreationMoment(LocalDateTime.now().toDate());
 				System.out.println(a1.getCreationMoment());
+				System.out.println(a1.getApplyMoment());
 				Assert.notNull(a1.getCreationMoment());
 
 				// We can only set an application to SUBMITTED when it is pending

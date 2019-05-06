@@ -52,6 +52,7 @@ public class Audit extends DomainEntity {
 
 	@Min(0)
 	@Max(10)
+	@NotNull
 	public BigDecimal getScore() {
 		return this.score;
 	}

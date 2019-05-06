@@ -228,8 +228,6 @@ public class RookieServiceTest extends AbstractTest {
 			if (user != null)
 				super.authenticate(user);
 
-			this.startTransaction();
-
 			final Rookie company = this.rookieService.create();
 			company.setAddress("soyUnaCalle");
 			company.setEmail("soyUnaPrueba@soyUnaPrueba");
@@ -296,8 +294,6 @@ public class RookieServiceTest extends AbstractTest {
 
 			if (user != null)
 				super.authenticate(user);
-
-			this.startTransaction();
 
 			final Rookie rookieFind = this.rookieService.getRookieByUserAccountId(12345);
 			rookieFind.getAddress();

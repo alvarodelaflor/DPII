@@ -18,6 +18,16 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<div>
+		<jstl:if test="${owner==true}">
+			<acme:cancel url="item/provider/delete.do?itemId=${item.id}" code="item.delete"/>
+			<form method="get" action="item/provider/edit.do">
+				<button name="itemId" value="${item.id}"><spring:message code="item.edit"/></button>
+			</form>
+			<br>	
+		</jstl:if>
+	</div>
+
 <div class="content">
 	<table>
 		<tr><td><strong><spring:message code="item.name" />:</strong> <jstl:out	value="${item.name}"></jstl:out></td></tr>

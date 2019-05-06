@@ -43,4 +43,9 @@
 		<put-attribute name="title" value="List Provider Items" />
 		<put-attribute name="body" value="/views/item/listProvider.jsp" />
 	</definition>
+	
+	<definition name="item/provider/list" extends="master.page">	
+		<put-attribute name="title" value="Items" />
+		<put-attribute name="body" value="/views/item/listByProvider.jsp" />
+	</definition>
 </tiles-definitions>

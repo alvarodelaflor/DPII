@@ -29,9 +29,16 @@
 		<br>
 	</c:when>
 	<c:otherwise>
-		<spring:message code="audit.emptyPositions" />
-		<br>
-		<br>
+		<c:choose>
+			<c:when test="${auditorLogger==true}">
+				<spring:message code="audit.emptyPositions" />
+				<br>
+				<br>			
+			</c:when>
+			<c:otherwise>
+
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

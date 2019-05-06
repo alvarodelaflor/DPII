@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
@@ -24,6 +25,7 @@ public class Item extends DomainEntity {
 	}
 
 	@SafeHtml
+	@NotBlank
 	public String getName() {
 		return this.name;
 	}
@@ -32,6 +34,7 @@ public class Item extends DomainEntity {
 		this.name = name;
 	}
 	@SafeHtml
+	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
@@ -41,6 +44,7 @@ public class Item extends DomainEntity {
 	}
 	@SafeHtml
 	@URL
+	@NotBlank
 	public String getLink() {
 		return this.link;
 	}

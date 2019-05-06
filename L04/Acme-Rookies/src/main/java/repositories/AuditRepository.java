@@ -15,5 +15,5 @@ public interface AuditRepository extends JpaRepository<Audit, Integer> {
 	Collection<Audit> getAuditByStatusAndAuditorId(Boolean status, int auditorId);
 	
 	@Query("select a from Audit a where a.status=true and a.position.id=?1")
-	Audit getAuditByPositionId(int positionId);
+	Collection<Audit> findAllAuditByPositionId(int positionId);
 }

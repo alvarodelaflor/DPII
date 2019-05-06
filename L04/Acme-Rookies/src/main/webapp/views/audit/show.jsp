@@ -46,17 +46,17 @@
 		<p><strong><spring:message code="audit.text" /> </strong><jstl:out value="${audit.text}"></jstl:out></p>
 		<p><strong><spring:message code="audit.creationMoment" /> </strong><jstl:out value="${audit.creationMoment}"></jstl:out></p>
 		<p><strong><spring:message code="audit.score" /> </strong><jstl:out value="${audit.score}"></jstl:out></p>
-		<p><strong><spring:message code="audit.status" /></strong><jstl:out value="${audit.status}"></jstl:out></p>
+		<p><strong><spring:message code="audit.status" /></strong><spring:message code="audit.${audit.status}" /></p>
 		<fieldset>
 			<legend>
 				<i><spring:message code="audit.auditor.data" /></i><img width="35" height="35" src="./images/phone.png" alt="${row1.id}" />	
 			</legend>
 			<c:choose>
 	    		<c:when test="${audit.auditor.photo=='' or audit.auditor.photo==null}">
-					<img width="95" src="./images/rookie.png" alt="ERROR"/>
+					<img width="95" src="./images/rookie.png" alt=" "/>
 	    		</c:when>    
 	    		<c:otherwise>
-					<img width="95" src="${audit.auditor.photo}" alt="ERROR"/>
+					<img width="95" src="${audit.auditor.photo}" alt=" "/>
 	    		</c:otherwise>
 			</c:choose>
 			<p><strong><spring:message code="audit.auditor.name" /> </strong><jstl:out value="${audit.auditor.name}">></jstl:out> <jstl:out value="${audit.auditor.surname}"></jstl:out></p>

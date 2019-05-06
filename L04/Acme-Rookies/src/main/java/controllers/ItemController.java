@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import security.UserAccount;
 import services.ItemService;
 import services.ProviderService;
 import domain.Item;
@@ -93,7 +95,7 @@ public class ItemController extends AbstractController {
 
 		ModelAndView result;
 		try {
-
+			final UserAccount logged = LoginService.getPrincipal();
 			final Item item = this.itemService.findOne(id);
 			List<String> pictures = new ArrayList<>();
 
@@ -104,6 +106,8 @@ public class ItemController extends AbstractController {
 			result.addObject("pictures", pictures);
 			result.addObject("item", item);
 			result.addObject("requestURI", "item/show.do");
+			if (logged != null && this.providerService.getProviderByUserAccountId(logged.getId()) != null && item.getProvider().getUserAccount().equals(logged))
+				result.addObject("owner", true);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
