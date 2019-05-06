@@ -75,6 +75,7 @@ public class Position extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getProfile() {
 		return this.profile;
 	}
