@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * i18n-l10n.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd 
+	">
+
+	<util:list id="messages">
+		<value>/views/master-page/messages</value>
+		<value>/views/misc/messages</value>
+		<value>/views/security/messages</value>		
+		<value>/views/welcome/messages</value>
+		
+		<value>/views/administrator/messages</value>
+		<value>/views/profile/messages</value>
+		
+		<!-- ALVARO -->
+		<value>/views/curricula/messages</value>
+		<value>/views/educationalData/messages</value>
+		<value>/views/positionData/messages</value>
+		<value>/views/audit/messages</value>
+		<!-- ALVARO -->
+		
+		
+		<!-- CARMEN -->
+		<value>/views/rookie/messages</value>
+		<value>/views/company/messages</value>
+		<value>/views/actor/messages</value>
+		<value>/views/position/messages</value>
+		<value>/views/application/messages</value>
+		<value>/views/problem/messages</value>
+		<value>/views/provider/messages</value>
+		<!-- CARMEN -->
+		<!-- ANTONIO S -->
+		<value>/views/socialProfile/messages</value>
+		<value>/views/message/messages</value>
+		<!-- ANTONIO S -->
+		<value>/views/finder/messages</value>
+		<value>/views/sponsorship/messages</value>
+	</util:list>
+
+</beans>
