@@ -78,5 +78,11 @@
 
 <br>
 
-<acme:cancel url="audit/list.do?auditorId=${audit.auditor.id}" code="back"/>  			
-    			
+<c:choose>
+	<c:when test="${noHistoryBack==true}">
+		<acme:cancel url="audit/list.do?auditorId=${audit.auditor.id}" code="back"/>
+	</c:when>
+	<c:otherwise>
+		<input type="button" value=<spring:message code="back" /> name="back" onclick="history.back()" />
+	</c:otherwise>
+</c:choose> 				

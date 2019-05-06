@@ -366,6 +366,7 @@
         	<list>
                 <ref bean="position01"/>
                 <ref bean="position02"/>
+                <ref bean="position03"/>
         	</list>
         </property>
     </bean>
@@ -381,6 +382,7 @@
         	<list>
                 <ref bean="position01"/>
                 <ref bean="position02"/>
+                <ref bean="position03"/>
         	</list>
         </property>
     </bean>
@@ -391,11 +393,58 @@
 		<property name="hint" value="hint03" />
 		<property name="finalMode" value="false" />
         <property name="attachments" value="attachments03" />  
-        <property name="company" ref= "company01"/> 
+        <property name="company" ref= "company02"/>
         <property name="position">
         	<list>
-                <ref bean="position01"/>
-                <ref bean="position02"/>
+                <ref bean="position05"/>
+                <ref bean="position06"/>
+                <ref bean="position07"/>
+        	</list>
+        </property>
+    </bean>
+    
+    <bean id="problem04" class="domain.Problem">
+    	<property name="title" value="title03" />
+    	<property name="statement" value="statement03" />
+		<property name="hint" value="hint03" />
+		<property name="finalMode" value="false" />
+        <property name="attachments" value="attachments03" />  
+        <property name="company" ref= "company02"/>
+        <property name="position">
+        	<list>
+                <ref bean="position05"/>
+                <ref bean="position06"/>
+                <ref bean="position07"/>
+        	</list>
+        </property>
+    </bean>
+    
+    <bean id="problem05" class="domain.Problem">
+    	<property name="title" value="title03" />
+    	<property name="statement" value="statement03" />
+		<property name="hint" value="hint03" />
+		<property name="finalMode" value="false" />
+        <property name="attachments" value="attachments03" />  
+        <property name="company" ref= "company03"/>
+        <property name="position">
+        	<list>
+                <ref bean="position08"/>
+                <ref bean="position09"/>
+        	</list>
+        </property>
+    </bean>
+    
+    <bean id="problem06" class="domain.Problem">
+    	<property name="title" value="title03" />
+    	<property name="statement" value="statement03" />
+		<property name="hint" value="hint03" />
+		<property name="finalMode" value="false" />
+        <property name="attachments" value="attachments03" />  
+        <property name="company" ref= "company03"/>
+        <property name="position">
+        	<list>
+                <ref bean="position08"/>
+                <ref bean="position09"/>
         	</list>
         </property>
     </bean>
