@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import domain.Finder;
-import domain.Hacker;
 import services.FinderService;
 import services.HackerService;
 import utilities.AbstractTest;
+import domain.Finder;
+import domain.Hacker;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -32,7 +32,7 @@ public class FinderServiceTest extends AbstractTest {
 	/*
 	 * 17.2 An actor who is authenticated as a hacker must be able to:
 	 * Manage his or her finder, which involves updating the search criteria, listing its contents, and clearing it.
-	 *
+	 * 
 	 * Analysis of sentence coverage
 	 * 12.6%
 	 * Analysis of data coverage
@@ -68,6 +68,7 @@ public class FinderServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("dd33f");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			final Hacker saved = this.hackerService.saveCreate(hacker);
@@ -97,7 +98,7 @@ public class FinderServiceTest extends AbstractTest {
 	}
 
 	/*
-	 *
+	 * 
 	 * 17.2 An actor who is authenticated as a hacker must be able to:
 	 * Manage his or her finder, which involves updating the search criteria, listing its contents, and clearing it.
 	 */
@@ -131,6 +132,7 @@ public class FinderServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("dd33f");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			final Hacker saved = this.hackerService.saveCreate(hacker);
@@ -195,6 +197,8 @@ public class FinderServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("dd33f");
+
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			final Hacker saved = this.hackerService.saveCreate(hacker);
@@ -252,6 +256,8 @@ public class FinderServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("dd33f");
+
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			final Hacker saved = this.hackerService.saveCreate(hacker);

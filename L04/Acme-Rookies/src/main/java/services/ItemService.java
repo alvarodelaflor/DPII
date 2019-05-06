@@ -4,13 +4,15 @@ package services;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ItemRepository;
-import security.Authority;
 import security.LoginService;
 import domain.Item;
 
@@ -24,7 +26,32 @@ public class ItemService {
 	@Autowired
 	private ProviderService	providerService;
 
+	@Autowired
+	Validator				validator;
 
+
+	//RECONSTRUCT
+	public Item reconstruct(final Item item, final BindingResult binding) {
+
+		Item res;
+
+		if (item.getId() == 0)
+			res = this.create();
+		else
+			res = this.findOne(item.getId());
+
+		res.setDescription(item.getDescription());
+		res.setName(item.getName());
+		res.setLink(item.getLink());
+		res.setPictures(item.getPictures());
+
+		this.validator.validate(res, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
+
+		return res;
+	}
 	// FINDALL  ---------------------------------------------------------------
 	public Collection<Item> findAll() {
 		return this.itemRepository.findAll();
@@ -53,6 +80,7 @@ public class ItemService {
 
 	// SAVE ---------------------------------------------------------------
 	public Item save(final Item a) {
+		Assert.isTrue(a.getProvider().getUserAccount().getId() == LoginService.getPrincipal().getId());
 		final Item app = this.itemRepository.save(a);
 		this.itemRepository.flush();
 		return app;
@@ -73,7 +101,6 @@ public class ItemService {
 		this.itemRepository.delete(item);
 
 	}
-
 	public Float minItemPerProvider() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);

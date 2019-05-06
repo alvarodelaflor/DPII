@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -132,7 +133,9 @@ public class ApplicationService {
 
 		result.setResponse(application.getResponse());
 		result.setLink(application.getLink());
-
+		result.setCreationMoment(res.getApplyMoment());
+		result.setApplyMoment(DateTime.now().toDate());
+		
 		binding.addAllErrors(binding);
 
 		System.out.println(result);
@@ -144,6 +147,8 @@ public class ApplicationService {
 			res.setLink(result.getLink());
 			res.setResponse(result.getResponse());
 			res.setStatus(result.getStatus());
+			res.setApplyMoment(result.getApplyMoment());
+			res.setCreationMoment(result.getCreationMoment());
 		}
 
 		return res;

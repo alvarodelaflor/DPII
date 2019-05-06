@@ -104,7 +104,18 @@
 			</c:choose>
 		</security:authorize>
 	</table>
+	<jstl:if test="${audits != null}">
+		<strong><spring:message code='position.showAudit' /></strong>
+		<display:table name="audits" id="row01" requestURI="${requestURI}" pagesize="5" class="displaytag">
+			<display:column titleKey="curricula.show">
+				<form method="get" action="audit/show.do">
+					<button class="linea" name="auditId" value="${row01.id}"><spring:message code="audit.show"/></button>
+				</form>	
+			</display:column>
+			<display:column property="auditor.email" titleKey="audit.auditor.emailContact"></display:column>
+			<display:column property="score" titleKey="audit.score"></display:column>
+		</display:table>
+	</jstl:if>
 </div>
 
-<input type="button" value="back" name="position.cancel"
-	onclick="history.back()" />
+<input type="button" value="<spring:message code="position.cancel" />" name="position.cancel" onclick="history.back()" />

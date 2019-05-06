@@ -60,13 +60,6 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.status=true")
 	Collection<Position> findAllPositionWithStatusTrue();
 	
-	// ALVARO 29/04/2019 22:44
-	
-	@Query("select p from Position p where p.status=true and p.cancel=false and not exists (select p2 from Audit a2 join a2.position p2)")
-	Collection<Position> findAllPositionWithStatusTrueNotCancelNotAudit();
-	
-	// ALVARO
-
 	@Query("select p from Position p where p.status=true and p.cancel=false")
 	Collection<Position> findAllPositionWithStatusTrueCancelFalse();
 
@@ -87,6 +80,17 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p from Position p where p.title like %?1% and p.status=1")
 	Collection<Position> findWithTitle(String title);
+	
+	/**
+	 * 
+	 * This query return all the position with a ticker that contains the string ginven<br>
+	 * CHANGE CONTROL: 05/05/2019 19:16 Create the method
+	 * 
+	 * @return {@link Collection}<{@link Position}>
+	 * @author Alvaro de la Flor Bonilla
+	 */
+	@Query("select p from Position p where p.ticker like %?1% and p.status=1")
+	Collection<Position> findWithTicker(String ticker);
 
 	@Query("select p from Position p where p.company.id = ?1")
 	Collection<Position> findAllPositionsByCompany(int companyId);
@@ -107,4 +111,33 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	 */
 	@Query("select p from Application a join a.position p where p.status=1 and a.status='ACCEPTED' and a.rookie.id = ?1")
 	Collection<Position> findValidPositionToCurriculaByRookieId(int rookieId);
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} in final mode no cancel that it has not
+	 * audit asociated
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	@Query("select p from Audit a right join a.position p where p.status=true and p.cancel=false and a.status is null")
+	Collection<Position> findAllPositionWithStatusTrueNotCancelNotAudit();
+	
+	/**
+	 * 
+	 * Return a collection of all {@link Position} by auditor ID.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Position}>
+	 */
+	@Query("select p from Audit a join a.position p where p.status=true and p.cancel=false and a.auditor.id=?1")
+	Collection<Position> findAllPositionByAuditor(int auditorId);
+
+	/* The average, the minimum, the maximum, and the standard deviation of the
+	 * audit score of the positions stored in the system
+	 */
+	@Query("select avg(a.score), min(a.score), max(a.score), stddev(a.score) from Audit a where a.status = true")
+	public List<Object[]> avgMinMaxStddevPositionAuditScore();
+
+
 }

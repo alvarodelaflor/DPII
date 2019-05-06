@@ -36,7 +36,7 @@
 				<acme:password code="provider.passwordC" path="confirmPassword" />
 				<acme:textbox code="provider.comercialName" path="companyName" />
 				<acme:textbox code="provider.address" path="address" />
-				<acme:textbox code="provider.email" path="email" />
+				<acme:textbox code="provider.email" path="email" placeholder="ej: benju12@gmail.com"/>
 				<acme:textbox code="provider.photo" path="photo" />
 				<acme:phonebox code="provider.phone" path="phone" />
 				</fieldset>
@@ -45,10 +45,10 @@
 				<legend>
 					<spring:message code="actor.creditCard" />
 				</legend>
-				<acme:textbox code="provider.holder" path="holder" />
-				<acme:textbox code="provider.make" path="make" />
-				<acme:textbox code="provider.number" path="number" />
-				<acme:textbox code="provider.CVV" path="CVV" />
+				<acme:textbox code="provider.holder" path="holder" placeholder="Do�a Benjumea"/>
+				<acme:textbox code="provider.make" path="make" placeholder="VISA"/>
+				<acme:textbox code="provider.number" path="number" placeholder="1234567890987654"/>
+				<acme:textbox code="provider.CVV" path="CVV" placeholder="123"/>
 				<acme:textboxExpiration code="provider.expiration" path="expiration" />
 				</fieldset>
 				<br>

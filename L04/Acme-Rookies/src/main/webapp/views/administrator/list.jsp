@@ -23,8 +23,6 @@
 
 <br>
 
-
-
 <!-- FINDER -->
 <security:authorize access="hasRole('ADMIN')">
 	<div>
@@ -44,15 +42,10 @@
 </security:authorize>
 <!-- FINDER -->
 
-
-<h3>
-	<i><spring:message code="rebranding" /></i>
-</h3>
-<form action="message/sendRebranding.do" method="get">
- 		<button class="linea" name="send.rebranding" ><spring:message code="send.rebranding"/></button>
-</form>
 <!--FAIR-->
-
+<h3>
+	<i><spring:message code="admin.fair" /></i>
+</h3>
 <p>${fair} u.m.</p>
 <security:authorize access="hasRole('ADMIN')">
 	<form:form class="formularioEdicion" method="GET"
@@ -321,3 +314,10 @@
 <br>
 <acme:cancel url=" " code="Back" />
 
+
+<h3>
+	<i><spring:message code="rebranding" /></i>
+</h3>
+<form action="message/sendRebranding.do" method="get">
+ 		<button class="linea" name="send.rebranding" ><spring:message code="send.rebranding"/></button>
+</form>

@@ -18,7 +18,6 @@ import org.springframework.validation.Validator;
 
 import repositories.ActorRepository;
 import repositories.ProviderRepository;
-import repositories.SponsorshipRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
@@ -41,9 +40,6 @@ public class ProviderService {
 
 	@Autowired
 	private ActorRepository			actorRepository;
-
-	@Autowired
-	private SponsorshipRepository	sponsorshipRepository;
 
 	@Autowired
 	private ConfigurationService	configurationService;
@@ -144,7 +140,7 @@ public class ProviderService {
 
 		result.setCreditCard(creditCard);
 
-		//AÑADIDO
+		//Aï¿½ADIDO
 
 		if (!registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
 			binding.rejectValue("expiration", "error.expirationFormatter");
@@ -178,7 +174,7 @@ public class ProviderService {
 						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
-		//AÑADIDO
+		//Aï¿½ADIDO
 
 		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5)
 			binding.rejectValue("userName", "error.userAcount");
@@ -249,6 +245,8 @@ public class ProviderService {
 		return result;
 	}
 
+}
+
 	public Collection<Provider> sponsorshipProvider() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
@@ -260,8 +258,8 @@ public class ProviderService {
 		for (int i = 0; i < collection.size(); i++) {
 
 			final Provider c = (Provider) collection.get(i)[0];
-			final Double valor = (Double) collection.get(i)[1];
 
+			final Double valor = (Double) collection.get(i)[1];
 			if (valor > this.sponsorshipRepository.avgSponsorshipPerProvider())
 				res.add(c);
 		}

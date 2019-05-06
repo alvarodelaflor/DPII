@@ -10,6 +10,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Audit;
+import domain.Position;
+import forms.PositionForm;
+import services.AuditService;
 import services.PositionFormService;
 import services.PositionService;
 import services.ProblemService;
@@ -40,6 +45,9 @@ public class PostionController extends AbstractController {
 
 	@Autowired
 	private ProblemService		problemService;
+	
+	@Autowired
+	private AuditService auditService;
 
 	@Autowired
 	private SponsorshipService	sponsorshipService;
@@ -118,6 +126,7 @@ public class PostionController extends AbstractController {
 
 			result = new ModelAndView("position/show");
 			result.addObject("position", position);
+			this.setAuditOfPosition(position.getId(), result);
 			result.addObject("hasProblem", hasProblem);
 			result.addObject("requestURI", "position/show.do");
 		} catch (final Exception e) {
@@ -126,6 +135,32 @@ public class PostionController extends AbstractController {
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
+	}
+	
+	
+	/**
+	 * 
+	 * This method set audit to the view if the position has one
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 */
+	private void setAuditOfPosition(int positionId, ModelAndView result) {
+		try {
+			Collection<Audit> audits = this.auditService.getAuditByPositionId(positionId);
+			Collection<Audit> aux = new ArrayList<Audit>();
+			for (Audit audit : audits) {				
+				if (audit!=null && audit.getStatus()!= null && audit.getStatus().equals(true)) {
+					aux.add(audit);
+				}
+			}
+			if (!aux.isEmpty()) {
+				result.addObject("audits", aux);
+			} else {
+				result.addObject("audits", null);
+			}
+		} catch (Exception e) {
+			result.addObject("audit", null);
+		}
 	}
 
 	// SAVE ---------------------------------------------------------------		

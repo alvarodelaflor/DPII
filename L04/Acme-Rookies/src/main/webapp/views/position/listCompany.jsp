@@ -29,5 +29,5 @@
 		<display:column property="salary" titleKey="position.salary"></display:column>
 	</display:table>
 					
-<input type="button" value="back" name="position.cancel" onclick="history.back()" />
+<input type="button" value="<spring:message code="position.cancel" />" name="position.cancel" onclick="history.back()" />
 

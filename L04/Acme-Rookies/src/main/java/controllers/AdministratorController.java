@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -30,9 +31,7 @@ import services.CompanyService;
 import services.ConfigurationService;
 import services.CurriculaService;
 import services.FinderService;
-import services.ItemService;
 import services.PositionService;
-import services.ProviderService;
 import services.RookieService;
 import services.SponsorshipService;
 import domain.Actor;
@@ -73,12 +72,6 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private SponsorshipService		sponsorshipService;
-
-	@Autowired
-	private ItemService				itemService;
-
-	@Autowired
-	private ProviderService			providerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -136,26 +129,29 @@ public class AdministratorController extends AbstractController {
 		res.addObject("avgNumberOfHistory", this.curriculaService.avgNumberOfResultHsitory());
 		res.addObject("stddevNumberOfHistory", this.curriculaService.stddevNumberOfResultHistory());
 		//AM
-		//AM2
-		res.addObject("minItemPerProvider", this.itemService.minItemPerProvider());
-		res.addObject("maxItemPerProvider", this.itemService.maxItemPerProvider());
-		res.addObject("avgItemPerProvider", this.itemService.avgItemPerProvider());
-		res.addObject("sttdevItemPerProvider", this.itemService.sttdevItemPerProvider());
 
-		res.addObject("minSponsorshipPerProvider", this.sponsorshipService.minSponsorshipPerProvider());
-		res.addObject("maxSponsorshipPerProvider", this.sponsorshipService.maxSponsorshipPerProvider());
-		res.addObject("avgSponsorshipPerProvider", this.sponsorshipService.avgSponsorshipPerProvider());
-		res.addObject("sttdevSponsorshipPerProvider", this.sponsorshipService.sttdevSponsorshipPerProvider());
+		// The average, the minimum, the maximum, and the standard deviation of the
+		// audit score of the positions stored in the system
+		Object[] positionScoreStats = this.positionService.avgMinMaxStddevPositionAuditScore();
+		res.addObject("avgPositionScore", positionScoreStats[0]);
+		res.addObject("minPositionScore", positionScoreStats[1]);
+		res.addObject("maxPositionScore", positionScoreStats[2]);
+		res.addObject("stddevPositionScore", positionScoreStats[3]);
+		
+		// The average, the minimum, the maximum, and the standard deviation of the
+		// audit score of the companies that are registered in the system.
+		Object[] companyScoreStats = this.companyService.avgMinMaxStddevCompanyAuditScore();
+		res.addObject("avgCompanyScore", companyScoreStats[0]);
+		res.addObject("minCompanyScore", companyScoreStats[1]);
+		res.addObject("maxCompanyScore", companyScoreStats[2]);
+		res.addObject("stddevCompanyScore", companyScoreStats[3]);
 
-		res.addObject("minSponsorshipPerPosition", this.sponsorshipService.minSponsorshipPerPosition());
-		res.addObject("maxSponsorshipPerPosition", this.sponsorshipService.maxSponsorshipPerPosition());
-		res.addObject("avgSponsorshipPerPosition", this.sponsorshipService.avgSponsorshipPerPosition());
-		res.addObject("sttdevSponsorshipPerPosition", this.sponsorshipService.sttdevSponsorshipPerPosition());
+		// The companies with the highest audit score
+		res.addObject("companiesHighestScore", this.companyService.getCompaniesWithHighestAuditScore());
 
-		res.addObject("sponsorshipProvider", this.providerService.sponsorshipProvider());
-		//AM2
-		res.addObject("logo", this.getLogo());
-		res.addObject("system", this.getSystem());
+		// The average salary offered by the positions that have the highest average
+		// audit score (This translates to the avg salary of the company with highest audit score)
+		res.addObject("avgSalaryCompanyHighestScore", this.companyService.avgSalaryOfCompanyHighestScore());
 		return res;
 	}
 
@@ -685,4 +681,37 @@ public class AdministratorController extends AbstractController {
 		res.addObject("system", this.getSystem());
 		return res;
 	}
+
+	@RequestMapping(value = "/calculateCompaniesScores", method = RequestMethod.GET)
+	public ModelAndView calculateCompaniesScores() {
+
+		ModelAndView res;
+
+		try {
+			this.adminService.calculateCompaniesScore();
+			res = new ModelAndView("redirect:/administrator/dashboard.do");
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return res;
+	}
 }
+
+		res.addObject("minItemPerProvider", this.itemService.minItemPerProvider());
+		res.addObject("maxItemPerProvider", this.itemService.maxItemPerProvider());
+		res.addObject("avgItemPerProvider", this.itemService.avgItemPerProvider());
+		res.addObject("sttdevItemPerProvider", this.itemService.sttdevItemPerProvider());
+
+		res.addObject("minSponsorshipPerProvider", this.sponsorshipService.minSponsorshipPerProvider());
+		res.addObject("maxSponsorshipPerProvider", this.sponsorshipService.maxSponsorshipPerProvider());
+		res.addObject("avgSponsorshipPerProvider", this.sponsorshipService.avgSponsorshipPerProvider());
+		res.addObject("sttdevSponsorshipPerProvider", this.sponsorshipService.sttdevSponsorshipPerProvider());
+
+		res.addObject("minSponsorshipPerPosition", this.sponsorshipService.minSponsorshipPerPosition());
+		res.addObject("maxSponsorshipPerPosition", this.sponsorshipService.maxSponsorshipPerPosition());
+		res.addObject("avgSponsorshipPerPosition", this.sponsorshipService.avgSponsorshipPerPosition());
+		res.addObject("sttdevSponsorshipPerPosition", this.sponsorshipService.sttdevSponsorshipPerPosition());
+
+		res.addObject("sponsorshipProvider", this.providerService.sponsorshipProvider());
+		//AM2

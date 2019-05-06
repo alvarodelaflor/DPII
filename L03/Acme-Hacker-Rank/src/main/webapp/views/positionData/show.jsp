@@ -28,10 +28,10 @@
 
 	<div>
 		<jstl:if test="${hackerLogin==true}">
-			<form method="get" action="/Acme-Hacker-Rank/positionData/hacker/delete.do">
+			<form method="get" action="positionData/hacker/delete.do">
 				<button class="linea" name="positionDataId" value="${positionData.id}"><spring:message code="curricula.delete"/></button>
 			</form>
-			<form method="get" action="/Acme-Hacker-Rank/positionData/hacker/edit.do">
+			<form method="get" action="positionData/hacker/edit.do">
 				<button name="positionDataId" value="${positionData.id}"><spring:message code="curricula.edit"/></button>
 			</form>
 			<br>	
@@ -54,7 +54,7 @@
 		</legend>
 		<p><strong><spring:message code="position.ticker" /></strong> <jstl:out value="${positionData.position.ticker}"></jstl:out></p>
 		<p><strong><spring:message code="position.title" /></strong> <jstl:out value="${positionData.position.title}"></jstl:out></p>
-		<form method="get" action="/Acme-Hacker-Rank/position/show.do">
+		<form method="get" action="position/show.do">
 			<button name="id" value="${positionData.position.id}"><spring:message code="positionData.goLink"/></button>
 		</form>
 	</fieldset>

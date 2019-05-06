@@ -18,14 +18,29 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jstl:if test="${auditorLogger==true}">
-	<form method="get" action="audit/auditor/create.do">
-		<button>
-			<spring:message code="createAudit" />
-		</button>
-	</form>
-	<br>
-</jstl:if>
+
+<c:choose>
+	<c:when test="${not empty positions}">
+		<form method="get" action="audit/auditor/create.do">
+			<button>
+				<spring:message code="createAudit" />
+			</button>
+		</form>
+		<br>
+	</c:when>
+	<c:otherwise>
+		<c:choose>
+			<c:when test="${auditorLogger==true}">
+				<spring:message code="audit.emptyPositions" />
+				<br>
+				<br>			
+			</c:when>
+			<c:otherwise>
+
+			</c:otherwise>
+		</c:choose>
+	</c:otherwise>
+</c:choose>
 
 <jstl:if test="${auditorLogger==true}">
 	<strong><spring:message code="audit.finalModeList" /></strong>
@@ -62,4 +77,4 @@
 	<br>
 	</jstl:if>
 <br>
-<input type="button" value=<spring:message code="audit.back" /> name="audit.back" onclick="history.back()" />
+<acme:cancel url="#" code="back"/>

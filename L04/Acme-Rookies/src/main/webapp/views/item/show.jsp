@@ -18,51 +18,30 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<security:authorize access="hasRole('PROVIDER')">
-	<style>
-		.linea
-		{
-		    float: left;
-		}
-	</style>
-
-	<div>
-		<jstl:if test="${providerLogin==true}">
-			<form method="get" action="item/provider/delete.do">
-				<button class="linea" name="itemId" value="${item.id}"><spring:message code="item.delete"/></button>
-			</form>
+<div>
+		<jstl:if test="${owner==true}">
+			<acme:cancel url="item/provider/delete.do?itemId=${item.id}" code="item.delete"/>
 			<form method="get" action="item/provider/edit.do">
 				<button name="itemId" value="${item.id}"><spring:message code="item.edit"/></button>
 			</form>
 			<br>	
 		</jstl:if>
 	</div>
-</security:authorize> 
-<div class="content">
-	
-		<p><strong><spring:message code="item.name" /></strong><jstl:out value="${item.name}"></jstl:out></p>
-		<p><strong><spring:message code="item.description" /></strong><jstl:out value="${item.description}"></jstl:out></p>
-		<fieldset>
-			<legend>
-				<i><spring:message code="item.link" /></i><a href="${item.link}"><jstl:out value= "${item.link }"/></a>
-			</legend>
-			<p><strong>Provider <spring:message code="provider.name" /></strong><jstl:out value="${item.provider.name}"></jstl:out></p>
-		</fieldset>
-	<fieldset>
-		
-		<br>
-		
-	</fieldset>
-</div>
 
+<div class="content">
+	<table>
+		<tr><td><strong><spring:message code="item.name" />:</strong> <jstl:out	value="${item.name}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="item.description" />:</strong> <jstl:out value="${item.description}"></jstl:out></td></tr>
+		<tr><td><strong><spring:message code="item.link" />:</strong> <jstl:out value="${item.link}"></jstl:out></td></tr>
+	</table>
+</div>
 <br>
 
-		<c:choose>
-    		<c:when test="${providerLogin==true}">
-    			<acme:cancel url="item/listProvider.do?providerId=${item.provider.id}" code="back"/>  		
-    		</c:when>   
-    		<c:otherwise>
-				<input type="button" value="back" name="back" onclick="history.back()" />
-    		</c:otherwise>
-        </c:choose>	
-    			
+<display:table pagesize="5" name="${pictures}" id="picture"
+	requestURI="${requestURI}">
+	<display:column titleKey="item.pictures">
+		<img width="300" src="${picture.trim()}" alt="Error" >
+	</display:column>
+</display:table>
+<input type="button" value=<spring:message code="item.back" /> name="item.back" onclick="history.back()" />
+

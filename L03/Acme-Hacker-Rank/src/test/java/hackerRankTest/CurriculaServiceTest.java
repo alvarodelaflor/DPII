@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import domain.Curricula;
-import domain.Hacker;
 import services.CurriculaService;
 import services.HackerService;
 import utilities.AbstractTest;
+import domain.Curricula;
+import domain.Hacker;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -68,6 +68,7 @@ public class CurriculaServiceTest extends AbstractTest {
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
 			hacker.setSurname("hackersurname");
+			hacker.setVatNumber("dd33f");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
 			final Hacker saved = this.hackerService.saveCreate(hacker);
@@ -130,6 +131,7 @@ public class CurriculaServiceTest extends AbstractTest {
 			hacker.setEmail("elcejas@hacker.com");
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
+			hacker.setVatNumber("dd33f");
 			hacker.setSurname("hackersurname");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
@@ -194,6 +196,8 @@ public class CurriculaServiceTest extends AbstractTest {
 			hacker.setEmail("elcejas@hacker.com");
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
+			hacker.setVatNumber("dd33f");
+
 			hacker.setSurname("hackersurname");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");
@@ -260,6 +264,7 @@ public class CurriculaServiceTest extends AbstractTest {
 			hacker.setEmail("elcejas@hacker.com");
 			hacker.setName("hackername");
 			hacker.setPhone("123456789");
+			hacker.setVatNumber("dd33f");
 			hacker.setSurname("hackersurname");
 			hacker.getUserAccount().setUsername("hackeruser");
 			hacker.getUserAccount().setPassword("hackerpass");

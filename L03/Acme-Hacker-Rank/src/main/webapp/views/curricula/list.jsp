@@ -19,7 +19,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jstl:if test="${hackerLogger==true}">
-	<form method="get" action="/Acme-Hacker-Rank/curricula/hacker/create.do">
+	<form method="get" action="curricula/hacker/create.do">
 		<button>
 			<spring:message code="createCurricula" />
 		</button>

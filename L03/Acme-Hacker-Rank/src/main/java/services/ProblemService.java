@@ -146,7 +146,7 @@ public class ProblemService {
 		return res;
 	}
 
-	public void save(final Problem problem) {
+	public Problem save(final Problem problem) {
 		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"), "Save failed: Logged user is not a company");
 		if (problem.getId() != 0) {
 			// Problem exists so we must be the owner
@@ -155,7 +155,7 @@ public class ProblemService {
 			// Database problem has to be in draft mode
 			Assert.isTrue(this.getDatabaseProblemFinalMode(problem.getId()) == false, "Save failed: Problem is in final mode");
 		}
-		this.problemRepository.save(problem);
+		return this.problemRepository.save(problem);
 	}
 
 	public Collection<Problem> getFinalModeFromLoggedCompanyNotInPosition(final int positionId) {

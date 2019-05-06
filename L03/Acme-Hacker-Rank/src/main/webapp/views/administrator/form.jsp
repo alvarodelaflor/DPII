@@ -45,7 +45,7 @@
 				<legend>
 					<spring:message code="actor.vatNumer" />
 				</legend>
-				<acme:textbox code="actor.vat" path="vatNumber" placeholder="CAR1234567r"/>	
+				<acme:textbox code="actor.vat" path="vatNumber" placeholder="CA1234567r"/>	
 				</fieldset>
 				<br>
 				<spring:message code="admin.conditions" var="termsAndConditions"/>

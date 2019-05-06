@@ -18,24 +18,12 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
 
-	private String	systemName, countryCode, banner, systemMessageEs, systemMessageEn;
-	private Integer	cacheHours, cacheAmount;
-	private Double	fair, VAT;
-
-
-	public Integer getFirsTime() {
-		return this.firsTime;
-	}
-
-	public void setFirsTime(final Integer firsTime) {
-		this.firsTime = firsTime;
-	}
-
+	private String				systemName, countryCode, banner, systemMessageEs, systemMessageEn;
+	private Integer				cacheHours, cacheAmount;
+	private Double				fair, VAT;
 
 	private Collection<String>	spamWords;
 	private Collection<String>	priorities;
-
-	private Integer				firsTime;
 
 
 	@Min(0)
@@ -144,3 +132,12 @@ public class Configuration extends DomainEntity {
 	}
 
 }
+
+	private Integer				firsTime;
+	public Integer getFirsTime() {
+		return this.firsTime;
+	}
+	public void setFirsTime(final Integer firsTime) {
+
+		this.firsTime = firsTime;
+	}

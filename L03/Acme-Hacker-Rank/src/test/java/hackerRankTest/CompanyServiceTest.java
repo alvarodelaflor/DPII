@@ -75,22 +75,23 @@ public class CompanyServiceTest extends AbstractTest {
 			{
 				// Test positivo: Create a company
 				// name, surname, photo, email, phone, address, userName, password, commercialName
-				"pruebaCreateCompany", "pruebaCreateCompany", "http://pruebaCreateCompany", "pruebaCreateCompany@pruebaCreateCompany", "", "", "pruebaCreateCompany", "pruebaCreateCompany", "pruebaCreateCompany", null
+				"pruebaCreateCompany", "pruebaCreateCompany", "http://pruebaCreateCompany", "pruebaCreateCompany@pruebaCreateCompany", "", "", "pruebaCreateCompany", "pruebaCreateCompany", "pruebaCreateCompany", "dd33f", null
+
 			}, {
 				// Test negativo: Create a company
 				// name, surname, photo, email, phone, address, userName, password, commercialName
-				"", "", "pruebaCreateCompany", "pruebaCreateCompany", "", "", "", "", "", IllegalArgumentException.class
+				"", "", "pruebaCreateCompany", "pruebaCreateCompany", "", "", "", "", "", "dd33ff", IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
 			this.Diver01((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6], (String) testingData[i][7],
-				(String) testingData[i][8], (Class<?>) testingData[i][9]);
+				(String) testingData[i][8], (String) testingData[i][9], (Class<?>) testingData[i][10]);
 	}
-
 	// Ancillary methods ------------------------------------------------------
 
-	protected void Diver01(final String name, final String surname, final String photo, final String email, final String phone, final String address, final String userName, final String password, final String comercialName, final Class<?> expected) {
+	protected void Diver01(final String name, final String surname, final String photo, final String email, final String phone, final String address, final String userName, final String password, final String comercialName, final String vat,
+		final Class<?> expected) {
 		Class<?> caught = null;
 
 		try {
@@ -104,6 +105,7 @@ public class CompanyServiceTest extends AbstractTest {
 			company.setPhone(phone);
 			company.setPhoto(photo);
 			company.setSurname(surname);
+			company.setVatNumber(vat);
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String hashPassword = encoder.encodePassword(password, null);
@@ -164,6 +166,7 @@ public class CompanyServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("ca22d");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -252,6 +255,7 @@ public class CompanyServiceTest extends AbstractTest {
 			company.setName("soyUnNombre");
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
+			company.setVatNumber("ca22d");
 			company.setSurname("SoyUnaPreuba");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
@@ -288,6 +292,7 @@ public class CompanyServiceTest extends AbstractTest {
 			companyError.setPhone("123456");
 			companyError.setPhoto("http://companyError");
 			companyError.setSurname("companyError");
+			companyError.setVatNumber("ca22d");
 			companyError.getUserAccount().setUsername("companyError");
 
 			final Md5PasswordEncoder encoder1 = new Md5PasswordEncoder();
@@ -477,6 +482,7 @@ public class CompanyServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("ca22d");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -545,6 +551,7 @@ public class CompanyServiceTest extends AbstractTest {
 			company.setPhone("123456");
 			company.setPhoto("http://SoyUnaFoto");
 			company.setSurname("SoyUnaPreuba");
+			company.setVatNumber("ca22d");
 			company.getUserAccount().setUsername("soyUnaPrueba");
 
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -604,8 +611,6 @@ public class CompanyServiceTest extends AbstractTest {
 
 			if (user != null)
 				super.authenticate(user);
-
-			this.startTransaction();
 
 			final Company companyFind = this.companyService.getCompanyByUserAccountId(12345);
 			companyFind.getAddress();

@@ -1,7 +1,9 @@
+
 package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,28 +16,31 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
-import domain.Audit;
-import domain.Auditor;
-import domain.CreditCard;
-import forms.ActorForm;
 import repositories.ActorRepository;
 import repositories.AuditorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
+import domain.Audit;
+import domain.Auditor;
+import domain.CreditCard;
+import forms.ActorForm;
 
 @Service
 @Transactional
 public class AuditorService {
 
 	@Autowired
-	private AuditorRepository auditorRepository;
+	private AuditorRepository		auditorRepository;
 	@Autowired
-	private ActorRepository actorRepository;
+	private ActorRepository			actorRepository;
 	@Autowired
-	private ConfigurationService configurationService;
+	private ConfigurationService	configurationService;
 	@Autowired
-	private Validator validator;
+	private Validator				validator;
+
+
 	// CRUD METHODS
 
 	/**
@@ -44,17 +49,30 @@ public class AuditorService {
 	 * @return {@link Auditor}
 	 */
 	public Auditor create() {
+		final Authority authority1 = new Authority();
+		authority1.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority1));
 		final Auditor auditor = new Auditor();
 		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
-		authority.setAuthority(Authority.ROOKIE);
+		authority.setAuthority(Authority.AUDITOR);
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
 		auditor.setUserAccount(user);
 		final CreditCard creditCard = new CreditCard();
 		auditor.setCreditCard(creditCard);
 		return auditor;
+	}
+	
+	/**
+	 * Get a collection with all {@link Actor} in database with {@link Auditor} authority.
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection} <{@link Audit}>
+	 */
+	public Collection<Auditor> findAll() {
+		return this.auditorRepository.findAll();
 	}
 
 	/**
@@ -93,7 +111,7 @@ public class AuditorService {
 
 		result.setCreditCard(creditCard);
 
-		checkErrors(actorForm, binding);
+		this.checkErrors(actorForm, binding);
 
 		result.getUserAccount().setUsername(actorForm.getUserName());
 
@@ -107,15 +125,13 @@ public class AuditorService {
 		return result;
 	}
 
-	
-
 	/**
 	 * Get an auditor by auditorId
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
-	public Auditor findOne(int auditorId) {
+	public Auditor findOne(final int auditorId) {
 		return this.auditorRepository.findOne(auditorId);
 	}
 
@@ -129,7 +145,7 @@ public class AuditorService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
-	public Auditor getAuditorByUserAccountId(int userAccountId) {
+	public Auditor getAuditorByUserAccountId(final int userAccountId) {
 		return this.auditorRepository.getAuditorByUserAccountId(userAccountId);
 	}
 
@@ -142,9 +158,9 @@ public class AuditorService {
 	public Auditor getAuditorLogin() {
 		Auditor res;
 		try {
-			int aux = LoginService.getPrincipal().getId();
+			final int aux = LoginService.getPrincipal().getId();
 			res = this.getAuditorByUserAccountId(aux);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = null;
 		}
 		return res;
@@ -175,7 +191,7 @@ public class AuditorService {
 			final String part1 = parts[0]; // MM
 			final String part2 = parts[1]; // YY
 
-			Calendar calendar = Calendar.getInstance();
+			final Calendar calendar = Calendar.getInstance();
 			final int monthRigthNow = calendar.getTime().getMonth();
 			final int monthCreditCard = Integer.parseInt(part1);
 
@@ -240,5 +256,10 @@ public class AuditorService {
 			binding.addError(error);
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
+	}
+	
+	
+	public void flush() {
+		this.auditorRepository.flush();
 	}
 }
