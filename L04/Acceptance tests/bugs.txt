@@ -6,7 +6,7 @@ RQ 13 -> When cancel button is used in edit view, it redirect to welcome page in
 	
 RQ 13 -> When admin tries to collect a sponsorship's charche, it is redirected to dashboard intead. (FRAN)
 
-RQ 4.3 -> El método que calcula la puntuación de auditoría de la compañía multiplica por 15000 la puntuación real
+RQ 4.3 -> El método que calcula la puntuación de auditoría de la compañía multiplica por 15000 la puntuación real (HIPONA)
 
 === Acme-Hacker-Rank ===
 RQ 24 -> Titles' Key banned and spammer are swapped in companie´s table (FRAN)
@@ -18,3 +18,5 @@ RQ 8.2 -> Cuando editas el teléfono de un actor y hay que añadir por defecto el 
 RQ 10 -> La fecha de aplicación y de respuesta de una aplicación están cambiadas (CARMEN)
 
 RQ 7 -> No funciona bien la paginación del listado de position (CARMEN)
+
+RQ 9.3 -> Ambos botones en la vista para aceptar o rechazar una solicitud rechazan la solicitud (HIPONA)
