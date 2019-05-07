@@ -22,15 +22,6 @@
 
 <div class="content">
 
-	<head>
-		<style>
-			 img {
-			 width: 25%;
-			 height: 25%;
-			 }
-		</style>
-	</head>
-
 	<div>
 		<img alt="" src="${sponsorship.banner}">
 	</div>

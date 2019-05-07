@@ -22,7 +22,7 @@ import domain.Message;
 import domain.Tag;
 
 @Service
-@Transactional
+//@Transactional
 public class MessageService {
 
 	@Autowired
@@ -198,4 +198,5 @@ public class MessageService {
 			this.messageRepository.delete(message);
 		}
 	}
+
 }

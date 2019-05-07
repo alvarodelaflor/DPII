@@ -110,6 +110,7 @@
 		<property name="cacheHours" value="1" />
 		<property name="fair" value="150.0" />
 		<property name="VAT" value="21.0" />
+		<property name="firsTime" value="0" />
 		<property name="cacheAmount" value="10" />
 		<property name="systemMessageEs" value="¡Bienvenidos a Acme Rookie Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
 		<property name="systemMessageEn" value="Welcome to Acme rookie Rank! We’re IT rookie’s favourite job marketplace!" />
@@ -370,6 +371,15 @@
         </property>
     </bean>
     
+    <bean id="problem11" class="domain.Problem">
+    	<property name="title" value="title11" />
+    	<property name="statement" value="statement11" />
+		<property name="hint" value="hint11" />
+		<property name="finalMode" value="false" />
+        <property name="attachments" value="attachments11" />  
+        <property name="company" ref= "company01"/> 
+    </bean>
+    
     <bean id="problem02" class="domain.Problem">
     	<property name="title" value="title02" />
     	<property name="statement" value="statement02" />
@@ -467,6 +477,18 @@
     	<property name="link" value="http://link02" />
 		<property name="status" value="REJECTED" />
 		<property name="position" ref="position02" />
+        <property name="problem" ref="problem02" />    
+        <property name="rookie" ref= "rookie01"/> 
+        <property name="applyMoment" value= "2018/11/10 08:00"/>  
+        <property name="creationMoment" value= "2018/12/10 08:00"/>              
+        <property name="curricula" ref= "curricula02"/>           
+    </bean>
+    
+    <bean id="application03" class="domain.Application">
+    	<property name="response" value="response03" />
+    	<property name="link" value="http://link03" />
+		<property name="status" value="SUBMITTED" />
+		<property name="position" ref="position03" />
         <property name="problem" ref="problem02" />    
         <property name="rookie" ref= "rookie01"/> 
         <property name="applyMoment" value= "2018/11/10 08:00"/>  

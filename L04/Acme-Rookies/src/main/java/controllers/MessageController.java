@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,10 +34,13 @@ import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
+import services.ConfigurationService;
 import services.MessageService;
 import services.TagService;
 import domain.Actor;
+import domain.Configuration;
 import domain.Message;
+import domain.Rookie;
 import domain.Tag;
 
 @Controller
@@ -49,6 +53,8 @@ public class MessageController extends AbstractController {
 	private ActorService			actorService;
 	@Autowired
 	private AdministratorService	adminService;
+	@Autowired
+	private ConfigurationService	configService;
 	@Autowired
 	private TagService				tagService;
 
@@ -271,20 +277,34 @@ public class MessageController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "messageId", defaultValue = "-1") final int messageId) {
 		ModelAndView result;
+		try {
+				
+			UserAccount user = LoginService.getPrincipal();
+			Actor logged = actorService.getActorByUserId(user.getId());
+			
+			
+			
+			final Tag tag = this.tagService.getTagByMessage(messageId);
 
-		final Tag tag = this.tagService.getTagByMessage(messageId);
-
-		final Message msg = this.messageService.findOne(messageId);
-		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
-		result = new ModelAndView("message/show");
-		result.addObject("msg", msg);
-		result.addObject("tag", tag);
-		result.addObject("language", language);
-		result.addObject("requestURI", "message/show.do");
-		//		result.addObject("logo", this.welcomeService.getLogo());
-		//		result.addObject("system", this.welcomeService.getSystem());
-		result.addObject("logo", this.getLogo());
-		result.addObject("system", this.getSystem());
+			final Message msg = this.messageService.findOne(messageId);
+			
+			Assert.isTrue(logged.getMessages().contains(msg));
+			
+			
+			final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+			result = new ModelAndView("message/show");
+			result.addObject("msg", msg);
+			result.addObject("tag", tag);
+			result.addObject("language", language);
+			result.addObject("requestURI", "message/show.do");
+			//		result.addObject("logo", this.welcomeService.getLogo());
+			//		result.addObject("system", this.welcomeService.getSystem());
+			result.addObject("logo", this.getLogo());
+			result.addObject("system", this.getSystem());
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		
 		return result;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -301,6 +321,7 @@ public class MessageController extends AbstractController {
 		Assert.notNull(msg, "msg.null");
 
 		try {
+			Assert.isTrue(a.getMessages().contains(msg));
 			System.out.println("entra en el try");
 			this.messageService.remove(msg);
 			//			final Collection<Message> sendMessages = new ArrayList<>();
@@ -318,15 +339,9 @@ public class MessageController extends AbstractController {
 		} catch (final Exception e) {
 			System.out.println(e);
 			System.out.println("entro en el catch");
-			result = new ModelAndView("message/show");
-			result.addObject("msg", msg);
+			
+			result = show(msg.getId());			
 		}
-
-		result.addObject("language", language);
-		//		result.addObject("logo", this.welcomeService.getLogo());
-		//		result.addObject("system", this.welcomeService.getSystem());
-		result.addObject("logo", this.getLogo());
-		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -434,6 +449,66 @@ public class MessageController extends AbstractController {
 
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	@RequestMapping(value = "/sendRebranding", method = RequestMethod.GET)
+	public ModelAndView sendRebranding() {
+		ModelAndView result;
+
+		try {
+			Configuration config = configService.getConfiguration();
+			
+			if (config.getFirsTime() == 0) {
+				final UserAccount log = LoginService.getPrincipal();
+				final Actor logged = this.actorService.getActorByUserId(log.getId());
+
+				
+				final List<String> emails = (List<String>) actorService.getEmailOfActors();
+				emails.remove(logged.getEmail());
+				
+
+				Message sended = this.messageService.create();
+				sended.setSubject("Change in application state");
+				final Collection<String> me = new ArrayList<>();
+				sended.setRecipient(me);
+				sended.setBody("Rebranding");
+				sended.setMoment(LocalDate.now().toDate());
+
+				final Tag noti = this.tagService.create();
+				noti.setTag("SYSTEM");
+				final Collection<Tag> tags = new ArrayList<>();
+				tags.add(noti);
+				sended.setTags(tags);
+				for (int i = 0; i < emails.size(); i++) {
+					final Actor a = this.actorService.getActorByEmailOnly(emails.get(i));
+					sended = this.messageService.exchangeMessage(sended, a.getId());
+				}
+				this.messageService.save(sended);
+
+				final List<Tag> newList = new ArrayList<>();
+				newList.addAll(sended.getTags());
+				for (int i = 0; i < newList.size(); i++) {
+					newList.get(i).setMessageId(sended.getId());
+					final Tag save = this.tagService.save(newList.get(i));
+				}
+				config.setFirsTime(1);
+				configService.save(config);
+				result = new ModelAndView("redirect:/administrator/list.do");
+			} else {
+				result = new ModelAndView("redirect:/administrator/list.do");
+			}
+			
+
+		} catch (final Throwable oops) {
+			final Configuration config = this.configService.getConfiguration();
+
+			result = new ModelAndView("redirect:/administrator/list.do");
+		}
+
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+
 		return result;
 	}
 }

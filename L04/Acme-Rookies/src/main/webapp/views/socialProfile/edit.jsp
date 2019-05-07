@@ -24,9 +24,6 @@
   
     <article>
       <header>
-        <h2>
-        	<spring:message code="actor.edit.socialProfile" />
-        </h2>
       </header>
       
       <div class="content">

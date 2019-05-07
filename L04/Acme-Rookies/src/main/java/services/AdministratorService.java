@@ -2,7 +2,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -227,17 +226,20 @@ public class AdministratorService extends ActorService {
 
 	public void calculateCompaniesScore() {
 		final List<Object[]> scoresAndCompanies = this.companyService.getCompaniesScores();
-		if (scoresAndCompanies.isEmpty()) return;
+		if (scoresAndCompanies.isEmpty())
+			return;
 
 		// We get the minimum and maximum (to map them min->0 max->1)
-		Double max = (Double) scoresAndCompanies.get(0)[0];
-		Double min = (Double) scoresAndCompanies.get(scoresAndCompanies.size() - 1)[0];
+		final Double max = (Double) scoresAndCompanies.get(0)[0];
+		final Double min = (Double) scoresAndCompanies.get(scoresAndCompanies.size() - 1)[0];
 
 		// Now we can iterate through each company and set its score (range 0..1)
 		// mappedScore = (score - min) / (max - min)
 		for (final Object[] o : scoresAndCompanies) {
 			final Double score = (Double) o[0];
-			final Double mappedScore = (score - min) / (max - min);
+			// TODO: INSERTING A BUG (MULTIPLYING THE SCORE * 15000)
+			// final Double mappedScore = (score - min) / (max - min); THIS IS THE CORRECT LINE
+			final Double mappedScore = ((score - min) / (max - min)) * 15000;
 			Company company = (Company) o[1];
 			company = this.companyService.findOne(company.getId());
 			company.setAuditScore(mappedScore);
