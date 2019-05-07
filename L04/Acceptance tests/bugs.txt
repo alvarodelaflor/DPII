@@ -1,27 +1,32 @@
-Acme-Rookies
-RQ 3 -> When an audit is created at the creation date, 30 minutes have been subtracted. (ÁLVARO)
-	Secure HTML is not used in the text of audit. (ÁLVARO)
+=== Acme-Rookies ===
+RQ 3 -> When an audit is created at the creation date, 30 minutes have been subtracted. (ï¿½LVARO)
+	Secure HTML is not used in the text of audit. (ï¿½LVARO)
 
 RQ 13 -> When cancel button is used in edit view, it redirect to welcome page instead. (FRAN)
 	
 RQ 13 -> When admin tries to collect a sponsorship's charche, it is redirected to dashboard intead. (FRAN)
 
-Acme-Hacker-Rank
-RQ 24 -> Titles' Key banned and spammer are swapped in companie´s table (FRAN)
+RQ 4.3 -> El mï¿½todo que calcula la puntuaciï¿½n de auditorï¿½a de la compaï¿½ï¿½a multiplica por 15000 la puntuaciï¿½n real (HIPONA)
 
-RQ 17.1 -> The github link can be left blank. (ÁLVARO)
+=== Acme-Hacker-Rank ===
+RQ 24 -> Titles' Key banned and spammer are swapped in companieï¿½s table (FRAN)
 
-RQ 8.2 -> Cuando editas el teléfono de un actor y hay que añadir por defecto el +34 al teléfono, se añade un 6 al final del teléfono (CARMEN)
+RQ 17.1 -> The github link can be left blank. (ï¿½LVARO)
 
-RQ 10 -> La fecha de aplicación y de respuesta de una aplicación están cambiadas (CARMEN)
+RQ 8.2 -> Cuando editas el telï¿½fono de un actor y hay que aï¿½adir por defecto el +34 al telï¿½fono, se aï¿½ade un 6 al final del telï¿½fono (CARMEN)
 
-RQ 7 -> No funciona bien la paginación del listado de position (CARMEN)
+RQ 10 -> La fecha de aplicaciï¿½n y de respuesta de una aplicaciï¿½n estï¿½n cambiadas (CARMEN)
+
+RQ 7 -> No funciona bien la paginaciï¿½n del listado de position (CARMEN)
 
 RQ 23.2 -> El momento de los mensajes no guarda la hora(ANTONIO)
 
-RQ 23.1 -> El botón cancel de show de social profile redirige a inicio(ANTONIO)
+RQ 23.1 -> El botï¿½n cancel de show de social profile redirige a inicio(ANTONIO)
 
-RQ 23.1 -> El máximo y el mínimo de patrocinios por encargo y por proveedores están intercambiados(ANTONIO)
+RQ 23.1 -> El mï¿½ximo y el mï¿½nimo de patrocinios por encargo y por proveedores estï¿½n intercambiados(ANTONIO)
 
 
 
+
+
+RQ 9.3 -> Ambos botones en la vista para aceptar o rechazar una solicitud rechazan la solicitud (HIPONA)
