@@ -16,3 +16,12 @@ RQ 8.2 -> Cuando editas el teléfono de un actor y hay que añadir por defecto el 
 RQ 10 -> La fecha de aplicación y de respuesta de una aplicación están cambiadas (CARMEN)
 
 RQ 7 -> No funciona bien la paginación del listado de position (CARMEN)
+
+RQ 23.2 -> El momento de los mensajes no guarda la hora(ANTONIO)
+
+RQ 23.1 -> El botón cancel de show de social profile redirige a inicio(ANTONIO)
+
+RQ 23.1 -> El máximo y el mínimo de patrocinios por encargo y por proveedores están intercambiados(ANTONIO)
+
+
+
