@@ -1,4 +1,4 @@
-=== Acme-Rookies ===
+﻿=== Acme-Rookies ===
 RQ 3 -> When an audit is created at the creation date, 30 minutes have been subtracted. (�LVARO)
 	Secure HTML is not used in the text of audit. (�LVARO)
 
@@ -8,6 +8,7 @@ RQ 13 -> When admin tries to collect a sponsorship's charche, it is redirected t
 
 RQ 4.3 -> El m�todo que calcula la puntuaci�n de auditor�a de la compa��a multiplica por 15000 la puntuaci�n real (HIPONA)
 
+RQ 10 -> A non provider user can delete an item.
 === Acme-Hacker-Rank ===
 RQ 24 -> Titles' Key banned and spammer are swapped in companie�s table (FRAN)
 
