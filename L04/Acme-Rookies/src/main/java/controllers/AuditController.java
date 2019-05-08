@@ -1,8 +1,8 @@
 /*
  * AuditController.java
- * 
+ *
  * Copyright (C) 2019 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -29,7 +29,7 @@ import services.PositionService;
 
 /*
  * CONTROL DE CAMBIOS CurriculaRookieController.java
- * 
+ *
  * ALVARO 09/03/2019 11:30 CREACION DE LA CLASE
  */
 
@@ -39,14 +39,14 @@ public class AuditController extends AbstractController {
 
 	// Suported Services
 	@Autowired
-	private AuditService auditService;
+	private AuditService	auditService;
 	@Autowired
-	private AuditorService auditorService;
+	private AuditorService	auditorService;
 	@Autowired
-	private PositionService positionService;
-	
+	private PositionService	positionService;
+
 	// Default Messages
-	private String notFoundAudit = "The audit has not been found in database by ID.";
+	private final String	notFoundAudit	= "The audit has not been found in database by ID.";
 
 
 	// Constructors -----------------------------------------------------------
@@ -54,8 +54,8 @@ public class AuditController extends AbstractController {
 	public AuditController() {
 		super();
 	}
-	
-	private void setConfig(ModelAndView result) {
+
+	private void setConfig(final ModelAndView result) {
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 	}
@@ -66,10 +66,10 @@ public class AuditController extends AbstractController {
 		try {
 			result = new ModelAndView("audit/list");
 			Auditor auditor = this.auditorService.findOne(auditorId);
-			Auditor auditorLogger = this.auditorService.getAuditorLogin();
-			if (auditor == null || (auditorLogger != null && auditor.equals(auditorLogger)) ) {
+			final Auditor auditorLogger = this.auditorService.getAuditorLogin();
+			if (auditor == null || (auditorLogger != null && auditor.equals(auditorLogger))) {
 				auditor = auditorLogger;
-				Collection<Position> aux = this.positionService.findAllPositionWithStatusTrueCancelFalse();
+				final Collection<Position> aux = this.positionService.findAllPositionWithStatusTrueCancelFalse();
 				aux.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));
 				result.addObject("positions", aux);
 				result.addObject("auditorLogger", true);
@@ -90,16 +90,16 @@ public class AuditController extends AbstractController {
 
 		ModelAndView result;
 		try {
-			Auditor auditorLogger = this.auditorService.getAuditorLogin();
+			final Auditor auditorLogger = this.auditorService.getAuditorLogin();
 			final Audit auditDB = this.auditService.findOne(auditId);
-			Assert.notNull(auditDB, notFoundAudit);
+			Assert.notNull(auditDB, this.notFoundAudit);
 			result = new ModelAndView("audit/show");
 			result.addObject("audit", auditDB);
-			if (auditDB.getAuditor()!=null && auditDB.getAuditor().equals(auditorLogger) && auditDB.getStatus()!=null && auditDB.getStatus().equals(false)) {
+			if (auditDB.getAuditor() != null && auditDB.getAuditor().equals(auditorLogger) && auditDB.getStatus() != null && auditDB.getStatus().equals(false)) {
 				result.addObject("auditLogin", true);
 				result.addObject("auditorLogger", true);
 			}
-			
+
 			result.addObject("requestURI", "audit/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -107,4 +107,5 @@ public class AuditController extends AbstractController {
 		this.setConfig(result);
 		return result;
 	}
+
 }

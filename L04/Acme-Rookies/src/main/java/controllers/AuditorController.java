@@ -11,23 +11,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AuditorService;
 import domain.Auditor;
-import domain.Company;
 import forms.RegistrationForm;
 import security.LoginService;
+import services.AuditorService;
 
 @Controller
 @RequestMapping("/auditor")
 public class AuditorController extends AbstractController {
 
 	@Autowired
-	private AuditorService	auditorService;
+	private AuditorService auditorService;
 
 
-	// CREATE ---------------------------------------------------------------		
+	// CREATE ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -44,7 +44,7 @@ public class AuditorController extends AbstractController {
 		return result;
 	}
 
-	// SAVE-CREATE ---------------------------------------------------------------		
+	// SAVE-CREATE ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final RegistrationForm registrationForm, final BindingResult binding) {
@@ -91,8 +91,8 @@ public class AuditorController extends AbstractController {
 		result.addObject("system", this.getSystem());
 		return result;
 	}
-	
-	// EDIT ---------------------------------------------------------------		
+
+	// EDIT ---------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
@@ -113,7 +113,7 @@ public class AuditorController extends AbstractController {
 		return result;
 	}
 
-	// SAVE-EDIT ---------------------------------------------------------------		
+	// SAVE-EDIT ---------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
 	public ModelAndView saveEdit(Auditor auditor, final BindingResult binding) {
@@ -157,8 +157,8 @@ public class AuditorController extends AbstractController {
 		result.addObject("system", this.getSystem());
 		return result;
 	}
-	
-	// SHOW ---------------------------------------------------------------		
+
+	// SHOW ---------------------------------------------------------------
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 
@@ -181,6 +181,40 @@ public class AuditorController extends AbstractController {
 			result.addObject("requestURI", "auditor/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody Auditor export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Auditor result = new Auditor();
+		result = this.auditorService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		System.out.println(result);
+		return result;
+	}
+
+	//Nuevo
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int auditorId) {
+		ModelAndView result;
+
+		final Auditor auditor = this.auditorService.findOne(auditorId);
+		System.out.println("Auditor encontrado: " + auditor);
+		if (this.auditorService.findOne(auditorId) == null || LoginService.getPrincipal().getId() != auditor.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(auditor, "auditor.null");
+
+			try {
+				this.auditorService.delete(auditor);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			}
 		}
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());

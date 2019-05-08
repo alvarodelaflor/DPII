@@ -36,5 +36,8 @@
 		<tr><td><strong><spring:message code="auditor.phone" /></strong> <jstl:out value="${auditor.phone}"></jstl:out></td></tr>
 	</table>
 </div>
-<input type="button" value="<spring:message code="auditor.cancel" />" name="auditor.cancel" onclick="history.back()" />
+<acme:cancel url=" " code="rookie.cancel"/>
+<acme:cancel url="/auditor/export.do?id=${auditor.id}" code="export"/><br>
+<spring:message code="delete.actor"></spring:message><br>
+<acme:cancel url="/auditor/delete.do?id=${auditor.id}" code="delete"/>
 
