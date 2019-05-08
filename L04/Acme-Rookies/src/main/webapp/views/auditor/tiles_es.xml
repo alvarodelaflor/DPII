@@ -21,4 +21,14 @@
 		<put-attribute name="body" value="/views/auditor/create.jsp" />
 	</definition>
 	
+	<definition name="auditor/edit" extends="master.page">	
+		<put-attribute name="title" value="Auditor: Editar" />
+		<put-attribute name="body" value="/views/auditor/edit.jsp" />
+	</definition>
+	
+	<definition name="auditor/show" extends="master.page">	
+		<put-attribute name="title" value="Auditor: Mostros" />
+		<put-attribute name="body" value="/views/auditor/show.jsp" />
+	</definition>
+	
 </tiles-definitions>

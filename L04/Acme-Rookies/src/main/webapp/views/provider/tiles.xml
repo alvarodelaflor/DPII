@@ -30,5 +30,10 @@
 		<put-attribute name="title" value="Show provider" />
 		<put-attribute name="body" value="/views/provider/show.jsp" />
 	</definition>
+	
+		<definition name="provider/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit provider" />
+		<put-attribute name="body" value="/views/provider/edit.jsp" />
+	</definition>
 
 </tiles-definitions>

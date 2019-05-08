@@ -6,14 +6,18 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AuditorService;
 import domain.Auditor;
+import domain.Company;
 import forms.RegistrationForm;
+import security.LoginService;
 
 @Controller
 @RequestMapping("/auditor")
@@ -87,4 +91,100 @@ public class AuditorController extends AbstractController {
 		result.addObject("system", this.getSystem());
 		return result;
 	}
+	
+	// EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		ModelAndView result;
+
+		try {
+			Auditor auditor;
+			final int idUserAccount = LoginService.getPrincipal().getId();
+			auditor = this.auditorService.getAuditorByUserAccountId(idUserAccount);
+			Assert.notNull(auditor);
+			result = new ModelAndView("auditor/edit");
+			result.addObject("auditor", auditor);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// SAVE-EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
+	public ModelAndView saveEdit(Auditor auditor, final BindingResult binding) {
+		ModelAndView result;
+
+		System.out.println("Auditor a editar" + auditor);
+
+		auditor = this.auditorService.reconstructEdit(auditor, binding);
+
+		System.out.println("c" + binding.getAllErrors());
+
+		if (binding.hasErrors()) {
+			System.out.println("Carmen: Hay fallos " + binding);
+			result = new ModelAndView("auditor/edit");
+		} else
+			try {
+				auditor = this.auditorService.saveEdit(auditor);
+				result = new ModelAndView("redirect:show.do");
+				result.addObject("auditor", auditor);
+			} catch (final Throwable oops) {
+				System.out.println(oops);
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.editModelAndView(auditor, "email.wrong");
+				else if (oops.getMessage().equals("error.email"))
+					result = this.editModelAndView(auditor, "error.email");
+				else
+					result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Auditor auditor, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("auditor/edit");
+		result.addObject("message", string);
+		result.addObject("auditor", auditor);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+	
+	// SHOW ---------------------------------------------------------------		
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+
+		ModelAndView result;
+		final Auditor auditor;
+		Boolean checkAuditor = false;
+		try {
+			if (id == -1) {
+				final int userLoggin = LoginService.getPrincipal().getId();
+				auditor = this.auditorService.getAuditorByUserAccountId(userLoggin);
+				Assert.isTrue(auditor != null);
+				checkAuditor = true;
+			} else {
+				auditor = this.auditorService.findOne(id);
+				Assert.isTrue(auditor != null);
+			}
+			result = new ModelAndView("auditor/show");
+			result.addObject("auditor", auditor);
+			result.addObject("checkAuditor", checkAuditor);
+			result.addObject("requestURI", "auditor/show.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
 }
