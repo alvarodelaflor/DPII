@@ -273,6 +273,27 @@ public class ProviderService {
 		return res;
 	}
 	
+	public Collection<Provider> ProviderItem() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		final Collection<Provider> res = new ArrayList<>();
+
+		final List<Object[]> collection = this.providerRepository.ProvidersPerNumberItem();
+
+		for (int i = 0; i < collection.size(); i++) {
+
+			final Provider c = (Provider) collection.get(i)[0];
+			 
+			res.add(c);
+			
+			
+		}
+		System.out.println(res); 
+
+		return res;
+	}
+	
 	// RECONSTRUCT-EDIT---------------------------------------------------------------		
 
 	public Provider reconstructEdit(final Provider provider, final BindingResult binding) {
