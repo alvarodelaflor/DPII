@@ -21,6 +21,7 @@ import repositories.CompanyRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthUtils;
 import domain.Company;
 import domain.CreditCard;
 import forms.RegistrationForm;
@@ -348,6 +349,7 @@ public class CompanyService {
 	}
 
 	public List<Company> getCompaniesWithHighestAuditScore() {
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("ADMIN"));
 		final List<Company> companies = this.companyRepository.getCompaniesOrderedByAuditScore();
 		List<Company> res = null;
 		if (companies.size() > 5)
@@ -358,10 +360,12 @@ public class CompanyService {
 	}
 
 	public Object[] avgMinMaxStddevCompanyAuditScore() {
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("ADMIN"));
 		return this.companyRepository.avgMinMaxStddevCompanyAuditScore().get(0);
 	}
 
 	public Double avgSalaryOfCompanyHighestScore() {
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("ADMIN"));
 		final List<Company> companies = this.companyRepository.getCompaniesOrderedByAuditScore();
 		Double res = null;
 		if (companies.size() > 0)
