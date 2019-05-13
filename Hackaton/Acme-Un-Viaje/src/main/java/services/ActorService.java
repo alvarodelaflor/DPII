@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import repositories.ActorRepository;
 import forms.RegisterActor;
+import repositories.ActorRepository;
 
 @Service
 @Transactional
@@ -25,12 +26,12 @@ public class ActorService {
 		if (!registerActor.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
 			binding.rejectValue("expiration", "error.expirationFormatter");
 
+		final Calendar calendar = Calendar.getInstance();
 		if (registerActor.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}")) {
 			final String[] parts = registerActor.getExpiration().split("/");
 			final String part1 = parts[0]; // MM
 			final String part2 = parts[1]; // YY
 
-			final Calendar calendar = Calendar.getInstance();
 			final int monthRigthNow = calendar.getTime().getMonth();
 			final int monthCreditCard = Integer.parseInt(part1);
 
@@ -85,7 +86,14 @@ public class ActorService {
 			binding.rejectValue("email", "email.wrong");
 			if (this.actorReporsitory.getActorByEmail(registerActor.getEmail()) != null)
 				binding.rejectValue("email", "error.email");
-
+		}
+		
+		if ( registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
+			binding.rejectValue("birthDate", "error.birthDate");
+			Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
+			if (ageActor < 18) {
+				binding.rejectValue("birthDate", "error.birthDateM");
+			}
 		}
 	}
 }

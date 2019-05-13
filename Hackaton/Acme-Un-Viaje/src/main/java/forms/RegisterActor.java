@@ -15,17 +15,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class RegisterActor {
 
 	private String	password, confirmPassword, email, name, phone, photo, surname, userName, holder, make, CVV, number, expiration;
-	private Date	bornDate;
+	private Date	birthDate;
 
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
-	public Date getBornDate() {
-		return this.bornDate;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	public Date getBirthDate() {
+		return this.birthDate;
 	}
 
-	public void setBornDate(final Date bornDate) {
-		this.bornDate = bornDate;
+	public void setBirthDate(final Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 

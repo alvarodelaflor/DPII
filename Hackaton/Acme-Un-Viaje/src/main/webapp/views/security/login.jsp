@@ -77,10 +77,10 @@ body {
 	</div>
 	<div id="signup" style="display: none;">
 		<div class="field-wrap">
-			<a href="#" class="btn btn-secondary">Click to register as patata</a>
+			<a href="#" class="btn btn-secondary"><spring:message code="register.user" /></a>
 		</div>
 		<div class="field-wrap">
-			<a href="cleaner/create.do" class="btn btn-secondary">Click to register as cleaner</a>
+			<a href="cleaner/create.do" class="btn btn-secondary"><spring:message code="register.cleaner" /></a>
 		</div>
 		<div class="field-wrap">
 			<a href="%" class="btn btn-secondary">Click to register as transportist</a>

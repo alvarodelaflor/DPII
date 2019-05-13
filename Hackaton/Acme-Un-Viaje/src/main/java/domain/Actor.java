@@ -28,7 +28,7 @@ public class Actor extends DomainEntity {
 
 	private String		name, surname, photo, email, phone;
 
-	private Date		bornDate;
+	private Date		birthDate;
 
 	private UserAccount	userAccount;
 
@@ -45,14 +45,14 @@ public class Actor extends DomainEntity {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@NotNull
-	public Date getBornDate() {
-		return this.bornDate;
+	public Date getBirthDate() {
+		return this.birthDate;
 	}
 
-	public void setBornDate(final Date bornDate) {
-		this.bornDate = bornDate;
+	public void setBirthDate(final Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	@ManyToOne(cascade = javax.persistence.CascadeType.ALL)

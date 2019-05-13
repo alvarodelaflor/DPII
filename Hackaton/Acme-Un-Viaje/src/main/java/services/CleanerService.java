@@ -64,7 +64,7 @@ public class CleanerService {
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		final String hashPassword = encoder.encodePassword(password, null);
 		cleaner.getUserAccount().setPassword(hashPassword);
-		cleaner.setBornDate(registerActor.getBornDate());
+		cleaner.setBirthDate(registerActor.getBirthDate());
 		cleaner.setEmail(registerActor.getEmail());
 		cleaner.setPhone(registerActor.getPhone());
 		cleaner.setName(registerActor.getName());
