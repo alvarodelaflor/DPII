@@ -30,6 +30,7 @@
 <%@ attribute name="placeholder" required="false"%>
 <%@ attribute name="cssLabel" required="false"%>
 <%@ attribute name="cssInput" required="false"%>
+<%@ attribute name="cssError" required="false"%>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
@@ -43,13 +44,17 @@
 <jstl:if test="${cssInput == null}">
 	<jstl:set var="cssInput" value="" />
 </jstl:if>
-<jstl:if test="${cssInput != null or cssLabel != null}">
+<jstl:if
+	test="${cssInput != null or cssLabel != null or cssError != null}">
 	<jstl:set var="row" value="row" />
+</jstl:if>
+<jstl:if test="${cssError == null}">
+	<jstl:set var="cssInput" value="" />
 </jstl:if>
 
 <%-- Definition --%>
 
-<div class="${row}" >
+<div class="${row}">
 	<div class="${cssLabel}">
 		<form:label path="${path}">
 			<spring:message code="${code}" />
@@ -59,5 +64,7 @@
 		<form:input path="${path}" readonly="${readonly}"
 			placeholder="${placeholder}" style="width: 100%" />
 	</div>
-	<form:errors path="${path}" cssClass="error" />
+	<div class="${cssError}">
+		<form:errors path="${path}" cssClass="error" />
+	</div>
 </div>

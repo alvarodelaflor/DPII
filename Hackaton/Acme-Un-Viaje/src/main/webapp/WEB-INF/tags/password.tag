@@ -27,6 +27,8 @@
 <%@ attribute name="code" required="true" rtexprvalue="true"%>
 <%@ attribute name="cssLabel" required="false"%>
 <%@ attribute name="cssInput" required="false"%>
+<%@ attribute name="placeholder" required="false"%>
+<%@ attribute name="cssError" required="false"%>
 
 <%-- Definition --%>
 <jstl:if test="${cssLabel == null}">
@@ -35,8 +37,15 @@
 <jstl:if test="${cssInput == null}">
 	<jstl:set var="cssInput" value="" />
 </jstl:if>
-<jstl:if test="${cssInput != null or cssLabel != null}">
+<jstl:if
+	test="${cssInput != null or cssLabel != null or cssError != null}">
 	<jstl:set var="row" value="row" />
+</jstl:if>
+<jstl:if test="${cssError == null}">
+	<jstl:set var="cssInput" value="" />
+</jstl:if>
+<jstl:if test="${placeholder == null}">
+	<jstl:set var="placeholder" value="" />
 </jstl:if>
 
 <div class="${row}">
@@ -46,7 +55,10 @@
 		</form:label>
 	</div>
 	<div class="${cssInput}">
-		<form:password path="${path}" style="width:100%"/>
+		<form:password path="${path}" style="width:100%"
+			placeholder="${placeholder}" />
 	</div>
-	<form:errors path="${path}" cssClass="error" />
+	<div class="${cssError}">
+		<form:errors path="${path}" cssClass="error" />
+	</div>
 </div>

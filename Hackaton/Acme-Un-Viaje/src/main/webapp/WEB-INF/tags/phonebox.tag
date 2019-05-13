@@ -61,6 +61,9 @@
 <%@ attribute name="readonly" required="false"%>
 <%@ attribute name="cssLabel" required="false"%>
 <%@ attribute name="cssInput" required="false"%>
+<%@ attribute name="placeholder" required="false"%>
+<%@ attribute name="cssError" required="false"%>
+
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
@@ -68,12 +71,19 @@
 <jstl:if test="${cssLabel == null}">
 	<jstl:set var="cssLabel" value="" />
 </jstl:if>
-<jstl:if test="${cssInput == null}">
+<jstl:if
+	test="${cssInput != null or cssLabel != null or cssError != null}">
+	<jstl:set var="row" value="row" />
+</jstl:if>
+<jstl:if test="${cssError == null}">
 	<jstl:set var="cssInput" value="" />
 </jstl:if>
+<jstl:if test="${placeholder == null}">
+	<jstl:set var="placeholder" value="" />
+</jstl:if>
 
-<jstl:if test="${cssInput != null or cssLabel != null}">
-	<jstl:set var="row" value="row" />
+<jstl:if test="${cssInput == null}">
+	<jstl:set var="cssInput" value="" />
 </jstl:if>
 
 <%-- Definition --%>
@@ -84,7 +94,10 @@
 		</form:label>
 	</div>
 	<div class="${cssInput}">
-		<form:input path="${path}" id="phoneNumber" style="width:100%"/>
+		<form:input path="${path}" id="phoneNumber" style="width:100%"
+			placeholder="${placeholder}" />
 	</div>
-	<form:errors path="${path}" cssClass="error" />
+	<div class="${cssError}">
+		<form:errors path="${path}" cssClass="error" />
+	</div>
 </div>

@@ -29,6 +29,7 @@
 <%@ attribute name="readonly" required="false"%>
 <%@ attribute name="cssLabel" required="false"%>
 <%@ attribute name="cssInput" required="false"%>
+<%@ attribute name="cssError" required="false"%>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
@@ -39,8 +40,12 @@
 <jstl:if test="${cssInput == null}">
 	<jstl:set var="cssInput" value="" />
 </jstl:if>
-<jstl:if test="${cssInput != null or cssLabel != null}">
+<jstl:if
+	test="${cssInput != null or cssLabel != null or cssError != null}">
 	<jstl:set var="row" value="row" />
+</jstl:if>
+<jstl:if test="${cssError == null}">
+	<jstl:set var="cssInput" value="" />
 </jstl:if>
 
 <%-- Definition --%>
@@ -52,7 +57,10 @@
 		</form:label>
 	</div>
 	<div class="${cssInput}">
-		<form:input path="${path}" readonly="${readonly}" placeholder="02/22" style="width:100%"/>
+		<form:input path="${path}" readonly="${readonly}" placeholder="02/22"
+			style="width:100%" />
 	</div>
-	<form:errors path="${path}" cssClass="error" />
+	<div class="${cssError}">
+		<form:errors path="${path}" cssClass="error" />
+	</div>
 </div>
