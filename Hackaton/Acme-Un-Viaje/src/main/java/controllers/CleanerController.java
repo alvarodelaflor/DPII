@@ -15,22 +15,24 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CleanerService;
 import domain.Cleaner;
+import domain.CreditCard;
 import forms.RegisterActor;
+import security.LoginService;
+import services.CleanerService;
 
 @Controller
 @RequestMapping("/cleaner")
 public class CleanerController extends AbstractController {
 
 	@Autowired
-	private CleanerService	cleanerService;
-
+	private CleanerService cleanerService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -38,7 +40,8 @@ public class CleanerController extends AbstractController {
 		super();
 	}
 
-	// CREATE ---------------------------------------------------------------		
+	// REGISTER AS CLEANER
+	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -54,15 +57,17 @@ public class CleanerController extends AbstractController {
 		return result;
 	}
 
-	// SAVE-CREATE ---------------------------------------------------------------		
+	// SAVE REGISTER AS CLEANER
+	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final RegisterActor registerActor, final BindingResult binding) {
 		ModelAndView result = null;
 		final Cleaner cleaner = this.cleanerService.reconstructRegisterAsCleaner(registerActor, binding);
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			System.err.println(binding);
 			result = new ModelAndView("cleaner/create");
-		else
+		} else
 			try {
 				this.cleanerService.saveRegisterAsCleaner(cleaner);
 				result = new ModelAndView("welcome/index");
@@ -71,22 +76,63 @@ public class CleanerController extends AbstractController {
 				final String moment = formatter.format(new Date());
 				result.addObject("moment", moment);
 			} catch (final Throwable oops) {
-				//				if (oops.getMessage().equals("email.wrong"))
-				//					result = this.createEditModelAndView(company, "email.wrong");
-				//				else if (oops.getMessage().equals("error.email"))
-				//					result = this.createEditModelAndView(company, "error.email");
-				//				else
-				result = this.createEditModelAndView(cleaner, "error.html");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 		return result;
 	}
 
-	private ModelAndView createEditModelAndView(final Cleaner actor, final String string) {
+	// EDIT DATA PERSONAL
+	// ---------------------------------------------------------------------
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
 		ModelAndView result;
+		Cleaner cleaner;
+		final int idUserAccount = LoginService.getPrincipal().getId();
+		cleaner = this.cleanerService.getCleanerByUserAccountId(idUserAccount);
+		Assert.notNull(cleaner);
+		CreditCard creditCard = cleaner.getCreditCard();
+		result = new ModelAndView("cleaner/edit");
+		result.addObject("cleaner", cleaner);
+		result.addObject("creditCard", creditCard);
+		return result;
+	}
 
-		result = new ModelAndView("cleaner/create");
-		result.addObject("message", string);
-		result.addObject("actor", actor);
+	// SAVE EDIT DATA PERSONAL
+	// ----------------------------------------------------------------
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
+	public ModelAndView saveEdit(Cleaner cleaner, final BindingResult binding) {
+		ModelAndView result = null;
+
+		cleaner = this.cleanerService.reconstructEditDataPeronal(cleaner, binding);
+
+		if (binding.hasErrors()) {
+			System.out.println("HAY ERRORES 2" + binding);
+			result = new ModelAndView("cleaner/edit");
+
+		} else
+			try {
+				this.cleanerService.saveRegisterAsCleaner(cleaner);
+				result = new ModelAndView("redirect:show.do");
+			} catch (final Throwable oops) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		return result;
+	}
+
+	// SHOW CLEANER
+	// -------------------------------------------------------------------
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show() {
+		ModelAndView result;
+		try {
+			final int userLoggin = LoginService.getPrincipal().getId();
+			final Cleaner registerActor;
+			registerActor = this.cleanerService.getCleanerByUserAccountId(userLoggin);
+			result = new ModelAndView("cleaner/show");
+			result.addObject("registerActor", registerActor);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 

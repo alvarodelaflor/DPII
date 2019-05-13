@@ -23,16 +23,16 @@ import forms.RegisterActor;
 public class CleanerService {
 
 	@Autowired
-	private CleanerRepository	cleanerRepository;
+	private CleanerRepository cleanerRepository;
 
 	@Autowired
-	private Validator			validator;
+	private Validator validator;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService actorService;
 
-
-	// REGISTER AS CLEANER ---------------------------------------------------------------		
+	// REGISTER AS CLEANER
+	// ---------------------------------------------------------------
 	public Cleaner create() {
 		final Cleaner cleaner = new Cleaner();
 		final UserAccount user = new UserAccount();
@@ -46,14 +46,17 @@ public class CleanerService {
 		return cleaner;
 	}
 
-	// SAVE REGISTER AS CLEANER ---------------------------------------------------------------		
+	// SAVE REGISTER AS CLEANER
+	// ---------------------------------------------------------------
 	public Cleaner saveRegisterAsCleaner(final Cleaner cleaner) {
-		//		if (cleaner.getPhone().matches("^([0-9]{4,})$"))
-		//			cleaner.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + cleaner.getPhone());
+		// if (cleaner.getPhone().matches("^([0-9]{4,})$"))
+		// cleaner.setPhone(this.configurationService.getConfiguration().getCountryCode()
+		// + " " + cleaner.getPhone());
 		return this.cleanerRepository.save(cleaner);
 	}
 
-	// RECONSTRUCT REGISTER AS CLEANER ---------------------------------------------------------------		
+	// RECONSTRUCT REGISTER AS CLEANER
+	// ---------------------------------------------------------------
 	public Cleaner reconstructRegisterAsCleaner(final RegisterActor registerActor, final BindingResult binding) {
 		final Cleaner cleaner = this.create();
 
@@ -79,6 +82,42 @@ public class CleanerService {
 		cleaner.setCreditCard(creditCard);
 
 		this.validator.validate(cleaner, binding);
+		return cleaner;
+	}
+
+	// FIND CLEANER
+	// ------------------------------------------------------------------------------------
+	public Cleaner getCleanerByUserAccountId(final int userAccountId) {
+		return this.cleanerRepository.findByUserAccountId(userAccountId);
+	}
+
+	// RECONSTRUCT EDIT DATA PERONAL
+	// ---------------------------------------------------------------
+	public Cleaner reconstructEditDataPeronal(final Cleaner registerActor, final BindingResult binding) {
+		Cleaner cleaner;
+
+		cleaner = this.cleanerRepository.findOne(registerActor.getId());
+
+		this.actorService.checkActorEdit(registerActor, binding);
+
+		if (!binding.hasErrors()) {
+			cleaner.setBirthDate(registerActor.getBirthDate());
+			cleaner.setEmail(registerActor.getEmail());
+			cleaner.setPhone(registerActor.getPhone());
+			cleaner.setName(registerActor.getName());
+			cleaner.setSurname(registerActor.getSurname());
+			cleaner.setPhoto(registerActor.getPhoto());
+			CreditCard creditCard = cleaner.getCreditCard();
+			creditCard.setCVV(registerActor.getCreditCard().getCVV());
+			creditCard.setExpiration(registerActor.getCreditCard().getExpiration());
+			creditCard.setHolder(registerActor.getCreditCard().getHolder());
+			creditCard.setMake(registerActor.getCreditCard().getMake());
+			creditCard.setNumber(registerActor.getCreditCard().getNumber());
+			cleaner.setCreditCard(creditCard);
+		}
+
+		this.validator.validate(registerActor, binding);
+
 		return cleaner;
 	}
 

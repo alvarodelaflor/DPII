@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2018 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
+
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password"
+			value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -29,6 +24,44 @@
 			</list>
 		</property>
 	</bean>
-<!-- Other domain beans come here -->	
-	
+
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="cleaner" />
+		<property name="password"
+			value="73af3cbee3b033a9d5f13c23fbdcad2b" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CLEANER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<!-- Other domain beans come here -->
+
+	<!-- CLEANER -->
+	<bean id="cleaner01" class="domain.Cleaner">
+		<property name="name" value="Mr. Potato" />
+		<property name="surname" value="Fritito" />
+		<property name="birthDate" value="1998/12/11" />
+
+		<property name="photo"
+			value="https://simg.nicepng.com/png/small/17-170013_mr-potato-head-free-png-image-mr-potato.png" />
+		<property name="email" value="patata@gmail.com" />
+		<property name="phone" value="678546678" />
+		<property name="userAccount" ref="userAccount2" />
+		<property name="creditCard" ref="creditCard01" />
+	</bean>
+	<!-- CLEANER -->
+
+	<!-- CREDITCARD -->
+	<bean id="creditCard01" class="domain.CreditCard">
+		<property name="holder" value="Mr. Potato" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="22/22" />
+	</bean>
+	<!-- CREDITCARD -->
+
 </beans>

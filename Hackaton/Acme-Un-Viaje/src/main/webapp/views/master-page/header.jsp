@@ -40,6 +40,17 @@
 					</div>
 			</li>
 			</security:authorize>
+			
+			<security:authorize access="hasRole('CLEANER')">
+			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.cleaner.profile" /></a>
+					<div class="dropdown-menu">
+						<a href="cleaner/edit.do" class="dropdown-item"><spring:message code="master.page.cleaner.edit" /></a>
+						<a href="cleaner/show.do" class="dropdown-item"><spring:message code="master.page.cleaner.show" /></a>
+					</div>
+			</li>
+			</security:authorize>
 		
 		<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
 		</ul>

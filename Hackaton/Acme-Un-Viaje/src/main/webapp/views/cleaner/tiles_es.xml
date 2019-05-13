@@ -21,9 +21,14 @@
 		<put-attribute name="body" value="/views/cleaner/create.jsp" />
 	</definition>
 	
-	<definition name="customer/action-2" extends="master.page">	
-		<put-attribute name="title" value="Cliente: Acción 2" />
-		<put-attribute name="body" value="/views/customer/action-2.jsp" />
+	<definition name="cleaner/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar tus datos personales" />
+		<put-attribute name="body" value="/views/cleaner/edit.jsp" />
+	</definition>
+	
+	<definition name="cleaner/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar tus datos personales" />
+		<put-attribute name="body" value="/views/cleaner/show.jsp" />
 	</definition>
 	
 </tiles-definitions>

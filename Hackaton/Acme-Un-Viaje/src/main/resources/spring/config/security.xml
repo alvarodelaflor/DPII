@@ -31,8 +31,10 @@
 		
 		<!-- CARMEN -->
 		<security:intercept-url pattern="/cleaner/create.do" access="permitAll" />
+		<security:intercept-url pattern="/cleaner/edit.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/cleaner/show.do" access="hasRole('CLEANER')" />
+		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
-		 
 		<!-- CARMEN -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
