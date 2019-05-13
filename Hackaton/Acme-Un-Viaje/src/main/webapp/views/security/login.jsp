@@ -77,13 +77,13 @@ body {
 	</div>
 	<div id="signup" style="display: none;">
 		<div class="field-wrap">
-			<a href="#" class="btn btn-secondary">Click to register as user</a>
+			<a href="#" class="btn btn-secondary">Click to register as patata</a>
 		</div>
 		<div class="field-wrap">
-			<a href="#" class="btn btn-secondary">Click to register as cleaner</a>
+			<a href="cleaner/create.do" class="btn btn-secondary">Click to register as cleaner</a>
 		</div>
 		<div class="field-wrap">
-			<a href="#" class="btn btn-secondary">Click to register as transportist</a>
+			<a href="%" class="btn btn-secondary">Click to register as transportist</a>
 		</div>
 	</div>
 </div>
