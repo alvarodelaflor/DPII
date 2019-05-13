@@ -244,7 +244,6 @@ public class AdministratorService extends ActorService {
 			Company company = (Company) o[1];
 			company = this.companyService.findOne(company.getId());
 			company.setAuditScore(mappedScore);
-			System.out.println(("max = " + max + ", min = " + min + ", score = " + score + ", mappedScore = " + mappedScore));
 		}
 	}
 	// RECONSTRUCT-EDIT---------------------------------------------------------------		
