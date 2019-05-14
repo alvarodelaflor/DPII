@@ -8,55 +8,82 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
-<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <div class="container-fluid">
 <div class="row">
 <div class="col-md-12">
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
-	<a href="#" class="navbar-brand"><img src="images/logo.png" style="width: 80px;"></a>
+	<a href="#" class="navbar-brand"><img src="images/logo.png"
+		style="width: 80px;"></a>
 
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#uno">
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#uno">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	
+
 	<div class="collapse navbar-collapse" id="uno">
 		<div class="col-md-8">
 		<ul class="navbar-nav">
-		
-		<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
+
+			<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
 			<security:authorize access="hasRole('ADMIN')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
-			<li class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.administrator" /></a>
+				<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+				<li class="nav-item dropdown"><a href="#"
+					class="nav-link dropdown-toggle" data-toggle="dropdown"
+					id="navbardrop"><spring:message
+							code="master.page.administrator" /></a>
 					<div class="dropdown-menu">
-						<a href="administrator/action-1.do" class="dropdown-item"><spring:message code="master.page.administrator.action.1" /></a>
-						<a href="administrator/action-2.do" class="dropdown-item"><spring:message code="master.page.administrator.action.2" /></a>
-					</div>
-			</li>
+						<a href="administrator/action-1.do" class="dropdown-item"><spring:message
+								code="master.page.administrator.action.1" /></a> <a
+							href="administrator/action-2.do" class="dropdown-item"><spring:message
+								code="master.page.administrator.action.2" /></a>
+					</div></li>
 			</security:authorize>
-			
+
 			<security:authorize access="hasRole('CLEANER')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
-			<li class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.cleaner.profile" /></a>
+				<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+				<li class="nav-item dropdown"><a href="#"
+					class="nav-link dropdown-toggle" data-toggle="dropdown"
+					id="navbardrop"><spring:message
+							code="master.page.cleaner.profile" /></a>
 					<div class="dropdown-menu">
-						<a href="cleaner/edit.do" class="dropdown-item"><spring:message code="master.page.cleaner.edit" /></a>
-						<a href="cleaner/show.do" class="dropdown-item"><spring:message code="master.page.cleaner.show" /></a>
-					</div>
-			</li>
+						<a href="cleaner/edit.do" class="dropdown-item"><spring:message
+								code="master.page.cleaner.edit" /></a> <a href="cleaner/show.do"
+							class="dropdown-item"><spring:message
+								code="master.page.cleaner.show" /></a>
+					</div></li>
 			</security:authorize>
-		
-		<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
+
+			<security:authorize access="hasRole('TRASNSPORTER')">
+				<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+				<li class="nav-item dropdown"><a href="#"
+					class="nav-link dropdown-toggle" data-toggle="dropdown"
+					id="navbardrop"><spring:message
+							code="master.page.cleaner.profile" /></a>
+					<div class="dropdown-menu">
+						<a href="transporter/edit.do" class="dropdown-item"><spring:message
+								code="master.page.cleaner.edit" /></a> <a href="transporter/show.do"
+							class="dropdown-item"><spring:message
+								code="master.page.cleaner.show" /></a>
+					</div></li>
+			</security:authorize>
+
+			<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
 		</ul>
 		</div>
 		
@@ -75,11 +102,9 @@
 						</ul>
 					</div>
 				</div>
-			</security:authorize>		
+			</div>
+		</security:authorize>
 		<!-- PARA TODO AQUEL LOGUEADO -->
-		
-		<!-- SIN LOGUEAR -->	
-			<security:authorize access="isAnonymous()">
 
 				<div class="btn-group">
 					<a href="security/login.do" class="btn btn-secondary"><spring:message code="master.page.login" /></a>

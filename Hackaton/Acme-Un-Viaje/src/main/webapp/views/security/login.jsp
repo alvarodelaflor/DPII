@@ -92,7 +92,7 @@ body {
 			<a href="cleaner/create.do" class="btn btn-secondary"><spring:message code="register.cleaner" /></a>
 		</div>
 		<div class="field-wrap">
-			<a href="%" class="btn btn-secondary">Click to register as transportist</a>
+			<a href="transporter/create.do" class="btn btn-secondary"><spring:message code="register.trasporter" /></a>
 		</div>
 	</div>
 </div>

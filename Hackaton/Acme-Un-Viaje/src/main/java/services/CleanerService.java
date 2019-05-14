@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,11 @@ import org.springframework.validation.Validator;
 
 import repositories.CleanerRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Cleaner;
 import domain.CreditCard;
+import domain.Transporter;
 import forms.RegisterActor;
 
 @Service
@@ -98,7 +101,7 @@ public class CleanerService {
 
 		cleaner = this.cleanerRepository.findOne(registerActor.getId());
 
-		this.actorService.checkActorEdit(registerActor, binding);
+		this.checkActorEdit(registerActor, binding);
 
 		if (!binding.hasErrors()) {
 			cleaner.setBirthDate(registerActor.getBirthDate());
@@ -120,5 +123,69 @@ public class CleanerService {
 
 		return cleaner;
 	}
+	
+	// CHECK EDIT DATA PERONAL
+		// ---------------------------------------------------------------
+		public void checkActorEdit(final Cleaner registerActor, final BindingResult binding) {
+
+			if (!registerActor.getCreditCard().getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
+				binding.rejectValue("creditCard.expiration", "error.expirationFormatter");
+
+			final Calendar calendar = Calendar.getInstance();
+			if (registerActor.getCreditCard().getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}")) {
+				final String[] parts = registerActor.getCreditCard().getExpiration().split("/");
+				final String part1 = parts[0]; // MM
+				final String part2 = parts[1]; // YY
+
+				final int monthRigthNow = calendar.getTime().getMonth();
+				final int monthCreditCard = Integer.parseInt(part1);
+
+				int yearRigthNow = calendar.getTime().getYear();
+				yearRigthNow = yearRigthNow % 100;
+				final int yearCredictCard = Integer.parseInt(part2);
+
+				System.out.println(yearCredictCard >= yearRigthNow);
+				System.out.println(monthCreditCard > monthRigthNow);
+
+				if (yearCredictCard < yearRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
+					binding.rejectValue("creditCard.expiration", "error.expirationFuture");
+
+				if (yearCredictCard >= yearRigthNow && monthCreditCard != 00 && monthCreditCard > 12)
+					if (yearCredictCard == yearRigthNow)
+						if (monthCreditCard < monthRigthNow)
+							binding.rejectValue("creditCard.expiration", "error.expirationFuture");
+			}
+
+			if (!registerActor.getCreditCard().getNumber().matches("([0-9]){16}"))
+				binding.rejectValue("creditCard.number", "error.numberCredictCard");
+
+			if (!registerActor.getCreditCard().getCVV().matches("([0-9]){3}"))
+				binding.rejectValue("creditCard.CVV", "error.CVVCredictCard");
+
+			if (registerActor.getCreditCard().getHolder() == "")
+				binding.rejectValue("creditCard.holder", "error.holderCredictCard");
+
+			if (registerActor.getCreditCard().getMake() == "")
+				binding.rejectValue("creditCard.make", "error.makeCredictCard");
+
+			final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+			if (!registerActor.getEmail().matches(pattern)) {
+				binding.rejectValue("email", "email.wrong");
+			}
+			
+			UserAccount user = LoginService.getPrincipal();
+			Cleaner t = this.getCleanerByUserAccountId(user.getId());
+			
+			if (!registerActor.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
+				binding.rejectValue("email", "error.email");
+
+			if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
+				binding.rejectValue("birthDate", "error.birthDate");
+				Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
+				if (ageActor < 18) {
+					binding.rejectValue("birthDate", "error.birthDateM");
+				}
+			}
+		}
 
 }

@@ -106,8 +106,7 @@
 	<div class="row">
 		<div class="col-md-4">
 			<acme:cancel url="" code="actor.back" />
-
 		</div>
 	</div>
 </div>
-</div>
+
