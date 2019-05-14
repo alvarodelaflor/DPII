@@ -19,6 +19,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
 	<a href="#" class="navbar-brand"><img src="images/logo.png" style="width: 80px;"></a>
 
@@ -27,6 +30,7 @@
 	</button>
 	
 	<div class="collapse navbar-collapse" id="uno">
+		<div class="col-md-8">
 		<ul class="navbar-nav">
 		
 		<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
@@ -54,19 +58,20 @@
 		
 		<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
 		</ul>
+		</div>
 		
 		<!-- PARA TODO AQUEL LOGUEADO -->
-		
+		<div class="col-md-4 text-right">
 			<security:authorize access="isAuthenticated()">
-				<div class="btn-group ml-auto">
+				<div class="btn-group">
 					<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><spring:message code="master.page.config" />
 						<span class="sr-only">Toggle Dropdown</span>
 					</button>		
 					<div class="dropdown-menu">
 						<a href="j_spring_security_logout" class="dropdown-item"><spring:message code="master.page.logout" /></a>
 						<ul class="navbar-nav">
-							<li class="nav-item"><a href="?language=en" class="dropdown-item"><img src="images/logoEN.png" style="width: 30px;"></a></li>
-							<li class="nav-item"><a href="?language=es" class="dropdown-item"><img src="images/logoES.png" style="width: 40px;"></a></li>
+							<li class="nav-item"><a href="?language=en" class="dropdown-item"><img src="images/logoEN.png" style="width: 2em;"></a></li>
+							<li class="nav-item"><a href="?language=es" class="dropdown-item"><img src="images/logoES.png" style="width: 2em;"></a></li>
 						</ul>
 					</div>
 				</div>
@@ -76,21 +81,25 @@
 		<!-- SIN LOGUEAR -->	
 			<security:authorize access="isAnonymous()">
 
-				<div class="btn-group ml-auto">
-				
+				<div class="btn-group">
 					<a href="security/login.do" class="btn btn-secondary"><spring:message code="master.page.login" /></a>
-					<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><spring:message code="master.page.config" />
-						<span class="sr-only">Toggle Dropdown</span>
+					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.config" />
+							<span class="sr-only">Toggle Dropdown</span>
 					</button>		
 					<div class="dropdown-menu">
 						<ul class="navbar-nav">
-							<li class="nav-item"><a href="?language=en" class="dropdown-item"><img src="images/logoEN.png" style="width: 30px;"></a></li>
-							<li class="nav-item"><a href="?language=es" class="dropdown-item"><img src="images/logoES.png" style="width: 40px;"></a></li>
+							<li class="nav-item"><a href="?language=en" class="dropdown-item"><img src="images/logoEN.png" style="width: 2em;"></a></li>
+							<li class="nav-item"><a href="?language=es" class="dropdown-item"><img src="images/logoES.png" style="width: 2em;"></a></li>
 						</ul>
 					</div>
-				</div>				
+				</div>
+				
 			</security:authorize>
 		<!-- SIN LOGUEAR -->
+		</div>
 	</div>
+	
 </nav>
-
+</div>
+</div>
+</div>
