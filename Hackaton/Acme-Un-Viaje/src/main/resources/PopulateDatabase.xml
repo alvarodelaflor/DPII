@@ -37,6 +37,19 @@
 			</list>
 		</property>
 	</bean>
+
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="transporter" />
+		<property name="password"
+			value="5f2ef48e6530f6cb099a4f1bc623e087" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="TRASNSPORTER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	<!-- Other domain beans come here -->
 
 	<!-- CLEANER -->
@@ -54,13 +67,27 @@
 	</bean>
 	<!-- CLEANER -->
 
+	<!-- TRANSPORT -->
+	<bean id="transporter01" class="domain.Transporter">
+		<property name="name" value="Mr. Potato" />
+		<property name="surname" value="Fritito" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="photo"
+			value="https://simg.nicepng.com/png/small/17-170013_mr-potato-head-free-png-image-mr-potato.png" />
+		<property name="email" value="patata1@gmail.com" />
+		<property name="phone" value="678546678" />
+		<property name="userAccount" ref="userAccount3" />
+		<property name="creditCard" ref="creditCard01" />
+	</bean>
+	<!-- TRANSPORT -->
+
 	<!-- CREDITCARD -->
 	<bean id="creditCard01" class="domain.CreditCard">
 		<property name="holder" value="Mr. Potato" />
 		<property name="make" value="VISA" />
 		<property name="number" value="1234567891234567" />
 		<property name="CVV" value="234" />
-		<property name="expiration" value="22/22" />
+		<property name="expiration" value="12/22" />
 	</bean>
 	<!-- CREDITCARD -->
 
