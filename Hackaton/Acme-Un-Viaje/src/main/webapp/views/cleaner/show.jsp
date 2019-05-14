@@ -22,7 +22,9 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <hr>
+<div class="container-fluid">
 <div class="row" style="padding-left: 2em">
+
 	<div class="col-md-3">
 		<div class="card">
 			<img class="card-img-top" src="${registerActor.photo}" alt="ERROR">
@@ -108,4 +110,4 @@
 		</span>
 	</div>
 </div>
-
+</div>
