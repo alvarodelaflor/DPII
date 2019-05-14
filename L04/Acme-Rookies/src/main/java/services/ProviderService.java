@@ -21,6 +21,7 @@ import repositories.ProviderRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Company;
 import domain.CreditCard;
 import domain.Provider;
 import forms.RegistrationForm;
@@ -46,6 +47,9 @@ public class ProviderService {
 	
 	@Autowired
 	private SponsorshipService	sponsorshipRepository;
+	
+	@Autowired
+	private ActorService actorService;
 
 
 	// CREATE ---------------------------------------------------------------
@@ -264,10 +268,104 @@ public class ProviderService {
 			if (valor > this.sponsorshipRepository.avgSponsorshipPerProvider())
 				res.add(c);
 		}
-		System.out.println(res);
+		System.out.println(res); 
 
 		return res;
 	}
+	
+	public Collection<Provider> ProviderItem() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
+		final Collection<Provider> res = new ArrayList<>();
+
+		final List<Object[]> collection = this.providerRepository.ProvidersPerNumberItem();
+
+		for (int i = 0; i < collection.size(); i++) {
+
+			final Provider c = (Provider) collection.get(i)[0];
+			 
+			res.add(c);
+			
+			
+		}
+		System.out.println(res); 
+
+		return res;
+	}
+	
+	// RECONSTRUCT-EDIT---------------------------------------------------------------		
+
+	public Provider reconstructEdit(final Provider provider, final BindingResult binding) {
+		Provider result;
+		final Provider res = this.providerRepository.findOne(provider.getId());
+
+		System.out.println("Carmen: entro en el reconstructEdict");
+
+		result = provider;
+
+		System.out.println(res.getVatNumber());
+
+		System.out.println("Nombre: " + provider.getName());
+		result.setName(provider.getName());
+		System.out.println("Nombre: " + result.getName());
+
+		result.setSurname(provider.getSurname());
+		result.setPhoto(provider.getPhoto());
+		result.setEmail(provider.getEmail());
+		result.setPhone(provider.getPhone());
+		result.setAddress(provider.getAddress());
+		result.setCommercialName(provider.getCommercialName());
+		result.setVatNumber(res.getVatNumber());
+
+		System.out.println("Carmen: voy a validar");
+
+		binding.addAllErrors(binding);
+
+		System.out.println(result);
+
+		this.validator.validate(provider, binding);
+		System.out.println(binding.getAllErrors());
+
+		if (binding.getAllErrors().isEmpty()) {
+			res.setSurname(result.getSurname());
+			res.setPhoto(result.getPhoto());
+			res.setEmail(result.getEmail());
+			res.setPhone(result.getPhone());
+			res.setAddress(result.getAddress());
+			res.setCommercialName(result.getCommercialName());
+			res.setName(result.getName());
+		}
+
+		return res;
+	}
+
+	// SAVE-EDIT ---------------------------------------------------------------	
+
+	public Provider saveEdit(Provider provider) {
+		Assert.isTrue(!this.checkEmailFormatter(provider), "email.wrong");
+		Assert.isTrue(this.checkEmailEdit(provider), "error.email");
+		System.out.println("hola");
+		if (provider.getPhone().matches("^([0-9]{4,})$")) {
+			final String phoneM = provider.getPhone() + "6";
+			provider.setPhone(phoneM);
+			provider.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + provider.getPhone());
+		}
+		provider = this.providerRepository.save(provider);
+		System.out.println(provider);
+
+		return provider;
+	}
+
+	private Boolean checkEmailEdit(final Provider provider) {
+		Boolean res = false;
+		System.out.println(this.actorService.getActorByEmailE(provider.getEmail()) == null);
+
+		if (this.actorService.getActorByEmailE(provider.getEmail()) == null && this.actorRepository.getActorByEmail(provider.getEmail()).size() <= 1)
+			res = true;
+		return res;
+	}
+
 }
 
 

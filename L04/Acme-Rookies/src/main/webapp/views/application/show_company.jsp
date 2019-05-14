@@ -28,7 +28,7 @@
 		<tr><td><strong><spring:message code="application.status" /></strong>: <jstl:out value="${application.status}"></jstl:out></td></tr>
 	</table>
 	<jstl:if test="${application.status eq 'SUBMITTED'}">
-		<input type="button" value="<spring:message code='application.accept' />" onclick="window.location = 'application/company/accept.do?applicationId=${application.id}'" />
+		<input type="button" value="<spring:message code='application.accept' />" onclick="window.location = 'application/company/accept.do?applicationId=${application.id}'" /> 
 		<input type="button" value="<spring:message code='application.reject' />" onclick="window.location = 'application/company/reject.do?applicationId=${application.id}'" />
 	</jstl:if>
 </div>

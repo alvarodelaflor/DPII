@@ -112,14 +112,14 @@
 	<h2><spring:message code="sponsorships" /></h2>
 	<h3><spring:message code="sponsorshipsPerProvider" /></h3>
 		<p><spring:message code="avg" /> <jstl:out value="${avgSponsorshipPerProvider}"></jstl:out></p>		
-		<p><spring:message code="min" /> <jstl:out value="${minSponsorshipPerProvider}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${maxSponsorshipPerProvider}"></jstl:out></p>		
 		<p><spring:message code="stddev" /> <jstl:out value="${sttdevSponsorshipPerProvider}"></jstl:out></p>
-		<p><spring:message code="max" /> <jstl:out value="${maxSponsorshipPerProvider}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${minSponsorshipPerProvider}"></jstl:out></p>		
 	<br>
 	<h3><spring:message code="sponsorshipsPerPosition" /></h3>
 		<p><spring:message code="avg" /> <jstl:out value="${avgSponsorshipPerPosition}"></jstl:out></p>		
-		<p><spring:message code="min" /> <jstl:out value="${minSponsorshipPerPosition}"></jstl:out></p>		
-		<p><spring:message code="max" /> <jstl:out value="${maxSponsorshipPerPosition}"></jstl:out></p>		
+		<p><spring:message code="min" /> <jstl:out value="${maxSponsorshipPerPosition}"></jstl:out></p>		
+		<p><spring:message code="max" /> <jstl:out value="${minSponsorshipPerPosition}"></jstl:out></p>		
 		<p><spring:message code="stddev" /> <jstl:out value="${sttdevSponsorshipPerPosition}"></jstl:out></p>
 	<br>
 	

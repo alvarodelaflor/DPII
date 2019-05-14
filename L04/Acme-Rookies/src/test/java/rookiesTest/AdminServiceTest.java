@@ -15,7 +15,9 @@ import org.springframework.util.Assert;
 
 import services.ActorService;
 import services.AdministratorService;
+import services.CompanyService;
 import services.MessageService;
+import services.PositionService;
 import services.RookieService;
 import utilities.AbstractTest;
 import domain.Administrator;
@@ -41,6 +43,12 @@ public class AdminServiceTest extends AbstractTest {
 
 	@Autowired
 	private MessageService			msgService;
+
+	@Autowired
+	private PositionService			positionService;
+
+	@Autowired
+	private CompanyService			companyService;
 
 
 	@Test
@@ -481,4 +489,87 @@ public class AdminServiceTest extends AbstractTest {
 		super.checkExceptions(expected, caught);
 	}
 
+	/**
+	 * ACME-ROOKIES R4.3: Launch a process to compute an audit score for every company.
+	 * Sentence coverage: ~80%
+	 * Data coverage: ~20%
+	 */
+	@Test
+	public void calculateCompanyScore() {
+
+		final Object testingData[][] = {
+
+			{
+				"admin", null
+			}, {
+				"company", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.calculateCompanyScore((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	private void calculateCompanyScore(final String user, final Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+			this.adminService.calculateCompaniesScore();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/**
+	 * ACME-ROOKIES R4.4: Display a dashboard with the following information
+	 * Sentence coverage: ~80%
+	 * Data coverage: ~20%
+	 */
+	@Test
+	public void dashboard4_4() {
+
+		final Object testingData[][] = {
+
+			{
+				"admin", null
+			}, {
+				"company", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.dashboard4_4((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	private void dashboard4_4(final String user, final Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+			this.positionService.avgMinMaxStddevPositionAuditScore();
+			this.companyService.avgMinMaxStddevCompanyAuditScore();
+			this.companyService.getCompaniesWithHighestAuditScore();
+			this.companyService.avgSalaryOfCompanyHighestScore();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 }

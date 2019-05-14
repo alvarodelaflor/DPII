@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Company;
 import domain.Provider;
 import forms.RegistrationForm;
 import security.LoginService;
@@ -186,6 +187,72 @@ public class ProviderController extends AbstractController {
 				result = new ModelAndView("redirect:/j_spring_security_logout");
 			}
 		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		ModelAndView result;
+
+		try {
+			Provider provider;
+			final int idUserAccount = LoginService.getPrincipal().getId();
+			provider = this.providerService.getProviderByUserAccountId(idUserAccount);
+			Assert.notNull(provider);
+			result = new ModelAndView("provider/edit");
+			result.addObject("provider", provider);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// SAVE-EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
+	public ModelAndView saveEdit(Provider provider, final BindingResult binding) {
+		ModelAndView result;
+
+		System.out.println("Provider a editar" + provider);
+
+		provider = this.providerService.reconstructEdit(provider, binding);
+
+		System.out.println("c" + binding.getAllErrors());
+
+		if (binding.hasErrors()) {
+			System.out.println("Carmen: Hay fallos " + binding);
+			result = new ModelAndView("provider/edit");
+		} else
+			try {
+				provider = this.providerService.saveEdit(provider);
+				result = new ModelAndView("redirect:show.do");
+				result.addObject("provider", provider);
+			} catch (final Throwable oops) {
+				System.out.println(oops);
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.editModelAndView(provider, "email.wrong");
+				else if (oops.getMessage().equals("error.email"))
+					result = this.editModelAndView(provider, "error.email");
+				else
+					result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Provider provider, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("provider/edit");
+		result.addObject("message", string);
+		result.addObject("provider", provider);
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;

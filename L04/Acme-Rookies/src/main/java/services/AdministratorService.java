@@ -2,7 +2,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -21,6 +20,7 @@ import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthUtils;
 import domain.Administrator;
 import domain.Company;
 import domain.CreditCard;
@@ -226,12 +226,15 @@ public class AdministratorService extends ActorService {
 	}
 
 	public void calculateCompaniesScore() {
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("ADMIN"));
+
 		final List<Object[]> scoresAndCompanies = this.companyService.getCompaniesScores();
-		if (scoresAndCompanies.isEmpty()) return;
+		if (scoresAndCompanies.isEmpty())
+			return;
 
 		// We get the minimum and maximum (to map them min->0 max->1)
-		Double max = (Double) scoresAndCompanies.get(0)[0];
-		Double min = (Double) scoresAndCompanies.get(scoresAndCompanies.size() - 1)[0];
+		final Double max = (Double) scoresAndCompanies.get(0)[0];
+		final Double min = (Double) scoresAndCompanies.get(scoresAndCompanies.size() - 1)[0];
 
 		// Now we can iterate through each company and set its score (range 0..1)
 		// mappedScore = (score - min) / (max - min)
@@ -241,7 +244,76 @@ public class AdministratorService extends ActorService {
 			Company company = (Company) o[1];
 			company = this.companyService.findOne(company.getId());
 			company.setAuditScore(mappedScore);
-			System.out.println(("max = " + max + ", min = " + min + ", score = " + score + ", mappedScore = " + mappedScore));
 		}
 	}
+	// RECONSTRUCT-EDIT---------------------------------------------------------------		
+
+	public Administrator reconstructEdit(final Administrator admin, final BindingResult binding) {
+		Administrator result;
+		final Administrator res = this.adminRepository.findOne(admin.getId());
+
+		System.out.println("Carmen: entro en el reconstructEdict");
+
+		result = admin;
+
+		System.out.println(res.getVatNumber());
+
+		System.out.println("Nombre: " + admin.getName());
+		result.setName(admin.getName());
+		System.out.println("Nombre: " + result.getName());
+
+		result.setSurname(admin.getSurname());
+		result.setPhoto(admin.getPhoto());
+		result.setEmail(admin.getEmail());
+		result.setPhone(admin.getPhone());
+		result.setAddress(admin.getAddress());
+		result.setVatNumber(res.getVatNumber());
+
+		System.out.println("Carmen: voy a validar");
+
+		binding.addAllErrors(binding);
+
+		System.out.println(result);
+
+		this.validator.validate(admin, binding);
+		System.out.println(binding.getAllErrors());
+
+		if (binding.getAllErrors().isEmpty()) {
+			res.setSurname(result.getSurname());
+			res.setPhoto(result.getPhoto());
+			res.setEmail(result.getEmail());
+			res.setPhone(result.getPhone());
+			res.setAddress(result.getAddress());
+			res.setName(result.getName());
+		}
+
+		return res;
+	}
+
+	// SAVE-EDIT ---------------------------------------------------------------	
+
+	public Administrator saveEdit(Administrator admin) {
+		Assert.isTrue(!this.checkEmailFormatter(admin), "email.wrong");
+		Assert.isTrue(this.checkEmailEdit(admin), "error.email");
+		System.out.println("hola");
+		if (admin.getPhone().matches("^([0-9]{4,})$")) {
+			final String phoneM = admin.getPhone() + "6";
+			admin.setPhone(phoneM);
+			admin.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + admin.getPhone());
+		}
+		admin = this.adminRepository.save(admin);
+		System.out.println(admin);
+
+		return admin;
+	}
+
+	private Boolean checkEmailEdit(final Administrator admin) {
+		Boolean res = false;
+		System.out.println(this.actorService.getActorByEmailE(admin.getEmail()) == null);
+
+		if (this.actorService.getActorByEmailE(admin.getEmail()) == null && this.actorRepository.getActorByEmail(admin.getEmail()).size() <= 1)
+			res = true;
+		return res;
+	}
+
 }

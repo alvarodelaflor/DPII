@@ -36,7 +36,9 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
-					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>	
+					<li><a href="provider/list.do"><spring:message code="master.page.list.provider" /></a></li>		
+					<li><a href="item/list.do"><spring:message code="master.page.list.item" /></a></li>																																						
 				</ul>
 			</li>
 			
@@ -50,13 +52,15 @@
 					<li><a href="finder/rookie/show.do"><spring:message code="master.page.finder" /></a></li>		
 				</ul>
 		</li>
-		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
-					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>	
+					<li><a href="provider/list.do"><spring:message code="master.page.list.provider" /></a></li>		
+					<li><a href="item/list.do"><spring:message code="master.page.list.item" /></a></li>																																						
 				</ul>
-		</li>
+				</li>
 
 		</security:authorize>
 
@@ -68,11 +72,14 @@
 					<li><a href="audit/list.do"><spring:message code="master.page.audit.list" /></a></li>							
 				</ul>
 		</li>
-		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
-			<ul>
-				<li class="arrow"></li>
-				<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>	
-			</ul>
+			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>	
+					<li><a href="provider/list.do"><spring:message code="master.page.list.provider" /></a></li>		
+					<li><a href="item/list.do"><spring:message code="master.page.list.item" /></a></li>																																						
+				</ul>
 		</li>
 
 		</security:authorize>
@@ -85,11 +92,13 @@
 					<li><a href="item/provider/list.do"><spring:message code="master.page.list.item" /></a></li>
 				</ul>
 		</li>
-		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
-					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>							
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>	
+					<li><a href="provider/list.do"><spring:message code="master.page.list.provider" /></a></li>		
+					<li><a href="item/list.do"><spring:message code="master.page.list.item" /></a></li>																																						
 				</ul>
 		</li>
 
@@ -104,11 +113,13 @@
 					<li><a href="application/company/list.do"><spring:message code="master.page.list.logged_company_applications" /></a></li>
 				</ul>
 		</li>
-		<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.information" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="company/list.do"><spring:message code="master.page.list.company" /></a></li>	
-					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>					
+					<li><a href="position/list.do"><spring:message code="master.page.list.position" /></a></li>	
+					<li><a href="provider/list.do"><spring:message code="master.page.list.provider" /></a></li>		
+					<li><a href="item/list.do"><spring:message code="master.page.list.item" /></a></li>																																						
 				</ul>
 		</li>
 
@@ -156,12 +167,18 @@
 					<security:authorize access="hasRole('COMPANY')">
 						<li><a href="company/show.do"><spring:message code="master.page.company.show" /></a></li>
 						<li><a href="company/edit.do"><spring:message code="master.page.company.edit" /></a></li>	
-					</security:authorize>		
+					</security:authorize>	
+					<security:authorize access="hasRole('ADMIN')">
+						<li><a href="administrator/show.do"><spring:message code="master.page.company.show" /></a></li>
+						<li><a href="administrator/edit.do"><spring:message code="master.page.company.edit" /></a></li>	
+					</security:authorize>	
 					<security:authorize access="hasRole('PROVIDER')">
 						<li><a href="provider/show.do"><spring:message code="master.page.rookie.show" /></a></li>
+						<li><a href="provider/edit.do"><spring:message code="master.page.rookie.edit" /></a></li>
 					</security:authorize>	
 					<security:authorize access="hasRole('AUDITOR')">
 						<li><a href="auditor/show.do"><spring:message code="master.page.rookie.show" /></a></li>
+						<li><a href="auditor/edit.do"><spring:message code="master.page.rookie.edit" /></a></li>
 					</security:authorize>		
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>

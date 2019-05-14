@@ -16,16 +16,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
-import repositories.ActorRepository;
-import repositories.AuditorRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 import domain.Audit;
 import domain.Auditor;
 import domain.CreditCard;
 import forms.ActorForm;
+import repositories.ActorRepository;
+import repositories.AuditorRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -39,13 +39,17 @@ public class AuditorService {
 	private ConfigurationService	configurationService;
 	@Autowired
 	private Validator				validator;
+	@Autowired
+	private ActorService			actorService;
+	@Autowired
+	private AuditService			auditService;
 
 
 	// CRUD METHODS
 
 	/**
 	 * Creates an empty auditor
-	 * 
+	 *
 	 * @return {@link Auditor}
 	 */
 	public Auditor create() {
@@ -64,10 +68,10 @@ public class AuditorService {
 		auditor.setCreditCard(creditCard);
 		return auditor;
 	}
-	
+
 	/**
 	 * Get a collection with all {@link Actor} in database with {@link Auditor} authority.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection} <{@link Audit}>
 	 */
@@ -77,7 +81,7 @@ public class AuditorService {
 
 	/**
 	 * Saves an auditor in the database (Copied from RookieService)
-	 * 
+	 *
 	 * @param auditor
 	 * @return {@link Auditor}
 	 */
@@ -90,7 +94,7 @@ public class AuditorService {
 		return this.auditorRepository.save(rookie);
 	}
 
-	// RECONSTRUCT-CREATE ---------------------------------------------------------------		
+	// RECONSTRUCT-CREATE ---------------------------------------------------------------
 	public Auditor reconstructCreate(final ActorForm actorForm, final BindingResult binding) {
 		final Auditor result = this.create();
 
@@ -127,7 +131,7 @@ public class AuditorService {
 
 	/**
 	 * Get an auditor by auditorId
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
@@ -141,7 +145,7 @@ public class AuditorService {
 
 	/**
 	 * Get an auditor by useraccount ID.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
@@ -151,7 +155,7 @@ public class AuditorService {
 
 	/**
 	 * Get the auditor login.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit} if is login, null otherwise.
 	 */
@@ -257,9 +261,85 @@ public class AuditorService {
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
 	}
-	
-	
+
 	public void flush() {
 		this.auditorRepository.flush();
 	}
+
+	// RECONSTRUCT-EDIT---------------------------------------------------------------
+
+	public Auditor reconstructEdit(final Auditor auditor, final BindingResult binding) {
+		Auditor result;
+		final Auditor res = this.auditorRepository.findOne(auditor.getId());
+
+		System.out.println("Carmen: entro en el reconstructEdict");
+
+		result = auditor;
+
+		System.out.println(res.getVatNumber());
+
+		System.out.println("Nombre: " + auditor.getName());
+		result.setName(auditor.getName());
+		System.out.println("Nombre: " + result.getName());
+
+		result.setSurname(auditor.getSurname());
+		result.setPhoto(auditor.getPhoto());
+		result.setEmail(auditor.getEmail());
+		result.setPhone(auditor.getPhone());
+		result.setAddress(auditor.getAddress());
+		result.setVatNumber(res.getVatNumber());
+
+		System.out.println("Carmen: voy a validar");
+
+		binding.addAllErrors(binding);
+
+		System.out.println(result);
+
+		this.validator.validate(auditor, binding);
+		System.out.println(binding.getAllErrors());
+
+		if (binding.getAllErrors().isEmpty()) {
+			res.setSurname(result.getSurname());
+			res.setPhoto(result.getPhoto());
+			res.setEmail(result.getEmail());
+			res.setPhone(result.getPhone());
+			res.setAddress(result.getAddress());
+			res.setName(result.getName());
+		}
+
+		return res;
+	}
+
+	// SAVE-EDIT ---------------------------------------------------------------
+
+	public Auditor saveEdit(Auditor auditor) {
+		Assert.isTrue(!this.checkEmailFormatter(auditor), "email.wrong");
+		Assert.isTrue(this.checkEmailEdit(auditor), "error.email");
+		System.out.println("hola");
+		if (auditor.getPhone().matches("^([0-9]{4,})$")) {
+			final String phoneM = auditor.getPhone() + "6";
+			auditor.setPhone(phoneM);
+			auditor.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + auditor.getPhone());
+		}
+		auditor = this.auditorRepository.save(auditor);
+		System.out.println(auditor);
+
+		return auditor;
+	}
+
+	private Boolean checkEmailEdit(final Auditor auditor) {
+		Boolean res = false;
+		System.out.println(this.actorService.getActorByEmailE(auditor.getEmail()) == null);
+
+		if (this.actorService.getActorByEmailE(auditor.getEmail()) == null && this.actorRepository.getActorByEmail(auditor.getEmail()).size() <= 1)
+			res = true;
+		return res;
+	}
+
+	public void delete(final Auditor auditor) {
+		this.auditService.deleteAuditorAudits(auditor);
+		this.auditorRepository.delete(auditor);
+
+	}
+
 }

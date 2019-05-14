@@ -19,6 +19,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +44,7 @@ import domain.Configuration;
 import domain.Rookie;
 import domain.Sponsorship;
 import forms.ActorForm;
+import security.LoginService;
 
 @Controller
 @RequestMapping("/administrator")
@@ -722,6 +724,103 @@ public class AdministratorController extends AbstractController {
 		}
 		return res;
 	}
+	
+	// SHOW ---------------------------------------------------------------		
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+
+		ModelAndView result;
+		final Administrator administrator;
+		Boolean checkAdministrator = false;
+		try {
+			if (id == -1) {
+				final int userLoggin = LoginService.getPrincipal().getId();
+				administrator = this.adminService.findOneByUserAccount(userLoggin);
+				Assert.isTrue(administrator != null);
+				checkAdministrator = true;
+			} else {
+				administrator = this.adminService.findOne(id);
+				Assert.isTrue(administrator != null);
+			}
+			result = new ModelAndView("administrator/show");
+			result.addObject("administrator", administrator);
+			result.addObject("checkAdministrator", checkAdministrator);
+			result.addObject("requestURI", "administrator/show.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		ModelAndView result;
+
+		try {
+			Administrator administrator;
+			final int idUserAccount = LoginService.getPrincipal().getId();
+			administrator = this.adminService.findOneByUserAccount(idUserAccount);
+			Assert.notNull(administrator);
+			result = new ModelAndView("administrator/edit");
+			result.addObject("administrator", administrator);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	// SAVE-EDIT ---------------------------------------------------------------		
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
+	public ModelAndView saveEdit(Administrator administrator, final BindingResult binding) {
+		ModelAndView result;
+
+		System.out.println("Administrator a editar" + administrator);
+
+		administrator = this.adminService.reconstructEdit(administrator, binding);
+
+		System.out.println("c" + binding.getAllErrors());
+
+		if (binding.hasErrors()) {
+			System.out.println("Carmen: Hay fallos " + binding);
+			result = new ModelAndView("administrator/edit");
+		} else
+			try {
+				administrator = this.adminService.saveEdit(administrator);
+				result = new ModelAndView("redirect:show.do");
+				result.addObject("administrator", administrator);
+			} catch (final Throwable oops) {
+				System.out.println(oops);
+				if (oops.getMessage().equals("email.wrong"))
+					result = this.editModelAndView(administrator, "email.wrong");
+				else if (oops.getMessage().equals("error.email"))
+					result = this.editModelAndView(administrator, "error.email");
+				else
+					result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Administrator administrator, final String string) {
+		ModelAndView result;
+
+		result = new ModelAndView("administrator/edit");
+		result.addObject("message", string);
+		result.addObject("administrator", administrator);
+		result.addObject("logo", this.getLogo());
+		result.addObject("system", this.getSystem());
+		return result;
+	}
+
+
 }
 
 	

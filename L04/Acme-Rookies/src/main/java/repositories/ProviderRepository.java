@@ -18,7 +18,7 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 	@Query("select p,(select 1.1*count(s) from Sponsorship s where s.provider = p) from Provider p")
 	List<Object[]> sponsorshipProvider();
 
-	//	@Query("select p,(select count(i) from Item i where i.provider = p) from Provider p ")
-	//	public Float ProvidersPerNumberItem();
+		@Query("select p,(select count(i) from Item i where i.provider = p) from Provider p ")
+		List<Object[]> ProvidersPerNumberItem();
 
 }

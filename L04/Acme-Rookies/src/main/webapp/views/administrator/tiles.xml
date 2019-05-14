@@ -42,4 +42,14 @@
 		<put-attribute name="body" value="/views/administrator/list.jsp" />
 	</definition>
 	
+		<definition name="administrator/show" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Show" />
+		<put-attribute name="body" value="/views/administrator/show.jsp" />
+	</definition>
+	
+	<definition name="administrator/edit" extends="master.page">	
+		<put-attribute name="title" value="Adminsitrator: Edit" />
+		<put-attribute name="body" value="/views/administrator/edit.jsp" />
+	</definition>
+	
 </tiles-definitions>
