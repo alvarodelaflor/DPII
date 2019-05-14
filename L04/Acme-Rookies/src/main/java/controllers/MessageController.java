@@ -317,10 +317,9 @@ public class MessageController extends AbstractController {
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 		final Message msg = this.messageService.findOne(id);
 
-		System.out.println("Message encontrado: " + msg);
-		Assert.notNull(msg, "msg.null");
-
 		try {
+			System.out.println("Message encontrado: " + msg);
+			Assert.notNull(msg, "msg.null");
 			Assert.isTrue(a.getMessages().contains(msg));
 			System.out.println("entra en el try");
 			this.messageService.remove(msg);
