@@ -141,8 +141,8 @@ public class AdministratorService extends ActorService {
 		// Aï¿½ADIDO
 
 		if (actorForm.getAccept() == false) {
-			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
-			binding.addError(error);
+//			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
+//			binding.addError(error);
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
 
@@ -297,7 +297,7 @@ public class AdministratorService extends ActorService {
 		Assert.isTrue(this.checkEmailEdit(admin), "error.email");
 		System.out.println("hola");
 		if (admin.getPhone().matches("^([0-9]{4,})$")) {
-			final String phoneM = admin.getPhone() + "6";
+			final String phoneM = admin.getPhone();
 			admin.setPhone(phoneM);
 			admin.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + admin.getPhone());
 		}

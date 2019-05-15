@@ -347,7 +347,7 @@ public class ProviderService {
 		Assert.isTrue(this.checkEmailEdit(provider), "error.email");
 		System.out.println("hola");
 		if (provider.getPhone().matches("^([0-9]{4,})$")) {
-			final String phoneM = provider.getPhone() + "6";
+			final String phoneM = provider.getPhone();
 			provider.setPhone(phoneM);
 			provider.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + provider.getPhone());
 		}

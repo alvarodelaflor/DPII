@@ -41,10 +41,6 @@
 						res = true;
 						alert("<spring:message code='PN' />");
 					}
-					if (res == false) {
-						var conf = confirm("<spring:message code='PNconf' />");
-						return conf;
-					}
 				}
 			</script>
 		</header>

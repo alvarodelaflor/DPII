@@ -276,7 +276,7 @@ public class CompanyService {
 		Assert.isTrue(this.checkEmailEdit(company), "error.email");
 		System.out.println("hola");
 		if (company.getPhone().matches("^([0-9]{4,})$")) {
-			final String phoneM = company.getPhone() + "6";
+			final String phoneM = company.getPhone();
 			company.setPhone(phoneM);
 			company.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + company.getPhone());
 		}

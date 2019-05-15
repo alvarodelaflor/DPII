@@ -264,7 +264,7 @@ public class RookieService {
 		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
 		Assert.isTrue(!this.checkEmailFormatter(rookie), "email.wrong");
 		if (rookie.getPhone().matches("^([0-9]{4,})$")) {
-			String phoneM = rookie.getPhone() + "6";
+			String phoneM = rookie.getPhone();
 			rookie.setPhone(phoneM);
 			rookie.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + rookie.getPhone());
 		}
