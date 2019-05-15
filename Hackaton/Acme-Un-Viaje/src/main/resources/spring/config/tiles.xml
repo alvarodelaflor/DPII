@@ -29,6 +29,7 @@
 		<value>/views/cleaner/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
 		<value>/views/transporter/tiles.xml</value>
+		<value>/views/referee/tiles.xml</value>
 		<!-- CARMEN -->
 	</util:list>
 

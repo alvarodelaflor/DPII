@@ -25,7 +25,7 @@
 <div class="container-fluid">
 	<form:form class="formularioEdicion" method="POST"
 		modelAttribute="registerActor" onsubmit="return phonenumberval();"
-		action="cleaner/create.do">
+		action="referee/create.do">
 		<div class="row" style="padding-left: 2.5em">
 			<div class="col-md-6">
 				<fieldset>

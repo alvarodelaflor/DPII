@@ -16,19 +16,19 @@
       
 <tiles-definitions>
 
-	<definition name="cleaner/create" extends="master.page">	
-		<put-attribute name="title" value="Registro como Operario de limpieza" />
-		<put-attribute name="body" value="/views/cleaner/create.jsp" />
+	<definition name="referee/create" extends="master.page">	
+		<put-attribute name="title" value="Registro como Regulador" />
+		<put-attribute name="body" value="/views/referee/create.jsp" />
 	</definition>
 	
-	<definition name="cleaner/edit" extends="master.page">	
+	<definition name="referee/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar tus datos personales" />
-		<put-attribute name="body" value="/views/cleaner/edit.jsp" />
+		<put-attribute name="body" value="/views/referee/edit.jsp" />
 	</definition>
 	
-	<definition name="cleaner/show" extends="master.page">	
+	<definition name="referee/show" extends="master.page">	
 		<put-attribute name="title" value="¡Tu perfil!" />
-		<put-attribute name="body" value="/views/cleaner/show.jsp" />
+		<put-attribute name="body" value="/views/referee/show.jsp" />
 	</definition>
 	
 </tiles-definitions>
