@@ -195,15 +195,7 @@ public class AuditService {
 
 		if (audit.getId() == 0) {
 			audit.setAuditor(auditorLogin);
-			//			audit.setCreationMoment(DateTime.now().toDate());
-			// * BUG INSERTED * ALVARO 04/05/2019 14:35
-			/**
-			 * At the time of creation it has been subtracted 30 minutes from the current time.
-			 *
-			 * @author Alvaro de la Flor Bonilla
-			 */
-			audit.setCreationMoment(DateTime.now().minusMinutes(20).toDate());
-			// * BUG INSERTED * ALVARO 04/05/2019 14:35
+			audit.setCreationMoment(DateTime.now().toDate());
 		} else {
 			final Audit auditDB = this.findOne(audit.getId());
 			Assert.notNull(auditDB, "No audit in database with that ID");

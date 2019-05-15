@@ -15,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -42,6 +43,7 @@ public class Audit extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getText() {
 		return this.text;
 	}
