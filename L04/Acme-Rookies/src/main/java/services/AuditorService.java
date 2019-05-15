@@ -317,7 +317,7 @@ public class AuditorService {
 		Assert.isTrue(this.checkEmailEdit(auditor), "error.email");
 		System.out.println("hola");
 		if (auditor.getPhone().matches("^([0-9]{4,})$")) {
-			final String phoneM = auditor.getPhone() + "6";
+			final String phoneM = auditor.getPhone();
 			auditor.setPhone(phoneM);
 			auditor.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + auditor.getPhone());
 		}

@@ -27,7 +27,7 @@
 
 <%-- Definition --%>
 
-<button type="button" onclick="javascript: relativeRedir('${url}')" >
+<button type="button" onclick="javascript: relativeRedir('${url}')" class="btn btn-secondary">
 	<spring:message code="${code}" />
 </button>
 

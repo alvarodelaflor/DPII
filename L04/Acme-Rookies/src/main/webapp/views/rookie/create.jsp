@@ -61,7 +61,7 @@
 				<spring:message code="rookie.conditions" var="termsAndConditions"/>
 				<form:checkbox path="accept" label="${termsAndConditions}"/>
 				<a href="actor/conditions.do" target="_blank"><spring:message code="rookie.conditions1" /></a>
-				<form:errors path="${accept}" cssClass="error" />
+				<form:errors path="accept" cssClass="error" />
 				<br>
 				<br>					
 				<acme:submit name="save" code="rookie.save"/>

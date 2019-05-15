@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="cleaner/create" extends="master.page">	
+		<put-attribute name="title" value="Register as Cleaner" />
+		<put-attribute name="body" value="/views/cleaner/create.jsp" />
+	</definition>
+	
+	<definition name="cleaner/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit your personal data" />
+		<put-attribute name="body" value="/views/cleaner/edit.jsp" />
+	</definition>
+	
+	<definition name="cleaner/show" extends="master.page">	
+		<put-attribute name="title" value="Show your personal data" />
+		<put-attribute name="body" value="/views/cleaner/show.jsp" />
+	</definition>
+	
+</tiles-definitions>

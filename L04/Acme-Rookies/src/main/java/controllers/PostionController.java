@@ -91,7 +91,7 @@ public class PostionController extends AbstractController {
 			result = new ModelAndView("position/list");
 			result.addObject("positions", positions);
 			result.addObject("positionForm", positionForm);
-			result.addObject("requestURI", "position/.do");
+			result.addObject("requestURI", "position/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

@@ -20,6 +20,7 @@ import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import utilities.AuthUtils;
 import domain.Administrator;
 import domain.Company;
 import domain.CreditCard;
@@ -140,8 +141,8 @@ public class AdministratorService extends ActorService {
 		// Aï¿½ADIDO
 
 		if (actorForm.getAccept() == false) {
-			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
-			binding.addError(error);
+//			final ObjectError error = new ObjectError("accept", "You have to accepted the terms and condictions");
+//			binding.addError(error);
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
 
@@ -225,6 +226,8 @@ public class AdministratorService extends ActorService {
 	}
 
 	public void calculateCompaniesScore() {
+		Assert.isTrue(AuthUtils.checkLoggedAuthority("ADMIN"));
+
 		final List<Object[]> scoresAndCompanies = this.companyService.getCompaniesScores();
 		if (scoresAndCompanies.isEmpty())
 			return;
@@ -237,16 +240,12 @@ public class AdministratorService extends ActorService {
 		// mappedScore = (score - min) / (max - min)
 		for (final Object[] o : scoresAndCompanies) {
 			final Double score = (Double) o[0];
-			// TODO: INSERTING A BUG (MULTIPLYING THE SCORE * 15000)
-			// final Double mappedScore = (score - min) / (max - min); THIS IS THE CORRECT LINE
-			final Double mappedScore = ((score - min) / (max - min)) * 15000;
+			final Double mappedScore = (score - min) / (max - min);
 			Company company = (Company) o[1];
 			company = this.companyService.findOne(company.getId());
 			company.setAuditScore(mappedScore);
-			System.out.println(("max = " + max + ", min = " + min + ", score = " + score + ", mappedScore = " + mappedScore));
 		}
 	}
-	
 	// RECONSTRUCT-EDIT---------------------------------------------------------------		
 
 	public Administrator reconstructEdit(final Administrator admin, final BindingResult binding) {
@@ -291,7 +290,6 @@ public class AdministratorService extends ActorService {
 		return res;
 	}
 
-
 	// SAVE-EDIT ---------------------------------------------------------------	
 
 	public Administrator saveEdit(Administrator admin) {
@@ -299,7 +297,7 @@ public class AdministratorService extends ActorService {
 		Assert.isTrue(this.checkEmailEdit(admin), "error.email");
 		System.out.println("hola");
 		if (admin.getPhone().matches("^([0-9]{4,})$")) {
-			final String phoneM = admin.getPhone() + "6";
+			final String phoneM = admin.getPhone();
 			admin.setPhone(phoneM);
 			admin.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + admin.getPhone());
 		}
