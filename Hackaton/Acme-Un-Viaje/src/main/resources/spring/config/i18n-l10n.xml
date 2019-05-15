@@ -29,6 +29,7 @@
 		<value>/views/cleaner/messages</value>
 		<value>/views/actor/messages</value>
 		<value>/views/transporter/messages</value>
+		<value>/views/referee/messages</value>
 		<!-- Carmen -->
 	</util:list>
 

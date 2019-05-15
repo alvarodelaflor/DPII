@@ -17,7 +17,7 @@
 <tiles-definitions>
 
 	<definition name="actor/conditions" extends="master.page">	
-		<put-attribute name="title" value="Terms and condictions" />
+		<put-attribute name="title" value="Terms and conditions" />
 		<put-attribute name="body" value="/views/actor/conditions.jsp" />
 	</definition>
 	

@@ -94,6 +94,9 @@ body {
 		<div class="field-wrap">
 			<a href="transporter/create.do" class="btn btn-secondary"><spring:message code="register.trasporter" /></a>
 		</div>
+		<div class="field-wrap">
+			<a href="referee/create.do" class="btn btn-secondary"><spring:message code="register.referee" /></a>
+		</div>
 	</div>
 </div>
 </div>

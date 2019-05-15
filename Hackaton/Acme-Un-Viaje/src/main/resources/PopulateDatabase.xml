@@ -50,6 +50,19 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="referee" />
+		<property name="password"
+			value="4f200dd50f7bcac8a64683b771700afb" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="REFEREE" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	<!-- Other domain beans come here -->
 
 	<!-- CLEANER -->
@@ -69,21 +82,51 @@
 
 	<!-- TRANSPORT -->
 	<bean id="transporter01" class="domain.Transporter">
-		<property name="name" value="Mr. Potato" />
+		<property name="name" value="Sr. Potato" />
 		<property name="surname" value="Fritito" />
 		<property name="birthDate" value="1998/12/11" />
 		<property name="photo"
-			value="https://simg.nicepng.com/png/small/17-170013_mr-potato-head-free-png-image-mr-potato.png" />
+			value="https://pngimage.net/wp-content/uploads/2018/06/mr-potato-head-toy-story-png-1-300x200.png" />
 		<property name="email" value="patata1@gmail.com" />
 		<property name="phone" value="678546678" />
 		<property name="userAccount" ref="userAccount3" />
-		<property name="creditCard" ref="creditCard01" />
+		<property name="creditCard" ref="creditCard02" />
 	</bean>
 	<!-- TRANSPORT -->
+	
+	<!-- REFEREE -->
+	<bean id="referee01" class="domain.Referee">
+		<property name="name" value="Sr. Potato" />
+		<property name="surname" value="Fritito" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="photo"
+			value="https://pngimage.net/wp-content/uploads/2018/06/mr-potato-head-toy-story-png-1-300x200.png" />
+		<property name="email" value="patata2@gmail.com" />
+		<property name="phone" value="678546678" />
+		<property name="userAccount" ref="userAccount4" />
+		<property name="creditCard" ref="creditCard03" />
+	</bean>
+	<!-- REFEREE -->
 
 	<!-- CREDITCARD -->
 	<bean id="creditCard01" class="domain.CreditCard">
 		<property name="holder" value="Mr. Potato" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	
+	<bean id="creditCard02" class="domain.CreditCard">
+		<property name="holder" value="Sr. Potato" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	
+	<bean id="creditCard03" class="domain.CreditCard">
+		<property name="holder" value="Sr. Potato" />
 		<property name="make" value="VISA" />
 		<property name="number" value="1234567891234567" />
 		<property name="CVV" value="234" />

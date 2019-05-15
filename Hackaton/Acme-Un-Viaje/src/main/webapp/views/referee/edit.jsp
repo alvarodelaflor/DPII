@@ -24,8 +24,12 @@
 <hr>
 <div class="container-fluid">
 	<form:form class="formularioEdicion" method="POST"
-		modelAttribute="registerActor" onsubmit="return phonenumberval();"
-		action="cleaner/create.do">
+		modelAttribute="referee" onsubmit="return phonenumberval();"
+		action="referee/edit.do">
+
+
+		<form:hidden path="id" />
+
 		<div class="row" style="padding-left: 2.5em">
 			<div class="col-md-6">
 				<fieldset>
@@ -38,15 +42,6 @@
 					<acme:textbox code="actor.surname" path="surname"
 						placeholder="Fernández Benjumea" cssLabel="col-md-3"
 						cssInput="col-md-5" cssError="col-md-4" />
-					<acme:textbox code="actor.username" path="userName"
-						placeholder="carferben" cssLabel="col-md-3" cssError="col-md-4"
-						cssInput="col-md-5" />
-					<acme:password code="actor.password" path="password"
-						placeholder="********" cssLabel="col-md-3" cssInput="col-md-5"
-						cssError="col-md-4" />
-					<acme:password code="actor.passwordC" path="confirmPassword"
-						placeholder="********" cssLabel="col-md-3" cssInput="col-md-5"
-						cssError="col-md-4" />
 					<acme:textbox code="actor.birthDate" path="birthDate"
 						placeholder="1998/11/12" cssLabel="col-md-3" cssInput="col-md-5"
 						cssError="col-md-4" />
@@ -59,50 +54,40 @@
 						cssError="col-md-4" placeholder="678543267" cssInput="col-md-5" />
 				</fieldset>
 			</div>
-			
+
 			<div class="col-md-6">
 				<fieldset>
 					<h2>
 						<spring:message code="actor.creditCard" />
 					</h2>
 					<hr>
-					<acme:textbox code="actor.holder" path="holder"
+					<acme:textbox code="actor.holder" path="creditCard.holder"
 						placeholder="Sr. Benjumea" cssLabel="col-md-3" cssInput="col-md-4"
 						cssError="col-md-4" />
-					<acme:textbox code="actor.make" path="make" placeholder="VISA"
+					<acme:textbox code="actor.make" path="creditCard.make" placeholder="VISA"
 						cssLabel="col-md-3" cssInput="col-md-4" cssError="col-md-4" />
-					<acme:textbox code="actor.number" path="number"
+					<acme:textbox code="actor.number" path="creditCard.number"
 						placeholder="1234567890987654" cssLabel="col-md-3"
 						cssError="col-md-4" cssInput="col-md-4" />
-					<acme:textbox code="actor.CVV" path="CVV" placeholder="123"
+					<acme:textbox code="actor.CVV" path="creditCard.CVV" placeholder="123"
 						cssError="col-md-4" cssLabel="col-md-3" cssInput="col-md-4" />
-					<acme:textboxExpiration code="actor.expiration" path="expiration"
+					<acme:textboxExpiration code="actor.expiration" path="creditCard.expiration"
 						cssError="col-md-4" cssLabel="col-md-3" cssInput="col-md-4" />
 				</fieldset>
 			</div>
 		</div>
-		
+
 		<br>
-		
-		<div class="row" style="padding-left: 2.5em">
-			<div class="col-md-12">
-				<fieldset>
-					<spring:message code="actor.conditions" var="termsAndConditions" />
-					<form:checkbox path="accept" label="${termsAndConditions}" />
-					<a href="actor/conditions.do" target="_blank"><spring:message
-							code="actor.conditions1" /></a>
-					<form:errors path="accept" cssClass="error" />
-				</fieldset>
-			</div>
-		</div>
+
 		<div class="row">
 			<div class="col-md-3">
-				<span style="padding-left: 2.5em"> <acme:submit name="save"
-						code="actor.save" />
+				<span style="padding-left: 2.5em"> <acme:submit
+						name="saveEdit" code="actor.save" />
 				</span> <span style="padding-left: 0.5em"> <acme:cancel url=""
 						code="actor.cancel" />
 				</span>
 			</div>
 		</div>
 	</form:form>
+
 </div>
