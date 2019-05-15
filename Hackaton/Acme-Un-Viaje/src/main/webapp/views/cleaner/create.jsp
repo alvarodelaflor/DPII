@@ -22,11 +22,11 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <hr>
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 2.5em">
 	<form:form class="formularioEdicion" method="POST"
 		modelAttribute="registerActor" onsubmit="return phonenumberval();"
 		action="cleaner/create.do">
-		<div class="row" style="padding-left: 2.5em">
+		<div class="row">
 			<div class="col-md-6">
 				<fieldset>
 					<h2>

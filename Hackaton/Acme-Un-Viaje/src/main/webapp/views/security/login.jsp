@@ -28,8 +28,11 @@
 <style type="text/css">
 <!--
 body {
-    background-image: url(images/hello.jpg);
-   	background-size: 100% 103%;
+	background: url(images/hello.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 -->
 </style>
@@ -42,7 +45,13 @@ body {
   }
 </script>
 </head>
-<body translate="no">
+<body>
+
+<div class="container-fluid">
+<div class="row">
+<div class="col-xs-2 col-md-3">
+</div>
+<div class="col-xs-8 col-md-6">
 	<div class="form">
 		<ul class="tab-group">
 			<li class="tab "><a href="#signup"><spring:message code="master.page.registre" /></a></li>
@@ -87,7 +96,13 @@ body {
 		</div>
 	</div>
 </div>
+</div>
 </div> 
+</div>
+<div class="col-xs-2 col-md-3">
+</div>
+</div>
+
 <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script id="rendered-js">
