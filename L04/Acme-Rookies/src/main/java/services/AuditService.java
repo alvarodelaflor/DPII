@@ -130,7 +130,7 @@ public class AuditService {
 		if (audit.getPosition()!= null && auditDB != null && audit.getStatus() != null && audit.getStatus().equals(false)) {
 			Assert.isTrue(auditDB.getPosition().equals(audit.getPosition()) || res.contains(audit.getPosition()));
 			res.add(auditDB.getPosition());
-		} else {
+		} else if (auditDB!= null && auditDB.getPosition()!=null) {
 			res.add(auditDB.getPosition());
 		}
 		return res;
