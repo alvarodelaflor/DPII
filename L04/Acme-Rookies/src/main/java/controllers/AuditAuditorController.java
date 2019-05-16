@@ -123,7 +123,12 @@ public class AuditAuditorController extends AbstractController {
 			System.out.println("Error en AuditAuditorController.java, binding: " + binding);
 			result = new ModelAndView("audit/auditor/create");
 			result.addObject("audit", audit);
-			result.addObject("posFinal", this.auditService.getPositionAvailable(audit));
+			try {
+				result.addObject("posFinal", this.auditService.getPositionAvailable(audit));	
+			} catch (Exception e) {
+				result = new ModelAndView(welcomeIndex);
+			}
+			
 		} else {
 			try {
 				Auditor auditorLogin = this.auditorService.getAuditorLogin();
@@ -137,15 +142,21 @@ public class AuditAuditorController extends AbstractController {
 				final Audit saveAudit = this.auditService.save(audit);
 				result = new ModelAndView("audit/show");
 				result.addObject("auditId", saveAudit.getId());
+				if (saveAudit.getStatus()!= null && saveAudit.getStatus().equals(false)) {
+					result.addObject("auditLogin", true);
+					result.addObject("auditorLogger", true);
+				}
 				result.addObject("noHistoryBack", true);
-				result.addObject("auditLogin", true);
-				result.addObject("auditorLogger", true);
 				result.addObject("requestURI", "audit/show.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE AuditAuditorController.java Throwable: " + oops);
 				result = new ModelAndView("audit/auditor/edit");
 				result.addObject("audit", audit);
-				result.addObject("posFinal", this.auditService.getPositionAvailable(audit));
+				try {
+					result.addObject("posFinal", this.auditService.getPositionAvailable(audit));					
+				} catch (Exception e) {
+					result = new ModelAndView(welcomeIndex);
+				}
 				result.addObject("message", "audit.commit.error");
 			}
 		}
