@@ -27,7 +27,7 @@
 				
 				<acme:textbox code="position.title" path="title" />
 				<acme:textbox code="position.description" path="description" />
-				<acme:textbox code="position.salary" path="salary"/>
+				<acme:numberbox code="position.salary" path="salary"/>
 				<acme:textbox code="position.deadline" path="deadline" placeholder="2021/12/25 15:30"/>
 				<acme:textbox code="position.profile" path="profile" />
 				<acme:textbox code="position.skills" path="skills" />

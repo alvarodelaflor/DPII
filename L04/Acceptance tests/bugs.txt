@@ -24,10 +24,5 @@ RQ 23.2 -> El momento de los mensajes no guarda la hora(ANTONIO)
 
 RQ 23.1 -> El bot�n cancel de show de social profile redirige a inicio(ANTONIO)
 
-RQ 23.1 -> El m�ximo y el m�nimo de patrocinios por encargo y por proveedores est�n intercambiados(ANTONIO)
-
-
-
-
 
 RQ 9.3 -> Ambos botones en la vista para aceptar o rechazar una solicitud rechazan la solicitud (HIPONA)

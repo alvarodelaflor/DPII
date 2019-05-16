@@ -46,7 +46,7 @@ public class MessageService {
 		final Collection<String> actors = new ArrayList<>();
 		final List<Tag> tags = new ArrayList<>();
 		if (message.getId() == 0) {
-			message.setMoment(LocalDate.now().toDate());
+			message.setMoment(LocalDateTime.now().toDate());
 			message.setRecipient(actors);
 			message.setSender("init");
 			//		message.setTags(tags);
@@ -108,7 +108,8 @@ public class MessageService {
 
 		//Capturo actor logeado seg�n su Username
 		final UserAccount uacc = LoginService.getPrincipal();
-		final Actor actor = this.actorService.getActorByUser(uacc.getUsername());
+		Integer id = uacc.getId();
+		final Actor actor = this.actorService.getActorByUserId(id);
 		//Actualizo contador total de msg
 		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1.);
 		//Actualizo contador de msg de spam

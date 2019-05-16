@@ -30,5 +30,5 @@
   																          			
           			</table>
           			
-          			<acme:cancel url=" " code="cancel"/>
+          			<acme:cancel url="socialProfile/list.do" code="socialProfile.cancel"/>
       			</div>
