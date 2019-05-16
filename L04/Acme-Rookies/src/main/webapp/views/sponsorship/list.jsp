@@ -25,9 +25,16 @@
 			</display:table>
 			<br />
 			<br />
-			<jstl:if test="${not notValid}">
-				<acme:cancel url="sponsorship/provider/create.do" code="create" />
-			</jstl:if>
+			
+			<c:choose>
+				<c:if test="${not notValid}">
+					<acme:cancel url="sponsorship/provider/create.do" code="create" />
+				</c:if>
+				<c:otherwise>
+					<spring:message code="notValidPositions" />	
+				</c:otherwise>
+			</c:choose>
+			
 		</security:authorize>
 	</div>
 	<div>

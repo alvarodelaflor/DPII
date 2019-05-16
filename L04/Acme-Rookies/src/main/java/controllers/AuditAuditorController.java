@@ -138,6 +138,10 @@ public class AuditAuditorController extends AbstractController {
 				result = new ModelAndView("audit/show");
 				result.addObject("auditId", saveAudit.getId());
 				result.addObject("noHistoryBack", true);
+				if (saveAudit != null && saveAudit.getStatus()!= null && saveAudit.getStatus().equals(false)) {
+					result.addObject("auditLogin", true);
+					result.addObject("auditorLogger", true);	
+				}
 				result.addObject("audit", saveAudit);
 				result.addObject("requestURI", "audit/show.do");
 			} catch (final Throwable oops) {
