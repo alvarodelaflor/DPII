@@ -38,9 +38,25 @@
 		<security:intercept-url pattern="/transporter/edit.do" access="hasRole('TRASNSPORTER')" />
 		<security:intercept-url pattern="/transporter/show.do" access="hasRole('TRASNSPORTER')" />
 		
+		<security:intercept-url pattern="/travelAgency/create.do" access="permitAll" />
+		<security:intercept-url pattern="/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
+		
 		<security:intercept-url pattern="/referee/create.do" access="permitAll" />
 		<security:intercept-url pattern="/referee/edit.do" access="hasRole('REFEREE')" />
 		<security:intercept-url pattern="/referee/show.do" access="hasRole('REFEREE')" />
+		
+		<security:intercept-url pattern="/customer/create.do" access="permitAll" />
+		<security:intercept-url pattern="/customer/edit.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/show.do" access="hasRole('CUSTOMER')" />
+		
+		<security:intercept-url pattern="/host/create.do" access="permitAll" />
+		<security:intercept-url pattern="/host/edit.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/show.do" access="hasRole('HOST')" />
+		
+		<security:intercept-url pattern="/admin/create.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/edit.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/show.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
 		<!-- CARMEN -->

@@ -22,14 +22,16 @@
 		<value>/views/misc/tiles.xml</value>		
 		<value>/views/security/tiles.xml</value>
 		<value>/views/welcome/tiles.xml</value>
-		
-		<value>/views/administrator/tiles.xml</value>
-		
+				
 		<!-- CARMEN -->
 		<value>/views/cleaner/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
 		<value>/views/transporter/tiles.xml</value>
 		<value>/views/referee/tiles.xml</value>
+		<value>/views/host/tiles.xml</value>
+		<value>/views/admin/tiles.xml</value>
+		<value>/views/travelAgency/tiles.xml</value>
+		<value>/views/customer/tiles.xml</value>
 		<!-- CARMEN -->
 	</util:list>
 

@@ -39,13 +39,16 @@ public class Authority implements GrantedAuthority {
 	public static final String CLEANER = "CLEANER";
 	public static final String TRASNSPORTER = "TRASNSPORTER";
 	public static final String REFEREE = "REFEREE";
+	public static final String HOST = "HOST";
+	public static final String TRAVELAGENCY = "TRAVELAGENCY";
+	public static final String CUSTOMER = "CUSTOMER";
 
 	// Attributes -------------------------------------------------------------
 
 	private String authority;
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.CLEANER + "|" + Authority.REFEREE + "|" + Authority.TRASNSPORTER + "$")
+	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.CLEANER +  "|" + Authority.TRAVELAGENCY +  "|" + Authority.CUSTOMER + "|" + Authority.HOST + "|" + Authority.REFEREE + "|" + Authority.TRASNSPORTER + "$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
@@ -64,6 +67,10 @@ public class Authority implements GrantedAuthority {
 		authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		result.add(authority);
+		
+		authority = new Authority();
+		authority.setAuthority(Authority.CUSTOMER);
+		result.add(authority);
 
 		authority = new Authority();
 		authority.setAuthority(Authority.TRASNSPORTER);
@@ -75,6 +82,14 @@ public class Authority implements GrantedAuthority {
 		
 		authority = new Authority();
 		authority.setAuthority(Authority.REFEREE);
+		result.add(authority);
+		
+		authority = new Authority();
+		authority.setAuthority(Authority.HOST);
+		result.add(authority);
+		
+		authority = new Authority();
+		authority.setAuthority(Authority.TRAVELAGENCY);
 		result.add(authority);
 
 		return result;

@@ -21,35 +21,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Admin;
+import domain.Customer;
 import domain.CreditCard;
-import forms.RegisterActor;
+import forms.RegisterActorE;
 import security.LoginService;
-import services.AdminService;
+import services.CustomerService;
 
 @Controller
-@RequestMapping("/admin")
-public class AdministratorController extends AbstractController {
+@RequestMapping("/customer")
+public class CustomerController extends AbstractController {
 
 	@Autowired
-	private AdminService adminService;
+	private CustomerService customerService;
 
 	// Constructors -----------------------------------------------------------
 
-	public AdministratorController() {
+	public CustomerController() {
 		super();
 	}
 
-	// REGISTER AS ADMIN
+	// REGISTER AS CLEANER
 	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		try {
-			final RegisterActor registerActor = new RegisterActor();
-			result = new ModelAndView("admin/create");
-			result.addObject("registerActor", registerActor);
+			final RegisterActorE registerActorE = new RegisterActorE();
+			result = new ModelAndView("customer/create");
+			result.addObject("registerActorE", registerActorE);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -57,19 +57,19 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
-	// SAVE REGISTER AS ADMIN
+	// SAVE REGISTER AS CLEANER
 	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final RegisterActor registerActor, final BindingResult binding) {
+	public ModelAndView save(final RegisterActorE registerActorE, final BindingResult binding) {
 		ModelAndView result = null;
-		final Admin admin = this.adminService.reconstructRegisterAsAdmin(registerActor, binding);
+		final Customer customer = this.customerService.reconstructRegisterAsCustomer(registerActorE, binding);
 		if (binding.hasErrors()) {
 			System.err.println(binding);
-			result = new ModelAndView("admin/create");
+			result = new ModelAndView("customer/create");
 		} else
 			try {
-				this.adminService.saveRegisterAsAdmin(admin);
+				this.customerService.saveRegisterAsCustomer(customer);
 				result = new ModelAndView("welcome/index");
 				final SimpleDateFormat formatter;
 				formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -86,13 +86,13 @@ public class AdministratorController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		ModelAndView result;
-		Admin admin;
+		Customer customer;
 		final int idUserAccount = LoginService.getPrincipal().getId();
-		admin = this.adminService.getAdminByUserAccountId(idUserAccount);
-		Assert.notNull(admin);
-		CreditCard creditCard = admin.getCreditCard();
-		result = new ModelAndView("admin/edit");
-		result.addObject("admin", admin);
+		customer = this.customerService.getCustomerByUserAccountId(idUserAccount);
+		Assert.notNull(customer);
+		CreditCard creditCard = customer.getCreditCard();
+		result = new ModelAndView("customer/edit");
+		result.addObject("customer", customer);
 		result.addObject("creditCard", creditCard);
 		return result;
 	}
@@ -100,18 +100,18 @@ public class AdministratorController extends AbstractController {
 	// SAVE EDIT DATA PERSONAL
 	// ----------------------------------------------------------------
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
-	public ModelAndView saveEdit(Admin admin, final BindingResult binding) {
+	public ModelAndView saveEdit(Customer customer, final BindingResult binding) {
 		ModelAndView result = null;
 
-		admin = this.adminService.reconstructEditDataPeronal(admin, binding);
+		customer = this.customerService.reconstructEditDataPeronal(customer, binding);
 
 		if (binding.hasErrors()) {
 			System.out.println("HAY ERRORES 2" + binding);
-			result = new ModelAndView("admin/edit");
+			result = new ModelAndView("customer/edit");
 
 		} else
 			try {
-				this.adminService.saveRegisterAsAdmin(admin);
+				this.customerService.saveRegisterAsCustomer(customer);
 				result = new ModelAndView("redirect:show.do");
 			} catch (final Throwable oops) {
 				result = new ModelAndView("redirect:/welcome/index.do");
@@ -119,17 +119,17 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
-	// SHOW ADMIN
+	// SHOW CLEANER
 	// -------------------------------------------------------------------
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show() {
 		ModelAndView result;
 		try {
 			final int userLoggin = LoginService.getPrincipal().getId();
-			final Admin registerActor;
-			registerActor = this.adminService.getAdminByUserAccountId(userLoggin);
-			result = new ModelAndView("admin/show");
-			result.addObject("registerActor", registerActor);
+			final Customer registerActorE;
+			registerActorE = this.customerService.getCustomerByUserAccountId(userLoggin);
+			result = new ModelAndView("customer/show");
+			result.addObject("registerActorE", registerActorE);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
