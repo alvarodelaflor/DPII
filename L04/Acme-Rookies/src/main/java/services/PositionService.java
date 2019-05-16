@@ -275,6 +275,7 @@ public class PositionService {
 				msg.setSubject("New Suitable Position 4 U tt");
 				msg.setBody("New Position: " + pos.getTitle());
 				msg.setRecipient(new ArrayList<String>());
+				msg.setTags(new ArrayList<Tag>());
 				for (final Rookie rookie : rookies) {
 
 					msg.getRecipient().add(rookie.getEmail());
