@@ -25,12 +25,12 @@
 					
 					<c:choose>
 					<c:when test="${row.userAccount.spammerFlag == false}">
-						<display:column  titleKey="banned">	<!-- B123123u123g123ge23dDe1231231tect13213123ed -->					
+						<display:column  titleKey="spammer">				
 						<spring:message code="spammer.show.isFinal.NO" />
 						</display:column>
 					</c:when>
 					<c:otherwise>
-						<display:column  titleKey="banned">						
+						<display:column  titleKey="spammer">						
 						<spring:message	code="spammer.show.isFinal.SI" />
 						</display:column>
 					</c:otherwise>
@@ -40,12 +40,12 @@
 					
 					<c:choose>
 					<c:when test="${row.userAccount.banned == false}">
-						<display:column  titleKey="spammer">						
+						<display:column  titleKey="banned">						
 						<spring:message code="spammer.show.isFinal.NO" />
 						</display:column>
 					</c:when>
 					<c:otherwise>
-						<display:column  titleKey="spammer">						
+						<display:column  titleKey="banned">						
 						<spring:message	code="spammer.show.isFinal.SI" />
 						</display:column>
 					</c:otherwise>

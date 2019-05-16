@@ -44,10 +44,9 @@
 						value="${(config.fair+((config.fair*config.VAT)/100.0))*row.bannerCount}"></jstl:out>
 				</display:column>
 				<display:column titleKey="collect">
-					<!-- B123123u55454gg76765e765dDe567t575ec56757te556756756d -->
-					<%-- <a href="administrator/collect.do?sponsorshipId=${row.id}"><spring:message
-							code="collect"></spring:message></a> --%>
-							<li><a href="administrator/dashboard.do"><spring:message code="collect" /></a></li>
+					
+					<a href="administrator/collect.do?sponsorshipId=${row.id}"><spring:message
+							code="collect"></spring:message></a>
 				</display:column>
 			</display:table>
 		</security:authorize>
