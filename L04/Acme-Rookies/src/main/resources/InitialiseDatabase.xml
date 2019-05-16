@@ -52,9 +52,12 @@
 		<property name="systemName" value="Acme-Rookies" />
 		<property name="countryCode" value="+34"></property>
 		<property name="cacheHours" value="1" />
+		<property name="fair" value="150.0" />
+		<property name="VAT" value="21.0" />
+		<property name="firsTime" value="0" />
 		<property name="cacheAmount" value="10" />
-		<property name="systemMessageEs" value="¡Bienvenidos a Acme Rookie Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
-		<property name="systemMessageEn" value="Welcome to Acme rookie Rank! We’re IT rookie’s favourite job marketplace!" />
+		<property name="systemMessageEs" value="¡Bienvenidos a Acme Rookie! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		<property name="systemMessageEn" value="Welcome to Acme rookie! We’re IT rookie’s favourite job marketplace!" />
 		<property name="spamWords">
 			<list value-type="java.lang.String">
 				<value>sex</value>
@@ -77,7 +80,7 @@
 		
 		<property name="banner" value="https://i.imgur.com/jlSVXO8.png" />
 	</bean>
-	<!-- CONFIG -->	
+	<!-- CONFIG -->
 	
 	<bean id="creditCard03" class="domain.CreditCard">
     	<property name="holder" value= "Manuel Ruiz de Lopera"/>
