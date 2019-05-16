@@ -25,7 +25,9 @@
 			</display:table>
 			<br />
 			<br />
-			<acme:cancel url="sponsorship/provider/create.do" code="create" />
+			<jstl:if test="${not notValid}">
+				<acme:cancel url="sponsorship/provider/create.do" code="create" />
+			</jstl:if>
 		</security:authorize>
 	</div>
 	<div>

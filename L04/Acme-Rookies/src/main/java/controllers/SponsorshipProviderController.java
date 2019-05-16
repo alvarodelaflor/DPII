@@ -41,12 +41,19 @@ public class SponsorshipProviderController extends AbstractController {
 		ModelAndView res;
 
 		try {
-
+			
+			Collection<Position> positions = this.positionService.findAllPositionWithStatusTrueCancelFalse();
+			Boolean notValid = false;
+			if (positions.isEmpty()) {
+				notValid = true;
+			}
+			
 			final Provider logged = this.providerService.getProviderByUserAccountId(LoginService.getPrincipal().getId());
 			final Collection<Sponsorship> sponsorships;
 			sponsorships = this.sponsorshipService.findAllByProviderId(logged.getId());
 			res = new ModelAndView("sponsorship/provider/list");
 			res.addObject("sponsorships", sponsorships);
+			res.addObject("notValid", notValid);
 		} catch (final Throwable oops) {
 
 			res = new ModelAndView("redirect:/welcome/index.do");
@@ -83,9 +90,15 @@ public class SponsorshipProviderController extends AbstractController {
 		ModelAndView res;
 
 		try {
+			Collection<Position> positions = this.positionService.findAllPositionWithStatusTrueCancelFalse();
+			
+			if (positions.isEmpty()) {
+				res = new ModelAndView("redirect:/welcome/index.do");	
+			} else {
+				final Sponsorship ss = this.sponsorshipService.create();
+				res = this.createEditModelAndView(ss);				
+			}
 
-			final Sponsorship ss = this.sponsorshipService.create();
-			res = this.createEditModelAndView(ss);
 		} catch (final Throwable oops) {
 
 			res = new ModelAndView("redirect:/welcome/index.do");
