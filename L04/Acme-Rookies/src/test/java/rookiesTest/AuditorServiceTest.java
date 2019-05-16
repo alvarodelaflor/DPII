@@ -93,6 +93,8 @@ public class AuditorServiceTest extends AbstractTest {
 
 		try {
 
+			this.authenticate("admin");
+
 			final Auditor auditor = this.auditorService.create();
 
 			auditor.setAddress(address);
