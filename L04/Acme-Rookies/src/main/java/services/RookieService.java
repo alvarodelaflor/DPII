@@ -157,7 +157,7 @@ public class RookieService {
 		final String hashPassword = encoder.encodePassword(password, null);
 		result.getUserAccount().setPassword(hashPassword);
 
-		//A�ADIDO
+		//ANADIDO
 
 		if (!registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
 			binding.rejectValue("expiration", "error.expirationFormatter");
@@ -191,7 +191,7 @@ public class RookieService {
 						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
-		//A�ADIDO
+		//ANADIDO
 
 		if (!registrationForm.getNumber().matches("([0-9]){16}"))
 			//			final ObjectError error = new ObjectError("number", "");
@@ -291,7 +291,7 @@ public class RookieService {
 	/**
 	 * Find a rookie by his userAccount id.
 	 * 
-	 * @author �lvaro de la Flor Bonilla
+	 * @author Alvaro de la Flor Bonilla
 	 * @return Rookie with the given userAccountId.
 	 */
 	public Rookie getRookieByUserAccountId(final int userAccountId) {
@@ -301,7 +301,7 @@ public class RookieService {
 	/**
 	 * Check that any user is login
 	 * 
-	 * @author �lvaro de la Flor Bonilla
+	 * @author Alvaro de la Flor Bonilla
 	 * @return True if an user is login, false in otherwise.
 	 */
 	public Boolean checkAnyLogger() {
@@ -317,7 +317,7 @@ public class RookieService {
 	/**
 	 * Get the rookieLogin. Must exits an user login.
 	 * 
-	 * @author �lvaro de la Flor Bonilla
+	 * @author Alvaro de la Flor Bonilla
 	 * @return The rookie login. Null if the user not is a rookie.
 	 */
 	public Rookie getRookieLogin() {
@@ -333,7 +333,7 @@ public class RookieService {
 	/**
 	 * Must exits the curricula
 	 * 
-	 * @author �lvaro de la Flor Bonilla
+	 * @author Alvaro de la Flor Bonilla
 	 * @return The rookie of the given curricula
 	 */
 	public Rookie getRookieByCurriculaId(final Curricula curricula) {

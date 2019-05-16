@@ -4,7 +4,7 @@ package domain;
 /*
  * Curricula.java
  * 
- * author: �lvaro de la Flor Bonilla GitHub: alvar017
+ * author: Alvaro de la Flor Bonilla GitHub: alvar017
  * 
  * CONTROL:
  * 30/03/2019 14:28 Creation

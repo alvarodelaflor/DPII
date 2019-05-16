@@ -287,12 +287,12 @@
 <c:choose>
     		<c:when test="${language=='English'}">
         		<form>
-      				<input type="button" value="Back" name="volver atr�s2" onclick="history.back()" />
+      				<input type="button" value="Back" name="volver atras2" onclick="history.back()" />
 	  			</form> 
     		</c:when>    
     		<c:otherwise>
 		 		<form>
-      				<input type="button" value="Volver" name="volver atr�s2" onclick="history.back()" />
+      				<input type="button" value="Volver" name="volver atras2" onclick="history.back()" />
 	  			</form>        		
     		</c:otherwise>
 		</c:choose>

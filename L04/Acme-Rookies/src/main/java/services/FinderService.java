@@ -49,9 +49,9 @@ public class FinderService {
 	}
 
 	/**
-	 * Comprueba si la cach� ha expirado, vuelve a buscar desfiles en caso afirmativo y actualiza el finder
+	 * Comprueba si la cache ha expirado, vuelve a buscar desfiles en caso afirmativo y actualiza el finder
 	 * 
-	 * @return Finder con los datos de la cach� o nuevos si ha expirado
+	 * @return Finder con los datos de la cache o nuevos si ha expirado
 	 */
 	public Finder findByLoggedRookieWithCache() {
 		// We have to check rookie authority
@@ -59,7 +59,7 @@ public class FinderService {
 
 		final Rookie rookie = this.rookieService.getRookieByUserAccountId(LoginService.getPrincipal().getId());
 		final Finder res = this.finderRepository.getByRookie(rookie.getId());
-		// Si la cach� ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
+		// Si la cache ha expirado volvemos a buscar los resultados con los criterios definidos en el finder
 		if (res.getExpirationDate() == null || res.getExpirationDate().before(new Date())) {
 			final Collection<Position> positions = this.findByFilter(res.getKeyword(), res.getMinSalary(), res.getMaxSalary(), res.getDeadline());
 			res.setPositions(this.getPositionAmount(positions));

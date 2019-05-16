@@ -73,25 +73,30 @@ public class SocialProfileController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam("socialProfileId") final int socialProfileId) {
 		ModelAndView result;
-		final UserAccount user = LoginService.getPrincipal();
-		final Actor a = this.actorService.getActorByUserId(user.getId());
+		try {
+			final UserAccount user = LoginService.getPrincipal();
+			final Actor a = this.actorService.getActorByUserId(user.getId());
 
-		final SocialProfile socialProfile = this.socialProfileService.findOne(socialProfileId);
-		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+			final SocialProfile socialProfile = this.socialProfileService.findOne(socialProfileId);
+			final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
-		if (!socialProfile.getActor().equals(a))
+			if (!socialProfile.getActor().equals(a))
+				result = new ModelAndView("welcome/index");
+
+			else {
+				result = new ModelAndView("socialProfile/show");
+				result.addObject("socialProfile", socialProfile);
+				//		final String system = this.welcomeService.getSystem();
+				//		result.addObject("system", system);
+				//		final String logo = this.welcomeService.getLogo();
+				//		result.addObject("logo", logo);
+				result.addObject("language", language);
+				result.addObject("requestURI", "socialProfile/show.do");
+			}
+		} catch (Exception e) {
 			result = new ModelAndView("welcome/index");
-
-		else {
-			result = new ModelAndView("socialProfile/show");
-			result.addObject("socialProfile", socialProfile);
-			//		final String system = this.welcomeService.getSystem();
-			//		result.addObject("system", system);
-			//		final String logo = this.welcomeService.getLogo();
-			//		result.addObject("logo", logo);
-			result.addObject("language", language);
-			result.addObject("requestURI", "socialProfile/show.do");
 		}
+		
 		//		result.addObject("logo", this.welcomeService.getLogo());
 		//		result.addObject("system", this.welcomeService.getSystem());
 		result.addObject("logo", this.getLogo()); result.addObject("system", this.getSystem()); return result;

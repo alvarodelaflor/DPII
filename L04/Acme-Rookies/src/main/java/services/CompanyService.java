@@ -116,7 +116,7 @@ public class CompanyService {
 
 		result.setCreditCard(creditCard);
 
-		//A�ADIDO
+		//ANADIDO
 
 		if (!registrationForm.getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
 			binding.rejectValue("expiration", "error.expirationFormatter");
@@ -150,7 +150,7 @@ public class CompanyService {
 						binding.rejectValue("expiration", "error.expirationFuture");
 		}
 
-		//A�ADIDO
+		//ANADIDO
 
 		if (registrationForm.getUserName().length() <= 5 && registrationForm.getUserName().length() <= 5)
 			binding.rejectValue("userName", "error.userAcount");

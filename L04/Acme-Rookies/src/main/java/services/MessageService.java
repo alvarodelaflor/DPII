@@ -106,7 +106,7 @@ public class MessageService {
 
 	public Message save(final Message message) {
 
-		//Capturo actor logeado seg�n su Username
+		//Capturo actor logeado segun su Username
 		final UserAccount uacc = LoginService.getPrincipal();
 		Integer id = uacc.getId();
 		final Actor actor = this.actorService.getActorByUserId(id);

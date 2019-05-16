@@ -68,6 +68,7 @@ public class ItemProviderController extends AbstractController {
 			result = new ModelAndView("item/provider/list");
 			result.addObject("items", items);
 			result.addObject("requestURI", "item/provider/list.do");
+			result.addObject("owner", true);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

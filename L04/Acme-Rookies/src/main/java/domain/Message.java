@@ -24,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 /*
  * CONTROL DE CAMBIOS Message.java
  * 
- * Antonio Salvat 23/02/2019 19:49 CREACI�N DE LA CLASE
+ * Antonio Salvat 23/02/2019 19:49 CREACION DE LA CLASE
  */
 
 @Entity
