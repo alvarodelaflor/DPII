@@ -27,9 +27,9 @@
 			<br />
 			
 			<c:choose>
-				<c:if test="${not notValid}">
+				<c:when test="${not notValid}">
 					<acme:cancel url="sponsorship/provider/create.do" code="create" />
-				</c:if>
+				</c:when>
 				<c:otherwise>
 					<spring:message code="notValidPositions" />	
 				</c:otherwise>
