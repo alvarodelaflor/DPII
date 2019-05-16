@@ -86,7 +86,7 @@ body {
 	</div>
 	<div id="signup" style="display: none;">
 		<div class="field-wrap">
-			<a href="#" class="btn btn-secondary"><spring:message code="register.user" /></a>
+			<a href="customer/create.do" class="btn btn-secondary"><spring:message code="register.user" /></a>
 		</div>
 		<div class="field-wrap">
 			<a href="cleaner/create.do" class="btn btn-secondary"><spring:message code="register.cleaner" /></a>
@@ -96,6 +96,12 @@ body {
 		</div>
 		<div class="field-wrap">
 			<a href="referee/create.do" class="btn btn-secondary"><spring:message code="register.referee" /></a>
+		</div>
+		<div class="field-wrap">
+			<a href="host/create.do" class="btn btn-secondary"><spring:message code="register.host" /></a>
+		</div>
+		<div class="field-wrap">
+			<a href="travelAgency/create.do" class="btn btn-secondary"><spring:message code="register.travelAgency" /></a>
 		</div>
 	</div>
 </div>

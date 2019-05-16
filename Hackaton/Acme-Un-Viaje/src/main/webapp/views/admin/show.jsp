@@ -24,33 +24,15 @@
 <hr>
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
-
-
-		<c:choose>
-			<c:when test="${company.photo == null}">
-				<div class="col-md-3">
-					<div class="card">
-						<img class="card-img-top" src="images/registerPhoto.png"
-							alt="ERROR">
-						<div class="card-body">
-							<h4 class="card-title">${registerActor.name}
-								${registerActor.surname}</h4>
-						</div>
-					</div>
+		<div class="col-md-3">
+			<div class="card">
+				<img class="card-img-top" src="${registerActor.photo}" alt="ERROR">
+				<div class="card-body">
+					<h4 class="card-title">${registerActor.name}
+						${registerActor.surname}</h4>
 				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="col-md-3">
-					<div class="card">
-						<img class="card-img-top" src="${registerActor.photo}" alt="ERROR">
-						<div class="card-body">
-							<h4 class="card-title">${registerActor.name}
-								${registerActor.surname}</h4>
-						</div>
-					</div>
-				</div>
-			</c:otherwise>
-		</c:choose>
+			</div>
+		</div>
 
 		<div class="col-md-4">
 			<fieldset>

@@ -37,10 +37,16 @@
 			<security:authorize access="hasRole('ADMIN')">
 			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.administrator" /></a>
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
-						<a href="administrator/action-1.do" class="dropdown-item"><spring:message code="master.page.administrator.action.1" /></a>
-						<a href="administrator/action-2.do" class="dropdown-item"><spring:message code="master.page.administrator.action.2" /></a>
+						<a href="admin/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+						<a href="admin/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+					</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.admin" /></a>
+					<div class="dropdown-menu">
+						<a href="admin/create.do" class="dropdown-item"><spring:message code="master.page.admin.create" /></a>
 					</div>
 			</li>
 			</security:authorize>
@@ -48,10 +54,10 @@
 			<security:authorize access="hasRole('CLEANER')">
 			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.cleaner.profile" /></a>
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
-						<a href="cleaner/edit.do" class="dropdown-item"><spring:message code="master.page.cleaner.edit" /></a>
-						<a href="cleaner/show.do" class="dropdown-item"><spring:message code="master.page.cleaner.show" /></a>
+						<a href="cleaner/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+						<a href="cleaner/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
 					</div>
 			</li>
 			</security:authorize>
@@ -59,21 +65,54 @@
 			<security:authorize access="hasRole('TRANSPORTER')">
 			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.cleaner.profile" /></a>
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
-						<a href="transporter/edit.do" class="dropdown-item"><spring:message code="master.page.cleaner.edit" /></a>
-						<a href="transporter/show.do" class="dropdown-item"><spring:message code="master.page.cleaner.show" /></a>
+						<a href="transporter/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+						<a href="transporter/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
 					</div>
 			</li>
 			</security:authorize>
 			
-						<security:authorize access="hasRole('REFEREE')">
+			<security:authorize access="hasRole('REFEREE')">
 			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.cleaner.profile" /></a>
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
-						<a href="referee/edit.do" class="dropdown-item"><spring:message code="master.page.cleaner.edit" /></a>
-						<a href="referee/show.do" class="dropdown-item"><spring:message code="master.page.cleaner.show" /></a>
+						<a href="referee/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+						<a href="referee/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+					</div>
+			</li>
+			</security:authorize>
+			
+			<security:authorize access="hasRole('CUSTOMER')">
+			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
+					<div class="dropdown-menu">
+						<a href="customer/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+						<a href="customer/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+					</div>
+			</li>
+			</security:authorize>
+			
+			<security:authorize access="hasRole('TRAVELAGENCY')">
+			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
+					<div class="dropdown-menu">
+						<a href="travelAgency/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+						<a href="travelAgency/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+					</div>
+			</li>
+			</security:authorize>
+						
+			<security:authorize access="hasRole('HOST')">
+			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
+					<div class="dropdown-menu">
+						<a href="host/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+						<a href="host/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
 					</div>
 			</li>
 			</security:authorize>
