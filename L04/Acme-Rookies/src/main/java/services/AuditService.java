@@ -127,8 +127,10 @@ public class AuditService {
 		Assert.notNull(auditor, this.notAuditor);
 		res.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));
 		final Audit auditDB = this.findOne(audit.getId());
-		if (auditDB != null && audit.getStatus() != null && audit.getStatus().equals(false)) {
+		if (audit.getPosition()!= null && auditDB != null && audit.getStatus() != null && audit.getStatus().equals(false)) {
 			Assert.isTrue(auditDB.getPosition().equals(audit.getPosition()) || res.contains(audit.getPosition()));
+			res.add(auditDB.getPosition());
+		} else if (auditDB!= null && auditDB.getPosition()!=null) {
 			res.add(auditDB.getPosition());
 		}
 		return res;

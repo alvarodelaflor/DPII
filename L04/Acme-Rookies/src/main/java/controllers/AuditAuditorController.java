@@ -123,7 +123,7 @@ public class AuditAuditorController extends AbstractController {
 			System.out.println("Error en AuditAuditorController.java, binding: " + binding);
 			result = new ModelAndView("audit/auditor/create");
 			result.addObject("audit", audit);
-			result.addObject("posFinal", this.auditService.getPositionAvailable(audit));
+			result.addObject("posFinal", this.auditService.getPositionAvailable(audit));	
 		} else {
 			try {
 				Auditor auditorLogin = this.auditorService.getAuditorLogin();
@@ -138,8 +138,7 @@ public class AuditAuditorController extends AbstractController {
 				result = new ModelAndView("audit/show");
 				result.addObject("auditId", saveAudit.getId());
 				result.addObject("noHistoryBack", true);
-				result.addObject("auditLogin", true);
-				result.addObject("auditorLogger", true);
+				result.addObject("audit", saveAudit);
 				result.addObject("requestURI", "audit/show.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE AuditAuditorController.java Throwable: " + oops);
