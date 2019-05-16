@@ -339,7 +339,13 @@ public class MessageController extends AbstractController {
 			System.out.println(e);
 			System.out.println("entro en el catch");
 			
-			result = show(msg.getId());			
+			try {
+				Assert.notNull(msg);
+				result = show(msg.getId());
+			} catch (Exception e2) {
+				result = new ModelAndView("welcome/index");
+			}
+					
 		}
 		return result;
 	}

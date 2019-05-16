@@ -308,7 +308,7 @@ public class ApplicationRookieController extends AbstractController {
 				msg.setSubject("Application with new status");
 				msg.setBody("The application sent about " + a2.getApplyMoment() + " ,right now has submitted status");
 				msg.setRecipient(new ArrayList<String>());
-				msg.getRecipient().add(rookie.getEmail());
+			//	msg.getRecipient().add(rookie.getEmail());
 				msg.setSender(rookie.getEmail());
 
 				final Tag tag = this.tagService.create();
@@ -323,7 +323,6 @@ public class ApplicationRookieController extends AbstractController {
 				this.msgService.exchangeMessage(msg, rookie.getId());
 
 				System.out.println("CARMEN LLEGO 3");
-				msg.getTags().add(tagSave);
 				final Message msgSave1 = this.msgService.save(msg);
 
 				tagSave.setMessageId(msgSave1.getId());
