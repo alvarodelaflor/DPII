@@ -21,6 +21,7 @@ import security.UserAccount;
 import domain.Actor;
 import domain.Application;
 import domain.Message;
+import domain.Problem;
 import domain.Rookie;
 import domain.Tag;
 
@@ -264,5 +265,15 @@ public class ApplicationService {
 			listTag.get(i).setMessageId(sended.getId());
 			final Tag save = this.tagService.save(listTag.get(i));
 		}
+	}
+
+	public void deleteProblemApps(Problem problem) {
+		Collection<Application> apps = this.applicationRepository.getProblemApps(problem.getId());
+		this.applicationRepository.deleteInBatch(apps);
+	}
+
+	public void deleteAllByPosition(int id) {
+		Collection<Application> apps = this.applicationRepository.getPositionApps(id);
+		this.applicationRepository.deleteInBatch(apps);
 	}
 }

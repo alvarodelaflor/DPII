@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -13,13 +15,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Company;
+import domain.Problem;
+import domain.Rookie;
 import repositories.ProblemRepository;
 import security.LoginService;
 import security.UserAccount;
 import utilities.AuthUtils;
-import domain.Company;
-import domain.Problem;
-import domain.Rookie;
 
 @Service
 @Transactional
@@ -36,7 +38,9 @@ public class ProblemService {
 
 	@Autowired
 	private PositionService		positionService;
-
+	
+	@Autowired
+	private ApplicationService		applicationService;
 	@Autowired
 	private Validator			validator;
 
@@ -115,6 +119,10 @@ public class ProblemService {
 
 	public void deleteCompanyProblems(final int id) {
 		final Collection<Problem> problems = this.problemRepository.getProblemsByCompany(id);
+		List<Problem> problems1 = new ArrayList<>();
+		for (Problem problem : problems1) {
+			this.applicationService.deleteProblemApps(problem);
+		}
 		this.problemRepository.deleteInBatch(problems);
 
 	}

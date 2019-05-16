@@ -41,4 +41,7 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Intege
 
 	@Query("select stddev(cast((select count(s) from Sponsorship s where s.position = p) as float)) from Position p")
 	public Float stddevSponsorshipPerPosition();
+	
+	@Query("select s from Sponsorship s where s.position.id = ?1")
+	Collection<Sponsorship> getPositionApps(int id);
 }

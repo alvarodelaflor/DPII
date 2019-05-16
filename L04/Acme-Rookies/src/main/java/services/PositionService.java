@@ -34,59 +34,71 @@ import domain.Tag;
 public class PositionService {
 
 	@Autowired
-	private PositionRepository	positionRepository;
+	private PositionRepository positionRepository;
 
 	@Autowired
-	private CompanyService		companyService;
+	private CompanyService companyService;
 
 	@Autowired
-	private RookieService		rookieService;
+	private RookieService rookieService;
 
 	@Autowired
-	private MessageService		msgService;
+	private MessageService msgService;
 
 	@Autowired
-	private TagService			tagService;
+	private TagService tagService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private PositionDataService	positionDataService;
+	private PositionDataService positionDataService;
 
 	@Autowired
-	private ProblemService		problemService;
+	private ProblemService problemService;
 
 	@Autowired
-	private AuditorService		auditorService;
+	private AuditorService auditorService;
 
 	@Autowired
-	private Validator			validator;
+	private ApplicationService applicationService;
 
+	@Autowired
+	private SponsorshipService sponsorshipService;
+
+	@Autowired
+	private AuditService auditsService;
+
+	@Autowired
+	private Validator validator;
 
 	public Position create() {
 		final Position res = new Position();
 		return res;
 	}
+
 	// FINDALL ---------------------------------------------------------------
 	public Collection<Position> findALL() {
 		return this.positionRepository.findAll();
 	}
 
-	// findAllPositionStatusTrueCancelFalseByCompany ---------------------------------------------------------------
+	// findAllPositionStatusTrueCancelFalseByCompany
+	// ---------------------------------------------------------------
 	public Collection<Position> findAllPositionStatusTrueCancelFalseByCompany(final int companyId) {
 		System.out.println(companyId);
 		final Collection<Position> p = this.positionRepository.findAllPositionStatusTrueCancelFalseByCompany(companyId);
 		return p;
 	}
 
-	// findAllPositionWithStatusTrueCancelFalse ---------------------------------------------------------------
+	// findAllPositionWithStatusTrueCancelFalse
+	// ---------------------------------------------------------------
 	public Collection<Position> findAllPositionWithStatusTrueCancelFalse() {
 		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrueCancelFalse();
 		return p;
 	}
 
-	// findAllPositionByCompany ---------------------------------------------------------------
+	// findAllPositionByCompany
+	// ---------------------------------------------------------------
 	public Collection<Position> findAllPositionWithStatusTrue() {
 		final Collection<Position> p = this.positionRepository.findAllPositionWithStatusTrue();
 		return p;
@@ -97,7 +109,8 @@ public class PositionService {
 		return this.positionRepository.findOne(id);
 	}
 
-	// searchPosition ---------------------------------------------------------------
+	// searchPosition
+	// ---------------------------------------------------------------
 	public Collection<Position> search(final String palabra) {
 		final HashSet<Position> p = new HashSet<>();
 		p.addAll(this.positionRepository.findWithDescription(palabra));
@@ -180,7 +193,8 @@ public class PositionService {
 
 	public Collection<Position> findAllPositionsByLoggedCompany() {
 		Assert.isTrue(AuthUtils.checkLoggedAuthority("COMPANY"));
-		final int companyId = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		final int companyId = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId())
+				.getId();
 		return this.positionRepository.findAllPositionsByCompany(companyId);
 	}
 
@@ -188,11 +202,13 @@ public class PositionService {
 		Assert.isTrue(this.checkPositionOwner(positionId), "Logged company is not the owner of position " + positionId);
 		return this.positionRepository.findOne(positionId);
 	}
+
 	private boolean checkPositionOwner(final int positionId) {
 		final int loggedId = LoginService.getPrincipal().getId();
 		final int ownerId = this.positionRepository.findOne(positionId).getCompany().getUserAccount().getId();
 		return loggedId == ownerId;
 	}
+
 	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position res = this.create();
 		if (position.getId() == 0) {
@@ -246,6 +262,7 @@ public class PositionService {
 		}
 		return ticker;
 	}
+
 	private String generateRandomNumber() {
 		String res = "";
 		final Random random = new Random();
@@ -267,9 +284,11 @@ public class PositionService {
 			// In case we are setting this as final, we have to have at least 2 problems
 			if (pos.getStatus()) {
 				final int problemCount = this.problemService.getProblemCount(pos.getId());
-				Assert.isTrue(problemCount >= 2, "Position can't be setted to final mode because it has less than 2 problems");
+				Assert.isTrue(problemCount >= 2,
+						"Position can't be setted to final mode because it has less than 2 problems");
 
-				final Collection<Rookie> rookies = this.rookieService.findRookieRegardlessFinder(pos.getTitle(), pos.getSalary(), pos.getDeadline(), pos.getDescription());
+				final Collection<Rookie> rookies = this.rookieService.findRookieRegardlessFinder(pos.getTitle(),
+						pos.getSalary(), pos.getDeadline(), pos.getDescription());
 
 				final Message msg = this.msgService.create();
 				msg.setSubject("New Suitable Position 4 U tt");
@@ -290,6 +309,7 @@ public class PositionService {
 		}
 		return this.positionRepository.save(pos);
 	}
+
 	private boolean getPositionDatabaseStatus(final int positionId) {
 		final Position dbPosition = this.positionRepository.findOne(positionId);
 		// Database position has to be in draft mode
@@ -392,11 +412,15 @@ public class PositionService {
 		this.detachAllProblems(positionId);
 		this.positionRepository.delete(positionId);
 	}
+
 	public void deleteCompanyPositions(final int companyId) {
 
 		final Collection<Position> positions = this.positionRepository.findAllPositionsByCompany(companyId);
 		if (!positions.isEmpty())
 			for (final Position position : positions) {
+				this.applicationService.deleteAllByPosition(position.getId());
+				this.auditsService.deleteAllByPosition(position.getId());
+				this.sponsorshipService.deleteAllByPosition(position.getId());
 				this.problemService.deleteAllByPosition(position.getId());
 				this.positionDataService.deleteAllByPosition(position.getId());
 				this.positionRepository.delete(position);
@@ -416,6 +440,7 @@ public class PositionService {
 			problem.getPosition().remove(position);
 		}
 	}
+
 	public void addProblemToPosition(final int problemId, final int positionId) {
 		// We must be the owner of both
 		final Position position = this.findOneLoggedIsOwner(positionId);
@@ -442,7 +467,8 @@ public class PositionService {
 
 	/**
 	 * 
-	 * Return a collection of all {@link Position} in database that is valid for a curricula.<br>
+	 * Return a collection of all {@link Position} in database that is valid for a
+	 * curricula.<br>
 	 * An empty collection if any rookie is logger
 	 * 
 	 * @author Alvaro de la Flor Bonilla
@@ -460,8 +486,8 @@ public class PositionService {
 
 	/**
 	 * 
-	 * Return a collection of all {@link Position} in final mode no cancel that it has not
-	 * audit asociated
+	 * Return a collection of all {@link Position} in final mode no cancel that it
+	 * has not audit asociated
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Position}>

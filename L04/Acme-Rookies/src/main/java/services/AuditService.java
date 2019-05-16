@@ -25,6 +25,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Application;
 import domain.Audit;
 import domain.Auditor;
 import domain.Position;
@@ -236,6 +237,11 @@ public class AuditService {
 		final Collection<Collection<Audit>> audits = this.findAllByAuditorLogin(auditor.getId()).values();
 		for (final Collection<Audit> collection : audits)
 			this.auditRepository.deleteInBatch(collection);
+	}
+
+	public void deleteAllByPosition(int id) {
+		Collection<Audit> apps = this.auditRepository.getPositionApps(id);
+		this.auditRepository.deleteInBatch(apps);
 	}
 
 }

@@ -19,6 +19,7 @@ import repositories.SponsorshipRepository;
 import security.Authority;
 import security.LoginService;
 import domain.Actor;
+import domain.Application;
 import domain.CreditCard;
 import domain.Provider;
 import domain.Sponsorship;
@@ -168,6 +169,11 @@ public class SponsorshipService {
 		authority.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(authority));
 		return this.sponsorshipRepo.stddevSponsorshipPerPosition();
+	}
+
+	public void deleteAllByPosition(int id) {
+		Collection<Sponsorship> apps = this.sponsorshipRepo.getPositionApps(id);
+		this.sponsorshipRepo.deleteInBatch(apps);
 	}
 
 }
