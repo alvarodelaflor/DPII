@@ -42,9 +42,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 
 			{
-				"admin", IllegalArgumentException.class
+				"admin", NullPointerException.class
 			}, {
-				"provideruser", null
+				"provider", null
 			}
 		};
 
@@ -58,11 +58,11 @@ public class SponsorshipServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 
 			{
-				"admin", null
+				"admin", NullPointerException.class
 			}, {
-				"provideruser", null
+				"provider", null
 			}, {
-				"rookieuser", IllegalArgumentException.class
+				"rookie", NullPointerException.class
 			}
 		};
 
@@ -76,9 +76,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 
 			{
-				"admin", IllegalArgumentException.class
+				"admin", NullPointerException.class
 			}, {
-				"provideruser", null
+				"provider", null
 			}
 		};
 
@@ -100,8 +100,10 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 				final Provider provider = this.providerService.create();
 				provider.setAddress("calle provider test");
-				provider.setCreditCard(null);
 				provider.setEmail("elcejas@provider.com");
+				provider.setCommercialName("commercia");
+				provider.setCreditCard(null);
+				provider.setVatNumber("ES12345678e");
 				provider.setName("providername");
 				provider.setPhone("123456789");
 				provider.setSurname("providersurname");
@@ -140,8 +142,10 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 				final Provider provider = this.providerService.create();
 				provider.setAddress("calle provider test");
-				provider.setCreditCard(null);
 				provider.setEmail("elcejas@provider.com");
+				provider.setCommercialName("commercia");
+				provider.setCreditCard(null);
+				provider.setVatNumber("ES12345678e");
 				provider.setName("providername");
 				provider.setPhone("123456789");
 				provider.setSurname("providersurname");
@@ -192,8 +196,10 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 				final Provider provider = this.providerService.create();
 				provider.setAddress("calle provider test");
-				provider.setCreditCard(null);
 				provider.setEmail("elcejas@provider.com");
+				provider.setCommercialName("commercia");
+				provider.setCreditCard(null);
+				provider.setVatNumber("ES12345678e");
 				provider.setName("providername");
 				provider.setPhone("123456789");
 				provider.setSurname("providersurname");

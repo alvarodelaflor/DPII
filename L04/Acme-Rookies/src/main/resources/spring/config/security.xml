@@ -196,7 +196,7 @@
 		<security:intercept-url pattern="/finder/rookie/show.do" access="hasRole('ROOKIE')" />
 		<security:intercept-url pattern="/finder/rookie/refresh.do" access="hasRole('ROOKIE')" />
 		<!-- BUG ADDED: any user can delete an item -->
-		<security:intercept-url pattern="/item/provider/delete.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/item/provider/delete.do" access="permitAll" />
 		<!-- BUG ADDED: any user can delete an item -->
 		<security:intercept-url pattern="/item/provider/create.do" access="hasRole('PROVIDER')" />
 		<security:intercept-url pattern="/item/provider/edit.do" access="hasRole('PROVIDER')" />

@@ -26,7 +26,7 @@
 	<display:column property="title" titleKey="problem.title"></display:column>
 	<display:column property="statement" titleKey="problem.statement"/>
 	<display:column property="hint" titleKey="problem.hint"/>
-	<display:column property="attachments" titleKey="problem.attachments"/>
+	<display:column property="attachments" titleKey="problem.statement"/>
 	<display:column titleKey="problem.finalMode">
 		<spring:message code="problem.finalMode.${row.finalMode}"/>
 	</display:column>
