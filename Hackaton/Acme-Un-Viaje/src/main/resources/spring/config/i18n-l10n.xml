@@ -27,6 +27,7 @@
 		<value>/views/admin/messages</value>
 		<value>/views/travelAgency/messages</value>
 		<value>/views/customer/messages</value>
+		<value>/views/socialProfile/messages</value>
 		<!-- Carmen -->
 	</util:list>
 

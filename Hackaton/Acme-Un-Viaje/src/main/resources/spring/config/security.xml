@@ -59,6 +59,12 @@
 		<security:intercept-url pattern="/admin/show.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
+		
+		<security:intercept-url pattern="/socialProfile/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
 		<!-- CARMEN -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 

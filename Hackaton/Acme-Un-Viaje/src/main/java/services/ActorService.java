@@ -23,7 +23,7 @@ import security.UserAccount;
 public class ActorService {
 
 	@Autowired
-	private ActorRepository actorReporsitory;
+	private ActorRepository actorRepository;
 
 	// CHECK REGISTER AS ACTOR
 	// ---------------------------------------------------------------
@@ -60,7 +60,7 @@ public class ActorService {
 		if (registerActor.getUserName().length() <= 5 && registerActor.getUserName().length() <= 5)
 			binding.rejectValue("userName", "error.userAcount");
 
-		if (this.actorReporsitory.getActorByUser(registerActor.getUserName()) != null)
+		if (this.actorRepository.getActorByUser(registerActor.getUserName()) != null)
 			binding.rejectValue("userName", "error.userNameExists");
 
 		if (registerActor.getConfirmPassword().length() <= 5 && registerActor.getPassword().length() <= 5)
@@ -107,17 +107,22 @@ public class ActorService {
 	}
 
 	public Collection<Actor> getActorByEmail(String email) {
-		return this.actorReporsitory.getActorByEmail(email);
+		return this.actorRepository.getActorByEmail(email);
 	}
 
 	public Actor getActorByEmailEdit(final String email) {
 		final UserAccount user = LoginService.getPrincipal();
-		final String emailA = this.actorReporsitory.findByUserAccountId(user.getId()).getEmail();
-		return this.actorReporsitory.getCompareEmailActor(email, emailA);
+		final String emailA = this.actorRepository.findByUserAccountId(user.getId()).getEmail();
+		return this.actorRepository.getCompareEmailActor(email, emailA);
 	}
 
 	public Collection<Actor> getActoresSameEmail(final String email) {
-		return this.actorReporsitory.getActoresSameEmail(email);
+		return this.actorRepository.getActoresSameEmail(email);
+	}
+	
+	public Actor getActorByUserId(final Integer id) {
+		final Actor a = this.actorRepository.getActorByUserId(id);
+		return a;
 	}
 
 }

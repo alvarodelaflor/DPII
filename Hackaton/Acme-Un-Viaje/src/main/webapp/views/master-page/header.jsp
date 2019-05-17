@@ -41,6 +41,7 @@
 					<div class="dropdown-menu">
 						<a href="admin/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="admin/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
 					</div>
 			</li>
 			<li class="nav-item dropdown">
@@ -58,6 +59,7 @@
 					<div class="dropdown-menu">
 						<a href="cleaner/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="cleaner/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
 					</div>
 			</li>
 			</security:authorize>
@@ -69,6 +71,7 @@
 					<div class="dropdown-menu">
 						<a href="transporter/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="transporter/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
 					</div>
 			</li>
 			</security:authorize>
@@ -80,6 +83,7 @@
 					<div class="dropdown-menu">
 						<a href="referee/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="referee/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
 					</div>
 			</li>
 			</security:authorize>
@@ -91,6 +95,7 @@
 					<div class="dropdown-menu">
 						<a href="customer/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="customer/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
 					</div>
 			</li>
 			</security:authorize>
@@ -102,6 +107,7 @@
 					<div class="dropdown-menu">
 						<a href="travelAgency/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="travelAgency/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>									
 					</div>
 			</li>
 			</security:authorize>
@@ -113,6 +119,7 @@
 					<div class="dropdown-menu">
 						<a href="host/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="host/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
 					</div>
 			</li>
 			</security:authorize>

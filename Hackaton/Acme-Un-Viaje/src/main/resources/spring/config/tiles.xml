@@ -32,6 +32,7 @@
 		<value>/views/admin/tiles.xml</value>
 		<value>/views/travelAgency/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
+		<value>/views/socialProfile/tiles.xml</value>
 		<!-- CARMEN -->
 	</util:list>
 
