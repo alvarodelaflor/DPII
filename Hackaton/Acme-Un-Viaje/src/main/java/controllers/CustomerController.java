@@ -40,7 +40,7 @@ public class CustomerController extends AbstractController {
 		super();
 	}
 
-	// REGISTER AS CLEANER
+	// REGISTER AS CUSTOMER
 	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class CustomerController extends AbstractController {
 		return result;
 	}
 
-	// SAVE REGISTER AS CLEANER
+	// SAVE REGISTER AS CUSTOMER
 	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
@@ -119,7 +119,7 @@ public class CustomerController extends AbstractController {
 		return result;
 	}
 
-	// SHOW CLEANER
+	// SHOW CUSTOMER
 	// -------------------------------------------------------------------
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show() {

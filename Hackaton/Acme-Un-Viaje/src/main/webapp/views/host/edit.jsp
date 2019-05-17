@@ -34,7 +34,7 @@
 			<div class="col-md-6">
 				<fieldset>
 					<h2>
-						<spring:message code="actor.personalData" />
+						<spring:message code="actor.personalData" />&nbsp;<i class="fas fa-mobile-alt icon-gradient"></i>
 					</h2>
 					<hr>
 					<acme:textbox code="actor.name" path="name" cssLabel="col-md-3"
@@ -58,7 +58,7 @@
 			<div class="col-md-6">
 				<fieldset>
 					<h2>
-						<spring:message code="actor.creditCard" />
+						<spring:message code="actor.creditCard" />&nbsp;<i class="far fa-credit-card icon-gradient"></i>
 					</h2>
 					<hr>
 					<acme:textbox code="actor.holder" path="creditCard.holder"

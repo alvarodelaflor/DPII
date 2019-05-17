@@ -101,6 +101,7 @@ public class TravelAgencyService {
 		travelAgency = this.travelAgencyRepository.findOne(registerActor.getId());
 
 		this.checkActorEdit(registerActor, binding);
+		this.validator.validate(registerActor, binding);
 
 		if (!binding.hasErrors()) {
 			travelAgency.setBirthDate(registerActor.getBirthDate());
@@ -118,7 +119,6 @@ public class TravelAgencyService {
 			travelAgency.setCreditCard(creditCard);
 		}
 
-		this.validator.validate(registerActor, binding);
 
 		return travelAgency;
 	}

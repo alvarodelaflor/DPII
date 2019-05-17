@@ -27,7 +27,7 @@
 
 
 		<c:choose>
-			<c:when test="${company.photo == null}">
+			<c:when test="${registerActor.photo == null or registerActor.photo=='' }">
 				<div class="col-md-3">
 					<div class="card">
 						<img class="card-img-top" src="images/registerPhoto.png"
@@ -55,7 +55,7 @@
 		<div class="col-md-4">
 			<fieldset>
 				<h2>
-					<spring:message code="actor.personalData" />
+					<spring:message code="actor.personalData" />&nbsp;<i class="fas fa-mobile-alt icon-gradient"></i>
 				</h2>
 				<hr>
 
@@ -89,7 +89,7 @@
 		<div class="col-md-4">
 			<fieldset>
 				<h2>
-					<spring:message code="actor.creditCard" />
+					<spring:message code="actor.creditCard" />&nbsp;<i class="far fa-credit-card icon-gradient"></i>
 				</h2>
 				<hr>
 				<div class="row" style="padding-left: 1.5em">

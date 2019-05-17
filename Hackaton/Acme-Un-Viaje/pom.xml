@@ -311,6 +311,14 @@
 		    <version>1.7.4</version>
 		</dependency>
 		
+		<!-- SAFEHTML -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.6.1</version>
+		</dependency>		
+		<!-- SAFEHTML -->
+		
 	</dependencies>
 
 </project> 

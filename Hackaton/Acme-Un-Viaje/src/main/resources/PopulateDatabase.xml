@@ -45,7 +45,7 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="TRASNSPORTER" />
+					<property name="authority" value="TRANSPORTER" />
 				</bean>
 			</list>
 		</property>
@@ -64,6 +64,19 @@
 		</property>
 	</bean>
 	<!-- Other domain beans come here -->
+	
+	<!-- ADMIN -->
+	<bean id="admin01" class="domain.Admin">
+		<property name="name" value="Mr. Admin" />
+		<property name="surname" value="Surnname" />
+		<property name="birthDate" value="1998/12/11" />
+
+		<property name="email" value="admin@gmail.com" />
+		<property name="phone" value="678546678" />
+		<property name="userAccount" ref="userAccount1" />
+		<property name="creditCard" ref="creditCard04" />
+	</bean>
+	<!-- ADMIN -->
 
 	<!-- CLEANER -->
 	<bean id="cleaner01" class="domain.Cleaner">
@@ -99,8 +112,6 @@
 		<property name="name" value="Sr. Potato" />
 		<property name="surname" value="Fritito" />
 		<property name="birthDate" value="1998/12/11" />
-		<property name="photo"
-			value="https://pngimage.net/wp-content/uploads/2018/06/mr-potato-head-toy-story-png-1-300x200.png" />
 		<property name="email" value="patata2@gmail.com" />
 		<property name="phone" value="678546678" />
 		<property name="userAccount" ref="userAccount4" />
@@ -127,6 +138,14 @@
 	
 	<bean id="creditCard03" class="domain.CreditCard">
 		<property name="holder" value="Sr. Potato" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	
+	<bean id="creditCard04" class="domain.CreditCard">
+		<property name="holder" value="Sr. ADMIN" />
 		<property name="make" value="VISA" />
 		<property name="number" value="1234567891234567" />
 		<property name="CVV" value="234" />

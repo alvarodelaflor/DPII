@@ -102,6 +102,7 @@ public class CleanerService {
 		cleaner = this.cleanerRepository.findOne(registerActor.getId());
 
 		this.checkActorEdit(registerActor, binding);
+		this.validator.validate(registerActor, binding);
 
 		if (!binding.hasErrors()) {
 			cleaner.setBirthDate(registerActor.getBirthDate());
@@ -119,7 +120,6 @@ public class CleanerService {
 			cleaner.setCreditCard(creditCard);
 		}
 
-		this.validator.validate(registerActor, binding);
 
 		return cleaner;
 	}

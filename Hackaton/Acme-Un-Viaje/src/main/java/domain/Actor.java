@@ -3,6 +3,7 @@ package domain;
 
 import java.util.Date;
 
+import javax.jws.HandlerChain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -70,6 +72,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -79,6 +82,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getSurname() {
 		return this.surname;
 	}
@@ -104,6 +108,7 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
+	@SafeHtml
 	public String getPhone() {
 		return this.phone;
 	}

@@ -6,6 +6,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -17,6 +18,7 @@ public class CreditCard {
 
 
 	@NotBlank
+	@SafeHtml
 	public String getHolder() {
 		return this.holder;
 	}
@@ -26,6 +28,7 @@ public class CreditCard {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getMake() {
 		return this.make;
 	}

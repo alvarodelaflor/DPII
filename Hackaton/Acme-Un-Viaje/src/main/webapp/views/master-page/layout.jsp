@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="styles/common.css" type="text/css">
 <link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <script type="text/javascript">
@@ -65,9 +65,15 @@
 		<tiles:insertAttribute name="header" />
 	</div>
 	<div>
-		<h1>
-			<tiles:insertAttribute name="title" />
-		</h1>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<h1>
+						<tiles:insertAttribute name="title" />
+					</h1>
+				</div>
+			</div>
+		</div>
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${message != null}">
 			<br />

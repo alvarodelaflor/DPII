@@ -103,6 +103,7 @@ public class CustomerService {
 		customer = this.customerRepository.findOne(registerActorE.getId());
 
 		this.checkActorEdit(registerActorE, binding);
+		this.validator.validate(registerActorE, binding);
 
 		if (!binding.hasErrors()) {
 			customer.setBirthDate(registerActorE.getBirthDate());
@@ -121,7 +122,6 @@ public class CustomerService {
 			customer.setCity(registerActorE.getCity());
 		}
 
-		this.validator.validate(registerActorE, binding);
 
 		return customer;
 	}

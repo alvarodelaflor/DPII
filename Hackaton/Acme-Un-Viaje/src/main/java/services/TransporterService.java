@@ -41,7 +41,7 @@ public class TransporterService {
 		final UserAccount user = new UserAccount();
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
-		authority.setAuthority(Authority.TRASNSPORTER);
+		authority.setAuthority(Authority.TRANSPORTER);
 
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
@@ -102,6 +102,7 @@ public class TransporterService {
 
 		transporter = this.transporterRepository.findOne(registerActor.getId());
 
+		this.validator.validate(registerActor, binding);
 		this.checkActorEdit(registerActor, binding);
 
 		if (!binding.hasErrors()) {
@@ -120,7 +121,6 @@ public class TransporterService {
 			transporter.setCreditCard(creditCard);
 		}
 
-		this.validator.validate(registerActor, binding);
 
 		return transporter;
 	}

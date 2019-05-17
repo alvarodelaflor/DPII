@@ -83,8 +83,8 @@ public class RefereeService {
 		creditCard.setMake(registerActor.getMake());
 		creditCard.setNumber(registerActor.getNumber());
 		referee.setCreditCard(creditCard);
-
 		this.validator.validate(referee, binding);
+
 		return referee;
 	}
 
@@ -102,6 +102,7 @@ public class RefereeService {
 		referee = this.refereeRepository.findOne(registerActor.getId());
 
 		this.checkActorEdit(registerActor, binding);
+		this.validator.validate(registerActor, binding);
 
 		if (!binding.hasErrors()) {
 			referee.setBirthDate(registerActor.getBirthDate());
@@ -119,7 +120,6 @@ public class RefereeService {
 			referee.setCreditCard(creditCard);
 		}
 
-		this.validator.validate(registerActor, binding);
 
 		return referee;
 	}

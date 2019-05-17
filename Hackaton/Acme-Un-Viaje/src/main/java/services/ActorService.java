@@ -25,7 +25,7 @@ public class ActorService {
 	@Autowired
 	private ActorRepository actorReporsitory;
 
-	// CHECK REGISTER AS CLEANER
+	// CHECK REGISTER AS ACTOR
 	// ---------------------------------------------------------------
 	public void checkActor(final RegisterActor registerActor, final BindingResult binding) {
 

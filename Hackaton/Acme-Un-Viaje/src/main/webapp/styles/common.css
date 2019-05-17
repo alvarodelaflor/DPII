@@ -15,3 +15,9 @@
 .message {
 	color: red;
 }
+
+.icon-gradient {
+	background: -webkit-linear-gradient(#3c92d8, #41c69a);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

@@ -24,20 +24,38 @@
 <hr>
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
-		<div class="col-md-3">
-			<div class="card">
-				<img class="card-img-top" src="${registerActor.photo}" alt="ERROR">
-				<div class="card-body">
-					<h4 class="card-title">${registerActor.name}
-						${registerActor.surname}</h4>
+
+		<c:choose>
+			<c:when
+				test="${registerActor.photo == null or registerActor.photo=='' }">
+				<div class="col-md-3">
+					<div class="card">
+						<img class="card-img-top" src="images/registerPhoto.png"
+							alt="ERROR">
+						<div class="card-body">
+							<h4 class="card-title">${registerActor.name}
+								${registerActor.surname}</h4>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			</c:when>
+			<c:otherwise>
+				<div class="col-md-3">
+					<div class="card">
+						<img class="card-img-top" src="${registerActor.photo}" alt="ERROR">
+						<div class="card-body">
+							<h4 class="card-title">${registerActor.name}
+								${registerActor.surname}</h4>
+						</div>
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
 		<div class="col-md-4">
 			<fieldset>
 				<h2>
-					<spring:message code="actor.personalData" />
+					<spring:message code="actor.personalData" />&nbsp;<i class="fas fa-mobile-alt icon-gradient"></i>
 				</h2>
 				<hr>
 
@@ -71,7 +89,7 @@
 		<div class="col-md-4">
 			<fieldset>
 				<h2>
-					<spring:message code="actor.creditCard" />
+					<spring:message code="actor.creditCard" />&nbsp;<i class="far fa-credit-card icon-gradient"></i>
 				</h2>
 				<hr>
 				<div class="row" style="padding-left: 1.5em">

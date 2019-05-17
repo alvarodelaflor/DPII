@@ -101,6 +101,7 @@ public class HostService {
 		host = this.hostRepository.findOne(registerActor.getId());
 
 		this.checkActorEdit(registerActor, binding);
+		this.validator.validate(registerActor, binding);
 
 		if (!binding.hasErrors()) {
 			host.setBirthDate(registerActor.getBirthDate());
@@ -118,7 +119,6 @@ public class HostService {
 			host.setCreditCard(creditCard);
 		}
 
-		this.validator.validate(registerActor, binding);
 
 		return host;
 	}

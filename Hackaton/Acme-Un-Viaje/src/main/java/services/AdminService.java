@@ -107,6 +107,7 @@ public class AdminService {
 		admin = this.adminRepository.findOne(registerActor.getId());
 
 		this.checkActorEdit(registerActor, binding);
+		this.validator.validate(registerActor, binding);
 
 		if (!binding.hasErrors()) {
 			admin.setBirthDate(registerActor.getBirthDate());
@@ -124,7 +125,6 @@ public class AdminService {
 			admin.setCreditCard(creditCard);
 		}
 
-		this.validator.validate(registerActor, binding);
 
 		return admin;
 	}
