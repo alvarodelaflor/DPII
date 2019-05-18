@@ -172,6 +172,26 @@ public class TravelAgencyService {
 				binding.rejectValue("email", "email.wrong");
 			}
 			
+			if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<")) {
+				binding.rejectValue("creditCard.holder", "error.html");
+			}
+			
+			if (registerActor.getName().contains(">") || registerActor.getName().contains("<")) {
+				binding.rejectValue("name", "error.html");
+			}
+			
+			if (registerActor.getSurname().contains(">") || registerActor.getSurname().contains("<")) {
+				binding.rejectValue("surname", "error.html");
+			}
+			
+			if (registerActor.getPhone().contains(">") || registerActor.getPhone().contains("<")) {
+				binding.rejectValue("phone", "error.html");
+			}
+			
+			if (registerActor.getCreditCard().getMake().contains(">") || registerActor.getCreditCard().getMake().contains("<")) {
+				binding.rejectValue("creditCard.make", "error.html");
+			}
+			
 			UserAccount user = LoginService.getPrincipal();
 			TravelAgency t = this.getTravelAgencyByUserAccountId(user.getId());
 			

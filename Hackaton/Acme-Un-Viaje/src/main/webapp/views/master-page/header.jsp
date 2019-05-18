@@ -35,7 +35,12 @@
 		
 		<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
 			<security:authorize access="hasRole('ADMIN')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.admin" /></a>
+					<div class="dropdown-menu">
+						<a href="admin/create.do" class="dropdown-item"><spring:message code="master.page.admin.create" /></a>
+					</div>
+			</li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
@@ -44,16 +49,9 @@
 						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
 					</div>
 			</li>
-			<li class="nav-item dropdown">
-				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.admin" /></a>
-					<div class="dropdown-menu">
-						<a href="admin/create.do" class="dropdown-item"><spring:message code="master.page.admin.create" /></a>
-					</div>
-			</li>
 			</security:authorize>
 			
 			<security:authorize access="hasRole('CLEANER')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
@@ -65,7 +63,6 @@
 			</security:authorize>
 			
 			<security:authorize access="hasRole('TRANSPORTER')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
@@ -77,7 +74,6 @@
 			</security:authorize>
 			
 			<security:authorize access="hasRole('REFEREE')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
@@ -89,7 +85,6 @@
 			</security:authorize>
 			
 			<security:authorize access="hasRole('CUSTOMER')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
@@ -101,7 +96,6 @@
 			</security:authorize>
 			
 			<security:authorize access="hasRole('TRAVELAGENCY')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
@@ -113,7 +107,6 @@
 			</security:authorize>
 						
 			<security:authorize access="hasRole('HOST')">
-			<li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">

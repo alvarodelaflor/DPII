@@ -92,8 +92,22 @@ public class ActorService {
 			binding.rejectValue("email", "email.wrong");
 		}
 		
+		if (registerActor.getHolder().contains(">") || registerActor.getHolder().contains("<")) {
+			binding.rejectValue("holder", "error.html");
+		}
 		
-		System.out.println("dddd" + this.getActorByEmail(registerActor.getEmail()).size());
+		if (registerActor.getMake().contains(">") || registerActor.getMake().contains("<")) {
+			binding.rejectValue("make", "error.html");
+		}
+		
+		if (registerActor.getPassword().contains(">") || registerActor.getPassword().contains("<")) {
+			binding.rejectValue("password", "error.html");
+		}
+		
+		if (registerActor.getUserName().contains(">") || registerActor.getUserName().contains("<")) {
+			binding.rejectValue("userName", "error.html");
+		}
+		
 		if (this.getActorByEmail(registerActor.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 

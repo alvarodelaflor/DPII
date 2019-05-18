@@ -157,6 +157,15 @@ public class CustomerService {
 						if (monthCreditCard < monthRigthNow)
 							binding.rejectValue("creditCard.expiration", "error.expirationFuture");
 			}
+			
+			if (registerActorE.getCreditCard().getHolder().contains(">") || registerActorE.getCreditCard().getHolder().contains("<")) {
+				binding.rejectValue("creditCard.holder", "error.html");
+			}
+			
+			
+			if (registerActorE.getCreditCard().getMake().contains(">") || registerActorE.getCreditCard().getMake().contains("<")) {
+				binding.rejectValue("creditCard.make", "error.html");
+			}
 
 			if (!registerActorE.getCreditCard().getNumber().matches("([0-9]){16}"))
 				binding.rejectValue("creditCard.number", "error.numberCredictCard");

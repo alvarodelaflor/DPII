@@ -155,6 +155,14 @@ public class CleanerService {
 						if (monthCreditCard < monthRigthNow)
 							binding.rejectValue("creditCard.expiration", "error.expirationFuture");
 			}
+			
+			if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<")) {
+				binding.rejectValue("creditCard.holder", "error.html");
+			}
+			
+			if (registerActor.getCreditCard().getMake().contains(">") || registerActor.getCreditCard().getMake().contains("<")) {
+				binding.rejectValue("creditCard.make", "error.html");
+			}
 
 			if (!registerActor.getCreditCard().getNumber().matches("([0-9]){16}"))
 				binding.rejectValue("creditCard.number", "error.numberCredictCard");

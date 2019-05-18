@@ -63,18 +63,56 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="hosthost" />
+		<property name="password"
+			value="67b3dba8bc6778101892eb77249db32e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HOST" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+		
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="travelAgency" />
+		<property name="password"
+			value="4d1f86316f4338d204a426975251362a" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="TRAVELAGENCY" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+			
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="customer" />
+		<property name="password"
+			value="91ec1f9324753048c0096d036a694f86" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	<!-- Other domain beans come here -->
 	
 	<!-- ADMIN -->
 	<bean id="admin01" class="domain.Admin">
 		<property name="name" value="Mr. Admin" />
-		<property name="surname" value="Surnname" />
+		<property name="surname" value="Nistrator" />
 		<property name="birthDate" value="1998/12/11" />
-
 		<property name="email" value="admin@gmail.com" />
-		<property name="phone" value="678546678" />
+		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount1" />
-		<property name="creditCard" ref="creditCard04" />
+		<property name="creditCard" ref="creditCard01" />
 	</bean>
 	<!-- ADMIN -->
 
@@ -83,45 +121,81 @@
 		<property name="name" value="Mr. Potato" />
 		<property name="surname" value="Fritito" />
 		<property name="birthDate" value="1998/12/11" />
-
 		<property name="photo"
 			value="https://simg.nicepng.com/png/small/17-170013_mr-potato-head-free-png-image-mr-potato.png" />
-		<property name="email" value="patata@gmail.com" />
-		<property name="phone" value="678546678" />
+		<property name="email" value="cleaner@gmail.com" />
+		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount2" />
-		<property name="creditCard" ref="creditCard01" />
+		<property name="creditCard" ref="creditCard02" />
 	</bean>
 	<!-- CLEANER -->
 
 	<!-- TRANSPORT -->
 	<bean id="transporter01" class="domain.Transporter">
-		<property name="name" value="Sr. Potato" />
-		<property name="surname" value="Fritito" />
+		<property name="name" value="Sr. Transporter" />
+		<property name="surname" value="Car" />
 		<property name="birthDate" value="1998/12/11" />
 		<property name="photo"
-			value="https://pngimage.net/wp-content/uploads/2018/06/mr-potato-head-toy-story-png-1-300x200.png" />
-		<property name="email" value="patata1@gmail.com" />
-		<property name="phone" value="678546678" />
+			value="https://cdn.pixabay.com/photo/2016/12/31/01/43/auto-1941991_960_720.png" />
+		<property name="email" value="transporter@gmail.com" />
+		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount3" />
-		<property name="creditCard" ref="creditCard02" />
+		<property name="creditCard" ref="creditCard03" />
 	</bean>
 	<!-- TRANSPORT -->
 	
 	<!-- REFEREE -->
 	<bean id="referee01" class="domain.Referee">
-		<property name="name" value="Sr. Potato" />
-		<property name="surname" value="Fritito" />
+		<property name="name" value="Sr. Referee" />
+		<property name="surname" value="referee" />
 		<property name="birthDate" value="1998/12/11" />
-		<property name="email" value="patata2@gmail.com" />
-		<property name="phone" value="678546678" />
+		<property name="email" value="referee@gmail.com" />
+		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount4" />
-		<property name="creditCard" ref="creditCard03" />
+		<property name="creditCard" ref="creditCard04" />
 	</bean>
 	<!-- REFEREE -->
+	
+	<!-- HOST -->
+	<bean id="host01" class="domain.Host">
+		<property name="name" value="Sr. Host" />
+		<property name="surname" value="host" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="email" value="host@gmail.com" />
+		<property name="phone" value="+34678546678" />
+		<property name="userAccount" ref="userAccount5" />
+		<property name="creditCard" ref="creditCard05" />
+	</bean>
+	<!-- HOTS -->
+	
+	<!-- TRAVELAGENCY -->
+	<bean id="travelAgency01" class="domain.TravelAgency">
+		<property name="name" value="Sr. Travel" />
+		<property name="surname" value="agency" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="email" value="travelAgency@gmail.com" />
+		<property name="phone" value="+34678546678" />
+		<property name="userAccount" ref="userAccount6" />
+		<property name="creditCard" ref="creditCard06" />
+	</bean>
+	<!-- TRAVELAGENCY -->
+	
+	<!-- CUSTOMER -->
+	<bean id="customer01" class="domain.Customer">
+		<property name="name" value="Sra. Carmen" />
+		<property name="surname" value="Fernandez" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="email" value="customer@gmail.com" />
+		<property name="city" value="Carmona" />
+		<property name="phone" value="+34678546678" />
+		<property name="userAccount" ref="userAccount7" />
+		<property name="creditCard" ref="creditCard07" />
+	</bean>
+	<!-- CUSTOMER -->
 
 	<!-- CREDITCARD -->
 	<bean id="creditCard01" class="domain.CreditCard">
-		<property name="holder" value="Mr. Potato" />
+		<property name="holder" value="Mr. Admin" />
 		<property name="make" value="VISA" />
 		<property name="number" value="1234567891234567" />
 		<property name="CVV" value="234" />
@@ -129,7 +203,7 @@
 	</bean>
 	
 	<bean id="creditCard02" class="domain.CreditCard">
-		<property name="holder" value="Sr. Potato" />
+		<property name="holder" value="Sr. Cleaner" />
 		<property name="make" value="VISA" />
 		<property name="number" value="1234567891234567" />
 		<property name="CVV" value="234" />
@@ -137,7 +211,7 @@
 	</bean>
 	
 	<bean id="creditCard03" class="domain.CreditCard">
-		<property name="holder" value="Sr. Potato" />
+		<property name="holder" value="Sr. Transporter" />
 		<property name="make" value="VISA" />
 		<property name="number" value="1234567891234567" />
 		<property name="CVV" value="234" />
@@ -145,12 +219,88 @@
 	</bean>
 	
 	<bean id="creditCard04" class="domain.CreditCard">
-		<property name="holder" value="Sr. ADMIN" />
+		<property name="holder" value="Sr. Referee" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	
+	<bean id="creditCard05" class="domain.CreditCard">
+		<property name="holder" value="Sr. Host" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	
+	<bean id="creditCard06" class="domain.CreditCard">
+		<property name="holder" value="Sr. Travel Agency" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	
+	<bean id="creditCard07" class="domain.CreditCard">
+		<property name="holder" value="Sr. Customer" />
 		<property name="make" value="VISA" />
 		<property name="number" value="1234567891234567" />
 		<property name="CVV" value="234" />
 		<property name="expiration" value="12/22" />
 	</bean>
 	<!-- CREDITCARD -->
+	
+	<!-- SOCIAL PROFILE -->
+	<bean id="socialProfile01" class="domain.SocialProfile">
+		<property name="link" value="http://admin" />
+		<property name="name" value="Admin" />
+		<property name="nick" value="Nistrator" />
+		<property name="actor" ref="admin01" />
+	</bean>
+	
+	<bean id="socialProfile02" class="domain.SocialProfile">
+		<property name="link" value="http://cleaner" />
+		<property name="name" value="Cleaner" />
+		<property name="nick" value="clear" />
+		<property name="actor" ref="cleaner01" />
+	</bean>
+	
+	<bean id="socialProfile03" class="domain.SocialProfile">
+		<property name="link" value="http://trasporter" />
+		<property name="name" value="Trasporter" />
+		<property name="nick" value="car" />
+		<property name="actor" ref="transporter01" />
+	</bean>
+	
+	<bean id="socialProfile04" class="domain.SocialProfile">
+		<property name="link" value="http://host" />
+		<property name="name" value="Host" />
+		<property name="nick" value="host" />
+		<property name="actor" ref="host01" />
+	</bean>
+	
+	<bean id="socialProfile05" class="domain.SocialProfile">
+		<property name="link" value="http://customer" />
+		<property name="name" value="Customer" />
+		<property name="nick" value="user" />
+		<property name="actor" ref="customer01" />
+	</bean>
+	
+	<bean id="socialProfile06" class="domain.SocialProfile">
+		<property name="link" value="http://travelAgency" />
+		<property name="name" value="Travel" />
+		<property name="nick" value="agency" />
+		<property name="actor" ref="travelAgency01" />
+	</bean>
+	
+	<bean id="socialProfile07" class="domain.SocialProfile">
+		<property name="link" value="http://referee" />
+		<property name="name" value="Referee" />
+		<property name="nick" value="ref" />
+		<property name="actor" ref="referee01" />
+	</bean>
+	<!-- SOCIAL PROFILE -->
+	
 
 </beans>

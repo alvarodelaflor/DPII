@@ -174,6 +174,14 @@ public class TransporterService {
 			binding.rejectValue("email", "email.wrong");
 		}
 		
+		if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<")) {
+			binding.rejectValue("creditCard.holder", "error.html");
+		}
+		
+		if (registerActor.getCreditCard().getMake().contains(">") || registerActor.getCreditCard().getMake().contains("<")) {
+			binding.rejectValue("creditCard.make", "error.html");
+		}
+		
 		UserAccount user = LoginService.getPrincipal();
 		Transporter t = this.getTransporterByUserAccountId(user.getId());
 		

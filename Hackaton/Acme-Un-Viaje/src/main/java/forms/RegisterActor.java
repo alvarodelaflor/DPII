@@ -9,6 +9,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,6 +34,7 @@ public class RegisterActor {
 
 
 	@NotBlank
+	@SafeHtml
 	public String getHolder() {
 		return this.holder;
 	}
@@ -42,6 +44,7 @@ public class RegisterActor {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getMake() {
 		return this.make;
 	}
@@ -88,6 +91,7 @@ public class RegisterActor {
 	@NotBlank
 	@Size(min = 5, max = 32)
 	@Column(unique = true)
+	@SafeHtml
 	public String getUserName() {
 		return this.userName;
 	}
@@ -97,6 +101,7 @@ public class RegisterActor {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getPassword() {
 		return this.password;
 	}
@@ -106,6 +111,7 @@ public class RegisterActor {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getConfirmPassword() {
 		return this.confirmPassword;
 	}
@@ -124,6 +130,7 @@ public class RegisterActor {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -132,6 +139,7 @@ public class RegisterActor {
 		this.name = name;
 	}
 
+	@SafeHtml
 	public String getPhone() {
 		return this.phone;
 	}
@@ -150,6 +158,7 @@ public class RegisterActor {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getSurname() {
 		return this.surname;
 	}
