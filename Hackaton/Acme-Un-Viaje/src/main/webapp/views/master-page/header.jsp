@@ -65,11 +65,17 @@
 			<security:authorize access="hasRole('TRANSPORTER')">
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
-					<div class="dropdown-menu">
-						<a href="transporter/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
-						<a href="transporter/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
-						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
-					</div>
+				<div class="dropdown-menu">
+					<a href="transporter/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+					<a href="transporter/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+					<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.transporter.transports" /></a>
+				<div class="dropdown-menu">
+					<a href="transport/transporter/list.do" class="dropdown-item"><spring:message code="master.page.transporter.transport.list" /></a>
+				</div>
 			</li>
 			</security:authorize>
 			

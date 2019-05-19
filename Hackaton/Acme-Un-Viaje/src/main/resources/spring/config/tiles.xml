@@ -34,6 +34,10 @@
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/socialProfile/tiles.xml</value>
 		<!-- CARMEN -->
+		
+		<!-- HIPONA -->
+		<value>/views/transport/tiles.xml</value>
+		<!-- HIPONA -->
 	</util:list>
 
 </beans>
