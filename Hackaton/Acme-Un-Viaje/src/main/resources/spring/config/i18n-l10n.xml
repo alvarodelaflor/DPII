@@ -28,6 +28,7 @@
 		<value>/views/travelAgency/messages</value>
 		<value>/views/customer/messages</value>
 		<value>/views/socialProfile/messages</value>
+		<value>/views/request/messages</value>
 		<!-- Carmen -->
 		<!-- HIPONA -->
 		<value>/views/transport/messages</value>

@@ -93,6 +93,12 @@
 			
 			<security:authorize access="hasRole('CUSTOMER')">
 			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.customer" /></a>
+					<div class="dropdown-menu">
+						<a href="request/customer/list.do" class="dropdown-item"><spring:message code="master.page.request.customerList" /></a>
+					</div>
+			</li>
+			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
 						<a href="customer/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>

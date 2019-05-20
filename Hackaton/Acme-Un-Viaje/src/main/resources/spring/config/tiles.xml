@@ -33,6 +33,7 @@
 		<value>/views/travelAgency/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/socialProfile/tiles.xml</value>
+		<value>/views/request/tiles.xml</value>
 		<!-- CARMEN -->
 		
 		<!-- HIPONA -->
