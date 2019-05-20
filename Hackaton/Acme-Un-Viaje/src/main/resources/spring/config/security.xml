@@ -69,6 +69,14 @@
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
 		<!-- CARMEN -->
 
+		<!-- HIPONA -->
+		<security:intercept-url pattern="/transport/transporter/list.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/create.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/show.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/edit.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
+		<!-- HIPONA -->
+
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 

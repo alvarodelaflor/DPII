@@ -301,6 +301,24 @@
 		<property name="actor" ref="referee01" />
 	</bean>
 	<!-- SOCIAL PROFILE -->
-	
-
+	<!-- TRANSPORTS -->
+	<bean id="transport01" class="domain.Transport">
+		<property name="numberOfPlaces" value="3" />
+		<property name="price" value="25" />
+		<property name="date" value="2019/12/11 15:30" />
+		<property name="vehicleType" value="Coche" />
+		<property name="origin" value="Sevilla" />
+		<property name="destination" value="Granada" />
+		<property name="transporter" ref="transporter01" />
+	</bean>
+	<bean id="transport02" class="domain.Transport">
+		<property name="numberOfPlaces" value="3" />
+		<property name="price" value="25" />
+		<property name="date" value="2019/12/11 18:30" />
+		<property name="vehicleType" value="Coche" />
+		<property name="origin" value="Granada" />
+		<property name="destination" value="Sevilla" />
+		<property name="transporter" ref="transporter01" />
+	</bean>
+	<!-- TRANSPORTS -->
 </beans>

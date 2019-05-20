@@ -29,6 +29,9 @@
 		<value>/views/customer/messages</value>
 		<value>/views/socialProfile/messages</value>
 		<!-- Carmen -->
+		<!-- HIPONA -->
+		<value>/views/transport/messages</value>
+		<!-- HIPONA -->
 	</util:list>
 
 </beans>
