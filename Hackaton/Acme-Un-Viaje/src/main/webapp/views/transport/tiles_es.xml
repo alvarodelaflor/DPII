@@ -31,4 +31,15 @@
 		<put-attribute name="body" value="/views/transport/transporter/edit.jsp" />
 	</definition>
 	
+	<definition name="transport/travelAgency/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de transportes" />
+		<put-attribute name="body" value="/views/transport/travelAgency/list.jsp" />
+	</definition>
+
+	<definition name="transport/travelAgency/show" extends="master.page">	
+		<put-attribute name="title" value="Detalles del transporte" />
+		<put-attribute name="body" value="/views/transport/travelAgency/show.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>
