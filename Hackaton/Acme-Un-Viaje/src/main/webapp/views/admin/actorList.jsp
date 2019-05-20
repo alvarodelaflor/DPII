@@ -10,8 +10,9 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<hr>
 <body>
-	<div>
+	<div class="container-fluid">
 		<security:authorize access="hasRole('ADMIN')">
 			<div>
 				<h2>

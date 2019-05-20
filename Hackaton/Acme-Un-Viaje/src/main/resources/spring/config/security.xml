@@ -59,6 +59,14 @@
 		<security:intercept-url pattern="/admin/show.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/actorList.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/ban.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/config.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newsw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/delsw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newscw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/delscw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newccm.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/delccm.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/traratio.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
 		
