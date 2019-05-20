@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ public class TransportTransporterController extends AbstractController {
 			final Collection<Transport> transports = this.transportService.getLoggedTransporterTransports();
 			result = new ModelAndView("transport/transporter/list");
 			result.addObject("transports", transports);
+			result.addObject("requestURI", "/transport/transporter/list.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -46,6 +48,45 @@ public class TransportTransporterController extends AbstractController {
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		return result;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		final Transport t = this.transportService.create();
+
+		ModelAndView result;
+		try {
+			result = new ModelAndView("transport/transporter/create");
+			result.addObject("transport", t);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public ModelAndView edit(final Transport transport, final BindingResult binding) {
+		Transport t = null;
+		try {
+			t = this.transportService.reconstruct(transport, binding);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		ModelAndView result;
+		if (binding.hasErrors()) {
+			result = new ModelAndView("transport/transporter/create");
+			result.addObject("transport", t);
+		} else
+			try {
+				this.transportService.save(t);
+				result = new ModelAndView("redirect:/transport/transporter/list.do");
+			} catch (final Throwable oops) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+
 		return result;
 	}
 }
