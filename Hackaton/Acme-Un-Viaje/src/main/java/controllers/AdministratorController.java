@@ -11,6 +11,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,30 +20,80 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import services.ActorService;
+import services.AdminService;
+import domain.Actor;
 import domain.Admin;
 import domain.CreditCard;
 import forms.RegisterActor;
-import security.LoginService;
-import services.AdminService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdministratorController extends AbstractController {
 
 	@Autowired
-	private AdminService adminService;
+	private AdminService	adminService;
+
+	@Autowired
+	private ActorService	actorService;
+
 
 	// Constructors -----------------------------------------------------------
-
 	public AdministratorController() {
 		super();
 	}
 
+	// BAN/UNBAN ACTOR
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/ban", method = RequestMethod.GET)
+	public ModelAndView banOrUnban(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+
+		ModelAndView res;
+		try {
+
+			this.adminService.banOrUnbanActorById(id);
+			res = new ModelAndView("redirect:actorList.do");
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:actorList.do");
+			if (oops.getMessage() == "not.found.error")
+				res.addObject("message", "not.found.error");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// ACTOR LIST
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/actorList", method = RequestMethod.GET)
+	public ModelAndView actorList() {
+
+		ModelAndView res;
+		try {
+
+			final Collection<Actor> bannedActors = this.actorService.findAllBannedButAdmins();
+			final Collection<Actor> NonBannedActors = this.actorService.findAllNonBannedButAdmins();
+
+			res = new ModelAndView("admin/actorList");
+			res.addObject("bannedActors", bannedActors);
+			res.addObject("NonBannedActors", NonBannedActors);
+			res.addObject("requestURI", "admin/actorList.do");
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
 	// REGISTER AS ADMIN
 	// ---------------------------------------------------------------
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -59,7 +110,6 @@ public class AdministratorController extends AbstractController {
 
 	// SAVE REGISTER AS ADMIN
 	// ---------------------------------------------------------------
-
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final RegisterActor registerActor, final BindingResult binding) {
 		ModelAndView result = null;
@@ -90,7 +140,7 @@ public class AdministratorController extends AbstractController {
 		final int idUserAccount = LoginService.getPrincipal().getId();
 		admin = this.adminService.getAdminByUserAccountId(idUserAccount);
 		Assert.notNull(admin);
-		CreditCard creditCard = admin.getCreditCard();
+		final CreditCard creditCard = admin.getCreditCard();
 		result = new ModelAndView("admin/edit");
 		result.addObject("admin", admin);
 		result.addObject("creditCard", creditCard);
