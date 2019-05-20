@@ -57,6 +57,8 @@
 		<security:intercept-url pattern="/admin/create.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/edit.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/show.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/actorList.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/ban.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
 		

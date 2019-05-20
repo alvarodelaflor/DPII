@@ -39,6 +39,7 @@
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.admin" /></a>
 					<div class="dropdown-menu">
 						<a href="admin/create.do" class="dropdown-item"><spring:message code="master.page.admin.create" /></a>
+						<a href="admin/actorList.do" class="dropdown-item"><spring:message code="master.page.admin.actorList" /></a>
 					</div>
 			</li>
 			<li class="nav-item dropdown">
