@@ -29,6 +29,17 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" /> 
 		
+		<!-- ALVARO -->
+		<security:intercept-url pattern="/curricula/cleaner/create.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/curricula/cleaner/edit.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/curricula/cleaner/delete.do" access="hasRole('CLEANER')" />
+		
+		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
+		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/edit.do" access="permitAll" />
+		<!-- ALVARO -->
+		
 		<!-- CARMEN -->
 		<security:intercept-url pattern="/cleaner/create.do" access="permitAll" />
 		<security:intercept-url pattern="/cleaner/edit.do" access="hasRole('CLEANER')" />

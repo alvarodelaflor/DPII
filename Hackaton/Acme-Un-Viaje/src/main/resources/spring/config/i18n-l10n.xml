@@ -29,6 +29,11 @@
 		<value>/views/customer/messages</value>
 		<value>/views/socialProfile/messages</value>
 		<!-- Carmen -->
+		
+		<!-- ALVARO -->
+		<value>/views/curricula/messages</value>
+		<value>/views/educationalData/messages</value>
+		<!-- ALVARO -->
 	</util:list>
 
 </beans>

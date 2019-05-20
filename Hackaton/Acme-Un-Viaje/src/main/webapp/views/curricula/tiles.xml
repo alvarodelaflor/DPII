@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+<!--
+	CONTROL DE CAMBIOS tiles.xml FLOAT
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>	
+
+	<definition name="curricula/cleaner/create" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/curricula/edit.jsp" />
+	</definition>
+	
+	<definition name="curricula/cleaner/edit" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/curricula/edit.jsp" />
+	</definition>
+	
+	<definition name="curricula/list" extends="master.page">	
+		<put-attribute name="title" value="List Curricula" />
+		<put-attribute name="body" value="/views/curricula/list.jsp" />
+	</definition>
+
+	<definition name="curricula/show" extends="master.page">	
+		<put-attribute name="title" value="Show Curricula" />
+		<put-attribute name="body" value="/views/curricula/show.jsp" />
+	</definition>
+</tiles-definitions>

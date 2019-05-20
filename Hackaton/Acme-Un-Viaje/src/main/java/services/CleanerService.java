@@ -12,14 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Curricula;
+import forms.RegisterActor;
 import repositories.CleanerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Transporter;
-import forms.RegisterActor;
 
 @Service
 @Transactional
@@ -195,5 +195,32 @@ public class CleanerService {
 				}
 			}
 		}
-
+		
+	/**
+	 * 
+	 * Return the cleaner who is login if exits, null otherwise
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Cleaner}
+	 */
+	public Cleaner getCleanerLogin() {
+		Cleaner res;
+		try {
+			res = this.getCleanerByUserAccountId(LoginService.getPrincipal().getId());
+		} catch (Exception e) {
+			res = null;
+		}
+		return res;
+	}
+	
+	/**
+	 * 
+	 * Find a cleaner by id
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Cleaner}
+	 */
+	public Cleaner findOne(int cleanerId) {
+		return this.cleanerRepository.findOne(cleanerId);
+	}
+	
 }

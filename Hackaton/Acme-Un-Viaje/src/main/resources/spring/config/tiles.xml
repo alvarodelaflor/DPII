@@ -34,6 +34,11 @@
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/socialProfile/tiles.xml</value>
 		<!-- CARMEN -->
+		
+		<!-- ALVARO -->
+		<value>/views/curricula/tiles.xml</value>
+		<value>/views/educationalData/tiles.xml</value>
+		<!-- ALVARO -->
 	</util:list>
 
 </beans>
