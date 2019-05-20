@@ -7,7 +7,6 @@
  * http://www.tdg-seville.info/License.html
  * 
  */
-
 .error {
 	color: red;
 }
@@ -20,4 +19,9 @@
 	background: -webkit-linear-gradient(#3c92d8, #41c69a);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+
+.container-fluid {
+	padding-left: 2.5em;
+	padding-right: 2.5em;
 }

@@ -26,8 +26,10 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.AdminService;
+import services.ConfigService;
 import domain.Actor;
 import domain.Admin;
+import domain.Config;
 import domain.CreditCard;
 import forms.RegisterActor;
 
@@ -41,12 +43,204 @@ public class AdministratorController extends AbstractController {
 	@Autowired
 	private ActorService	actorService;
 
+	@Autowired
+	private ConfigService	configService;
+
 
 	// Constructors -----------------------------------------------------------
 	public AdministratorController() {
 		super();
 	}
 
+	// DASHBOARD
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard() {
+
+		ModelAndView res;
+		try {
+
+			res = new ModelAndView("admin/dashboard");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/dashboard");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW TRANSPORTER BAN RATIO
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/traratio", method = RequestMethod.GET)
+	public ModelAndView newTransporterBanRatio(@RequestParam(value = "traratio", defaultValue = "-1") final int traratio) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newTransporterBanRatio(traratio);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "not.in.range.error") {
+				res = this.config();
+				res.addObject("message", "not.in.range.error");
+			} else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW CREDIT CARD MAKE
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newccm", method = RequestMethod.GET)
+	public ModelAndView newCreditCardMake(@RequestParam(value = "newccm", defaultValue = "") final String newccm) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newCreditCardMake(newccm);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// DELETE CREDIT CARD MAKE
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/delccm", method = RequestMethod.GET)
+	public ModelAndView deleteCreditCardMake(@RequestParam(value = "delccm", defaultValue = "") final String delccm) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.deleteCreditCardMake(delccm);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW SCORE WORD
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newscw", method = RequestMethod.GET)
+	public ModelAndView newScoreWord(@RequestParam(value = "newscw", defaultValue = "") final String newscw) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newScoreWord(newscw);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// DELETE SCORE WORD
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/delscw", method = RequestMethod.GET)
+	public ModelAndView deleteScoreWord(@RequestParam(value = "delscw", defaultValue = "") final String delscw) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.deleteScoreWord(delscw);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW SPAM WORD
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newsw", method = RequestMethod.GET)
+	public ModelAndView newSpamWord(@RequestParam(value = "newsw", defaultValue = "") final String newsw) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newSpamWord(newsw);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// DELETE SPAM WORD
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/delsw", method = RequestMethod.GET)
+	public ModelAndView deleteSpamWord(@RequestParam(value = "delsw", defaultValue = "") final String delsw) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.deleteSpamWord(delsw);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// CONFIGURATION
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/config", method = RequestMethod.GET)
+	public ModelAndView config() {
+
+		ModelAndView res;
+		try {
+
+			final Config config = this.adminService.getConfig();
+			res = new ModelAndView("admin/config");
+			res.addObject("config", config);
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
 	// BAN/UNBAN ACTOR
 	// ---------------------------------------------------------------
 	@RequestMapping(value = "/ban", method = RequestMethod.GET)

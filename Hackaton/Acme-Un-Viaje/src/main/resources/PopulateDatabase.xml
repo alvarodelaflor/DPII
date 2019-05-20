@@ -103,7 +103,36 @@
 		</property>
 	</bean>
 	<!-- Other domain beans come here -->
-	
+	<!-- CONFIG -->
+	<bean id="config" class="domain.Config">
+		<property name="spamList">
+			<list value-type="java.lang.String">
+				<value>sex</value>
+				<value>sexo</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>Un millón</value>
+				<value>Nigeria</value>
+			</list>
+		</property>
+		<property name="scoreList">
+			<list value-type="java.lang.String">
+				<value>good</value>
+				<value>bueno</value>
+				<value>bad</value>
+				<value>malo</value>
+			</list>
+		</property>
+		<property name="creditCardMakeList">
+			<list value-type="java.lang.String">
+				<value>VISA</value>
+				<value>MASTERCARD</value>
+			</list>
+		</property>
+		<property name="transporterBanRatio" value="10" />
+	</bean>
+	<!-- CONFIG -->
 	<!-- ADMIN -->
 	<bean id="admin01" class="domain.Admin">
 		<property name="name" value="Mr. Admin" />
@@ -113,6 +142,7 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount1" />
 		<property name="creditCard" ref="creditCard01" />
+		<property name="config" ref="config" />
 	</bean>
 	<!-- ADMIN -->
 

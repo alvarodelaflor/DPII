@@ -13,12 +13,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 <div class="container-fluid">
 <div class="row">
 <div class="col-md-12">
@@ -40,6 +34,7 @@
 					<div class="dropdown-menu">
 						<a href="admin/create.do" class="dropdown-item"><spring:message code="master.page.admin.create" /></a>
 						<a href="admin/actorList.do" class="dropdown-item"><spring:message code="master.page.admin.actorList" /></a>
+						<a href="admin/config.do" class="dropdown-item"><spring:message code="master.page.admin.config" /></a>
 					</div>
 			</li>
 			<li class="nav-item dropdown">

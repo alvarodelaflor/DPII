@@ -19,6 +19,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.Admin;
+import domain.Config;
 import domain.CreditCard;
 import forms.RegisterActor;
 
@@ -35,6 +36,15 @@ public class AdminService {
 	@Autowired
 	private ActorService	actorService;
 
+
+	// GET CONFIG
+	// ---------------------------------------------------------------
+	public Config getConfig() {
+
+		Assert.notNull(this.adminRepository.findByUserAccountId(LoginService.getPrincipal().getId()), "authority.error");
+
+		return this.adminRepository.findByUserAccountId(LoginService.getPrincipal().getId()).getConfig();
+	}
 
 	// BAN||UNBAN ACTOR
 	// ---------------------------------------------------------------

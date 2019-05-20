@@ -36,8 +36,8 @@
 	<div class="col-md-12">
 		<br>
 		<div class="row">
-			<acme:cancel url="" code="actor.back" />
-			<span style="padding-left: 0.5em"> <acme:historyBack/>
+
+			<span> <acme:historyBack />
 			</span>
 		</div>
 	</div>
