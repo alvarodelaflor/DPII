@@ -10,7 +10,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <hr>
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 2.5em">
 	<display:table name="transports" id="row" requestURI="${requestURI}"
 		pagesize="5" class="displaytag table table-hover">
 		<div class="row">
