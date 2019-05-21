@@ -109,6 +109,10 @@ public class ActorService {
 	public Collection<Actor> getActorByEmail(String email) {
 		return this.actorReporsitory.getActorByEmail(email);
 	}
+	
+	public Actor getActorByEmail2(final String email) {
+		return this.actorReporsitory.getActorByEmail2(email);
+	}
 
 	public Actor getActorByEmailEdit(final String email) {
 		final UserAccount user = LoginService.getPrincipal();
@@ -118,6 +122,22 @@ public class ActorService {
 
 	public Collection<Actor> getActoresSameEmail(final String email) {
 		return this.actorReporsitory.getActoresSameEmail(email);
+	}
+	
+	public Actor findByUserAccountId(final int id) {
+		return this.actorReporsitory.findByUserAccountId(id);
+	}
+	
+	public Collection<String> getEmailofActors() {
+		return this.actorReporsitory.getEmailofActors();
+	}
+	
+	public Actor getActorMailbox(final Integer id) {
+		return this.actorReporsitory.getActorByMailbox(id);
+	}
+	
+	public Actor save(final Actor actor) {
+		return this.actorReporsitory.save(actor);
 	}
 
 }

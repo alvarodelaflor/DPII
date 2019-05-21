@@ -75,6 +75,12 @@
 		<property name="phone" value="678546678" />
 		<property name="userAccount" ref="userAccount1" />
 		<property name="creditCard" ref="creditCard04" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox01"/>
+                <ref bean="mailbox02"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- ADMIN -->
 
@@ -90,6 +96,12 @@
 		<property name="phone" value="678546678" />
 		<property name="userAccount" ref="userAccount2" />
 		<property name="creditCard" ref="creditCard01" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox03"/>
+                <ref bean="mailbox04"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- CLEANER -->
 
@@ -104,6 +116,12 @@
 		<property name="phone" value="678546678" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="creditCard" ref="creditCard02" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox05"/>
+                <ref bean="mailbox06"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- TRANSPORT -->
 	
@@ -116,6 +134,12 @@
 		<property name="phone" value="678546678" />
 		<property name="userAccount" ref="userAccount4" />
 		<property name="creditCard" ref="creditCard03" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox07"/>
+                <ref bean="mailbox08"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- REFEREE -->
 
@@ -152,5 +176,57 @@
 		<property name="expiration" value="12/22" />
 	</bean>
 	<!-- CREDITCARD -->
+		
+	<!-- Mailbox -->
+	<bean id="mailbox01" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox02" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+    <bean id="mailbox03" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox04" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+    <bean id="mailbox05" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox06" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+    <bean id="mailbox07" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox08" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+	<!-- Mailbox -->
+	
+	
 
 </beans>

@@ -33,6 +33,11 @@
 		<value>/views/travelAgency/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<!-- CARMEN -->
+		<!-- Antonio -->
+		<value>/views/message/tiles.xml</value>
+		<value>/views/mailbox/tiles.xml</value>
+		<!-- Antonio -->
+		
 	</util:list>
 
 </beans>

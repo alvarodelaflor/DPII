@@ -131,6 +131,7 @@
 					<div class="dropdown-menu">
 						<a href="j_spring_security_logout" class="dropdown-item"><spring:message code="master.page.logout" /></a>
 						<ul class="navbar-nav">
+							<li><a href="mailbox/list.do"><spring:message code="master.page.mailbox.list" /></a></li>	
 							<li class="nav-item"><a href="?language=en" class="dropdown-item"><img src="images/logoEN.png" style="width: 2em;"></a></li>
 							<li class="nav-item"><a href="?language=es" class="dropdown-item"><img src="images/logoES.png" style="width: 2em;"></a></li>
 						</ul>

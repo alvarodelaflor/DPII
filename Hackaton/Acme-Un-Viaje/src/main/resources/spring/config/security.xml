@@ -60,6 +60,22 @@
 		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
 		<!-- CARMEN -->
+		<!-- Antonio -->
+		<security:intercept-url pattern="/mailbox/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/mailbox/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/mailbox/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/mailbox/show.do" access="permitAll" />
+		<security:intercept-url pattern="/mailbox/delete.do" access="permitAll" />
+
+		<security:intercept-url pattern="/message/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/message/show.do" access="permitAll" />
+		<security:intercept-url pattern="/message/createBroadcast.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/message/editBroadcast.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/message/delete.do" access="permitAll" />
+		<security:intercept-url pattern="/message/editMailbox.do" access="permitAll" />
+		<!-- Antonio -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
