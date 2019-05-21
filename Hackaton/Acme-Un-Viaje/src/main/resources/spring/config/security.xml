@@ -128,6 +128,8 @@
 			<!-- FERRETE -->
 		<security:intercept-url pattern="/transport/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/transport/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/accomodation/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/accomodation/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
 		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
