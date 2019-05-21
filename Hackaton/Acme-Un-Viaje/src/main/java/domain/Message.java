@@ -6,9 +6,11 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -23,10 +25,20 @@ public class Message extends DomainEntity {
 
 	private String				subject;
 	private String				body;
+	private String				sender;
 	private Date				moment;
 	private Collection<Mailbox>	mailboxes;
 	private Collection<String>	emailReceiver;
-	private Collection<String>		tags;
+	private Collection<Tag>		tags;
+	
+	
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
 
 	@ManyToMany
 	@Valid
@@ -74,14 +86,17 @@ public class Message extends DomainEntity {
 	public void setEmailReceiver(final Collection<String> emailReceiver) {
 		this.emailReceiver = emailReceiver;
 	}
-	
-	@ElementCollection(targetClass = String.class)
-	public Collection<String> getTags() {
-		return this.tags;
+
+	@Valid
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Tag.class)
+	public Collection<Tag> getTags() {
+		return tags;
 	}
 
-	public void setTags(final Collection<String> tags) {
+	public void setTags(Collection<Tag> tags) {
 		this.tags = tags;
 	}
+
+	
 
 }

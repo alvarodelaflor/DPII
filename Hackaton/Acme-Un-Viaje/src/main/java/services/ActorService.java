@@ -146,7 +146,7 @@ public class ActorService {
 	}
 	
 	public Actor getActorByEmail2(final String email) {
-		return this.actorReporsitory.getActorByEmail2(email);
+		return this.actorRepository.getActorByEmail2(email);
 	}
 
 	public Actor getActorByEmailEdit(final String email) {
@@ -165,19 +165,16 @@ public class ActorService {
 	}
 	
 	public Actor findByUserAccountId(final int id) {
-		return this.actorReporsitory.findByUserAccountId(id);
+		return this.actorRepository.findByUserAccountId(id);
 	}
 	
 	public Collection<String> getEmailofActors() {
-		return this.actorReporsitory.getEmailofActors();
+		return this.actorRepository.getEmailofActors();
 	}
 	
 	public Actor getActorMailbox(final Integer id) {
-		return this.actorReporsitory.getActorByMailbox(id);
+		return this.actorRepository.getActorByMailbox(id);
 	}
 	
-	public Actor save(final Actor actor) {
-		return this.actorReporsitory.save(actor);
-	}
 
 }
