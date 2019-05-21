@@ -103,7 +103,36 @@
 		</property>
 	</bean>
 	<!-- Other domain beans come here -->
-	
+	<!-- CONFIG -->
+	<bean id="config" class="domain.Config">
+		<property name="spamList">
+			<list value-type="java.lang.String">
+				<value>sex</value>
+				<value>sexo</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>Un millón</value>
+				<value>Nigeria</value>
+			</list>
+		</property>
+		<property name="scoreList">
+			<list value-type="java.lang.String">
+				<value>good</value>
+				<value>bueno</value>
+				<value>bad</value>
+				<value>malo</value>
+			</list>
+		</property>
+		<property name="creditCardMakeList">
+			<list value-type="java.lang.String">
+				<value>VISA</value>
+				<value>MASTERCARD</value>
+			</list>
+		</property>
+		<property name="transporterBanRatio" value="10" />
+	</bean>
+	<!-- CONFIG -->
 	<!-- ADMIN -->
 	<bean id="admin01" class="domain.Admin">
 		<property name="name" value="Mr. Admin" />
@@ -113,6 +142,13 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount1" />
 		<property name="creditCard" ref="creditCard01" />
+		<property name="config" ref="config" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox01"/>
+                <ref bean="mailbox02"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- ADMIN -->
 
@@ -127,6 +163,12 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount2" />
 		<property name="creditCard" ref="creditCard02" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox03"/>
+                <ref bean="mailbox04"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- CLEANER -->
 
@@ -141,6 +183,12 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="creditCard" ref="creditCard03" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox05"/>
+                <ref bean="mailbox06"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- TRANSPORT -->
 	
@@ -153,6 +201,12 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount4" />
 		<property name="creditCard" ref="creditCard04" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox07"/>
+                <ref bean="mailbox08"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- REFEREE -->
 	
@@ -301,6 +355,77 @@
 		<property name="actor" ref="referee01" />
 	</bean>
 	<!-- SOCIAL PROFILE -->
+	<!-- TRANSPORTS -->
+	<bean id="transport01" class="domain.Transport">
+		<property name="numberOfPlaces" value="3" />
+		<property name="price" value="25" />
+		<property name="date" value="2019/12/11 15:30" />
+		<property name="vehicleType" value="Coche" />
+		<property name="origin" value="Sevilla" />
+		<property name="destination" value="Granada" />
+		<property name="transporter" ref="transporter01" />
+	</bean>
+	<bean id="transport02" class="domain.Transport">
+		<property name="numberOfPlaces" value="3" />
+		<property name="price" value="25" />
+		<property name="date" value="2019/12/11 18:30" />
+		<property name="vehicleType" value="Coche" />
+		<property name="origin" value="Granada" />
+		<property name="destination" value="Sevilla" />
+		<property name="transporter" ref="transporter01" />
+	</bean>
+	<!-- TRANSPORTS -->
+		
+	<!-- Mailbox -->
+	<bean id="mailbox01" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox02" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+    <bean id="mailbox03" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox04" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+    <bean id="mailbox05" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox06" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+    <bean id="mailbox07" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox08" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+	<!-- Mailbox -->
+	
 	
 
 </beans>

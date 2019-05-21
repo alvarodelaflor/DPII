@@ -28,12 +28,20 @@
 		<value>/views/travelAgency/messages</value>
 		<value>/views/customer/messages</value>
 		<value>/views/socialProfile/messages</value>
+		<value>/views/request/messages</value>
 		<!-- Carmen -->
 		
 		<!-- ALVARO -->
 		<value>/views/curricula/messages</value>
 		<value>/views/educationalData/messages</value>
 		<!-- ALVARO -->
+		<!-- HIPONA -->
+		<value>/views/transport/messages</value>
+		<!-- HIPONA -->
+		<!-- Antonio -->
+		<value>/views/message/messages</value>
+		<value>/views/mailbox/messages</value>
+		<!-- Antonio -->
 	</util:list>
 
 </beans>

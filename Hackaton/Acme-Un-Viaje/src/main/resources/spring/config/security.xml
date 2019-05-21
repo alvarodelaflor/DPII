@@ -68,6 +68,16 @@
 		<security:intercept-url pattern="/admin/create.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/edit.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/show.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/actorList.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/ban.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/config.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newsw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/delsw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newscw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/delscw.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newccm.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/delccm.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/traratio.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
 		
@@ -76,7 +86,34 @@
 		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
+		
+		<security:intercept-url pattern="/request/customer/create.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/request/customer/list.do" access="hasRole('CUSTOMER')" />	
 		<!-- CARMEN -->
+		<!-- Antonio -->
+		<security:intercept-url pattern="/mailbox/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/mailbox/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/mailbox/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/mailbox/show.do" access="permitAll" />
+		<security:intercept-url pattern="/mailbox/delete.do" access="permitAll" />
+
+		<security:intercept-url pattern="/message/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/message/show.do" access="permitAll" />
+		<security:intercept-url pattern="/message/createBroadcast.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/message/editBroadcast.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/message/delete.do" access="permitAll" />
+		<security:intercept-url pattern="/message/editMailbox.do" access="permitAll" />
+		<!-- Antonio -->
+
+		<!-- HIPONA -->
+		<security:intercept-url pattern="/transport/transporter/list.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/create.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/show.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/edit.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
+		<!-- HIPONA -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 

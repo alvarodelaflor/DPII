@@ -13,12 +13,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 <div class="container-fluid">
 <div class="row">
 <div class="col-md-12">
@@ -39,6 +33,8 @@
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.admin" /></a>
 					<div class="dropdown-menu">
 						<a href="admin/create.do" class="dropdown-item"><spring:message code="master.page.admin.create" /></a>
+						<a href="admin/actorList.do" class="dropdown-item"><spring:message code="master.page.admin.actorList" /></a>
+						<a href="admin/config.do" class="dropdown-item"><spring:message code="master.page.admin.config" /></a>
 					</div>
 			</li>
 			<li class="nav-item dropdown">
@@ -71,11 +67,17 @@
 			<security:authorize access="hasRole('TRANSPORTER')">
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
-					<div class="dropdown-menu">
-						<a href="transporter/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
-						<a href="transporter/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
-						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
-					</div>
+				<div class="dropdown-menu">
+					<a href="transporter/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
+					<a href="transporter/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
+					<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>			
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.transporter.transports" /></a>
+				<div class="dropdown-menu">
+					<a href="transport/transporter/list.do" class="dropdown-item"><spring:message code="master.page.transporter.transport.list" /></a>
+				</div>
 			</li>
 			</security:authorize>
 			
@@ -91,6 +93,12 @@
 			</security:authorize>
 			
 			<security:authorize access="hasRole('CUSTOMER')">
+			<li class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.customer" /></a>
+					<div class="dropdown-menu">
+						<a href="request/customer/list.do" class="dropdown-item"><spring:message code="master.page.request.customerList" /></a>
+					</div>
+			</li>
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.actor.profile" /></a>
 					<div class="dropdown-menu">
@@ -137,6 +145,7 @@
 					<div class="dropdown-menu">
 						<a href="j_spring_security_logout" class="dropdown-item"><spring:message code="master.page.logout" /></a>
 						<ul class="navbar-nav">
+							<li><a href="mailbox/list.do"><spring:message code="master.page.mailbox.list" /></a></li>	
 							<li class="nav-item"><a href="?language=en" class="dropdown-item"><img src="images/logoEN.png" style="width: 2em;"></a></li>
 							<li class="nav-item"><a href="?language=es" class="dropdown-item"><img src="images/logoES.png" style="width: 2em;"></a></li>
 						</ul>

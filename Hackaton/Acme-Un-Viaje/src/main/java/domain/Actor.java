@@ -1,6 +1,7 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.jws.HandlerChain;
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -37,6 +39,8 @@ public class Actor extends DomainEntity {
 	private UserAccount	userAccount;
 
 	private CreditCard	creditCard;
+	
+	private Collection<Mailbox>		mailboxes;
 
 
 	@NotNull
@@ -115,6 +119,19 @@ public class Actor extends DomainEntity {
 
 	public void setPhone(final String phone) {
 		this.phone = phone;
+	}
+	
+	@Valid
+	@OneToMany(cascade = javax.persistence.CascadeType.ALL)
+	@Cascade({
+		CascadeType.ALL
+	})
+	public Collection<Mailbox> getMailboxes() {
+		return this.mailboxes;
+	}
+
+	public void setMailboxes(final Collection<Mailbox> mailboxes) {
+		this.mailboxes = mailboxes;
 	}
 
 }

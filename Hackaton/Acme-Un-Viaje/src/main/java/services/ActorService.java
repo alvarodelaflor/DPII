@@ -3,7 +3,6 @@ package services;
 
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,19 +10,47 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import domain.Actor;
-import domain.Cleaner;
-import forms.RegisterActor;
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
+import forms.RegisterActor;
 
 @Service
 @Transactional
 public class ActorService {
 
 	@Autowired
-	private ActorRepository actorRepository;
+	private ActorRepository	actorRepository;
+
+
+	// FIND ALL NON-BANNED BUT ADMINS
+	// ---------------------------------------------------------------
+	public Collection<Actor> findAllNonBannedButAdmins() {
+
+		return this.actorRepository.findAllNonBannedButAdmins();
+	}
+
+	// FIND ALL BANNED BUT ADMINS
+	// ---------------------------------------------------------------
+	public Collection<Actor> findAllBannedButAdmins() {
+
+		return this.actorRepository.findAllBannedButAdmins();
+	}
+
+	// SAVE ACTOR
+	// ---------------------------------------------------------------
+	public Actor save(final Actor actor) {
+
+		return this.actorRepository.save(actor);
+	}
+
+	// FIND ONE ACTOR
+	// ---------------------------------------------------------------
+	public Actor findOne(final int id) {
+
+		return this.actorRepository.findOne(id);
+	}
 
 	// CHECK REGISTER AS ACTOR
 	// ---------------------------------------------------------------
@@ -88,40 +115,38 @@ public class ActorService {
 		}
 
 		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-		if (!registerActor.getEmail().matches(pattern)) {
+		if (!registerActor.getEmail().matches(pattern))
 			binding.rejectValue("email", "email.wrong");
-		}
-		
-		if (registerActor.getHolder().contains(">") || registerActor.getHolder().contains("<")) {
+
+		if (registerActor.getHolder().contains(">") || registerActor.getHolder().contains("<"))
 			binding.rejectValue("holder", "error.html");
-		}
-		
-		if (registerActor.getMake().contains(">") || registerActor.getMake().contains("<")) {
+
+		if (registerActor.getMake().contains(">") || registerActor.getMake().contains("<"))
 			binding.rejectValue("make", "error.html");
-		}
-		
-		if (registerActor.getPassword().contains(">") || registerActor.getPassword().contains("<")) {
+
+		if (registerActor.getPassword().contains(">") || registerActor.getPassword().contains("<"))
 			binding.rejectValue("password", "error.html");
-		}
-		
-		if (registerActor.getUserName().contains(">") || registerActor.getUserName().contains("<")) {
+
+		if (registerActor.getUserName().contains(">") || registerActor.getUserName().contains("<"))
 			binding.rejectValue("userName", "error.html");
-		}
-		
+
 		if (this.getActorByEmail(registerActor.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 
 		if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
 			binding.rejectValue("birthDate", "error.birthDate");
-			Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
-			if (ageActor < 18) {
+			final Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
+			if (ageActor < 18)
 				binding.rejectValue("birthDate", "error.birthDateM");
-			}
 		}
 	}
 
-	public Collection<Actor> getActorByEmail(String email) {
+	public Collection<Actor> getActorByEmail(final String email) {
 		return this.actorRepository.getActorByEmail(email);
+	}
+	
+	public Actor getActorByEmail2(final String email) {
+		return this.actorReporsitory.getActorByEmail2(email);
 	}
 
 	public Actor getActorByEmailEdit(final String email) {
@@ -133,10 +158,26 @@ public class ActorService {
 	public Collection<Actor> getActoresSameEmail(final String email) {
 		return this.actorRepository.getActoresSameEmail(email);
 	}
-	
+
 	public Actor getActorByUserId(final Integer id) {
 		final Actor a = this.actorRepository.getActorByUserId(id);
 		return a;
+	}
+	
+	public Actor findByUserAccountId(final int id) {
+		return this.actorReporsitory.findByUserAccountId(id);
+	}
+	
+	public Collection<String> getEmailofActors() {
+		return this.actorReporsitory.getEmailofActors();
+	}
+	
+	public Actor getActorMailbox(final Integer id) {
+		return this.actorReporsitory.getActorByMailbox(id);
+	}
+	
+	public Actor save(final Actor actor) {
+		return this.actorReporsitory.save(actor);
 	}
 
 }

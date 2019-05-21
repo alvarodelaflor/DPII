@@ -33,12 +33,22 @@
 		<value>/views/travelAgency/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/socialProfile/tiles.xml</value>
+		<value>/views/request/tiles.xml</value>
 		<!-- CARMEN -->
 		
 		<!-- ALVARO -->
 		<value>/views/curricula/tiles.xml</value>
 		<value>/views/educationalData/tiles.xml</value>
 		<!-- ALVARO -->
+		
+		<!-- HIPONA -->
+		<value>/views/transport/tiles.xml</value>
+		<!-- HIPONA -->
+		<!-- Antonio -->
+		<value>/views/message/tiles.xml</value>
+		<value>/views/mailbox/tiles.xml</value>
+		<!-- Antonio -->
+		
 	</util:list>
 
 </beans>
