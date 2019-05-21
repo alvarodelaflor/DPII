@@ -178,6 +178,17 @@
 							<li class="nav-item dropdown">
 								<a href="#" class="nav-link dropdown-toggle"
 									data-toggle="dropdown" id="navbardrop">
+									<spring:message code="master.page.travelAgency" />
+								</a>
+								<div class="dropdown-menu">
+									<a href="warranty/travelAgency/list.do" class="dropdown-item">
+										<spring:message code="master.page.warranty.travelAgencyList" />
+									</a>
+								</div>
+							</li>
+							<li class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle"
+									data-toggle="dropdown" id="navbardrop">
 									<spring:message code="master.page.actor.profile" />
 								</a>
 								<div class="dropdown-menu">
