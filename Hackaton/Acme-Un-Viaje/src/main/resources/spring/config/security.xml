@@ -34,11 +34,17 @@
 		<security:intercept-url pattern="/curricula/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/curricula/cleaner/delete.do" access="hasRole('CLEANER')" />
 		
+		<security:intercept-url pattern="/educationalData/cleaner/create.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/educationalData/cleaner/edit.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/educationalData/cleaner/delete.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+		
 		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
 		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/delete.do" access="hasRole('CLEANER')" />
+		
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->

@@ -73,13 +73,13 @@ $(document).ready(function() {
 			</c:choose>
 			
 			<table id="example" class="table table-striped table-bordered" style="width:100%">
-  				<tfoot>
-    				<tr>
-      					<th class="th-sm">
-      						<c:choose>
-								<c:when test="${cleanerLogin==true}">
+				<c:choose>
+					<c:when test="${cleanerLogin==true}">
+  						<tfoot>
+    						<tr>
+      							<th class="th-sm">
 									<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/cleaner/edit.do">
-          								<div class="row">
+	          							<div class="row">
 											<div class="col-md-7">
 												<div class="form-group">
 													<spring:message htmlEscape="false" code="curricula.attachment" var="placeholder1" />
@@ -92,17 +92,17 @@ $(document).ready(function() {
 													<acme:submit name="save" code="save2"/>
 												</div>
 											</div>
-          								</div>
-          								<form:hidden path="id"/>
-          								<form:hidden path="version"/>
-          								<form:hidden path="curriculaM"/>
-          								<form:hidden path="isCopy"/>
+	         							</div>
+	          							<form:hidden path="id"/>
+	          							<form:hidden path="version"/>
+	          							<form:hidden path="curriculaM"/>
+	          							<form:hidden path="isCopy"/>
 									</form:form>
-								</c:when>
-							</c:choose>
-      					</th>
-      				</tr>
-  				</tfoot>
+      							</th>
+      						</tr>
+  						</tfoot>
+					</c:when>
+				</c:choose>
   				<tbody>
 			      <c:forEach var = "i" items="${miscellaneousAttachments}">
   						<tr>
@@ -114,7 +114,7 @@ $(document).ready(function() {
 	  											<c:out value = "${i.attachment}"/>
 	  										</div>
 	  										<div class="col-md-4">
-	  											<acme:delete name = "" url="miscellaneousAttachment/cleaner/delete.do?miscellaneousAttachmentId=${row0.id}${i.id}" code="curricula.delete"/>
+	  											<acme:delete name = "" url="miscellaneousAttachment/cleaner/delete.do?miscellaneousAttachmentId=${i.id}" code="curricula.delete"/>
 	  										</div>
 	  									</c:when>
 	  									<c:otherwise>
@@ -156,3 +156,35 @@ $(document).ready(function() {
 	</div>
 </div>
 
+<div class="container-fluid" style="padding-left: 2.5em">
+	<div class="row">
+		<div class="col-md-6">
+			<h3><strong><spring:message code="curricula.educationalData" /></strong></h3>
+			<br>
+			<display:table name="educationalDatas" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
+				<display:column titleKey="curricula.educationalData.degree">
+					<a href="educationalData/show.do?educationalDataId=${row2.id}"><jstl:out value="${row2.degree}"></jstl:out></a>			
+				</display:column>
+				<display:column property="institution" titleKey="curricula.educationalData.institution"></display:column>
+				<c:choose>
+					<c:when test="${cleanerLogin==true}">
+						<display:column titleKey="none">
+							<acme:create name = "" url="educationalData/cleaner/edit.do?educationalDataId=${row2.id}" code="curricula.edit"/>	
+						</display:column>
+						<display:column titleKey="none">
+							<acme:delete name = "" url="educationalData/cleaner/delete.do?educationalDataId=${row2.id}" code="curricula.delete"/>
+						</display:column>
+					</c:when>
+				</c:choose>
+			</display:table>
+			<jstl:if test="${cleanerLogin==true}">
+				<form method="get" action="educationalData/cleaner/create.do">
+					<button class="btn btn-dark" name="curriculaId" value="${curricula.id}"><spring:message code="educationalData.create"/></button>
+				</form>
+			</jstl:if>
+		</div>
+		<div class="col-md-6">
+		<!--  -->
+		</div>
+	</div>
+</div>

@@ -23,17 +23,17 @@
 <tiles-definitions>
 
 	<definition name="educationalData/cleaner/create" extends="master.page">	
-		<put-attribute name="title" value="Crear un Registro Formativo" />
+		<put-attribute name="title" value="" />
 		<put-attribute name="body" value="/views/educationalData/edit.jsp" />
 	</definition>
 	
 	<definition name="educationalData/cleaner/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar un Registro Formativo" />
+		<put-attribute name="title" value="" />
 		<put-attribute name="body" value="/views/educationalData/edit.jsp" />
 	</definition>
 	
 	<definition name="educationalData/show" extends="master.page">	
-		<put-attribute name="title" value="Mostrar Registro Formativos" />
+		<put-attribute name="title" value="" />
 		<put-attribute name="body" value="/views/educationalData/show.jsp" />
 	</definition>
 	
