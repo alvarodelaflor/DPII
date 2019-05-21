@@ -93,4 +93,56 @@ public class ConfigService {
 		this.configRepo.save(config);
 
 	}
+
+	public void newWelcomeMessageEn(final String msg) {
+
+		final Config config = this.adminService.getConfig();
+		config.setWelcomeMessageEn(msg);
+		this.configRepo.save(config);
+	}
+
+	public void newWelcomeMessageEs(final String msg) {
+
+		final Config config = this.adminService.getConfig();
+		config.setWelcomeMessageEs(msg);
+		this.configRepo.save(config);
+	}
+
+	public void newSystemNombre(final String msg) {
+
+		final Config config = this.adminService.getConfig();
+		config.setSystemNombre(msg);
+		this.configRepo.save(config);
+	}
+
+	public void newSystemName(final String msg) {
+
+		final Config config = this.adminService.getConfig();
+		config.setSystemName(msg);
+		this.configRepo.save(config);
+	}
+
+	public void newBanner(final String banner) {
+
+		// From REGEX: ^(http(s?):\\/\\/www\\.).+(\\.)
+		Assert.isTrue(banner.matches("^(http(s?):\\/\\/www\\.).+(\\.).+"), "not.url");
+		final Config config = this.adminService.getConfig();
+		config.setSystemName(banner);
+		this.configRepo.save(config);
+	}
+
+	public void newDefaultPhoneCode(final String newdpc) {
+
+		final Config config = this.adminService.getConfig();
+		config.setDefaultPhoneCode(newdpc);
+		this.configRepo.save(config);
+	}
+
+	// GET LOGO
+	// ---------------------------------------------------------------
+	public String getBannerLogo() {
+
+		return this.configRepo.findAll().iterator().next().getBannerLogo();
+	}
+
 }

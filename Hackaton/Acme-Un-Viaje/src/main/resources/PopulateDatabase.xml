@@ -131,6 +131,12 @@
 			</list>
 		</property>
 		<property name="transporterBanRatio" value="10" />
+		<property name="systemNombre" value="Acme Un Viaje"></property>
+		<property name="systemName" value="Acme A Trip"></property>
+		<property name="welcomeMessageEs" value="Bienvenido a Acme Un Viaje"></property>
+		<property name="welcomeMessageEn" value="Welcome to Acme A Trip"></property>
+		<property name="bannerLogo" value="images/logo.png"></property>
+		<property name="defaultPhoneCode" value="+34 "></property>
 	</bean>
 	<!-- CONFIG -->
 	<!-- ADMIN -->
@@ -515,4 +521,28 @@
     </bean>
 	<!-- WARRANTY -->
 	
+	
+	<!-- ACCOMODATIONS -->
+	<bean id="accomodation01" class="domain.Accomodation">
+		<property name="pricePerNight" value="30" />
+		<property name="address" value="Calle Ramón de la Cruz Nº1" />
+		<property name="place" value="Sevilla" />
+		<property name="description" value="Bonita habitación con vistas al asfalto" />
+		<property name="host" ref="host01" />
+		<property name="pictures" value="https://www.recoletos-hotel.com/files/hotel/hotel-recoletos/02-habitaciones/estandard/vp-jardin-de-recoletos-madrid-habitacion-doble-estandard-03.jpg" />
+		<property name="maxPeople" value="4" />
+		<property name="rating" value="3" />
+	</bean>
+	<bean id="accomodation02" class="domain.Accomodation">
+		<property name="pricePerNight" value="5" />
+		<property name="address" value="Calle Ramón de la Cruz Nº2" />
+		<property name="place" value="Sevilla" />
+		<property name="description" value="Ático de mala muerte" />
+		<property name="host" ref="host01" />
+		<property name="pictures" value="https://t-ec.bstatic.com/images/hotel/max1024x768/170/170499069.jpg'https://rincondelobizarro.files.wordpress.com/2011/12/cuartocutre.jpg" />
+		<property name="maxPeople" value="2" />
+		<property name="rating" value="0.5" />
+	</bean>
+	<!-- ACCOMODATIONS -->
+
 </beans>

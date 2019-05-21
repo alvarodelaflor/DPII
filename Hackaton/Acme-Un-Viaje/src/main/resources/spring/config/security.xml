@@ -89,6 +89,13 @@
 		<security:intercept-url pattern="/admin/newccm.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/delccm.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/traratio.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newwwmes.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newwmen.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newsysno.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newsysna.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newbnn.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newdpc.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/dashboard.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
 		
@@ -133,6 +140,8 @@
 			<!-- FERRETE -->
 		<security:intercept-url pattern="/transport/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/transport/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/accomodation/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/accomodation/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
 		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 

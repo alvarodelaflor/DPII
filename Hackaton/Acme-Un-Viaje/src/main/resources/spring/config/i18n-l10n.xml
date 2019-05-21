@@ -43,6 +43,10 @@
 		<value>/views/message/messages</value>
 		<value>/views/mailbox/messages</value>
 		<!-- Antonio -->
+		
+		<!-- FERRETE -->
+		<value>/views/accomodation/messages</value>
+		<!-- FERRETE -->
 	</util:list>
 
 </beans>

@@ -50,6 +50,9 @@
 		<value>/views/message/tiles.xml</value>
 		<value>/views/mailbox/tiles.xml</value>
 		<!-- Antonio -->
+		<!-- FERRETE -->
+		<value>/views/accomodation/tiles.xml</value>
+		<!-- FERRETE -->
 		
 	</util:list>
 

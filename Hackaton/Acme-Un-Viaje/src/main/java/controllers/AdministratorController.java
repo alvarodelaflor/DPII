@@ -27,6 +27,7 @@ import security.LoginService;
 import services.ActorService;
 import services.AdminService;
 import services.ConfigService;
+import services.CurriculaService;
 import domain.Actor;
 import domain.Admin;
 import domain.Config;
@@ -38,13 +39,16 @@ import forms.RegisterActor;
 public class AdministratorController extends AbstractController {
 
 	@Autowired
-	private AdminService	adminService;
+	private AdminService		adminService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private ConfigService	configService;
+	private ConfigService		configService;
+
+	@Autowired
+	private CurriculaService	curriculaService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -61,10 +65,146 @@ public class AdministratorController extends AbstractController {
 		try {
 
 			res = new ModelAndView("admin/dashboard");
+			//CurriculaPerCleaner:
+			final Float minCurriculaPerCleaner = this.curriculaService.minCurriculaPerCleaner();
+			final Float maxCurriculaPerCleaner = this.curriculaService.maxCurriculaPerCleaner();
+			final Float avgCurriculaPerCleaner = this.curriculaService.avgCurriculaPerCleaner();
+			final Float stddevCurriculaPerCleaner = this.curriculaService.stddevCurriculaPerCleaner();
+			res.addObject("minCurriculaPerCleaner", minCurriculaPerCleaner);
+			res.addObject("maxCurriculaPerCleaner", maxCurriculaPerCleaner);
+			res.addObject("avgCurriculaPerCleaner", avgCurriculaPerCleaner);
+			res.addObject("stddevCurriculaPerCleaner", stddevCurriculaPerCleaner);
 		} catch (final Throwable oops) {
 
 			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
 				res = new ModelAndView("admin/dashboard");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW DEFAULT PHONE CODE
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newdpc", method = RequestMethod.GET)
+	public ModelAndView newDefaultPhoneCode(@RequestParam(value = "newdpc", defaultValue = "-1") final String newdpc) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newDefaultPhoneCode(newdpc);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW BANNER
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newbnn", method = RequestMethod.GET)
+	public ModelAndView newBanner(@RequestParam(value = "newbnn", defaultValue = "-1") final String newbnn) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newBanner(newbnn);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "not.url") {
+				res = this.config();
+				res.addObject("message", "not.url");
+			} else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW SYSTEM NAME
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newsysna", method = RequestMethod.GET)
+	public ModelAndView newSystemName(@RequestParam(value = "newsysna", defaultValue = "-1") final String newsysna) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newSystemName(newsysna);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW SYSTEM NOMBRE
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newsysno", method = RequestMethod.GET)
+	public ModelAndView newSystemNombre(@RequestParam(value = "newsysno", defaultValue = "-1") final String newsysno) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newSystemNombre(newsysno);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW WELCOME MESSAGE EN
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newwmen", method = RequestMethod.GET)
+	public ModelAndView newWelcomeMessageEn(@RequestParam(value = "newwmen", defaultValue = "-1") final String newwmen) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newWelcomeMessageEn(newwmen);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
+			else
+				res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// NEW WELCOME MESSAGE ES
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/newwmes", method = RequestMethod.GET)
+	public ModelAndView newWelcomeMessageEs(@RequestParam(value = "newwmes", defaultValue = "-1") final String newwmes) {
+
+		ModelAndView res;
+		try {
+
+			this.configService.newWelcomeMessageEs(newwmes);
+			res = new ModelAndView("redirect:config.do");
+		} catch (final Throwable oops) {
+
+			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
+				res = new ModelAndView("admin/config");
 			else
 				res = new ModelAndView("redirect:/welcome/index.do");
 		}
