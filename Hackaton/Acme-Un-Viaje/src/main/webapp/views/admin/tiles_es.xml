@@ -31,4 +31,14 @@
 		<put-attribute name="body" value="/views/admin/show.jsp" />
 	</definition>
 	
+	<definition name="admin/actorList" extends="master.page">	
+		<put-attribute name="title" value="Listando Usuarios" />
+		<put-attribute name="body" value="/views/admin/actorList.jsp" />
+	</definition>
+	
+	<definition name="admin/config" extends="master.page">	
+		<put-attribute name="title" value="Configuracion" />
+		<put-attribute name="body" value="/views/admin/config.jsp" />
+	</definition>
+	
 </tiles-definitions>

@@ -16,9 +16,8 @@ import repositories.TransporterRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Transporter;
-import domain.Cleaner;
 import domain.CreditCard;
+import domain.Transporter;
 import forms.RegisterActor;
 
 @Service
@@ -26,13 +25,14 @@ import forms.RegisterActor;
 public class TransporterService {
 
 	@Autowired
-	private TransporterRepository transporterRepository;
+	private TransporterRepository	transporterRepository;
 
 	@Autowired
-	private Validator validator;
+	private Validator				validator;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
+
 
 	// REGISTER AS TRASNSPORTER
 	// ---------------------------------------------------------------
@@ -60,8 +60,7 @@ public class TransporterService {
 
 	// RECONSTRUCT REGISTER AS TRASNSPORTER
 	// ---------------------------------------------------------------
-	public Transporter reconstructRegisterAsTransporter(final RegisterActor registerActor,
-			final BindingResult binding) {
+	public Transporter reconstructRegisterAsTransporter(final RegisterActor registerActor, final BindingResult binding) {
 		final Transporter transporter = this.create();
 
 		this.actorService.checkActor(registerActor, binding);
@@ -112,7 +111,7 @@ public class TransporterService {
 			transporter.setName(registerActor.getName());
 			transporter.setSurname(registerActor.getSurname());
 			transporter.setPhoto(registerActor.getPhoto());
-			CreditCard creditCard = transporter.getCreditCard();
+			final CreditCard creditCard = transporter.getCreditCard();
 			creditCard.setCVV(registerActor.getCreditCard().getCVV());
 			creditCard.setExpiration(registerActor.getCreditCard().getExpiration());
 			creditCard.setHolder(registerActor.getCreditCard().getHolder());
@@ -120,7 +119,6 @@ public class TransporterService {
 			creditCard.setNumber(registerActor.getCreditCard().getNumber());
 			transporter.setCreditCard(creditCard);
 		}
-
 
 		return transporter;
 	}
@@ -170,23 +168,32 @@ public class TransporterService {
 			binding.rejectValue("creditCard.make", "error.makeCredictCard");
 
 		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-		if (!registerActor.getEmail().matches(pattern)) {
+		if (!registerActor.getEmail().matches(pattern))
 			binding.rejectValue("email", "email.wrong");
-		}
-		
-		UserAccount user = LoginService.getPrincipal();
-		Transporter t = this.getTransporterByUserAccountId(user.getId());
-		
+
+		if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<"))
+			binding.rejectValue("creditCard.holder", "error.html");
+
+		if (registerActor.getCreditCard().getMake().contains(">") || registerActor.getCreditCard().getMake().contains("<"))
+			binding.rejectValue("creditCard.make", "error.html");
+
+		final UserAccount user = LoginService.getPrincipal();
+		final Transporter t = this.getTransporterByUserAccountId(user.getId());
+
 		if (!registerActor.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 
 		if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
 			binding.rejectValue("birthDate", "error.birthDate");
-			Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
-			if (ageActor < 18) {
+			final Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
+			if (ageActor < 18)
 				binding.rejectValue("birthDate", "error.birthDateM");
-			}
 		}
+	}
+
+	public Transporter getLoggedTransporter() {
+		final int id = LoginService.getPrincipal().getId();
+		return this.getTransporterByUserAccountId(id);
 	}
 
 }

@@ -27,28 +27,31 @@ public class Authority implements GrantedAuthority {
 
 	// Constructors -----------------------------------------------------------
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
+
 
 	public Authority() {
 		super();
 	}
 
+
 	// Values -----------------------------------------------------------------
 
-	public static final String ADMIN = "ADMIN";
-	public static final String CLEANER = "CLEANER";
-	public static final String TRANSPORTER = "TRANSPORTER";
-	public static final String REFEREE = "REFEREE";
-	public static final String HOST = "HOST";
-	public static final String TRAVELAGENCY = "TRAVELAGENCY";
-	public static final String CUSTOMER = "CUSTOMER";
+	public static final String	ADMIN			= "ADMIN";
+	public static final String	CLEANER			= "CLEANER";
+	public static final String	TRANSPORTER		= "TRANSPORTER";
+	public static final String	REFEREE			= "REFEREE";
+	public static final String	HOST			= "HOST";
+	public static final String	TRAVELAGENCY	= "TRAVELAGENCY";
+	public static final String	CUSTOMER		= "CUSTOMER";
 
 	// Attributes -------------------------------------------------------------
 
-	private String authority;
+	private String				authority;
+
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.CLEANER +  "|" + Authority.TRAVELAGENCY +  "|" + Authority.CUSTOMER + "|" + Authority.HOST + "|" + Authority.REFEREE + "|" + Authority.TRANSPORTER + "$")
+	@Pattern(regexp = "^(" + Authority.ADMIN + "|" + Authority.CLEANER + "|" + Authority.TRAVELAGENCY + "|" + Authority.CUSTOMER + "|" + Authority.HOST + "|" + Authority.REFEREE + "|" + Authority.TRANSPORTER + ")$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
@@ -67,7 +70,7 @@ public class Authority implements GrantedAuthority {
 		authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		result.add(authority);
-		
+
 		authority = new Authority();
 		authority.setAuthority(Authority.CUSTOMER);
 		result.add(authority);
@@ -79,15 +82,15 @@ public class Authority implements GrantedAuthority {
 		authority = new Authority();
 		authority.setAuthority(Authority.CLEANER);
 		result.add(authority);
-		
+
 		authority = new Authority();
 		authority.setAuthority(Authority.REFEREE);
 		result.add(authority);
-		
+
 		authority = new Authority();
 		authority.setAuthority(Authority.HOST);
 		result.add(authority);
-		
+
 		authority = new Authority();
 		authority.setAuthority(Authority.TRAVELAGENCY);
 		result.add(authority);

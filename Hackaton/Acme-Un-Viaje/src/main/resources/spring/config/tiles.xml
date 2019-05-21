@@ -32,7 +32,13 @@
 		<value>/views/admin/tiles.xml</value>
 		<value>/views/travelAgency/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
+		<value>/views/socialProfile/tiles.xml</value>
+		<value>/views/request/tiles.xml</value>
 		<!-- CARMEN -->
+		
+		<!-- HIPONA -->
+		<value>/views/transport/tiles.xml</value>
+		<!-- HIPONA -->
 		<!-- Antonio -->
 		<value>/views/message/tiles.xml</value>
 		<value>/views/mailbox/tiles.xml</value>

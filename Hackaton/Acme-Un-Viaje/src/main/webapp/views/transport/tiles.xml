@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="transport/transporter/list" extends="master.page">	
+		<put-attribute name="title" value="List of your transports" />
+		<put-attribute name="body" value="/views/transport/transporter/list.jsp" />
+	</definition>
+
+	<definition name="transport/transporter/show" extends="master.page">	
+		<put-attribute name="title" value="Showing your transport" />
+		<put-attribute name="body" value="/views/transport/transporter/show.jsp" />
+	</definition>
+	
+	<definition name="transport/transporter/create" extends="master.page">	
+		<put-attribute name="title" value="Create a transport" />
+		<put-attribute name="body" value="/views/transport/transporter/edit.jsp" />
+	</definition>
+	
+	<definition name="transport/transporter/createMultiple" extends="master.page">	
+		<put-attribute name="title" value="Create multiple transports" />
+		<put-attribute name="body" value="/views/transport/transporter/createMultiple.jsp" />
+	</definition>
+	
+	<definition name="transport/transporter/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit a transport" />
+		<put-attribute name="body" value="/views/transport/transporter/edit.jsp" />
+	</definition>
+	
+</tiles-definitions>
