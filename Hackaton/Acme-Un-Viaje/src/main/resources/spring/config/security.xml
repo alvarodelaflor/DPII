@@ -114,6 +114,11 @@
 		<security:intercept-url pattern="/transport/transporter/edit.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
 		<!-- HIPONA -->
+		
+			<!-- FERRETE -->
+		<security:intercept-url pattern="/transport/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/transport/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
+		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 

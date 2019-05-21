@@ -115,7 +115,8 @@
 					<div class="dropdown-menu">
 						<a href="travelAgency/edit.do" class="dropdown-item"><spring:message code="master.page.actor.edit" /></a>
 						<a href="travelAgency/show.do" class="dropdown-item"><spring:message code="master.page.actor.show" /></a>
-						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>									
+						<a href="socialProfile/list.do" class="dropdown-item"><spring:message code="master.page.socialProfile.list" /></a>
+						<a href="transport/travelAgency/list.do" class="dropdown-item"><spring:message code="master.page.transport.list" /></a>									
 					</div>
 			</li>
 			</security:authorize>

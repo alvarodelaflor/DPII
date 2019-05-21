@@ -10,12 +10,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Transport;
+import domain.Transporter;
 import repositories.TransportRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.CommonUtils;
-import domain.Transport;
-import domain.Transporter;
 
 @Service
 @Transactional
@@ -108,4 +108,17 @@ public class TransportService {
 		return res;
 	}
 
+    public Collection<Transport> findAll() {
+		return this.transportRepository.findAll();
+	}
+
+	public Transport findOne(final int id) {
+		return this.transportRepository.findOne(id);
+	}
+
+	// -- Inner class methods
+	private boolean isTransportOwner(final Transport transport) {
+		final Transporter transporter = this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId());
+		return transport.getTransporter().equals(transporter);
+	}
 }
