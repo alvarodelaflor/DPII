@@ -219,6 +219,12 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="creditCard" ref="creditCard05" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox09"/>
+                <ref bean="mailbox10"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- HOTS -->
 	
@@ -231,6 +237,12 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="creditCard" ref="creditCard06" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox11"/>
+                <ref bean="mailbox12"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- TRAVELAGENCY -->
 	
@@ -244,6 +256,12 @@
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard07" />
+		<property name="mailboxes">
+        	<list>
+                <ref bean="mailbox13"/>
+                <ref bean="mailbox14"/>
+        	</list>
+        </property>
 	</bean>
 	<!-- CUSTOMER -->
 
@@ -422,6 +440,42 @@
     </bean> 
     
      <bean id="mailbox08" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+      <bean id="mailbox09" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox10" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+      <bean id="mailbox11" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox12" class="domain.Mailbox">
+        <property name="name" value="outBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean>
+    
+      <bean id="mailbox13" class="domain.Mailbox">
+        <property name="name" value="inBox" />
+        <property name="isDefault" value="true" />
+        <property name="messages"><null/></property>   
+    </bean> 
+    
+     <bean id="mailbox14" class="domain.Mailbox">
         <property name="name" value="outBox" />
         <property name="isDefault" value="true" />
         <property name="messages"><null/></property>   

@@ -16,25 +16,65 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<body>
+      			
+    <div class="container-fluid" style="padding-left: 2.5em">
+    	<div class="col-md-6" style="padding-left: 2.5em">
+			<fieldset>
+				<h2>
+					<spring:message code="msg.show" />
+					&nbsp;
+				</h2>
+				<hr>
+				<div class="row" style="padding-left: 1.5em">
+					<strong><spring:message code="msg.show.subject" />:&nbsp;</strong>
+					<jstl:out value="${msg.subject}"></jstl:out>
+				</div>
 
-<div class="content">
-				<table>
-					<tr><td><strong><spring:message code="msg.show" /></strong></td></tr>
-    						
-    				<tr><td><spring:message code="msg.show.subject" /><jstl:out value="${msg.subject}"></jstl:out></td></tr>
-    							
-    				<tr><td><spring:message code="msg.show.body" /><jstl:out value="${msg.body}"></jstl:out></td></tr>
-    				  			
-    				<tr><td><spring:message code="msg.show.priority" /><jstl:out value="${msg.priority.value}"></jstl:out></td></tr>															          			
-          			
-          			<tr><td><spring:message code="msg.show.moment" /><jstl:out value="${msg.moment}"></jstl:out></td></tr>															          			
-          			</table>
-          			
-          			<a onclick="return confirmar('accion.html')" title="AcmeTitle" href="message/delete.do?id=${msg.id}&mailboxId=${mailboxId}"><img src="images/delete.png" alt="Delete" width="3%"/></a>
-          			<form>
-	<input type="button" value=<spring:message code="back" /> name="back" onclick="history.back()" />
-</form>
-          			
-      			</div>
+				<div class="row" style="padding-left: 1.5em">
+					<strong><spring:message code="msg.show.body" />:&nbsp;</strong>
+					<jstl:out value="${msg.body}"></jstl:out>
+				</div>
+				
+				<div class="row" style="padding-left: 1.5em">
+					<strong><spring:message code="msg.show.tags" />:&nbsp;</strong>
+					<jstl:out value="${msg.tags}"></jstl:out>
+				</div>
+				
+					<div class="row" style="padding-left: 1.5em">
+					<strong><spring:message code="msg.show.sender" />:&nbsp;</strong>
+					<jstl:out value="${msg.sender}"></jstl:out>
+				</div>
+				
+				<div class="row" style="padding-left: 1.5em">
+					<strong><spring:message code="msg.show.emailReceiver" />:&nbsp;</strong>
+					<jstl:out value="${msg.emailReceiver}"></jstl:out>
+				</div>
+
+				<div class="row" style="padding-left: 1.5em">
+					<strong><spring:message code="msg.show.moment" />:&nbsp;</strong>
+					<jstl:out value="${msg.moment}"></jstl:out>
+				</div>
+			</fieldset>
+		</div>
+			<div class="row">
+			<div class="col-md-3">
+				<span> <acme:create url="message/delete.do?id=${msg.id}&mailboxId=${mailboxId}"
+					name="buttonDelete" code="buttonDelete" />
+				</span> 
+			</div>
+			</div>
+			
+			<br>
+			
+			<div class="row">
+		<div class="col-md-3">
+			 <span> <acme:cancel url="history.back()"
+					code="actor.back" />
+			</span>
+		</div>
+	</div>
+
+	</div>
+    

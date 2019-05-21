@@ -16,13 +16,19 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
 
 <p><spring:message code="listMessage"/></p>
-<body>
-  
-   <display:table name="msgs" id="row"  requestURI="${requestURI}"	pagesize="5" class="displaytag" >
   	
-  	<display:column titleKey="administrator.showMessage"> 
+  	<div class="container-fluid" style="padding-left: 2.5em">
+	<display:table name="msgs" id="row"
+		requestURI="${requestURI}" pagesize="5"
+		class="displaytag table table-hover">
+		<div class="row" style="padding-left: 2.5em">
+			<div class="col-md-6">
+				<fieldset>
+						<display:column titleKey="administrator.showMessage"> 
 		<a href="message/show.do?messageId=${row.id}&mailboxId=${mailboxId}"><spring:message code="showMessage" /></a>
 	</display:column>
 		<display:column titleKey="administrator.editMessage"> 
@@ -31,20 +37,17 @@
   	<display:column property="subject" titleKey="msg.subject"/>
   	<display:column property="body" titleKey="msg.body"/>
   	<display:column property="moment" titleKey="msg.moment"/>
-  	
-  	</display:table>
+				</fieldset>
+			</div>
+		</div>
+	</display:table>
+	<div class="row">
+		<div class="col-md-3">
+			 <span> <acme:cancel url=""
+					code="actor.back" />
+			</span>
+		</div>
+	</div>
+	
+</div>
   	  		
-  		<c:choose>
-    		<c:when test="${language=='English'}">
-        		<form>
-      				<input type="button" value="Back" name="volver atrás2" onclick="history.back()" />
-	  			</form> 
-    		</c:when>    
-    		<c:otherwise>
-		 		<form>
-      				<input type="button" value="Volver" name="volver atrás2" onclick="history.back()" />
-	  			</form>        		
-    		</c:otherwise>
-		</c:choose>
-		
-</body>

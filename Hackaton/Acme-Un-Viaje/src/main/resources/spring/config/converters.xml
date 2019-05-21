@@ -25,6 +25,9 @@
 		<bean class="converters.StringToCurriculaConverter"/>
 		<bean class="converters.CurriculaToStringConverter"/>
 		<!-- ALVARO -->
+		
+		<bean class="converters.StringToMailboxConverter" />		
+		<bean class="converters.StringToTagConverter" />
 	</util:list>
 	
 </beans>

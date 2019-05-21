@@ -36,9 +36,11 @@ import security.UserAccount;
 import services.ActorService;
 import services.MailboxService;
 import services.MessageService;
+import services.TagService;
 import domain.Actor;
 import domain.Mailbox;
 import domain.Message;
+import domain.Tag;
 
 @Controller
 @RequestMapping("/message")
@@ -50,6 +52,8 @@ public class MessageController extends AbstractController {
 	private ActorService		actorService;
 	@Autowired
 	private MailboxService		mailboxService;
+	@Autowired
+	private TagService		tagService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -182,22 +186,18 @@ public class MessageController extends AbstractController {
 					msg = this.messageService.exchangeMessage(msg, receiverIndex.getId());
 					System.out.println(receiverIndex);
 					System.out.println(this.mailboxService.getInBoxActor(receiverIndex.getId()).getMessages());
-				}
+				}			
 
-				System.out.println("despues de exchangeMessage");
-				System.out.println(sender);
-				System.out.println(msg);
-				System.out.println(msg.getMailboxes());
-				System.out.println(this.mailboxService.getOutBoxActor(sender.getId()).getMessages());
-
-				System.out.println("LA SUPER PRUEBA DEL COMBO");
-				System.out.println(msg.getEmailReceiver());
-
-				System.out.println("Entro en el save");
-
-				System.out.println("intenta el list de exchange message");
 				this.messageService.save(msg);
 
+				List<Tag> tags = new ArrayList<Tag>();
+				tags.addAll(msg.getTags());
+				
+				for (int i = 0; i < tags.size(); i++) {
+					tags.get(i).setMessageId(msg.getId());
+					tagService.save(tags.get(i));
+				}
+				
 				result = new ModelAndView("mailbox/list");
 				result.addObject("mailboxes", sender.getMailboxes());
 				result.addObject("requestURI", "mailbox/list.do");
@@ -400,51 +400,44 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/editMailbox", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveMailbox(@ModelAttribute("msg") @Valid final Message msg, final BindingResult binding) {
+	public ModelAndView saveMailbox(@ModelAttribute("msg")  Message msg, final BindingResult binding) {
 		ModelAndView result;
-		System.out.println(msg.getMailboxes());
-		System.out.println("Entro en el save");
-		final UserAccount login = LoginService.getPrincipal();
-		final Actor sender = this.actorService.findByUserAccountId(login.getId());
+		
+		msg = this.messageService.reconstruct(msg, binding);
 
-		final Message oldMessage = this.messageService.findOne(msg.getId());
-		System.out.println(oldMessage.getMailboxes());
+		try {
 
-		msg.getMailboxes().addAll(oldMessage.getMailboxes());
+			this.messageService.editMailbox(msg);
 
-		System.out.println(msg.getMailboxes());
+			final UserAccount login = LoginService.getPrincipal();
+			final Actor sender = this.actorService.getActorByUserId(login.getId());
 
-		for (final Mailbox mailbox : oldMessage.getMailboxes())
-			if (sender.getMailboxes().contains(mailbox))
-				msg.getMailboxes().remove(mailbox);
-
-		System.out.println(sender.getName());
-		System.out.println(sender.getEmail());
-
-		if (binding.hasErrors()) {
-			System.out.println("Entro en el binding messageController");
-			System.out.println(binding.getAllErrors().get(0));
-
-			final Collection<Mailbox> mailboxes = sender.getMailboxes();
-			System.out.println(mailboxes);
-			result = new ModelAndView("mailbox/list");
-			result.addObject("mailboxes", mailboxes);
-		} else
-			try {
-				System.out.println("intenta el list broadcast");
-
-				this.messageService.save(msg);
+			if (binding.hasErrors()) {
+				System.out.println("Entro en el binding messageController");
+				System.out.println(binding.getAllErrors().get(0));
 
 				final Collection<Mailbox> mailboxes = sender.getMailboxes();
 				System.out.println(mailboxes);
 				result = new ModelAndView("mailbox/list");
 				result.addObject("mailboxes", mailboxes);
-			} catch (final Throwable oops) {
-				System.out.println("Es el oops");
-				System.out.println(oops);
-				result = this.createEditModelAndView(msg, "message.commit.error");
-			}
+			} else
+				try {
+					System.out.println("intenta el list notification");
 
+					this.messageService.save(msg);
+
+					final Collection<Mailbox> mailboxes = sender.getMailboxes();
+					System.out.println(mailboxes);
+					result = new ModelAndView("mailbox/list");
+					result.addObject("mailboxes", mailboxes);
+				} catch (final Throwable oops) {
+					System.out.println("Es el oops");
+					System.out.println(oops);
+					result = this.createEditModelAndView(msg, "message.commit.error");
+				}
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 	}
 	protected ModelAndView createEditModelAndViewMailbox(final Message msg) {

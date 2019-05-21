@@ -10,6 +10,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.MailboxRepository;
 import security.LoginService;
@@ -32,7 +34,34 @@ public class MailboxService {
 
 	@Autowired
 	private ActorService			actorService;
+	
+	@Autowired
+	private Validator			validator;
 
+	
+	public Mailbox reconstruct(final Mailbox mailbox, final BindingResult binding) {
+		Mailbox result;
+
+		if (mailbox.getId() == 0) {
+			mailbox.setIsDefault(false);
+			result = mailbox;
+		} else {
+			result = this.mailboxRepository.findOne(mailbox.getId());
+			//			result.setTitle(floatBro.getTitle());
+			//			result.setDescription(floatBro.getDescription());
+			//			result.setPictures(floatBro.getPictures());
+			//			if (result.getBrotherhood() == null)
+			//				result.setBrotherhood(this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId()));
+			mailbox.setId(result.getId());
+			mailbox.setVersion(result.getVersion());
+			mailbox.setIsDefault(result.getIsDefault());
+
+			result = mailbox;
+		}
+		this.validator.validate(mailbox, binding);
+		return result;
+	}
+	
 
 	public Mailbox create() {
 		final Mailbox result = new Mailbox();

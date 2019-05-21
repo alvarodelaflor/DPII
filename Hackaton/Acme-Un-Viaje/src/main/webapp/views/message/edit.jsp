@@ -16,35 +16,33 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
 
 <p><spring:message code="editMessage" /></p>
-<body>
-	<form:form action="message/editMailbox.do" method="POST"	modelAttribute="msg">
 		
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-		<form:hidden path="moment" />
-		<form:hidden path="subject" />
-		<form:hidden path="body" />
-		<form:hidden path="priority.value" />
-		<form:hidden path="emailReceiver" />
-		
-		<form:label path="mailboxes">
+		<div class="container-fluid"  style="padding-left: 2.5em" >
+			<div class="col-md-6" style="padding-left: 2.5em">
+			<form:form class="formularioEdicion" method="POST"
+				modelAttribute="msg" action="message/editMailbox.do">
+				<form:hidden path="id" />
+				<fieldset>
+						<form:label path="mailboxes">
 			<spring:message code="msg.mailboxes" />:
 		</form:label>
 		<form:select path="mailboxes">
    		 	<form:options items="${nameMailbox}" />
 		</form:select>
 		<form:errors cssClass="error" path="mailboxes" />
-		
-		<br />
-		
-				
-		
-		
-		<input type="submit" name="save" value="<spring:message code="editMessage" />" />
-		
-		</form:form>
-		
-		<input type="button" name="cancel" value="<spring:message code="msg.cancel"/>" onclick="javascript:relativeRedir('mailbox/list.do');"/>
-</body>
+				</fieldset>
+				<br>
+				<div class="row">
+					<div class="col-md-8">
+						<acme:submit name="save" code="actor.save" />
+						<acme:cancel url="javascript:relativeRedir('mailbox/list.do');" code="msg.cancel"/>
+					</div>
+				</div>
+			</form:form>
+		</div>
+	</div>
+	

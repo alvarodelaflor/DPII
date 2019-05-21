@@ -23,6 +23,7 @@ import domain.Actor;
 import domain.Admin;
 import domain.Mailbox;
 import domain.Message;
+import domain.Tag;
 
 @Service
 @Transactional
@@ -39,6 +40,8 @@ public class MessageService {
 	@Autowired
 	ActorService				actorService;
 	@Autowired
+	TagService				tagService;
+	@Autowired
 	private Validator			validator;
 
 	@Autowired
@@ -47,15 +50,25 @@ public class MessageService {
 	public Message reconstruct(final Message message, final BindingResult binding) {
 		Message result;
 		final Collection<Mailbox> boxes = new ArrayList<>();
+		Collection<Tag> tags = new ArrayList<Tag>();
+		
+		UserAccount user = LoginService.getPrincipal();
+		Actor a = actorService.getActorByUserId(user.getId());
 
 		if (message.getId() == 0) {
 			message.setMoment(LocalDate.now().toDate());
 			message.setMailboxes(boxes);
+			message.setSender(a.getEmail());
 			result = message;
 		} else {
 			result = this.messageRepository.findOne(message.getId());
 			message.setId(result.getId());
 			message.setVersion(result.getVersion());
+			message.setBody(result.getBody());
+			message.setEmailReceiver(result.getEmailReceiver());
+			message.setMoment(result.getMoment());
+			message.setSubject(result.getSubject());
+			message.setSender(result.getSender());
 
 			result = message;
 		}
@@ -89,13 +102,26 @@ public class MessageService {
 			boxReceiver.getMessages().add(message);
 			message.getMailboxes().add(boxReceiver);
 		
-
+			List<Tag> tags = (List<Tag>) message.getTags();
+			Tag old = tags.get(0);
+			old.setActorId(sender.getId());
+			
+			
+			
+			Tag tag = tagService.create();
+			tag.setActorId(receiverId);
+			
+			message.setTags(new ArrayList<Tag>());
+			Collection<Tag> tagsActor = new ArrayList<Tag>();
+			tagsActor.add(old);
+			tagsActor.add(tag);
+		
+			
 		return message;
 	}
 	public Message sendBroadcast(final Message message) {
 		final Admin a = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Collection<Mailbox> inBoxAdmin = this.mailboxService.getAdminInBox();
-		final Mailbox spamBoxAdmin = this.mailboxService.getSpamBoxActor(a.getId());
 		final Mailbox outBoxAdmin = this.mailboxService.getOutBoxActor(a.getId());
 
 		System.out.println(outBoxAdmin);
@@ -121,44 +147,18 @@ public class MessageService {
 		final UserAccount user = LoginService.getPrincipal();
 		final Actor a = this.actorService.findByUserAccountId(user.getId());
 
-		final Collection<Mailbox> boxes = a.getMailboxes();
-		final List<Mailbox> boxesList = new ArrayList<>();
-		boxesList.addAll(boxes);
-		System.out.println("aqui");
-		System.out.println(boxesList);
-		Mailbox trash = null;
-		for (int i = 0; i < boxesList.size(); i++)
-			if (boxesList.get(i).getName().equals("trashBox")) {
-				System.out.println("Entra aqui");
-				trash = boxesList.get(i);
-			}
-		System.out.println("aqui 2");
-		System.out.println(trash);
-
-		final Mailbox v = this.mailboxService.findOne(mailboxId);
-
-		System.out.println(v);
-
-		if (v.getName().equals("trashBox"))
-			for (int i = 0; i < boxesList.size(); i++) {
-				message.getMailboxes().remove(boxesList.get(i));
-				boxesList.get(i).getMessages().remove(message);
-
-			}
-		else {
-			System.out.println("falla aqui");
-			message.getMailboxes().remove(v);
-			v.getMessages().remove(message);
-
-			if (!trash.getMessages().contains(message)) {
-				message.getMailboxes().add(trash);
-				trash.getMessages().add(message);
-			}
+		Assert.isTrue(message.getEmailReceiver().contains(a.getEmail()) || message.getSender().equals(a.getEmail()));
+		
+		if(message.getTags().contains("DELETED")) {
+			messageRepository.delete(message.getId());
+		}else {
+			Tag tag = tagService.create();
+			tag.setActorId(a.getId());
+			tag.setMessageId(message.getId());
+			tag.setTag("DELETED");
+			message.getTags().add(tag);
 		}
-
-		if (message.getMailboxes().size() == 0)
-			this.messageRepository.delete(message);
-
+		
 		return message;
 
 	}
@@ -168,5 +168,39 @@ public class MessageService {
 
 	public Message save(final Message message) {
 		return this.messageRepository.save(message);
+	}
+	
+	public void editMailbox(final Message message) {
+		System.out.println("new Boxes");
+		System.out.println(message.getMailboxes());
+
+		final List<Mailbox> listNewBoxes = new ArrayList<>();
+		listNewBoxes.addAll(message.getMailboxes());
+
+		final UserAccount login = LoginService.getPrincipal();
+		final Actor sender = this.actorService.getActorByUserId(login.getId());
+
+		final Message oldMessage = this.findOne(message.getId());
+		System.out.println("antiguas Boxes");
+		System.out.println(oldMessage.getMailboxes());
+
+		final Collection<Mailbox> boxesJsp = message.getMailboxes();
+
+		message.getMailboxes().addAll(oldMessage.getMailboxes());
+
+		System.out.println(message.getMailboxes());
+
+		System.out.println("nuevas");
+		System.out.println(listNewBoxes);
+
+		for (final Mailbox mailbox : oldMessage.getMailboxes()) {
+			System.out.println(sender.getMailboxes().contains(mailbox));
+			System.out.println(boxesJsp.contains(mailbox));
+			System.out.println(!listNewBoxes.contains(mailbox));
+			if (sender.getMailboxes().contains(mailbox) && boxesJsp.contains(mailbox) && !(listNewBoxes.contains(mailbox)))
+				message.getMailboxes().remove(mailbox);
+		}
+		System.out.println(sender.getName());
+		System.out.println(sender.getEmail());
 	}
 }
