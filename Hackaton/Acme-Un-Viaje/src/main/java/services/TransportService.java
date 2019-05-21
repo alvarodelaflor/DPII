@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,12 +13,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Transport;
-import domain.Transporter;
 import repositories.TransportRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.CommonUtils;
+import domain.Transport;
+import domain.TransportForm;
+import domain.Transporter;
 
 @Service
 @Transactional
@@ -94,6 +97,35 @@ public class TransportService {
 		return res;
 	}
 
+	public void validateTransportForm(final TransportForm transportForm, final BindingResult binding) {
+		this.validator.validate(transportForm, binding);
+	}
+
+	public void saveMultiple(final TransportForm transportForm) {
+		final Collection<Transport> transports = new ArrayList<Transport>();
+
+		Transport t = null;
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setTime(transportForm.getInitDate());
+
+		final Date d = transportForm.getInitDate();
+		while (transportForm.getEndDate().after(d)) {
+			t = this.create();
+			t.setDate(calendar.getTime());
+			t.setDestination(transportForm.getDestination());
+			t.setNumberOfPlaces(transportForm.getNumberOfPlaces());
+			t.setOrigin(transportForm.getOrigin());
+			t.setPrice(transportForm.getPrice());
+			t.setReservedPlaces(0);
+			t.setVehicleType(transportForm.getVehicleType());
+
+			transports.add(t);
+			calendar.add(Calendar.DATE, 1);
+		}
+
+		this.transportRepository.save(transports);
+	}
+
 	// ---------- Inner class methods
 	private boolean loggedIsTransportOwner(final Transport transport) {
 		final Transporter transporter = this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId());
@@ -118,7 +150,7 @@ public class TransportService {
 		return res;
 	}
 
-    public Collection<Transport> findAll() {
+	public Collection<Transport> findAll() {
 		return this.transportRepository.findAll();
 	}
 
@@ -126,9 +158,4 @@ public class TransportService {
 		return this.transportRepository.findOne(id);
 	}
 
-	// -- Inner class methods
-	private boolean isTransportOwner(final Transport transport) {
-		final Transporter transporter = this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId());
-		return transport.getTransporter().equals(transporter);
-	}
 }

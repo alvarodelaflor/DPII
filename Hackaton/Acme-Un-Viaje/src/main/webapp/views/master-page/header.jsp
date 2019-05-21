@@ -127,8 +127,8 @@
 									<a href="transport/transporter/list.do" class="dropdown-item">
 										<spring:message code="master.page.transporter.transport.list" />
 									</a>
-									<a href="transport/transporter/list.do" class="dropdown-item">
-										<spring:message code="master.page.transporter.transport.list" />
+									<a href="transport/transporter/listAll.do" class="dropdown-item">
+										<spring:message code="master.page.transporter.transport.listAll" />
 									</a>
 								</div>
 							</li>
