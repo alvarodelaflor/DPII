@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.TransportService;
 import domain.Transport;
+import domain.TransportForm;
 
 @Controller
 @RequestMapping("/transport/transporter")
@@ -41,9 +42,9 @@ public class TransportTransporterController extends AbstractController {
 		ModelAndView result;
 		try {
 			final Collection<Transport> transports = this.transportService.getLoggedTransporterTransports();
-			result = new ModelAndView("transport/transporter/list");
+			result = new ModelAndView("transport/transporter/listAll");
 			result.addObject("transports", transports);
-			result.addObject("requestURI", "/transport/transporter/list.do");
+			result.addObject("requestURI", "/transport/transporter/listAll.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -68,12 +69,50 @@ public class TransportTransporterController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		final Transport t = this.transportService.create();
 
 		ModelAndView result;
 		try {
+			final Transport t = this.transportService.create();
 			result = new ModelAndView("transport/transporter/create");
 			result.addObject("transport", t);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/createMultiple", method = RequestMethod.GET)
+	public ModelAndView createMultiple() {
+		ModelAndView result;
+		try {
+			result = new ModelAndView("transport/transporter/createMultiple");
+			result.addObject("transportForm", new TransportForm());
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/createMultiple", method = RequestMethod.POST)
+	public ModelAndView createMultiplePost(final TransportForm transportForm, final BindingResult binding) {
+		try {
+			this.transportService.validateTransportForm(transportForm, binding);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		ModelAndView result;
+
+		if (binding.hasErrors()) {
+			result = new ModelAndView("transport/transporter/createMultiple");
+			result.addObject("transportForm", transportForm);
+		}
+
+		try {
+			this.transportService.saveMultiple(transportForm);
+			result = new ModelAndView("redirect:/transport/transporter/list.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

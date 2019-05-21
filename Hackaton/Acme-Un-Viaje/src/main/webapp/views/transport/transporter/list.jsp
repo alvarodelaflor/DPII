@@ -20,7 +20,8 @@
 					<display:column titleKey="transport.origin" property="origin" />
 					<display:column titleKey="transport.destination" property="destination" />
 					<display:column titleKey="transport.show">
-						<a href="transport/transporter/show.do?transportId=${row.id}"> <spring:message code="transport.show" />
+						<a href="transport/transporter/show.do?transportId=${row.id}">
+							<spring:message code="transport.show" />
 						</a>
 					</display:column>
 				</fieldset>
@@ -30,9 +31,17 @@
 	<br>
 
 	<div class="row">
-		<div class="col-md-3">
-			<span> <acme:create url="transport/transporter/create.do" name="createTransport" code="transport.create" />
-			</span> <span style="padding-left: 0.5em"> <acme:cancel url="" code="actor.back" />
+		<div class="col-md-12">
+			<span>
+				<acme:create url="transport/transporter/create.do" name="createTransport" code="transport.create" />
+			</span>
+			<span style="padding-left: 0.5em">
+				<button type="button" onclick="javascript: relativeRedir('transport/transporter/createMultiple.do')" class="btn btn-success">
+					<spring:message code="transport.createMultiple" />
+				</button>
+			</span>
+			<span style="padding-left: 0.5em">
+				<acme:cancel url="" code="actor.back" />
 			</span>
 		</div>
 	</div>

@@ -27,7 +27,7 @@
 	</definition>
 	
 	<definition name="transport/transporter/createMultiple" extends="master.page">	
-		<put-attribute name="title" value="Crear varios transportes" />
+		<put-attribute name="title" value="Crear transportes en un rango de fecha" />
 		<put-attribute name="body" value="/views/transport/transporter/createMultiple.jsp" />
 	</definition>
 	
