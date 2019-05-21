@@ -73,6 +73,17 @@
 							<li class="nav-item dropdown">
 								<a href="#" class="nav-link dropdown-toggle"
 									data-toggle="dropdown" id="navbardrop">
+									<spring:message code="master.page.cleaner.employment" />
+								</a>
+								<div class="dropdown-menu">
+									<a href="curricula/list.do" class="dropdown-item">
+										<spring:message code="curricula" />
+									</a>
+								</div>
+							</li>
+							<li class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle"
+									data-toggle="dropdown" id="navbardrop">
 									<spring:message code="master.page.actor.profile" />
 								</a>
 								<div class="dropdown-menu">

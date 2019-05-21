@@ -37,7 +37,8 @@
 		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
 		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
 		
-		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/edit.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/delete.do" access="hasRole('CLEANER')" />
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->
