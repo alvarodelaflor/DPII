@@ -9,10 +9,13 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,19 +27,39 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Request extends DomainEntity {
 
-	private String place;
+	private String origin, destination ;
 	private int numberOfPeople;
 	private Double maxPrice;
 	private Date startDate, endDate;
 	private Customer customer;
+	private Boolean status;
 	
+	@NotNull
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
 	@SafeHtml
-	public String getPlace() {
-		return place;
+	@NotBlank
+	public String getOrigin() {
+		return origin;
 	}
 	
-	public void setPlace(String place) {
-		this.place = place;
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+	
+	@SafeHtml
+	public String getDestination() {
+		return destination;
+	}
+	
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 	
 	@Min(1)
@@ -61,6 +84,7 @@ public class Request extends DomainEntity {
 	
 	@NotNull
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	public Date getStartDate() {
 		return startDate;
@@ -72,6 +96,7 @@ public class Request extends DomainEntity {
 	
 	@NotNull
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	public Date getEndDate() {
 		return endDate;

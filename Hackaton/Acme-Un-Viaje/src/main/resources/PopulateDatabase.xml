@@ -428,6 +428,37 @@
     </bean>
 	<!-- Mailbox -->
 	
+	<!-- REQUEST -->
+	<bean id="request01" class="domain.Request">
+        <property name="customer" ref="customer01" />
+        <property name="destination" value="Noruega" />
+        <property name="origin" value="Carmona" />
+		<property name="endDate" value="2020/12/11" />
+        <property name="startDate" value="2020/11/11" />
+        <property name="status" value="true" />
+        <property name="maxPrice" value="10" />
+        <property name="numberOfPeople" value="4" />
+    </bean>
+    
+    <bean id="request02" class="domain.Request">
+        <property name="customer" ref="customer01" />
+        <property name="destination" value="Bruselas" />
+        <property name="origin" value="New York" />
+		<property name="endDate" value="2019/12/11" />
+        <property name="startDate" value="2019/11/11" />
+        <property name="status" value="false" />
+        <property name="maxPrice" value="10" />
+        <property name="numberOfPeople" value="2" />
+    </bean>
+	<!-- REQUEST -->
 	
-
+	<!-- WARRANTY -->
+	<bean id="warranty01" class="domain.Warranty">
+        <property name="travelAgency" ref="travelAgency01" />
+        <property name="title" value="title0001" />
+        <property name="terms" value="terms0001" />
+        <property name="draftMode" value="false" />
+    </bean>
+	<!-- WARRANTY -->
+	
 </beans>

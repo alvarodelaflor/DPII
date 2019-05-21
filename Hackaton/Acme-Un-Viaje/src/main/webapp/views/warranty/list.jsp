@@ -22,34 +22,35 @@
 
 <hr>
 <div class="container-fluid" style="padding-left: 2.5em">
-	<display:table name="requests" id="row" requestURI="${requestURI}"
+	<display:table name="warranties" id="row" requestURI="${requestURI}"
 		pagesize="5" class="displaytag table table-hover">
 		<div class="row" style="padding-left: 2.5em">
 			<div class="col-md-6">
 				<fieldset>
-					<display:column titleKey="request.place">
-						<jstl:out value="${row.destination}"></jstl:out>
+					<display:column titleKey="warranty.title">
+						<jstl:out value="${row.title}"></jstl:out>
 					</display:column>
-					<display:column titleKey="request.placeOrigin">
-						<jstl:out value="${row.origin}"></jstl:out>
+
+					<display:column titleKey="warranty.terms">
+						<jstl:out value="${row.terms}"></jstl:out>
 					</display:column>
-					<display:column titleKey="request.numberOfPeople">
-						<jstl:out value="${row.numberOfPeople}"></jstl:out>
-					</display:column>
-					<display:column titleKey="request.maxPrice">
-						<jstl:out value="${row.maxPrice}"></jstl:out>
-					</display:column>
-					<display:column titleKey="request.startDate">
-						<jstl:out value="${row.startDate}"></jstl:out>
-					</display:column>
-					<display:column titleKey="request.endDate">
-						<jstl:out value="${row.endDate}"></jstl:out>
-					</display:column>
-					<display:column titleKey="request.delete">
+
+					<display:column titleKey="warranty.delete">
 						<c:choose>
-							<c:when test="${row.status == false}">
-								<a href="request/customer/delete.do?requestId=${row.id}"><spring:message
-										code="request.delete" /></a>
+							<c:when test="${row.draftMode == false}">
+								<a href="warranty/travelAgency/delete.do?warrantyId=${row.id}"><spring:message
+										code="warranty.delete" /></a>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</display:column>
+
+					<display:column titleKey="warranty.edit">
+						<c:choose>
+							<c:when test="${row.draftMode == false}">
+								<a href="warranty/travelAgency/edit.do?warrantyId=${row.id}"><spring:message
+										code="warranty.edit" /></a>
 							</c:when>
 							<c:otherwise>
 							</c:otherwise>
@@ -65,8 +66,8 @@
 <div class="row">
 	<div class="col-md-3">
 		<span style="padding-left: 2.5em"> <acme:create
-				url="request/customer/create.do" name="buttonRequest"
-				code="request.create" />
+				url="warranty/travelAgency/create.do" name="buttonWarranty"
+				code="warranty.create" />
 		</span> <span style="padding-left: 0.5em"> <acme:cancel url=""
 				code="actor.back" />
 		</span>

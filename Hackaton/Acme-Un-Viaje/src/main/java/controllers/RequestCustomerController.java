@@ -20,6 +20,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
@@ -33,7 +34,7 @@ import services.RequestService;
 
 @Controller
 @RequestMapping("/request/customer")
-public class RequestController extends AbstractController {
+public class RequestCustomerController extends AbstractController {
 
 	@Autowired
 	private RequestService requestService;
@@ -43,7 +44,7 @@ public class RequestController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public RequestController() {
+	public RequestCustomerController() {
 		super();
 	}
 
@@ -64,7 +65,7 @@ public class RequestController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final Request request, final BindingResult binding) {
 		ModelAndView result;
-		
+
 		final Request requestN = this.requestService.reconstruct(request, binding);
 
 		try {
@@ -74,15 +75,10 @@ public class RequestController extends AbstractController {
 			} else
 				try {
 					Assert.isTrue(request != null);
-					final Request savedrequest = this.requestService.save(request);
-					final int userLoggin = LoginService.getPrincipal().getId();
-					final Customer actor = this.customerService.getCustomerByUserAccountId(userLoggin);
-					Assert.isTrue(actor != null);
+					final Request savedrequest = this.requestService.save(requestN);
 
-					result = new ModelAndView("request/customer/list");
-					result.addObject("requests",
-							this.requestService.getCustomerRequest());
-					result.addObject("requestURI", "request/customer/list.do");
+					result = new ModelAndView("redirect:/request/customer/list.do");
+
 				} catch (final Throwable oops) {
 					result = new ModelAndView("request/customer/create");
 				}
@@ -96,13 +92,31 @@ public class RequestController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		try {
+			Collection<Request> requests = this.requestService.getCustomerRequest();
+			System.out.println(requests);
 			result = new ModelAndView("request/customer/list");
-			result.addObject("requests",
-					this.requestService.getCustomerRequest());
+			result.addObject("requests", requests);
 			result.addObject("requestURI", "request/customer/list.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
 	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "requestId", defaultValue = "-1") final int requestId) {
+		ModelAndView result;
+		try {
+			final Request request = this.requestService.findOne(requestId);
+			Assert.notNull(request, "socialProfile.null");
+			this.requestService.delete(request);
+			result = new ModelAndView("redirect:/request/customer/list.do");
+		} catch (final Throwable oops) {
+			System.out.println(oops);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+
+	}
+
 }

@@ -59,7 +59,11 @@
 		<security:intercept-url pattern="/travelAgency/create.do" access="permitAll" />
 		<security:intercept-url pattern="/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
-		
+		<security:intercept-url pattern="/warranty/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/warranty/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/warranty/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/warranty/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
+
 		<security:intercept-url pattern="/referee/create.do" access="permitAll" />
 		<security:intercept-url pattern="/referee/edit.do" access="hasRole('REFEREE')" />
 		<security:intercept-url pattern="/referee/show.do" access="hasRole('REFEREE')" />
@@ -96,7 +100,9 @@
 		
 		<security:intercept-url pattern="/request/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/request/customer/list.do" access="hasRole('CUSTOMER')" />	
+		<security:intercept-url pattern="/request/customer/delete.do" access="hasRole('CUSTOMER')" />	
 		<!-- CARMEN -->
+		
 		<!-- Antonio -->
 		<security:intercept-url pattern="/mailbox/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/mailbox/create.do" access="permitAll" /> 

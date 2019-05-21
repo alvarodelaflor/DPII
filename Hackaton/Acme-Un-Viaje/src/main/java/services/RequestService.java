@@ -9,8 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+
+import domain.Actor;
 import domain.Customer;
+import domain.Mailbox;
 import domain.Request;
+import domain.SocialProfile;
 import repositories.RequestRepository;
 import security.LoginService;
 import security.UserAccount;
@@ -50,6 +54,9 @@ public class RequestService {
 		requestNew.setMaxPrice(request.getMaxPrice());
 		requestNew.setNumberOfPeople(request.getNumberOfPeople());
 		requestNew.setStartDate(request.getStartDate());
+		requestNew.setStatus(false);
+		requestNew.setOrigin(request.getOrigin());
+		requestNew.setDestination(request.getDestination());
 
 		UserAccount userL = LoginService.getPrincipal();
 		Customer customer = this.customerService.getCustomerByUserAccountId(userL.getId());
@@ -58,6 +65,10 @@ public class RequestService {
 
 		this.validator.validate(requestNew, binding);
 
+
+		if (binding.hasFieldErrors("numberOfPeople")) {
+			binding.getModel().put("numberOfPeople", "patatoide");
+		}
 		return requestNew;
 	}
 
@@ -74,20 +85,20 @@ public class RequestService {
 				&& request.getStartDate().after(request.getEndDate())) {
 			binding.rejectValue("endDate", "error.beforeDate");
 		}
-
-		if (request.getNumberOfPeople() > 0) {
-			String cadena = Integer.toString(request.getNumberOfPeople());
-			if (!cadena.matches("([0-9])") && cadena != " ") {
-				binding.rejectValue("numberOfPeople", "error.number");
-			}
-		}
-		
-		if (request.getMaxPrice() != null && request.getMaxPrice() > 0) {
-			String cadena = Double.toString(request.getMaxPrice());
-			if (!cadena.matches("[0-9]{1,}[.][0-9]{1,}")) {
-				binding.rejectValue("maxPrice", "error.number");
-			}
-		}
 	}
+	
+	public void delete(final Request request) {
+		Customer customer = this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.notNull(customer);
+		Assert.isTrue(request.getCustomer().equals(customer));
+		Assert.isTrue(request.getStatus()==false);
+		this.requestRepository.delete(request);
+	}
+	
+	public Request findOne(final int id) {
+		final Request result = this.requestRepository.findOne(id);
+		return result;
+	}
+
 
 }
