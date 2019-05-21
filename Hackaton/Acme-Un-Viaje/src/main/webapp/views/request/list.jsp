@@ -18,16 +18,20 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <hr>
 <div class="container-fluid" style="padding-left: 2.5em">
-	<display:table name="request" id="row" requestURI="${requestURI}"
+	<display:table name="requests" id="row" requestURI="${requestURI}"
 		pagesize="5" class="displaytag table table-hover">
 		<div class="row" style="padding-left: 2.5em">
 			<div class="col-md-6">
 				<fieldset>
 					<display:column titleKey="request.place">
-						<jstl:out value="${row.place}"></jstl:out>
+						<jstl:out value="${row.destination}"></jstl:out>
+					</display:column>
+					<display:column titleKey="request.placeOrigin">
+						<jstl:out value="${row.origin}"></jstl:out>
 					</display:column>
 					<display:column titleKey="request.numberOfPeople">
 						<jstl:out value="${row.numberOfPeople}"></jstl:out>
@@ -40,6 +44,16 @@
 					</display:column>
 					<display:column titleKey="request.endDate">
 						<jstl:out value="${row.endDate}"></jstl:out>
+					</display:column>
+					<display:column titleKey="request.delete">
+						<c:choose>
+							<c:when test="${row.status == false}">
+								<a href="request/customer/delete.do?requestId=${row.id}"><spring:message
+										code="request.delete" /></a>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
 					</display:column>
 				</fieldset>
 			</div>

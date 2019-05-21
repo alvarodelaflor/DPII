@@ -14,7 +14,7 @@ import domain.Transporter;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
-	@Query("select r from Request r where r.id = ?1")
+	@Query("select r from Request r where r.customer.id = ?1")
 	Collection<Request> getCustomerRequest(int id);
 
 }

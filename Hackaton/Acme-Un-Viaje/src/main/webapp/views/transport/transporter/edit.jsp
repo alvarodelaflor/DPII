@@ -41,7 +41,7 @@
 				</fieldset>
 				<br>
 				<div class="row">
-					<span><acme:submit name="save" code="actor.save" /></span> <span style="padding-left: 0.5em"> <acme:cancel url="" code="actor.back" />
+					<span><acme:submit name="save" code="actor.save" /></span> <span style="padding-left: 0.5em"> <acme:cancel url="/transport/transporter/list.do" code="actor.back" />
 					</span>
 				</div>
 			</form:form>
