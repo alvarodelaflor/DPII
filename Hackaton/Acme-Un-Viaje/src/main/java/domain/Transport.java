@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Transport extends DomainEntity {
 
 	// --- Attributes
+	private int			reservedPlaces;
 	private int			numberOfPlaces;
 	private double		price;
 	private Date		date;
@@ -36,14 +38,13 @@ public class Transport extends DomainEntity {
 	private Transporter	transporter;
 
 
-	public Transport() {
+	@Min(0)
+	public int getReservedPlaces() {
+		return this.reservedPlaces;
 	}
 
-	public Transport(final int numberOfPlaces, final double price, final Date date, final String vehicleType) {
-		this.numberOfPlaces = numberOfPlaces;
-		this.price = price;
-		this.date = date;
-		this.vehicleType = vehicleType;
+	public void setReservedPlaces(final int reservedPlaces) {
+		this.reservedPlaces = reservedPlaces;
 	}
 
 	@Min(1)
@@ -55,7 +56,7 @@ public class Transport extends DomainEntity {
 		this.numberOfPlaces = numberOfPlaces;
 	}
 
-	@Min(0)
+	@DecimalMin(value = "0.0")
 	public double getPrice() {
 		return this.price;
 	}

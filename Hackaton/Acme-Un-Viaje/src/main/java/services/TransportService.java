@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,15 @@ public class TransportService {
 
 		final int transporterId = this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		final Collection<Transport> res = this.transportRepository.getTransporterTransports(transporterId);
+
+		return res;
+	}
+
+	public Collection<Transport> getLoggedTransporterTransportsFromCurrentDate() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.TRANSPORTER));
+
+		final int transporterId = this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		final Collection<Transport> res = this.transportRepository.getTransporterTransportsFromDate(transporterId, new Date());
 
 		return res;
 	}

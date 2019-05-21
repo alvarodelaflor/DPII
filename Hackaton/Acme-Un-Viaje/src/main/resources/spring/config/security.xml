@@ -111,6 +111,7 @@
 
 		<!-- HIPONA -->
 		<security:intercept-url pattern="/transport/transporter/list.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/listAll.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/create.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/show.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/edit.do" access="hasRole('TRANSPORTER')" />

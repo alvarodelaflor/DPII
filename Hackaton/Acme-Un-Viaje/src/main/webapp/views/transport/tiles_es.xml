@@ -7,7 +7,12 @@
 <tiles-definitions>
 
 	<definition name="transport/transporter/list" extends="master.page">	
-		<put-attribute name="title" value="Listado de tus transportes" />
+		<put-attribute name="title" value="Listado de tus transportes (desde la fecha actual en adelante)" />
+		<put-attribute name="body" value="/views/transport/transporter/list.jsp" />
+	</definition>
+	
+	<definition name="transport/transporter/listAll" extends="master.page">	
+		<put-attribute name="title" value="Listado de tus transportes (todos)" />
 		<put-attribute name="body" value="/views/transport/transporter/list.jsp" />
 	</definition>
 

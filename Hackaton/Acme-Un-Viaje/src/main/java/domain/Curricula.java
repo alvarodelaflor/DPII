@@ -12,6 +12,7 @@ package domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -20,7 +21,7 @@ import org.hibernate.validator.constraints.URL;
 @Entity
 public class Curricula extends DomainEntity {
 
-	private String	name, statement, phone, linkLinkedin;
+	private String	name, statement, phone, linkLinkedin, bannerLogo;
 	private Boolean	isCopy;
 	private Cleaner	cleaner;
 
@@ -37,6 +38,7 @@ public class Curricula extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
+	@Size(max=100000000)
 	public String getStatement() {
 		return this.statement;
 	}
@@ -82,5 +84,15 @@ public class Curricula extends DomainEntity {
 
 	public void setCleaner(final Cleaner cleaner) {
 		this.cleaner = cleaner;
+	}
+
+	@NotBlank
+	@SafeHtml
+	public String getBannerLogo() {
+		return bannerLogo;
+	}
+
+	public void setBannerLogo(String bannerLogo) {
+		this.bannerLogo = bannerLogo;
 	}
 }

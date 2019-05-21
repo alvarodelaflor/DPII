@@ -26,6 +26,20 @@ public class TransportTransporterController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		try {
+			final Collection<Transport> transports = this.transportService.getLoggedTransporterTransportsFromCurrentDate();
+			result = new ModelAndView("transport/transporter/list");
+			result.addObject("transports", transports);
+			result.addObject("requestURI", "/transport/transporter/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	public ModelAndView listAll() {
+		ModelAndView result;
+		try {
 			final Collection<Transport> transports = this.transportService.getLoggedTransporterTransports();
 			result = new ModelAndView("transport/transporter/list");
 			result.addObject("transports", transports);
@@ -35,6 +49,7 @@ public class TransportTransporterController extends AbstractController {
 		}
 		return result;
 	}
+
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(required = false, value = "transportId") final Integer transportId) {
 		if (transportId == null)
