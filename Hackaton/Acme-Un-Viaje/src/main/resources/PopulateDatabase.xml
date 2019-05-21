@@ -160,7 +160,7 @@
 	</bean>
 	<!-- CLEANER -->
 
-	<!-- TRANSPORT -->
+	<!-- TRANSPORTER -->
 	<bean id="transporter01" class="domain.Transporter">
 		<property name="name" value="Sr. Transporter" />
 		<property name="surname" value="Car" />
@@ -172,7 +172,7 @@
 		<property name="userAccount" ref="userAccount3" />
 		<property name="creditCard" ref="creditCard03" />
 	</bean>
-	<!-- TRANSPORT -->
+	<!-- TRANSPORTER -->
 	
 	<!-- REFEREE -->
 	<bean id="referee01" class="domain.Referee">
@@ -333,6 +333,7 @@
 	<!-- SOCIAL PROFILE -->
 	<!-- TRANSPORTS -->
 	<bean id="transport01" class="domain.Transport">
+		<property name="reservedPlaces" value="1" />
 		<property name="numberOfPlaces" value="3" />
 		<property name="price" value="25" />
 		<property name="date" value="2019/12/11 15:30" />
@@ -342,6 +343,7 @@
 		<property name="transporter" ref="transporter01" />
 	</bean>
 	<bean id="transport02" class="domain.Transport">
+		<property name="reservedPlaces" value="0" />
 		<property name="numberOfPlaces" value="3" />
 		<property name="price" value="25" />
 		<property name="date" value="2019/12/11 18:30" />
