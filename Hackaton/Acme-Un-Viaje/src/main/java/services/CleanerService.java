@@ -193,6 +193,7 @@ public class CleanerService {
 			if (ageActor < 18)
 				binding.rejectValue("birthDate", "error.birthDateM");
 		}
+	}
 		
 	/**
 	 * 
