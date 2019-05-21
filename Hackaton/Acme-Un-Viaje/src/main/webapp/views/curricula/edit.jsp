@@ -59,11 +59,16 @@
 				<form:input class="form-control" path="linkLinkedin" placeholder="${placeholder3}"/>
 				<form:errors path="linkLinkedin" cssClass="error" />
 			</div>
+			<div class="form-group">
+				<spring:message htmlEscape="true" code="curricula.bannerLogo" var="placeholder4" />
+				<form:input class="form-control" path="bannerLogo" placeholder="${placeholder4}"/>
+				<form:errors path="bannerLogo" cssClass="error" />
+			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-group">
         		<spring:message htmlEscape="true" code="curricula.tellus" var="placeholder4" />
-        		<form:textarea class="form-control" rows="5" path="statement" placeholder="${placeholder4}"/>
+        		<form:textarea class="form-control" rows="7" path="statement" placeholder="${placeholder4}"/>
         		<form:errors path="statement" cssClass="error" />
 			</div>
 		</div>
