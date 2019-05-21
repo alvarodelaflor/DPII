@@ -29,7 +29,9 @@
 			<div class="col-md-6">
 				<fieldset>
 
-					<acme:textbox code="request.place" path="place" cssLabel="col-md-3"
+					<acme:textbox code="request.place" path="destination" cssLabel="col-md-3"
+						cssInput="col-md-5" cssError="col-md-4" placeholder="Noruega"/>
+					<acme:textbox code="request.placeOrigin" path="origin" cssLabel="col-md-3"
 						cssInput="col-md-5" cssError="col-md-4" placeholder="Carmona"/>
 					<acme:textbox code="request.numberOfPeople" path="numberOfPeople"
 						 cssLabel="col-md-3" placeholder="4"

@@ -89,7 +89,9 @@
 		
 		<security:intercept-url pattern="/request/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/request/customer/list.do" access="hasRole('CUSTOMER')" />	
+		<security:intercept-url pattern="/request/customer/delete.do" access="hasRole('CUSTOMER')" />	
 		<!-- CARMEN -->
+		
 		<!-- Antonio -->
 		<security:intercept-url pattern="/mailbox/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/mailbox/create.do" access="permitAll" /> 
