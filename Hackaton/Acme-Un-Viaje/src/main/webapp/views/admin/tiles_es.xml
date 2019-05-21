@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
- * tiles_es.xml
- *
- * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * tiles_es.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+
 <tiles-definitions>
 
-	<definition name="admin/create" extends="master.page">	
+	<definition name="admin/create" extends="master.page">
 		<put-attribute name="title" value="Registro como Administrador" />
 		<put-attribute name="body" value="/views/admin/create.jsp" />
 	</definition>
-	
-	<definition name="admin/edit" extends="master.page">	
+
+	<definition name="admin/edit" extends="master.page">
 		<put-attribute name="title" value="Editar tus datos personales" />
 		<put-attribute name="body" value="/views/admin/edit.jsp" />
 	</definition>
-	
-	<definition name="admin/show" extends="master.page">	
+
+	<definition name="admin/show" extends="master.page">
 		<put-attribute name="title" value="¡Tu perfil!" />
 		<put-attribute name="body" value="/views/admin/show.jsp" />
 	</definition>
-	
-	<definition name="admin/actorList" extends="master.page">	
+
+	<definition name="admin/actorList" extends="master.page">
 		<put-attribute name="title" value="Listando Usuarios" />
 		<put-attribute name="body" value="/views/admin/actorList.jsp" />
 	</definition>
-	
-	<definition name="admin/config" extends="master.page">	
+
+	<definition name="admin/config" extends="master.page">
 		<put-attribute name="title" value="Configuracion" />
 		<put-attribute name="body" value="/views/admin/config.jsp" />
 	</definition>
-	
+
+	<definition name="admin/dashboard" extends="master.page">
+		<put-attribute name="title" value="Informacion" />
+		<put-attribute name="body" value="/views/admin/dashboard.jsp" />
+	</definition>
+
 </tiles-definitions>

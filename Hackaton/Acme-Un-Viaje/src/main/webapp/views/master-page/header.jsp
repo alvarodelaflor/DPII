@@ -17,7 +17,7 @@
 <div class="row">
 <div class="col-md-12">
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
-	<a href="#" class="navbar-brand"><img src="images/logo.png" style="width: 80px;"></a>
+	<a href="#" class="navbar-brand"><img src="${bannerLogo}" style="width: 80px;"></a>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#uno">
 		<span class="navbar-toggler-icon"></span>
@@ -32,6 +32,7 @@
 			<li class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop"><spring:message	code="master.page.admin" /></a>
 					<div class="dropdown-menu">
+						<a href="admin/dashboard.do" class="dropdown-item"><spring:message code="master.page.admin.dashboard" /></a>
 						<a href="admin/create.do" class="dropdown-item"><spring:message code="master.page.admin.create" /></a>
 						<a href="admin/actorList.do" class="dropdown-item"><spring:message code="master.page.admin.actorList" /></a>
 						<a href="admin/config.do" class="dropdown-item"><spring:message code="master.page.admin.config" /></a>

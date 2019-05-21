@@ -14,12 +14,75 @@
 <body>
 	<div class="container-fluid">
 		<security:authorize access="hasRole('ADMIN')">
+			<div class="newBanner">
+				<h3>
+					<i><spring:message code="newBanner" /></i>
+				</h3>
+				<c:out value="${config.bannerLogo}"></c:out>
+				<br />
+				<form:form class="formularioEdicion" method="GET"
+					action="admin/newbnn.do?newbnn='${newbnn}'.do">
+					<spring:message code="newBannerLogo" />
+					<input type=text name="newbnn" required="required" />
+					<acme:submit name="save" code="save" />
+				</form:form>
+				<br />
+			</div>
+			<div class="systemName">
+				<h3>
+					<i><spring:message code="systemName" /></i>
+				</h3>
+				<c:out value="${config.systemName}"></c:out>
+				<br />
+				<form:form class="formularioEdicion" method="GET"
+					action="admin/newsysna.do?newsysna='${newsysna}'.do">
+					<spring:message code="newSystemName" />
+					<input type=text name="newsysna" required="required" />
+					<acme:submit name="save" code="save" />
+				</form:form>
+				<br />
+				<h3>
+					<i><spring:message code="systemNombre" /></i>
+				</h3>
+				<c:out value="${config.systemNombre}"></c:out>
+				<br />
+				<form:form class="formularioEdicion" method="GET"
+					action="admin/newwmen.do?newwmes='${newwmen}'.do">
+					<spring:message code="newSystemNombre" />
+					<input type=text name="newsysno" required="required" />
+					<acme:submit name="save" code="save" />
+				</form:form>
+				<br />
+			</div>
+			<div class="welcomeMessage">
+				<h3>
+					<i><spring:message code="welcomeMessage" /></i>
+				</h3>
+				<c:out value="${config.welcomeMessageEn}"></c:out>
+				<br />
+				<form:form class="formularioEdicion" method="GET"
+					action="admin/newwmes.do?newwmes='${newwmes}'.do">
+					<spring:message code="newWelcomeMessageEn" />
+					<input type=text name="newwmes" required="required" />
+					<acme:submit name="save" code="save" />
+				</form:form>
+				<br />
+				<c:out value="${config.welcomeMessageEs}"></c:out>
+				<br />
+				<form:form class="formularioEdicion" method="GET"
+					action="admin/newwmen.do?newwmes='${newwmen}'.do">
+					<spring:message code="newWelcomeMessageEs" />
+					<input type=text name="newwmen" required="required" />
+					<acme:submit name="save" code="save" />
+				</form:form>
+				<br />
+			</div>
 			<div class="spamList">
 				<h3>
 					<i><spring:message code="spamList" /></i>
 				</h3>
 				<c:out value="${config.spamList}"></c:out>
-				<br /> <br />
+				<br />
 				<form:form class="formularioEdicion" method="GET"
 					action="admin/newsw.do?newsw='${newsw}'.do">
 					<spring:message code="newSpamWord" />
@@ -39,7 +102,7 @@
 					<i><spring:message code="scoreList" /></i>
 				</h3>
 				<c:out value="${config.scoreList}"></c:out>
-				<br /> <br />
+				<br />
 				<form:form class="formularioEdicion" method="GET"
 					action="admin/newscw.do?newscw='${newscw}'.do">
 					<spring:message code="newScoreWord" />
@@ -59,7 +122,7 @@
 					<i><spring:message code="creditCardMakeList" /></i>
 				</h3>
 				<c:out value="${config.creditCardMakeList}"></c:out>
-				<br /> <br />
+				<br />
 				<form:form class="formularioEdicion" method="GET"
 					action="admin/newccm.do?newccm='${newccm}'.do">
 					<spring:message code="newCreditCardMake" />
@@ -79,11 +142,25 @@
 					<i><spring:message code="transporterBanRatio" /></i>
 				</h3>
 				<c:out value="${config.transporterBanRatio} %"></c:out>
-				<br /> <br />
+				<br />
 				<form:form class="formularioEdicion" method="GET"
 					action="admin/traratio.do?traratio='${traratio}'.do">
 					<spring:message code="newTransporterBanRatio" />
 					<input type=number name="traratio" required="required" />
+					<acme:submit name="save" code="save" />
+				</form:form>
+				<br />
+			</div>
+			<div class="defaultPhoneCode">
+				<h3>
+					<i><spring:message code="defaultPhoneCode" /></i>
+				</h3>
+				<c:out value="+${config.defaultPhoneCode}"></c:out>
+				<br />
+				<form:form class="formularioEdicion" method="GET"
+					action="admin/newdpc.do?newdpc='${newdpc}'.do">
+					<spring:message code="newDefaultPhoneCode" />
+					<input type=number name="newdpc" required="required" />
 					<acme:submit name="save" code="save" />
 				</form:form>
 				<br />

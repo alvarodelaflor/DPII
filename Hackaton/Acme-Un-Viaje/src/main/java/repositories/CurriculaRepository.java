@@ -18,6 +18,8 @@ public interface CurriculaRepository extends JpaRepository<Curricula, Integer> {
 	@Query("select c from Curricula c where c.cleaner.id=?1 and c.isCopy=0")
 	Collection<Curricula> getCurriculasNotCopyOfCleaner(int cleanerId);
 
+	// DASHBOARD:
+
 	@Query("select min(cast((select count(c) from Curricula c where c.cleaner = h) as float)) from Cleaner h")
 	Float minCurriculaPerCleaner();
 
@@ -28,6 +30,6 @@ public interface CurriculaRepository extends JpaRepository<Curricula, Integer> {
 	Float avgCurriculaPerCleaner();
 
 	@Query("select stddev(cast((select count(c) from Curricula c where c.cleaner = h) as float)) from Cleaner h")
-	Float sttdevCurriculaPerCleaner();
+	Float stddevCurriculaPerCleaner();
 
 }

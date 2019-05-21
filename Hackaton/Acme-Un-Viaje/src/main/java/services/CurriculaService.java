@@ -24,10 +24,10 @@ import org.springframework.validation.Validator;
 
 import repositories.CurriculaRepository;
 import security.LoginService;
+import domain.Cleaner;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.MiscellaneousAttachment;
-import domain.Cleaner;
 
 @Service
 @Transactional
@@ -47,6 +47,7 @@ public class CurriculaService {
 
 	@Autowired
 	private Validator						validator;
+
 
 	// CRUD Methods
 
@@ -103,8 +104,8 @@ public class CurriculaService {
 			Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), "Not allow to edit a not own curricula");
 
 		//TODO
-//		if (curricula.getPhone().matches("^([0-9]{4,})$"))
-//			curricula.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + curricula.getPhone());
+		//		if (curricula.getPhone().matches("^([0-9]{4,})$"))
+		//			curricula.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + curricula.getPhone());
 
 		return this.curriculaRepository.save(curricula);
 	}
@@ -125,9 +126,9 @@ public class CurriculaService {
 		final Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
 		if (!educationalDatas.isEmpty())
 			this.educationalDataService.deleteAll(educationalDatas);
-//		final Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
-//		if (!positionDatas.isEmpty())
-//			this.positionDataService.deleteAll(positionDatas);
+		//		final Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
+		//		if (!positionDatas.isEmpty())
+		//			this.positionDataService.deleteAll(positionDatas);
 		final Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
 		if (!miscellaneousAttachaments.isEmpty())
 			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);
@@ -249,4 +250,23 @@ public class CurriculaService {
 
 	// AUXILIAR METHODS
 
+	public Float minCurriculaPerCleaner() {
+
+		return this.curriculaRepository.minCurriculaPerCleaner();
+	}
+
+	public Float maxCurriculaPerCleaner() {
+
+		return this.curriculaRepository.maxCurriculaPerCleaner();
+	}
+
+	public Float avgCurriculaPerCleaner() {
+
+		return this.curriculaRepository.avgCurriculaPerCleaner();
+	}
+
+	public Float stddevCurriculaPerCleaner() {
+
+		return this.curriculaRepository.stddevCurriculaPerCleaner();
+	}
 }

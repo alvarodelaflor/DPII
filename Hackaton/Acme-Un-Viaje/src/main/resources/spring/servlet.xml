@@ -48,11 +48,19 @@
 	<bean id="openEntityManagerInViewInterceptor"
 		class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
 
+	<bean id="logoInterceptor"
+		class="interceptors.ConfigInterceptor" />
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*.do" />
 			<ref bean="openEntityManagerInViewInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*.do" />
+			<ref bean="logoInterceptor" />
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
 
 	<!-- I18n and L10n -->

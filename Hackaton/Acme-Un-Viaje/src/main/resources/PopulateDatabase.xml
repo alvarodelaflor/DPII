@@ -131,6 +131,12 @@
 			</list>
 		</property>
 		<property name="transporterBanRatio" value="10" />
+		<property name="systemNombre" value="Acme Un Viaje"></property>
+		<property name="systemName" value="Acme A Trip"></property>
+		<property name="welcomeMessageEs" value="Bienvenido a Acme Un Viaje"></property>
+		<property name="welcomeMessageEn" value="Welcome to Acme A Trip"></property>
+		<property name="bannerLogo" value="images/logo.png"></property>
+		<property name="defaultPhoneCode" value="+34 "></property>
 	</bean>
 	<!-- CONFIG -->
 	<!-- ADMIN -->

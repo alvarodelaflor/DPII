@@ -13,10 +13,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Actor;
-import domain.Admin;
-import domain.CreditCard;
-import forms.RegisterActor;
 import repositories.AdminRepository;
 import security.Authority;
 import security.LoginService;
@@ -235,9 +231,9 @@ public class AdminService {
 				binding.rejectValue("birthDate", "error.birthDateM");
 		}
 	}
-		
-		public Admin findByUserAccountId(final int id) {
-			return this.adminRepository.findByUserAccountId(id);
-		}
+
+	public Admin findByUserAccountId(final int id) {
+		return this.adminRepository.findByUserAccountId(id);
+	}
 
 }
