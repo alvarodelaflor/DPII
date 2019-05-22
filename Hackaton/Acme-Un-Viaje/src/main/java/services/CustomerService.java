@@ -33,6 +33,9 @@ public class CustomerService {
 
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// REGISTER AS CLEANER
 	// ---------------------------------------------------------------
@@ -52,9 +55,9 @@ public class CustomerService {
 	// SAVE REGISTER AS CLEANER
 	// ---------------------------------------------------------------
 	public Customer saveRegisterAsCustomer(final Customer customer) {
-		// if (customer.getPhone().matches("^([0-9]{4,})$"))
-		// customer.setPhone(this.configurationService.getConfiguration().getCountryCode()
-		// + " " + customer.getPhone());
+		if (customer.getPhone().matches("^([0-9]{4,})$")) {
+			 customer.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + customer.getPhone());
+		 }
 		return this.customerRepository.save(customer);
 	}
 

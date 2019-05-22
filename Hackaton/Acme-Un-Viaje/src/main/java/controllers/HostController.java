@@ -19,6 +19,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Host;
@@ -122,13 +123,17 @@ public class HostController extends AbstractController {
 	// SHOW HOST
 	// -------------------------------------------------------------------
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show() {
+	public ModelAndView show(@RequestParam(value = "hostId", defaultValue = "-1") final int hotId) {
 		ModelAndView result;
 		try {
-			final int userLoggin = LoginService.getPrincipal().getId();
 			final Host registerActor;
-			registerActor = this.hostService.getHostByUserAccountId(userLoggin);
-			result = new ModelAndView("host/show");
+			if (hotId == -1 ) {
+				final int userLoggin = LoginService.getPrincipal().getId();
+				registerActor = this.hostService.getHostByUserAccountId(userLoggin);
+			} else {
+				registerActor = this.hostService.findOne(hotId);
+			}
+			result = new ModelAndView("host/show");				
 			result.addObject("registerActor", registerActor);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

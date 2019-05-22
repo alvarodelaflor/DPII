@@ -13,6 +13,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<fieldset>
+					<display:column titleKey="transport.reservedPlaces" property="reservedPlaces" />
 					<display:column titleKey="transport.numberOfPlaces" property="numberOfPlaces" />
 					<display:column titleKey="transport.price" property="price" />
 					<display:column titleKey="transport.date" property="date" />

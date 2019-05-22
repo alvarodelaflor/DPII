@@ -1,5 +1,5 @@
 
-package domain;
+package forms;
 
 import java.util.Date;
 
@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import domain.Transporter;
 
 public class TransportForm {
 

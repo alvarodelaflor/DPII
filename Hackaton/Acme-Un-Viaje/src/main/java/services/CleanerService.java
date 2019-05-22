@@ -36,6 +36,9 @@ public class CleanerService {
 
 	@Autowired
 	private ActorService		actorService;
+	
+	@Autowired
+	private ConfigService configService;
 
 
 	// REGISTER AS CLEANER
@@ -56,9 +59,9 @@ public class CleanerService {
 	// SAVE REGISTER AS CLEANER
 	// ---------------------------------------------------------------
 	public Cleaner saveRegisterAsCleaner(final Cleaner cleaner) {
-		// if (cleaner.getPhone().matches("^([0-9]{4,})$"))
-		// cleaner.setPhone(this.configurationService.getConfiguration().getCountryCode()
-		// + " " + cleaner.getPhone());
+		 if (cleaner.getPhone().matches("^([0-9]{4,})$")) {
+			 cleaner.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + cleaner.getPhone());
+		 }
 		return this.cleanerRepository.save(cleaner);
 	}
 

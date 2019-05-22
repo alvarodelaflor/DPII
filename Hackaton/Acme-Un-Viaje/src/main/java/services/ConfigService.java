@@ -144,5 +144,9 @@ public class ConfigService {
 
 		return this.configRepo.findAll().iterator().next().getBannerLogo();
 	}
+	
+	public Config getConfiguration() {
+		return this.configRepo.findAll().iterator().next();
+	}
 
 }

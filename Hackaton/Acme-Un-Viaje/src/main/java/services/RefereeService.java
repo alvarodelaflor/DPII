@@ -33,6 +33,9 @@ public class RefereeService {
 
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// REGISTER AS REFEREE
 	// ---------------------------------------------------------------
@@ -52,9 +55,9 @@ public class RefereeService {
 	// SAVE REGISTER AS REFEREE
 	// ---------------------------------------------------------------
 	public Referee saveRegisterAsReferee(final Referee referee) {
-		// if (referee.getPhone().matches("^([0-9]{4,})$"))
-		// referee.setPhone(this.configurationService.getConfiguration().getCountryCode()
-		// + " " + referee.getPhone());
+		if (referee.getPhone().matches("^([0-9]{4,})$")) {
+			 referee.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + referee.getPhone());
+		 }
 		return this.refereeRepository.save(referee);
 	}
 
