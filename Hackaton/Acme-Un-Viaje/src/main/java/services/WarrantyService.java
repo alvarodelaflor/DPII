@@ -94,7 +94,7 @@ public class WarrantyService {
 				.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(actor);
 		Assert.isTrue(warranty.getTravelAgency().equals(actor));
-		Assert.isTrue(warranty.getDraftMode() == false);		
+		Assert.isTrue(warranty.getDraftMode() == true);		
 		this.warrantyRepository.delete(warranty);
 	}
 
