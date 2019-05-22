@@ -25,6 +25,20 @@
 							<spring:message code="transport.show" />
 						</a>
 					</display:column>
+					<display:column titleKey="transport.edit">
+						<jstl:if test="${row.reservedPlaces eq 0}">
+							<a href="transport/transporter/edit.do?transportId=${row.id}">
+								<spring:message code="transport.edit" />
+							</a>
+						</jstl:if>
+					</display:column>
+					<display:column titleKey="transport.edit">
+						<jstl:if test="${row.reservedPlaces eq 0}">
+							<a href="transport/transporter/delete.do?transportId=${row.id}">
+								<spring:message code="transport.delete" />
+							</a>
+						</jstl:if>
+					</display:column>
 				</fieldset>
 			</div>
 		</div>

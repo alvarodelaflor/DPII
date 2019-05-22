@@ -120,6 +120,23 @@ public class TransportTransporterController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView editGet(@RequestParam(required = false, value = "transportId") final Integer transportId) {
+		if (transportId == null)
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		ModelAndView result;
+		try {
+			final Transport transport = this.transportService.getLoggedTransporterTransportForEdit(transportId);
+
+			result = new ModelAndView("transport/transporter/create");
+			result.addObject("transport", transport);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ModelAndView edit(final Transport transport, final BindingResult binding) {
 		Transport t = null;
