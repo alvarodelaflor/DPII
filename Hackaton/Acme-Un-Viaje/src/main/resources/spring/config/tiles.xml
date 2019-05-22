@@ -53,6 +53,7 @@
 		<!-- FERRETE -->
 		<value>/views/accomodation/tiles.xml</value>
 		<value>/views/finderAccomodation/tiles.xml</value>
+		<value>/views/finderRequest/tiles.xml</value>
 		<!-- FERRETE -->
 		
 	</util:list>

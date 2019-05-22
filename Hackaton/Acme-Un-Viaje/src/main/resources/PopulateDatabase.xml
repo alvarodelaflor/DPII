@@ -250,6 +250,7 @@
         	</list>
         </property>
         <property name="finder" ref="finderAccomodation01" />
+        <property name="finderRequest" ref="finderRequest01" />
 	</bean>
 	<!-- TRAVELAGENCY -->
 	
@@ -554,5 +555,13 @@
 		<property name="people" value="1" />
 	</bean>
 	<!-- FINDERACCOMODATION -->
+	
+		<!-- FINDERREQUEST -->
+	<bean id="finderRequest01" class="domain.FinderRequest">
+		<property name="price" value="80" />
+		<property name="place" value="Sevilla" />
+		<property name="startDate" value="2019/12/11" />
+	</bean>
+	<!-- FINDERREQUEST-->
 
 </beans>
