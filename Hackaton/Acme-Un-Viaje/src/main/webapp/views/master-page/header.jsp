@@ -211,6 +211,11 @@
 						</security:authorize>
 
 						<security:authorize access="hasRole('HOST')">
+							<li class = "nav-item">
+									<a href="accomodation/host/list.do" class="nav-link"> 
+										<spring:message code="master.page.accomodation.list" />
+									</a>
+								</li>
 							<li class="nav-item dropdown"><a href="#"
 								class="nav-link dropdown-toggle" data-toggle="dropdown"
 								id="navbardrop"> <spring:message
