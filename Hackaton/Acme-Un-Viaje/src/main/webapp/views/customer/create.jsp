@@ -30,7 +30,8 @@
 			<div class="col-md-6">
 				<fieldset>
 					<h2>
-						<spring:message code="actor.personalData" />&nbsp;<i class="fas fa-mobile-alt icon-gradient"></i>
+						<spring:message code="actor.personalData" />
+						&nbsp;<i class="fas fa-mobile-alt icon-gradient"></i>
 					</h2>
 					<hr>
 					<acme:textbox code="actor.name" path="name" cssLabel="col-md-3"
@@ -47,9 +48,8 @@
 					<acme:password code="actor.passwordC" path="confirmPassword"
 						placeholder="********" cssLabel="col-md-3" cssInput="col-md-5"
 						cssError="col-md-4" />
-					<acme:textbox code="actor.city" path="city"
-						placeholder="Carmon" cssLabel="col-md-3" cssError="col-md-4"
-						cssInput="col-md-5" />
+					<acme:textbox code="actor.city" path="city" placeholder="Carmon"
+						cssLabel="col-md-3" cssError="col-md-4" cssInput="col-md-5" />
 					<acme:textbox code="actor.birthDate" path="birthDate"
 						placeholder="1998/11/12" cssLabel="col-md-3" cssInput="col-md-5"
 						cssError="col-md-4" />
@@ -62,18 +62,31 @@
 						cssError="col-md-4" placeholder="678543267" cssInput="col-md-5" />
 				</fieldset>
 			</div>
-			
+
 			<div class="col-md-6">
 				<fieldset>
 					<h2>
-						<spring:message code="actor.creditCard" />&nbsp;<i class="far fa-credit-card icon-gradient"></i>
+						<spring:message code="actor.creditCard" />
+						&nbsp;<i class="far fa-credit-card icon-gradient"></i>
 					</h2>
 					<hr>
 					<acme:textbox code="actor.holder" path="holder"
 						placeholder="Sr. Benjumea" cssLabel="col-md-3" cssInput="col-md-4"
 						cssError="col-md-4" />
-					<acme:textbox code="actor.make" path="make" placeholder="VISA"
-						cssLabel="col-md-3" cssInput="col-md-4" cssError="col-md-4" />
+
+					<div class="row">
+						<div class="col-md-3">
+							<form:label path="make">
+								<spring:message code="actor.make" />:
+							</form:label>
+						</div>
+						<div class="col-md-4">
+							<form:select multiple="false" path="make" cssStyle="width: 100%">
+								<form:options items="${makes}" required="required" />
+							</form:select>
+						</div>
+					</div>
+
 					<acme:textbox code="actor.number" path="number"
 						placeholder="1234567890987654" cssLabel="col-md-3"
 						cssError="col-md-4" cssInput="col-md-4" />
@@ -84,9 +97,9 @@
 				</fieldset>
 			</div>
 		</div>
-		
+
 		<br>
-		
+
 		<div class="row" style="padding-left: 2.5em">
 			<div class="col-md-12">
 				<fieldset>

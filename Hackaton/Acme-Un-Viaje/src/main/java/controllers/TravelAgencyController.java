@@ -11,6 +11,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.TravelAgency;
 import domain.CreditCard;
+import domain.TravelAgency;
 import forms.RegisterActor;
 import security.LoginService;
+import services.ConfigService;
 import services.TravelAgencyService;
 
 @Controller
@@ -33,6 +35,9 @@ public class TravelAgencyController extends AbstractController {
 
 	@Autowired
 	private TravelAgencyService travelAgencyService;
+	
+	@Autowired 
+	private ConfigService configService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,6 +55,8 @@ public class TravelAgencyController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("travelAgency/create");
 			result.addObject("registerActor", registerActor);
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -67,6 +74,8 @@ public class TravelAgencyController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("travelAgency/create");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.travelAgencyService.saveRegisterAsTravelAgency(travelAgency);
@@ -94,6 +103,8 @@ public class TravelAgencyController extends AbstractController {
 		result = new ModelAndView("travelAgency/edit");
 		result.addObject("travelAgency", travelAgency);
 		result.addObject("creditCard", creditCard);
+		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		result.addObject("makes", makes);
 		return result;
 	}
 
@@ -108,7 +119,8 @@ public class TravelAgencyController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("travelAgency/edit");
-
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.travelAgencyService.saveRegisterAsTravelAgency(travelAgency);

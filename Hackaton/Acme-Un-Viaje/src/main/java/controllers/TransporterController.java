@@ -11,7 +11,10 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+
+import javax.management.loading.PrivateClassLoader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,7 @@ import domain.Transporter;
 import domain.CreditCard;
 import forms.RegisterActor;
 import security.LoginService;
+import services.ConfigService;
 import services.TransporterService;
 
 @Controller
@@ -33,6 +37,9 @@ public class TransporterController extends AbstractController {
 
 	@Autowired
 	private TransporterService transporterService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,6 +57,8 @@ public class TransporterController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("transporter/create");
 			result.addObject("registerActor", registerActor);
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -65,8 +74,9 @@ public class TransporterController extends AbstractController {
 		ModelAndView result = null;
 		final Transporter transporter = this.transporterService.reconstructRegisterAsTransporter(registerActor, binding);
 		if (binding.hasErrors()) {
-			System.err.println(binding);
 			result = new ModelAndView("transporter/create");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.transporterService.saveRegisterAsTransporter(transporter);
@@ -94,6 +104,8 @@ public class TransporterController extends AbstractController {
 		result = new ModelAndView("transporter/edit");
 		result.addObject("transporter", transporter);
 		result.addObject("creditCard", creditCard);
+		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		result.addObject("makes", makes);
 		return result;
 	}
 
@@ -107,6 +119,8 @@ public class TransporterController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("transporter/edit");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.transporterService.saveRegisterAsTransporter(transporter);

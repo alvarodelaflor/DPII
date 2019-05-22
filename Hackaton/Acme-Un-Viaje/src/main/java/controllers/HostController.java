@@ -11,6 +11,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import domain.Host;
 import domain.CreditCard;
 import forms.RegisterActor;
 import security.LoginService;
+import services.ConfigService;
 import services.HostService;
 
 @Controller
@@ -34,6 +36,9 @@ public class HostController extends AbstractController {
 
 	@Autowired
 	private HostService hostService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -51,6 +56,8 @@ public class HostController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("host/create");
 			result.addObject("registerActor", registerActor);
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -68,6 +75,8 @@ public class HostController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("host/create");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.hostService.saveRegisterAsHost(host);
@@ -95,6 +104,8 @@ public class HostController extends AbstractController {
 		result = new ModelAndView("host/edit");
 		result.addObject("host", host);
 		result.addObject("creditCard", creditCard);
+		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		result.addObject("makes", makes);
 		return result;
 	}
 
@@ -107,8 +118,9 @@ public class HostController extends AbstractController {
 		host = this.hostService.reconstructEditDataPeronal(host, binding);
 
 		if (binding.hasErrors()) {
-			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("host/edit");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 
 		} else
 			try {
