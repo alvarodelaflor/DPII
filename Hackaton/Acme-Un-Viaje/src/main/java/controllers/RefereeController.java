@@ -11,6 +11,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import domain.Referee;
 import domain.CreditCard;
 import forms.RegisterActor;
 import security.LoginService;
+import services.ConfigService;
 import services.RefereeService;
 
 @Controller
@@ -33,6 +35,9 @@ public class RefereeController extends AbstractController {
 
 	@Autowired
 	private RefereeService refereeService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,6 +55,8 @@ public class RefereeController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("referee/create");
 			result.addObject("registerActor", registerActor);
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -65,8 +72,9 @@ public class RefereeController extends AbstractController {
 		ModelAndView result = null;
 		final Referee referee = this.refereeService.reconstructRegisterAsReferee(registerActor, binding);
 		if (binding.hasErrors()) {
-			System.err.println(binding);
 			result = new ModelAndView("referee/create");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.refereeService.saveRegisterAsReferee(referee);
@@ -94,6 +102,8 @@ public class RefereeController extends AbstractController {
 		result = new ModelAndView("referee/edit");
 		result.addObject("referee", referee);
 		result.addObject("creditCard", creditCard);
+		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		result.addObject("makes", makes);
 		return result;
 	}
 
@@ -107,6 +117,8 @@ public class RefereeController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("referee/edit");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.refereeService.saveRegisterAsReferee(referee);

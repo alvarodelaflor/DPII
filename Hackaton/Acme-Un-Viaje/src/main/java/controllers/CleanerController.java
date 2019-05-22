@@ -11,6 +11,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import domain.CreditCard;
 import forms.RegisterActor;
 import security.LoginService;
 import services.CleanerService;
+import services.ConfigService;
 
 @Controller
 @RequestMapping("/cleaner")
@@ -33,6 +35,9 @@ public class CleanerController extends AbstractController {
 
 	@Autowired
 	private CleanerService cleanerService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,6 +55,8 @@ public class CleanerController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("cleaner/create");
 			result.addObject("registerActor", registerActor);
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -67,6 +74,8 @@ public class CleanerController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("cleaner/create");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.cleanerService.saveRegisterAsCleaner(cleaner);
@@ -94,6 +103,8 @@ public class CleanerController extends AbstractController {
 		result = new ModelAndView("cleaner/edit");
 		result.addObject("cleaner", cleaner);
 		result.addObject("creditCard", creditCard);
+		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		result.addObject("makes", makes);
 		return result;
 	}
 
@@ -108,7 +119,8 @@ public class CleanerController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("cleaner/edit");
-
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.cleanerService.saveRegisterAsCleaner(cleaner);

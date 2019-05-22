@@ -117,7 +117,7 @@ public class WarrantyTravelAgencyController extends AbstractController {
 			Warranty warranty = this.warrantyService.findOne(warrantyId);
 			Assert.notNull(actor);
 			Assert.isTrue(warranty.getTravelAgency().equals(actor));
-			Assert.isTrue(warranty.getDraftMode() == false);
+			Assert.isTrue(warranty.getDraftMode() == true);
 
 			result = new ModelAndView("warranty/travelAgency/edit");
 			result.addObject("warranty", warranty);

@@ -435,6 +435,8 @@ public class AdministratorController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("admin/create");
 			result.addObject("registerActor", registerActor);
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -451,6 +453,8 @@ public class AdministratorController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("admin/create");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.adminService.saveRegisterAsAdmin(admin);
@@ -478,6 +482,8 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("admin/edit");
 		result.addObject("admin", admin);
 		result.addObject("creditCard", creditCard);
+		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		result.addObject("makes", makes);
 		return result;
 	}
 
@@ -492,7 +498,8 @@ public class AdministratorController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("admin/edit");
-
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.adminService.saveRegisterAsAdmin(admin);

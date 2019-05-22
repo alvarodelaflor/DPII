@@ -11,6 +11,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import domain.Customer;
 import domain.CreditCard;
 import forms.RegisterActorE;
 import security.LoginService;
+import services.ConfigService;
 import services.CustomerService;
 
 @Controller
@@ -33,6 +35,9 @@ public class CustomerController extends AbstractController {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,6 +55,8 @@ public class CustomerController extends AbstractController {
 			final RegisterActorE registerActorE = new RegisterActorE();
 			result = new ModelAndView("customer/create");
 			result.addObject("registerActorE", registerActorE);
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -65,8 +72,9 @@ public class CustomerController extends AbstractController {
 		ModelAndView result = null;
 		final Customer customer = this.customerService.reconstructRegisterAsCustomer(registerActorE, binding);
 		if (binding.hasErrors()) {
-			System.err.println(binding);
 			result = new ModelAndView("customer/create");
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.customerService.saveRegisterAsCustomer(customer);
@@ -94,6 +102,8 @@ public class CustomerController extends AbstractController {
 		result = new ModelAndView("customer/edit");
 		result.addObject("customer", customer);
 		result.addObject("creditCard", creditCard);
+		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		result.addObject("makes", makes);
 		return result;
 	}
 
@@ -106,9 +116,9 @@ public class CustomerController extends AbstractController {
 		customer = this.customerService.reconstructEditDataPeronal(customer, binding);
 
 		if (binding.hasErrors()) {
-			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("customer/edit");
-
+			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			result.addObject("makes", makes);
 		} else
 			try {
 				this.customerService.saveRegisterAsCustomer(customer);

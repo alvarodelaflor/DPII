@@ -37,7 +37,7 @@
 
 					<display:column titleKey="warranty.delete">
 						<c:choose>
-							<c:when test="${row.draftMode == false}">
+							<c:when test="${row.draftMode == true}">
 								<a href="warranty/travelAgency/delete.do?warrantyId=${row.id}"><spring:message
 										code="warranty.delete" /></a>
 							</c:when>
@@ -48,7 +48,7 @@
 
 					<display:column titleKey="warranty.edit">
 						<c:choose>
-							<c:when test="${row.draftMode == false}">
+							<c:when test="${row.draftMode == true}">
 								<a href="warranty/travelAgency/edit.do?warrantyId=${row.id}"><spring:message
 										code="warranty.edit" /></a>
 							</c:when>
