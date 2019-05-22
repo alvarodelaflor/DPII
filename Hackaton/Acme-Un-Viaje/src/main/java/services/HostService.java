@@ -32,6 +32,9 @@ public class HostService {
 
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// REGISTER AS HOST
 	// ---------------------------------------------------------------
@@ -51,9 +54,9 @@ public class HostService {
 	// SAVE REGISTER AS HOST
 	// ---------------------------------------------------------------
 	public Host saveRegisterAsHost(final Host host) {
-		// if (host.getPhone().matches("^([0-9]{4,})$"))
-		// host.setPhone(this.configurationService.getConfiguration().getCountryCode()
-		// + " " + host.getPhone());
+		if (host.getPhone().matches("^([0-9]{4,})$")) {
+			 host.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + host.getPhone());
+		 }
 		return this.hostRepository.save(host);
 	}
 

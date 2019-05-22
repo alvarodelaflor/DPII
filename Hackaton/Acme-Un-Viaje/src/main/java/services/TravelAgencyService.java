@@ -32,6 +32,9 @@ public class TravelAgencyService {
 
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	// REGISTER AS TRAVEL
 	// ---------------------------------------------------------------
@@ -51,9 +54,9 @@ public class TravelAgencyService {
 	// SAVE REGISTER AS TRAVEL
 	// ---------------------------------------------------------------
 	public TravelAgency saveRegisterAsTravelAgency(final TravelAgency travelAgency) {
-		// if (travelAgency.getPhone().matches("^([0-9]{4,})$"))
-		// travelAgency.setPhone(this.configurationService.getConfiguration().getCountryCode()
-		// + " " + travelAgency.getPhone());
+		if (travelAgency.getPhone().matches("^([0-9]{4,})$")) {
+			 travelAgency.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + travelAgency.getPhone());
+		 }
 		return this.travelAgencyRepository.save(travelAgency);
 	}
 

@@ -32,6 +32,9 @@ public class TransporterService {
 
 	@Autowired
 	private ActorService			actorService;
+	
+	@Autowired
+	private ConfigService configService;
 
 
 	// REGISTER AS TRASNSPORTER
@@ -52,9 +55,9 @@ public class TransporterService {
 	// SAVE REGISTER AS TRASNSPORTER
 	// ---------------------------------------------------------------
 	public Transporter saveRegisterAsTransporter(final Transporter transporter) {
-		// if (transporter.getPhone().matches("^([0-9]{4,})$"))
-		// transporter.setPhone(this.configurationService.getConfiguration().getCountryCode()
-		// + " " + transporter.getPhone());
+		if (transporter.getPhone().matches("^([0-9]{4,})$")) {
+			 transporter.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + transporter.getPhone());
+		 }
 		return this.transporterRepository.save(transporter);
 	}
 

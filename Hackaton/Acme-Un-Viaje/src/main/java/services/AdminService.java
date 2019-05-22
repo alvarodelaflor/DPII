@@ -35,6 +35,9 @@ public class AdminService {
 
 	@Autowired
 	private ActorService	actorService;
+	
+	@Autowired
+	private ConfigService configService;
 
 
 	// GET CONFIG
@@ -84,9 +87,9 @@ public class AdminService {
 	// SAVE REGISTER AS ADMIN
 	// ---------------------------------------------------------------
 	public Admin saveRegisterAsAdmin(final Admin admin) {
-		// if (admin.getPhone().matches("^([0-9]{4,})$"))
-		// admin.setPhone(this.configurationService.getConfiguration().getCountryCode()
-		// + " " + admin.getPhone());
+		 if (admin.getPhone().matches("^([0-9]{4,})$")) {
+			 admin.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + admin.getPhone());
+		 }
 		return this.adminRepository.save(admin);
 	}
 
