@@ -116,8 +116,18 @@
 				</div>
 			</fieldset>
 		</div>
+		<!-- ALVARO -->
+		<div class="row">
+			<div class="jumbotron">
+				<div class="col-md-12">
+					<h4 class="display-12">
+						<spring:message code="workforce"/><acme:create name = "" url="jobApplication/cleaner/create.do?hostId=${registerActor.id}" code="curricula.edit"/>
+					</h4>
+				</div>
+			</div>
+		</div>
+		<!-- ALVARO -->
 	</div>
-
 
 	<br>
 
@@ -127,5 +137,4 @@
 
 		</div>
 	</div>
-</div>
 </div>

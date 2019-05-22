@@ -73,6 +73,9 @@
 									<a href="curricula/list.do" class="dropdown-item">
 										<spring:message code="curricula" />
 									</a>
+									<a href="jobApplication/cleaner/list.do" class="dropdown-item">
+										<spring:message code="jobApplication" />
+									</a>
 								</div>
 							</li>
 							<li class="nav-item dropdown">

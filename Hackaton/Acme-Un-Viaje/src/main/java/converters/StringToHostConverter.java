@@ -6,20 +6,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import domain.Curricula;
+import domain.Host;
 
-import repositories.CurriculaRepository;
+import repositories.HostRepository;
 
 @Component
-public class StringToCurriculaConverter implements Converter<String, Curricula> {
+public class StringToHostConverter implements Converter<String, Host> {
 
 	@Autowired
-	CurriculaRepository	curriculaRepository;
+	HostRepository	hostRepository;
 
 
 	@Override
-	public Curricula convert(final String text) {
-		Curricula result;
+	public Host convert(final String text) {
+		Host result;
 		int id;
 
 		try {
@@ -27,10 +27,10 @@ public class StringToCurriculaConverter implements Converter<String, Curricula> 
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.curriculaRepository.findOne(id);
+				result = this.hostRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
-			System.out.println("Error en StringToCurriculaConverter CATCH: " + oops);
+			System.out.println("Error en StringToHostConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;

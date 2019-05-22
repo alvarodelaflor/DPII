@@ -66,7 +66,7 @@ public class JobApplicationService {
 		final JobApplication jobApplication = new JobApplication();
 
 		// We check if the cleaner is valid for a new application
-		Assert.isTrue(!this.checkValidForNewApplication(cleaner.getId(), host.getId()), cleanerAcceptedPending);
+		Assert.isTrue(this.checkValidForNewApplication(cleaner.getId(), host.getId()), cleanerAcceptedPending);
 		
 		jobApplication.setHost(host);
 		jobApplication.setCleaner(cleaner);
@@ -107,9 +107,15 @@ public class JobApplicationService {
 		
 		JobApplication jobApplicationDB = this.jobApplicationRepository.findOne(jobApplication.getId());
 		if (jobApplicationDB != null) {
-			Assert.isTrue(jobApplicationDB.getStatus()!=null && jobApplicationDB.getStatus().equals(false), finalMode);
+			if (this.cleanerService.getCleanerLogin()!=null) {				
+				Assert.isTrue(jobApplicationDB.getStatus()==null, finalMode);
+			} else {
+				Assert.isTrue(jobApplication.getStatus()!=null, "Application must be accepted o rejected");
+			}
 			Assert.isTrue(jobApplicationDB.getCleaner().equals(jobApplication.getCleaner()), diferentCleaner);
 			Assert.isTrue(jobApplicationDB.getHost().equals(jobApplication.getHost()), diferentHost);
+		} else {
+			Assert.isTrue(checkValidForNewApplication(this.cleanerService.getCleanerLogin().getId(), jobApplication.getHost().getId()), cleanerAcceptedPending);
 		}
 		return this.jobApplicationRepository.save(jobApplication);
 	}
@@ -122,7 +128,7 @@ public class JobApplicationService {
 	public void delete(final JobApplication jobApplication) {
 		Assert.notNull(jobApplication, jobApplicationNull);
 		JobApplication jobApplicationDB = this.jobApplicationRepository.findOne(jobApplication.getId());
-		Assert.isTrue(jobApplicationDB.getStatus()!=null && jobApplicationDB.getStatus().equals(false), finalMode);
+		Assert.isTrue(jobApplicationDB.getStatus()==null, finalMode);
 		Assert.isTrue(this.checkValidForEdit(jobApplication), actorNoValid);
 		this.jobApplicationRepository.delete(jobApplication);
 	}
@@ -166,29 +172,39 @@ public class JobApplicationService {
 		return jobApplication;
 	}
 	
-	public Boolean checkValidForNewApplication(int cleanerId, int hostId) {
-		Boolean res = false;
+	private Boolean checkValidForNewApplication(int cleanerId, int hostId) {
+		Boolean res = true;
 		int aux = this.jobApplicationRepository.getJobApplicationAcceptedAndPending(cleanerId, hostId).size();
 		if (aux > 0) {
-			res = true;
+			res = false;
 		}
 		return res;
 	}
 	
-	private Boolean checkValidForEdit(JobApplication jobApplication) {
+	public Boolean checkValidForEdit(JobApplication jobApplication) {
 		Boolean res = false;
 		Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
 		Host hostLogin = this.hostService.getHostLogin();
 		
-		if (cleanerLogin.getId()==jobApplication.getId()) {
+		if (cleanerLogin!= null && cleanerLogin.getId()==jobApplication.getCleaner().getId()) {
 			res = true;
 		}
 		
-		if (hostLogin.getId()==jobApplication.getId()) {
+		if (hostLogin!= null && hostLogin.getId()==jobApplication.getHost().getId()) {
 			res = true;
 		}
 		
 		return res;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link JobApplication}>
+	 */
+	public Collection<JobApplication> findAllByCleanerId(int cleanerId) {
+		return this.jobApplicationRepository.findAllByCleanerId(cleanerId);
 	}
 	// AUXILIAR METHODS
 }

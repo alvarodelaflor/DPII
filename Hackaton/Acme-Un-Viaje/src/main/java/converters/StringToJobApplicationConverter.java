@@ -4,22 +4,23 @@ package converters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import domain.Curricula;
+import domain.JobApplication;
 
-import repositories.CurriculaRepository;
+import repositories.JobApplicationRepository;
 
 @Component
-public class StringToCurriculaConverter implements Converter<String, Curricula> {
+public class StringToJobApplicationConverter implements Converter<String, JobApplication> {
 
 	@Autowired
-	CurriculaRepository	curriculaRepository;
+	JobApplicationRepository	jobApplicationRepository;
 
 
 	@Override
-	public Curricula convert(final String text) {
-		Curricula result;
+	public JobApplication convert(final String text) {
+		JobApplication result;
 		int id;
 
 		try {
@@ -27,10 +28,10 @@ public class StringToCurriculaConverter implements Converter<String, Curricula> 
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.curriculaRepository.findOne(id);
+				result = this.jobApplicationRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
-			System.out.println("Error en StringToCurriculaConverter CATCH: " + oops);
+			System.out.println("Error en StringToJobApplicationConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;

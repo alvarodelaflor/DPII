@@ -184,7 +184,7 @@ $(document).ready(function() {
 			</jstl:if>
 		</div>
 		<div class="col-md-6">
-		<!--  -->
+		<!-- Para meter los trabajos que ha realizado el cleaner -->
 		</div>
 	</div>
 </div>

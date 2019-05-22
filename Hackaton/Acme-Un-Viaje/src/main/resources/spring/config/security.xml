@@ -39,6 +39,17 @@
 		<security:intercept-url pattern="/educationalData/cleaner/delete.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
 		
+		<security:intercept-url pattern="/jobApplication/cleaner/create.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/jobApplication/cleaner/edit.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/jobApplication/cleaner/delete.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/jobApplication/cleaner/list.do" access="hasRole('CLEANER')" />
+		
+		<security:intercept-url pattern="/jobApplication/host/create.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/jobApplication/host/edit.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/jobApplication/host/delete.do" access="hasRole('HOST')" />
+		
+		<security:intercept-url pattern="/jobApplication/show.do" access="permitAll" />
+		
 		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
 		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
 		
@@ -74,7 +85,7 @@
 		
 		<security:intercept-url pattern="/host/create.do" access="permitAll" />
 		<security:intercept-url pattern="/host/edit.do" access="hasRole('HOST')" />
-		<security:intercept-url pattern="/host/show.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/show.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/admin/create.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/edit.do" access="hasRole('ADMIN')" />

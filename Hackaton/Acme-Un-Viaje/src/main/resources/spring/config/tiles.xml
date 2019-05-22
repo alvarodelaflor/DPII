@@ -41,6 +41,7 @@
 		<!-- ALVARO -->
 		<value>/views/curricula/tiles.xml</value>
 		<value>/views/educationalData/tiles.xml</value>
+		<value>/views/jobApplication/tiles.xml</value>
 		<!-- ALVARO -->
 		
 		<!-- HIPONA -->

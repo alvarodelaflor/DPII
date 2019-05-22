@@ -35,6 +35,7 @@
 		<!-- ALVARO -->
 		<value>/views/curricula/messages</value>
 		<value>/views/educationalData/messages</value>
+		<value>/views/jobApplication/messages</value>
 		<!-- ALVARO -->
 		<!-- HIPONA -->
 		<value>/views/transport/messages</value>
