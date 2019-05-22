@@ -16,38 +16,33 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
 
 <p><spring:message code="editMessage" /></p>
-<body>
-	<form:form action="message/editBroadcast.do" method="POST"	modelAttribute="msg">
 		
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-		
-		
-				
-		<form:label path="subject">
-			<spring:message code="msg.subject" />:
-		</form:label>
-		<form:input path="subject" />
-		<form:errors cssClass="error" path="subject" />
-		
-		<br />
-		
-		<form:label path="body">
-			<spring:message code="msg.body" />:
-		</form:label>
-		<form:input path="body" />
-		<form:errors cssClass="error" path="body" />
-		
-		<br />
-		
-		
-		<br />
-		
-		<input type="submit" name="save" value="<spring:message code="editMessage" />" />
-		
-		</form:form>
-		
-		<input type="button" name="cancel" value="<spring:message code="msg.cancel"/>" onclick="javascript:relativeRedir('mailbox/list.do');"/>
+	
+	<div class="container-fluid"  style="padding-left: 2.5em" >
+				<div class="col-md-6" style="padding-left: 2.5em">
+			<form:form class="formularioEdicion" method="POST"
+				modelAttribute="msg" action="message/editBroadcast.do">
+				<form:hidden path="id" />
+				<fieldset>
+					<acme:textbox code="msg.subject" path="subject"
+						 cssError="col-md-6" cssLabel="col-md-2"
+						cssInput="col-md-4" />
+
+					<acme:textbox code="msg.body" path="body"
+						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					
+				</fieldset>
+				<br>
+				<div class="row">
+					<div class="col-md-8">
+						<acme:submit name="save" code="actor.save" />
+					</div>
+				</div>
+			</form:form>
+		</div>
+	</div>
 </body>

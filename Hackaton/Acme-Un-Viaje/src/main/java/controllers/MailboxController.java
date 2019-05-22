@@ -127,8 +127,10 @@ public class MailboxController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Mailbox mailbox, final BindingResult binding) {
+	public ModelAndView save( Mailbox mailbox, final BindingResult binding) {
 		ModelAndView result;
+		
+		mailbox = mailboxService.reconstruct(mailbox, binding);
 		final UserAccount login = LoginService.getPrincipal();
 		final Actor logged = this.actorService.findByUserAccountId(login.getId());
 
@@ -211,7 +213,6 @@ public class MailboxController extends AbstractController {
 			return result;
 		}
 
-		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
 		System.out.println("Mailbox encontrado: " + mailbox);
 		Assert.notNull(mailbox, "mailbox.null");
@@ -219,14 +220,13 @@ public class MailboxController extends AbstractController {
 		try {
 			System.out.println("entra en delete Mailbox");
 			this.mailboxService.delete(mailbox);
-			result = new ModelAndView("redirect:list.do");
+			result = listMailbox();
 		} catch (final Exception e) {
 			System.out.println(e);
 			System.out.println("entra en catch");
 			result = this.createEditModelAndView(mailbox, "mailbox.commit.error");
 		}
 
-		result.addObject("language", language);
 		return result;
 	}
 }

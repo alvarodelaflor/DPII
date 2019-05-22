@@ -17,4 +17,5 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 
 	@Query("select ma.messages from Actor a join a.mailboxes ma where ma.name = outbox and a.id=?1")
 	Collection<Message> getMessageOutBoxFromActor();
+	
 }

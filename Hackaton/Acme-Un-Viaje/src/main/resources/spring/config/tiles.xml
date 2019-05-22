@@ -34,6 +34,8 @@
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/socialProfile/tiles.xml</value>
 		<value>/views/request/tiles.xml</value>
+		<value>/views/warranty/tiles.xml</value>
+
 		<!-- CARMEN -->
 		
 		<!-- ALVARO -->

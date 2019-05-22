@@ -34,10 +34,17 @@
 		<security:intercept-url pattern="/curricula/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/curricula/cleaner/delete.do" access="hasRole('CLEANER')" />
 		
+		<security:intercept-url pattern="/educationalData/cleaner/create.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/educationalData/cleaner/edit.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/educationalData/cleaner/delete.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+		
 		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
 		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
 		
-		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/edit.do" access="permitAll" />
+		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/edit.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/delete.do" access="hasRole('CLEANER')" />
+		
 		<!-- ALVARO -->
 		
 		<!-- CARMEN -->
@@ -52,7 +59,11 @@
 		<security:intercept-url pattern="/travelAgency/create.do" access="permitAll" />
 		<security:intercept-url pattern="/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
-		
+		<security:intercept-url pattern="/warranty/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/warranty/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/warranty/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/warranty/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
+
 		<security:intercept-url pattern="/referee/create.do" access="permitAll" />
 		<security:intercept-url pattern="/referee/edit.do" access="hasRole('REFEREE')" />
 		<security:intercept-url pattern="/referee/show.do" access="hasRole('REFEREE')" />
@@ -120,6 +131,7 @@
 		<security:intercept-url pattern="/transport/transporter/list.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/listAll.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/create.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transport/transporter/createMultiple.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/show.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/edit.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
