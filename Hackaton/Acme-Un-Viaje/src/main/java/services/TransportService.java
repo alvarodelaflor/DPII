@@ -42,14 +42,14 @@ public class TransportService {
 	}
 
 	public Transport save(final Transport t) {
-		Assert.isTrue(CommonUtils.hasAuthority(Authority.TRANSPORTER));
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.TRANSPORTER), "Logged user is not a transporter");
 		Transport res = null;
 
 		if (t.getId() == 0) {
 			res = t;
 			res.setTransporter(this.transporterService.getLoggedTransporter());
 		} else {
-			Assert.isTrue(this.loggedIsTransportOwner(t));
+			Assert.isTrue(this.loggedIsTransportOwner(t), "Transporter is not the transport owner");
 			res = t;
 		}
 
@@ -93,13 +93,13 @@ public class TransportService {
 			res = this.editTransport(transport);
 
 		this.validator.validate(res, binding);
-
+		this.injectDateOneYearLaterError(res.getDate(), "date", binding);
 		return res;
 	}
-
 	public void validateTransportForm(final TransportForm transportForm, final BindingResult binding) {
 		this.validator.validate(transportForm, binding);
 		try {
+			this.injectDateOneYearLaterError(transportForm.getEndDate(), "endDate", binding);
 			if (transportForm.getEndDate().before(transportForm.getInitDate()))
 				binding.rejectValue("endDate", "transportForm.error.dateRange");
 		} catch (final Throwable oops) {
@@ -149,15 +149,22 @@ public class TransportService {
 
 	private Transport editTransport(final Transport t) {
 		Assert.isTrue(CommonUtils.hasAuthority(Authority.TRANSPORTER));
-
 		final Transport dbTransport = this.transportRepository.findOne(t.getId());
 		Assert.isTrue(this.loggedIsTransportOwner(dbTransport));
+		Assert.isTrue(dbTransport.getReservedPlaces() == 0);
 
 		final Transport res = t;
 		res.setId(dbTransport.getId());
 		res.setVersion(dbTransport.getVersion());
-
+		res.setTransporter(dbTransport.getTransporter());
 		return res;
+	}
+
+	private void injectDateOneYearLaterError(final Date date, final String error, final BindingResult binding) {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.YEAR, 1);
+		if (calendar.getTime().before(date))
+			binding.rejectValue(error, "transportForm.error.tooLate");
 	}
 
 	public Collection<Transport> findAll() {
@@ -166,6 +173,13 @@ public class TransportService {
 
 	public Transport findOne(final int id) {
 		return this.transportRepository.findOne(id);
+	}
+
+	public Transport getLoggedTransporterTransportForEdit(final Integer transportId) {
+		// TODO Auto-generated method stub
+		final Transport res = this.getLoggedTransporterTransport(transportId);
+		Assert.isTrue(res.getReservedPlaces() == 0);
+		return res;
 	}
 
 }

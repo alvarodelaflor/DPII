@@ -27,17 +27,17 @@
 				<form:hidden path="id" />
 				<fieldset>
 					<hr>
-					<acme:textbox code="transport.numberOfPlaces" path="numberOfPlaces" placeholder="4" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.numberOfPlaces" path="numberOfPlaces" placeholder="4" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.price" path="price" placeholder="25" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.price" path="price" placeholder="25" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.date" path="date" placeholder="2021/12/11 13:30" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.date" path="date" placeholder="2021/12/11 13:30" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.vehicleType" path="vehicleType" placeholder="Car" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.vehicleType" path="vehicleType" placeholder="Car" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.origin" path="origin" placeholder="Sevilla" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.origin" path="origin" placeholder="Sevilla" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.destination" path="destination" placeholder="Valencia" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.destination" path="destination" placeholder="Valencia" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 				</fieldset>
 				<br>
 				<div class="row">
