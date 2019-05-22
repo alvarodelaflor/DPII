@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.TransportService;
 import domain.Transport;
-import domain.TransportForm;
+import forms.TransportForm;
 
 @Controller
 @RequestMapping("/transport/transporter")
@@ -100,6 +100,7 @@ public class TransportTransporterController extends AbstractController {
 		try {
 			this.transportService.validateTransportForm(transportForm, binding);
 		} catch (final Throwable oops) {
+			oops.printStackTrace();
 			return new ModelAndView("redirect:/welcome/index.do");
 		}
 
@@ -108,14 +109,13 @@ public class TransportTransporterController extends AbstractController {
 		if (binding.hasErrors()) {
 			result = new ModelAndView("transport/transporter/createMultiple");
 			result.addObject("transportForm", transportForm);
-		}
-
-		try {
-			this.transportService.saveMultiple(transportForm);
-			result = new ModelAndView("redirect:/transport/transporter/list.do");
-		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/welcome/index.do");
-		}
+		} else
+			try {
+				this.transportService.saveMultiple(transportForm);
+				result = new ModelAndView("redirect:/transport/transporter/list.do");
+			} catch (final Throwable oops) {
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
 
 		return result;
 	}

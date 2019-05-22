@@ -13,6 +13,10 @@
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="col-md-12">
 		<div class="row">
+			<strong><spring:message code="transport.reservedPlaces" />:&nbsp;</strong>
+			<jstl:out value="${transport.reservedPlaces}"></jstl:out>
+		</div>
+		<div class="row">
 			<strong><spring:message code="transport.numberOfPlaces" />:&nbsp;</strong>
 			<jstl:out value="${transport.numberOfPlaces}"></jstl:out>
 		</div>
@@ -37,7 +41,8 @@
 		<br>
 		<div class="row">
 
-			<span> <acme:historyBack />
+			<span>
+				<acme:historyBack />
 			</span>
 		</div>
 	</div>

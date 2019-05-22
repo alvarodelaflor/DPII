@@ -18,8 +18,8 @@ import security.Authority;
 import security.LoginService;
 import utilities.CommonUtils;
 import domain.Transport;
-import domain.TransportForm;
 import domain.Transporter;
+import forms.TransportForm;
 
 @Service
 @Transactional
@@ -99,6 +99,11 @@ public class TransportService {
 
 	public void validateTransportForm(final TransportForm transportForm, final BindingResult binding) {
 		this.validator.validate(transportForm, binding);
+		try {
+			if (transportForm.getEndDate().before(transportForm.getInitDate()))
+				binding.rejectValue("endDate", "transportForm.error.dateRange");
+		} catch (final Throwable oops) {
+		}
 	}
 
 	public void saveMultiple(final TransportForm transportForm) {
@@ -108,8 +113,12 @@ public class TransportService {
 		final Calendar calendar = Calendar.getInstance();
 		calendar.setTime(transportForm.getInitDate());
 
-		final Date d = transportForm.getInitDate();
-		while (transportForm.getEndDate().after(d)) {
+		Date d = transportForm.getInitDate();
+		final Transporter transporter = this.transporterService.getLoggedTransporter();
+		final Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTime(transportForm.getEndDate());
+		endCalendar.add(Calendar.DATE, 1);
+		while (endCalendar.getTime().after(d)) {
 			t = this.create();
 			t.setDate(calendar.getTime());
 			t.setDestination(transportForm.getDestination());
@@ -118,9 +127,10 @@ public class TransportService {
 			t.setPrice(transportForm.getPrice());
 			t.setReservedPlaces(0);
 			t.setVehicleType(transportForm.getVehicleType());
-
+			t.setTransporter(transporter);
 			transports.add(t);
 			calendar.add(Calendar.DATE, 1);
+			d = calendar.getTime();
 		}
 
 		this.transportRepository.save(transports);

@@ -23,23 +23,22 @@
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
 		<div class="col-md-6">
-			<form:form class="formularioEdicion" method="POST" modelAttribute="transportForm" action="transport/transporter/edit.do">
-				<form:hidden path="id" />
+			<form:form class="formularioEdicion" method="POST" modelAttribute="transportForm" action="transport/transporter/createMultiple.do">
 				<fieldset>
 					<hr>
-					<acme:textbox code="transport.initDate" path="initDate" placeholder="2021/12/11 13:30" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.initDate" path="initDate" placeholder="2021/12/11 13:30" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.endDate" path="endDate" placeholder="2021/12/18" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.endDate" path="endDate" placeholder="2021/12/18" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.numberOfPlaces" path="numberOfPlaces" placeholder="4" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.numberOfPlaces" path="numberOfPlaces" placeholder="4" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.price" path="price" placeholder="25" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.price" path="price" placeholder="25" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.vehicleType" path="vehicleType" placeholder="Car" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.vehicleType" path="vehicleType" placeholder="Car" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.origin" path="origin" placeholder="Sevilla" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.origin" path="origin" placeholder="Sevilla" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.destination" path="destination" placeholder="Valencia" cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+					<acme:textbox code="transport.destination" path="destination" placeholder="Valencia" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 				</fieldset>
 				<br>
 				<div class="row">
