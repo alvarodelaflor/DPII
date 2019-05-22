@@ -17,6 +17,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Host;
+import domain.Cleaner;
 import domain.CreditCard;
 import forms.RegisterActor;
 
@@ -196,4 +197,24 @@ public class HostService {
 			}
 		}
 
+		public Host findOne(Integer id) {
+			return this.hostRepository.findOne(id);
+	}
+		
+		/**
+		 * 
+		 * Return the host who is login if exits, null otherwise
+		 * 
+		 * @author Alvaro de la Flor Bonilla
+		 * @return {@link Host}
+		 */
+		public Host getHostLogin() {
+			Host res;
+			try {
+				res = this.getHostByUserAccountId(LoginService.getPrincipal().getId());
+			} catch (Exception e) {
+				res = null;
+			}
+			return res;
+		}
 }
