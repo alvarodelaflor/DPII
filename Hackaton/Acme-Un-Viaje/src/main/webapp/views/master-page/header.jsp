@@ -200,7 +200,7 @@
 									</a>
 								</li>
 								<li class = "nav-item">
-									<a href="accomodation/travelAgency/list.do" class="nav-link"> 
+									<a href="finder/travelAgency/show.do" class="nav-link"> 
 										<spring:message code="master.page.accomodation.list" />
 									</a>
 								</li>

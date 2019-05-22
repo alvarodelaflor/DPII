@@ -46,6 +46,7 @@
 		
 		<!-- FERRETE -->
 		<value>/views/accomodation/messages</value>
+		<value>/views/finderAccomodation/messages</value>
 		<!-- FERRETE -->
 	</util:list>
 

@@ -2,7 +2,6 @@
 package domain;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -18,7 +17,6 @@ public class FinderAccomodation extends DomainEntity {
 	private Double						price;
 	private Integer						people;
 
-	private Date						expirationDate;
 	//======== Relaciones
 	private Collection<Accomodation>	accomodations;
 
@@ -53,14 +51,6 @@ public class FinderAccomodation extends DomainEntity {
 
 	public void setPeople(final Integer people) {
 		this.people = people;
-	}
-
-	public Date getExpirationDate() {
-		return this.expirationDate;
-	}
-
-	public void setExpirationDate(final Date expirationDate) {
-		this.expirationDate = expirationDate;
 	}
 
 	@ManyToMany

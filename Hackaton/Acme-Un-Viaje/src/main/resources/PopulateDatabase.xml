@@ -249,6 +249,7 @@
                 <ref bean="mailbox12"/>
         	</list>
         </property>
+        <property name="finder" ref="finderAccomodation01" />
 	</bean>
 	<!-- TRAVELAGENCY -->
 	
@@ -544,5 +545,14 @@
 		<property name="rating" value="0.5" />
 	</bean>
 	<!-- ACCOMODATIONS -->
+	
+	<!-- FINDERACCOMODATION -->
+	<bean id="finderAccomodation01" class="domain.FinderAccomodation">
+		<property name="price" value="80" />
+		<property name="address" value="Sevilla" />
+		<property name="keyword" value="Sevilla" />
+		<property name="people" value="1" />
+	</bean>
+	<!-- FINDERACCOMODATION -->
 
 </beans>
