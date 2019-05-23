@@ -629,14 +629,12 @@
 	<!-- BOOKINGTRANSPORT -->
 	<bean id="bookingTransport01" class="domain.BookingTransport">
 		<property name="transport" ref="transport01" />
-		<property name="endDate" value="2020/12/11" />
-		<property name="startDate" value="2019/12/11" />
+		<property name="date" value="2020/12/11" />
 	</bean>
 	
 	<bean id="bookingTransport02" class="domain.BookingTransport">
 		<property name="transport" ref="transport02" />
-		<property name="endDate" value="2020/12/11" />
-		<property name="startDate" value="2019/12/11" />
+		<property name="date" value="2020/12/11" />
 	</bean>
 	<!-- BOOKINGTRANSPORT-->
 </beans>
