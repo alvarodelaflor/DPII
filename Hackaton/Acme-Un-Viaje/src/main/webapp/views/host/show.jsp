@@ -52,10 +52,13 @@
 			</c:otherwise>
 		</c:choose>
 
+		<br>
+
 		<div class="col-md-4">
 			<fieldset>
 				<h2>
-					<spring:message code="actor.personalData" />&nbsp;<i class="fas fa-mobile-alt icon-gradient"></i>
+					<spring:message code="actor.personalData" />
+					&nbsp;<i class="fas fa-mobile-alt icon-gradient"></i>
 				</h2>
 				<hr>
 
@@ -86,40 +89,59 @@
 			</fieldset>
 		</div>
 
-		<div class="col-md-4">
-			<fieldset>
-				<h2>
-					<spring:message code="actor.creditCard" />&nbsp;<i class="far fa-credit-card icon-gradient"></i>
-				</h2>
-				<hr>
-				<div class="row" style="padding-left: 1.5em">
-					<strong><spring:message code="actor.holder" />:&nbsp;</strong>
-					<jstl:out value="${registerActor.creditCard.holder}"></jstl:out>
-				</div>
+		<c:choose>
+			<c:when test="${res}">
+				<div class="col-md-4">
+					<fieldset>
+						<h2>
+							<spring:message code="actor.creditCard" />
+							&nbsp;<i class="far fa-credit-card icon-gradient"></i>
+						</h2>
+						<hr>
+						<div class="row" style="padding-left: 1.5em">
+							<strong><spring:message code="actor.holder" />:&nbsp;</strong>
+							<jstl:out value="${registerActor.creditCard.holder}"></jstl:out>
+						</div>
 
-				<div class="row" style="padding-left: 1.5em">
-					<strong><spring:message code="actor.make" />:&nbsp;</strong>
-					<jstl:out value="${registerActor.creditCard.make}"></jstl:out>
-				</div>
-				<div class="row" style="padding-left: 1.5em">
-					<strong><spring:message code="actor.number" />:&nbsp;</strong>
-					<jstl:out value="${registerActor.creditCard.number}"></jstl:out>
-				</div>
+						<div class="row" style="padding-left: 1.5em">
+							<strong><spring:message code="actor.make" />:&nbsp;</strong>
+							<jstl:out value="${registerActor.creditCard.make}"></jstl:out>
+						</div>
+						<div class="row" style="padding-left: 1.5em">
+							<strong><spring:message code="actor.number" />:&nbsp;</strong>
+							<jstl:out value="${registerActor.creditCard.number}"></jstl:out>
+						</div>
 
-				<div class="row" style="padding-left: 1.5em">
-					<strong><spring:message code="actor.CVV" />:&nbsp;</strong>
-					<jstl:out value="${registerActor.creditCard.CVV}"></jstl:out>
+						<div class="row" style="padding-left: 1.5em">
+							<strong><spring:message code="actor.CVV" />:&nbsp;</strong>
+							<jstl:out value="${registerActor.creditCard.CVV}"></jstl:out>
+						</div>
+						<div class="row" style="padding-left: 1.5em">
+							<strong><spring:message code="actor.expiration" />:&nbsp;</strong>
+							<jstl:out value="${registerActor.creditCard.expiration}"></jstl:out>
+						</div>
+					</fieldset>
 				</div>
-				<div class="row" style="padding-left: 1.5em">
-					<strong><spring:message code="actor.expiration" />:&nbsp;</strong>
-					<jstl:out value="${registerActor.creditCard.expiration}"></jstl:out>
-				</div>
-			</fieldset>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	<!-- ALVARO -->
+	<br>
+	<div class="jumbotron" style="width: 100%">
+		<div class="row">
+			<div class="col-md-12">
+				<h4 class="display-12" style="text-align: center">
+					<spring:message code="workforce" />
+					<acme:create name=""
+						url="jobApplication/cleaner/create.do?hostId=${registerActor.id}"
+						code="curricula.edit" />
+				</h4>
+			</div>
 		</div>
 	</div>
-
-
-	<br>
+	<!-- ALVARO -->
 
 	<div class="row">
 		<div class="col-md-4">
@@ -127,5 +149,4 @@
 
 		</div>
 	</div>
-</div>
 </div>

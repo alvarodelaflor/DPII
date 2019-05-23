@@ -24,6 +24,10 @@
 		<!-- ALVARO -->
 		<bean class="converters.StringToCurriculaConverter"/>
 		<bean class="converters.CurriculaToStringConverter"/>
+		<bean class="converters.StringToJobApplicationConverter"/>
+		<bean class="converters.JobApplicationToStringConverter"/>
+		<bean class="converters.StringToHostConverter"/>
+		<bean class="converters.HostToStringConverter"/>
 		<!-- ALVARO -->
 		
 		<bean class="converters.StringToMailboxConverter" />		

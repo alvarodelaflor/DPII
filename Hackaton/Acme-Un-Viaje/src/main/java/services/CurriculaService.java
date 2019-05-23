@@ -181,6 +181,7 @@ public class CurriculaService {
 		curriculaCopy.setCleaner(curricula.getCleaner());
 		curriculaCopy.setIsCopy(true);
 		curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
+		curriculaCopy.setBannerLogo(curricula.getBannerLogo());
 		curriculaCopy.setName(curricula.getName());
 		curriculaCopy.setPhone(curricula.getPhone());
 		curriculaCopy.setStatement(curricula.getStatement());

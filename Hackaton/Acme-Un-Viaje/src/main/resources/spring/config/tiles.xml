@@ -41,6 +41,7 @@
 		<!-- ALVARO -->
 		<value>/views/curricula/tiles.xml</value>
 		<value>/views/educationalData/tiles.xml</value>
+		<value>/views/jobApplication/tiles.xml</value>
 		<!-- ALVARO -->
 		
 		<!-- HIPONA -->
@@ -53,6 +54,7 @@
 		<!-- FERRETE -->
 		<value>/views/accomodation/tiles.xml</value>
 		<value>/views/finderAccomodation/tiles.xml</value>
+		<value>/views/finderRequest/tiles.xml</value>
 		<!-- FERRETE -->
 		
 	</util:list>
