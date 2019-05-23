@@ -60,7 +60,7 @@ public class CleanerService {
 	// ---------------------------------------------------------------
 	public Cleaner saveRegisterAsCleaner(final Cleaner cleaner) {
 		 if (cleaner.getPhone().matches("^([0-9]{4,})$")) {
-			 cleaner.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + cleaner.getPhone());
+			 cleaner.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + cleaner.getPhone());
 		 }
 		return this.cleanerRepository.save(cleaner);
 	}

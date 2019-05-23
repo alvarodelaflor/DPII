@@ -3,41 +3,28 @@ package domain;
 
 import java.util.Date;
 
-/*
- * Curricula.java
- *
- * author: Alvaro de la Flor Bonilla GitHub: alvar017
- *
- * CONTROL:
- * 30/03/2019 14:28 Creation
- */
-
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Access(AccessType.PROPERTY)
 public class BookingTransport extends DomainEntity {
 
-	private Date		startDate;
-	private Date		endDate;
+	private Date		date;
+
 	private Transport	transport;
 
 
-	public Date getStartDate() {
-		return this.startDate;
+	public Date getDate() {
+		return this.date;
 	}
 
-	public void setStartDate(final Date startDate) {
-		this.startDate = startDate;
+	public void setDate(final Date date) {
+		this.date = date;
 	}
 
-	public Date getEndDate() {
-		return this.endDate;
-	}
-
-	public void setEndDate(final Date endDate) {
-		this.endDate = endDate;
-	}
 	@ManyToOne(optional = false)
 	public Transport getTransport() {
 		return this.transport;

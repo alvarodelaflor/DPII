@@ -53,6 +53,35 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private String					password;
 	private Collection<Authority>	authorities;
 	private Boolean					banned	= false;
+	
+	private Double					msgCounter		= 0.;
+	private Double					spamMsgCounter	= 0.;
+	private Boolean					spammerFlag		= false;
+
+
+	public Double getMsgCounter() {
+		return this.msgCounter;
+	}
+
+	public void setMsgCounter(final Double msgCounter) {
+		this.msgCounter = msgCounter;
+	}
+
+	public Double getSpamMsgCounter() {
+		return this.spamMsgCounter;
+	}
+
+	public void setSpamMsgCounter(final Double spamMsgCounter) {
+		this.spamMsgCounter = spamMsgCounter;
+	}
+	
+	public Boolean getSpammerFlag() {
+		return this.spammerFlag;
+	}
+
+	public void setSpammerFlag(final Boolean spammerFlag) {
+		this.spammerFlag = spammerFlag;
+	}
 
 
 	public Boolean getBanned() {

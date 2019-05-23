@@ -136,7 +136,7 @@
 		<property name="welcomeMessageEs" value="Bienvenido a Acme Un Viaje"></property>
 		<property name="welcomeMessageEn" value="Welcome to Acme A Trip"></property>
 		<property name="bannerLogo" value="images/logo.png"></property>
-		<property name="defaultPhoneCode" value="+34 "></property>
+		<property name="defaultPhoneCode" value="34 "></property>
 	</bean>
 	<!-- CONFIG -->
 	<!-- ADMIN -->
