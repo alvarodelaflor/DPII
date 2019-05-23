@@ -227,6 +227,12 @@
 										<spring:message code="master.page.request.list" />
 									</a>
 								</li>
+								
+								<li class = "nav-item">
+									<a href="travelPack/travelAgency/list.do" class="nav-link"> 
+										<spring:message code="master.page.travelPack.list" />
+									</a>
+								</li>
 						</security:authorize>
 
 							<security:authorize access="hasRole('HOST')">

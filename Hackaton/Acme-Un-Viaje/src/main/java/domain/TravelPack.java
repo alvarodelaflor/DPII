@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.SafeHtml;
+
 /**
  * Transport
  */
@@ -29,8 +31,18 @@ public class TravelPack extends DomainEntity {
 	private Complaint						complaint;
 	private Customer						customer;
 	private TravelAgency					travelAgency;
+	private Boolean							draft;
 
 
+	public Boolean getDraft() {
+		return this.draft;
+	}
+
+	public void setDraft(final Boolean draft) {
+		this.draft = draft;
+	}
+
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}

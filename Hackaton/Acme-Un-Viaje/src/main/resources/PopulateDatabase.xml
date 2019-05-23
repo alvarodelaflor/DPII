@@ -582,6 +582,7 @@
 		<!-- TRAVELPACK -->
 	<bean id="travelPack01" class="domain.TravelPack">
 		<property name="name" value ="travelPack1" />
+		<property name="draft" value ="false" />
 		<property name="customer" ref ="customer01" />
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">
@@ -597,6 +598,7 @@
 	</bean>
 	<bean id="travelPack02" class="domain.TravelPack">
 		<property name="name" value ="travelPack2" />
+		<property name="draft" value ="false" />
 		<property name="customer" ref ="customer01" />
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">
