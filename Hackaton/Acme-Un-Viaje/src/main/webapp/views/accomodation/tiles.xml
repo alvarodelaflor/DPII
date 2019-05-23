@@ -17,5 +17,24 @@
 		<put-attribute name="body" value="/views/accomodation/travelAgency/show.jsp" />
 	</definition>
 	
+	<definition name="accomodation/host/list" extends="master.page">	
+		<put-attribute name="title" value="Yours Accomodations" />
+		<put-attribute name="body" value="/views/accomodation/list.jsp" />
+	</definition>
+	
+	<definition name="accomodation/host/create" extends="master.page">	
+		<put-attribute name="title" value="Create an accomodation" />
+		<put-attribute name="body" value="/views/accomodation/create.jsp" />
+	</definition>
+	
+	<definition name="accomodation/host/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit an accomodation" />
+		<put-attribute name="body" value="/views/accomodation/edit.jsp" />
+	</definition>
+	
+	<definition name="accomodation/host/show" extends="master.page">	
+		<put-attribute name="title" value="Show an accomodation" />
+		<put-attribute name="body" value="/views/accomodation/show.jsp" />
+	</definition>
 	
 </tiles-definitions>

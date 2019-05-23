@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+ 
+ <!--
+	CONTROL DE CAMBIOS tiles_es.xml FLOAT
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="jobApplication/cleaner/create" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/jobApplication/editC.jsp" />
+	</definition>
+	
+	<definition name="jobApplication/cleaner/edit" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/jobApplication/editC.jsp" />
+	</definition>
+	
+	<definition name="jobApplication/show" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/jobApplication/show.jsp" />
+	</definition>
+	
+	<definition name="jobApplication/cleaner/list" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/jobApplication/list.jsp" />
+	</definition>
+	
+</tiles-definitions>

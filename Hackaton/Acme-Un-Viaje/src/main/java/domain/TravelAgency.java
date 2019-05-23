@@ -13,8 +13,18 @@ import javax.persistence.OneToOne;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class TravelAgency extends Actor {
 
-	private FinderAccomodation finder;
+	private FinderAccomodation	finder;
+	private FinderRequest		finderRequest;
 
+
+	@OneToOne(optional = false)
+	public FinderRequest getFinderRequest() {
+		return this.finderRequest;
+	}
+
+	public void setFinderRequest(final FinderRequest finderRequest) {
+		this.finderRequest = finderRequest;
+	}
 
 	@OneToOne(optional = false)
 	public FinderAccomodation getFinder() {
