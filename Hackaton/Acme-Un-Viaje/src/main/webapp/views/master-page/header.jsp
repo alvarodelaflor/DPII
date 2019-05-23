@@ -64,6 +64,9 @@
 									class="nav-link"> <spring:message
 											code="master.page.admin.create" />
 								</a></li>
+								<li class="nav-item dropdown">
+									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('CLEANER')">
@@ -94,6 +97,9 @@
 												code="master.page.socialProfile.list" />
 										</a>
 									</div></li>
+									<li class="nav-item dropdown">
+									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('TRANSPORTER')">
@@ -124,6 +130,9 @@
 												code="master.page.transporter.transport.listAll" />
 										</a>
 									</div></li>
+									<li class="nav-item dropdown">
+									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('REFEREE')">
@@ -141,6 +150,9 @@
 												code="master.page.socialProfile.list" />
 										</a>
 									</div></li>
+									<li class="nav-item dropdown">
+									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('CUSTOMER')">
@@ -163,6 +175,9 @@
 									class="nav-link"> <spring:message
 											code="master.page.request.customerList" />
 								</a></li>
+								<li class="nav-item dropdown">
+									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('TRAVELAGENCY')">
@@ -205,6 +220,9 @@
 									href="finderRequest/travelAgency/show.do" class="nav-link">
 										<spring:message code="master.page.accomodation.list" />
 								</a></li>
+								<li class="nav-item dropdown">
+									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('HOST')">
@@ -226,6 +244,9 @@
 												code="master.page.socialProfile.list" />
 										</a>
 									</div></li>
+									<li class="nav-item dropdown">
+									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+								</li>
 							</security:authorize>
 
 							<!-- ACTORES LOGUEADOS, DISTINGUIENDO POR ROL -->
