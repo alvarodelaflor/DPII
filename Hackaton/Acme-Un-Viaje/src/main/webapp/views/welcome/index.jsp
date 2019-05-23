@@ -18,16 +18,18 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <hr>
-<div class="row" style="padding-left: 2.5em">
-	<p>
-		<spring:message code="welcome.greeting.prefix" />
-		${name}
-		<spring:message code="welcome.greeting.suffix" />
-	</p>
-</div>
-<div class="row" style="padding-left: 2.5em">
-	<p>
-		<spring:message code="welcome.greeting.current.time" />
-		${moment}
-	</p>
+<div class="container-fluid">
+	<div class="row">
+		<p>
+			<spring:message code="welcome.greeting.prefix" />
+			${name}
+			<spring:message code="welcome.greeting.suffix" />
+		</p>
+	</div>
+	<div class="row">
+		<p>
+			<spring:message code="welcome.greeting.current.time" />
+			${moment}
+		</p>
+	</div>
 </div>

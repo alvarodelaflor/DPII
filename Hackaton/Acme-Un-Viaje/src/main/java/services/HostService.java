@@ -3,23 +3,25 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Host;
+import forms.RegisterActor;
 import repositories.HostRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Host;
-import domain.Cleaner;
-import domain.CreditCard;
-import forms.RegisterActor;
 
 @Service
 @Transactional
@@ -27,6 +29,9 @@ public class HostService {
 
 	@Autowired
 	private HostRepository hostRepository;
+	
+	@Autowired
+	private CleanerService cleanerService;
 
 	@Autowired
 	private Validator validator;
@@ -36,6 +41,21 @@ public class HostService {
 	
 	@Autowired
 	private ConfigService configService;
+	
+	
+	//CRUD METHODS
+
+	/**
+	 * Return all hosts save in DataBase
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Host}>
+	 */
+	public Collection<Host> findAll() {
+		return this.hostRepository.findAll();
+	}
+	
+	// CRUD METHODS
 
 	// REGISTER AS HOST
 	// ---------------------------------------------------------------
@@ -219,6 +239,21 @@ public class HostService {
 			} catch (Exception e) {
 				res = null;
 			}
+			return res;
+		}
+
+		/**
+		 * Return the host available for an especific cleaner job application<br>
+		 * Cleaner must exits in DataBase
+		 * 
+		 * @author Alvaro de la Flor Bonilla
+		 * @return {@link Collection}<{@link Host}>
+		 */
+		public Collection<Host> findHostAvailableForCleaner(Cleaner cleaner) {
+			Assert.notNull(cleaner, "Cleaner is null");
+			Assert.notNull(this.cleanerService.findOne(cleaner.getId()), "Cleaner not found in DataBase");
+			Collection<Host> res = this.findAll();
+			res.removeAll(this.hostRepository.findHostNotAvailableForCleaner(cleaner.getId()));
 			return res;
 		}
 }

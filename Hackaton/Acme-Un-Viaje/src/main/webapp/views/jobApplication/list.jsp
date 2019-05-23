@@ -20,9 +20,16 @@
 
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
-		<div class="col-md-12">
-			<h3><strong><spring:message code="jobApplication.hello" /></strong></h3>
-			<br>
+		<div class="col-md-3">
+	    		<img src="https://koe.cl/uploads/carta-presentacion-en-ingles/carta-presentacion-en-ingles.png" alt="Curricula"  width="250"/>
+		</div>
+		<div class="col-md-9">
+		    <h3>
+				<spring:message code="jobApplication.principalMessage1" /><jstl:out value=" ${cleaner.name}!"></jstl:out>
+				<small class="text-muted">
+					<spring:message code="jobApplication.secundaryMessage1" />
+				</small>
+			</h3>
 			<display:table name="jobApplications" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
 				<display:column titleKey="jobApplication.host">
 					<a href="host/show.do?hostId=${row2.host.id}"><jstl:out value="${row2.host.name} ${row2.host.surname}"></jstl:out></a>			
@@ -55,6 +62,45 @@
 					</c:when>
 				</c:choose>
 			</display:table>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron jumbotron-fluid">
+			  <div class="container">
+			    <h1 class="display-4"><spring:message code="lookForJob1"/></h1>
+			    <p class="lead"><spring:message code="lookForJob2"/></p>
+				<display:table name="hosts" id="row3" requestURI="${requestURI}" pagesize="1" class="displaytag table table-hover">
+					<display:column titleKey="none">
+						<center><c:choose>
+							<c:when
+								test="${row3.photo == null or row3.photo=='' }">
+								<div class="col-md-3">
+									<div class="card">
+										<img class="card-img-top" src="images/registerPhoto.png"
+											alt="ERROR">
+										<div class="card-body">
+											<h4 class="card-title"><a href="host/show.do?hostId=${row3.id}"><jstl:out value="${row3.name}${row3.surname}"></jstl:out></a></h4>
+										</div>
+									</div>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="col-md-3">
+									<div class="card">
+										<img class="card-img-top" src="${row3.photo}" alt="ERROR">
+										<div class="card-body">
+											<h4 class="card-title"><a href="host/show.do?hostId=${row3.id}"><jstl:out value="${row3.name} ${row3.surname}"></jstl:out></a></h4>
+										</div>
+									</div>
+								</div>
+							</c:otherwise>
+						</c:choose></center>
+					</display:column>
+				</display:table>
+			  </div>
+			</div>		
 		</div>
 	</div>
 </div>

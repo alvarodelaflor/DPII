@@ -15,6 +15,7 @@ import domain.Cleaner;
 import domain.JobApplication;
 import services.CleanerService;
 import services.CurriculaService;
+import services.HostService;
 import services.JobApplicationService;
 
 @Controller
@@ -23,6 +24,9 @@ public class JobApplicationCleanerController extends AbstractController {
 
 	@Autowired
 	private CleanerService cleanerService;
+	
+	@Autowired
+	private HostService hostService;
 	
 	@Autowired
 	private JobApplicationService	jobApplicationService;
@@ -44,8 +48,10 @@ public class JobApplicationCleanerController extends AbstractController {
 				result.addObject("cleanerLogger", true);
 			Assert.notNull(cleaner, "Cleaner is null");
 			final Collection<JobApplication> jobApplications = this.jobApplicationService.findAllByCleanerId(this.cleanerService.getCleanerLogin().getId());
+			result.addObject("cleaner", cleaner);
 			result.addObject("jobApplications", jobApplications);
-			result.addObject("requestURI", "jobApplication/cleaner/list");
+			result.addObject("hosts", this.hostService.findHostAvailableForCleaner(cleaner));
+			result.addObject("requestURI", "jobApplication/cleaner/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
