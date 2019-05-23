@@ -1,6 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Cleaner;
+import domain.Host;
 import domain.JobApplication;
 import services.CleanerService;
 import services.CurriculaService;
@@ -50,12 +53,24 @@ public class JobApplicationCleanerController extends AbstractController {
 			final Collection<JobApplication> jobApplications = this.jobApplicationService.findAllByCleanerId(this.cleanerService.getCleanerLogin().getId());
 			result.addObject("cleaner", cleaner);
 			result.addObject("jobApplications", jobApplications);
-			result.addObject("hosts", this.hostService.findHostAvailableForCleaner(cleaner));
+			Collection<Host> availableHost = this.hostService.findHostAvailableForCleaner(cleaner);
+			result.addObject("numbers", listNumber(availableHost.size()));
+			result.addObject("hosts", availableHost);
 			result.addObject("requestURI", "jobApplication/cleaner/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
+	}
+	
+	private List<Integer> listNumber(int size) {
+		List<Integer> res = new ArrayList<>();
+		int aux = 0;
+		while (aux < size) {
+			res.add(aux);
+			aux++;
+		}
+		return res;
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

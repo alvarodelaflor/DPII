@@ -18,8 +18,9 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <div class="container-fluid" style="padding-left: 2.5em">
-	<div class="row">
+	<div class="row">	
 		<div class="col-md-3">
 	    		<img src="https://koe.cl/uploads/carta-presentacion-en-ingles/carta-presentacion-en-ingles.png" alt="Curricula"  width="250"/>
 		</div>
@@ -71,34 +72,92 @@
 			  <div class="container">
 			    <h1 class="display-4"><spring:message code="lookForJob1"/></h1>
 			    <p class="lead"><spring:message code="lookForJob2"/></p>
-				<display:table name="hosts" id="row3" requestURI="${requestURI}" pagesize="1" class="displaytag table table-hover">
-					<display:column titleKey="none">
-						<center><c:choose>
-							<c:when
-								test="${row3.photo == null or row3.photo=='' }">
-								<div class="col-md-3">
-									<div class="card">
-										<img class="card-img-top" src="images/registerPhoto.png"
-											alt="ERROR">
-										<div class="card-body">
-											<h4 class="card-title"><a href="host/show.do?hostId=${row3.id}"><jstl:out value="${row3.name}${row3.surname}"></jstl:out></a></h4>
-										</div>
-									</div>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="col-md-3">
-									<div class="card">
-										<img class="card-img-top" src="${row3.photo}" alt="ERROR">
-										<div class="card-body">
-											<h4 class="card-title"><a href="host/show.do?hostId=${row3.id}"><jstl:out value="${row3.name} ${row3.surname}"></jstl:out></a></h4>
-										</div>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose></center>
-					</display:column>
-				</display:table>
+				<div id="myCarousel" class="carousel slide bg-inverse w-50 ml-auto mr-auto" data-ride="carousel">
+					<ol class="carousel-indicators">
+				    	<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<c:forEach var = "i" items="${numbers}">
+							<jstl:if test="${i!=0}">
+								<li data-target="#myCarousel" data-slide-to="${i}"></li>
+							</jstl:if>
+						</c:forEach>
+				  	</ol>
+				  	<div class="carousel-inner" role="listbox">
+					  	<c:forEach var = "i" items="${hosts}">
+							<c:choose>
+								<c:when test="${i.name == hosts[0].name}">
+								    <div class="carousel-item active">
+										<c:choose>
+											<c:when
+												test="${i.photo == null or i.photo=='' }">
+												<div class="col-md-3">
+													<div class="card">
+														<img class="card-img-top" src="images/registerPhoto.png"
+															alt="ERROR">
+													</div>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="col-md-3">
+													<div class="card">
+														<img class="card-img-top" src="${i.photo}" alt="ERROR">
+													</div>
+												</div>
+											</c:otherwise>
+										</c:choose>
+								        <div class="carousel-caption">
+											<h3><a href="host/show.do?hostId=${i.id}"><jstl:out value="${i.name} ${i.surname}"></jstl:out></a></h3>
+								        </div>
+								    </div>
+								</c:when>
+								<c:otherwise>
+								    <div class="carousel-item">
+										<c:choose>
+											<c:when
+												test="${i.photo == null or i.photo=='' }">
+												<div class="col-md-3">
+													<div class="card">
+														<img class="card-img-top" src="images/registerPhoto.png"
+															alt="ERROR">
+													</div>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="col-md-3">
+													<div class="card">
+														<img class="card-img-top" src="${i.photo}" alt="ERROR">
+													</div>
+												</div>
+											</c:otherwise>
+										</c:choose>
+								        <div class="carousel-caption">
+								          <h3><a href="host/show.do?hostId=${i.id}"><jstl:out value="${i.name} ${i.surname}"></jstl:out></a></h3>
+								        </div>
+								    </div>
+								</c:otherwise>
+							</c:choose>
+					  	</c:forEach>
+				  	</div>
+				  	<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+				    	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    	<span class="sr-only">Previous</span>
+				  </a>
+				  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a>
+				</div>				
+				<!-- Initialize Bootstrap functionality -->
+				<script>
+				// Initialize tooltip component
+				$(function () {
+				  $('[data-toggle="tooltip"]').tooltip()
+				})
+				
+				// Initialize popover component
+				$(function () {
+				  $('[data-toggle="popover"]').popover()
+				})
+				</script>
 			  </div>
 			</div>		
 		</div>
