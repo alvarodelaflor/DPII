@@ -21,7 +21,6 @@ public class Complaint extends DomainEntity {
 
 	private Customer			customer;
 	private TravelAgency		travelAgency;
-	private BookingAccomodation	booking;
 	private Host				host;
 	private Transporter			transporter;
 
@@ -54,7 +53,7 @@ public class Complaint extends DomainEntity {
 		this.customer = customer;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public TravelAgency getTravelAgency() {
 		return this.travelAgency;
 	}
@@ -63,6 +62,7 @@ public class Complaint extends DomainEntity {
 		this.travelAgency = travelAgency;
 	}
 
+	@ManyToOne(optional = true)	
 	public Host getHost() {
 		return this.host;
 	}
@@ -71,6 +71,7 @@ public class Complaint extends DomainEntity {
 		this.host = host;
 	}
 
+	@ManyToOne(optional = true)	
 	public Transporter getTransporter() {
 		return this.transporter;
 	}
