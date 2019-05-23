@@ -211,7 +211,7 @@
 								
 								<li class = "nav-item">
 									<a href="finderRequest/travelAgency/show.do" class="nav-link"> 
-										<spring:message code="master.page.accomodation.list" />
+										<spring:message code="master.page.request.list" />
 									</a>
 								</li>
 						</security:authorize>
