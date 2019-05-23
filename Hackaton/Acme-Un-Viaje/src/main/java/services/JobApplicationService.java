@@ -40,6 +40,7 @@ public class JobApplicationService {
 	
 	private String cleanerNotLogin = "Any cleaner is login";
 	private String hostNotFound = "This host has not been found in database";
+	private String hostNull = "The host is null";
 	private String cleanerAcceptedPending = "This cleaner has an already application (accepted or pending) for this host";
 	private String diferentHost = "The host is diferent";
 	private String diferentCleaner = "The cleaner is diferent";
@@ -205,6 +206,33 @@ public class JobApplicationService {
 	 */
 	public Collection<JobApplication> findAllByCleanerId(int cleanerId) {
 		return this.jobApplicationRepository.findAllByCleanerId(cleanerId);
+	}
+	
+	public Collection<JobApplication> getJobApplicationByStatusAndHostId(Boolean status, int hostId){
+		Host hostLogin = this.hostService.getHostLogin();
+		Host hostToCheck = this.hostService.findOne(hostId);
+		Assert.notNull(hostLogin, hostNull);
+		Assert.notNull(hostToCheck, hostNotFound);
+		Assert.isTrue(hostLogin.equals(hostToCheck), diferentHost);
+		return this.jobApplicationRepository.getJobApplicationByStatusAndHostId(status, hostId);
+	}
+	
+	public Collection<JobApplication> getJobApplicationPendingByHostId(int hostId) { 
+		Host hostLogin = this.hostService.getHostLogin();
+		Host hostToCheck = this.hostService.findOne(hostId);
+		Assert.notNull(hostLogin, hostNull);
+		Assert.notNull(hostToCheck, hostNotFound);
+		Assert.isTrue(hostLogin.equals(hostToCheck), diferentHost);
+		return this.jobApplicationRepository.getJobApplicationPendingByHostId(hostId);		
+	}
+	
+	public Collection<JobApplication> getExCleaners(int hostId) {
+		Host hostLogin = this.hostService.getHostLogin();
+		Host hostToCheck = this.hostService.findOne(hostId);
+		Assert.notNull(hostLogin, hostNull);
+		Assert.notNull(hostToCheck, hostNotFound);
+		Assert.isTrue(hostLogin.equals(hostToCheck), diferentHost);
+		return this.jobApplicationRepository.getExCleaners(hostId);
 	}
 	// AUXILIAR METHODS
 }
