@@ -55,7 +55,7 @@ public class TravelAgencyService {
 	// ---------------------------------------------------------------
 	public TravelAgency saveRegisterAsTravelAgency(final TravelAgency travelAgency) {
 		if (travelAgency.getPhone().matches("^([0-9]{4,})$")) {
-			 travelAgency.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + travelAgency.getPhone());
+			 travelAgency.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + travelAgency.getPhone());
 		 }
 		return this.travelAgencyRepository.save(travelAgency);
 	}

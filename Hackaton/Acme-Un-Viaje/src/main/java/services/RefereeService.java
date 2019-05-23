@@ -56,7 +56,7 @@ public class RefereeService {
 	// ---------------------------------------------------------------
 	public Referee saveRegisterAsReferee(final Referee referee) {
 		if (referee.getPhone().matches("^([0-9]{4,})$")) {
-			 referee.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + referee.getPhone());
+			 referee.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + referee.getPhone());
 		 }
 		return this.refereeRepository.save(referee);
 	}

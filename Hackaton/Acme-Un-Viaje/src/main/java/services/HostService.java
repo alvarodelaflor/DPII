@@ -76,7 +76,7 @@ public class HostService {
 	// ---------------------------------------------------------------
 	public Host saveRegisterAsHost(final Host host) {
 		if (host.getPhone().matches("^([0-9]{4,})$")) {
-			 host.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + host.getPhone());
+			 host.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + host.getPhone());
 		 }
 		return this.hostRepository.save(host);
 	}
