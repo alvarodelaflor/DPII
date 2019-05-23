@@ -47,12 +47,14 @@
 									<spring:message code="null" />
 								</c:when>
 								<c:otherwise>
-									<c:when test="${row2.status==true}">
-										<spring:message code="true" />
-									</c:when>
-									<c:otherwise>
-										<spring:message code="false" />
-									</c:otherwise>
+									<c:choose>
+										<c:when test="${row2.status==true}">
+											<spring:message code="true" />
+										</c:when>
+										<c:otherwise>
+											<spring:message code="false" />
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>			
 						</display:column>
@@ -85,7 +87,7 @@
 			    	</c:when>
 			    	<c:otherwise>
 			    		<p class="lead"><spring:message code="lookForJob2"/></p>
-						<div id="myCarousel" class="carousel slide bg-inverse w-50 ml-auto mr-auto" data-ride="carousel">
+						<div id="myCarousel" class="carousel slide bg-inverse w-60 ml-auto mr-auto" data-ride="carousel">
 							<ol class="carousel-indicators">
 						    	<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 								<c:forEach var = "i" items="${numbers}">

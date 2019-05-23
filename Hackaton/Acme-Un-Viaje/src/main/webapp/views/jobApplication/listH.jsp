@@ -181,4 +181,27 @@
 			</div>		
 		</div>
 	</div>
+	<div class="row">
+		<c:choose>
+			<c:when test="${empty accepted}">
+			
+			</c:when>
+			<c:otherwise>
+				<div class="col-md-12">
+					<h1 class="display-4"><strong><spring:message code="jobApplication.accepted" /></strong></h1>
+					<p class="lead"><spring:message code="jobApplications.howDrop" /></p>
+					<br>
+					<display:table name="accepted" id="row3" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
+						<display:column titleKey="actor.name">
+							<a href="curricula/show.do?curriculaId=${row3.curricula.id}"><jstl:out value="${row3.cleaner.name} ${row3.cleaner.surname}"></jstl:out></a>			
+						</display:column>
+						<display:column property="cleanerMessage" titleKey="jobApplication.firstMessage"></display:column>
+							<display:column titleKey="none">
+								<acme:delete name = "" url="jobApplication/host/drop.do?jobApplicationId=${row3.id}" code="curricula.delete"/>
+							</display:column>
+					</display:table>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</div>
 </div>
