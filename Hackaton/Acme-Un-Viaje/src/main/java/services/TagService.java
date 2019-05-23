@@ -50,9 +50,15 @@ public class TagService {
 		this.tagRepository.flush();
 	}
 
-	public Tag getTagByMessage(final int messageId) {
+	public Collection<Tag> getTagByMessage(final int messageId) {
 		final UserAccount user = LoginService.getPrincipal();
 		final Actor a = this.actorService.getActorByUserId(user.getId());
 		return this.tagRepository.getTagByMessage(a.getId(), messageId);
+	}
+	
+	public Tag getTagByMessageDeleted(final int messageId) {
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
+		return this.tagRepository.getTagByMessageDelete(a.getId(), messageId);
 	}
 }
