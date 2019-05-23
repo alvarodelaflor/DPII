@@ -45,31 +45,53 @@
 	</h3>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="form-group">
-				<spring:message htmlEscape="false" code="jobApplication.cleanerMessage" var="placeholder1" />
-				<form:textarea class="form-control" path="cleanerMessage" placeholder="${placeholder1}"/>
-				<form:errors path="cleanerMessage" cssClass="error" />
-			</div>
-			<div class="form-group">
-			  <label for="exampleFormControlSelect1"><spring:message htmlEscape="false" code="jobApplication.curricula" /></label>
-			  <form:select class="form-control" id="exampleFormControlSelect1" path="curricula">
-			  	<form:options items="${curriculas}" itemValue="id" itemLabel="name" />
-			  </form:select>
-			  <form:errors path="curricula" cssClass="error" />
-			</div>
+			<c:choose>
+				<c:when test="${empty curriculas}">
+					<br>
+					<br>
+					<p class="lead">
+						<spring:message htmlEscape="false" code="jobApplication.emptyCurriculas"/>
+						<a href="curricula/cleaner/create.do">
+							<spring:message htmlEscape="false" code="createCurricula"/>
+						</a>		
+					</p>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+				</c:when>
+				<c:otherwise>
+					<div class="form-group">
+						<spring:message htmlEscape="false" code="jobApplication.cleanerMessage" var="placeholder1" />
+						<form:textarea class="form-control" path="cleanerMessage" placeholder="${placeholder1}"/>
+						<form:errors path="cleanerMessage" cssClass="error" />
+					</div>
+					<div class="form-group">
+					  <label for="exampleFormControlSelect1"><spring:message htmlEscape="false" code="jobApplication.curricula" /></label>
+					  <form:select class="form-control" id="exampleFormControlSelect1" path="curricula">
+					  	<form:options items="${curriculas}" itemValue="id" itemLabel="name" />
+					  </form:select>
+					  <form:errors path="curricula" cssClass="error" />
+					</div>
+					<div class="row" style="padding-left: 1.0em">
+						<p class="lead">
+							<spring:message htmlEscape="false" code="jobApplication.add" />
+						</p>
+					</div>
+					<div class="row">
+						<div class="col-md-6" style="padding-left: 14.0em">
+							<span style="padding-left: 4.5em"> <acme:submit
+									name="save" code="actor.save" />
+							</span> <span style="padding-left: 0.5em"> <acme:cancel url=""
+									code="actor.cancel" />
+							</span>
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	
-	<div class="row" style="padding-left: 1.0em">
-		<p class="lead">
-			<spring:message htmlEscape="false" code="jobApplication.add" />
-		</p>
-	</div>
-	<div class="row">
-		<div class="col-md-3">
-			<span style="padding-left: 17.5em"> <acme:submit name="save" code="actor.save" /></span> 
-			<span style="padding-left: 0.5em"> <acme:cancel url="" code="actor.cancel" /></span>
-		</div>
-	</div>
 
 </form:form>
