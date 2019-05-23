@@ -83,9 +83,12 @@ public class MessageController extends AbstractController {
 
 		final Message msg = this.messageService.findOne(messageId);
 		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+		
+		Collection<Tag> tags = tagService.getTagByMessage(messageId);
 
 		result = new ModelAndView("message/show");
 		result.addObject("msg", msg);
+		result.addObject("tags",tags);
 		result.addObject("language", language);
 		result.addObject("mailboxId", mailboxId);
 		result.addObject("requestURI", "message/show.do");
@@ -239,21 +242,12 @@ public class MessageController extends AbstractController {
 		
 		msg = this.messageService.reconstruct(msg, binding);
 		
+		msg.setTags(new ArrayList<Tag>());
+		
 		final UserAccount login = LoginService.getPrincipal();
 		final Actor sender = this.actorService.findByUserAccountId(login.getId());
-		System.out.println("antes de exchangeMessage");
-		System.out.println("despues de exchangeMessage");
-		System.out.println(sender);
-		System.out.println(msg);
-		System.out.println(msg.getMailboxes());
-		System.out.println(this.mailboxService.getOutBoxActor(sender.getId()).getMessages());
-
-		System.out.println("Entro en el save");
-		//		if (msg.getBody() == null || msg.getBody().isEmpty()) {
-		//			final ObjectError error = new ObjectError("message.body", "An account already exists for this email.");
-		//			binding.addError(error);
-		//			binding.rejectValue("body", "error.message.body.blank");
-		//		}
+	
+		
 		if (binding.hasErrors()) {
 			System.out.println("Entro en el binding messageController");
 			System.out.println(binding.getAllErrors().get(0));
@@ -268,6 +262,13 @@ public class MessageController extends AbstractController {
 				System.out.println("intenta el list broadcast");
 				msg = this.messageService.sendBroadcast(msg);
 				this.messageService.save(msg);
+				List<Tag> tags = new ArrayList<Tag>();
+				tags.addAll(msg.getTags());
+				
+				for (int i = 0; i < tags.size(); i++) {
+					tags.get(i).setMessageId(msg.getId());
+					tagService.save(tags.get(i));
+				}
 				final Collection<Mailbox> mailboxes = sender.getMailboxes();
 				System.out.println(mailboxes);
 				result = new ModelAndView("mailbox/list");
@@ -370,7 +371,14 @@ public class MessageController extends AbstractController {
 
 		try {
 			System.out.println("entra en el try");
-			final Message m = this.messageService.delete(msg, mailboxId);
+			this.messageService.delete(msg, mailboxId);
+			Message m = messageService.findOne(msg.getId());
+			if(m != null) {
+			Tag deleteTag = tagService.getTagByMessageDeleted(m.getId());
+			if(deleteTag != null) {
+				tagService.save(deleteTag);
+			}
+			}
 			final Collection<Mailbox> mailboxes = sender.getMailboxes();
 			System.out.println(mailboxes);
 			result = new ModelAndView("mailbox/list");

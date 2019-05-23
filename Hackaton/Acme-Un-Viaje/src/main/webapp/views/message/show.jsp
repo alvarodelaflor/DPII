@@ -39,7 +39,7 @@
 				
 				<div class="row" style="padding-left: 1.5em">
 					<strong><spring:message code="msg.show.tags" />:&nbsp;</strong>
-					<jstl:out value="${msg.tags}"></jstl:out>
+					<jstl:out value="${tags}"></jstl:out>
 				</div>
 				
 					<div class="row" style="padding-left: 1.5em">
