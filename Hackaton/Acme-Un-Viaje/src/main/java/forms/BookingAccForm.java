@@ -1,34 +1,22 @@
 
-package domain;
+package forms;
 
 import java.util.Date;
 
-/*
- * Curricula.java
- *
- * author: Alvaro de la Flor Bonilla GitHub: alvar017
- *
- * CONTROL:
- * 30/03/2019 14:28 Creation
- */
-
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
-public class BookingAccomodation extends DomainEntity {
+import domain.Accomodation;
+
+public class BookingAccForm {
 
 	private Date			startDate, endDate;
-
+	private int				travelPackId;
 	private Accomodation	accomodation;
 
 
-	@ManyToOne(optional = false)
 	public Accomodation getAccomodation() {
 		return this.accomodation;
 	}
@@ -37,7 +25,14 @@ public class BookingAccomodation extends DomainEntity {
 		this.accomodation = accomodation;
 	}
 
-	@NotNull
+	public int getTravelPackId() {
+		return this.travelPackId;
+	}
+
+	public void setTravelPackId(final int travelPackId) {
+		this.travelPackId = travelPackId;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	public Date getStartDate() {
@@ -48,7 +43,6 @@ public class BookingAccomodation extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	public Date getEndDate() {

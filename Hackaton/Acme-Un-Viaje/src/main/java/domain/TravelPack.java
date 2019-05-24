@@ -32,6 +32,7 @@ public class TravelPack extends DomainEntity {
 	private Customer						customer;
 	private TravelAgency					travelAgency;
 	private Boolean							draft;
+	private Double							price;
 
 
 	public Boolean getDraft() {
@@ -94,13 +95,10 @@ public class TravelPack extends DomainEntity {
 	}
 	@Transient
 	public Double getPrice() {
-		Double price = 0.;
-		for (final BookingAccomodation b : this.accomodations)
-			price += b.getAccomodation().getPricePerNight() * b.getEndDate().getTime() - b.getStartDate().getTime() / 86400000;
-
-		for (final BookingTransport b : this.transports)
-			price += b.getTransport().getPrice();
-		return price;
+		return this.price;
+	}
+	public void setPrice(final Double price) {
+		this.price = price;
 	}
 
 }

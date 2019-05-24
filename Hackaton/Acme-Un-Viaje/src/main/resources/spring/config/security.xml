@@ -166,6 +166,9 @@
 		<security:intercept-url pattern="/travelPack/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/travelPack/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/travelPack/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/travelPack/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/bookingAccomodation/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/bookingTransport/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
 		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
