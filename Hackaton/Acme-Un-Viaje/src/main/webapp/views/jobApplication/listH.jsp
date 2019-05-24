@@ -57,7 +57,7 @@
 																		<div class="row">
 																			<div class="col-md-12 col-center">
 																				<acme:create name = "" url="jobApplication/host/edit.do?jobApplicationId=${i.id}" code="jobApplication.acceptCleaner"/>
-																				<acme:delete name = "" url="jobApplication/host/delete.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
+																				<acme:delete name = "" url="jobApplication/host/reject.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
 																			</div>
 																			<br>
 																			<div class="col-md-12 col-center">
@@ -80,7 +80,7 @@
 																		<div class="row">
 																			<div class="col-md-12 col-center">
 																				<acme:create name = "" url="jobApplication/host/edit.do?jobApplicationId=${i.id}" code="jobApplication.acceptCleaner"/>
-																				<acme:delete name = "" url="jobApplication/host/delete.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
+																				<acme:delete name = "" url="jobApplication/host/reject.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
 																			</div>
 																			<br>
 																			<div class="col-md-12 col-center">
@@ -110,7 +110,7 @@
 																		<div class="row">
 																			<div class="col-md-12 col-center">
 																				<acme:create name = "" url="jobApplication/host/edit.do?jobApplicationId=${i.id}" code="jobApplication.acceptCleaner"/>
-																				<acme:delete name = "" url="jobApplication/host/delete.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
+																				<acme:delete name = "" url="jobApplication/host/reject.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
 																			</div>
 																			<br>
 																			<div class="col-md-12 col-center">
@@ -133,7 +133,7 @@
 																		<div class="row">
 																			<div class="col-md-12 col-center">
 																				<acme:create name = "" url="jobApplication/host/edit.do?jobApplicationId=${i.id}" code="jobApplication.acceptCleaner"/>
-																				<acme:delete name = "" url="jobApplication/host/delete.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
+																				<acme:delete name = "" url="jobApplication/host/reject.do?jobApplicationId=${i.id}" code="jobApplication.rejectCleaner"/>
 																			</div>
 																			<br>
 																			<div class="col-md-12 col-center">

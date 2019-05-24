@@ -43,7 +43,7 @@
 						</display:column>
 						<display:column titleKey="jobApplication.status">
 							<c:choose>
-								<c:when test="${row2.status==null or row2.status==''}">
+								<c:when test="${row2.status==null}">
 									<spring:message code="null" />
 								</c:when>
 								<c:otherwise>
@@ -61,7 +61,7 @@
 						<display:column property="cleanerMessage" titleKey="jobApplication.cleanerMessage2"></display:column>
 						<display:column property="rejectMessage" titleKey="jobApplication.rejectMessage"></display:column>
 						<c:choose>
-							<c:when test="${cleanerLogger==true and row2.status==null}">
+							<c:when test="${row2.status==null}">
 								<display:column titleKey="none">
 									<acme:create name = "" url="jobApplication/cleaner/edit.do?jobApplicationId=${row2.id}" code="curricula.edit"/>	
 								</display:column>
@@ -69,6 +69,14 @@
 									<acme:delete name = "" url="jobApplication/cleaner/delete.do?jobApplicationId=${row2.id}" code="curricula.delete"/>
 								</display:column>
 							</c:when>
+							<c:otherwise>
+								<display:column titleKey="none">
+										
+								</display:column>
+								<display:column titleKey="none">
+								
+								</display:column>							
+							</c:otherwise>
 						</c:choose>
 					</display:table>
 				</c:otherwise>

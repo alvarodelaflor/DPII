@@ -141,7 +141,7 @@ public class JobApplicationCleanerController extends AbstractController {
 				//				this.jobApplicationService.createJobApplicationCopyAndSave(saveJobApplication);
 				//CHECK COPY CURRICULA WORK
 				result = new ModelAndView("redirect:/jobApplication/cleaner/list.do?jobApplicationId=" + saveJobApplication.getId());
-				result.addObject("requestURI", "jobApplication/list.do");
+				result.addObject("requestURI", "jobApplication/cleaner/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE JobApplicationCleanerController.java Throwable: " + oops);
 				result = new ModelAndView("jobApplication/cleaner/edit");

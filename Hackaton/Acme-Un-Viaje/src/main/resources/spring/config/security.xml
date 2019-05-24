@@ -47,6 +47,8 @@
 		<security:intercept-url pattern="/jobApplication/host/create.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/edit.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/delete.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/jobApplication/host/drop.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/jobApplication/host/reject.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/list.do" access="hasRole('HOST')" />
 		
 		<security:intercept-url pattern="/jobApplication/show.do" access="permitAll" />

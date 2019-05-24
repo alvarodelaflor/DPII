@@ -78,8 +78,6 @@ public class CurriculaController extends AbstractController {
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-//		result.addObject("logo", this.getLogo());
-//		result.addObject("system", this.getSystem());
 		return result;
 	}
 
