@@ -38,7 +38,7 @@
 	<strong>
 	<form:label path="startDate"><spring:message code="finder.startDate" />:</form:label>
 	</strong>
-	<form:input  path="startDate"/>	
+	<form:input  path="startDate" placeholder="2025/02/03 15:00"/>	
 	<form:errors path="startDate" cssClass="error" />
 	
 	
@@ -50,7 +50,7 @@
 	<p class="error"><spring:message code="finder.error"/></p>
 </jstl:if>
 
-<display:table name="requests" id="row" requestURI="${requestURI}"
+<display:table name="finder.requests" id="row" requestURI="${requestURI}"
 		pagesize="5" class="displaytag table table-hover">
 		<div class="row" style="padding-left: 2.5em">
 			<div class="col-md-6">
@@ -72,6 +72,11 @@
 					</display:column>
 					<display:column titleKey="request.endDate">
 						<jstl:out value="${row.endDate}"></jstl:out>
+					</display:column>
+					<display:column titleKey="request.travelPack">
+						
+								<a href="travelPack/travelAgency/create.do?customerId=${row.customer.id}"><spring:message
+										code="request.createTravelPack" /></a>
 					</display:column>
 				</fieldset>
 			</div>
