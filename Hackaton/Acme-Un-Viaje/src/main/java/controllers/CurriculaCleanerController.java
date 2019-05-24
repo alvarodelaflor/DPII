@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +29,7 @@ import domain.Cleaner;
 /*
  * CONTROL DE CAMBIOS CurriculaCleanerController.java
  * 
- * ALVARO 09/03/2019 11:30 CREACION DE LA CLASE
+ * ALVARO 24/05/2019 Version 1.0
  */
 
 @Controller
@@ -54,8 +53,6 @@ public class CurriculaCleanerController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		try {
-			final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-			Assert.notNull(cleanerLogin, "No cleaner is login");
 			final Curricula curricula = this.curriculaService.create();
 			result = new ModelAndView("curricula/cleaner/edit");
 			result.addObject("curricula", curricula);
@@ -63,8 +60,6 @@ public class CurriculaCleanerController extends AbstractController {
 			System.out.println("Error e en GET /create CurriculaController.java: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-//		result.addObject("logo", this.getLogo());
-//		result.addObject("system", this.getSystem());
 		return result;
 	}
 
@@ -83,14 +78,23 @@ public class CurriculaCleanerController extends AbstractController {
 		} catch (final Exception e) {
 			if (cleanerLogin != null) {
 				result = new ModelAndView("curricula/list");
-				final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByCleaner(cleanerLogin);
-				result.addObject("curriculas", curriculas);
-			} else
+				this.setAllValidCurriculas(result);
+			} else {
 				result = new ModelAndView("redirect:/welcome/index.do");
+			}
 		}
-//		result.addObject("logo", this.getLogo());
-//		result.addObject("system", this.getSystem());
 		return result;
+	}
+	
+	private void setAllValidCurriculas(ModelAndView result) {
+		try {
+			Cleaner cleaner = this.cleanerService.getCleanerLogin();
+			Assert.notNull(cleaner, "Any cleaner is login");
+			final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByCleaner(cleaner);
+			result.addObject("curriculas", curriculas);
+		} catch (Exception e) {
+			System.out.println("Se ha producido un error al intentar listar curriculas");
+		}
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -101,8 +105,6 @@ public class CurriculaCleanerController extends AbstractController {
 		} catch (final Exception e) {
 			System.out.println("Error e reconstruct de curricula: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
-//			result.addObject("logo", this.getLogo());
-//			result.addObject("system", this.getSystem());
 			return result;
 		}
 
@@ -110,16 +112,10 @@ public class CurriculaCleanerController extends AbstractController {
 			System.out.println("Error en CurriculaCleanerController.java, binding: " + binding);
 			result = new ModelAndView("curricula/cleaner/create");
 			result.addObject("curricula", curricula);
-		} else
+		} else {
 			try {
-				final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-				Assert.notNull(cleanerLogin, "No cleaner is login");
-				Assert.isTrue(curricula != null, "curricula.null");
 				Assert.isTrue(!curricula.getIsCopy(), "Trying to edit a copyCurricula");
 				final Curricula saveCurricula = this.curriculaService.save(curricula);
-				// CHECK COPY CURRICULA WORK
-				//				this.curriculaService.createCurriculaCopyAndSave(saveCurricula);
-				//CHECK COPY CURRICULA WORK
 				result = new ModelAndView("redirect:/curricula/show.do?curriculaId=" + saveCurricula.getId());
 				result.addObject("requestURI", "curricula/list.do");
 			} catch (final Throwable oops) {
@@ -128,8 +124,7 @@ public class CurriculaCleanerController extends AbstractController {
 				result.addObject("curricula", curricula);
 				result.addObject("message", "curricula.commit.error");
 			}
-//		result.addObject("logo", this.getLogo());
-//		result.addObject("system", this.getSystem());
+		}
 		return result;
 	}
 
@@ -139,10 +134,7 @@ public class CurriculaCleanerController extends AbstractController {
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
 
 		try {
-			Assert.notNull(cleanerLogin, "No cleaner is login");
 			final Curricula curriculaDB = this.curriculaService.findOne(curriculaId);
-			Assert.notNull(curriculaDB, "Not found curricula in DB");
-			Assert.isTrue(curriculaDB.getCleaner().equals(cleanerLogin), "Not allow to delete, diferent cleaner");
 			this.curriculaService.delete(curriculaDB);
 			result = new ModelAndView("redirect:/curricula/list.do?cleanerId=" + cleanerLogin.getId());
 		} catch (final Throwable oops) {
@@ -153,8 +145,6 @@ public class CurriculaCleanerController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			result.addObject("message", "curricula.commit.error");
 		}
-//		result.addObject("logo", this.getLogo());
-//		result.addObject("system", this.getSystem());
 		return result;
 	}
 }

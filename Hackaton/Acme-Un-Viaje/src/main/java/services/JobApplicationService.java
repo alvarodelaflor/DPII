@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.Cleaner;
+import domain.Curricula;
 import domain.Host;
 import domain.JobApplication;
 import repositories.JobApplicationRepository;
@@ -33,6 +34,8 @@ public class JobApplicationService {
 	private HostService				hostService;
 	@Autowired
 	private CleanerService			cleanerService;
+	@Autowired
+	private CurriculaService curriculaService;
 	@Autowired
 	private Validator					validator;
 
@@ -121,7 +124,29 @@ public class JobApplicationService {
 		} else {
 			Assert.isTrue(checkValidForNewApplication(this.cleanerService.getCleanerLogin().getId(), jobApplication.getHost().getId()), cleanerAcceptedPending);
 		}
-		return this.jobApplicationRepository.save(jobApplication);
+		return this.jobApplicationRepository.save(jobApplication); 
+	}
+	
+	/**
+	 * 
+	 * If we make a curriculum change in the edition of the working application<br>
+	 * we delete the previous copy
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 */
+	public void checkChangeCurricula(JobApplication jobApplication) {
+		Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
+		if (cleanerLogin!=null) {
+			try {
+				JobApplication jobApplicationDB = this.findOne(jobApplication.getId());
+				Assert.isTrue(cleanerLogin.equals(jobApplicationDB.getCleaner()));
+				if (!jobApplication.getCurricula().equals(jobApplicationDB.getCurricula())) {
+					this.curriculaService.delete(jobApplicationDB.getCurricula());
+				}				
+			} catch (Exception e) {
+
+			}
+		}
 	}
 
 	/**
@@ -134,7 +159,9 @@ public class JobApplicationService {
 		JobApplication jobApplicationDB = this.jobApplicationRepository.findOne(jobApplication.getId());
 		Assert.isTrue(jobApplicationDB.getStatus()==null, finalMode);
 		Assert.isTrue(this.checkValidForEdit(jobApplication), actorNoValid);
+		Curricula curricula = this.curriculaService.findOne(jobApplication.getCurricula().getId());
 		this.jobApplicationRepository.delete(jobApplication);
+		this.curriculaService.delete(curricula);
 	}
 	
 	// CRUD METHODS

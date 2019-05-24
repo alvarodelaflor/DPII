@@ -135,11 +135,7 @@ public class JobApplicationCleanerController extends AbstractController {
 				Assert.isTrue(jobApplication != null, "jobApplication.null");
 				Assert.isTrue(jobApplication.getStatus()==null, "Trying to edit an accept JobApplication");
 				Assert.isTrue(jobApplication.getDropMoment()==null, "Trying to edit a drop JobApplication");
-				jobApplication.setCurricula(this.curriculaService.createCurriculaCopyAndSave(jobApplication.getCurricula()));
-				final JobApplication saveJobApplication = this.jobApplicationService.save(jobApplication);
-				// CHECK COPY CURRICULA WORK
-				//				this.jobApplicationService.createJobApplicationCopyAndSave(saveJobApplication);
-				//CHECK COPY CURRICULA WORK
+				final JobApplication saveJobApplication = this.curriculaService.createCurriculaCopyAndSave(jobApplication);
 				result = new ModelAndView("redirect:/jobApplication/cleaner/list.do?jobApplicationId=" + saveJobApplication.getId());
 				result.addObject("requestURI", "jobApplication/cleaner/list.do");
 			} catch (final Throwable oops) {
