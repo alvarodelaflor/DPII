@@ -33,7 +33,15 @@
 						</jstl:choose>
 					</display:column>
 					<display:column titleKey="travelPack.price">
-						<jstl:out value= "${price}"/>
+						<jstl:out value= "${row.price}"/>
+					</display:column>
+					
+					<display:column titleKey="curricula.edit">
+						<jstl:if test="${row.draft}">
+						<a href="travelPack/travelAgency/edit.do?travelPackId=${row.id}">
+							<spring:message code="curricula.edit" />
+						</a>
+						</jstl:if>
 					</display:column>
 				</fieldset>
 			</div>

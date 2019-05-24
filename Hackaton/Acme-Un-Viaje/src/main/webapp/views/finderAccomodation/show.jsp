@@ -72,6 +72,11 @@
 							<spring:message code="transport.show" />
 						</a>
 					</display:column>
+					<display:column titleKey="baccomodation.book">
+						<a href="bookingAccomodation/travelAgency/create.do?accomodationId=${row.id}">
+							<spring:message code="baccomodation.book" />
+						</a>
+					</display:column>
 				</fieldset>
 			</div>
 		</div>
@@ -80,7 +85,7 @@
 
 	<div class="row">
 		<div class="col-md-3">
-			<span> <acme:cancel url="accomodation/travelAgency/list.do" code="actor.back" />
+			<span> <acme:cancel url="welcome/index.do" code="actor.back" />
 			</span>
 		</div>
 	</div>

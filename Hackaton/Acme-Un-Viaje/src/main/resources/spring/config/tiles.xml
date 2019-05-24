@@ -57,6 +57,8 @@
 		<value>/views/finderAccomodation/tiles.xml</value>
 		<value>/views/finderRequest/tiles.xml</value>
 		<value>/views/travelPack/tiles.xml</value>
+		<value>/views/bookingAccomodation/tiles.xml</value>
+		<value>/views/bookingTransport/tiles.xml</value>
 		<!-- FERRETE -->
 		
 	</util:list>

@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import domain.BookingAccomodation;
+import forms.BookingAccForm;
 import repositories.BookingAccomodationRepository;
 
 @Service
@@ -16,7 +19,13 @@ import repositories.BookingAccomodationRepository;
 public class BookingAccomodationService {
 
 	@Autowired
-	private BookingAccomodationRepository bookingAccomodationRepository;
+	private BookingAccomodationRepository	bookingAccomodationRepository;
+
+	@Autowired
+	private TravelPackService				travelPackService;
+
+	@Autowired
+	private Validator						validator;
 
 
 	public void delete(final BookingAccomodation bAccomodation) {
@@ -45,6 +54,16 @@ public class BookingAccomodationService {
 				res = true;
 				break;
 			}
+		return res;
+	}
+
+	public BookingAccomodation reconstructForm(final BookingAccForm form, final BindingResult binding) {
+		final BookingAccomodation res = this.create();
+		res.setAccomodation(form.getAccomodation());
+		res.setStartDate(form.getStartDate());
+		res.setEndDate(form.getEndDate());
+
+		this.validator.validate(res, binding);
 		return res;
 	}
 

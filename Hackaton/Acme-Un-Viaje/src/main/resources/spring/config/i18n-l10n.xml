@@ -51,6 +51,8 @@
 		<value>/views/finderAccomodation/messages</value>
 		<value>/views/finderRequest/messages</value>
 		<value>/views/travelPack/messages</value>
+		<value>/views/bookingAccomodation/messages</value>
+		<value>/views/bookingTransport/messages</value>
 		<!-- FERRETE -->
 	</util:list>
 

@@ -23,23 +23,23 @@
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
 		<div class="col-md-6">
-			<form:form class="formularioEdicion" method="POST" modelAttribute="travelPack" action="travelPack/travelAgency/create.do">
-				<form:hidden path="id" />
-				<form:hidden path="customer" />
+			<form:form class="formularioEdicion" method="POST" modelAttribute="form" action="bookingAccomodation/travelAgency/create.do">
+				<form:hidden path="accomodation" />
 				<fieldset>
 					<hr>
-					<acme:textbox code="travelPack.name" path="name" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<spring:message code="warranty.finalMode" />
-					&nbsp; &nbsp; &nbsp; &nbsp;
-					<spring:message code="travelPack.draft.true" />
-					<form:radiobutton path="draft" value="true"  checked="checked" />
-					<spring:message code="travelPack.draft.false" />
-					<form:radiobutton path="draft" value="false" />
+					<acme:textbox code="baccomodation.startDate" path="startDate" placeholder ="yyyy/MM/dd" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
+					<acme:textbox code="baccomodation.endDate" path="endDate" placeholder ="yyyy/MM/dd" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
+					<form:label path="travelPackId">
+						<spring:message code="baccomodation.travelPack" />:
+					</form:label>
+					<form:select itemLabel="name" itemValue="id" multiple="false" path="travelPackId">
+	   		 		<form:options items="${packs}" itemLabel="name" itemValue="id" required="required"/>
+					</form:select>
+					<form:errors cssClass="error" path="travelPackId" />
 				</fieldset>
 				<br>
 				<div class="row">
-					<span><acme:submit name="save" code="actor.save" /></span> <span style="padding-left: 0.5em"> <acme:cancel url="/travelPack/travelAgency/list.do" code="actor.back" />
+					<span><acme:submit name="save" code="actor.save" /></span> <span style="padding-left: 0.5em"> <acme:cancel url="/finder/travelAgency/show.do" code="actor.back" />
 					</span>
 				</div>
 			</form:form>
