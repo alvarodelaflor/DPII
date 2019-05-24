@@ -42,6 +42,8 @@ public class MessageService {
 	@Autowired
 	TagService				tagService;
 	@Autowired
+	ConfigService				configService;
+	@Autowired
 	private Validator			validator;
 
 	@Autowired
@@ -110,12 +112,26 @@ public class MessageService {
 			
 			Tag tag = tagService.create();
 			tag.setActorId(receiverId);
+			tag.setTag(old.getTag());
 			
+			if (message.getTags().size() == 1) {
 			message.setTags(new ArrayList<Tag>());
 			Collection<Tag> tagsActor = new ArrayList<Tag>();
 			tagsActor.add(old);
 			tagsActor.add(tag);
-		
+			message.setTags(tagsActor);
+			
+			}else {
+				message.getTags().add(tag);
+			}
+			
+			if (checkSuspiciousWithBoolean(message)) {
+				Tag spam = tagService.create();
+				spam.setActorId(receiverId);
+				spam.setTag("SPAM");
+				message.getTags().add(spam);
+			}
+				
 			
 		return message;
 	}
@@ -128,7 +144,18 @@ public class MessageService {
 
 		message.getMailboxes().add(outBoxAdmin);
 		outBoxAdmin.getMessages().add(message);
-
+		
+		Tag tagAdmin = tagService.create();
+		tagAdmin.setTag("NOTIFICATION");
+		tagAdmin.setActorId(a.getId());
+		message.getTags().add(tagAdmin);
+		
+		Collection<String> emails = actorService.getEmailofActors();
+		emails.remove(a.getEmail());
+		
+		message.setEmailReceiver(emails);
+		
+		
 		Assert.notNull(a);
 
 			final Collection<Mailbox> result = this.mailboxService.getInbox();
@@ -138,35 +165,112 @@ public class MessageService {
 			for (final Mailbox mailbox : result) {
 				message.getMailboxes().add(mailbox);
 				mailbox.getMessages().add(message);
+				Tag tag = tagService.create();
+				tag.setTag("NOTIFICATION");
+				Actor aacto = actorService.getActorMailbox(mailbox.getId());
+				tag.setActorId(aacto.getId());
+				message.getTags().add(tag);
+				
+				if (checkSuspiciousWithBoolean(message)) {
+					Tag spam = tagService.create();
+					spam.setActorId(aacto.getId());
+					spam.setTag("SPAM");
+					message.getTags().add(spam);
+				}
 			
 		}
-
+			
+			
+			
+			
 		return message;
 	}
-	public Message delete(final Message message, final Integer mailboxId) {
+	public void delete(final Message message, final Integer mailboxId) {
 		final UserAccount user = LoginService.getPrincipal();
 		final Actor a = this.actorService.findByUserAccountId(user.getId());
 
 		Assert.isTrue(message.getEmailReceiver().contains(a.getEmail()) || message.getSender().equals(a.getEmail()));
 		
-		if(message.getTags().contains("DELETED")) {
-			messageRepository.delete(message.getId());
+		Tag deleteTag = tagService.getTagByMessageDeleted(message.getId());
+		
+		if(deleteTag != null) {
+			if(message.getMailboxes().size() > 1) {
+				Mailbox m = mailboxService.findOne(mailboxId);
+				m.getMessages().remove(message);
+				message.getMailboxes().remove(m);				
+				List<Tag> tags = (List<Tag>) tagService.getTagByMessage(message.getId());
+				for (int i = 0; i < tags.size(); i++) {
+					message.getTags().remove(tags.get(i));
+					tagService.delete(tags.get(i));
+				}
+			}else {
+				Mailbox m = mailboxService.findOne(mailboxId);
+				m.getMessages().remove(message);
+				message.getMailboxes().remove(m);
+				List<Tag> tags = (List<Tag>) tagService.getTagByMessage(message.getId());
+				for (int i = 0; i < tags.size(); i++) {
+					message.getTags().remove(tags.get(i));
+					tagService.delete(tags.get(i));
+				}
+				messageRepository.delete(message.getId());
+			}
 		}else {
 			Tag tag = tagService.create();
 			tag.setActorId(a.getId());
 			tag.setMessageId(message.getId());
 			tag.setTag("DELETED");
 			message.getTags().add(tag);
+			
 		}
 		
-		return message;
-
 	}
 	public Message findOne(final int id) {
 		return this.messageRepository.findOne(id);
 	}
+	
+	private Boolean checkSuspiciousWithBoolean(final Message msg) {
+
+		Boolean res = false;
+		final Collection<String> spamWords = this.configService.getConfiguration().getSpamList();
+
+		for (final String word : spamWords)
+			if (msg.getBody().contains(word)) {
+				res = true;
+				break;
+			}
+		return res;
+	}
+
+	// spammerFlag = true if condition is fulfilled
+	private Boolean spammerFlagCheck(final UserAccount uacc) {
+
+		Boolean res = false;
+
+		if (uacc.getMsgCounter() != 0) {
+
+			final Double ratiospam = uacc.getSpamMsgCounter() / uacc.getMsgCounter();
+			final Double percentage = uacc.getMsgCounter() * 0.1;
+			res = ratiospam > percentage;
+		}
+
+		return res;
+	}
 
 	public Message save(final Message message) {
+		//Capturo actor logeado segun su Username
+		final UserAccount uacc = LoginService.getPrincipal();
+		Integer id = uacc.getId();
+		final Actor actor = this.actorService.getActorByUserId(id);
+		//Actualizo contador total de msg
+		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1.);
+		//Actualizo contador de msg de spam
+		if (this.checkSuspiciousWithBoolean(message) == true)
+			actor.getUserAccount().setSpamMsgCounter(uacc.getSpamMsgCounter() + 1.);
+		//Calculo el spammerFlag del UserAcc
+		actor.getUserAccount().setSpammerFlag(this.spammerFlagCheck(actor.getUserAccount()));
+		//Guardo Actor con el UserAcc modificado
+		this.actorService.save(actor);
+		//Guardo el Msg
 		return this.messageRepository.save(message);
 	}
 	

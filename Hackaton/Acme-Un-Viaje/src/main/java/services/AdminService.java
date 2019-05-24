@@ -88,7 +88,7 @@ public class AdminService {
 	// ---------------------------------------------------------------
 	public Admin saveRegisterAsAdmin(final Admin admin) {
 		 if (admin.getPhone().matches("^([0-9]{4,})$")) {
-			 admin.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + admin.getPhone());
+			 admin.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + admin.getPhone());
 		 }
 		return this.adminRepository.save(admin);
 	}

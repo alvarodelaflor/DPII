@@ -102,6 +102,12 @@ body {
 							</form:form>
 						</div>
 						<div id="signup" style="display: none;">
+							<div style="color: White; text-align: center">
+								<h2>
+									<spring:message code="register.as" />
+								</h2>
+							</div>
+							<br>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="field-wrap">

@@ -108,7 +108,7 @@
 		<security:intercept-url pattern="/admin/newccm.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/delccm.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/traratio.do" access="hasRole('ADMIN')" />
-		<security:intercept-url pattern="/admin/newwwmes.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newwmes.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/newwmen.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/newsysno.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/newsysna.do" access="hasRole('ADMIN')" />

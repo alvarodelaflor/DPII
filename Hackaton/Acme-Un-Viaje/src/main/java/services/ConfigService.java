@@ -52,7 +52,7 @@ public class ConfigService {
 		final Config config = this.adminService.getConfig();
 		final HashSet<String> scoreWords = new HashSet<>(config.getScoreList());
 		scoreWords.add(word);
-		config.setSpamList(scoreWords);
+		config.setScoreList(scoreWords);
 		this.configRepo.save(config);
 	}
 
@@ -61,7 +61,7 @@ public class ConfigService {
 		final Config config = this.adminService.getConfig();
 		final HashSet<String> scoreWords = new HashSet<>(config.getScoreList());
 		scoreWords.remove(word);
-		config.setSpamList(scoreWords);
+		config.setScoreList(scoreWords);
 		this.configRepo.save(config);
 	}
 
@@ -70,19 +70,19 @@ public class ConfigService {
 		final Config config = this.adminService.getConfig();
 		final HashSet<String> makes = new HashSet<>(config.getCreditCardMakeList());
 		makes.add(word);
-		config.setSpamList(makes);
+		config.setCreditCardMakeList(makes);
 		this.configRepo.save(config);
 	}
 
 	public void deleteCreditCardMake(final String word) {
 
 		final Config config = this.adminService.getConfig();
-		final HashSet<String> spamWords = new HashSet<>(config.getSpamList());
-		spamWords.remove(word);
-		config.setSpamList(spamWords);
+		final HashSet<String> makes = new HashSet<>(config.getCreditCardMakeList());
+		makes.remove(word);
+		config.setCreditCardMakeList(makes);
 		this.configRepo.save(config);
 	}
-
+	
 	public void newTransporterBanRatio(final int ratio) {
 
 		Assert.isTrue(ratio > 0 && ratio < 100, "not.in.range.error");
@@ -127,7 +127,7 @@ public class ConfigService {
 		// From REGEX: ^(http(s?):\\/\\/www\\.).+(\\.)
 		Assert.isTrue(banner.matches("^(http(s?):\\/\\/www\\.).+(\\.).+"), "not.url");
 		final Config config = this.adminService.getConfig();
-		config.setSystemName(banner);
+		config.setBannerLogo(banner);
 		this.configRepo.save(config);
 	}
 

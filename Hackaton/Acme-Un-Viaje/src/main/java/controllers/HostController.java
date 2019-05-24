@@ -137,16 +137,20 @@ public class HostController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "hostId", defaultValue = "-1") final int hotId) {
 		ModelAndView result;
+		Boolean res;
 		try {
 			final Host registerActor;
 			if (hotId == -1 ) {
 				final int userLoggin = LoginService.getPrincipal().getId();
 				registerActor = this.hostService.getHostByUserAccountId(userLoggin);
+				res = true;
 			} else {
 				registerActor = this.hostService.findOne(hotId);
+				res = false;
 			}
 			result = new ModelAndView("host/show");				
 			result.addObject("registerActor", registerActor);
+			result.addObject("res", res);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
