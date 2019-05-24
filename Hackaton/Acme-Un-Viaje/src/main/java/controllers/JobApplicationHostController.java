@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Cleaner;
 import domain.Host;
 import domain.JobApplication;
 import services.CleanerService;
@@ -41,6 +40,21 @@ public class JobApplicationHostController extends AbstractController {
 	
 	private String redirectWelcome = "redirect:/welcome/index.do";
 	
+	private ModelAndView getList(ModelAndView result) {
+		final Host hostLogin = this.hostService.getHostLogin();
+		Collection<JobApplication> pending = this.jobApplicationService.getJobApplicationPendingByHostId(hostLogin.getId());
+		Collection<JobApplication> rejected = this.jobApplicationService.getJobApplicationByStatusAndHostId(false, hostLogin.getId());
+		Collection<JobApplication> accepted = this.jobApplicationService.getJobApplicationByStatusAndHostId(true, hostLogin.getId());
+		Collection<JobApplication> exCleaners = this.jobApplicationService.getExCleaners(hostLogin.getId());
+		result.addObject("pending", pending);
+		result.addObject("rejected", rejected);
+		result.addObject("accepted", accepted);
+		result.addObject("exCleaners", exCleaners);
+		result.addObject("numberPending", listNumber(pending.size()));
+		result.addObject("hostLogin", hostLogin);
+		return result;
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -48,15 +62,7 @@ public class JobApplicationHostController extends AbstractController {
 			Host host = this.hostService.getHostLogin();
 			Assert.notNull(host, "Not host found in DB");
 			result = new ModelAndView("jobApplication/host/list");
-			Collection<JobApplication> pending = this.jobApplicationService.getJobApplicationPendingByHostId(host.getId());
-			Collection<JobApplication> rejected = this.jobApplicationService.getJobApplicationByStatusAndHostId(false, host.getId());
-			Collection<JobApplication> accepted = this.jobApplicationService.getJobApplicationByStatusAndHostId(true, host.getId());
-			Collection<JobApplication> exCleaners = this.jobApplicationService.getExCleaners(host.getId());
-			result.addObject("pending", pending);
-			result.addObject("rejected", rejected);
-			result.addObject("accepted", accepted);
-			result.addObject("exCleaners", exCleaners);
-			result.addObject("numberPending", listNumber(pending.size()));
+			this.getList(result);
 			result.addObject("requestURI", "jobApplication/host/list.do");
 		} catch (final Exception e) {
 			System.out.println("Error e en GET /list jobApplicationController.java: " + e);
@@ -78,26 +84,10 @@ public class JobApplicationHostController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(value = "jobApplicationId", defaultValue = "-1") final int jobApplicationId) {
 		ModelAndView result;
-		final Host hostLogin = this.hostService.getHostLogin();
 		try {
-			final JobApplication jobApplicationDB = this.jobApplicationService.findOne(jobApplicationId);
-			Assert.notNull(jobApplicationDB, "Job Application not found in DB");
-			Assert.isTrue(jobApplicationDB.getStatus()==null, "Trying to edit an acept or reject application");
-			Assert.isTrue(jobApplicationDB.getDropMoment()==null, "Trying to edit a drop application");
-			Assert.notNull(hostLogin, "No cleaner is login");
-			Assert.isTrue(hostLogin.equals(jobApplicationDB.getHost()));
-			jobApplicationDB.setStatus(true);
-			this.jobApplicationService.save(jobApplicationDB);
+			this.jobApplicationService.acceptApplication(jobApplicationId);
 			result = new ModelAndView("jobApplication/host/list");
-			Collection<JobApplication> pending = this.jobApplicationService.getJobApplicationPendingByHostId(hostLogin.getId());
-			Collection<JobApplication> rejected = this.jobApplicationService.getJobApplicationByStatusAndHostId(false, hostLogin.getId());
-			Collection<JobApplication> accepted = this.jobApplicationService.getJobApplicationByStatusAndHostId(true, hostLogin.getId());
-			Collection<JobApplication> exCleaners = this.jobApplicationService.getExCleaners(hostLogin.getId());
-			result.addObject("pending", pending);
-			result.addObject("rejected", rejected);
-			result.addObject("accepted", accepted);
-			result.addObject("exCleaners", exCleaners);
-			result.addObject("numberPending", listNumber(pending.size()));
+			this.getList(result);
 			result.addObject("requestURI", "jobApplication/host/list.do");
 		} catch (final Exception e) {
 			System.out.println("Error en EDIT JobApplicationHostController.java Throwable: " + e);
@@ -124,24 +114,13 @@ public class JobApplicationHostController extends AbstractController {
 			result.addObject("jobApplication", jobApplication);
 		} else
 			try {
-				final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-				Assert.notNull(cleanerLogin, "No cleaner is login");
-				Assert.isTrue(jobApplication != null, "jobApplication.null");
-				Assert.isTrue(jobApplication.getStatus()==null, "Trying to edit an accept JobApplication");
-				Assert.isTrue(jobApplication.getDropMoment()==null, "Trying to edit a drop JobApplication");
-				jobApplication.setCurricula(this.curriculaService.createCurriculaCopyAndSave(jobApplication.getCurricula()));
-				final JobApplication saveJobApplication = this.jobApplicationService.save(jobApplication);
-				result = new ModelAndView("redirect:/jobApplication/cleaner/list.do?jobApplicationId=" + saveJobApplication.getId());
+				this.jobApplicationService.save(jobApplication);
+				result = new ModelAndView("redirect:/jobApplication/cleaner/list.do");
 				result.addObject("requestURI", "jobApplication/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE JobApplicationCleanerController.java Throwable: " + oops);
-				result = new ModelAndView("jobApplication/cleaner/edit");
+				result = new ModelAndView("jobApplication/cleaner/list");
 				result.addObject("jobApplication", jobApplication);
-				try {
-					result.addObject("curriculas", this.curriculaService.findAllNotCopyByCleaner(this.cleanerService.getCleanerLogin()));
-				} catch (Exception e) {
-					
-				}
 				result.addObject("message", "jobApplication.commit.error");
 			}
 		return result;
@@ -154,19 +133,9 @@ public class JobApplicationHostController extends AbstractController {
 
 		try {
 			Assert.notNull(hostLogin, "No host is login");
-			final JobApplication jobApplicationDB = this.jobApplicationService.findOne(jobApplicationId);
-			Assert.notNull(jobApplicationDB, "Not found jobApplication in DB");
 			this.jobApplicationService.dropUser(jobApplicationId);
 			result = new ModelAndView("jobApplication/host/list");
-			Collection<JobApplication> pending = this.jobApplicationService.getJobApplicationPendingByHostId(hostLogin.getId());
-			Collection<JobApplication> rejected = this.jobApplicationService.getJobApplicationByStatusAndHostId(false, hostLogin.getId());
-			Collection<JobApplication> accepted = this.jobApplicationService.getJobApplicationByStatusAndHostId(true, hostLogin.getId());
-			Collection<JobApplication> exCleaners = this.jobApplicationService.getExCleaners(hostLogin.getId());
-			result.addObject("pending", pending);
-			result.addObject("rejected", rejected);
-			result.addObject("accepted", accepted);
-			result.addObject("exCleaners", exCleaners);
-			result.addObject("numberPending", listNumber(pending.size()));
+			this.getList(result);
 			result.addObject("requestURI", "jobApplication/host/list.do");
 		} catch (final Throwable oops) {
 			System.out.println("Error en CurriculaCleanerController.java Throwable: " + oops);
@@ -217,7 +186,6 @@ public class JobApplicationHostController extends AbstractController {
 			result.addObject("host", hostLogin);
 		} else
 			try {
-				Assert.notNull(jobApplication, "Jobapplication is null");
 				this.jobApplicationService.rejectUser(jobApplication);
 				result = new ModelAndView("redirect:/jobApplication/host/list.do");
 				result.addObject("requestURI", "jobApplication/host/list.do");

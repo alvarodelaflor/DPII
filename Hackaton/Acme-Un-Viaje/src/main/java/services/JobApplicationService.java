@@ -113,6 +113,7 @@ public class JobApplicationService {
 			} else {
 				Host hostLogin = this.hostService.getHostLogin();
 				Assert.notNull(hostLogin, hostNull);
+				Assert.isTrue(jobApplication.getHost().equals(hostLogin), diferentHost);
 				Assert.isTrue(jobApplication.getStatus()==null && jobApplication.getDropMoment()==null, "Application must be accepted o rejected");
 			}
 			Assert.isTrue(jobApplicationDB.getCleaner().equals(jobApplication.getCleaner()), diferentCleaner);
@@ -175,7 +176,7 @@ public class JobApplicationService {
 		return jobApplication;
 	}
 	
-	private Boolean checkValidForNewApplication(int cleanerId, int hostId) {
+	public Boolean checkValidForNewApplication(int cleanerId, int hostId) {
 		Boolean res = true;
 		int aux = this.jobApplicationRepository.getJobApplicationAcceptedAndPending(cleanerId, hostId).size();
 		if (aux > 0) {
@@ -264,5 +265,19 @@ public class JobApplicationService {
 		jobApplication.setStatus(false);
 		return this.jobApplicationRepository.save(jobApplication);
 	}
+	
+	public JobApplication acceptApplication(int jobApplicationId) {
+		Host hostLogin = this.hostService.getHostLogin();
+		Assert.notNull(hostLogin, hostNull);
+		JobApplication jobApplicationDB = this.findOne(jobApplicationId);
+		Assert.notNull(jobApplicationDB, jobApplicationNull);
+		Assert.isTrue(jobApplicationDB.getStatus()==null, "Trying to edit an acept or reject application");
+		Assert.isTrue(jobApplicationDB.getDropMoment()==null, "Trying to edit a drop application");
+		Assert.notNull(hostLogin, "No cleaner is login");
+		Assert.isTrue(hostLogin.equals(jobApplicationDB.getHost()));
+		jobApplicationDB.setStatus(true);
+		return this.jobApplicationRepository.save(jobApplicationDB);
+	}
 	// AUXILIAR METHODS
+
 }

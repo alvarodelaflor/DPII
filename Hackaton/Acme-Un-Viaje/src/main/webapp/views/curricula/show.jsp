@@ -35,7 +35,7 @@ $(document).ready(function() {
 			<c:choose>
 				<c:when test="${curricula.cleaner.photo == null or curricula.cleaner.photo=='' }">
 					<div class="card">
-						<img class="card-img-top" src="images/registerPhoto.png" alt="ERROR">
+						<img class="card-img-top" src="images/registerPhoto.png" alt="<spring:message htmlEscape="false" code="notLogo"/>">
 						<div class="card-body">
 							<h4 class="card-title">${curricula.cleaner.name} <br>${curricula.cleaner.surname}</h4>
 							<jstl:if test="${cleanerLogin==true}">
@@ -54,7 +54,7 @@ $(document).ready(function() {
 				<c:otherwise>
 					<div class="card">
 						<img class="card-img-top" src="${curricula.cleaner.photo}"
-							alt="ERROR">
+							alt="<spring:message htmlEscape="false" code="notLogo"/>">
 						<div class="card-body">
 							<h4 class="card-title">${curricula.cleaner.name} <br>${curricula.cleaner.surname}</h4>
 							<jstl:if test="${cleanerLogin==true}">
@@ -75,32 +75,34 @@ $(document).ready(function() {
 			<table id="example" class="table table-striped table-bordered" style="width:100%">
 				<c:choose>
 					<c:when test="${cleanerLogin==true}">
-  						<tfoot>
-    						<tr>
-      							<th class="th-sm">
-									<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/cleaner/edit.do">
-	          							<div class="row">
-											<div class="col-md-7">
-												<div class="form-group">
-													<spring:message htmlEscape="false" code="curricula.attachment" var="placeholder1" />
-													<form:input class="form-control" path="attachment" placeholder="${placeholder1}"/>
-													<form:errors path="attachment" cssClass="error" />
+						<jstl:if test="${moreAttachment}">				
+	  						<tfoot>
+	    						<tr>
+	      							<th class="th-sm">
+										<form:form class="formularioEdicion" method="POST" modelAttribute="miscellaneousAttachment" action="miscellaneousAttachment/cleaner/edit.do">
+		          							<div class="row">
+												<div class="col-md-7">
+													<div class="form-group">
+														<spring:message htmlEscape="false" code="curricula.attachment" var="placeholder1" />
+														<form:input class="form-control" path="attachment" placeholder="${placeholder1}"/>
+														<form:errors path="attachment" cssClass="error" />
+													</div>
 												</div>
-											</div>
-											<div class="col-md-5">
-												<div class="form-group">
-													<acme:submit name="save" code="save2"/>
+												<div class="col-md-5">
+													<div class="form-group">
+														<acme:submit name="save" code="save2"/>
+													</div>
 												</div>
-											</div>
-	         							</div>
-	          							<form:hidden path="id"/>
-	          							<form:hidden path="version"/>
-	          							<form:hidden path="curriculaM"/>
-	          							<form:hidden path="isCopy"/>
-									</form:form>
-      							</th>
-      						</tr>
-  						</tfoot>
+		         							</div>
+		          							<form:hidden path="id"/>
+		          							<form:hidden path="version"/>
+		          							<form:hidden path="curriculaM"/>
+		          							<form:hidden path="isCopy"/>
+										</form:form>
+	      							</th>
+	      						</tr>
+	  						</tfoot>
+						</jstl:if>
 					</c:when>
 				</c:choose>
   				<tbody>
@@ -151,7 +153,7 @@ $(document).ready(function() {
 					<spring:message code="profileMoreInfo" /><a href="socialProfile/list.do?cleanerId=<jstl:out value="${curricula.cleaner.id}"></jstl:out>"><spring:message code="link" /></a>
 				</p>
 			</div>
-			<img class="card-img-top" src="<jstl:out value="${curricula.bannerLogo}"></jstl:out>" alt="ERROR">
+			<img class="img-fluid" src="<jstl:out value="${curricula.bannerLogo}"></jstl:out>" alt="<spring:message htmlEscape="false" code="notLogo"/>">
 		</div>
 	</div>
 </div>

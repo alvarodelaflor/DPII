@@ -37,7 +37,7 @@
 					<p class="lead"><spring:message code="jobApplications.empty" /></p>
 				</c:when>
 				<c:otherwise>
-					<display:table name="jobApplications" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
+					<display:table name="jobApplications" id="row2" requestURI="${requestURI}" pagesize="5" class="table table-striped table-responsive-md btn-table">
 						<display:column titleKey="jobApplication.host">
 							<a href="host/show.do?hostId=${row2.host.id}"><jstl:out value="${row2.host.name} ${row2.host.surname}"></jstl:out></a>			
 						</display:column>
@@ -60,6 +60,7 @@
 						</display:column>
 						<display:column property="cleanerMessage" titleKey="jobApplication.cleanerMessage2"></display:column>
 						<display:column property="rejectMessage" titleKey="jobApplication.rejectMessage"></display:column>
+						<display:column property="dropMoment" titleKey="jobApplication.dropMoment"></display:column>
 						<c:choose>
 							<c:when test="${row2.status==null}">
 								<display:column titleKey="none">
