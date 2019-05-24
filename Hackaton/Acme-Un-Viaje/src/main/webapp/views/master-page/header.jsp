@@ -251,6 +251,10 @@
 									class="nav-link"> <spring:message
 											code="master.page.accomodation.list" />
 								</a></li>
+								<li class="nav-item"><a href="cleaningTask/list.do"
+									class="nav-link"> <spring:message
+											code="master.page.cleaningTask.list" />
+								</a></li>
 								<li class="nav-item dropdown"><a href="#"
 									class="nav-link dropdown-toggle" data-toggle="dropdown"
 									id="navbardrop"> <spring:message

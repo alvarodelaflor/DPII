@@ -639,4 +639,14 @@
 		<property name="date" value="2020/12/11" />
 	</bean>
 	<!-- BOOKINGTRANSPORT-->
+	
+		<!-- CLEANINGTASK -->
+	<bean id="cleaningTask01" class="domain.CleaningTask">
+		<property name="cleaner" ref="cleaner01" />
+		<property name="startMoment" value="2019/12/11 11:00:00" />
+		<property name="endMoment" value="2019/12/12  11:00:00" />
+		<property name="accomodation" ref="accomodation01" />
+	</bean>
+	<!-- CLEANINGTASK-->
+
 </beans>
