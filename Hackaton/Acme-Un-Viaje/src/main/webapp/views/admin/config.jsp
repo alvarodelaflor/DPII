@@ -47,7 +47,7 @@
 				<c:out value="${config.systemNombre}"></c:out>
 				<br />
 				<form:form class="formularioEdicion" method="GET"
-					action="admin/newwmen.do?newwmes='${newwmen}'.do">
+					action="admin/newsysno.do?newwmes='${newsysno}'.do">
 					<spring:message code="newSystemNombre" />
 					<input type=text name="newsysno" required="required" />
 					<acme:submit name="save" code="save" />
@@ -61,18 +61,18 @@
 				<c:out value="${config.welcomeMessageEn}"></c:out>
 				<br />
 				<form:form class="formularioEdicion" method="GET"
-					action="admin/newwmes.do?newwmes='${newwmes}'.do">
+					action="admin/newwmen.do?newwmen='${newwmen}'.do">
 					<spring:message code="newWelcomeMessageEn" />
-					<input type=text name="newwmes" required="required" />
+					<input type=text name="newwmen" required="required" />
 					<acme:submit name="save" code="save" />
 				</form:form>
 				<br />
 				<c:out value="${config.welcomeMessageEs}"></c:out>
 				<br />
 				<form:form class="formularioEdicion" method="GET"
-					action="admin/newwmen.do?newwmes='${newwmen}'.do">
+					action="admin/newwmes.do?newwmes='${newwmes}'.do">
 					<spring:message code="newWelcomeMessageEs" />
-					<input type=text name="newwmen" required="required" />
+					<input type=text name="newwmes" required="required" />
 					<acme:submit name="save" code="save" />
 				</form:form>
 				<br />
@@ -126,7 +126,7 @@
 				<form:form class="formularioEdicion" method="GET"
 					action="admin/newccm.do?newccm='${newccm}'.do">
 					<spring:message code="newCreditCardMake" />
-					<input type=text name="nnewccm" required="required" />
+					<input type=text name="newccm" required="required" />
 					<acme:submit name="save" code="save" />
 				</form:form>
 				<form:form class="formularioEdicion" method="GET"

@@ -72,11 +72,8 @@
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<span style="padding-left: 2.5em"> <acme:cancel
-							url="admin/actorList.do" code="Refresh" />
-					</span> <span style="padding-left: 0.5em"> <acme:cancel url=" "
-							code="Back" />
-					</span>
+					<acme:cancel url="admin/actorList.do" code="Refresh" />
+					<acme:cancel url=" " code="Back" />
 				</div>
 			</div>
 		</security:authorize>

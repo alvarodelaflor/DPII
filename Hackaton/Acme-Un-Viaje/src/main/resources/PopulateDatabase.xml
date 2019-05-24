@@ -136,7 +136,7 @@
 		<property name="welcomeMessageEs" value="Bienvenido a Acme Un Viaje"></property>
 		<property name="welcomeMessageEn" value="Welcome to Acme A Trip"></property>
 		<property name="bannerLogo" value="images/logo.png"></property>
-		<property name="defaultPhoneCode" value="+34 "></property>
+		<property name="defaultPhoneCode" value="34 "></property>
 	</bean>
 	<!-- CONFIG -->
 	<!-- ADMIN -->
@@ -578,6 +578,67 @@
 		<property name="startDate" value="2019/12/11" />
 	</bean>
 	<!-- FINDERREQUEST-->
+	
+		<!-- TRAVELPACK -->
+	<bean id="travelPack01" class="domain.TravelPack">
+		<property name="name" value ="travelPack1" />
+		<property name="draft" value ="false" />
+		<property name="customer" ref ="customer01" />
+		<property name="travelAgency" ref="travelAgency01" />
+		<property name="accomodations">
+        	<list>
+                <ref bean="bookingAccomodation02"/>
+        	</list>
+        </property>
+        <property name="transports">
+        	<list>
+                <ref bean="bookingTransport02"/>
+        	</list>
+        </property>
+	</bean>
+	<bean id="travelPack02" class="domain.TravelPack">
+		<property name="name" value ="travelPack2" />
+		<property name="draft" value ="false" />
+		<property name="customer" ref ="customer01" />
+		<property name="travelAgency" ref="travelAgency01" />
+		<property name="accomodations">
+        	<list>
+                <ref bean="bookingAccomodation01"/>
+        	</list>
+        </property>
+        <property name="transports">
+        	<list>
+                <ref bean="bookingTransport01"/>
+        	</list>
+        </property>
+	</bean>
+	<!-- TRAVELPACK-->
+	
+	<!-- BOOKINGACCOMODATION -->
+	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
+		<property name="accomodation" ref="accomodation01" />
+		<property name="endDate" value="2020/12/11" />
+		<property name="startDate" value="2019/12/11" />
+	</bean>
+	
+	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
+		<property name="accomodation" ref="accomodation02" />
+		<property name="endDate" value="2020/12/11" />
+		<property name="startDate" value="2019/12/11" />
+	</bean>
+	<!-- BOOKINGACCOMODATION-->
+	
+	<!-- BOOKINGTRANSPORT -->
+	<bean id="bookingTransport01" class="domain.BookingTransport">
+		<property name="transport" ref="transport01" />
+		<property name="date" value="2020/12/11" />
+	</bean>
+	
+	<bean id="bookingTransport02" class="domain.BookingTransport">
+		<property name="transport" ref="transport02" />
+		<property name="date" value="2020/12/11" />
+	</bean>
+	<!-- BOOKINGTRANSPORT-->
 	
 		<!-- CLEANINGTASK -->
 	<bean id="cleaningTask01" class="domain.CleaningTask">

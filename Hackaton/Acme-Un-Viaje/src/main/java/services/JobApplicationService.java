@@ -40,6 +40,7 @@ public class JobApplicationService {
 	
 	private String cleanerNotLogin = "Any cleaner is login";
 	private String hostNotFound = "This host has not been found in database";
+	private String hostNull = "The host is null";
 	private String cleanerAcceptedPending = "This cleaner has an already application (accepted or pending) for this host";
 	private String diferentHost = "The host is diferent";
 	private String diferentCleaner = "The cleaner is diferent";
@@ -110,7 +111,10 @@ public class JobApplicationService {
 			if (this.cleanerService.getCleanerLogin()!=null) {				
 				Assert.isTrue(jobApplicationDB.getStatus()==null, finalMode);
 			} else {
-				Assert.isTrue(jobApplication.getStatus()!=null, "Application must be accepted o rejected");
+				Host hostLogin = this.hostService.getHostLogin();
+				Assert.notNull(hostLogin, hostNull);
+				Assert.isTrue(jobApplication.getHost().equals(hostLogin), diferentHost);
+				Assert.isTrue(jobApplication.getStatus()==null && jobApplication.getDropMoment()==null, "Application must be accepted o rejected");
 			}
 			Assert.isTrue(jobApplicationDB.getCleaner().equals(jobApplication.getCleaner()), diferentCleaner);
 			Assert.isTrue(jobApplicationDB.getHost().equals(jobApplication.getHost()), diferentHost);
@@ -172,7 +176,7 @@ public class JobApplicationService {
 		return jobApplication;
 	}
 	
-	private Boolean checkValidForNewApplication(int cleanerId, int hostId) {
+	public Boolean checkValidForNewApplication(int cleanerId, int hostId) {
 		Boolean res = true;
 		int aux = this.jobApplicationRepository.getJobApplicationAcceptedAndPending(cleanerId, hostId).size();
 		if (aux > 0) {
@@ -206,5 +210,74 @@ public class JobApplicationService {
 	public Collection<JobApplication> findAllByCleanerId(int cleanerId) {
 		return this.jobApplicationRepository.findAllByCleanerId(cleanerId);
 	}
+	
+	public Collection<JobApplication> getJobApplicationByStatusAndHostId(Boolean status, int hostId){
+		Host hostLogin = this.hostService.getHostLogin();
+		Host hostToCheck = this.hostService.findOne(hostId);
+		Assert.notNull(hostLogin, hostNull);
+		Assert.notNull(hostToCheck, hostNotFound);
+		Assert.isTrue(hostLogin.equals(hostToCheck), diferentHost);
+		return this.jobApplicationRepository.getJobApplicationByStatusAndHostId(status, hostId);
+	}
+	
+	public Collection<JobApplication> getJobApplicationPendingByHostId(int hostId) { 
+		Host hostLogin = this.hostService.getHostLogin();
+		Host hostToCheck = this.hostService.findOne(hostId);
+		Assert.notNull(hostLogin, hostNull);
+		Assert.notNull(hostToCheck, hostNotFound);
+		Assert.isTrue(hostLogin.equals(hostToCheck), diferentHost);
+		return this.jobApplicationRepository.getJobApplicationPendingByHostId(hostId);		
+	}
+	
+	public Collection<JobApplication> getExCleaners(int hostId) {
+		Host hostLogin = this.hostService.getHostLogin();
+		Host hostToCheck = this.hostService.findOne(hostId);
+		Assert.notNull(hostLogin, hostNull);
+		Assert.notNull(hostToCheck, hostNotFound);
+		Assert.isTrue(hostLogin.equals(hostToCheck), diferentHost);
+		return this.jobApplicationRepository.getExCleaners(hostId);
+	}
+	
+	public JobApplication dropUser(int jobApplicationId) {
+		Host hostLogin = this.hostService.getHostLogin();
+		Assert.notNull(hostLogin, hostNull);
+		JobApplication jobApplicationDB = this.findOne(jobApplicationId);
+		Assert.notNull(jobApplicationDB, jobApplicationNull);
+		Assert.isTrue(jobApplicationDB.getStatus().equals(true), "Application is not accepted");
+		Assert.isTrue(jobApplicationDB.getDropMoment()==null, "Cleaner is already drop");
+		Assert.isTrue(jobApplicationDB.getHost().equals(hostLogin), "Not allow to drop, diferent host");
+		jobApplicationDB.setDropMoment(DateTime.now().toDate());
+		return this.save(jobApplicationDB);
+	}
+	
+	public JobApplication rejectUser(JobApplication jobApplication) {
+		Host hostLogin = this.hostService.getHostLogin();
+		Assert.notNull(hostLogin, hostNull);
+		JobApplication jobApplicationDB = this.findOne(jobApplication.getId());
+		Assert.notNull(jobApplicationDB, jobApplicationNull);
+		Assert.notNull(hostLogin, "No host is login");
+		Assert.isTrue(jobApplicationDB != null, "jobApplication.null");
+		Assert.isTrue(jobApplicationDB.getCleaner().equals(jobApplication.getCleaner()), diferentCleaner);
+		Assert.isTrue(jobApplicationDB.getHost().equals(jobApplication.getHost()), diferentHost);
+		Assert.isTrue(jobApplicationDB.getStatus()==null, "Trying to edit an accept JobApplication");
+		Assert.isTrue(jobApplicationDB.getDropMoment()==null, "Trying to edit a drop JobApplication");
+		Assert.isTrue(jobApplicationDB.getHost().equals(hostLogin), diferentHost);
+		jobApplication.setStatus(false);
+		return this.jobApplicationRepository.save(jobApplication);
+	}
+	
+	public JobApplication acceptApplication(int jobApplicationId) {
+		Host hostLogin = this.hostService.getHostLogin();
+		Assert.notNull(hostLogin, hostNull);
+		JobApplication jobApplicationDB = this.findOne(jobApplicationId);
+		Assert.notNull(jobApplicationDB, jobApplicationNull);
+		Assert.isTrue(jobApplicationDB.getStatus()==null, "Trying to edit an acept or reject application");
+		Assert.isTrue(jobApplicationDB.getDropMoment()==null, "Trying to edit a drop application");
+		Assert.notNull(hostLogin, "No cleaner is login");
+		Assert.isTrue(hostLogin.equals(jobApplicationDB.getHost()));
+		jobApplicationDB.setStatus(true);
+		return this.jobApplicationRepository.save(jobApplicationDB);
+	}
 	// AUXILIAR METHODS
+
 }

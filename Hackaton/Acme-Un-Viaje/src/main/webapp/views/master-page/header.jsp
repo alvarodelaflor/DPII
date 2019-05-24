@@ -180,52 +180,73 @@
 								</li>
 							</security:authorize>
 
-							<security:authorize access="hasRole('TRAVELAGENCY')">
-								<li class="nav-item dropdown"><a href="#"
-									class="nav-link dropdown-toggle" data-toggle="dropdown"
-									id="navbardrop"> <spring:message
-											code="master.page.actor.profile" />
+								<security:authorize access="hasRole('TRAVELAGENCY')">
+							<li class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle"
+									data-toggle="dropdown" id="navbardrop">
+									<spring:message code="master.page.travelAgency" />
 								</a>
-									<div class="dropdown-menu">
-										<a href="travelAgency/edit.do" class="dropdown-item"> <spring:message
-												code="master.page.actor.edit" />
-										</a> <a href="travelAgency/show.do" class="dropdown-item"> <spring:message
-												code="master.page.actor.show" />
-										</a> <a href="socialProfile/list.do" class="dropdown-item"> <spring:message
-												code="master.page.socialProfile.list" />
-										</a> <a href="accomodation/travelAgency/list.do"
-											class="dropdown-item"> <spring:message
-												code="master.page.accomodation.list" />
-										</a> <a href="transport/travelAgency/list.do"
-											class="dropdown-item"> <spring:message
-												code="master.page.transport.list" />
-										</a>
-									</div></li>
-
-								<li class="nav-item"><a
-									href="transport/travelAgency/list.do" class="nav-link"> <spring:message
-											code="master.page.transport.list" />
-								</a></li>
-								<li class="nav-item"><a href="finder/travelAgency/show.do"
-									class="nav-link"> <spring:message
+								<div class="dropdown-menu">
+									<a href="warranty/travelAgency/list.do" class="dropdown-item">
+										<spring:message code="master.page.warranty.travelAgencyList" />
+									</a>
+								</div>
+							</li>
+							<li class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle"
+									data-toggle="dropdown" id="navbardrop">
+									<spring:message code="master.page.actor.profile" />
+								</a>
+								<div class="dropdown-menu">
+									<a href="travelAgency/edit.do" class="dropdown-item"> <spring:message
+											code="master.page.actor.edit" />
+									</a> <a href="travelAgency/show.do" class="dropdown-item"> <spring:message
+											code="master.page.actor.show" />
+									</a> <a href="socialProfile/list.do" class="dropdown-item"> <spring:message
+											code="master.page.socialProfile.list" />
+									</a> <a href="accomodation/travelAgency/list.do" class="dropdown-item"> <spring:message
 											code="master.page.accomodation.list" />
-								</a></li>
-
-								<li class="nav-item"><a
-									href="warranty/travelAgency/list.do" class="nav-link"> <spring:message
-											code="master.page.warranty.travelAgencyList" />
-								</a></li>
-
-								<li class="nav-item"><a
-									href="finderRequest/travelAgency/show.do" class="nav-link">
-										<spring:message code="master.page.accomodation.list" />
-								</a></li>
-								<li class="nav-item dropdown">
-									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
+									</a> <a href="transport/travelAgency/list.do" class="dropdown-item"> <spring:message
+											code="master.page.transport.list" />
+									</a>
+								</div></li>
+								
+								<li class = "nav-item">
+									<a href="transport/travelAgency/list.do" class="nav-link"> 
+										<spring:message code="master.page.transport.list" />
+									</a>
 								</li>
-							</security:authorize>
+								<li class = "nav-item">
+									<a href="finder/travelAgency/show.do" class="nav-link"> 
+										<spring:message code="master.page.accomodation.list" />
+									</a>
+								</li>
+								
+								<li class = "nav-item">
+									<a href="finderRequest/travelAgency/show.do" class="nav-link"> 
+										<spring:message code="master.page.request.list" />
+									</a>
+								</li>
+								
+								<li class = "nav-item">
+									<a href="travelPack/travelAgency/list.do" class="nav-link"> 
+										<spring:message code="master.page.travelPack.list" />
+									</a>
+								</li>
+						</security:authorize>
 
 							<security:authorize access="hasRole('HOST')">
+								<li class="nav-item dropdown">
+									<a href="#" class="nav-link dropdown-toggle"
+										data-toggle="dropdown" id="navbardrop">
+										<spring:message code="master.page.cleaner.employment" />
+									</a>
+									<div class="dropdown-menu">
+										<a href="jobApplication/host/list.do" class="dropdown-item">
+											<spring:message code="jobApplication" />
+										</a>
+									</div>
+								</li>
 								<li class="nav-item"><a href="accomodation/host/list.do"
 									class="nav-link"> <spring:message
 											code="master.page.accomodation.list" />

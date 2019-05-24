@@ -18,37 +18,73 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jstl:if test="${cleanerLogger==true}">
-	<form method="get" action="curricula/cleaner/create.do">
-		<button>
-			<spring:message code="createCurricula" />
-		</button>
-	</form>
-	<br>
-</jstl:if>
-
-<display:table name="curriculas" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+<div class="container-fluid" style="padding-left: 2.5em">
+	<h3>
+		<spring:message code="curricula.principalMessage" />
+		<small class="text-muted">
+			<spring:message code="curricula.moreInfo" />
+		</small>
+	</h3>
 	<jstl:if test="${cleanerLogger==true}">
-		<display:column titleKey="curricula.edit">
-			<a href="curricula/cleaner/edit.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/edit.png" alt="${row.id}" /></a>	
-		</display:column>
-		<display:column titleKey="curricula.delete">
-			<a href="curricula/cleaner/delete.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/delete.png" alt="${row.id}" /></a>	
-		</display:column>
+		<p class="lead">
+			<spring:message code="jobApplications.wantCreateCrurricula" />
+			<a href="curricula/cleaner/create.do">
+				<spring:message htmlEscape="false" code="showDetailsCurricula"/>
+			</a>
+		</p>
 	</jstl:if>
-	<display:column titleKey="curricula.show">
-		<a href="curricula/show.do?curriculaId=${row.id}"><img width="35" height="35" src="./images/show.png" alt="${row.id}" /></a>	
-	</display:column>
-	<display:column property="name" titleKey="curricula.name"></display:column>
-	<display:column property="statement" titleKey="curricula.statement"></display:column>
-</display:table>
-<br>
-<br>
-<c:choose>
-	<c:when test="${cleanerLogger==true}">
-		<acme:cancel url="cleaner/show.do?cleanerId=${curricula.cleaner.id}" code="back"/>
-	</c:when>
-	<c:otherwise>
-		<input type="button" value=<spring:message code="curricula.back" /> name="curricula.back" onclick="history.back()" />
-	</c:otherwise>
-</c:choose>
+	<div id="accordion">
+	<c:forEach var = "i" items="${numbers}">
+			<c:choose>
+				<c:when test="${i==0}">
+					<div class="card">
+				    	<div class="card-header" id="heading0">
+							<h5 class="mb-0">
+				        		<button class="btn btn-link" data-toggle="collapse" data-target="#collapse0" aria-expanded="true" aria-controls="collapse0">
+				          			<jstl:out value="${curriculas[i].name}"></jstl:out>
+				        		</button>
+				      		</h5>
+				    	</div>
+				    	<div id="collapse0" class="collapse show" aria-labelledby="heading0" data-parent="#accordion">
+				      		<div class="card-body">
+				      			<b>
+					        		<jstl:out value="${curriculas[i].statement}"></jstl:out><br>
+				        		</b>
+				        		<br>
+					        	<spring:message htmlEscape="false" code="curricula.moreDetails"/>
+								<a href="curricula/show.do?curriculaId=${curriculas[i].id}">
+									<spring:message htmlEscape="false" code="showDetailsCurricula"/>
+								</a>
+				      		</div>
+				    	</div>
+				  	</div>
+				</c:when>
+				<c:otherwise>
+				  	<div class="card">
+				    	<div class="card-header" id="heading${i}">
+				      		<h5 class="mb-0">
+				        		<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
+				          			<jstl:out value="${curriculas[i].name}"></jstl:out>
+				        		</button>
+				      		</h5>
+				    	</div>
+				    	<div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#accordion">
+				      		<div class="card-body">
+				      			<b>
+					        		<jstl:out value="${curriculas[i].statement}"></jstl:out><br>
+				        		</b>
+				        		<br>
+					        	<spring:message htmlEscape="false" code="curricula.moreDetails"/>
+								<a href="curricula/show.do?curriculaId=${curriculas[i].id}">
+									<spring:message htmlEscape="false" code="showDetailsCurricula"/>
+								</a>
+				      		</div>
+				    	</div>
+				  	</div>
+				</c:otherwise>
+			</c:choose>
+	</c:forEach>
+	</div>
+	<br>
+	<acme:cancel url="#" code="back"/>
+</div>

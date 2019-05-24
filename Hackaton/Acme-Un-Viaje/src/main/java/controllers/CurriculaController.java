@@ -10,6 +10,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,6 +59,16 @@ public class CurriculaController extends AbstractController {
 	public CurriculaController() {
 		super();
 	}
+	
+	private List<Integer> listNumber(int size) {
+		List<Integer> res = new ArrayList<>();
+		int aux = 0;
+		while (aux < size) {
+			res.add(aux);
+			aux++;
+		}
+		return res;
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value = "cleanerId", defaultValue = "-1") final int cleanerId) {
@@ -74,13 +85,25 @@ public class CurriculaController extends AbstractController {
 			Assert.notNull(cleaner, "Cleaner is null");
 			final Collection<Curricula> curriculas = this.curriculaService.findAllNotCopyByCleaner(cleaner);
 			result.addObject("curriculas", curriculas);
+			result.addObject("numbers", this.listNumber(curriculas.size()));
 			result.addObject("requestURI", "curriculas/list.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-//		result.addObject("logo", this.getLogo());
-//		result.addObject("system", this.getSystem());
 		return result;
+	}
+	
+	private ModelAndView checkMaximumMiscellaneous(ModelAndView result, int curriculaId) {
+		ModelAndView res = result;
+		try {
+			Integer aux = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(this.curriculaService.findOne(curriculaId)).size();
+			if (aux <4) {
+				res.addObject("moreAttachment", true);
+			}
+		} catch (Exception e) {
+			res.addObject("moreAttachment", false);
+		}
+		return res;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -97,7 +120,9 @@ public class CurriculaController extends AbstractController {
 				result.addObject("cleanerLogin", true);
 				final MiscellaneousAttachment miscellaneousAttachment = this.miscellaneousAttachmentService.createWithHistory(curriculaDB);
 				result.addObject("miscellaneousAttachment", miscellaneousAttachment);
+				this.checkMaximumMiscellaneous(result, curriculaId);
 			}
+			
 
 			result.addObject("curricula", curriculaDB);
 

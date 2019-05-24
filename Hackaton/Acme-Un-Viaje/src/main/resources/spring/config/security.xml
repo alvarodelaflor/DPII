@@ -47,6 +47,9 @@
 		<security:intercept-url pattern="/jobApplication/host/create.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/edit.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/delete.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/jobApplication/host/drop.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/jobApplication/host/reject.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/jobApplication/host/list.do" access="hasRole('HOST')" />
 		
 		<security:intercept-url pattern="/jobApplication/show.do" access="permitAll" />
 		
@@ -105,7 +108,7 @@
 		<security:intercept-url pattern="/admin/newccm.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/delccm.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/traratio.do" access="hasRole('ADMIN')" />
-		<security:intercept-url pattern="/admin/newwwmes.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/admin/newwmes.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/newwmen.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/newsysno.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/newsysna.do" access="hasRole('ADMIN')" />
@@ -165,6 +168,10 @@
 		<security:intercept-url pattern="/finder/travelAgency/refresh.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/finderRequest/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/finderRequest/travelAgency/refresh.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/travelPack/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/travelPack/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/travelPack/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/travelPack/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
 		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 

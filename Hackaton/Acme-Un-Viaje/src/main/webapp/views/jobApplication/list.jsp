@@ -37,29 +37,32 @@
 					<p class="lead"><spring:message code="jobApplications.empty" /></p>
 				</c:when>
 				<c:otherwise>
-					<display:table name="jobApplications" id="row2" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
+					<display:table name="jobApplications" id="row2" requestURI="${requestURI}" pagesize="5" class="table table-striped table-responsive-md btn-table">
 						<display:column titleKey="jobApplication.host">
 							<a href="host/show.do?hostId=${row2.host.id}"><jstl:out value="${row2.host.name} ${row2.host.surname}"></jstl:out></a>			
 						</display:column>
 						<display:column titleKey="jobApplication.status">
 							<c:choose>
-								<c:when test="${row2.status==null or row2.status==''}">
+								<c:when test="${row2.status==null}">
 									<spring:message code="null" />
 								</c:when>
 								<c:otherwise>
-									<c:when test="${row2.status==true}">
-										<spring:message code="true" />
-									</c:when>
-									<c:otherwise>
-										<spring:message code="false" />
-									</c:otherwise>
+									<c:choose>
+										<c:when test="${row2.status==true}">
+											<spring:message code="true" />
+										</c:when>
+										<c:otherwise>
+											<spring:message code="false" />
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>			
 						</display:column>
 						<display:column property="cleanerMessage" titleKey="jobApplication.cleanerMessage2"></display:column>
 						<display:column property="rejectMessage" titleKey="jobApplication.rejectMessage"></display:column>
+						<display:column property="dropMoment" titleKey="jobApplication.dropMoment"></display:column>
 						<c:choose>
-							<c:when test="${cleanerLogger==true and row2.status==null}">
+							<c:when test="${row2.status==null}">
 								<display:column titleKey="none">
 									<acme:create name = "" url="jobApplication/cleaner/edit.do?jobApplicationId=${row2.id}" code="curricula.edit"/>	
 								</display:column>
@@ -67,6 +70,14 @@
 									<acme:delete name = "" url="jobApplication/cleaner/delete.do?jobApplicationId=${row2.id}" code="curricula.delete"/>
 								</display:column>
 							</c:when>
+							<c:otherwise>
+								<display:column titleKey="none">
+										
+								</display:column>
+								<display:column titleKey="none">
+								
+								</display:column>							
+							</c:otherwise>
 						</c:choose>
 					</display:table>
 				</c:otherwise>
@@ -85,7 +96,7 @@
 			    	</c:when>
 			    	<c:otherwise>
 			    		<p class="lead"><spring:message code="lookForJob2"/></p>
-						<div id="myCarousel" class="carousel slide bg-inverse w-50 ml-auto mr-auto" data-ride="carousel">
+						<div id="myCarousel" class="carousel slide bg-inverse w-60 ml-auto mr-auto" data-ride="carousel">
 							<ol class="carousel-indicators">
 						    	<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 								<c:forEach var = "i" items="${numbers}">

@@ -42,4 +42,14 @@
 		<put-attribute name="body" value="/views/jobApplication/list.jsp" />
 	</definition>
 	
+	<definition name="jobApplication/host/list" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/jobApplication/listH.jsp" />
+	</definition>
+	
+	<definition name="jobApplication/host/reject" extends="master.page">	
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="/views/jobApplication/reject.jsp" />
+	</definition>
+	
 </tiles-definitions>

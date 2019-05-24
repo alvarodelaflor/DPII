@@ -56,7 +56,7 @@ public class TransporterService {
 	// ---------------------------------------------------------------
 	public Transporter saveRegisterAsTransporter(final Transporter transporter) {
 		if (transporter.getPhone().matches("^([0-9]{4,})$")) {
-			 transporter.setPhone(this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + transporter.getPhone());
+			 transporter.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + transporter.getPhone());
 		 }
 		return this.transporterRepository.save(transporter);
 	}

@@ -18,38 +18,31 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<security:authorize access="hasRole('CLEANER')">
-	<style>
-		.linea
-		{
-		    float: left;
-		}
-	</style>
-
-	<div>
-		<jstl:if test="${cleanerLogin==true}">
-			<form method="get" action="educationalData/cleaner/delete.do">
-				<button class="linea" name="educationalDataId" value="${educationalData.id}"><spring:message code="curricula.delete"/></button>
-			</form>
-			<form method="get" action="educationalData/cleaner/edit.do">
-				<button name="educationalDataId" value="${educationalData.id}"><spring:message code="curricula.edit"/></button>
-			</form>
-			<br>	
-		</jstl:if>
+<div class="jumbotron" style="width: 100%">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="display-3">
+				<jstl:out value="${educationalData.degree}"></jstl:out>
+			</h3>
+			<p>
+				<spring:message code="whereStudy" /><jstl:out value="${educationalData.institution}"></jstl:out>
+			</p>
+			<br>
+			<p class="lead">
+				<jstl:out value="${educationalData.curricula.cleaner.name}"></jstl:out>
+				<spring:message code="period" />
+				<strong><b><jstl:out value="${educationalData.startDate} - ${educationalData.endDate}"></jstl:out></b></strong>
+				<spring:message code="calification" />
+				<strong><b><jstl:out value="${educationalData.mark}"></jstl:out></b></strong>
+				<br>
+				<br>
+				<spring:message code="masInfo" />
+				<a href="https://www.google.com/search?source=hp&ei=CjPoXLzZIZGZkwX09K1I&q=${educationalData.degree}">
+					<spring:message htmlEscape="false" code="showDetailsCurricula"/>
+				</a>		
+			</p>
+		</div>
 	</div>
-</security:authorize> 
-<div class="content">
-	<fieldset>
-		<legend>
-			<spring:message code="curricula.data" />
-		</legend>
-		<p><strong><spring:message code="educationalData.degree" /> </strong><jstl:out value="${educationalData.degree}"></jstl:out></p>
-		<p><strong><spring:message code="educationalData.institution" /> </strong><jstl:out value="${educationalData.institution}"></jstl:out></p>
-		<p><strong><spring:message code="educationalData.mark" /> </strong><jstl:out value="${educationalData.mark}"></jstl:out></p>
-		<p><strong><spring:message code="educationalData.startDate" /> </strong><jstl:out value="${educationalData.startDate}"></jstl:out></p>
-		<p><strong><spring:message code="educationalData.endDate" /> </strong><jstl:out value="${educationalData.endDate}"></jstl:out></p>
-	</fieldset>
+	<br>
+	<acme:historyBack/>
 </div>
-
-<br>
-<acme:cancel url="curricula/show.do?curriculaId=${educationalData.curricula.id}" code="back"/>
