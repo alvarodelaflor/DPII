@@ -144,11 +144,21 @@
 		</div>
 	</jstl:if>
 	<!-- ALVARO -->
-
-	<div class="row">
-		<div class="col-md-4">
-			<acme:cancel url="" code="actor.back" />
-
-		</div>
-	</div>
+	<c:choose>
+		<c:when test="${validCleaner}">
+			<div class="row">
+				<div class="col-md-4">
+					<acme:historyBack/>
+				</div>
+			</div>		
+		</c:when>
+		<c:otherwise>
+			<div class="row">
+				<div class="col-md-4">
+					<acme:cancel url="" code="actor.back" />
+		
+				</div>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </div>

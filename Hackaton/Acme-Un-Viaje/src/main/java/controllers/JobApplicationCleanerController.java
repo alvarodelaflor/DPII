@@ -103,6 +103,7 @@ public class JobApplicationCleanerController extends AbstractController {
 			Assert.notNull(cleanerLogin, "No cleaner is login");
 			Assert.isTrue(cleanerLogin.equals(jobApplicationDB.getCleaner()));
 			result = new ModelAndView("jobApplication/cleaner/edit");
+			result.addObject("toEdit", true);
 			result.addObject("curriculas", this.curriculaService.findAllNotCopyByCleaner(this.cleanerService.getCleanerLogin()));
 			result.addObject("jobApplication", jobApplicationDB);
 		} catch (final Exception e) {

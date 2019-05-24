@@ -82,7 +82,7 @@
 		<div class="col-md-3">
 			<span style="padding-left: 4.5em"> <acme:submit
 					name="save" code="actor.save" />
-			</span> <span style="padding-left: 0.5em"> <acme:cancel url=""
+			</span> <span style="padding-left: 0.5em"> <acme:cancel url="/curricula/list.do"
 					code="actor.cancel" />
 			</span>
 		</div>
