@@ -141,6 +141,9 @@
 		<security:intercept-url pattern="/message/editBroadcast.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/message/delete.do" access="permitAll" />
 		<security:intercept-url pattern="/message/editMailbox.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/cleaningTask/list.do" access="hasRole('HOST')" /> 
+		<security:intercept-url pattern="/cleaningTask/show.do" access="hasRole('HOST')" /> 
 		<!-- Antonio -->
 
 		<!-- HIPONA -->
