@@ -20,16 +20,26 @@ public class StringToAccomodationConverter implements Converter<String, Accomoda
 	@Override
 	public Accomodation convert(final String text) {
 		Accomodation result;
+		Accomodation resId;
+		Accomodation resAddress;
 		String address;
+		int id;
 
 		try {
 			if (StringUtils.isEmpty(text))
 				result = null;
-			else {
-				address = text;
-				result = this.accomodationRepository.findByAddress(address);
+			else {				
+				id = Integer.valueOf(text);
+				resId = this.accomodationRepository.findOne(id);
+				result = resId;								
 			}
-		} catch (final Throwable oops) {
+		}
+			catch (NumberFormatException e) {
+				address = text;
+				resAddress = this.accomodationRepository.findByAddress(address);	
+				result = resAddress;
+			}
+		 catch (final Throwable oops) {
 			System.out.println("Error en StringToAccomodationConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
