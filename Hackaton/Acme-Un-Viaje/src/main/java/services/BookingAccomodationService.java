@@ -37,7 +37,8 @@ public class BookingAccomodationService {
 	}
 
 	public BookingAccomodation save(final BookingAccomodation bookingAccomodation) {
-		Assert.isTrue(!this.isReserved(bookingAccomodation), "The accomodation is already reserved for those days");
+		System.out.println("Service: " + bookingAccomodation.getAccomodation().toString());
+		Assert.isTrue(!this.isReserved(bookingAccomodation), "error.accomodationAlreadyReserved");
 		return this.bookingAccomodationRepository.save(bookingAccomodation);
 	}
 
@@ -49,8 +50,12 @@ public class BookingAccomodationService {
 		boolean res = false;
 		final Collection<BookingAccomodation> bookings = this.bookingAccomodationRepository.getAccomodationBookings(bookingAccomodation.getAccomodation().getId());
 		for (final BookingAccomodation b : bookings)
-			if ((b.getStartDate().before(bookingAccomodation.getStartDate()) || b.getEndDate().after(bookingAccomodation.getStartDate()))
-				&& (b.getStartDate().before(bookingAccomodation.getEndDate()) || b.getEndDate().after(bookingAccomodation.getEndDate()))) {
+			if ((b.getStartDate().before(bookingAccomodation.getStartDate()) && b.getEndDate().after(bookingAccomodation.getStartDate()))
+				|| (b.getStartDate().before(bookingAccomodation.getEndDate()) && b.getEndDate().after(bookingAccomodation.getEndDate()))
+				|| (b.getStartDate().after(bookingAccomodation.getStartDate()) && b.getEndDate().before(bookingAccomodation.getEndDate()))
+				|| (b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear() && b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth()
+					&& b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear()
+					&& b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth())) {
 				res = true;
 				break;
 			}

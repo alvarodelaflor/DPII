@@ -125,6 +125,7 @@ public class TravelPackTravelAgencyController extends AbstractController {
 			final TravelPack travelPack = this.travelPackService.findOne(travelPackId);
 			result = new ModelAndView("travelPack/travelAgency/show");
 			result.addObject("travelPack", travelPack);
+			result.addObject("requestURI", "travelPack/travelAgency/show.do?travelPackId=" + travelPackId);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}

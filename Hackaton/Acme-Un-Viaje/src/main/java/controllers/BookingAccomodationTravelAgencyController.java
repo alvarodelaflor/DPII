@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Accomodation;
 import domain.BookingAccomodation;
 import domain.TravelPack;
 import forms.BookingAccForm;
@@ -54,13 +55,16 @@ public class BookingAccomodationTravelAgencyController extends AbstractControlle
 
 	// ---------------------------------------------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(@RequestParam(value = "accomodationId", defaultValue = "-1") final int accomodationId) {
 		ModelAndView result;
 		try {
 			final BookingAccForm form = new BookingAccForm();
+			final Accomodation acc = this.accomodationService.findOne(accomodationId);
+			Assert.notNull(acc, "The accomodation does not exist");
+			form.setAccomodation(acc);
 			result = new ModelAndView("bookingAccomodation/travelAgency/create");
 			result.addObject("form", form);
-			final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyPacks();
+			final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
 			result.addObject("packs", packs);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -78,18 +82,28 @@ public class BookingAccomodationTravelAgencyController extends AbstractControlle
 			System.err.println(binding);
 			result = new ModelAndView("bookingAccomodation/travelAgency/create");
 			result.addObject("form", form);
-			final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyPacks();
+			final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
 			result.addObject("packs", packs);
+			result.addObject("message", "error.createbAccomodation");
 		} else
 			try {
-				final TravelPack pack = this.travelPackService.findOne(form.getTravelPackId());
 
 				final BookingAccomodation bc = this.bookingAccomodationService.save(book);
+				final TravelPack pack = this.travelPackService.findOne(form.getTravelPackId());
 				pack.getAccomodations().add(bc);
-				this.travelPackService.save(pack);
 				result = new ModelAndView("redirect:/travelPack/travelAgency/list.do");
+
 			} catch (final Throwable oops) {
-				result = new ModelAndView("redirect:/welcome/index.do");
+				if (oops.getMessage() != null) {
+					result = new ModelAndView("bookingAccomodation/travelAgency/create");
+					result.addObject("form", form);
+					final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
+					result.addObject("packs", packs);
+					result.addObject("message", oops.getMessage());
+				} else {
+					oops.printStackTrace();
+					result = new ModelAndView("redirect:/welcome/index.do");
+				}
 			}
 		return result;
 	}

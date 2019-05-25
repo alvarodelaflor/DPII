@@ -101,4 +101,9 @@ public class TravelPackService {
 		return result;
 	}
 
+	public Collection<TravelPack> getTravelAgencyDraftPacks() {
+		final TravelAgency travel = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
+		return this.travelPackRepository.getTravelAgencyDraftPacks(travel.getId());
+	}
+
 }
