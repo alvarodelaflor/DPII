@@ -618,6 +618,12 @@
 				<ref bean="bookingTransport02" />
 			</list>
 		</property>
+		<property name="complaints">
+			<list>
+				<ref bean="complaint01" />
+				<ref bean="complaint02" />
+			</list>
+		</property>
 	</bean>
 	<bean id="travelPack02" class="domain.TravelPack">
 		<property name="name" value="travelPack2" />
@@ -677,7 +683,6 @@
 		<property name="moment" value="2019/05/20 20:00" />
 		<property name="customer" ref="customer01" />
 		<property name="transporter" ref="transporter01" />
-		<property name="travelPack" ref="travelPack01" />
 	</bean>
 
 	<bean id="complaint02" class="domain.Complaint">
@@ -685,7 +690,6 @@
 		<property name="moment" value="2019/05/20 20:00" />
 		<property name="customer" ref="customer01" />
 		<property name="host" ref="host01" />
-		<property name="travelPack" ref="travelPack01" />
 	</bean>
 	<!-- COMPLAINT -->
 </beans>

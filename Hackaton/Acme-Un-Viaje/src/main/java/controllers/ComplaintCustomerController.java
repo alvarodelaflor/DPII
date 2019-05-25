@@ -40,23 +40,6 @@ public class ComplaintCustomerController extends AbstractController {
 		return res;
 	}
 
-	//	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	//	public ModelAndView show(@RequestParam(required = false, value = "complaintId") final Integer complaintId) {
-	//		if (complaintId == null)
-	//			return new ModelAndView("redirect:/welcome/index.do");
-	//
-	//		ModelAndView res = null;
-	//		try {
-	//			final Complaint complaint = this.complaintService.getLoggedCustomerComplaint(complaintId);
-	//			res = new ModelAndView("complaint/customer/show");
-	//			res.addObject("complaint", complaint);
-	//		} catch (final Throwable oops) {
-	//			res = new ModelAndView("redirect:/welcome/index.do");
-	//		}
-	//
-	//		return res;
-	//	}
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView res = null;
@@ -105,4 +88,18 @@ public class ComplaintCustomerController extends AbstractController {
 		return res;
 	}
 
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(required = false, value = "complaintId") final Integer complaintId) {
+		if (complaintId == null)
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		ModelAndView res = null;
+		try {
+			this.complaintService.delete(complaintId);
+			res = new ModelAndView("redirect:/complaint/customer/list.do");
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return res;
+	}
 }

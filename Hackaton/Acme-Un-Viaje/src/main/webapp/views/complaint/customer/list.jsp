@@ -19,9 +19,6 @@
 			<div class="col-md-12">
 				<fieldset>
 					<display:column titleKey="complaint.moment" property="moment" />
-					<display:column titleKey="complaint.travelPack">
-						<jstl:out value="${row.travelPack.name}" />
-					</display:column>
 					<display:column titleKey="complaint.description"
 						property="description" />
 
@@ -59,9 +56,6 @@
 			<div class="col-md-12">
 				<fieldset>
 					<display:column titleKey="complaint.moment" property="moment" />
-					<display:column titleKey="complaint.travelPack">
-						<jstl:out value="${row.travelPack.name}" />
-					</display:column>
 					<display:column titleKey="complaint.description"
 						property="description" />
 				</fieldset>

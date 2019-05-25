@@ -15,6 +15,7 @@ import security.Authority;
 import utilities.CommonUtils;
 import domain.Complaint;
 import domain.Customer;
+import domain.TravelPack;
 
 @Service
 @Transactional
@@ -25,6 +26,9 @@ public class ComplaintService {
 
 	@Autowired
 	private CustomerService		customerService;
+
+	@Autowired
+	private TravelPackService	travelPackService;
 
 
 	public Collection<Complaint> getLoggedCustomerAssignedComplaints() {
@@ -51,12 +55,12 @@ public class ComplaintService {
 	}
 
 	public Complaint reconstruct(final Complaint complaint, final BindingResult binding) {
-		final Complaint res = this.create();
-		if (complaint.getId() == 0) {
+		final Complaint res = complaint;
+		if (complaint.getId() != 0)
+			Assert.isTrue(this.isAssigned(complaint.getId()) == false);
 
-		} else
-			Assert.isTrue(this.isNotAssigned(complaint.getId()));
-
+		res.setCustomer(this.customerService.getLoggedCustomer());
+		res.setMoment(new Date());
 		return res;
 	}
 
@@ -66,8 +70,15 @@ public class ComplaintService {
 		this.complaintRepository.save(reconstructedComplaint);
 	}
 
-	private boolean isNotAssigned(final int id) {
-		// TODO: Finish
-		return false;
+	private boolean isAssigned(final int complaintId) {
+		return this.complaintRepository.findOne(complaintId).getReview() != null;
+	}
+
+	public void delete(final int complaintId) {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		Assert.isTrue(this.isAssigned(complaintId) == false);
+		final TravelPack tp = this.travelPackService.findFromComplaint(complaintId);
+		tp.getComplaints().remove(this.complaintRepository.findOne(complaintId));
+		this.complaintRepository.delete(complaintId);
 	}
 }
