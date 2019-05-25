@@ -175,6 +175,10 @@
 									class="nav-link"> <spring:message
 											code="master.page.request.customerList" />
 								</a></li>
+								<li class="nav-item"><a href="customer/contacts.do"
+									class="nav-link"> <spring:message
+											code="master.page.request.contacts" />
+								</a></li>
 								<li class="nav-item dropdown">
 									<a href="mailbox/list.do" class="nav-link"><spring:message code="master.page.mailbox.list" /></a>			
 								</li>

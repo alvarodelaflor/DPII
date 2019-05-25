@@ -31,4 +31,24 @@
 		<put-attribute name="body" value="/views/customer/show.jsp" />
 	</definition>
 	
+	<definition name="customer/contacts" extends="master.page">	
+		<put-attribute name="title" value="My Contacts" />
+		<put-attribute name="body" value="/views/customer/contacts.jsp" />
+	</definition>
+	
+	<definition name="customer/rateHost" extends="master.page">	
+		<put-attribute name="title" value="Host Valoration" />
+		<put-attribute name="body" value="/views/valoration/rateHost.jsp" />
+	</definition>
+	
+	<definition name="customer/rateTransporter" extends="master.page">	
+		<put-attribute name="title" value="Transporter Valoration" />
+		<put-attribute name="body" value="/views/valoration/rateTransporter.jsp" />
+	</definition>
+	
+	<definition name="customer/rateTravelAgency" extends="master.page">	
+		<put-attribute name="title" value="Travel Agency Valoration" />
+		<put-attribute name="body" value="/views/valoration/rateTravelAgency.jsp" />
+	</definition>
+	
 </tiles-definitions>

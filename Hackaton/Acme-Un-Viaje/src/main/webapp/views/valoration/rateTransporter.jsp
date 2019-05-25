@@ -12,7 +12,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <form:form class="formularioEdicion" method="POST"
-	modelAttribute="valoration" action="host/rateCustomer.do">
+	modelAttribute="valoration" action="customer/rateTransporter.do">
 
 	<div class="row" style="padding-left: 2.5em">
 		<div class="col-md-6">
@@ -29,7 +29,7 @@
 		<div class="col-md-3">
 			<span style="padding-left: 2.5em"> <acme:submit name="save"
 					code="save" />
-			</span> <span style="padding-left: 0.5em"> <acme:cancel url=""
+			</span> <span style="padding-left: 0.5em"> <acme:cancel url="customer/contacts.do"
 					code="cancel" />
 			</span>
 		</div>

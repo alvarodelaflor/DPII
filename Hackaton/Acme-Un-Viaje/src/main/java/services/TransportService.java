@@ -182,4 +182,8 @@ public class TransportService {
 		return res;
 	}
 
+	public Collection<Transporter> getTransportersByCustomerId(final int id) {
+
+		return this.transportRepository.getTransportersByCustomerId(id);
+	}
 }

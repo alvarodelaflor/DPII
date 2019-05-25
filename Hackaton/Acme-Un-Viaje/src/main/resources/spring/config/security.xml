@@ -85,6 +85,10 @@
 		<security:intercept-url pattern="/customer/create.do" access="permitAll" />
 		<security:intercept-url pattern="/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/customer/show.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/contacts.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/rateHost.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/rateTransporter.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/rateTravelAgency.do" access="hasRole('CUSTOMER')" />
 		
 		<security:intercept-url pattern="/host/create.do" access="permitAll" />
 		<security:intercept-url pattern="/host/edit.do" access="hasRole('HOST')" />

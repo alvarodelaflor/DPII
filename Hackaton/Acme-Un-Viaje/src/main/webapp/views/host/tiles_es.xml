@@ -32,7 +32,7 @@
 
 	<definition name="host/rateCustomer" extends="master.page">
 		<put-attribute name="title" value="Valorar Cliente" />
-		<put-attribute name="body" value="/views/valoration/rate.jsp" />
+		<put-attribute name="body" value="/views/valoration/rateCustomer.jsp" />
 	</definition>
 
 	<definition name="host/cleanerList" extends="master.page">
@@ -42,7 +42,7 @@
 
 	<definition name="host/rateCleaner" extends="master.page">
 		<put-attribute name="title" value="Valorar Empleado" />
-		<put-attribute name="body" value="/views/valoration/rate.jsp" />
+		<put-attribute name="body" value="/views/valoration/rateCleaner.jsp" />
 	</definition>
 
 </tiles-definitions>

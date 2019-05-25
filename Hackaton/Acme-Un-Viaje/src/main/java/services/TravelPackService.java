@@ -12,10 +12,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.BookingAccomodation;
-import domain.BookingTransport;
 import repositories.TravelPackRepository;
 import security.LoginService;
+import domain.Accomodation;
+import domain.BookingAccomodation;
+import domain.BookingTransport;
+import domain.Host;
 import domain.TravelAgency;
 import domain.TravelPack;
 
@@ -25,11 +27,12 @@ public class TravelPackService {
 
 	@Autowired
 	private TravelPackRepository	travelPackRepository;
+
 	@Autowired
 	private TravelAgencyService		travelAgencyService;
 
 	@Autowired
-	private CustomerService			customerService;
+	private AccomodationService		accService;
 
 	@Autowired
 	private Validator				validator;
@@ -109,5 +112,19 @@ public class TravelPackService {
 	public Collection<TravelPack> getTravelPacksAccomodationId(final int id) {
 
 		return this.travelPackRepository.getTravelPacksAccomodationId(id);
+	}
+
+	public Collection<Host> getAllHostByCustomerId(final int id) {
+
+		final Collection<Host> res = new ArrayList<>();
+		final Collection<Accomodation> accomodations = this.accService.getAccomodationsByCustomerId(id);
+		for (final Accomodation accomodation : accomodations)
+			res.add(accomodation.getHost());
+		return res;
+	}
+
+	public Collection<TravelPack> getTravelPacksByCustomerId(final int id) {
+
+		return this.getTravelPacksByCustomerId(id);
 	}
 }

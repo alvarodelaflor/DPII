@@ -15,13 +15,14 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Access(AccessType.PROPERTY)
 public class Valoration extends DomainEntity {
 
-	Integer		score;
-	String		comment;
+	Integer			score;
+	String			comment;
 
-	Cleaner		cleaner;
-	Customer	customer;
-	Transporter	transporter;
-	Host		host;
+	Cleaner			cleaner;
+	Customer		customer;
+	Transporter		transporter;
+	TravelAgency	travelAgency;
+	Host			host;
 
 
 	@Min(1)
@@ -42,6 +43,15 @@ public class Valoration extends DomainEntity {
 
 	public void setComment(final String comment) {
 		this.comment = comment;
+	}
+
+	@ManyToOne(optional = true)
+	public TravelAgency getTravelAgency() {
+		return this.travelAgency;
+	}
+
+	public void setTravelAgency(final TravelAgency travelAgency) {
+		this.travelAgency = travelAgency;
 	}
 
 	@ManyToOne(optional = true)

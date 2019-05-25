@@ -25,10 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Host;
-import forms.RegisterActor;
 import security.LoginService;
 import services.AccomodationService;
 import services.CleanerService;
@@ -53,19 +49,16 @@ public class HostController extends AbstractController {
 	private HostService				hostService;
 
 	@Autowired
-	private CleanerService cleanerService;
-	
+	private CleanerService			cleanerService;
+
 	@Autowired
-	private JobApplicationService jobApplicationService;
-	
+	private JobApplicationService	jobApplicationService;
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService			configService;
 
 	@Autowired
 	private CustomerService			customerService;
-
-	@Autowired
-	private CleanerService			cleanerService;
 
 	@Autowired
 	private JobApplicationService	jobAppService;
@@ -317,7 +310,7 @@ public class HostController extends AbstractController {
 				registerActor = this.hostService.findOne(hotId);
 				res = false;
 			}
-			
+
 			result = new ModelAndView("host/show");
 			// ALVARO If an cleaner user show the profile of an valid host to do an application the link appear
 			this.validCleaner(registerActor, result);
@@ -329,15 +322,15 @@ public class HostController extends AbstractController {
 		}
 		return result;
 	}
-	
-	private ModelAndView validCleaner(Host host, ModelAndView result) {
-		ModelAndView res = result;
+
+	private ModelAndView validCleaner(final Host host, final ModelAndView result) {
+		final ModelAndView res = result;
 		try {
-			Cleaner cleaner = this.cleanerService.getCleanerLogin();
+			final Cleaner cleaner = this.cleanerService.getCleanerLogin();
 			Assert.notNull(cleaner, "Any cleaner is login");
 			Assert.isTrue(this.jobApplicationService.checkValidForNewApplication(cleaner.getId(), host.getId()), "El usuario dispone con una aplicaci�n pendiente");
 			res.addObject("validCleaner", true);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out.println("Bloqueada petici�n de logueo, el limpiador no es un usuario v�lido");
 			res.addObject("validCleaner", false);
 		}

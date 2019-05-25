@@ -134,4 +134,8 @@ public class AccomodationService {
 		return res;
 	}
 
+	public Collection<Host> getAccomodationsByCustomerId(final int id) {
+
+		return this.accomodationRepo.getAccomodationsByCustomerId(id);
+	}
 }
