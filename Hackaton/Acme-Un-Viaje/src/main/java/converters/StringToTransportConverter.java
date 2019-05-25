@@ -6,19 +6,19 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import domain.Accomodation;
-import repositories.AccomodationRepository;
+import domain.Transport;
+import repositories.TransportRepository;
 
 @Component
-public class StringToAccomodationConverter implements Converter<String, Accomodation> {
+public class StringToTransportConverter implements Converter<String, Transport> {
 
 	@Autowired
-	AccomodationRepository accomodationRepository;
+	TransportRepository transportRepository;
 
 
 	@Override
-	public Accomodation convert(final String text) {
-		Accomodation result;
+	public Transport convert(final String text) {
+		Transport result;
 		int id;
 
 		try {
@@ -26,7 +26,7 @@ public class StringToAccomodationConverter implements Converter<String, Accomoda
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.accomodationRepository.findOne(id);
+				result = this.transportRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);

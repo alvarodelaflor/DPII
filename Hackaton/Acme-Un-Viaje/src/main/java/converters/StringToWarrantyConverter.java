@@ -6,19 +6,19 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import domain.Accomodation;
-import repositories.AccomodationRepository;
+import domain.Warranty;
+import repositories.WarrantyRepository;
 
 @Component
-public class StringToAccomodationConverter implements Converter<String, Accomodation> {
+public class StringToWarrantyConverter implements Converter<String, Warranty> {
 
 	@Autowired
-	AccomodationRepository accomodationRepository;
+	WarrantyRepository warrantyRepository;
 
 
 	@Override
-	public Accomodation convert(final String text) {
-		Accomodation result;
+	public Warranty convert(final String text) {
+		Warranty result;
 		int id;
 
 		try {
@@ -26,9 +26,10 @@ public class StringToAccomodationConverter implements Converter<String, Accomoda
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.accomodationRepository.findOne(id);
+				result = this.warrantyRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
+			System.out.println("Error en StringToWarrantyConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;

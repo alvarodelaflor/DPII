@@ -7,7 +7,7 @@
 <tiles-definitions>
 
 		<definition name="bookingTransport/travelAgency/create" extends="master.page">	
-		<put-attribute name="title" value="Adding transport" />
+		<put-attribute name="title" value="Creating transport" />
 		<put-attribute name="body" value="/views/bookingTransport/edit.jsp" />
 	</definition>
 	

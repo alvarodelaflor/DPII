@@ -53,7 +53,7 @@ public class TravelPackService {
 		if (travelPack.getId() != 0) {
 			final TravelPack packDB = this.findOne(travelPack.getId());
 			Assert.notNull(packDB);
-			Assert.isTrue(packDB.getDraft(), "The travel pack is already in final mode");
+			Assert.isTrue(packDB.getDraft(), "travelPack.finalMode");
 		}
 		travelPack.setPrice(this.calculatePrice(travelPack));
 		return this.travelPackRepository.save(travelPack);
