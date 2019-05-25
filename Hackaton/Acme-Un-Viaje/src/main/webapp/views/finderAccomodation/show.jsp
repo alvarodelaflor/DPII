@@ -72,11 +72,13 @@
 							<spring:message code="transport.show" />
 						</a>
 					</display:column>
+					<jstl:if test="${canBook}">
 					<display:column titleKey="baccomodation.book">
 						<a href="bookingAccomodation/travelAgency/create.do?accomodationId=${row.id}">
 							<spring:message code="baccomodation.book" />
 						</a>
 					</display:column>
+					</jstl:if>
 				</fieldset>
 			</div>
 		</div>
