@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.Cleaner;
+import domain.Curricula;
 import domain.Host;
 import domain.JobApplication;
 import repositories.JobApplicationRepository;
@@ -33,6 +34,8 @@ public class JobApplicationService {
 	private HostService				hostService;
 	@Autowired
 	private CleanerService			cleanerService;
+	@Autowired
+	private CurriculaService curriculaService;
 	@Autowired
 	private Validator					validator;
 
@@ -113,6 +116,7 @@ public class JobApplicationService {
 			} else {
 				Host hostLogin = this.hostService.getHostLogin();
 				Assert.notNull(hostLogin, hostNull);
+				Assert.isTrue(jobApplication.getHost().equals(hostLogin), diferentHost);
 				Assert.isTrue(jobApplication.getStatus()==null && jobApplication.getDropMoment()==null, "Application must be accepted o rejected");
 			}
 			Assert.isTrue(jobApplicationDB.getCleaner().equals(jobApplication.getCleaner()), diferentCleaner);
@@ -120,7 +124,29 @@ public class JobApplicationService {
 		} else {
 			Assert.isTrue(checkValidForNewApplication(this.cleanerService.getCleanerLogin().getId(), jobApplication.getHost().getId()), cleanerAcceptedPending);
 		}
-		return this.jobApplicationRepository.save(jobApplication);
+		return this.jobApplicationRepository.save(jobApplication); 
+	}
+	
+	/**
+	 * 
+	 * If we make a curriculum change in the edition of the working application<br>
+	 * we delete the previous copy
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 */
+	public void checkChangeCurricula(JobApplication jobApplication) {
+		Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
+		if (cleanerLogin!=null) {
+			try {
+				JobApplication jobApplicationDB = this.findOne(jobApplication.getId());
+				Assert.isTrue(cleanerLogin.equals(jobApplicationDB.getCleaner()));
+				if (!jobApplication.getCurricula().equals(jobApplicationDB.getCurricula())) {
+					this.curriculaService.delete(jobApplicationDB.getCurricula());
+				}				
+			} catch (Exception e) {
+
+			}
+		}
 	}
 
 	/**
@@ -133,7 +159,9 @@ public class JobApplicationService {
 		JobApplication jobApplicationDB = this.jobApplicationRepository.findOne(jobApplication.getId());
 		Assert.isTrue(jobApplicationDB.getStatus()==null, finalMode);
 		Assert.isTrue(this.checkValidForEdit(jobApplication), actorNoValid);
+		Curricula curricula = this.curriculaService.findOne(jobApplication.getCurricula().getId());
 		this.jobApplicationRepository.delete(jobApplication);
+		this.curriculaService.delete(curricula);
 	}
 	
 	// CRUD METHODS
@@ -175,7 +203,7 @@ public class JobApplicationService {
 		return jobApplication;
 	}
 	
-	private Boolean checkValidForNewApplication(int cleanerId, int hostId) {
+	public Boolean checkValidForNewApplication(int cleanerId, int hostId) {
 		Boolean res = true;
 		int aux = this.jobApplicationRepository.getJobApplicationAcceptedAndPending(cleanerId, hostId).size();
 		if (aux > 0) {
@@ -264,5 +292,19 @@ public class JobApplicationService {
 		jobApplication.setStatus(false);
 		return this.jobApplicationRepository.save(jobApplication);
 	}
+	
+	public JobApplication acceptApplication(int jobApplicationId) {
+		Host hostLogin = this.hostService.getHostLogin();
+		Assert.notNull(hostLogin, hostNull);
+		JobApplication jobApplicationDB = this.findOne(jobApplicationId);
+		Assert.notNull(jobApplicationDB, jobApplicationNull);
+		Assert.isTrue(jobApplicationDB.getStatus()==null, "Trying to edit an acept or reject application");
+		Assert.isTrue(jobApplicationDB.getDropMoment()==null, "Trying to edit a drop application");
+		Assert.notNull(hostLogin, "No cleaner is login");
+		Assert.isTrue(hostLogin.equals(jobApplicationDB.getHost()));
+		jobApplicationDB.setStatus(true);
+		return this.jobApplicationRepository.save(jobApplicationDB);
+	}
 	// AUXILIAR METHODS
+
 }

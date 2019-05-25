@@ -11,22 +11,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Transport;
+import domain.TravelPack;
 import services.TransportService;
+import services.TravelPackService;
 
 @Controller
 @RequestMapping("/transport/travelAgency")
 public class TransportTravelAgencyController extends AbstractController {
 
 	@Autowired
-	private TransportService transportService;
+	private TransportService	transportService;
+
+	@Autowired
+	private TravelPackService	travelPackService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
+		boolean canBook = true;
 		try {
 			final Collection<Transport> transports = this.transportService.findAll();
 			result = new ModelAndView("transport/travelAgency/list");
+			final Collection<TravelPack> draftPacks = this.travelPackService.getTravelAgencyDraftPacks();
+			if (draftPacks == null || draftPacks.isEmpty())
+				canBook = false;
+			result.addObject("canBook", canBook);
 			result.addObject("transports", transports);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");

@@ -32,7 +32,18 @@ public class TravelPack extends DomainEntity {
 	private Customer						customer;
 	private TravelAgency					travelAgency;
 	private Boolean							draft;
+	private Double							price;
+	private Warranty						warranty;
 
+
+	@ManyToOne(optional = true)
+	public Warranty getWarranty() {
+		return this.warranty;
+	}
+
+	public void setWarranty(final Warranty warranty) {
+		this.warranty = warranty;
+	}
 
 	public Boolean getDraft() {
 		return this.draft;
@@ -94,13 +105,10 @@ public class TravelPack extends DomainEntity {
 	}
 	@Transient
 	public Double getPrice() {
-		Double price = 0.;
-		for (final BookingAccomodation b : this.accomodations)
-			price += b.getAccomodation().getPricePerNight() * b.getEndDate().getTime() - b.getStartDate().getTime() / 86400000;
-
-		for (final BookingTransport b : this.transports)
-			price += b.getTransport().getPrice();
-		return price;
+		return this.price;
+	}
+	public void setPrice(final Double price) {
+		this.price = price;
 	}
 
 }

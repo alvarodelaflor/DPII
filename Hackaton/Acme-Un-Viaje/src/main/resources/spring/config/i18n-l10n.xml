@@ -44,6 +44,7 @@
 		<!-- Antonio -->
 		<value>/views/message/messages</value>
 		<value>/views/mailbox/messages</value>
+		<value>/views/cleaningTask/messages</value>
 		<!-- Antonio -->
 		
 		<!-- FERRETE -->
@@ -51,6 +52,8 @@
 		<value>/views/finderAccomodation/messages</value>
 		<value>/views/finderRequest/messages</value>
 		<value>/views/travelPack/messages</value>
+		<value>/views/bookingAccomodation/messages</value>
+		<value>/views/bookingTransport/messages</value>
 		<!-- FERRETE -->
 	</util:list>
 

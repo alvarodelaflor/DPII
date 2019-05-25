@@ -82,6 +82,7 @@ public class MiscellaneousAttachmentService {
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
 		Assert.notNull(cleanerLogin, "No cleaner login");
 		Assert.notNull(miscellaneousAttachment, "Null miscellaneousAttachment");
+		Assert.isTrue(this.miscellaneousAttachmentRepository.getMiscellaneousAttachmentFromCurriculaId(miscellaneousAttachment.getCurriculaM().getId()).size()<4, "Cant save more attachment");
 		Assert.isTrue(cleanerLogin.equals(miscellaneousAttachment.getCurriculaM().getCleaner()), "Not allow to edit not own MiscellaneousAttachment");
 		return this.miscellaneousAttachmentRepository.save(miscellaneousAttachment);
 	}

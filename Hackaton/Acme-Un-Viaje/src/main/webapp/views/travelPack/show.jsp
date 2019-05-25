@@ -41,6 +41,11 @@
 					<spring:message code="travelPack.accomodations" />
 					:
 				</div>
+				<jstl:if test="${travelPack.draft}">
+				<div class="col-md-4">
+					<acme:cancel url="finder/travelAgency/show.do" code="travelPack.newAcc" />
+				</div>
+				</jstl:if>
 				<display:table name="travelPack.accomodations" id="row" requestURI="${requestURI}"
 					pagesize="5" class="displaytag table table-hover">
 					<div class="row">
@@ -59,7 +64,11 @@
 					<spring:message code="travelPack.transports" />
 					:
 				</div>
-				
+				<jstl:if test="${travelPack.draft}">
+				<div class="col-md-4">
+					<acme:cancel url="transport/travelAgency/list.do" code="travelPack.newTrans" />
+				</div>
+				</jstl:if>
 				<display:table name="travelPack.transports" id="row" requestURI="${requestURI}"
 					pagesize="5" class="displaytag table table-hover">
 					<div class="row">
@@ -78,6 +87,12 @@
 				</display:table>
 				
 				<div class="row">
+					<spring:message code="travelPack.warranty" />
+					:
+					<jstl:out value="${travelPack.warranty.title}"></jstl:out>
+				</div>
+				
+				<div class="row">
 					<spring:message code="travelPack.complaint" />
 					:
 					<jstl:out value="${travelPack.complaint.description}"></jstl:out>
@@ -92,5 +107,18 @@
 		<div class="col-md-4">
 			<acme:cancel url="travelPack/travelAgency/list.do" code="actor.back" />
 		</div>
+		<jstl:choose>
+			<jstl:when test="${travelPack.draft}">
+				<div class="col-md-4">
+				<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="curricula.delete" />
+				</div>
+			</jstl:when>
+			<jstl:otherwise>
+				<div class="col-md-4">
+				<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="travelPack.cancel" />
+				</div>
+			</jstl:otherwise>
+		
+		</jstl:choose>
 	</div>
 </div>

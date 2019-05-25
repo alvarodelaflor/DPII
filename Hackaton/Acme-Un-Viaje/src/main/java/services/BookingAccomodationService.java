@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.BookingAccomodationRepository;
 import domain.BookingAccomodation;
+import forms.BookingAccForm;
+import repositories.BookingAccomodationRepository;
 
 @Service
 @Transactional
@@ -17,6 +21,12 @@ public class BookingAccomodationService {
 
 	@Autowired
 	private BookingAccomodationRepository	bookingAccomodationRepository;
+
+	@Autowired
+	private TravelPackService				travelPackService;
+
+	@Autowired
+	private Validator						validator;
 
 
 	public void delete(final BookingAccomodation bAccomodation) {
@@ -28,7 +38,8 @@ public class BookingAccomodationService {
 	}
 
 	public BookingAccomodation save(final BookingAccomodation bookingAccomodation) {
-		Assert.isTrue(!this.isReserved(bookingAccomodation), "The accomodation is already reserved for those days");
+		System.out.println("Service: " + bookingAccomodation.getAccomodation().toString());
+		Assert.isTrue(!this.isReserved(bookingAccomodation), "error.accomodationAlreadyReserved");
 		return this.bookingAccomodationRepository.save(bookingAccomodation);
 	}
 
@@ -40,8 +51,12 @@ public class BookingAccomodationService {
 		boolean res = false;
 		final Collection<BookingAccomodation> bookings = this.bookingAccomodationRepository.getAccomodationBookings(bookingAccomodation.getAccomodation().getId());
 		for (final BookingAccomodation b : bookings)
-			if ((b.getStartDate().before(bookingAccomodation.getStartDate()) || b.getEndDate().after(bookingAccomodation.getStartDate()))
-				&& (b.getStartDate().before(bookingAccomodation.getEndDate()) || b.getEndDate().after(bookingAccomodation.getEndDate()))) {
+			if ((b.getStartDate().before(bookingAccomodation.getStartDate()) && b.getEndDate().after(bookingAccomodation.getStartDate()))
+				|| (b.getStartDate().before(bookingAccomodation.getEndDate()) && b.getEndDate().after(bookingAccomodation.getEndDate()))
+				|| (b.getStartDate().after(bookingAccomodation.getStartDate()) && b.getEndDate().before(bookingAccomodation.getEndDate()))
+				|| (b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear() && b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth()
+					&& b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear()
+					&& b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth())) {
 				res = true;
 				break;
 			}
@@ -52,4 +67,14 @@ public class BookingAccomodationService {
 
 		return this.bookingAccomodationRepository.getAccomodationBookings(id);
 	}
+	public BookingAccomodation reconstructForm(final BookingAccForm form, final BindingResult binding) {
+		final BookingAccomodation res = this.create();
+		res.setAccomodation(form.getAccomodation());
+		res.setStartDate(form.getStartDate());
+		res.setEndDate(form.getEndDate());
+
+		this.validator.validate(res, binding);
+		return res;
+	}
+
 }

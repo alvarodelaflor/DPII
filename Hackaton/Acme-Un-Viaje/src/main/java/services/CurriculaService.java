@@ -7,7 +7,7 @@ package services;
  * @author Alvaro de la Flor Bonilla GitHub: alvar017
  * 
  *         CONTROL:
- *         30/03/2019 14:47 Creation
+ *         21/05/2019 Version 1.0
  */
 
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ import security.LoginService;
 import domain.Cleaner;
 import domain.Curricula;
 import domain.EducationalData;
+import domain.JobApplication;
 import domain.MiscellaneousAttachment;
 
 @Service
@@ -44,22 +45,30 @@ public class CurriculaService {
 
 	@Autowired
 	private MiscellaneousAttachmentService	miscellaneousAttachmentService;
+	
+	@Autowired
+	private JobApplicationService jobAplicationService;
 
 	@Autowired
 	private Validator						validator;
-
+	
+	// Default messages
+	private String anyCleanerLogin = "Any cleaner is login in the system (CURRICULASERVICE)";
+	private String nullCurricula = "Curricula is null";
+	private String curriculaNotFound = "The curricula has not been found in database";
+	private String notValidUser = "This user can not edit the curricula, he is not his owner";
 
 	// CRUD Methods
 
 	/**
-	 * Create a CurriculaEntity. Must exist a {@link Cleaner} login to create it.
+	 * Create a Curricula entity. Must exist a {@link Cleaner} login to create it.
 	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Curricula}
 	 */
 	public Curricula create() {
-		Assert.notNull(LoginService.getPrincipal());
-		Assert.notNull(this.cleanerService.getCleanerLogin(), "Must exist an cleaner login");
+		Cleaner cleaner = this.cleanerService.getCleanerLogin();
+		Assert.notNull(cleaner, anyCleanerLogin);
 		return new Curricula();
 	}
 
@@ -85,9 +94,7 @@ public class CurriculaService {
 	}
 
 	/**
-	 * <p>
 	 * Save a curricula. Check user login ({@link Cleaner}) is the same that user who create the curricula in the case he want to edit it
-	 * </p>
 	 * Curricula must not be null<br>
 	 * Must exist cleaner login
 	 * 
@@ -95,18 +102,13 @@ public class CurriculaService {
 	 * @return The save {@link Curricula}
 	 */
 	public Curricula save(final Curricula curricula) {
-		Assert.notNull(curricula, "Curricula is null");
-		Assert.isTrue(this.checkAnyLogger(), "Any user is login");
-		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-		Assert.notNull(cleanerLogin, "No cleaner is login");
+		Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
+		Assert.notNull(cleanerLogin, anyCleanerLogin);
+		Assert.notNull(curricula, nullCurricula);
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
-		if (curriculaDB != null)
-			Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), "Not allow to edit a not own curricula");
-
-		//TODO
-		//		if (curricula.getPhone().matches("^([0-9]{4,})$"))
-		//			curricula.setPhone(this.configurationService.getConfiguration().getCountryCode() + " " + curricula.getPhone());
-
+		if (curriculaDB != null) {
+			Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), notValidUser);
+		}
 		return this.curriculaRepository.save(curricula);
 	}
 
@@ -119,16 +121,13 @@ public class CurriculaService {
 	 */
 	public void delete(final Curricula curricula) {
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-		Assert.notNull(cleanerLogin, "No cleaner is login");
+		Assert.notNull(cleanerLogin, anyCleanerLogin);
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
-		Assert.notNull(curriculaDB, "The curricula is not in DB");
-		Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), "Not allow to delete a not own curricula");
+		Assert.notNull(curriculaDB, curriculaNotFound);
+		Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), notValidUser);
 		final Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
 		if (!educationalDatas.isEmpty())
 			this.educationalDataService.deleteAll(educationalDatas);
-		//		final Collection<PositionData> positionDatas = this.positionDataService.getPositionDataFromCurricula(curriculaDB);
-		//		if (!positionDatas.isEmpty())
-		//			this.positionDataService.deleteAll(positionDatas);
 		final Collection<MiscellaneousAttachment> miscellaneousAttachaments = this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
 		if (!miscellaneousAttachaments.isEmpty())
 			this.miscellaneousAttachmentService.deleteAll(miscellaneousAttachaments);
@@ -174,21 +173,47 @@ public class CurriculaService {
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The copy {@link Curricula} instance
 	 */
-	public Curricula createCurriculaCopyAndSave(final Curricula curricula) {
+	public JobApplication createCurriculaCopyAndSave(JobApplication jobApplication) {
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-		Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), "Try to do a copy of curricula by not own cleaner");
 		final Curricula curriculaCopy = this.create();
-		curriculaCopy.setCleaner(curricula.getCleaner());
-		curriculaCopy.setIsCopy(true);
-		curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
-		curriculaCopy.setBannerLogo(curricula.getBannerLogo());
-		curriculaCopy.setName(curricula.getName());
-		curriculaCopy.setPhone(curricula.getPhone());
-		curriculaCopy.setStatement(curricula.getStatement());
-		final Curricula copy = this.save(curriculaCopy);
-		this.educationalDataService.makeCopyAllEducationalDataForCurricula(curricula, copy);
-		this.miscellaneousAttachmentService.makeCopyAllMiscellaneousAttachmentForCurricula(curricula, copy);
-		return copy;
+		Curricula copy;
+		JobApplication savedJobApplication;
+		Assert.isTrue(jobApplication.getCurricula().getCleaner().equals(cleanerLogin), "Try to do a copy of curricula by not own cleaner");
+		Curricula curricula = jobApplication.getCurricula();
+		JobApplication jobApplicationDB = this.jobAplicationService.findOne(jobApplication.getId());
+		if (jobApplicationDB!=null && !curricula.equals(this.jobAplicationService.findOne(jobApplication.getId()).getCurricula())) {
+			curriculaCopy.setCleaner(curricula.getCleaner());
+			curriculaCopy.setIsCopy(true);
+			curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
+			curriculaCopy.setBannerLogo(curricula.getBannerLogo());
+			curriculaCopy.setName(curricula.getName());
+			curriculaCopy.setPhone(curricula.getPhone());
+			curriculaCopy.setStatement(curricula.getStatement());
+			copy = this.save(curriculaCopy);
+			Curricula curriculaToDelete = this.findOne(jobApplicationDB.getCurricula().getId());
+			Assert.notNull(curriculaToDelete, "Curricula to delete null");
+			this.educationalDataService.makeCopyAllEducationalDataForCurricula(curricula, copy);
+			this.miscellaneousAttachmentService.makeCopyAllMiscellaneousAttachmentForCurricula(curricula, copy);
+			jobApplication.setCurricula(copy);
+			savedJobApplication = this.jobAplicationService.save(jobApplication);
+			this.delete(curriculaToDelete);
+		} else if (jobApplicationDB!=null && jobApplication.getCurricula().equals(jobApplicationDB.getCurricula())) {
+			savedJobApplication = this.jobAplicationService.save(jobApplication);
+		} else {
+			curriculaCopy.setCleaner(curricula.getCleaner());
+			curriculaCopy.setIsCopy(true);
+			curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
+			curriculaCopy.setBannerLogo(curricula.getBannerLogo());
+			curriculaCopy.setName(curricula.getName());
+			curriculaCopy.setPhone(curricula.getPhone());
+			curriculaCopy.setStatement(curricula.getStatement());
+			copy = this.save(curriculaCopy);
+			this.educationalDataService.makeCopyAllEducationalDataForCurricula(curricula, copy);
+			this.miscellaneousAttachmentService.makeCopyAllMiscellaneousAttachmentForCurricula(curricula, copy);
+			jobApplication.setCurricula(copy);
+			savedJobApplication = this.jobAplicationService.save(jobApplication);
+		}
+		return savedJobApplication;
 	}
 
 	/**

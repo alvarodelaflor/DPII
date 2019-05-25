@@ -80,12 +80,22 @@
 						</p>
 					</div>
 					<div class="row">
-						<div class="col-md-6" style="padding-left: 14.0em">
-							<span style="padding-left: 4.5em"> <acme:submit
+						<div class="col-md-6" style="padding-left: 0.0em">
+							<span style="padding-left: 1.0em"> <acme:submit
 									name="save" code="actor.save" />
-							</span> <span style="padding-left: 0.5em"> <acme:cancel url=""
-									code="actor.cancel" />
-							</span>
+							</span> 
+							<c:choose>
+								<c:when test="${toEdit}">
+									<span style="padding-left: 0.5em"> <acme:cancel url="/jobApplication/cleaner/list.do"
+											code="actor.cancel" />
+									</span>								
+								</c:when>
+								<c:otherwise>
+									<span style="padding-left: 0.5em"> <acme:cancel url="/host/show.do?hostId=${jobApplication.host.id}"
+											code="actor.cancel" />
+									</span>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</c:otherwise>

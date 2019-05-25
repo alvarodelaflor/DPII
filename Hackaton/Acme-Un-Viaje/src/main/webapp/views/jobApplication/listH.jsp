@@ -24,7 +24,7 @@
 		<div class="col-md-12">
 			<div class="jumbotron jumbotron-fluid">
 			  <div class="container">
-			    <h1 class="display-4"><spring:message code="host.lookForJob1"/><jstl:out value="${pending[0].cleaner.name}"></jstl:out>!</h1>
+			    <h1 class="display-4"><spring:message code="host.lookForJob1"/><jstl:out value="${hostLogin.name}"></jstl:out>!</h1>
 			    <c:choose>
 			    	<c:when test="${empty pending}">
 			    		<p class="lead"><spring:message code="jobApplications.emptycleaner" /></p>
@@ -197,11 +197,39 @@
 						</display:column>
 						<display:column property="cleanerMessage" titleKey="jobApplication.firstMessage"></display:column>
 							<display:column titleKey="none">
-								<acme:delete name = "" url="jobApplication/host/drop.do?jobApplicationId=${row3.id}" code="curricula.delete"/>
+								<acme:delete name = "" url="jobApplication/host/drop.do?jobApplicationId=${row3.id}" code="fireUser"/>
 							</display:column>
 					</display:table>
 				</div>
 			</c:otherwise>
 		</c:choose>
+	</div>
+	<div class="row">
+		<c:choose>
+			<c:when test="${empty exCleaners}">
+			
+			</c:when>
+			<c:otherwise>
+				<div class="col-md-12">
+					<h1 class="display-4"><strong><spring:message code="jobApplication.forgot1" /></strong></h1>
+					<p class="lead"><spring:message code="jobApplication.forgot2" /></p>
+					<br>
+					<display:table name="exCleaners" id="row3" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
+						<display:column titleKey="actor.name">
+							<a href="curricula/show.do?curriculaId=${row3.curricula.id}"><jstl:out value="${row3.cleaner.name} ${row3.cleaner.surname}"></jstl:out></a>			
+						</display:column>
+						<display:column property="cleanerMessage" titleKey="jobApplication.firstMessage"></display:column>
+						<display:column property="dropMoment" titleKey="jobApplication.dropMoment"></display:column>
+					</display:table>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<span style="padding-left: 0.5em"> <acme:cancel url="#"
+					code="back" />
+			</span>
+		</div>
 	</div>
 </div>

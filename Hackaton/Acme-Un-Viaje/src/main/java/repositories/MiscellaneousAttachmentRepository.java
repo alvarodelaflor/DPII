@@ -19,6 +19,6 @@ import domain.MiscellaneousAttachment;
 @Repository
 public interface MiscellaneousAttachmentRepository extends JpaRepository<MiscellaneousAttachment, Integer> {
 	
-	@Query("select ma from MiscellaneousAttachment ma join ma.curriculaM mac where mac.id=?1 and ma.isCopy=false")
+	@Query("select ma from MiscellaneousAttachment ma join ma.curriculaM mac where mac.id=?1")
 	Collection<MiscellaneousAttachment> getMiscellaneousAttachmentFromCurriculaId(int curriculaId);
 }

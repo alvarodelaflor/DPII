@@ -25,6 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Host;
+import forms.RegisterActor;
 import security.LoginService;
 import services.AccomodationService;
 import services.CleanerService;
@@ -49,7 +53,13 @@ public class HostController extends AbstractController {
 	private HostService				hostService;
 
 	@Autowired
-	private ConfigService			configService;
+	private CleanerService cleanerService;
+	
+	@Autowired
+	private JobApplicationService jobApplicationService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	@Autowired
 	private CustomerService			customerService;
@@ -307,13 +317,31 @@ public class HostController extends AbstractController {
 				registerActor = this.hostService.findOne(hotId);
 				res = false;
 			}
+			
 			result = new ModelAndView("host/show");
+			// ALVARO If an cleaner user show the profile of an valid host to do an application the link appear
+			this.validCleaner(registerActor, result);
+			// ALVARO
 			result.addObject("registerActor", registerActor);
 			result.addObject("res", res);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
+	}
+	
+	private ModelAndView validCleaner(Host host, ModelAndView result) {
+		ModelAndView res = result;
+		try {
+			Cleaner cleaner = this.cleanerService.getCleanerLogin();
+			Assert.notNull(cleaner, "Any cleaner is login");
+			Assert.isTrue(this.jobApplicationService.checkValidForNewApplication(cleaner.getId(), host.getId()), "El usuario dispone con una aplicaci�n pendiente");
+			res.addObject("validCleaner", true);
+		} catch (Exception e) {
+			System.out.println("Bloqueada petici�n de logueo, el limpiador no es un usuario v�lido");
+			res.addObject("validCleaner", false);
+		}
+		return res;
 	}
 
 }

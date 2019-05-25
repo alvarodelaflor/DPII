@@ -129,24 +129,36 @@
 	</div>
 	<!-- ALVARO -->
 	<br>
-	<div class="jumbotron" style="width: 100%">
-		<div class="row">
-			<div class="col-md-12">
-				<h4 class="display-12" style="text-align: center">
-					<spring:message code="workforce" />
-					<acme:create name=""
-						url="jobApplication/cleaner/create.do?hostId=${registerActor.id}"
-						code="curricula.edit" />
-				</h4>
+	<jstl:if test="${validCleaner}">	
+		<div class="jumbotron" style="width: 100%">
+			<div class="row">
+				<div class="col-md-12">
+					<h4 class="display-12" style="text-align: center">
+						<spring:message code="workforce" />
+						<a href="jobApplication/cleaner/create.do?hostId=${registerActor.id}">
+							<spring:message htmlEscape="false" code="yourApplication"/>
+						</a>	
+					</h4>
+				</div>
 			</div>
 		</div>
-	</div>
+	</jstl:if>
 	<!-- ALVARO -->
-
-	<div class="row">
-		<div class="col-md-4">
-			<acme:cancel url="" code="actor.back" />
-
-		</div>
-	</div>
+	<c:choose>
+		<c:when test="${validCleaner}">
+			<div class="row">
+				<div class="col-md-4">
+					<acme:historyBack/>
+				</div>
+			</div>		
+		</c:when>
+		<c:otherwise>
+			<div class="row">
+				<div class="col-md-4">
+					<acme:cancel url="" code="actor.back" />
+		
+				</div>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </div>

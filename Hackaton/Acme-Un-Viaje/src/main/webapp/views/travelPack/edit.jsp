@@ -23,25 +23,26 @@
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
 		<div class="col-md-6">
-			<form:form class="formularioEdicion" method="POST" modelAttribute="transport" action="transport/transporter/edit.do">
+			<form:form class="formularioEdicion" method="POST" modelAttribute="travelPack" action="travelPack/travelAgency/create.do">
 				<form:hidden path="id" />
+				<form:hidden path="customer" />
 				<fieldset>
 					<hr>
-					<acme:textbox code="transport.numberOfPlaces" path="numberOfPlaces" placeholder="4" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
+					<acme:textbox code="travelPack.name" path="name" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
 
-					<acme:textbox code="transport.price" path="price" placeholder="25" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.date" path="date" placeholder="2021/12/11 13:30" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.vehicleType" path="vehicleType" placeholder="Car" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.origin" path="origin" placeholder="Sevilla" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.destination" path="destination" placeholder="Valencia" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
+					<spring:message code="warranty.finalMode" />
+					&nbsp; &nbsp; &nbsp; &nbsp;
+					<spring:message code="travelPack.draft.true" />
+					<form:radiobutton path="draft" value="true"  checked="checked" />
+					<spring:message code="travelPack.draft.false" />
+					<form:radiobutton path="draft" value="false" />
+					<form:select itemLabel="title" multiple="false" path="warranty">
+	   		 		<form:options items="${warranties}" itemLabel="title" required="required"/>
+					</form:select>
 				</fieldset>
 				<br>
 				<div class="row">
-					<span><acme:submit name="save" code="actor.save" /></span> <span style="padding-left: 0.5em"> <acme:cancel url="/transport/transporter/list.do" code="actor.back" />
+					<span><acme:submit name="save" code="actor.save" /></span> <span style="padding-left: 0.5em"> <acme:cancel url="/travelPack/travelAgency/list.do" code="actor.back" />
 					</span>
 				</div>
 			</form:form>

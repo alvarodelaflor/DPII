@@ -24,6 +24,6 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
 	@Query("select j from JobApplication j where j.host.id=?1 and j.status=null and j.dropMoment=null")
 	Collection<JobApplication> getJobApplicationPendingByHostId(int hostId);
 	
-	@Query("select j from JobApplication j where j.host.id=?1 and j.status=false and j.dropMoment!=null")
+	@Query("select j from JobApplication j where j.host.id=?1 and j.status=true and j.dropMoment!=null")
 	Collection<JobApplication> getExCleaners(int hostId);
 }
