@@ -25,7 +25,6 @@ public class Complaint extends DomainEntity {
 	private TravelAgency	travelAgency;
 	private Host			host;
 	private Transporter		transporter;
-	private TravelPack		travelPack;
 	private Review			review;
 
 
@@ -83,15 +82,6 @@ public class Complaint extends DomainEntity {
 
 	public void setTransporter(final Transporter transporter) {
 		this.transporter = transporter;
-	}
-
-	@ManyToOne(optional = false)
-	public TravelPack getTravelPack() {
-		return this.travelPack;
-	}
-
-	public void setTravelPack(final TravelPack travelPack) {
-		this.travelPack = travelPack;
 	}
 
 	@OneToOne(optional = true)

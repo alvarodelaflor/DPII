@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -31,6 +32,7 @@ public class TravelPack extends DomainEntity {
 	private TravelAgency					travelAgency;
 	private Boolean							draft;
 	private Double							price;
+	private Collection<Complaint>			complaints;
 
 
 	public Boolean getDraft() {
@@ -88,6 +90,16 @@ public class TravelPack extends DomainEntity {
 	}
 	public void setPrice(final Double price) {
 		this.price = price;
+	}
+
+	@ElementCollection
+	@OneToMany()
+	public Collection<Complaint> getComplaints() {
+		return this.complaints;
+	}
+
+	public void setComplaints(final Collection<Complaint> complaints) {
+		this.complaints = complaints;
 	}
 
 }
