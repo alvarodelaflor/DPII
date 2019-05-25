@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.CreditCard;
-import domain.Customer;
-import forms.RegisterActorE;
 import repositories.CustomerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.CreditCard;
+import domain.Customer;
+import forms.RegisterActorE;
 
 @Service
 @Transactional
@@ -199,4 +199,7 @@ public class CustomerService {
 		return this.customerRepository.findOne(customerId);
 	}
 
+	public Customer getLoggedCustomer() {
+		return this.customerRepository.findByUserAccountId(LoginService.getPrincipal().getId());
+	}
 }
