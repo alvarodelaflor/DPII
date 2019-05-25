@@ -27,9 +27,12 @@ public class ComplaintCustomerController extends AbstractController {
 		ModelAndView res = null;
 
 		try {
-			final Collection<Complaint> complaints = this.complaintService.getLoggedCustomerComplaints();
+			final Collection<Complaint> complaintsUnassigned = this.complaintService.getLoggedCustomerUnassignedComplaints();
+			final Collection<Complaint> complaintsAssigned = this.complaintService.getLoggedCustomerAssignedComplaints();
 			res = new ModelAndView("complaint/customer/list");
-			res.addObject("complaints", complaints);
+			res.addObject("complaintsUnassigned", complaintsUnassigned);
+			res.addObject("complaintsAssigned", complaintsAssigned);
+			res.addObject("requestURI", "/complaint/customer/list.do");
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -37,22 +40,22 @@ public class ComplaintCustomerController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam(required = false, value = "complaintId") final Integer complaintId) {
-		if (complaintId == null)
-			return new ModelAndView("redirect:/welcome/index.do");
-
-		ModelAndView res = null;
-		try {
-			final Complaint complaint = this.complaintService.getLoggedCustomerComplaint(complaintId);
-			res = new ModelAndView("complaint/customer/show");
-			res.addObject("complaint", complaint);
-		} catch (final Throwable oops) {
-			res = new ModelAndView("redirect:/welcome/index.do");
-		}
-
-		return res;
-	}
+	//	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	//	public ModelAndView show(@RequestParam(required = false, value = "complaintId") final Integer complaintId) {
+	//		if (complaintId == null)
+	//			return new ModelAndView("redirect:/welcome/index.do");
+	//
+	//		ModelAndView res = null;
+	//		try {
+	//			final Complaint complaint = this.complaintService.getLoggedCustomerComplaint(complaintId);
+	//			res = new ModelAndView("complaint/customer/show");
+	//			res.addObject("complaint", complaint);
+	//		} catch (final Throwable oops) {
+	//			res = new ModelAndView("redirect:/welcome/index.do");
+	//		}
+	//
+	//		return res;
+	//	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -83,8 +86,8 @@ public class ComplaintCustomerController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(final Complaint complaint, final BindingResult binding) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public ModelAndView editPost(final Complaint complaint, final BindingResult binding) {
 		Complaint reconstructedComplaint;
 		try {
 			reconstructedComplaint = this.complaintService.reconstruct(complaint, binding);
@@ -95,8 +98,7 @@ public class ComplaintCustomerController extends AbstractController {
 		ModelAndView res = null;
 		try {
 			this.complaintService.save(reconstructedComplaint);
-			res = new ModelAndView("complaint/customer/edit");
-			res.addObject("complaint", complaint);
+			res = new ModelAndView("redirect:/complaint/customer/list.do");
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}

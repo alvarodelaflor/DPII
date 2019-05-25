@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+ 
+ <!--
+	CONTROL DE CAMBIOS tiles_es.xml FLOAT
+  
+	ALVARO 17/02/2019 19:29 CREACIÓN
+-->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="complaint/customer/list" extends="master.page">	
+		<put-attribute name="title" value="Listado de tus quejas" />
+		<put-attribute name="body" value="/views/complaint/customer/list.jsp" />
+	</definition>
+	
+	<definition name="complaint/customer/create" extends="master.page">	
+		<put-attribute name="title" value="Crear una queja" />
+		<put-attribute name="body" value="/views/complaint/customer/edit.jsp" />
+	</definition>
+	
+	<definition name="complaint/customer/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar una queja" />
+		<put-attribute name="body" value="/views/complaint/customer/edit.jsp" />
+	</definition>
+	
+</tiles-definitions>

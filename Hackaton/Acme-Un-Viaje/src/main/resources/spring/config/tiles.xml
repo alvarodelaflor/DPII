@@ -46,6 +46,7 @@
 		
 		<!-- HIPONA -->
 		<value>/views/transport/tiles.xml</value>
+		<value>/views/complaint/tiles.xml</value>
 		<!-- HIPONA -->
 		<!-- Antonio -->
 		<value>/views/message/tiles.xml</value>

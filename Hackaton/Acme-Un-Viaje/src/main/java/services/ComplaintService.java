@@ -27,10 +27,16 @@ public class ComplaintService {
 	private CustomerService		customerService;
 
 
-	public Collection<Complaint> getLoggedCustomerComplaints() {
+	public Collection<Complaint> getLoggedCustomerAssignedComplaints() {
 		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
 		final Customer c = this.customerService.getLoggedCustomer();
-		return this.complaintRepository.getLoggedCustomerComplaints(c.getId());
+		return this.complaintRepository.getLoggedCustomerAssignedComplaints(c.getId());
+	}
+
+	public Collection<Complaint> getLoggedCustomerUnassignedComplaints() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.complaintRepository.getLoggedCustomerUnassignedComplaints(c.getId());
 	}
 
 	public Complaint getLoggedCustomerComplaint(final Integer complaintId) {

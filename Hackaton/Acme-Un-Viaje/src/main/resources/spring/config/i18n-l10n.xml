@@ -39,6 +39,7 @@
 		<!-- ALVARO -->
 		<!-- HIPONA -->
 		<value>/views/transport/messages</value>
+		<value>/views/complaint/messages</value>
 		<!-- HIPONA -->
 		<!-- Antonio -->
 		<value>/views/message/messages</value>

@@ -7,22 +7,26 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Past;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Complaint extends DomainEntity {
 
-	private String				description;
-	private Date				moment;
+	private String			description;
+	private Date			moment;
 
-	private Customer			customer;
-	private TravelAgency		travelAgency;
-	private Host				host;
-	private Transporter			transporter;
+	private Customer		customer;
+	private TravelAgency	travelAgency;
+	private Host			host;
+	private Transporter		transporter;
+	private TravelPack		travelPack;
+	private Review			review;
 
 
 	@SafeHtml
@@ -35,7 +39,8 @@ public class Complaint extends DomainEntity {
 		this.description = description;
 	}
 
-	@Past
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getMoment() {
 		return this.moment;
 	}
@@ -62,7 +67,7 @@ public class Complaint extends DomainEntity {
 		this.travelAgency = travelAgency;
 	}
 
-	@ManyToOne(optional = true)	
+	@ManyToOne(optional = true)
 	public Host getHost() {
 		return this.host;
 	}
@@ -71,13 +76,31 @@ public class Complaint extends DomainEntity {
 		this.host = host;
 	}
 
-	@ManyToOne(optional = true)	
+	@ManyToOne(optional = true)
 	public Transporter getTransporter() {
 		return this.transporter;
 	}
 
 	public void setTransporter(final Transporter transporter) {
 		this.transporter = transporter;
+	}
+
+	@ManyToOne(optional = false)
+	public TravelPack getTravelPack() {
+		return this.travelPack;
+	}
+
+	public void setTravelPack(final TravelPack travelPack) {
+		this.travelPack = travelPack;
+	}
+
+	@OneToOne(optional = true)
+	public Review getReview() {
+		return this.review;
+	}
+
+	public void setReview(final Review review) {
+		this.review = review;
 	}
 
 }

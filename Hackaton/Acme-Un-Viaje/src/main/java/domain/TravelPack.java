@@ -11,7 +11,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.SafeHtml;
@@ -28,7 +27,6 @@ public class TravelPack extends DomainEntity {
 	private String							name;
 	private Collection<BookingAccomodation>	accomodations;
 	private Collection<BookingTransport>	transports;
-	private Complaint						complaint;
 	private Customer						customer;
 	private TravelAgency					travelAgency;
 	private Boolean							draft;
@@ -67,15 +65,6 @@ public class TravelPack extends DomainEntity {
 
 	public void setTransports(final Collection<BookingTransport> transports) {
 		this.transports = transports;
-	}
-
-	@OneToOne(optional = true)
-	public Complaint getComplaint() {
-		return this.complaint;
-	}
-
-	public void setComplaint(final Complaint complaint) {
-		this.complaint = complaint;
 	}
 	@ManyToOne(optional = false)
 	public Customer getCustomer() {
