@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -25,6 +26,7 @@ public class Valoration extends DomainEntity {
 
 	@Min(1)
 	@Max(10)
+	@NotNull
 	public Integer getScore() {
 		return this.score;
 	}

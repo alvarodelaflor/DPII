@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.BookingAccomodation;
 import repositories.BookingAccomodationRepository;
+import domain.BookingAccomodation;
 
 @Service
 @Transactional
 public class BookingAccomodationService {
 
 	@Autowired
-	private BookingAccomodationRepository bookingAccomodationRepository;
+	private BookingAccomodationRepository	bookingAccomodationRepository;
 
 
 	public void delete(final BookingAccomodation bAccomodation) {
@@ -48,4 +48,8 @@ public class BookingAccomodationService {
 		return res;
 	}
 
+	public Collection<BookingAccomodation> getAccomodationBookings(final int id) {
+
+		return this.bookingAccomodationRepository.getAccomodationBookings(id);
+	}
 }

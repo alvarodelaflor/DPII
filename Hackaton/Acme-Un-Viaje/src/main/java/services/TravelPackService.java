@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.TravelAgency;
-import domain.TravelPack;
 import repositories.TravelPackRepository;
 import security.LoginService;
+import domain.TravelAgency;
+import domain.TravelPack;
 
 @Service
 @Transactional
@@ -51,4 +51,8 @@ public class TravelPackService {
 		return this.travelPackRepository.getTravelAgencyPacks(travel.getId());
 	}
 
+	public Collection<TravelPack> getTravelPacksAccomodationId(final int id) {
+
+		return this.travelPackRepository.getTravelPacksAccomodationId(id);
+	}
 }

@@ -31,7 +31,8 @@
 				test="${accomodation.pictures == null or accomodation.pictures=='' }">
 				<div class="col-md-3">
 					<div class="card">
-						<img class="card-img-top" src="https://image.flaticon.com/icons/png/512/8/8721.png"
+						<img class="card-img-top"
+							src="https://image.flaticon.com/icons/png/512/8/8721.png"
 							alt="ERROR">
 						<div class="card-body">
 							<h4 class="card-title">${accomodation.place}</h4>
@@ -97,6 +98,14 @@
 
 	<div class="row">
 		<div class="col-md-6">
+			<span style="padding-left: 0.5em"> <acme:cancel
+					url="host/customerList.do?accomodationId=${accomodation.id}"
+					code="myCustomers" />
+			</span>
+			<span style="padding-left: 0.5em"> <acme:cancel
+					url="host/cleanerList.do?accomodationId=${accomodation.id}"
+					code="myCleaners" />
+			</span>
 			<c:choose>
 				<c:when test="${not res}">
 					<span style="padding-left: 0.5em"> <acme:create

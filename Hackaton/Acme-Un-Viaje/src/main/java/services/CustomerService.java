@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.CreditCard;
-import domain.Customer;
-import forms.RegisterActorE;
 import repositories.CustomerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.CreditCard;
+import domain.Customer;
+import domain.TravelPack;
+import forms.RegisterActorE;
 
 @Service
 @Transactional
@@ -32,6 +34,9 @@ public class CustomerService {
 
 	@Autowired
 	private ActorService		actorService;
+
+	@Autowired
+	private TravelPackService	travelPackService;
 
 	@Autowired
 	private ConfigService		configService;
@@ -199,4 +204,14 @@ public class CustomerService {
 		return this.customerRepository.findOne(customerId);
 	}
 
+	public Collection<Customer> getCustomersByAccomodationId(final int id) {
+
+		final Collection<Customer> res = new ArrayList<>();
+
+		final Collection<TravelPack> travelPacks = this.travelPackService.getTravelPacksAccomodationId(id);
+		for (final TravelPack travelPack : travelPacks)
+			res.add(travelPack.getCustomer());
+
+		return res;
+	}
 }

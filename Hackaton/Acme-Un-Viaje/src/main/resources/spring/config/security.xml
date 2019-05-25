@@ -89,6 +89,10 @@
 		<security:intercept-url pattern="/host/create.do" access="permitAll" />
 		<security:intercept-url pattern="/host/edit.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/host/show.do" access="permitAll" />
+		<security:intercept-url pattern="/host/customerList.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/rateCustomer.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/cleanerList.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/rateCleaner.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/create.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/edit.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/list.do" access="hasRole('HOST')" />

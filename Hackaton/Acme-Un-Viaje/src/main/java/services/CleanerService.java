@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Curricula;
-import forms.RegisterActor;
 import repositories.CleanerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Cleaner;
 import domain.CreditCard;
+import domain.JobApplication;
 import forms.RegisterActor;
 
 @Service
@@ -36,9 +34,9 @@ public class CleanerService {
 
 	@Autowired
 	private ActorService		actorService;
-	
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService		configService;
 
 
 	// REGISTER AS CLEANER
@@ -59,9 +57,8 @@ public class CleanerService {
 	// SAVE REGISTER AS CLEANER
 	// ---------------------------------------------------------------
 	public Cleaner saveRegisterAsCleaner(final Cleaner cleaner) {
-		 if (cleaner.getPhone().matches("^([0-9]{4,})$")) {
-			 cleaner.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + cleaner.getPhone());
-		 }
+		if (cleaner.getPhone().matches("^([0-9]{4,})$"))
+			cleaner.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + cleaner.getPhone());
 		return this.cleanerRepository.save(cleaner);
 	}
 
@@ -197,7 +194,7 @@ public class CleanerService {
 				binding.rejectValue("birthDate", "error.birthDateM");
 		}
 	}
-		
+
 	/**
 	 * 
 	 * Return the cleaner who is login if exits, null otherwise
@@ -209,20 +206,30 @@ public class CleanerService {
 		Cleaner res;
 		try {
 			res = this.getCleanerByUserAccountId(LoginService.getPrincipal().getId());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = null;
 		}
 		return res;
 	}
-	
+
 	/**
 	 * 
 	 * Find a cleaner by id
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
-	public Cleaner findOne(int cleanerId) {
+	public Cleaner findOne(final int cleanerId) {
 		return this.cleanerRepository.findOne(cleanerId);
 	}
-	
+
+	public Collection<Cleaner> getAllCleanersInJobList(final Collection<JobApplication> jobs) {
+
+		final Collection<Cleaner> res = new ArrayList<>();
+		for (final JobApplication job : jobs)
+			res.add(job.getCleaner());
+
+		return res;
+	}
+
 }
