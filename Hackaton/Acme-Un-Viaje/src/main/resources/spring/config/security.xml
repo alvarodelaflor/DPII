@@ -159,6 +159,10 @@
 		<security:intercept-url pattern="/transport/transporter/show.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/edit.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
+		
+		<security:intercept-url pattern="/complaint/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/complaint/customer/edit.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/complaint/customer/delete.do" access="hasRole('CUSTOMER')" />
 		<!-- HIPONA -->
 		
 		<!-- FERRETE -->
@@ -174,6 +178,9 @@
 		<security:intercept-url pattern="/travelPack/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/travelPack/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/travelPack/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/travelPack/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/bookingAccomodation/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/bookingTransport/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
 		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 

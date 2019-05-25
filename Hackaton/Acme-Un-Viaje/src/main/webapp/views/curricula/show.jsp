@@ -189,4 +189,21 @@ $(document).ready(function() {
 		<!-- Para meter los trabajos que ha realizado el cleaner -->
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<br>
+			<c:choose>
+				<c:when test="${cleanerLogin==true}">					
+					<span style="padding-left: 0.0em"> <acme:cancel url="/curricula/list.do"
+							code="back" />
+					</span>
+				</c:when>
+				<c:otherwise>
+					<span style="padding-left: 0.0em"> <acme:cancel url="/jobApplication/host/list.do"
+							code="back" />
+					</span>			
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
 </div>

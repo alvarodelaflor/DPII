@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Customer;
+import domain.TravelAgency;
 import domain.TravelPack;
+import security.LoginService;
 import services.CustomerService;
 import services.TravelAgencyService;
 import services.TravelPackService;
@@ -68,6 +70,8 @@ public class TravelPackTravelAgencyController extends AbstractController {
 	public ModelAndView save(final TravelPack travelPack, final BindingResult binding) {
 		ModelAndView result;
 
+		final TravelPack travelPackN = this.travelPackService.reconstruct(travelPack, binding);
+
 		try {
 			if (binding.hasErrors()) {
 				System.out.println(binding);
@@ -75,7 +79,7 @@ public class TravelPackTravelAgencyController extends AbstractController {
 				result.addObject("travelPack", travelPack);
 			} else {
 				Assert.isTrue(travelPack != null);
-				final TravelPack savetravelPack = this.travelPackService.save(travelPack);
+				final TravelPack savetravelPack = this.travelPackService.save(travelPackN);
 				result = new ModelAndView("redirect:/travelPack/travelAgency/list.do");
 			}
 		} catch (final Throwable oops) {
@@ -121,10 +125,62 @@ public class TravelPackTravelAgencyController extends AbstractController {
 			final TravelPack travelPack = this.travelPackService.findOne(travelPackId);
 			result = new ModelAndView("travelPack/travelAgency/show");
 			result.addObject("travelPack", travelPack);
-			result.addObject("price", travelPack.getPrice());
+			result.addObject("requestURI", "travelPack/travelAgency/show.do?travelPackId=" + travelPackId);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam(value = "travelPackId", defaultValue = "-1") final int travelPackId) {
+		ModelAndView result;
+		final TravelAgency travelAgencyLogin = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
+		try {
+			final TravelPack travelPackDB = this.travelPackService.findOne(travelPackId);
+			Assert.notNull(travelPackDB, "TravelPack not found in DB");
+			Assert.notNull(travelAgencyLogin, "No travelAgency is login");
+			Assert.isTrue(travelAgencyLogin.equals(travelPackDB.getTravelAgency()));
+			result = new ModelAndView("travelPack/travelAgency/edit");
+			result.addObject("travelPack", travelPackDB);
+		} catch (final Exception e) {
+			if (travelAgencyLogin != null)
+				result = new ModelAndView("redirect:/travelPack/travelAgency/list.do");
+			else
+				result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView edit(TravelPack travelPack, final BindingResult binding) {
+		ModelAndView result;
+		try {
+			travelPack = this.travelPackService.reconstruct(travelPack, binding);
+		} catch (final Exception e) {
+			System.out.println("Error e reconstruct de travelPack: " + e);
+			result = new ModelAndView("redirect:/welcome/index.do");
+			return result;
+		}
+
+		if (binding.hasErrors()) {
+			System.out.println("Error en TravelPackTravelAgencyController.java, binding: " + binding);
+			result = new ModelAndView("travelPack/travelAgency/create");
+			result.addObject("travelPack", travelPack);
+		} else
+			try {
+				final TravelAgency travelAgencyLogin = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
+				Assert.notNull(travelAgencyLogin, "No travelAgency is login");
+				Assert.isTrue(travelPack != null, "Travel pack doesn't exists");
+				final TravelPack saveTravelPack = this.travelPackService.save(travelPack);
+				result = new ModelAndView("redirect:/travelPack/show.do?travelPackId=" + saveTravelPack.getId());
+				result.addObject("requestURI", "travelPack/travelAgency/list.do");
+			} catch (final Throwable oops) {
+				System.out.println("Error en SAVE TravelPackTravelAgencyController.java Throwable: " + oops);
+				result = new ModelAndView("travelPack/travelAgency/edit");
+				result.addObject("travelPack", travelPack);
+				result.addObject("message", "travelPack.commit.error");
+			}
 		return result;
 	}
 

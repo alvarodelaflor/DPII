@@ -41,6 +41,9 @@
 					<spring:message code="travelPack.accomodations" />
 					:
 				</div>
+				<div class="col-md-4">
+					<acme:cancel url="finder/travelAgency/show.do" code="travelPack.newAcc" />
+				</div>
 				<display:table name="travelPack.accomodations" id="row" requestURI="${requestURI}"
 					pagesize="5" class="displaytag table table-hover">
 					<div class="row">
@@ -58,6 +61,9 @@
 				<div class="row">
 					<spring:message code="travelPack.transports" />
 					:
+				</div>
+				<div class="col-md-4">
+					<acme:cancel url="transport/travelAgency/list.do" code="travelPack.newTrans" />
 				</div>
 				
 				<display:table name="travelPack.transports" id="row" requestURI="${requestURI}"
@@ -91,6 +97,9 @@
 	<div class="row">
 		<div class="col-md-4">
 			<acme:cancel url="travelPack/travelAgency/list.do" code="actor.back" />
+		</div>
+		<div class="col-md-4">
+			<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="curricula.delete" />
 		</div>
 	</div>
 </div>

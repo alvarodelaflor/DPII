@@ -32,8 +32,14 @@
 		
 		<!-- ANTONIO -->
 		<bean class="converters.StringToCleanerConverter" />		
-		<bean class="converters.StringToAccomodationConverter" />
 		<!-- ANTONIO -->
+		<bean class="converters.StringToMailboxConverter" />		
+		<bean class="converters.StringToTagConverter" />
+		
+		<bean class="converters.StringToCustomerConverter" />		
+		<bean class="converters.CustomerToStringConverter" />
+		<bean class="converters.StringToAccomodationConverter" />		
+		<bean class="converters.AccomodationToStringConverter" />
 	</util:list>
 	
 </beans>

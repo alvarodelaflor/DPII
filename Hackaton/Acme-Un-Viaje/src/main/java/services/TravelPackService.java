@@ -1,17 +1,23 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
-import domain.TravelAgency;
-import domain.TravelPack;
 import repositories.TravelPackRepository;
 import security.LoginService;
+import domain.BookingAccomodation;
+import domain.BookingTransport;
+import domain.TravelAgency;
+import domain.TravelPack;
 
 @Service
 @Transactional
@@ -21,6 +27,12 @@ public class TravelPackService {
 	private TravelPackRepository	travelPackRepository;
 	@Autowired
 	private TravelAgencyService		travelAgencyService;
+
+	@Autowired
+	private CustomerService			customerService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public void delete(final TravelPack pack) {
@@ -38,7 +50,12 @@ public class TravelPackService {
 	}
 
 	public TravelPack save(final TravelPack travelPack) {
-		Assert.isTrue(travelPack.getDraft(), "The travel pack is already in final mode");
+		if (travelPack.getId() != 0) {
+			final TravelPack packDB = this.findOne(travelPack.getId());
+			Assert.notNull(packDB);
+			Assert.isTrue(packDB.getDraft(), "The travel pack is already in final mode");
+		}
+		travelPack.setPrice(this.calculatePrice(travelPack));
 		return this.travelPackRepository.save(travelPack);
 	}
 
@@ -49,6 +66,49 @@ public class TravelPackService {
 	public Collection<TravelPack> getTravelAgencyPacks() {
 		final TravelAgency travel = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
 		return this.travelPackRepository.getTravelAgencyPacks(travel.getId());
+	}
+	public Double calculatePrice(final TravelPack pack) {
+		Double price = 0.;
+		for (final BookingAccomodation b : pack.getAccomodations())
+			price += b.getAccomodation().getPricePerNight() * ((b.getEndDate().getTime() - b.getStartDate().getTime()) - 1) / 86400000;
+
+		for (final BookingTransport b : pack.getTransports())
+			price += b.getTransport().getPrice();
+		return price;
+	}
+
+	public TravelPack reconstruct(final TravelPack travelPack, final BindingResult binding) {
+		TravelPack result;
+		if (travelPack.getId() == 0) {
+			travelPack.setTravelAgency(this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId()));
+			final List<BookingAccomodation> accs = new ArrayList<>();
+			travelPack.setAccomodations(accs);
+			final List<BookingTransport> transports = new ArrayList<>();
+			travelPack.setTransports(transports);
+			result = travelPack;
+		} else {
+			result = this.travelPackRepository.findOne(travelPack.getId());
+			Assert.notNull(result, "Travel Pack is null");
+			travelPack.setId(result.getId());
+			travelPack.setVersion(result.getVersion());
+			travelPack.setTravelAgency(result.getTravelAgency());
+			travelPack.setCustomer(result.getCustomer());
+			travelPack.setAccomodations(result.getAccomodations());
+			travelPack.setTransports(result.getTransports());
+			result = travelPack;
+		}
+		this.validator.validate(result, binding);
+		return result;
+	}
+
+	public Collection<TravelPack> getTravelAgencyDraftPacks() {
+		final TravelAgency travel = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
+		return this.travelPackRepository.getTravelAgencyDraftPacks(travel.getId());
+	}
+
+	public TravelPack findFromComplaint(final int complaintId) {
+		final TravelPack tp = this.travelPackRepository.findFromComplaint(complaintId);
+		return tp;
 	}
 
 }

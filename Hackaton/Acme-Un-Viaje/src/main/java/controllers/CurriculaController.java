@@ -35,6 +35,7 @@ import domain.Cleaner;
  * CONTROL DE CAMBIOS CurriculaCleanerController.java
  * 
  * ALVARO 09/03/2019 11:30 CREACION DE LA CLASE
+ * ALVARO 24/05/2019 Version 1.0
  */
 
 @Controller

@@ -225,4 +225,11 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<span style="padding-left: 0.5em"> <acme:cancel url="#"
+					code="back" />
+			</span>
+		</div>
+	</div>
 </div>
