@@ -32,12 +32,19 @@
 	</display:column>
   	<display:column property="cleaner.name" titleKey="cleT.cleaner" />
   	<display:column property="accomodation.address" titleKey="clT.accomodation"/>
+  	<display:column titleKey="cleaningTask.deleteCleaningTask"> 
+		<a href="cleaningTask/delete.do?cleaningTaskId=${row.id}"><spring:message code="deleteCleaningTask" /></a>
+	</display:column>
 				</fieldset>
 			</div>
 		</div>
 	</display:table>
 	<div class="row">
 		<div class="col-md-3">
+			<span style="padding-left: 2.5em"> <acme:create
+				url="cleaningTask/create.do" name="buttonCleaningTask"
+				code="cleaningTask.create" />
+			</span>
 			 <span> <acme:cancel url=""
 					code="actor.back" />
 			</span>

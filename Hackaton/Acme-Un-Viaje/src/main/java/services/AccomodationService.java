@@ -138,5 +138,13 @@ public class AccomodationService {
 		}
 		return res;
 	}
+	
+	public Accomodation findByAddress(String address) {
+		return accomodationRepo.findByAddress(address);
+	}
+	
+	public Collection<String> getAddressAccomodationsByActor(int id) {
+		return accomodationRepo.getAddressAccomodationsByActor(id);
+	}
 
 }

@@ -26,7 +26,7 @@
 	
 		<div class="col-md-6" style="padding-left: 2.5em">
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="cleaningTask" action="cleaningTask/edit.do">
+				modelAttribute="cleaningTask" action="cleaningTask/create.do">
 				<form:hidden path="id" />
 				<fieldset>
 
@@ -38,17 +38,29 @@
 					<acme:textbox code="cleaningTask.description" path="description"
 						 cssError="col-md-6" cssLabel="col-md-2"
 						cssInput="col-md-4" />
+						
+					<form:label path="cleaner">
+						<spring:message code="cleaningTask.cleaner" />:
+					</form:label>
+					<form:select multiple="true" path="cleaner">
+   		 				<form:options items="${cleaners}" />
+					</form:select>
+					<form:errors cssClass="error" path="cleaner" />
+					
+					<br>
 
-					<acme:textbox code="cleaningTask.cleaner" path="cleaner" 
-						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
-
-					<acme:textbox code="cleaningTask.accomodation" path="accomodation"
+					<form:label path="accomodation">
+						<spring:message code="cleaningTask.accomodation" />:
+					</form:label>
+					<form:select multiple="true" path="accomodation">
+   		 				<form:options items="${accomodations}" />
+					</form:select>
+					<form:errors cssClass="error" path="accomodation" />
+						
+						<acme:textbox code="cleaningTask.startMoment" path="startMoment" placeholder="2025/02/03 15:00" 
 						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
 						
-						<acme:textbox code="cleaningTask.startMoment" path="startMoment" placeholder="2019/12/11 11:00:00"
-						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
-						
-						<acme:textbox code="cleaningTask.endMoment" path="endMoment" placeholder="2019/12/11 11:00:00"
+						<acme:textbox code="cleaningTask.endMoment" path="endMoment" placeholder="2025/02/04 15:00"
 						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
 						
 						

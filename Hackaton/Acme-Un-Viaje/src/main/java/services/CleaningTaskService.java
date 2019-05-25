@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -81,6 +82,13 @@ public class CleaningTaskService {
 		
 		public Collection<CleaningTask> getCleaningTaskHost(final int id) {
 			return this.cleaningTaskRepository.getCleaningTaskHost(id);
+		}
+		
+		public Boolean checkDate(final Date startDate, final Date endDate) {
+			Boolean res = true;
+			if (startDate.before(endDate))
+				res = false;
+			return res;
 		}
 		
 }
