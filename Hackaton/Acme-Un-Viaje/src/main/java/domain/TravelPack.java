@@ -93,7 +93,7 @@ public class TravelPack extends DomainEntity {
 	}
 
 	@ElementCollection
-	@OneToMany()
+	@OneToMany
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;
 	}
