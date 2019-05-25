@@ -192,9 +192,18 @@ $(document).ready(function() {
 	<div class="row">
 		<div class="col-md-3">
 			<br>
-			<span style="padding-left: 0.0em"> <acme:cancel url="/curricula/list.do"
-					code="back" />
-			</span>
+			<c:choose>
+				<c:when test="${cleanerLogin==true}">					
+					<span style="padding-left: 0.0em"> <acme:cancel url="/curricula/list.do"
+							code="back" />
+					</span>
+				</c:when>
+				<c:otherwise>
+					<span style="padding-left: 0.0em"> <acme:cancel url="/jobApplication/host/list.do"
+							code="back" />
+					</span>			
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </div>

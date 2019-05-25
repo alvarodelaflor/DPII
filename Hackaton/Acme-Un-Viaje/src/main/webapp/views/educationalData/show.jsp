@@ -44,5 +44,7 @@
 		</div>
 	</div>
 	<br>
-	<acme:historyBack/>
+	<span style="padding-left: 0.0em"> <acme:cancel url="/curricula/show.do?curriculaId=${educationalData.curricula.id}"
+			code="back" />
+	</span>
 </div>
