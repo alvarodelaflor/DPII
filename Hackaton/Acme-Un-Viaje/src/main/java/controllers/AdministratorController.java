@@ -396,6 +396,10 @@ public class AdministratorController extends AbstractController {
 			res = new ModelAndView("redirect:actorList.do");
 			if (oops.getMessage() == "not.found.error")
 				res.addObject("message", "not.found.error");
+			else if (oops.getMessage() == "not.spammer.error")
+				res.addObject("message", "not.spammer.error");
+			else if (oops.getMessage() == "not.low.score.error")
+				res.addObject("message", "not.low.score.error");
 			else
 				res = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -435,7 +439,7 @@ public class AdministratorController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("admin/create");
 			result.addObject("registerActor", registerActor);
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -453,7 +457,7 @@ public class AdministratorController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("admin/create");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -482,7 +486,7 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("admin/edit");
 		result.addObject("admin", admin);
 		result.addObject("creditCard", creditCard);
-		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 		result.addObject("makes", makes);
 		return result;
 	}
@@ -498,7 +502,7 @@ public class AdministratorController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("admin/edit");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {

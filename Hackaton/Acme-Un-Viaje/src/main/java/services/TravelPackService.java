@@ -14,10 +14,8 @@ import org.springframework.validation.Validator;
 
 import repositories.TravelPackRepository;
 import security.LoginService;
-import domain.Accomodation;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
-import domain.Host;
 import domain.TravelAgency;
 import domain.TravelPack;
 
@@ -112,15 +110,6 @@ public class TravelPackService {
 	public Collection<TravelPack> getTravelPacksAccomodationId(final int id) {
 
 		return this.travelPackRepository.getTravelPacksAccomodationId(id);
-	}
-
-	public Collection<Host> getAllHostByCustomerId(final int id) {
-
-		final Collection<Host> res = new ArrayList<>();
-		final Collection<Accomodation> accomodations = this.accService.getAccomodationsByCustomerId(id);
-		for (final Accomodation accomodation : accomodations)
-			res.add(accomodation.getHost());
-		return res;
 	}
 
 	public Collection<TravelPack> getTravelPacksByCustomerId(final int id) {

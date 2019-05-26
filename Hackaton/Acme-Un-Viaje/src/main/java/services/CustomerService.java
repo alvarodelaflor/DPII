@@ -214,4 +214,9 @@ public class CustomerService {
 
 		return res;
 	}
+
+	public Collection<Customer> getCustomersByTranspoterId(final int id) {
+
+		return this.customerRepository.getCustomersByTransporterId(id);
+	}
 }

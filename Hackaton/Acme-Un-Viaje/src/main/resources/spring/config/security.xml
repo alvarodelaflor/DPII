@@ -69,6 +69,8 @@
 		<security:intercept-url pattern="/transporter/create.do" access="permitAll" />
 		<security:intercept-url pattern="/transporter/edit.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transporter/show.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transporter/myCustomers.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transporter/rateCustomer.do" access="hasRole('TRANSPORTER')" />
 		
 		<security:intercept-url pattern="/travelAgency/create.do" access="permitAll" />
 		<security:intercept-url pattern="/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />

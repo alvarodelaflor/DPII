@@ -174,7 +174,7 @@ public class CustomerController extends AbstractController {
 			res = new ModelAndView("customer/rateHost");
 			final Valoration valoration = this.valorationService.create();
 			valoration.setCustomer(this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId()));
-			valoration.setHost(this.hostService.getHostByUserAccountId(hostId));
+			valoration.setHost(this.hostService.findOne(hostId));
 			res.addObject("valoration", valoration);
 		} catch (final Throwable oops) {
 

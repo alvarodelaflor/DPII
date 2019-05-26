@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.management.loading.PrivateClassLoader;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,29 +22,103 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Transporter;
-import domain.CreditCard;
-import forms.RegisterActor;
 import security.LoginService;
 import services.ConfigService;
+import services.CustomerService;
 import services.TransporterService;
+import services.ValorationService;
+import domain.CreditCard;
+import domain.Transporter;
+import domain.Valoration;
+import forms.RegisterActor;
 
 @Controller
 @RequestMapping("/transporter")
 public class TransporterController extends AbstractController {
 
 	@Autowired
-	private TransporterService transporterService;
-	
+	private TransporterService	transporterService;
+
 	@Autowired
-	private ConfigService configService;
+	private CustomerService		customerService;
+
+	@Autowired
+	private ValorationService	valorationService;
+
+	@Autowired
+	private ConfigService		configService;
+
 
 	// Constructors -----------------------------------------------------------
 
 	public TransporterController() {
 		super();
+	}
+
+	// RATE CUSTOMER
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/rateCustomer", method = RequestMethod.GET)
+	public ModelAndView rateCustomer(@RequestParam(value = "customerId", defaultValue = "-1") final int customerId) {
+
+		ModelAndView res;
+
+		try {
+
+			res = new ModelAndView("transporter/rateCustomer");
+			final Valoration valoration = this.valorationService.create();
+			valoration.setTransporter(this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId()));
+			valoration.setCustomer(this.customerService.findOne(customerId));
+			res.addObject("valoration", valoration);
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+	@RequestMapping(value = "/rateCustomer", method = RequestMethod.POST, params = "save")
+	public ModelAndView rateCustomer(@Valid final Valoration valoration, final BindingResult binding) {
+
+		ModelAndView res;
+
+		if (binding.hasErrors()) {
+
+			res = new ModelAndView("transporter/rateCustomer");
+			res.addObject("valoration", valoration);
+		} else
+			try {
+
+				this.valorationService.save(valoration);
+				res = new ModelAndView("redirect:myCustomers.do");
+			} catch (final Throwable oops) {
+
+				res = new ModelAndView("redirect:/welcome/index.do");
+			}
+
+		return res;
+	}
+
+	// MY CUSTOMERS
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/myCustomers", method = RequestMethod.GET)
+	public ModelAndView myCustomers() {
+
+		ModelAndView res;
+
+		try {
+
+			final Transporter transporter = this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId());
+			res = new ModelAndView("transporter/myCustomers");
+			res.addObject("customers", this.customerService.getCustomersByTranspoterId(transporter.getId()));
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
 	}
 
 	// REGISTER AS TRASNSPORTER
@@ -57,7 +131,7 @@ public class TransporterController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("transporter/create");
 			result.addObject("registerActor", registerActor);
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -75,7 +149,7 @@ public class TransporterController extends AbstractController {
 		final Transporter transporter = this.transporterService.reconstructRegisterAsTransporter(registerActor, binding);
 		if (binding.hasErrors()) {
 			result = new ModelAndView("transporter/create");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -100,11 +174,11 @@ public class TransporterController extends AbstractController {
 		final int idUserAccount = LoginService.getPrincipal().getId();
 		transporter = this.transporterService.getTransporterByUserAccountId(idUserAccount);
 		Assert.notNull(transporter);
-		CreditCard creditCard = transporter.getCreditCard();
+		final CreditCard creditCard = transporter.getCreditCard();
 		result = new ModelAndView("transporter/edit");
 		result.addObject("transporter", transporter);
 		result.addObject("creditCard", creditCard);
-		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 		result.addObject("makes", makes);
 		return result;
 	}
@@ -119,7 +193,7 @@ public class TransporterController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("transporter/edit");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {

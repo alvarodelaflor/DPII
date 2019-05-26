@@ -25,6 +25,15 @@ public class Valoration extends DomainEntity {
 	Host			host;
 
 
+	@ManyToOne(optional = true)
+	public TravelAgency getTravelAgency() {
+		return this.travelAgency;
+	}
+
+	public void setTravelAgency(final TravelAgency travelAgency) {
+		this.travelAgency = travelAgency;
+	}
+
 	@Min(1)
 	@Max(10)
 	@NotNull
@@ -43,15 +52,6 @@ public class Valoration extends DomainEntity {
 
 	public void setComment(final String comment) {
 		this.comment = comment;
-	}
-
-	@ManyToOne(optional = true)
-	public TravelAgency getTravelAgency() {
-		return this.travelAgency;
-	}
-
-	public void setTravelAgency(final TravelAgency travelAgency) {
-		this.travelAgency = travelAgency;
 	}
 
 	@ManyToOne(optional = true)

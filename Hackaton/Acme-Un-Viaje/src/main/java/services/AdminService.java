@@ -35,9 +35,9 @@ public class AdminService {
 
 	@Autowired
 	private ActorService	actorService;
-	
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService	configService;
 
 
 	// GET CONFIG
@@ -57,6 +57,8 @@ public class AdminService {
 
 		final Actor actor = this.actorService.findOne(id);
 		Assert.notNull(actor, "not.found.error");
+		if (!actor.getUserAccount().getBanned())
+			Assert.isTrue(!actor.getUserAccount().getSpammerFlag(), "not.spammer.error"); //TODO: añadir la restriccion del score
 
 		final UserAccount uacc = actor.getUserAccount();
 		uacc.setBanned(!uacc.getBanned());
@@ -87,9 +89,8 @@ public class AdminService {
 	// SAVE REGISTER AS ADMIN
 	// ---------------------------------------------------------------
 	public Admin saveRegisterAsAdmin(final Admin admin) {
-		 if (admin.getPhone().matches("^([0-9]{4,})$")) {
-			 admin.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + admin.getPhone());
-		 }
+		if (admin.getPhone().matches("^([0-9]{4,})$"))
+			admin.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + admin.getPhone());
 		return this.adminRepository.save(admin);
 	}
 
