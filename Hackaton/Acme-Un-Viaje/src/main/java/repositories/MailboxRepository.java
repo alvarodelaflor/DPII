@@ -29,6 +29,9 @@ public interface MailboxRepository extends JpaRepository<Mailbox, Integer> {
 
 	@Query("select m from Actor a join a.mailboxes m where a.id = ?1 and m.name = 'inBox'")
 	Collection<Mailbox> getInBoxActor(Integer id);
+	
+	@Query("select m from Actor a join a.mailboxes m where a.email = ?1 and m.name = 'inBox'")
+	Mailbox getInBoxActorEmail(String email);
 
 	@Query("select m from Actor a join a.mailboxes m where a.id = ?1 and m.name = 'trashBox'")
 	Collection<Mailbox> getTrashBoxActor(Integer id);

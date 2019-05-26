@@ -159,6 +159,11 @@ public class MailboxService {
 			inbox = inBoxList.get(0);
 		return inbox;
 	}
+	
+
+	public Mailbox getInBoxActorEmail(final String email) {
+		return mailboxRepository.getInBoxActorEmail(email);
+	}
 	public Collection<Mailbox> getInBox() {
 
 		return this.mailboxRepository.getInBox();
