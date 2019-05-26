@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -17,10 +18,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.CleaningTask;
 import domain.Complaint;
+import domain.Customer;
 import domain.Host;
+import domain.Mailbox;
+import domain.Message;
 import domain.Review;
+import domain.Tag;
+import domain.Transporter;
+import domain.TravelAgency;
 import services.ComplaintService;
+import services.MessageService;
 import services.ReviewService;
+import services.TagService;
 
 @Controller
 @RequestMapping("/review")
@@ -31,6 +40,12 @@ public class ReviewController extends AbstractController{
 	
 	@Autowired
 	private ComplaintService		complaintService;
+	
+	@Autowired
+	private MessageService		messageService;
+	
+	@Autowired
+	private TagService		tagService;
 	
 	public ReviewController() {
 		super();
@@ -106,6 +121,17 @@ public class ReviewController extends AbstractController{
 										
 					complaint.setReview(reviewSave);
 					complaintService.saveWithoutSetMoment(complaint);
+					
+				
+					Message msg = messageService.sendBroadcastWithoutAdminReview(complaint, reviewSave);
+					this.messageService.save(msg);
+					List<Tag> tags = new ArrayList<Tag>();
+					tags.addAll(msg.getTags());
+					
+					for (int i = 0; i < tags.size(); i++) {
+						tags.get(i).setMessageId(msg.getId());
+						tagService.save(tags.get(i));
+					}
 					
 
 					result = new ModelAndView("review/list");

@@ -21,9 +21,16 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.Admin;
+import domain.Complaint;
+import domain.Customer;
+import domain.Host;
 import domain.Mailbox;
 import domain.Message;
+import domain.Referee;
+import domain.Review;
 import domain.Tag;
+import domain.Transporter;
+import domain.TravelAgency;
 
 @Service
 @Transactional
@@ -43,6 +50,10 @@ public class MessageService {
 	TagService				tagService;
 	@Autowired
 	ConfigService				configService;
+	@Autowired
+	RefereeService				refereeService;
+	@Autowired
+	TravelPackService				travelPackService;
 	@Autowired
 	private Validator			validator;
 
@@ -135,6 +146,71 @@ public class MessageService {
 			
 		return message;
 	}
+	public Message sendBroadcastWithoutAdminReview(Complaint complaint, Review review) {		
+		
+		Message message = create();
+		
+		Customer customer = complaint.getCustomer();
+		TravelAgency travelAgency = complaint.getTravelAgency();
+		Host host = complaint.getHost();
+		Transporter transporter = complaint.getTransporter();
+			
+		List<String> emails = new ArrayList<String>();
+		if(customer != null) {
+			emails.add(customer.getEmail());
+		}
+		
+		if(travelAgency != null) {
+			emails.add(travelAgency.getEmail());
+		}
+		
+		if(host != null) {
+			emails.add(host.getEmail());
+		}
+		
+		if(transporter != null) {
+			emails.add(transporter.getEmail());
+		}
+		
+		Referee ref = refereeService.getRefereeByUserAccountId(LoginService.getPrincipal().getId());
+		
+		emails.add(ref.getEmail());
+		
+		message.setEmailReceiver(emails);
+		
+		Collection<Mailbox> mailboxes = new ArrayList<Mailbox>();
+		
+		for (int i = 0; i < emails.size(); i++) {
+			mailboxes.add(mailboxService.getInBoxActorEmail(emails.get(i)));
+		}
+		
+		message.setTags(new ArrayList<Tag>());
+		
+				
+			for (final Mailbox box : mailboxes) {
+				message.getMailboxes().add(box);
+				box.getMessages().add(message);
+				Tag tag = tagService.create();
+				tag.setTag("NOTIFICATION");
+				Actor aacto = actorService.getActorMailbox(box.getId());
+				tag.setActorId(aacto.getId());
+				message.getTags().add(tag);
+				
+				if (checkSuspiciousWithBoolean(message)) {
+					Tag spam = tagService.create();
+					spam.setActorId(aacto.getId());
+					spam.setTag("SPAM");
+					message.getTags().add(spam);
+				}
+			
+		}
+			
+		message.setSubject("Notification about review done");	
+		message.setBody("A review has been made on the complaint with description" + " {" + complaint.getDescription() + "} about the travel pack " + travelPackService.findFromComplaint(complaint.getId()).getName() + ". The description of the review is {" + review.getDescription() + "}.");
+			
+		return message;
+	}
+	
 	public Message sendBroadcast(final Message message) {
 		final Admin a = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Collection<Mailbox> inBoxAdmin = this.mailboxService.getAdminInBox();
@@ -179,9 +255,7 @@ public class MessageService {
 				}
 			
 		}
-			
-			
-			
+				
 			
 		return message;
 	}
