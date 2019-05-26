@@ -58,7 +58,7 @@ public class MessageService {
 		Actor a = actorService.getActorByUserId(user.getId());
 
 		if (message.getId() == 0) {
-			message.setMoment(LocalDate.now().toDate());
+			message.setMoment(LocalDateTime.now().toDate());
 			message.setMailboxes(boxes);
 			message.setSender(a.getEmail());
 			result = message;

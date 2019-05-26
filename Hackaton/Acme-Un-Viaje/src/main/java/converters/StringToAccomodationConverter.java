@@ -7,28 +7,40 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import domain.Accomodation;
+
 import repositories.AccomodationRepository;
 
 @Component
 public class StringToAccomodationConverter implements Converter<String, Accomodation> {
 
 	@Autowired
-	AccomodationRepository accomodationRepository;
+	AccomodationRepository	accomodationRepository;
 
 
 	@Override
 	public Accomodation convert(final String text) {
 		Accomodation result;
+		Accomodation resId;
+		Accomodation resAddress;
+		String address;
 		int id;
 
 		try {
 			if (StringUtils.isEmpty(text))
 				result = null;
-			else {
+			else {				
 				id = Integer.valueOf(text);
-				result = this.accomodationRepository.findOne(id);
+				resId = this.accomodationRepository.findOne(id);
+				result = resId;								
 			}
-		} catch (final Throwable oops) {
+		}
+			catch (NumberFormatException e) {
+				address = text;
+				resAddress = this.accomodationRepository.findByAddress(address);	
+				result = resAddress;
+			}
+		 catch (final Throwable oops) {
+			System.out.println("Error en StringToAccomodationConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;

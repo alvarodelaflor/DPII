@@ -204,6 +204,9 @@ public class CustomerService {
 		return this.customerRepository.findOne(customerId);
 	}
 
+	public Customer getLoggedCustomer() {
+		return this.customerRepository.findByUserAccountId(LoginService.getPrincipal().getId());
+	}
 	public Collection<Customer> getCustomersByAccomodationId(final int id) {
 
 		final Collection<Customer> res = new ArrayList<>();

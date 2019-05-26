@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.CreditCard;
+import domain.FinderAccomodation;
+import domain.FinderRequest;
+import domain.TravelAgency;
+import forms.RegisterActor;
 import repositories.TravelAgencyRepository;
 import security.Authority;
 import security.LoginService;
@@ -35,6 +40,15 @@ public class TravelAgencyService {
 	private ActorService			actorService;
 
 	@Autowired
+	private ConfigService configService;
+	
+	@Autowired
+	private FinderAccomodationService finderAccomodationService;
+	
+	@Autowired
+	private FinderRequestService finderRequestService;
+	
+	@Autowired
 	private TravelPackService		travelPackService;
 
 	@Autowired
@@ -49,6 +63,14 @@ public class TravelAgencyService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.TRAVELAGENCY);
+		
+		FinderAccomodation finderA = this.finderAccomodationService.create();
+		FinderAccomodation finderAs = this.finderAccomodationService.save(finderA);
+		FinderRequest finderR = this.finderRequestService.create();
+		FinderRequest finderRS = this.finderRequestService.save(finderR);
+		
+		travelAgency.setFinder(finderAs);
+		travelAgency.setFinderRequest(finderRS);
 
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);

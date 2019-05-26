@@ -30,7 +30,9 @@
 		<bean class="converters.HostToStringConverter"/>
 		<!-- ALVARO -->
 		
-		
+		<!-- ANTONIO -->
+		<bean class="converters.StringToCleanerConverter" />		
+		<!-- ANTONIO -->
 		<bean class="converters.StringToMailboxConverter" />		
 		<bean class="converters.StringToTagConverter" />
 		

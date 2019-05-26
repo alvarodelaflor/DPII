@@ -1,10 +1,12 @@
 
 package services;
 
+import java.awt.image.RescaleOp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -222,6 +224,39 @@ public class CleanerService {
 	public Cleaner findOne(final int cleanerId) {
 		return this.cleanerRepository.findOne(cleanerId);
 	}
+	
+	public Collection<Cleaner> findAll() {
+		return this.cleanerRepository.findAll();
+	}
+	
+	public Collection<Cleaner> findByHostId(int hostId) {
+		return this.cleanerRepository.findByHostId(hostId);
+	}
+	
+	public Cleaner findByNameSurname(String name, String surname) {
+		return this.cleanerRepository.findByNameSurname(name, surname);
+	}
+	
+	public Collection<String> getCompleteName() {
+		Collection<String> result = new ArrayList<String>();
+		
+		List<Object[]> namesSurnames = cleanerRepository.getCleanersName();
+		
+		for (int i = 0; i < namesSurnames.size(); i++) {
+			
+			String name = (String) namesSurnames.get(i)[0];
+			
+			String surname = (String) namesSurnames.get(i)[1];
+			
+			String res = surname + "," + name;
+			
+			result.add(res);
+			
+		}
+		
+		return result;		
+	}
+	
 
 	public Collection<Cleaner> getAllCleanersInJobList(final Collection<JobApplication> jobs) {
 

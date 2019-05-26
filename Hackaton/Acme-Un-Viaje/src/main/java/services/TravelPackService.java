@@ -107,6 +107,11 @@ public class TravelPackService {
 		return this.travelPackRepository.getTravelAgencyDraftPacks(travel.getId());
 	}
 
+	public TravelPack findFromComplaint(final int complaintId) {
+		final TravelPack tp = this.travelPackRepository.findFromComplaint(complaintId);
+		return tp;
+	}
+
 	public Collection<TravelPack> getTravelPacksAccomodationId(final int id) {
 
 		return this.travelPackRepository.getTravelPacksAccomodationId(id);

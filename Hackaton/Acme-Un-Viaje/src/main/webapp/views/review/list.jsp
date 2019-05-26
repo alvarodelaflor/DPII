@@ -18,23 +18,20 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<p><spring:message code="listCleaningTask"/></p>
+<p><spring:message code="listReview"/></p>
   	
   	<div class="container-fluid" style="padding-left: 2.5em">
-	<display:table name="cleaningTasks" id="row"
+	<display:table name="reviews" id="row"
 		requestURI="${requestURI}" pagesize="5"
 		class="displaytag table table-hover">
 		<div class="row" style="padding-left: 2.5em">
 			<div class="col-md-6">
 				<fieldset>
-						<display:column titleKey="cleaningTask.showCleaningTask"> 
-		<a href="cleaningTask/show.do?cleaningTaskId=${row.id}"><spring:message code="showCleaningTask" /></a>
+						<display:column titleKey="review.showReview"> 
+		<a href="review/show.do?reviewId=${row.id}"><spring:message code="showReview" /></a>
 	</display:column>
-  	<display:column property="cleaner.name" titleKey="cleT.cleaner" />
-  	<display:column property="accomodation.address" titleKey="clT.accomodation"/>
-  	<display:column titleKey="cleaningTask.deleteCleaningTask"> 
-		<a href="cleaningTask/delete.do?cleaningTaskId=${row.id}"><spring:message code="deleteCleaningTask" /></a>
-	</display:column>
+  	<display:column property="referee.name" titleKey="referee.name" />
+  	<display:column property="description" titleKey="description"/>
 				</fieldset>
 			</div>
 		</div>
@@ -42,8 +39,8 @@
 	<div class="row">
 		<div class="col-md-3">
 			<span style="padding-left: 2.5em"> <acme:create
-				url="cleaningTask/create.do" name="buttonCleaningTask"
-				code="cleaningTask.create" />
+				url="review/create.do" name="buttonReview"
+				code="review.create" />
 			</span>
 			 <span> <acme:cancel url=""
 					code="actor.back" />

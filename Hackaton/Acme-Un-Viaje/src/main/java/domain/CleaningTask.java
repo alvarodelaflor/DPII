@@ -46,7 +46,7 @@ public class CleaningTask extends DomainEntity{
 	
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getStartMoment() {
 		return startMoment;
 	}
@@ -57,7 +57,7 @@ public class CleaningTask extends DomainEntity{
 	
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getEndMoment() {
 		return endMoment;
 	}

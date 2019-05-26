@@ -14,8 +14,7 @@
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
-		<property name="password"
-			value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -27,8 +26,7 @@
 
 	<bean id="userAccount2" class="security.UserAccount">
 		<property name="username" value="cleaner" />
-		<property name="password"
-			value="73af3cbee3b033a9d5f13c23fbdcad2b" />
+		<property name="password" value="73af3cbee3b033a9d5f13c23fbdcad2b" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -40,8 +38,7 @@
 
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="transporter" />
-		<property name="password"
-			value="5f2ef48e6530f6cb099a4f1bc623e087" />
+		<property name="password" value="5f2ef48e6530f6cb099a4f1bc623e087" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -50,11 +47,10 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount4" class="security.UserAccount">
 		<property name="username" value="referee" />
-		<property name="password"
-			value="4f200dd50f7bcac8a64683b771700afb" />
+		<property name="password" value="4f200dd50f7bcac8a64683b771700afb" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -63,11 +59,10 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="hosthost" />
-		<property name="password"
-			value="67b3dba8bc6778101892eb77249db32e" />
+		<property name="password" value="67b3dba8bc6778101892eb77249db32e" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -76,11 +71,10 @@
 			</list>
 		</property>
 	</bean>
-		
+
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="travelAgency" />
-		<property name="password"
-			value="4d1f86316f4338d204a426975251362a" />
+		<property name="password" value="4d1f86316f4338d204a426975251362a" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -89,11 +83,10 @@
 			</list>
 		</property>
 	</bean>
-			
+
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="customer" />
-		<property name="password"
-			value="91ec1f9324753048c0096d036a694f86" />
+		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -150,11 +143,11 @@
 		<property name="creditCard" ref="creditCard01" />
 		<property name="config" ref="config" />
 		<property name="mailboxes">
-        	<list>
-                <ref bean="mailbox01"/>
-                <ref bean="mailbox02"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="mailbox01" />
+				<ref bean="mailbox02" />
+			</list>
+		</property>
 	</bean>
 	<!-- ADMIN -->
 
@@ -170,11 +163,11 @@
 		<property name="userAccount" ref="userAccount2" />
 		<property name="creditCard" ref="creditCard02" />
 		<property name="mailboxes">
-        	<list>
-                <ref bean="mailbox03"/>
-                <ref bean="mailbox04"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="mailbox03" />
+				<ref bean="mailbox04" />
+			</list>
+		</property>
 	</bean>
 	<!-- CLEANER -->
 
@@ -190,14 +183,14 @@
 		<property name="userAccount" ref="userAccount3" />
 		<property name="creditCard" ref="creditCard03" />
 		<property name="mailboxes">
-        	<list>
-                <ref bean="mailbox05"/>
-                <ref bean="mailbox06"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="mailbox05" />
+				<ref bean="mailbox06" />
+			</list>
+		</property>
 	</bean>
 	<!-- TRANSPORTER -->
-	
+
 	<!-- REFEREE -->
 	<bean id="referee01" class="domain.Referee">
 		<property name="name" value="Sr. Referee" />
@@ -208,14 +201,14 @@
 		<property name="userAccount" ref="userAccount4" />
 		<property name="creditCard" ref="creditCard04" />
 		<property name="mailboxes">
-        	<list>
-                <ref bean="mailbox07"/>
-                <ref bean="mailbox08"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="mailbox07" />
+				<ref bean="mailbox08" />
+			</list>
+		</property>
 	</bean>
 	<!-- REFEREE -->
-	
+
 	<!-- HOST -->
 	<bean id="host01" class="domain.Host">
 		<property name="name" value="Sr. Host" />
@@ -226,14 +219,14 @@
 		<property name="userAccount" ref="userAccount5" />
 		<property name="creditCard" ref="creditCard05" />
 		<property name="mailboxes">
-        	<list>
-                <ref bean="mailbox09"/>
-                <ref bean="mailbox10"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="mailbox09" />
+				<ref bean="mailbox10" />
+			</list>
+		</property>
 	</bean>
 	<!-- HOTS -->
-	
+
 	<!-- TRAVELAGENCY -->
 	<bean id="travelAgency01" class="domain.TravelAgency">
 		<property name="name" value="Sr. Travel" />
@@ -244,16 +237,16 @@
 		<property name="userAccount" ref="userAccount6" />
 		<property name="creditCard" ref="creditCard06" />
 		<property name="mailboxes">
-        	<list>
-                <ref bean="mailbox11"/>
-                <ref bean="mailbox12"/>
-        	</list>
-        </property>
-        <property name="finder" ref="finderAccomodation01" />
-        <property name="finderRequest" ref="finderRequest01" />
+			<list>
+				<ref bean="mailbox11" />
+				<ref bean="mailbox12" />
+			</list>
+		</property>
+		<property name="finder" ref="finderAccomodation01" />
+		<property name="finderRequest" ref="finderRequest01" />
 	</bean>
 	<!-- TRAVELAGENCY -->
-	
+
 	<!-- CUSTOMER -->
 	<bean id="customer01" class="domain.Customer">
 		<property name="name" value="Sra. Carmen" />
@@ -265,11 +258,11 @@
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard07" />
 		<property name="mailboxes">
-        	<list>
-                <ref bean="mailbox13"/>
-                <ref bean="mailbox14"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="mailbox13" />
+				<ref bean="mailbox14" />
+			</list>
+		</property>
 	</bean>
 	<!-- CUSTOMER -->
 
@@ -281,7 +274,7 @@
 		<property name="CVV" value="234" />
 		<property name="expiration" value="12/22" />
 	</bean>
-	
+
 	<bean id="creditCard02" class="domain.CreditCard">
 		<property name="holder" value="Sr. Cleaner" />
 		<property name="make" value="VISA" />
@@ -289,7 +282,7 @@
 		<property name="CVV" value="234" />
 		<property name="expiration" value="12/22" />
 	</bean>
-	
+
 	<bean id="creditCard03" class="domain.CreditCard">
 		<property name="holder" value="Sr. Transporter" />
 		<property name="make" value="VISA" />
@@ -297,7 +290,7 @@
 		<property name="CVV" value="234" />
 		<property name="expiration" value="12/22" />
 	</bean>
-	
+
 	<bean id="creditCard04" class="domain.CreditCard">
 		<property name="holder" value="Sr. Referee" />
 		<property name="make" value="VISA" />
@@ -305,7 +298,7 @@
 		<property name="CVV" value="234" />
 		<property name="expiration" value="12/22" />
 	</bean>
-	
+
 	<bean id="creditCard05" class="domain.CreditCard">
 		<property name="holder" value="Sr. Host" />
 		<property name="make" value="VISA" />
@@ -313,7 +306,7 @@
 		<property name="CVV" value="234" />
 		<property name="expiration" value="12/22" />
 	</bean>
-	
+
 	<bean id="creditCard06" class="domain.CreditCard">
 		<property name="holder" value="Sr. Travel Agency" />
 		<property name="make" value="VISA" />
@@ -321,7 +314,7 @@
 		<property name="CVV" value="234" />
 		<property name="expiration" value="12/22" />
 	</bean>
-	
+
 	<bean id="creditCard07" class="domain.CreditCard">
 		<property name="holder" value="Sr. Customer" />
 		<property name="make" value="VISA" />
@@ -330,7 +323,7 @@
 		<property name="expiration" value="12/22" />
 	</bean>
 	<!-- CREDITCARD -->
-	
+
 	<!-- SOCIAL PROFILE -->
 	<bean id="socialProfile01" class="domain.SocialProfile">
 		<property name="link" value="http://admin" />
@@ -338,42 +331,42 @@
 		<property name="nick" value="Nistrator" />
 		<property name="actor" ref="admin01" />
 	</bean>
-	
+
 	<bean id="socialProfile02" class="domain.SocialProfile">
 		<property name="link" value="http://cleaner" />
 		<property name="name" value="Cleaner" />
 		<property name="nick" value="clear" />
 		<property name="actor" ref="cleaner01" />
 	</bean>
-	
+
 	<bean id="socialProfile03" class="domain.SocialProfile">
 		<property name="link" value="http://trasporter" />
 		<property name="name" value="Trasporter" />
 		<property name="nick" value="car" />
 		<property name="actor" ref="transporter01" />
 	</bean>
-	
+
 	<bean id="socialProfile04" class="domain.SocialProfile">
 		<property name="link" value="http://host" />
 		<property name="name" value="Host" />
 		<property name="nick" value="host" />
 		<property name="actor" ref="host01" />
 	</bean>
-	
+
 	<bean id="socialProfile05" class="domain.SocialProfile">
 		<property name="link" value="http://customer" />
 		<property name="name" value="Customer" />
 		<property name="nick" value="user" />
 		<property name="actor" ref="customer01" />
 	</bean>
-	
+
 	<bean id="socialProfile06" class="domain.SocialProfile">
 		<property name="link" value="http://travelAgency" />
 		<property name="name" value="Travel" />
 		<property name="nick" value="agency" />
 		<property name="actor" ref="travelAgency01" />
 	</bean>
-	
+
 	<bean id="socialProfile07" class="domain.SocialProfile">
 		<property name="link" value="http://referee" />
 		<property name="name" value="Referee" />
@@ -403,127 +396,155 @@
 		<property name="transporter" ref="transporter01" />
 	</bean>
 	<!-- TRANSPORTS -->
-		
+
 	<!-- Mailbox -->
 	<bean id="mailbox01" class="domain.Mailbox">
-        <property name="name" value="inBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean> 
-    
-     <bean id="mailbox02" class="domain.Mailbox">
-        <property name="name" value="outBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean>
-    
-    <bean id="mailbox03" class="domain.Mailbox">
-        <property name="name" value="inBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean> 
-    
-     <bean id="mailbox04" class="domain.Mailbox">
-        <property name="name" value="outBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean>
-    
-    <bean id="mailbox05" class="domain.Mailbox">
-        <property name="name" value="inBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean> 
-    
-     <bean id="mailbox06" class="domain.Mailbox">
-        <property name="name" value="outBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean>
-    
-    <bean id="mailbox07" class="domain.Mailbox">
-        <property name="name" value="inBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean> 
-    
-     <bean id="mailbox08" class="domain.Mailbox">
-        <property name="name" value="outBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean>
-    
-      <bean id="mailbox09" class="domain.Mailbox">
-        <property name="name" value="inBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean> 
-    
-     <bean id="mailbox10" class="domain.Mailbox">
-        <property name="name" value="outBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean>
-    
-      <bean id="mailbox11" class="domain.Mailbox">
-        <property name="name" value="inBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean> 
-    
-     <bean id="mailbox12" class="domain.Mailbox">
-        <property name="name" value="outBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean>
-    
-      <bean id="mailbox13" class="domain.Mailbox">
-        <property name="name" value="inBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean> 
-    
-     <bean id="mailbox14" class="domain.Mailbox">
-        <property name="name" value="outBox" />
-        <property name="isDefault" value="true" />
-        <property name="messages"><null/></property>   
-    </bean>
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox02" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox03" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox04" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox05" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox06" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox07" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox08" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox09" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox10" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox11" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox12" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox13" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox14" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
 	<!-- Mailbox -->
-	
+
 	<!-- REQUEST -->
 	<bean id="request01" class="domain.Request">
-        <property name="customer" ref="customer01" />
-        <property name="destination" value="Noruega" />
-        <property name="origin" value="Carmona" />
+		<property name="customer" ref="customer01" />
+		<property name="destination" value="Noruega" />
+		<property name="origin" value="Carmona" />
 		<property name="endDate" value="2020/12/11" />
-        <property name="startDate" value="2020/11/11" />
-        <property name="status" value="true" />
-        <property name="maxPrice" value="10" />
-        <property name="numberOfPeople" value="4" />
-    </bean>
-    
-    <bean id="request02" class="domain.Request">
-        <property name="customer" ref="customer01" />
-        <property name="destination" value="Bruselas" />
-        <property name="origin" value="New York" />
+		<property name="startDate" value="2020/11/11" />
+		<property name="status" value="true" />
+		<property name="maxPrice" value="10" />
+		<property name="numberOfPeople" value="4" />
+	</bean>
+
+	<bean id="request02" class="domain.Request">
+		<property name="customer" ref="customer01" />
+		<property name="destination" value="Bruselas" />
+		<property name="origin" value="New York" />
 		<property name="endDate" value="2019/12/11" />
-        <property name="startDate" value="2019/11/11" />
-        <property name="status" value="false" />
-        <property name="maxPrice" value="10" />
-        <property name="numberOfPeople" value="2" />
-    </bean>
+		<property name="startDate" value="2019/11/11" />
+		<property name="status" value="false" />
+		<property name="maxPrice" value="10" />
+		<property name="numberOfPeople" value="2" />
+	</bean>
 	<!-- REQUEST -->
-	
+
 	<!-- WARRANTY -->
 	<bean id="warranty01" class="domain.Warranty">
-        <property name="travelAgency" ref="travelAgency01" />
-        <property name="title" value="title0001" />
-        <property name="terms" value="terms0001" />
-        <property name="draftMode" value="false" />
-    </bean>
+		<property name="travelAgency" ref="travelAgency01" />
+		<property name="title" value="title0001" />
+		<property name="terms" value="terms0001" />
+		<property name="draftMode" value="false" />
+	</bean>
 	<!-- WARRANTY -->
-	
-	
+
+
 	<!-- ACCOMODATIONS -->
 	<bean id="accomodation01" class="domain.Accomodation">
 		<property name="pricePerNight" value="30" />
@@ -531,7 +552,8 @@
 		<property name="place" value="Sevilla" />
 		<property name="description" value="Bonita habitación con vistas al asfalto" />
 		<property name="host" ref="host01" />
-		<property name="pictures" value="https://www.recoletos-hotel.com/files/hotel/hotel-recoletos/02-habitaciones/estandard/vp-jardin-de-recoletos-madrid-habitacion-doble-estandard-03.jpg" />
+		<property name="pictures"
+			value="https://www.recoletos-hotel.com/files/hotel/hotel-recoletos/02-habitaciones/estandard/vp-jardin-de-recoletos-madrid-habitacion-doble-estandard-03.jpg" />
 		<property name="maxPeople" value="4" />
 		<property name="rating" value="3" />
 	</bean>
@@ -541,12 +563,13 @@
 		<property name="place" value="Sevilla" />
 		<property name="description" value="Ático de mala muerte" />
 		<property name="host" ref="host01" />
-		<property name="pictures" value="https://t-ec.bstatic.com/images/hotel/max1024x768/170/170499069.jpg'https://rincondelobizarro.files.wordpress.com/2011/12/cuartocutre.jpg" />
+		<property name="pictures"
+			value="https://t-ec.bstatic.com/images/hotel/max1024x768/170/170499069.jpg'https://rincondelobizarro.files.wordpress.com/2011/12/cuartocutre.jpg" />
 		<property name="maxPeople" value="2" />
 		<property name="rating" value="0.5" />
 	</bean>
 	<!-- ACCOMODATIONS -->
-	
+
 	<!-- FINDERACCOMODATION -->
 	<bean id="finderAccomodation01" class="domain.FinderAccomodation">
 		<property name="price" value="80" />
@@ -555,98 +578,118 @@
 		<property name="people" value="1" />
 	</bean>
 	<!-- FINDERACCOMODATION -->
-	
+
 	<!-- BOOKINGACCOMODATION -->
 	<bean id="bookingaccomodation01" class="domain.BookingAccomodation">
 		<property name="startDate" value="2018/11/11" />
 		<property name="endDate" value="2018/11/12" />
 		<property name="accomodation" ref="accomodation01" />
 	</bean>
-	
+
 	<bean id="bookingaccomodation02" class="domain.BookingAccomodation">
 		<property name="startDate" value="2022/11/11" />
 		<property name="endDate" value="2022/11/11" />
 		<property name="accomodation" ref="accomodation02" />
 	</bean>
 	<!-- BOOKINGACCOMODATION -->
-	
-	
-		<!-- FINDERREQUEST -->
+
+
+	<!-- FINDERREQUEST -->
 	<bean id="finderRequest01" class="domain.FinderRequest">
 		<property name="price" value="80" />
 		<property name="place" value="Sevilla" />
 		<property name="startDate" value="2019/12/11" />
 	</bean>
-	<!-- FINDERREQUEST-->
-	
-		<!-- TRAVELPACK -->
+	<!-- FINDERREQUEST -->
+
+	<!-- TRAVELPACK -->
 	<bean id="travelPack01" class="domain.TravelPack">
-		<property name="name" value ="travelPack1" />
-		<property name="draft" value ="false" />
-		<property name="customer" ref ="customer01" />
+		<property name="name" value="travelPack1" />
+		<property name="draft" value="false" />
+		<property name="customer" ref="customer01" />
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">
-        	<list>
-                <ref bean="bookingAccomodation02"/>
-        	</list>
-        </property>
-        <property name="transports">
-        	<list>
-                <ref bean="bookingTransport02"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="bookingAccomodation02" />
+			</list>
+		</property>
+		<property name="transports">
+			<list>
+				<ref bean="bookingTransport02" />
+			</list>
+		</property>
+		<property name="complaints">
+			<list>
+				<ref bean="complaint01" />
+				<ref bean="complaint02" />
+			</list>
+		</property>
 	</bean>
 	<bean id="travelPack02" class="domain.TravelPack">
-		<property name="name" value ="travelPack2" />
-		<property name="draft" value ="false" />
-		<property name="customer" ref ="customer01" />
+		<property name="name" value="travelPack2" />
+		<property name="draft" value="false" />
+		<property name="customer" ref="customer01" />
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">
-        	<list>
-                <ref bean="bookingAccomodation01"/>
-        	</list>
-        </property>
-        <property name="transports">
-        	<list>
-                <ref bean="bookingTransport01"/>
-        	</list>
-        </property>
+			<list>
+				<ref bean="bookingAccomodation01" />
+			</list>
+		</property>
+		<property name="transports">
+			<list>
+				<ref bean="bookingTransport01" />
+			</list>
+		</property>
 	</bean>
-	<!-- TRAVELPACK-->
-	
+	<!-- TRAVELPACK -->
+
 	<!-- BOOKINGACCOMODATION -->
 	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
 		<property name="endDate" value="2020/12/11" />
 		<property name="startDate" value="2019/12/11" />
 	</bean>
-	
+
 	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation02" />
 		<property name="endDate" value="2020/12/11" />
 		<property name="startDate" value="2019/12/11" />
 	</bean>
-	<!-- BOOKINGACCOMODATION-->
-	
+	<!-- BOOKINGACCOMODATION -->
+
 	<!-- BOOKINGTRANSPORT -->
 	<bean id="bookingTransport01" class="domain.BookingTransport">
 		<property name="transport" ref="transport01" />
 		<property name="date" value="2020/12/11" />
 	</bean>
-	
+
 	<bean id="bookingTransport02" class="domain.BookingTransport">
 		<property name="transport" ref="transport02" />
 		<property name="date" value="2020/12/11" />
 	</bean>
-	<!-- BOOKINGTRANSPORT-->
-	
-		<!-- CLEANINGTASK -->
+	<!-- BOOKINGTRANSPORT -->
+
+	<!-- CLEANINGTASK -->
 	<bean id="cleaningTask01" class="domain.CleaningTask">
 		<property name="cleaner" ref="cleaner01" />
 		<property name="startMoment" value="2019/12/11 11:00:00" />
 		<property name="endMoment" value="2019/12/12  11:00:00" />
 		<property name="accomodation" ref="accomodation01" />
 	</bean>
-	<!-- CLEANINGTASK-->
+	<!-- CLEANINGTASK -->
+	<!-- COMPLAINT -->
+	<bean id="complaint01" class="domain.Complaint">
+		<property name="description" value="Bastante deficiente trato hacia mi persona" />
+		<property name="moment" value="2019/05/20 20:00" />
+		<property name="customer" ref="customer01" />
+		<property name="transporter" ref="transporter01" />
+	</bean>
 
+	<bean id="complaint02" class="domain.Complaint">
+		<property name="description" value="La habitación estaba muy sucia" />
+		<property name="moment" value="2019/05/20 20:00" />
+		<property name="customer" ref="customer01" />
+		<property name="host" ref="host01" />
+	</bean>
+	<!-- COMPLAINT -->
 </beans>
