@@ -46,6 +46,12 @@
 		<bean class="converters.StringToWarrantyConverter" />		
 		<bean class="converters.WarrantyToStringConverter" />
 		<!-- Ferrete -->
+		<bean class="converters.HostToStringConverter" />
+		<bean class="converters.StringToHostConverter" />	
+		<bean class="converters.TransporterToStringConverter" />
+		<bean class="converters.StringToTransporterConverter" />	
+		<bean class="converters.TravelAgencyToStringConverter" />
+		<bean class="converters.StringToTravelAgencyConverter" />	
 	</util:list>
 	
 </beans>

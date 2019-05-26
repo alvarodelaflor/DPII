@@ -13,7 +13,8 @@
 
 <form:form class="formularioEdicion" method="POST"
 	modelAttribute="valoration" action="customer/rateTravelAgency.do">
-
+	<form:hidden path="customer"/>
+	<form:hidden path="travelAgency"/>
 	<div class="row" style="padding-left: 2.5em">
 		<div class="col-md-6">
 			<fieldset>

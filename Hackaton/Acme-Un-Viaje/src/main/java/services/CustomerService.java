@@ -222,4 +222,17 @@ public class CustomerService {
 
 		return this.customerRepository.getCustomersByTransporterId(id);
 	}
+
+	public List<String> bestCustomer() {
+
+		final List<String> res = new ArrayList<>();
+		final List<Customer> customers = new ArrayList<>();
+		customers.addAll(this.customerRepository.bestCustomer());
+		for (final Customer customer : customers)
+			res.add(customer.getUserAccount().getUsername());
+		if (customers.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
+	}
 }

@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -34,15 +33,6 @@ public class TravelPack extends DomainEntity {
 	private Double							price;
 	private Collection<Complaint>			complaints;
 
-
-	@ManyToOne(optional = true)
-	public Warranty getWarranty() {
-		return this.warranty;
-	}
-
-	public void setWarranty(final Warranty warranty) {
-		this.warranty = warranty;
-	}
 
 	public Boolean getDraft() {
 		return this.draft;

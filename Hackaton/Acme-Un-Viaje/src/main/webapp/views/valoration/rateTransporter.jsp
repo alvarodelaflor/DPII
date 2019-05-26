@@ -13,7 +13,8 @@
 
 <form:form class="formularioEdicion" method="POST"
 	modelAttribute="valoration" action="customer/rateTransporter.do">
-
+	<form:hidden path="customer" />
+	<form:hidden path="transporter" />
 	<div class="row" style="padding-left: 2.5em">
 		<div class="col-md-6">
 			<fieldset>
@@ -29,8 +30,8 @@
 		<div class="col-md-3">
 			<span style="padding-left: 2.5em"> <acme:submit name="save"
 					code="save" />
-			</span> <span style="padding-left: 0.5em"> <acme:cancel url="customer/contacts.do"
-					code="cancel" />
+			</span> <span style="padding-left: 0.5em"> <acme:cancel
+					url="customer/contacts.do" code="cancel" />
 			</span>
 		</div>
 	</div>

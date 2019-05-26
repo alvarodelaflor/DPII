@@ -1,12 +1,10 @@
 
 package services;
 
-import java.awt.image.RescaleOp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -224,39 +222,38 @@ public class CleanerService {
 	public Cleaner findOne(final int cleanerId) {
 		return this.cleanerRepository.findOne(cleanerId);
 	}
-	
+
 	public Collection<Cleaner> findAll() {
 		return this.cleanerRepository.findAll();
 	}
-	
-	public Collection<Cleaner> findByHostId(int hostId) {
+
+	public Collection<Cleaner> findByHostId(final int hostId) {
 		return this.cleanerRepository.findByHostId(hostId);
 	}
-	
-	public Cleaner findByNameSurname(String name, String surname) {
+
+	public Cleaner findByNameSurname(final String name, final String surname) {
 		return this.cleanerRepository.findByNameSurname(name, surname);
 	}
-	
+
 	public Collection<String> getCompleteName() {
-		Collection<String> result = new ArrayList<String>();
-		
-		List<Object[]> namesSurnames = cleanerRepository.getCleanersName();
-		
+		final Collection<String> result = new ArrayList<String>();
+
+		final List<Object[]> namesSurnames = this.cleanerRepository.getCleanersName();
+
 		for (int i = 0; i < namesSurnames.size(); i++) {
-			
-			String name = (String) namesSurnames.get(i)[0];
-			
-			String surname = (String) namesSurnames.get(i)[1];
-			
-			String res = surname + "," + name;
-			
+
+			final String name = (String) namesSurnames.get(i)[0];
+
+			final String surname = (String) namesSurnames.get(i)[1];
+
+			final String res = surname + "," + name;
+
 			result.add(res);
-			
+
 		}
-		
-		return result;		
+
+		return result;
 	}
-	
 
 	public Collection<Cleaner> getAllCleanersInJobList(final Collection<JobApplication> jobs) {
 
@@ -265,6 +262,18 @@ public class CleanerService {
 			res.add(job.getCleaner());
 
 		return res;
+	}
+
+	public List<String> bestCleaner() {
+		final List<String> res = new ArrayList<>();
+		final List<Cleaner> cleaners = new ArrayList<>();
+		cleaners.addAll(this.cleanerRepository.bestCleaner());
+		for (final Cleaner cleaner : cleaners)
+			res.add(cleaner.getUserAccount().getUsername());
+		if (cleaners.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
 	}
 
 }

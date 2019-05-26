@@ -13,16 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.CreditCard;
-import domain.FinderAccomodation;
-import domain.FinderRequest;
-import domain.TravelAgency;
-import forms.RegisterActor;
 import repositories.TravelAgencyRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.CreditCard;
+import domain.FinderAccomodation;
+import domain.FinderRequest;
 import domain.TravelAgency;
 import forms.RegisterActor;
 
@@ -31,28 +28,25 @@ import forms.RegisterActor;
 public class TravelAgencyService {
 
 	@Autowired
-	private TravelAgencyRepository	travelAgencyRepository;
+	private TravelAgencyRepository		travelAgencyRepository;
 
 	@Autowired
-	private Validator				validator;
+	private Validator					validator;
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private ConfigService configService;
-	
-	@Autowired
-	private FinderAccomodationService finderAccomodationService;
-	
-	@Autowired
-	private FinderRequestService finderRequestService;
-	
-	@Autowired
-	private TravelPackService		travelPackService;
+	private ConfigService				configService;
 
 	@Autowired
-	private ConfigService			configService;
+	private FinderAccomodationService	finderAccomodationService;
+
+	@Autowired
+	private FinderRequestService		finderRequestService;
+
+	@Autowired
+	private TravelPackService			travelPackService;
 
 
 	// REGISTER AS TRAVEL
@@ -63,12 +57,12 @@ public class TravelAgencyService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.TRAVELAGENCY);
-		
-		FinderAccomodation finderA = this.finderAccomodationService.create();
-		FinderAccomodation finderAs = this.finderAccomodationService.save(finderA);
-		FinderRequest finderR = this.finderRequestService.create();
-		FinderRequest finderRS = this.finderRequestService.save(finderR);
-		
+
+		final FinderAccomodation finderA = this.finderAccomodationService.create();
+		final FinderAccomodation finderAs = this.finderAccomodationService.save(finderA);
+		final FinderRequest finderR = this.finderRequestService.create();
+		final FinderRequest finderRS = this.finderRequestService.save(finderR);
+
 		travelAgency.setFinder(finderAs);
 		travelAgency.setFinderRequest(finderRS);
 
@@ -236,5 +230,17 @@ public class TravelAgencyService {
 	public TravelAgency findOne(final int id) {
 
 		return this.travelAgencyRepository.findOne(id);
+	}
+
+	public List<String> bestTravelAgency() {
+		final List<String> res = new ArrayList<>();
+		final List<TravelAgency> travelAgencys = new ArrayList<>();
+		travelAgencys.addAll(this.travelAgencyRepository.bestTravelAgency());
+		for (final TravelAgency travelAgency : travelAgencys)
+			res.add(travelAgency.getUserAccount().getUsername());
+		if (travelAgencys.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
 	}
 }

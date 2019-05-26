@@ -26,8 +26,13 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.AdminService;
+import services.CleanerService;
 import services.ConfigService;
 import services.CurriculaService;
+import services.CustomerService;
+import services.HostService;
+import services.TransporterService;
+import services.TravelAgencyService;
 import domain.Actor;
 import domain.Admin;
 import domain.Config;
@@ -49,6 +54,21 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private CurriculaService	curriculaService;
+
+	@Autowired
+	private CustomerService		customerService;
+
+	@Autowired
+	private HostService			hostService;
+
+	@Autowired
+	private TransporterService	transporterService;
+
+	@Autowired
+	private TravelAgencyService	travelAgencyService;
+
+	@Autowired
+	private CleanerService		cleanerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -74,6 +94,16 @@ public class AdministratorController extends AbstractController {
 			res.addObject("maxCurriculaPerCleaner", maxCurriculaPerCleaner);
 			res.addObject("avgCurriculaPerCleaner", avgCurriculaPerCleaner);
 			res.addObject("stddevCurriculaPerCleaner", stddevCurriculaPerCleaner);
+			//BestCustomer
+			res.addObject("bestCustomer", this.customerService.bestCustomer());
+			//BestHost
+			res.addObject("bestHost", this.hostService.bestHost());
+			//BestTransporter
+			res.addObject("bestTransporter", this.transporterService.bestTransporter());
+			//BestTravelAgency
+			res.addObject("bestTravelAgency", this.travelAgencyService.bestTravelAgency());
+			//BestCleaner
+			res.addObject("bestCleaner", this.cleanerService.bestCleaner());
 		} catch (final Throwable oops) {
 
 			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
@@ -84,7 +114,6 @@ public class AdministratorController extends AbstractController {
 
 		return res;
 	}
-
 	// NEW DEFAULT PHONE CODE
 	// ---------------------------------------------------------------
 	@RequestMapping(value = "/newdpc", method = RequestMethod.GET)

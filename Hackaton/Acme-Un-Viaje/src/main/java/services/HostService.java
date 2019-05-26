@@ -14,35 +14,35 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Host;
-import forms.RegisterActor;
 import repositories.HostRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Host;
+import forms.RegisterActor;
 
 @Service
 @Transactional
 public class HostService {
 
 	@Autowired
-	private HostRepository hostRepository;
-	
-	@Autowired
-	private CleanerService cleanerService;
+	private HostRepository	hostRepository;
 
 	@Autowired
-	private Validator validator;
+	private CleanerService	cleanerService;
 
 	@Autowired
-	private ActorService actorService;
-	
+	private Validator		validator;
+
 	@Autowired
-	private ConfigService configService;
-	
-	
+	private ActorService	actorService;
+
+	@Autowired
+	private ConfigService	configService;
+
+
 	//CRUD METHODS
 
 	/**
@@ -54,7 +54,7 @@ public class HostService {
 	public Collection<Host> findAll() {
 		return this.hostRepository.findAll();
 	}
-	
+
 	// CRUD METHODS
 
 	// REGISTER AS HOST
@@ -75,9 +75,8 @@ public class HostService {
 	// SAVE REGISTER AS HOST
 	// ---------------------------------------------------------------
 	public Host saveRegisterAsHost(final Host host) {
-		if (host.getPhone().matches("^([0-9]{4,})$")) {
-			 host.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + host.getPhone());
-		 }
+		if (host.getPhone().matches("^([0-9]{4,})$"))
+			host.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + host.getPhone());
 		return this.hostRepository.save(host);
 	}
 
@@ -134,7 +133,7 @@ public class HostService {
 			host.setName(registerActor.getName());
 			host.setSurname(registerActor.getSurname());
 			host.setPhoto(registerActor.getPhoto());
-			CreditCard creditCard = host.getCreditCard();
+			final CreditCard creditCard = host.getCreditCard();
 			creditCard.setCVV(registerActor.getCreditCard().getCVV());
 			creditCard.setExpiration(registerActor.getCreditCard().getExpiration());
 			creditCard.setHolder(registerActor.getCreditCard().getHolder());
@@ -191,69 +190,74 @@ public class HostService {
 			binding.rejectValue("creditCard.make", "error.makeCredictCard");
 
 		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-		if (!registerActor.getEmail().matches(pattern)) {
+		if (!registerActor.getEmail().matches(pattern))
 			binding.rejectValue("email", "email.wrong");
-		}
 
-		if (registerActor.getCreditCard().getHolder().contains(">")
-				|| registerActor.getCreditCard().getHolder().contains("<")) {
+		if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<"))
 			binding.rejectValue("creditCard.holder", "error.html");
-		}
 
-		if (registerActor.getCreditCard().getMake().contains(">")
-				|| registerActor.getCreditCard().getMake().contains("<")) {
+		if (registerActor.getCreditCard().getMake().contains(">") || registerActor.getCreditCard().getMake().contains("<"))
 			binding.rejectValue("creditCard.make", "error.html");
-		}
 
-		UserAccount user = LoginService.getPrincipal();
-		Host t = this.getHostByUserAccountId(user.getId());
+		final UserAccount user = LoginService.getPrincipal();
+		final Host t = this.getHostByUserAccountId(user.getId());
 
-		if (!registerActor.getEmail().equals(t.getEmail())
-				&& this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
+		if (!registerActor.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 
 		if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
 			binding.rejectValue("birthDate", "error.birthDate");
-			Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
-			if (ageActor < 18) {
+			final Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
+			if (ageActor < 18)
 				binding.rejectValue("birthDate", "error.birthDateM");
-			}
 		}
 	}
 
-		public Host findOne(Integer id) {
-			return this.hostRepository.findOne(id);
+	public Host findOne(final Integer id) {
+		return this.hostRepository.findOne(id);
 	}
-		
-		/**
-		 * 
-		 * Return the host who is login if exits, null otherwise
-		 * 
-		 * @author Alvaro de la Flor Bonilla
-		 * @return {@link Host}
-		 */
-		public Host getHostLogin() {
-			Host res;
-			try {
-				res = this.getHostByUserAccountId(LoginService.getPrincipal().getId());
-			} catch (Exception e) {
-				res = null;
-			}
-			return res;
-		}
 
-		/**
-		 * Return the host available for an especific cleaner job application<br>
-		 * Cleaner must exits in DataBase
-		 * 
-		 * @author Alvaro de la Flor Bonilla
-		 * @return {@link Collection}<{@link Host}>
-		 */
-		public Collection<Host> findHostAvailableForCleaner(Cleaner cleaner) {
-			Assert.notNull(cleaner, "Cleaner is null");
-			Assert.notNull(this.cleanerService.findOne(cleaner.getId()), "Cleaner not found in DataBase");
-			Collection<Host> res = this.findAll();
-			res.removeAll(this.hostRepository.findHostNotAvailableForCleaner(cleaner.getId()));
-			return res;
+	/**
+	 * 
+	 * Return the host who is login if exits, null otherwise
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Host}
+	 */
+	public Host getHostLogin() {
+		Host res;
+		try {
+			res = this.getHostByUserAccountId(LoginService.getPrincipal().getId());
+		} catch (final Exception e) {
+			res = null;
 		}
+		return res;
+	}
+
+	/**
+	 * Return the host available for an especific cleaner job application<br>
+	 * Cleaner must exits in DataBase
+	 * 
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link Host}>
+	 */
+	public Collection<Host> findHostAvailableForCleaner(final Cleaner cleaner) {
+		Assert.notNull(cleaner, "Cleaner is null");
+		Assert.notNull(this.cleanerService.findOne(cleaner.getId()), "Cleaner not found in DataBase");
+		final Collection<Host> res = this.findAll();
+		res.removeAll(this.hostRepository.findHostNotAvailableForCleaner(cleaner.getId()));
+		return res;
+	}
+
+	public List<String> bestHost() {
+		final List<String> res = new ArrayList<>();
+		final List<Host> hosts = new ArrayList<>();
+		hosts.addAll(this.hostRepository.bestHost());
+		for (final Host host : hosts)
+			res.add(host.getUserAccount().getUsername());
+		if (hosts.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
+	}
 }
