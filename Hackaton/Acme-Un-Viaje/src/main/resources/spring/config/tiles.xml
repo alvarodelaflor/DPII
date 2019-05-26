@@ -52,6 +52,7 @@
 		<value>/views/message/tiles.xml</value>
 		<value>/views/mailbox/tiles.xml</value>
 		<value>/views/cleaningTask/tiles.xml</value>
+		<value>/views/review/tiles.xml</value>
 		<!-- Antonio -->
 		<!-- FERRETE -->
 		<value>/views/accomodation/tiles.xml</value>

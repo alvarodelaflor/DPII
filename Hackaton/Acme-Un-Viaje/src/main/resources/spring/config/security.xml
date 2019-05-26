@@ -149,6 +149,10 @@
 		<security:intercept-url pattern="/cleaningTask/show.do" access="hasRole('HOST')" /> 
 		<security:intercept-url pattern="/cleaningTask/create.do" access="hasRole('HOST')" /> 
 		<security:intercept-url pattern="/cleaningTask/delete.do" access="hasRole('HOST')" /> 
+		
+		<security:intercept-url pattern="/review/list.do" access="hasRole('REFEREE')" /> 
+		<security:intercept-url pattern="/review/show.do" access="hasRole('REFEREE')" /> 
+		<security:intercept-url pattern="/review/create.do" access="hasRole('REFEREE')" /> 
 		<!-- Antonio -->
 
 		<!-- HIPONA -->

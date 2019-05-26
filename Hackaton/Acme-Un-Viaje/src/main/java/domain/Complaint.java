@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -85,6 +87,9 @@ public class Complaint extends DomainEntity {
 	}
 
 	@OneToOne(optional = true)
+	@Cascade({
+		CascadeType.ALL
+	})
 	public Review getReview() {
 		return this.review;
 	}

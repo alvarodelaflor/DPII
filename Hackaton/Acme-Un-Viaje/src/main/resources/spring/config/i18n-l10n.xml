@@ -45,6 +45,7 @@
 		<value>/views/message/messages</value>
 		<value>/views/mailbox/messages</value>
 		<value>/views/cleaningTask/messages</value>
+		<value>/views/review/messages</value>
 		<!-- Antonio -->
 		
 		<!-- FERRETE -->

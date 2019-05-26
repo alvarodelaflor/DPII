@@ -69,6 +69,10 @@ public class ComplaintService {
 
 		this.complaintRepository.save(reconstructedComplaint);
 	}
+	
+	public void saveWithoutSetMoment(final Complaint reconstructedComplaint) {
+		this.complaintRepository.save(reconstructedComplaint);
+	}
 
 	private boolean isAssigned(final int complaintId) {
 		return this.complaintRepository.findOne(complaintId).getReview() != null;
@@ -80,5 +84,19 @@ public class ComplaintService {
 		final TravelPack tp = this.travelPackService.findFromComplaint(complaintId);
 		tp.getComplaints().remove(this.complaintRepository.findOne(complaintId));
 		this.complaintRepository.delete(complaintId);
+	}
+	
+	public Collection<Complaint> getComplaintsWithoutReview() {
+		
+		return this.complaintRepository.getComplaintsWithoutReview();
+	}
+	
+	public Complaint findOne(final Integer complaintId) {
+		return this.complaintRepository.findOne(complaintId);
+	}
+	
+	public Complaint getComplaintOfReview(int reviewId) {	
+		Complaint res = complaintRepository.getComplaintOfReview(reviewId);
+		return res;
 	}
 }

@@ -92,7 +92,6 @@ public class TravelPack extends DomainEntity {
 		this.price = price;
 	}
 
-	@ElementCollection
 	@OneToMany
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;

@@ -152,6 +152,16 @@
 							<security:authorize access="hasRole('REFEREE')">
 								<li class="nav-item dropdown">
 									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop">
+										<spring:message code="master.page.referee" />
+									</a>
+									<div class="dropdown-menu">
+										<a href="review/list.do" class="dropdown-item">
+											<spring:message code="review" />
+										</a>
+									</div>
+								</li>			
+								<li class="nav-item dropdown">
+									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop">
 										<spring:message code="master.page.actor.profile" />
 									</a>
 									<div class="dropdown-menu">
