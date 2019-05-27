@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -222,9 +221,11 @@ public class TravelAgencyService {
 		}
 	}
 
-	public Collection<TravelAgency> getTravelAgenciesByCustomerId(final int id) {
+	public List<TravelAgency> getTravelAgenciesByCustomerId(final int id) {
 
-		return this.travelAgencyRepository.getTravelAgenciesByCustomerId(id);
+		final List<TravelAgency> res = new ArrayList<>();
+		res.addAll(this.travelAgencyRepository.getTravelAgenciesByCustomerId(id));
+		return res;
 	}
 
 	public TravelAgency findOne(final int id) {

@@ -13,6 +13,7 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -31,6 +32,7 @@ import services.CustomerService;
 import services.TransporterService;
 import services.ValorationService;
 import domain.CreditCard;
+import domain.Customer;
 import domain.Transporter;
 import domain.Valoration;
 import forms.RegisterActor;
@@ -67,10 +69,15 @@ public class TransporterController extends AbstractController {
 
 		try {
 
+			final Transporter logged = this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId());
+			final List<Customer> customers = this.customerService.getCustomersByTranspoterId(logged.getId());
+			final Customer customer = this.customerService.findOne(customerId);
+			Assert.isTrue(customers.contains(customer), "get.hack.error");
+
 			res = new ModelAndView("transporter/rateCustomer");
 			final Valoration valoration = this.valorationService.create();
-			valoration.setTransporter(this.transporterService.getTransporterByUserAccountId(LoginService.getPrincipal().getId()));
-			valoration.setCustomer(this.customerService.findOne(customerId));
+			valoration.setTransporter(logged);
+			valoration.setCustomer(customer);
 			res.addObject("valoration", valoration);
 		} catch (final Throwable oops) {
 

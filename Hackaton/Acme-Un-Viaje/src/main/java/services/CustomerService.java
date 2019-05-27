@@ -218,9 +218,11 @@ public class CustomerService {
 		return res;
 	}
 
-	public Collection<Customer> getCustomersByTranspoterId(final int id) {
+	public List<Customer> getCustomersByTranspoterId(final int id) {
 
-		return this.customerRepository.getCustomersByTransporterId(id);
+		final List<Customer> res = new ArrayList<>();
+		res.addAll(this.customerRepository.getCustomersByTransporterId(id));
+		return res;
 	}
 
 	public List<String> bestCustomer() {
@@ -234,5 +236,12 @@ public class CustomerService {
 			return res;
 		else
 			return res.subList(0, 2);
+	}
+
+	public List<Customer> getCustomersByHostId(final int id) {
+
+		final List<Customer> res = new ArrayList<>();
+		res.addAll(this.customerRepository.getCustomersByHostId(id));
+		return res;
 	}
 }

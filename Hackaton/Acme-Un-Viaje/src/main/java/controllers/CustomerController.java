@@ -13,6 +13,7 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -36,6 +37,9 @@ import services.TravelAgencyService;
 import services.ValorationService;
 import domain.CreditCard;
 import domain.Customer;
+import domain.Host;
+import domain.Transporter;
+import domain.TravelAgency;
 import domain.Valoration;
 import forms.RegisterActorE;
 
@@ -82,11 +86,15 @@ public class CustomerController extends AbstractController {
 		ModelAndView res;
 
 		try {
+			final Customer logged = this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId());
+			final List<TravelAgency> travelAgencies = this.travelAgencyService.getTravelAgenciesByCustomerId(logged.getId());
+			final TravelAgency travelAgency = this.travelAgencyService.findOne(travelAgencyId);
+			Assert.isTrue(travelAgencies.contains(travelAgency), "get.hack.error");
 
 			res = new ModelAndView("customer/rateTravelAgency");
 			final Valoration valoration = this.valorationService.create();
-			valoration.setCustomer(this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId()));
-			valoration.setTravelAgency(this.travelAgencyService.findOne(travelAgencyId));
+			valoration.setCustomer(logged);
+			valoration.setTravelAgency(travelAgency);
 			res.addObject("valoration", valoration);
 		} catch (final Throwable oops) {
 
@@ -95,7 +103,6 @@ public class CustomerController extends AbstractController {
 
 		return res;
 	}
-
 	@RequestMapping(value = "/rateTravelAgency", method = RequestMethod.POST, params = "save")
 	public ModelAndView rateTravelAgency(@Valid final Valoration valoration, final BindingResult binding) {
 
@@ -127,10 +134,15 @@ public class CustomerController extends AbstractController {
 
 		try {
 
+			final Customer logged = this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId());
+			final List<Transporter> transporters = this.transportService.getTransportersByCustomerId(logged.getId());
+			final Transporter transporter = this.transporterService.findOne(transporterId);
+			Assert.isTrue(transporters.contains(transporter), "get.hack.error");
+
 			res = new ModelAndView("customer/rateTransporter");
 			final Valoration valoration = this.valorationService.create();
-			valoration.setCustomer(this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId()));
-			valoration.setTransporter(this.transporterService.findOne(transporterId));
+			valoration.setCustomer(logged);
+			valoration.setTransporter(transporter);
 			res.addObject("valoration", valoration);
 		} catch (final Throwable oops) {
 
@@ -171,9 +183,14 @@ public class CustomerController extends AbstractController {
 
 		try {
 
+			final Customer logged = this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId());
+			final List<Host> hosts = this.accService.getAccomodationsByCustomerId(logged.getId());
+			final Host host = this.hostService.findOne(hostId);
+			Assert.isTrue(hosts.contains(host), "get.hack.error");
+
 			res = new ModelAndView("customer/rateHost");
 			final Valoration valoration = this.valorationService.create();
-			valoration.setCustomer(this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId()));
+			valoration.setCustomer(logged);
 			valoration.setHost(this.hostService.findOne(hostId));
 			res.addObject("valoration", valoration);
 		} catch (final Throwable oops) {
@@ -183,7 +200,6 @@ public class CustomerController extends AbstractController {
 
 		return res;
 	}
-
 	@RequestMapping(value = "/rateHost", method = RequestMethod.POST, params = "save")
 	public ModelAndView rateHost(@Valid final Valoration valoration, final BindingResult binding) {
 

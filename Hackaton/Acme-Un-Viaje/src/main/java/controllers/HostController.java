@@ -13,6 +13,7 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -85,10 +86,14 @@ public class HostController extends AbstractController {
 
 		try {
 
+			final Host logged = this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId());
+			final Cleaner cleaner = this.cleanerService.findOne(cleanerId);
+			Assert.isTrue(this.valorationService.checkValorationHostCleaner(logged, cleaner), "get.hack.error");
+
 			res = new ModelAndView("host/rateCleaner");
 			final Valoration valoration = this.valorationService.create();
-			valoration.setHost(this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId()));
-			valoration.setCleaner(this.cleanerService.findOne(cleanerId));
+			valoration.setHost(logged);
+			valoration.setCleaner(cleaner);
 			res.addObject("valoration", valoration);
 		} catch (final Throwable oops) {
 
@@ -97,7 +102,6 @@ public class HostController extends AbstractController {
 
 		return res;
 	}
-
 	@RequestMapping(value = "/rateCleaner", method = RequestMethod.POST, params = "save")
 	public ModelAndView rateCleaner(@Valid final Valoration valoration, final BindingResult binding) {
 
@@ -153,10 +157,15 @@ public class HostController extends AbstractController {
 
 		try {
 
+			final Host logged = this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId());
+			final List<Customer> customers = this.customerService.getCustomersByHostId(logged.getId());
+			final Customer customer = this.customerService.findOne(customerId);
+			Assert.isTrue(customers.contains(customer), "get.hack.error");
+
 			res = new ModelAndView("host/rateCustomer");
 			final Valoration valoration = this.valorationService.create();
-			valoration.setHost(this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId()));
-			valoration.setCustomer(this.customerService.findOne(customerId));
+			valoration.setHost(logged);
+			valoration.setCustomer(customer);
 			res.addObject("valoration", valoration);
 		} catch (final Throwable oops) {
 
@@ -165,7 +174,6 @@ public class HostController extends AbstractController {
 
 		return res;
 	}
-
 	@RequestMapping(value = "/rateCustomer", method = RequestMethod.POST, params = "save")
 	public ModelAndView rateCustomer(@Valid final Valoration valoration, final BindingResult binding) {
 
