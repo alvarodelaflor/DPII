@@ -123,7 +123,8 @@
 		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
-		
+		<security:intercept-url pattern="/socialProfile/listOnly.do" access="isAuthenticated()" />
+	
 		<security:intercept-url pattern="/request/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/request/customer/list.do" access="hasRole('CUSTOMER')" />	
 		<security:intercept-url pattern="/request/customer/delete.do" access="hasRole('CUSTOMER')" />	

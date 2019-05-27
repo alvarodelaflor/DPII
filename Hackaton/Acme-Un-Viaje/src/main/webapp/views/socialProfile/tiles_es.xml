@@ -30,6 +30,11 @@
 		<put-attribute name="body" value="/views/socialProfile/list.jsp" />
 	</definition>
 	
+	<definition name="socialProfile/listOnly" extends="master.page">	
+		<put-attribute name="title" value="Sus Perfiles sociales" />
+		<put-attribute name="body" value="/views/socialProfile/listOnly.jsp" />
+	</definition>
+	
 	<definition name="socialProfile/show" extends="master.page">	
 		<put-attribute name="title" value="Tus Perfiles sociales" />
 		<put-attribute name="body" value="/views/socialProfile/show.jsp" />

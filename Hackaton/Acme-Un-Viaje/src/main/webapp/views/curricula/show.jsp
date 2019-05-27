@@ -150,7 +150,7 @@ $(document).ready(function() {
 					<spring:message code="linkLinkedinMoreInfo" /><a href="<jstl:out value="${curricula.linkLinkedin}"></jstl:out>"><jstl:out value="${curricula.linkLinkedin}"></jstl:out></a>
 				</p>
 				<p>
-					<spring:message code="profileMoreInfo" /><a href="socialProfile/list.do?cleanerId=<jstl:out value="${curricula.cleaner.id}"></jstl:out>"><spring:message code="link" /></a>
+					<spring:message code="profileMoreInfo" /><a href="socialProfile/listOnly.do?actorId=<jstl:out value="${curricula.cleaner.id}"></jstl:out>"><spring:message code="link" /></a>
 				</p>
 			</div>
 			<img class="img-fluid" src="<jstl:out value="${curricula.bannerLogo}"></jstl:out>" alt="<spring:message htmlEscape="false" code="notLogo"/>">
