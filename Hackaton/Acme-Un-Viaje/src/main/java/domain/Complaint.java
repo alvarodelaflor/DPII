@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -18,6 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Complaint extends DomainEntity {
 
 	private String			description;
@@ -92,6 +95,11 @@ public class Complaint extends DomainEntity {
 	})
 	public Review getReview() {
 		return this.review;
+	}
+
+	@Override
+	public String toString() {
+		return "Complaint [description=" + this.description + ", moment=" + this.moment + ", customer=" + this.customer + ", travelAgency=" + this.travelAgency + ", host=" + this.host + ", transporter=" + this.transporter + ", review=" + this.review + "]";
 	}
 
 	public void setReview(final Review review) {

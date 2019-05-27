@@ -32,7 +32,7 @@ public class ComplaintCustomerController extends AbstractController {
 			res = new ModelAndView("complaint/customer/list");
 			res.addObject("complaintsUnassigned", complaintsUnassigned);
 			res.addObject("complaintsAssigned", complaintsAssigned);
-			res.addObject("requestURI", "/complaint/customer/list.do");
+			res.addObject("requestURI", "complaint/customer/list.do");
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -70,21 +70,26 @@ public class ComplaintCustomerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public ModelAndView editPost(final Complaint complaint, final BindingResult binding) {
+	public ModelAndView editPost(final Integer travelAgencyId, final Integer hostId, final Integer transporterId, final Integer travelPackId, final Complaint complaint, final BindingResult binding) {
 		Complaint reconstructedComplaint;
 		try {
-			reconstructedComplaint = this.complaintService.reconstruct(complaint, binding);
+			reconstructedComplaint = this.complaintService.reconstruct(travelAgencyId, hostId, transporterId, complaint, binding);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		ModelAndView res = null;
-		try {
-			this.complaintService.save(reconstructedComplaint);
-			res = new ModelAndView("redirect:/complaint/customer/list.do");
-		} catch (final Throwable oops) {
-			res = new ModelAndView("redirect:/welcome/index.do");
-		}
+		if (binding.hasErrors()) {
+			res = new ModelAndView("complaint/customer/edit");
+			res.addObject("complaint", complaint);
+		} else
+			try {
+				this.complaintService.save(reconstructedComplaint, travelPackId);
+				res = new ModelAndView("redirect:/complaint/customer/list.do");
+			} catch (final Throwable oops) {
+				oops.printStackTrace();
+				res = new ModelAndView("redirect:/welcome/index.do");
+			}
 		return res;
 	}
 

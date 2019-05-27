@@ -30,7 +30,7 @@ public class TransportTransporterController extends AbstractController {
 			final Collection<Transport> transports = this.transportService.getLoggedTransporterTransportsFromCurrentDate();
 			result = new ModelAndView("transport/transporter/list");
 			result.addObject("transports", transports);
-			result.addObject("requestURI", "/transport/transporter/list.do");
+			result.addObject("requestURI", "transport/transporter/list.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -157,6 +157,22 @@ public class TransportTransporterController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(required = false, value = "transportId") final Integer transportId) {
+		if (transportId == null)
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		ModelAndView result;
+		try {
+			this.transportService.delete(transportId);
+			result = new ModelAndView("redirect:/transport/transporter/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}

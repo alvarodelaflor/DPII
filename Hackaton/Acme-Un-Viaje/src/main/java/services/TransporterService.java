@@ -32,9 +32,9 @@ public class TransporterService {
 
 	@Autowired
 	private ActorService			actorService;
-	
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService			configService;
 
 
 	// REGISTER AS TRASNSPORTER
@@ -55,9 +55,8 @@ public class TransporterService {
 	// SAVE REGISTER AS TRASNSPORTER
 	// ---------------------------------------------------------------
 	public Transporter saveRegisterAsTransporter(final Transporter transporter) {
-		if (transporter.getPhone().matches("^([0-9]{4,})$")) {
-			 transporter.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + transporter.getPhone());
-		 }
+		if (transporter.getPhone().matches("^([0-9]{4,})$"))
+			transporter.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + transporter.getPhone());
 		return this.transporterRepository.save(transporter);
 	}
 
@@ -97,6 +96,9 @@ public class TransporterService {
 		return this.transporterRepository.findByUserAccountId(userAccountId);
 	}
 
+	public Transporter findOne(final int transporterId) {
+		return this.transporterRepository.findOne(transporterId);
+	}
 	// RECONSTRUCT EDIT DATA PERONAL
 	// ---------------------------------------------------------------
 	public Transporter reconstructEditDataPeronal(final Transporter registerActor, final BindingResult binding) {
