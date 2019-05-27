@@ -13,9 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.TravelPackRepository;
+import security.Authority;
 import security.LoginService;
+import utilities.CommonUtils;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
+import domain.Customer;
 import domain.TravelAgency;
 import domain.TravelPack;
 
@@ -111,4 +114,21 @@ public class TravelPackService {
 		return tp;
 	}
 
+	public Collection<TravelPack> getLoggedNotDraftStatusNull() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusNull(c.getId());
+	}
+
+	public Collection<TravelPack> getLoggedNotDraftStatusTrue() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusTrue(c.getId());
+	}
+
+	public Collection<TravelPack> getLoggedNotDraftStatusFalse() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusFalse(c.getId());
+	}
 }

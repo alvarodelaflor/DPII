@@ -167,6 +167,12 @@
 		<security:intercept-url pattern="/complaint/customer/list.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/delete.do" access="hasRole('CUSTOMER')" />
+		
+		<security:intercept-url pattern="/travelPack/customer/listOffered.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/listAccepted.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/listRejected.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/accept.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/reject.do" access="hasRole('CUSTOMER')" />
 		<!-- HIPONA -->
 		
 		<!-- FERRETE -->
