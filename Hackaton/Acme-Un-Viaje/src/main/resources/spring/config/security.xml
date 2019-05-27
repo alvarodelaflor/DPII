@@ -185,6 +185,20 @@
 		<security:intercept-url pattern="/travelPack/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/bookingAccomodation/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/bookingTransport/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		
+		<security:intercept-url pattern="/cleaner/delete.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/host/delete.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/transporter/delete.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/referee/delete.do" access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/customer/delete.do" access="hasRole('CUSTOMER')" />
+
+		<security:intercept-url pattern="/cleaner/export.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/travelAgency/export.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/host/export.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/transporter/export.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/referee/export.do" access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/customer/export.do" access="hasRole('CUSTOMER')" />
 		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 

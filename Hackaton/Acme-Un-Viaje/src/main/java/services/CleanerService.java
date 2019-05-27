@@ -1,47 +1,54 @@
 
 package services;
 
-import java.awt.image.RescaleOp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.Cleaner;
 import domain.CreditCard;
-import domain.Curricula;
 import forms.RegisterActor;
 import repositories.CleanerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Cleaner;
-import domain.CreditCard;
-import forms.RegisterActor;
 
 @Service
 @Transactional
 public class CleanerService {
 
 	@Autowired
-	private CleanerRepository	cleanerRepository;
+	private CleanerRepository		cleanerRepository;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
 
 	@Autowired
-	private ActorService		actorService;
-	
+	private ActorService			actorService;
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService			configService;
+
+	@Autowired
+	private CurriculaService		curriculaService;
+
+	@Autowired
+	private ValorationService		valorationService;
+
+	@Autowired
+	private SocialProfileService	socialProfileService;
+
+	@Autowired
+	private CleaningTaskService		cleaningTaskService;
 
 
 	// REGISTER AS CLEANER
@@ -62,9 +69,8 @@ public class CleanerService {
 	// SAVE REGISTER AS CLEANER
 	// ---------------------------------------------------------------
 	public Cleaner saveRegisterAsCleaner(final Cleaner cleaner) {
-		 if (cleaner.getPhone().matches("^([0-9]{4,})$")) {
-			 cleaner.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + cleaner.getPhone());
-		 }
+		if (cleaner.getPhone().matches("^([0-9]{4,})$"))
+			cleaner.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + cleaner.getPhone());
 		return this.cleanerRepository.save(cleaner);
 	}
 
@@ -200,11 +206,11 @@ public class CleanerService {
 				binding.rejectValue("birthDate", "error.birthDateM");
 		}
 	}
-		
+
 	/**
-	 * 
+	 *
 	 * Return the cleaner who is login if exits, null otherwise
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
@@ -212,52 +218,62 @@ public class CleanerService {
 		Cleaner res;
 		try {
 			res = this.getCleanerByUserAccountId(LoginService.getPrincipal().getId());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			res = null;
 		}
 		return res;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Find a cleaner by id
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
-	public Cleaner findOne(int cleanerId) {
+	public Cleaner findOne(final int cleanerId) {
 		return this.cleanerRepository.findOne(cleanerId);
 	}
-	
+
 	public Collection<Cleaner> findAll() {
 		return this.cleanerRepository.findAll();
 	}
-	
-	public Collection<Cleaner> findByHostId(int hostId) {
+
+	public Collection<Cleaner> findByHostId(final int hostId) {
 		return this.cleanerRepository.findByHostId(hostId);
 	}
-	
-	public Cleaner findByNameSurname(String name, String surname) {
+
+	public Cleaner findByNameSurname(final String name, final String surname) {
 		return this.cleanerRepository.findByNameSurname(name, surname);
 	}
-	
+
 	public Collection<String> getCompleteName() {
-		Collection<String> result = new ArrayList<String>();
-		
-		List<Object[]> namesSurnames = cleanerRepository.getCleanersName();
-		
+		final Collection<String> result = new ArrayList<String>();
+
+		final List<Object[]> namesSurnames = this.cleanerRepository.getCleanersName();
+
 		for (int i = 0; i < namesSurnames.size(); i++) {
-			
-			String name = (String) namesSurnames.get(i)[0];
-			
-			String surname = (String) namesSurnames.get(i)[1];
-			
-			String res = surname + "," + name;
-			
+
+			final String name = (String) namesSurnames.get(i)[0];
+
+			final String surname = (String) namesSurnames.get(i)[1];
+
+			final String res = surname + "," + name;
+
 			result.add(res);
-			
+
 		}
-		
-		return result;		
+
+		return result;
 	}
-	
+
+	public void delete(final Cleaner cleaner) {
+		Assert.isTrue(cleaner.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.socialProfileService.deleteActorSocialProfiles(cleaner);
+		this.cleaningTaskService.deleteCleanerTasks(cleaner);
+		this.curriculaService.deleteAllByCleaner(cleaner);
+		this.valorationService.deleteAllByCleaner(cleaner);
+		this.cleanerRepository.delete(cleaner);
+	}
+
 }
