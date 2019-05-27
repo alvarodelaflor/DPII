@@ -105,6 +105,7 @@ public class CurriculaService {
 		Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
 		Assert.notNull(cleanerLogin, anyCleanerLogin);
 		Assert.notNull(curricula, nullCurricula);
+		Assert.isTrue(checkValidCurricula(curricula), "No pass check");
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		if (curriculaDB != null) {
 			Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), notValidUser);
@@ -272,6 +273,20 @@ public class CurriculaService {
 		if (!curriculas.isEmpty())
 			for (final Curricula curricula : curriculas)
 				this.delete(curricula);
+	}
+	
+	private Boolean checkValidCurricula(Curricula curricula) {
+		Boolean res = true;
+		String name = curricula.getName();
+		String statement = curricula.getStatement();
+		String phone = curricula.getPhone();
+		String linkLinkedin = curricula.getLinkLinkedin();
+		String bannerLogo = curricula.getBannerLogo();
+		Cleaner cleaner = curricula.getCleaner();
+		if (name==null || statement==null || phone== null || linkLinkedin==null || bannerLogo == null || cleaner == null || name.replace(" ", "").length() == 0 || statement.replace(" ", "").length() == 0 || phone.replace(" ", "").length() == 0 || linkLinkedin.replace(" ", "").length() == 0 || bannerLogo.replace(" ", "").length() == 0) {
+			res = false;
+		}
+		return res;
 	}
 
 	// AUXILIAR METHODS
