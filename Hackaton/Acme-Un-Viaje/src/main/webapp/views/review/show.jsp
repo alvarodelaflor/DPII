@@ -23,44 +23,45 @@
 <hr>
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
-		<div class="col-md-12">
-		<div class="row">
-			<strong><spring:message code="complaint.customer" />:&nbsp;</strong>
-			<jstl:out value="${complaint.customer.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.travelAgency" />:&nbsp;</strong>
-			<jstl:out value="${complaint.travelAgency.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.host" />:&nbsp;</strong>
-			<jstl:out value="${complaint.host.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.transporter" />:&nbsp;</strong>
-			<jstl:out value="${complaint.transporter.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.moment" />:&nbsp;</strong>
-			<jstl:out value="${complaint.moment}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.description" />:&nbsp;</strong>
-			<jstl:out value="${complaint.description}"></jstl:out>
+		<div class="col-md-6">
+			<div class="row">
+				<strong><spring:message code="complaint.customer" />:&nbsp;</strong>
+				<jstl:out value="${complaint.customer.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.travelAgency" />:&nbsp;</strong>
+				<jstl:out value="${complaint.travelAgency.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.host" />:&nbsp;</strong>
+				<jstl:out value="${complaint.host.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.transporter" />:&nbsp;</strong>
+				<jstl:out value="${complaint.transporter.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.moment" />:&nbsp;</strong>
+				<jstl:out value="${complaint.moment}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.description" />:&nbsp;</strong>
+				<jstl:out value="${complaint.description}"></jstl:out>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-12">
-		<br>
-		<div class="col-md-6" style="padding-left: 2.5em">
+	<div class="row">
+		<div class="col-md-6">
+
 			<fieldset>
-				<div class="row" style="padding-left: 1.5em">
+				<div class="row">
 					<strong><spring:message code="review.moment" />:&nbsp;</strong>
 					<jstl:out value="${review.moment}"></jstl:out>
 				</div>
 			</fieldset>
-			
+
 			<fieldset>
-				<div class="row" style="padding-left: 1.5em">
+				<div class="row">
 					<strong><spring:message code="review.description" />:&nbsp;</strong>
 					<jstl:out value="${review.description}"></jstl:out>
 				</div>
@@ -68,5 +69,4 @@
 			</fieldset>
 		</div>
 	</div>
-</div>
 </div>

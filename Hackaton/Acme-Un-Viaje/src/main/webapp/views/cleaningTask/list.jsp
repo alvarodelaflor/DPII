@@ -18,8 +18,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<p><spring:message code="listCleaningTask"/></p>
-  	
+<hr>  	
   	<div class="container-fluid" style="padding-left: 2.5em">
 	<display:table name="cleaningTasks" id="row"
 		requestURI="${requestURI}" pagesize="5"
@@ -41,7 +40,7 @@
 	</display:table>
 	<div class="row">
 		<div class="col-md-3">
-			<span style="padding-left: 2.5em"> <acme:create
+			<span> <acme:create
 				url="cleaningTask/create.do" name="buttonCleaningTask"
 				code="cleaningTask.create" />
 			</span>

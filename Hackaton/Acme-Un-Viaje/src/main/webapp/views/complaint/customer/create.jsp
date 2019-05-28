@@ -27,7 +27,6 @@
 				<form:hidden path="id" />
 				<input type="hidden" id="travelPackId" name="travelPackId" value="${travelPackId}" />
 				<fieldset>
-					<hr>
 					<acme:textbox code="complaint.description" path="description" placeholder="This is a description" cssError="col-md-4" cssLabel="col-md-3" cssInput="col-md-5" />
 					<div class="row">
 						<div class="col-md-3">
@@ -71,7 +70,8 @@
 						</div>
 					</div>
 				</fieldset>
-				<div class="row">
+				<br>
+				<div class="row" style="padding-left: 0.5em">
 					<span>
 						<acme:submit name="save" code="actor.save" />
 					</span>

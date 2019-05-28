@@ -21,68 +21,60 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <hr>
-<div class="container-fluid"  style="padding-left: 2.5em" >
+<div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
-	
-	<div class="col-md-12">
-		<div class="row">
-			<strong><spring:message code="complaint.customer" />:&nbsp;</strong>
-			<jstl:out value="${complaint.customer.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.travelAgency" />:&nbsp;</strong>
-			<jstl:out value="${complaint.travelAgency.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.host" />:&nbsp;</strong>
-			<jstl:out value="${complaint.host.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.transporter" />:&nbsp;</strong>
-			<jstl:out value="${complaint.transporter.name}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.moment" />:&nbsp;</strong>
-			<jstl:out value="${complaint.moment}"></jstl:out>
-		</div>
-		<div class="row">
-			<strong><spring:message code="complaint.description" />:&nbsp;</strong>
-			<jstl:out value="${complaint.description}"></jstl:out>
+
+		<div class="col-md-12">
+			<div class="row">
+				<strong><spring:message code="complaint.customer" />:&nbsp;</strong>
+				<jstl:out value="${complaint.customer.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.travelAgency" />:&nbsp;</strong>
+				<jstl:out value="${complaint.travelAgency.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.host" />:&nbsp;</strong>
+				<jstl:out value="${complaint.host.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.transporter" />:&nbsp;</strong>
+				<jstl:out value="${complaint.transporter.name}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.moment" />:&nbsp;</strong>
+				<jstl:out value="${complaint.moment}"></jstl:out>
+			</div>
+			<div class="row">
+				<strong><spring:message code="complaint.description" />:&nbsp;</strong>
+				<jstl:out value="${complaint.description}"></jstl:out>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-12">
-	
-		<div class="col-md-6" style="padding-left: 2.5em">
+
+
+
+	<div class="row">
+		<div class="col-md-6">
+		<br>
 			<form:form class="formularioEdicion" method="POST"
-				modelAttribute="review" action="review/create.do?complaintId=${complaint.id}">
+				modelAttribute="review"
+				action="review/create.do?complaintId=${complaint.id}">
 				<form:hidden path="id" />
 				<fieldset>
-
-					<h2>
-						<spring:message code="referee.editReview" />
-						&nbsp;
-					</h2>
-					<hr>
 					<acme:textbox code="review.description" path="description"
-						 cssError="col-md-6" cssLabel="col-md-2"
-						cssInput="col-md-4" />	
+						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
 				</fieldset>
 				<br>
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-md-6">
 						<acme:submit name="save" code="actor.save" />
+						<span style="padding-left: 0.5em"> <acme:cancel url=""
+								code="actor.back" />
+						</span>
 					</div>
 				</div>
 			</form:form>
 		</div>
 	</div>
-</div>
-<br>
-<div class="row">
-	<div class="col-md-3">
-		 <span style="padding-left: 0.5em"> <acme:cancel url=""
-				code="actor.back" />
-		</span>
-	</div>
-</div>
 </div>
