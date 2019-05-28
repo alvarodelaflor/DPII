@@ -84,6 +84,10 @@ public class CleaningTaskService {
 			return this.cleaningTaskRepository.getCleaningTaskHost(id);
 		}
 		
+		public Collection<CleaningTask> getCleaningTaskCleaner(final int id) {
+			return this.cleaningTaskRepository.getCleaningTaskCleaner(id);
+		}
+		
 		public Boolean checkDate(final Date startDate, final Date endDate) {
 			Boolean res = true;
 			if (startDate.before(endDate))
