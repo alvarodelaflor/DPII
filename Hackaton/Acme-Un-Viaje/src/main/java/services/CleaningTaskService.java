@@ -47,33 +47,33 @@ public class CleaningTaskService {
 		this.validator.validate(cleaningTask, binding);
 		return result;
 	}
-		
-		public Collection<CleaningTask> getCleaningTaskHost(final int id) {
-			return this.cleaningTaskRepository.getCleaningTaskHost(id);
-		}
-		
-		public Collection<CleaningTask> getCleaningTaskCleaner(final int id) {
-			return this.cleaningTaskRepository.getCleaningTaskCleaner(id);
-		}
-		
-		public Boolean checkDate(final Date startDate, final Date endDate) {
-			Boolean res = true;
-			if (startDate.before(endDate))
-				res = false;
-			return res;
-		}
-		
-		public void deleteCleanerTasks(final Cleaner cleaner) {
+
+	public Collection<CleaningTask> getCleaningTaskHost(final int id) {
+		return this.cleaningTaskRepository.getCleaningTaskHost(id);
+	}
+
+	public Collection<CleaningTask> getCleaningTaskCleaner(final int id) {
+		return this.cleaningTaskRepository.getCleaningTaskCleaner(id);
+	}
+
+	public Boolean checkDate(final Date startDate, final Date endDate) {
+		Boolean res = true;
+		if (startDate.before(endDate))
+			res = false;
+		return res;
+	}
+
+	public void deleteCleanerTasks(final Cleaner cleaner) {
 		final Collection<CleaningTask> tasks = this.getCleanerCleaningTasks(cleaner.getId());
 		if (tasks != null && !tasks.isEmpty())
 			for (final CleaningTask task : tasks)
 				this.delete(task);
-		}
-		
-		private Collection<CleaningTask> getCleanerCleaningTasks(final int id) {
+	}
+
+	private Collection<CleaningTask> getCleanerCleaningTasks(final int id) {
 		return this.cleaningTaskRepository.getCleanerCleaningTaks(id);
-		}
-		
+	}
+
 	public CleaningTask create() {
 		final CleaningTask cleaningTask = new CleaningTask();
 		return cleaningTask;
@@ -94,5 +94,10 @@ public class CleaningTaskService {
 
 	public CleaningTask save(final CleaningTask cleaningTask) {
 		return this.cleaningTaskRepository.save(cleaningTask);
+	}
+
+	public Collection<CleaningTask> getCleaningTaskAccomodation(final int id) {
+
+		return this.cleaningTaskRepository.getCleaningTaskAccomodation(id);
 	}
 }

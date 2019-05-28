@@ -102,7 +102,7 @@ public class ComplaintService {
 	}
 
 	public void delete(final int complaintId) {
-		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER) || CommonUtils.hasAuthority(Authority.HOST));
 		Assert.isTrue(this.isAssigned(complaintId) == false);
 		final TravelPack tp = this.travelPackService.findFromComplaint(complaintId);
 		tp.getComplaints().remove(this.complaintRepository.findOne(complaintId));

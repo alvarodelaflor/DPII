@@ -278,7 +278,7 @@ public class HostService {
 		this.socialProfileService.deleteActorSocialProfiles(host);
 		this.accomodationService.deleteAllByHost(host);
 		this.complaintService.deleteHostComplaints(host);
-		this.valorationService.deleteAllByCustomer(host);
+		this.valorationService.deleteAllByHost(host);
 		this.hostRepository.delete(host);
 
 	}

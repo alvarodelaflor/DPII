@@ -15,6 +15,8 @@ import org.springframework.validation.Validator;
 
 import domain.Accomodation;
 import domain.BookingAccomodation;
+import domain.CleaningTask;
+import domain.FinderAccomodation;
 import domain.Host;
 import repositories.AccomodationRepository;
 import security.LoginService;
@@ -35,6 +37,9 @@ public class AccomodationService {
 
 	@Autowired
 	private BookingAccomodationService	bookingAccomodationService;
+
+	@Autowired
+	private CleaningTaskService			cleaningTaskService;
 
 
 	// ---------- public class methods
@@ -114,6 +119,18 @@ public class AccomodationService {
 		final List<BookingAccomodation> bookingAccomodation = this.accomodationRepo.findAllByAccomodationId(accomodation.getId());
 		for (int i = 0; i < bookingAccomodation.size(); i++)
 			this.bookingAccomodationService.delete(bookingAccomodation.get(i));
+
+		//Boorado de C.Taks
+		final Collection<CleaningTask> items = this.cleaningTaskService.getCleaningTaskAccomodation(accomodation.getId());
+		if (items != null && !items.isEmpty())
+			for (final CleaningTask item : items)
+				this.cleaningTaskService.delete(item);
+
+		final Collection<FinderAccomodation> finders = this.accomodationRepo.getAccomodationFinders(accomodation.getId());
+		System.out.println(finders);
+		if (finders != null && !finders.isEmpty())
+			for (final FinderAccomodation item : finders)
+				item.getAccomodations().remove(accomodation);
 
 		this.accomodationRepo.delete(accomodation);
 	}

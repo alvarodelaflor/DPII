@@ -62,11 +62,12 @@ public class ValorationService {
 				this.valorationRepository.delete(valoration);
 	}
 
-	public void deleteAllByCustomer(final Host host) {
+	public void deleteAllByHost(final Host host) {
 		final Collection<Valoration> valorations = this.valorationRepository.findValorationsByHost(host.getId());
 		if (valorations != null && !valorations.isEmpty())
 			for (final Valoration valoration : valorations)
 				this.valorationRepository.delete(valoration);
 
 	}
+
 }
