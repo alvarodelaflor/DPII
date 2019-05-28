@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.TravelPackRepository;
+import security.Authority;
 import security.LoginService;
+import utilities.CommonUtils;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
+import domain.Customer;
+import domain.Host;
+import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
+import repositories.TravelPackRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -25,11 +33,12 @@ public class TravelPackService {
 
 	@Autowired
 	private TravelPackRepository	travelPackRepository;
+
 	@Autowired
 	private TravelAgencyService		travelAgencyService;
 
 	@Autowired
-	private CustomerService			customerService;
+	private AccomodationService		accService;
 
 	@Autowired
 	private Validator				validator;
@@ -53,7 +62,7 @@ public class TravelPackService {
 		if (travelPack.getId() != 0) {
 			final TravelPack packDB = this.findOne(travelPack.getId());
 			Assert.notNull(packDB);
-			Assert.isTrue(packDB.getDraft(), "The travel pack is already in final mode");
+			Assert.isTrue(packDB.getDraft(), "travelPack.finalMode");
 		}
 		travelPack.setPrice(this.calculatePrice(travelPack));
 		return this.travelPackRepository.save(travelPack);
@@ -111,4 +120,55 @@ public class TravelPackService {
 		return tp;
 	}
 
+	public Collection<TravelPack> getLoggedNotDraftStatusNull() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusNull(c.getId());
+	}
+
+	public Collection<TravelPack> getLoggedNotDraftStatusTrue() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusTrue(c.getId());
+	}
+
+	public Collection<TravelPack> getLoggedNotDraftStatusFalse() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusFalse(c.getId());
+	}
+	public void deleteCustomerTravelPacks(final Customer customer) {
+		final Collection<TravelPack> items = this.getCustomerPacks(customer.getId());
+		if (items != null && !items.isEmpty())
+			for (final TravelPack item : items)
+				this.travelPackRepository.delete(item);
+	}
+
+	private Collection<TravelPack> getCustomerPacks(final int id) {
+		return this.travelPackRepository.getCustomerTravelPacks(id);
+	}
+
+
+	public Collection<Host> getHosts(final TravelPack travelPack) {
+		final Collection<Host> res = new HashSet<>();
+		for (final BookingAccomodation ba : travelPack.getAccomodations())
+			res.add(ba.getAccomodation().getHost());
+		return res;
+	}
+
+	public Collection<Transporter> getTransporters(final TravelPack travelPack) {
+		final Collection<Transporter> res = new HashSet<>();
+		for (final BookingTransport bt : travelPack.getTransports())
+			res.add(bt.getTransport().getTransporter());
+		return res;
+	}
+	public Collection<TravelPack> getTravelPacksAccomodationId(final int id) {
+
+		return this.travelPackRepository.getTravelPacksAccomodationId(id);
+	}
+
+	public Collection<TravelPack> getTravelPacksByCustomerId(final int id) {
+
+		return this.getTravelPacksByCustomerId(id);
+	}
 }

@@ -32,9 +32,9 @@ public class TransporterService {
 
 	@Autowired
 	private ActorService			actorService;
-	
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService			configService;
 
 
 	// REGISTER AS TRASNSPORTER
@@ -55,9 +55,8 @@ public class TransporterService {
 	// SAVE REGISTER AS TRASNSPORTER
 	// ---------------------------------------------------------------
 	public Transporter saveRegisterAsTransporter(final Transporter transporter) {
-		if (transporter.getPhone().matches("^([0-9]{4,})$")) {
-			 transporter.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + transporter.getPhone());
-		 }
+		if (transporter.getPhone().matches("^([0-9]{4,})$"))
+			transporter.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + transporter.getPhone());
 		return this.transporterRepository.save(transporter);
 	}
 
@@ -97,6 +96,9 @@ public class TransporterService {
 		return this.transporterRepository.findByUserAccountId(userAccountId);
 	}
 
+	public Transporter findOne(final int transporterId) {
+		return this.transporterRepository.findOne(transporterId);
+	}
 	// RECONSTRUCT EDIT DATA PERONAL
 	// ---------------------------------------------------------------
 	public Transporter reconstructEditDataPeronal(final Transporter registerActor, final BindingResult binding) {
@@ -199,4 +201,20 @@ public class TransporterService {
 		return this.getTransporterByUserAccountId(id);
 	}
 
+	public Transporter findOne(final int id) {
+
+		return this.transporterRepository.findOne(id);
+	}
+
+	public List<String> bestTransporter() {
+		final List<String> res = new ArrayList<>();
+		final List<Transporter> transporters = new ArrayList<>();
+		transporters.addAll(this.transporterRepository.bestTransporter());
+		for (final Transporter transporter : transporters)
+			res.add(transporter.getUserAccount().getUsername());
+		if (transporters.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
+	}
 }

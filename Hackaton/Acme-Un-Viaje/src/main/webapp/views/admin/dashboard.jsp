@@ -38,6 +38,51 @@
 				<br>
 			</div>
 			<div>
+				<h3>
+					<spring:message code="bestCustomer" />
+				</h3>
+				<br />
+				<p>
+					<jstl:out value="${bestCustomer}"></jstl:out>
+				</p>
+			</div>
+			<div>
+				<h3>
+					<spring:message code="bestHost" />
+				</h3>
+				<br />
+				<p>
+					<jstl:out value="${bestHost}"></jstl:out>
+				</p>
+			</div>
+			<div>
+				<h3>
+					<spring:message code="bestTransporter" />
+				</h3>
+				<br />
+				<p>
+					<jstl:out value="${bestTransporter}"></jstl:out>
+				</p>
+			</div>
+			<div>
+				<h3>
+					<spring:message code="bestTravelAgency" />
+				</h3>
+				<br />
+				<p>
+					<jstl:out value="${bestTravelAgency}"></jstl:out>
+				</p>
+			</div>
+			<div>
+				<h3>
+					<spring:message code="bestCleaner" />
+				</h3>
+				<br />
+				<p>
+					<jstl:out value="${bestCleaner}"></jstl:out>
+				</p>
+			</div>
+			<div>
 				<acme:cancel url=" " code="Back"/>
 			</div>
 		</security:authorize>

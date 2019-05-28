@@ -36,6 +36,9 @@
 					<form:radiobutton path="draft" value="true"  checked="checked" />
 					<spring:message code="travelPack.draft.false" />
 					<form:radiobutton path="draft" value="false" />
+					<form:select itemLabel="title" multiple="false" path="warranty">
+	   		 		<form:options items="${warranties}" itemLabel="title" required="required"/>
+					</form:select>
 				</fieldset>
 				<br>
 				<div class="row">

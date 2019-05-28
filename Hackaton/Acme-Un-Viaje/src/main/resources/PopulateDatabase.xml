@@ -11,6 +11,18 @@
 	">
 
 	<!-- User accounts -->
+	
+	<bean id="userAccountHost02" class="security.UserAccount">
+		<property name="username" value="hackerhost" />
+		<property name="password" value="67b3dba8bc6778101892eb77249db32e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HOST" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
@@ -225,6 +237,21 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="host02" class="domain.Host">
+		<property name="name" value="Sr. Host 2" />
+		<property name="surname" value="host 2" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="email" value="host2@gmail.com" />
+		<property name="phone" value="+34678546678" />
+		<property name="userAccount" ref="userAccountHost02" />
+		<property name="creditCard" ref="creditCardHost02" />
+		<property name="mailboxes">
+			<list>
+				<ref bean="mailboxHost0201" />
+				<ref bean="mailboxHost0202" />
+			</list>
+		</property>
+	</bean>
 	<!-- HOTS -->
 
 	<!-- TRAVELAGENCY -->
@@ -267,6 +294,13 @@
 	<!-- CUSTOMER -->
 
 	<!-- CREDITCARD -->
+	<bean id="creditCardHost02" class="domain.CreditCard">
+		<property name="holder" value="Mr. Jojojocker" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
 	<bean id="creditCard01" class="domain.CreditCard">
 		<property name="holder" value="Mr. Admin" />
 		<property name="make" value="VISA" />
@@ -398,6 +432,22 @@
 	<!-- TRANSPORTS -->
 
 	<!-- Mailbox -->
+	<bean id="mailboxHost0201" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailboxHost0202" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+	
 	<bean id="mailbox01" class="domain.Mailbox">
 		<property name="name" value="inBox" />
 		<property name="isDefault" value="true" />
@@ -606,6 +656,7 @@
 	<bean id="travelPack01" class="domain.TravelPack">
 		<property name="name" value="travelPack1" />
 		<property name="draft" value="false" />
+		<property name="status" value="true"/>
 		<property name="customer" ref="customer01" />
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">

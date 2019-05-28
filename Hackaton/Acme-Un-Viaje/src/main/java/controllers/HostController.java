@@ -13,6 +13,9 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,31 +26,50 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Host;
-import forms.RegisterActor;
 import security.LoginService;
+import services.AccomodationService;
 import services.CleanerService;
 import services.ConfigService;
+import services.CustomerService;
 import services.HostService;
 import services.JobApplicationService;
+import services.ValorationService;
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Customer;
+import domain.Host;
+import domain.JobApplication;
+import domain.Valoration;
+import forms.RegisterActor;
 
 @Controller
 @RequestMapping("/host")
 public class HostController extends AbstractController {
 
 	@Autowired
-	private HostService hostService;
-	
+	private HostService				hostService;
+
 	@Autowired
-	private CleanerService cleanerService;
-	
+	private CleanerService			cleanerService;
+
 	@Autowired
-	private JobApplicationService jobApplicationService;
-	
+	private JobApplicationService	jobApplicationService;
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService			configService;
+
+	@Autowired
+	private CustomerService			customerService;
+
+	@Autowired
+	private JobApplicationService	jobAppService;
+
+	@Autowired
+	private AccomodationService		accService;
+
+	@Autowired
+	private ValorationService		valorationService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -55,9 +77,149 @@ public class HostController extends AbstractController {
 		super();
 	}
 
+	// RATE CLEANER
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/rateCleaner", method = RequestMethod.GET)
+	public ModelAndView rateCleaner(@RequestParam(value = "cleanerId", defaultValue = "-1") final int cleanerId) {
+
+		ModelAndView res;
+
+		try {
+
+			final Host logged = this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId());
+			final Cleaner cleaner = this.cleanerService.findOne(cleanerId);
+			Assert.isTrue(this.valorationService.checkValorationHostCleaner(logged, cleaner), "get.hack.error");
+
+			res = new ModelAndView("host/rateCleaner");
+			final Valoration valoration = this.valorationService.create();
+			valoration.setHost(logged);
+			valoration.setCleaner(cleaner);
+			res.addObject("valoration", valoration);
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+	@RequestMapping(value = "/rateCleaner", method = RequestMethod.POST, params = "save")
+	public ModelAndView rateCleaner(@Valid final Valoration valoration, final BindingResult binding) {
+
+		ModelAndView res;
+
+		if (binding.hasErrors()) {
+
+			res = new ModelAndView("host/rateCleaner");
+			res.addObject("valoration", valoration);
+		} else
+			try {
+
+				this.valorationService.save(valoration);
+				res = new ModelAndView("redirect:/accomodation/host/list.do");
+			} catch (final Throwable oops) {
+
+				res = new ModelAndView("redirect:/welcome/index.do");
+			}
+
+		return res;
+	}
+
+	// CLEANER LIST
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/cleanerList", method = RequestMethod.GET)
+	public ModelAndView cleanerList(@RequestParam(value = "accomodationId", defaultValue = "-1") final int accomodationId) {
+
+		ModelAndView res;
+
+		try {
+
+			res = new ModelAndView("host/cleanerList");
+			res.addObject("accomodationId", accomodationId);
+
+			final Collection<JobApplication> jobs = this.jobAppService.getJobApplicationByStatusAndHostId(true, this.accService.findOne(accomodationId).getHost().getId());
+			final Collection<Cleaner> cleaners = this.cleanerService.getAllCleanersInJobList(jobs);
+			res.addObject("cleaners", cleaners);
+
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
+	// RATE CUSTOMER
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/rateCustomer", method = RequestMethod.GET)
+	public ModelAndView rateCustomer(@RequestParam(value = "customerId", defaultValue = "-1") final int customerId) {
+
+		ModelAndView res;
+
+		try {
+
+			final Host logged = this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId());
+			final List<Customer> customers = this.customerService.getCustomersByHostId(logged.getId());
+			final Customer customer = this.customerService.findOne(customerId);
+			Assert.isTrue(customers.contains(customer), "get.hack.error");
+
+			res = new ModelAndView("host/rateCustomer");
+			final Valoration valoration = this.valorationService.create();
+			valoration.setHost(logged);
+			valoration.setCustomer(customer);
+			res.addObject("valoration", valoration);
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+	@RequestMapping(value = "/rateCustomer", method = RequestMethod.POST, params = "save")
+	public ModelAndView rateCustomer(@Valid final Valoration valoration, final BindingResult binding) {
+
+		ModelAndView res;
+
+		if (binding.hasErrors()) {
+
+			res = new ModelAndView("host/rateCustomer");
+			res.addObject("valoration", valoration);
+		} else
+			try {
+
+				this.valorationService.save(valoration);
+				res = new ModelAndView("redirect:/accomodation/host/list.do");
+			} catch (final Throwable oops) {
+
+				res = new ModelAndView("redirect:/welcome/index.do");
+			}
+
+		return res;
+	}
+
+	// CUSTOMER LIST
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/customerList", method = RequestMethod.GET)
+	public ModelAndView customerList(@RequestParam(value = "accomodationId", defaultValue = "-1") final int accomodationId) {
+
+		ModelAndView res;
+
+		try {
+
+			res = new ModelAndView("host/customerList");
+			res.addObject("accomodationId", accomodationId);
+			final Collection<Customer> customers = this.customerService.getCustomersByAccomodationId(accomodationId);
+			res.addObject("customers", customers);
+
+		} catch (final Throwable oops) {
+
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return res;
+	}
+
 	// REGISTER AS HOST
 	// ---------------------------------------------------------------
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -65,7 +227,7 @@ public class HostController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("host/create");
 			result.addObject("registerActor", registerActor);
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -76,7 +238,6 @@ public class HostController extends AbstractController {
 
 	// SAVE REGISTER AS HOST
 	// ---------------------------------------------------------------
-
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final RegisterActor registerActor, final BindingResult binding) {
 		ModelAndView result = null;
@@ -84,7 +245,7 @@ public class HostController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("host/create");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -109,11 +270,11 @@ public class HostController extends AbstractController {
 		final int idUserAccount = LoginService.getPrincipal().getId();
 		host = this.hostService.getHostByUserAccountId(idUserAccount);
 		Assert.notNull(host);
-		CreditCard creditCard = host.getCreditCard();
+		final CreditCard creditCard = host.getCreditCard();
 		result = new ModelAndView("host/edit");
 		result.addObject("host", host);
 		result.addObject("creditCard", creditCard);
-		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 		result.addObject("makes", makes);
 		return result;
 	}
@@ -128,7 +289,7 @@ public class HostController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("host/edit");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 
 		} else
@@ -149,7 +310,7 @@ public class HostController extends AbstractController {
 		Boolean res;
 		try {
 			final Host registerActor;
-			if (hotId == -1 ) {
+			if (hotId == -1) {
 				final int userLoggin = LoginService.getPrincipal().getId();
 				registerActor = this.hostService.getHostByUserAccountId(userLoggin);
 				res = true;
@@ -157,7 +318,7 @@ public class HostController extends AbstractController {
 				registerActor = this.hostService.findOne(hotId);
 				res = false;
 			}
-			
+
 			result = new ModelAndView("host/show");
 			// ALVARO If an cleaner user show the profile of an valid host to do an application the link appear
 			this.validCleaner(registerActor, result);
@@ -169,16 +330,16 @@ public class HostController extends AbstractController {
 		}
 		return result;
 	}
-	
-	private ModelAndView validCleaner(Host host, ModelAndView result) {
-		ModelAndView res = result;
+
+	private ModelAndView validCleaner(final Host host, final ModelAndView result) {
+		final ModelAndView res = result;
 		try {
-			Cleaner cleaner = this.cleanerService.getCleanerLogin();
+			final Cleaner cleaner = this.cleanerService.getCleanerLogin();
 			Assert.notNull(cleaner, "Any cleaner is login");
-			Assert.isTrue(this.jobApplicationService.checkValidForNewApplication(cleaner.getId(), host.getId()), "El usuario dispone con una aplicación pendiente");
+			Assert.isTrue(this.jobApplicationService.checkValidForNewApplication(cleaner.getId(), host.getId()), "El usuario dispone con una aplicaciï¿½n pendiente");
 			res.addObject("validCleaner", true);
-		} catch (Exception e) {
-			System.out.println("Bloqueada petición de logueo, el limpiador no es un usuario válido");
+		} catch (final Exception e) {
+			System.out.println("Bloqueada peticiï¿½n de logueo, el limpiador no es un usuario vï¿½lido");
 			res.addObject("validCleaner", false);
 		}
 		return res;

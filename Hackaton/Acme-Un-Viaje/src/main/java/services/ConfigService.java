@@ -125,7 +125,7 @@ public class ConfigService {
 	public void newBanner(final String banner) {
 
 		// From REGEX: ^(http(s?):\\/\\/www\\.).+(\\.)
-		Assert.isTrue(banner.matches("^(http(s?):\\/\\/www\\.).+(\\.).+"), "not.url");
+		Assert.isTrue(banner.matches("^(http(s?):\\/\\/).+(\\.).+"), "not.url");
 		final Config config = this.adminService.getConfig();
 		config.setBannerLogo(banner);
 		this.configRepo.save(config);

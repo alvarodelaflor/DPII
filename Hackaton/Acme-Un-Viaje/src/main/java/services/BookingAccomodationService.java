@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.BookingAccomodationRepository;
 import domain.BookingAccomodation;
 import forms.BookingAccForm;
 import repositories.BookingAccomodationRepository;
@@ -62,6 +63,10 @@ public class BookingAccomodationService {
 		return res;
 	}
 
+	public Collection<BookingAccomodation> getAccomodationBookings(final int id) {
+
+		return this.bookingAccomodationRepository.getAccomodationBookings(id);
+	}
 	public BookingAccomodation reconstructForm(final BookingAccForm form, final BindingResult binding) {
 		final BookingAccomodation res = this.create();
 		res.setAccomodation(form.getAccomodation());

@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * security.xml
- *
- * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * security.xml * * Copyright (C) 2018 Universidad de Sevilla * * The use of this project is hereby constrained to the conditions of the * TDG Licence, a copy of which you may download 
+	from * http://www.tdg-seville.info/License.html -->
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"	
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
@@ -21,54 +13,55 @@
 
 	<bean id="loginService" class="security.LoginService" />
 
-	<bean id="passwordEncoder"
-		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
 
 	<!-- Access control -->
 
 	<security:http auto-config="true" use-expressions="true">
-		<security:intercept-url pattern="/" access="permitAll" /> 
-		
+		<security:intercept-url pattern="/" access="permitAll" />
+
 		<!-- ALVARO -->
 		<security:intercept-url pattern="/curricula/cleaner/create.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/curricula/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/curricula/cleaner/delete.do" access="hasRole('CLEANER')" />
-		
+
 		<security:intercept-url pattern="/educationalData/cleaner/create.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/educationalData/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/educationalData/cleaner/delete.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
-		
+
 		<security:intercept-url pattern="/jobApplication/cleaner/create.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/jobApplication/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/jobApplication/cleaner/delete.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/jobApplication/cleaner/list.do" access="hasRole('CLEANER')" />
-		
+
 		<security:intercept-url pattern="/jobApplication/host/create.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/edit.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/delete.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/drop.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/reject.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/jobApplication/host/list.do" access="hasRole('HOST')" />
-		
+
 		<security:intercept-url pattern="/jobApplication/show.do" access="permitAll" />
-		
+
 		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
 		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
-		
+
 		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/miscellaneousAttachment/cleaner/delete.do" access="hasRole('CLEANER')" />
-		
+
 		<!-- ALVARO -->
-		
+
 		<!-- CARMEN -->
 		<security:intercept-url pattern="/cleaner/create.do" access="permitAll" />
 		<security:intercept-url pattern="/cleaner/edit.do" access="hasRole('CLEANER')" />
 		<security:intercept-url pattern="/cleaner/show.do" access="hasRole('CLEANER')" />
-		
+
 		<security:intercept-url pattern="/transporter/create.do" access="permitAll" />
 		<security:intercept-url pattern="/transporter/edit.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transporter/show.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transporter/myCustomers.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/transporter/rateCustomer.do" access="hasRole('TRANSPORTER')" />
 		
 		<security:intercept-url pattern="/travelAgency/create.do" access="permitAll" />
 		<security:intercept-url pattern="/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
@@ -81,20 +74,28 @@
 		<security:intercept-url pattern="/referee/create.do" access="permitAll" />
 		<security:intercept-url pattern="/referee/edit.do" access="hasRole('REFEREE')" />
 		<security:intercept-url pattern="/referee/show.do" access="hasRole('REFEREE')" />
-		
+
 		<security:intercept-url pattern="/customer/create.do" access="permitAll" />
 		<security:intercept-url pattern="/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/customer/show.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/contacts.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/rateHost.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/rateTransporter.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/rateTravelAgency.do" access="hasRole('CUSTOMER')" />
 		
 		<security:intercept-url pattern="/host/create.do" access="permitAll" />
 		<security:intercept-url pattern="/host/edit.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/host/show.do" access="permitAll" />
+		<security:intercept-url pattern="/host/customerList.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/rateCustomer.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/cleanerList.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/host/rateCleaner.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/create.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/edit.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/list.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/delete.do" access="hasRole('HOST')" />
 		<security:intercept-url pattern="/accomodation/host/show.do" access="hasRole('HOST')" />
-		
+
 		<security:intercept-url pattern="/admin/create.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/edit.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/show.do" access="hasRole('ADMIN')" />
@@ -115,37 +116,40 @@
 		<security:intercept-url pattern="/admin/newbnn.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/newdpc.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/admin/dashboard.do" access="hasRole('ADMIN')" />
-		
-		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" /> 
-		
+
+		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
+
 		<security:intercept-url pattern="/socialProfile/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" />
-		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
-		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
-		
+		<security:intercept-url pattern="/socialProfile/listOnly.do" access="isAuthenticated()" />
+	
 		<security:intercept-url pattern="/request/customer/create.do" access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/request/customer/list.do" access="hasRole('CUSTOMER')" />	
-		<security:intercept-url pattern="/request/customer/delete.do" access="hasRole('CUSTOMER')" />	
+		<security:intercept-url pattern="/request/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/request/customer/delete.do" access="hasRole('CUSTOMER')" />
 		<!-- CARMEN -->
-		
+
 		<!-- Antonio -->
-		<security:intercept-url pattern="/mailbox/list.do" access="permitAll" /> 
-		<security:intercept-url pattern="/mailbox/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/mailbox/list.do" access="permitAll" />
+		<security:intercept-url pattern="/mailbox/create.do" access="permitAll" />
 		<security:intercept-url pattern="/mailbox/edit.do" access="permitAll" />
 		<security:intercept-url pattern="/mailbox/show.do" access="permitAll" />
 		<security:intercept-url pattern="/mailbox/delete.do" access="permitAll" />
 
-		<security:intercept-url pattern="/message/list.do" access="permitAll" /> 
-		<security:intercept-url pattern="/message/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/message/list.do" access="permitAll" />
+		<security:intercept-url pattern="/message/create.do" access="permitAll" />
 		<security:intercept-url pattern="/message/edit.do" access="permitAll" />
 		<security:intercept-url pattern="/message/show.do" access="permitAll" />
-		<security:intercept-url pattern="/message/createBroadcast.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/message/createBroadcast.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/message/editBroadcast.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/message/delete.do" access="permitAll" />
 		<security:intercept-url pattern="/message/editMailbox.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/cleaningTask/list.do" access="hasRole('HOST')" /> 
+		<security:intercept-url pattern="/cleaningTask/cleaner/list.do" access="hasRole('CLEANER')" /> 
+		<security:intercept-url pattern="/cleaningTask/cleaner/show.do" access="hasRole('CLEANER')" /> 
 		<security:intercept-url pattern="/cleaningTask/show.do" access="hasRole('HOST')" /> 
 		<security:intercept-url pattern="/cleaningTask/create.do" access="hasRole('HOST')" /> 
 		<security:intercept-url pattern="/cleaningTask/delete.do" access="hasRole('HOST')" /> 
@@ -163,12 +167,22 @@
 		<security:intercept-url pattern="/transport/transporter/show.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/edit.do" access="hasRole('TRANSPORTER')" />
 		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
-		
+
 		<security:intercept-url pattern="/complaint/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/complaint/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/delete.do" access="hasRole('CUSTOMER')" />
+
+		<security:intercept-url pattern="/travelPack/customer/listOffered.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/listAccepted.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/listRejected.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/accept.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/reject.do" access="hasRole('CUSTOMER')" />
+
+		<security:intercept-url pattern="/bookingAccomodation/customer/show.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/bookingTransport/customer/show.do" access="hasRole('CUSTOMER')" />
 		<!-- HIPONA -->
-		
+
 		<!-- FERRETE -->
 		<security:intercept-url pattern="/transport/travelAgency/list.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/transport/travelAgency/show.do" access="hasRole('TRAVELAGENCY')" />
@@ -185,40 +199,48 @@
 		<security:intercept-url pattern="/travelPack/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/bookingAccomodation/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/bookingTransport/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		
+		<security:intercept-url pattern="/cleaner/delete.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/host/delete.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/transporter/delete.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/referee/delete.do" access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/customer/delete.do" access="hasRole('CUSTOMER')" />
+
+		<security:intercept-url pattern="/cleaner/export.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/travelAgency/export.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/host/export.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/transporter/export.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/referee/export.do" access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/customer/export.do" access="hasRole('CUSTOMER')" />
 		<!-- FERRETE -->
 
-		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
-		<security:intercept-url pattern="/images/**" access="permitAll" /> 
-		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
-		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
+		<security:intercept-url pattern="/favicon.ico" access="permitAll" />
+		<security:intercept-url pattern="/images/**" access="permitAll" />
+		<security:intercept-url pattern="/scripts/**" access="permitAll" />
+		<security:intercept-url pattern="/styles/**" access="permitAll" />
 
-		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
+		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" />
 
-		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
-		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
+		<security:intercept-url pattern="/security/login.do" access="permitAll" />
+		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" />
 
-		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
+		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
 
-		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" />
 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" />
 
-		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
-	
+		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" />
+
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
-		<security:form-login 
-			login-page="/security/login.do"
-			password-parameter="password" 
-			username-parameter="username"
-			authentication-failure-url="/security/loginFailure.do" />
+		<security:form-login login-page="/security/login.do" password-parameter="password" username-parameter="username" authentication-failure-url="/security/loginFailure.do" />
 
-		<security:logout 
-			logout-success-url="/" 
-			invalidate-session="true" />
+		<security:logout logout-success-url="/" invalidate-session="true" />
 	</security:http>
 
 </beans>

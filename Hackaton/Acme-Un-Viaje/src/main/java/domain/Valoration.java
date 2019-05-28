@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -14,17 +15,28 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Access(AccessType.PROPERTY)
 public class Valoration extends DomainEntity {
 
-	Integer		score;
-	String		comment;
+	Integer			score;
+	String			comment;
 
-	Cleaner		cleaner;
-	Customer	customer;
-	Transporter	transporter;
-	Host		host;
+	Cleaner			cleaner;
+	Customer		customer;
+	Transporter		transporter;
+	TravelAgency	travelAgency;
+	Host			host;
 
+
+	@ManyToOne(optional = true)
+	public TravelAgency getTravelAgency() {
+		return this.travelAgency;
+	}
+
+	public void setTravelAgency(final TravelAgency travelAgency) {
+		this.travelAgency = travelAgency;
+	}
 
 	@Min(1)
 	@Max(10)
+	@NotNull
 	public Integer getScore() {
 		return this.score;
 	}

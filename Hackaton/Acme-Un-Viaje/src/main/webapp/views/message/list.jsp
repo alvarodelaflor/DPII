@@ -19,8 +19,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<p><spring:message code="listMessage"/></p>
-  	
+<hr>  	
   	<div class="container-fluid" style="padding-left: 2.5em">
 	<display:table name="msgs" id="row"
 		requestURI="${requestURI}" pagesize="5"

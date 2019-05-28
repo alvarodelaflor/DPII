@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
- * tiles_es.xml
- *
- * Copyright (C) 2018 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * tiles_es.xml * * Copyright (C) 2018 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+
 <tiles-definitions>
 
-	<definition name="host/create" extends="master.page">	
+	<definition name="host/create" extends="master.page">
 		<put-attribute name="title" value="Registro como Anfitrión" />
 		<put-attribute name="body" value="/views/host/create.jsp" />
 	</definition>
-	
-	<definition name="host/edit" extends="master.page">	
+
+	<definition name="host/edit" extends="master.page">
 		<put-attribute name="title" value="Editar tus datos personales" />
 		<put-attribute name="body" value="/views/host/edit.jsp" />
 	</definition>
-	
-	<definition name="host/show" extends="master.page">	
+
+	<definition name="host/show" extends="master.page">
 		<put-attribute name="title" value="¡Tu perfil!" />
 		<put-attribute name="body" value="/views/host/show.jsp" />
 	</definition>
-	
+
+	<definition name="host/customerList" extends="master.page">
+		<put-attribute name="title" value="Mis Clientes en este Hospedaje" />
+		<put-attribute name="body" value="/views/host/customerList.jsp" />
+	</definition>
+
+	<definition name="host/rateCustomer" extends="master.page">
+		<put-attribute name="title" value="Valorar Cliente" />
+		<put-attribute name="body" value="/views/valoration/rateCustomer.jsp" />
+	</definition>
+
+	<definition name="host/cleanerList" extends="master.page">
+		<put-attribute name="title" value="Mis Empleados en este Hospedaje" />
+		<put-attribute name="body" value="/views/host/cleanerList.jsp" />
+	</definition>
+
+	<definition name="host/rateCleaner" extends="master.page">
+		<put-attribute name="title" value="Valorar Empleado" />
+		<put-attribute name="body" value="/views/valoration/rateCleaner.jsp" />
+	</definition>
+
 </tiles-definitions>

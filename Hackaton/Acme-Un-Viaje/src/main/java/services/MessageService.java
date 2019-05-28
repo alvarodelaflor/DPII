@@ -100,6 +100,8 @@ public class MessageService {
 
 	public Message exchangeMessage(final Message message, final Integer receiverId) {
 		//this.checkSuspicious(message);
+		
+		Assert.isTrue(message.getSubject() != null);
 
 		final UserAccount userSender = LoginService.getPrincipal();
 		final Actor sender = this.actorService.findByUserAccountId(userSender.getId());
@@ -146,6 +148,7 @@ public class MessageService {
 			
 		return message;
 	}
+	
 	public Message sendBroadcastWithoutAdminReview(Complaint complaint, Review review) {		
 		
 		Message message = create();

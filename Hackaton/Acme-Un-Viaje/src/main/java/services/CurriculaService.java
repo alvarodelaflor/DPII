@@ -3,9 +3,9 @@ package services;
 
 /**
  * CurriculaService.java
- * 
+ *
  * @author Alvaro de la Flor Bonilla GitHub: alvar017
- * 
+ *
  *         CONTROL:
  *         21/05/2019 Version 1.0
  */
@@ -22,13 +22,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.CurriculaRepository;
-import security.LoginService;
 import domain.Cleaner;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.JobApplication;
 import domain.MiscellaneousAttachment;
+import repositories.CurriculaRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -45,37 +45,38 @@ public class CurriculaService {
 
 	@Autowired
 	private MiscellaneousAttachmentService	miscellaneousAttachmentService;
-	
+
 	@Autowired
-	private JobApplicationService jobAplicationService;
+	private JobApplicationService			jobAplicationService;
 
 	@Autowired
 	private Validator						validator;
-	
+
 	// Default messages
-	private String anyCleanerLogin = "Any cleaner is login in the system (CURRICULASERVICE)";
-	private String nullCurricula = "Curricula is null";
-	private String curriculaNotFound = "The curricula has not been found in database";
-	private String notValidUser = "This user can not edit the curricula, he is not his owner";
+	private final String					anyCleanerLogin		= "Any cleaner is login in the system (CURRICULASERVICE)";
+	private final String					nullCurricula		= "Curricula is null";
+	private final String					curriculaNotFound	= "The curricula has not been found in database";
+	private final String					notValidUser		= "This user can not edit the curricula, he is not his owner";
+
 
 	// CRUD Methods
 
 	/**
 	 * Create a Curricula entity. Must exist a {@link Cleaner} login to create it.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Curricula}
 	 */
 	public Curricula create() {
-		Cleaner cleaner = this.cleanerService.getCleanerLogin();
-		Assert.notNull(cleaner, anyCleanerLogin);
+		final Cleaner cleaner = this.cleanerService.getCleanerLogin();
+		Assert.notNull(cleaner, this.anyCleanerLogin);
 		return new Curricula();
 	}
 
 	/**
-	 * 
+	 *
 	 * Return a collection of all {@link Curricula} in database.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Curricula}>
 	 */
@@ -85,7 +86,7 @@ public class CurriculaService {
 
 	/**
 	 * Find a curricula in dataBase by id
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Curricula}
 	 */
@@ -97,7 +98,7 @@ public class CurriculaService {
 	 * Save a curricula. Check user login ({@link Cleaner}) is the same that user who create the curricula in the case he want to edit it
 	 * Curricula must not be null<br>
 	 * Must exist cleaner login
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The save {@link Curricula}
 	 */
@@ -117,15 +118,15 @@ public class CurriculaService {
 	 * Delete a curricula.<br>
 	 * Check user login ({@link Cleaner}) is the same that user who created the curricula<br>
 	 * Must exist a {@link Cleaner} login and curricula must not be null
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public void delete(final Curricula curricula) {
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-		Assert.notNull(cleanerLogin, anyCleanerLogin);
+		Assert.notNull(cleanerLogin, this.anyCleanerLogin);
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
-		Assert.notNull(curriculaDB, curriculaNotFound);
-		Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), notValidUser);
+		Assert.notNull(curriculaDB, this.curriculaNotFound);
+		Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), this.notValidUser);
 		final Collection<EducationalData> educationalDatas = this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
 		if (!educationalDatas.isEmpty())
 			this.educationalDataService.deleteAll(educationalDatas);
@@ -141,7 +142,7 @@ public class CurriculaService {
 
 	/**
 	 * This method reconstruct a prunned {@link Curricula} and validate it
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The reconstruct {@link Curricula}
 	 */
@@ -166,23 +167,23 @@ public class CurriculaService {
 	}
 
 	/**
-	 * 
+	 *
 	 * This methods create and save a copy of the curricula given and all of their educationalData and positionData<br>
 	 * Set to true the isCopy atribute of curriculum, educationalData and positionData instances that they have been copy<br>
 	 * The {@link Cleaner} who create the Curricula must be login.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return The copy {@link Curricula} instance
 	 */
-	public JobApplication createCurriculaCopyAndSave(JobApplication jobApplication) {
+	public JobApplication createCurriculaCopyAndSave(final JobApplication jobApplication) {
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
 		final Curricula curriculaCopy = this.create();
 		Curricula copy;
 		JobApplication savedJobApplication;
 		Assert.isTrue(jobApplication.getCurricula().getCleaner().equals(cleanerLogin), "Try to do a copy of curricula by not own cleaner");
-		Curricula curricula = jobApplication.getCurricula();
-		JobApplication jobApplicationDB = this.jobAplicationService.findOne(jobApplication.getId());
-		if (jobApplicationDB!=null && !curricula.equals(this.jobAplicationService.findOne(jobApplication.getId()).getCurricula())) {
+		final Curricula curricula = jobApplication.getCurricula();
+		final JobApplication jobApplicationDB = this.jobAplicationService.findOne(jobApplication.getId());
+		if (jobApplicationDB != null && !curricula.equals(this.jobAplicationService.findOne(jobApplication.getId()).getCurricula())) {
 			curriculaCopy.setCleaner(curricula.getCleaner());
 			curriculaCopy.setIsCopy(true);
 			curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
@@ -191,16 +192,16 @@ public class CurriculaService {
 			curriculaCopy.setPhone(curricula.getPhone());
 			curriculaCopy.setStatement(curricula.getStatement());
 			copy = this.save(curriculaCopy);
-			Curricula curriculaToDelete = this.findOne(jobApplicationDB.getCurricula().getId());
+			final Curricula curriculaToDelete = this.findOne(jobApplicationDB.getCurricula().getId());
 			Assert.notNull(curriculaToDelete, "Curricula to delete null");
 			this.educationalDataService.makeCopyAllEducationalDataForCurricula(curricula, copy);
 			this.miscellaneousAttachmentService.makeCopyAllMiscellaneousAttachmentForCurricula(curricula, copy);
 			jobApplication.setCurricula(copy);
 			savedJobApplication = this.jobAplicationService.save(jobApplication);
 			this.delete(curriculaToDelete);
-		} else if (jobApplicationDB!=null && jobApplication.getCurricula().equals(jobApplicationDB.getCurricula())) {
+		} else if (jobApplicationDB != null && jobApplication.getCurricula().equals(jobApplicationDB.getCurricula()))
 			savedJobApplication = this.jobAplicationService.save(jobApplication);
-		} else {
+		else {
 			curriculaCopy.setCleaner(curricula.getCleaner());
 			curriculaCopy.setIsCopy(true);
 			curriculaCopy.setLinkLinkedin(curricula.getLinkLinkedin());
@@ -226,7 +227,7 @@ public class CurriculaService {
 
 	/**
 	 * Check that any user is login
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Boolean}<br>
 	 *         True if an user is login, false in otherwise.
@@ -242,9 +243,9 @@ public class CurriculaService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Return all Curricula in dataBase of a {@link Cleaner}.
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Curricula}>
 	 */
@@ -256,7 +257,7 @@ public class CurriculaService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection < {@link Curricula} > not copy mode
 	 */
@@ -309,5 +310,12 @@ public class CurriculaService {
 	public Float stddevCurriculaPerCleaner() {
 
 		return this.curriculaRepository.stddevCurriculaPerCleaner();
+	}
+
+	public void deleteAllByCleaner(final Cleaner cleaner) {
+		final Collection<Curricula> cvs = this.findAllByCleaner(cleaner);
+		if (cvs != null && !cvs.isEmpty())
+			for (final Curricula curricula : cvs)
+				this.delete(curricula);
 	}
 }

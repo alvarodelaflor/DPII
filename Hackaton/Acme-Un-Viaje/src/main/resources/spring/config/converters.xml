@@ -36,10 +36,23 @@
 		<bean class="converters.StringToMailboxConverter" />		
 		<bean class="converters.StringToTagConverter" />
 		
+		<!-- Ferrete -->
 		<bean class="converters.StringToCustomerConverter" />		
 		<bean class="converters.CustomerToStringConverter" />
 		<bean class="converters.StringToAccomodationConverter" />		
 		<bean class="converters.AccomodationToStringConverter" />
+		<bean class="converters.StringToWarrantyConverter" />		
 	</util:list>
+		<bean class="converters.StringToTransportConverter" />		
+		<bean class="converters.TransportToStringConverter" />
+		<bean class="converters.StringToWarrantyConverter" />		
+		<bean class="converters.WarrantyToStringConverter" />
+		<!-- Ferrete -->
+		<bean class="converters.HostToStringConverter" />
+		<bean class="converters.StringToHostConverter" />	
+		<bean class="converters.TransporterToStringConverter" />
+		<bean class="converters.StringToTransporterConverter" />	
+		<bean class="converters.TravelAgencyToStringConverter" />
+		<bean class="converters.StringToTravelAgencyConverter" />	
 	
 </beans>

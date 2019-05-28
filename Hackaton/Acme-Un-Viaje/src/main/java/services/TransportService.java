@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -176,10 +177,24 @@ public class TransportService {
 	}
 
 	public Transport getLoggedTransporterTransportForEdit(final Integer transportId) {
-		// TODO Auto-generated method stub
 		final Transport res = this.getLoggedTransporterTransport(transportId);
 		Assert.isTrue(res.getReservedPlaces() == 0);
 		return res;
 	}
 
+	public void delete(final Integer transportId) {
+		final Transport t = this.transportRepository.findOne(transportId);
+		Assert.isTrue(this.loggedIsTransportOwner(t));
+
+		Assert.isTrue(t.getReservedPlaces() == 0);
+
+		this.transportRepository.delete(transportId);
+	}
+
+	public List<Transporter> getTransportersByCustomerId(final int id) {
+
+		final List<Transporter> res = new ArrayList<>();
+		res.addAll(this.transportRepository.getTransportersByCustomerId(id));
+		return res;
+	}
 }

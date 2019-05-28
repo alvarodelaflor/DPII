@@ -17,7 +17,6 @@ public class AccomodationToStringConverter implements Converter<Accomodation, St
 			result = null;
 		else
 			result = String.valueOf(accomodation.getId());
-		System.out.println("CONVERTIDOR AccomodationToStringConverter.java " + result);
 		return result;
 	}
 }

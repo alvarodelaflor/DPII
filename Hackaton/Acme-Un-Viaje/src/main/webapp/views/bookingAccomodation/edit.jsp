@@ -32,10 +32,11 @@
 					<form:label path="travelPackId">
 						<spring:message code="baccomodation.travelPack" />:
 					</form:label>
+					<form:errors cssClass="error" path="travelPackId" />
 					<form:select itemLabel="name" itemValue="id" multiple="false" path="travelPackId">
 	   		 		<form:options items="${packs}" itemLabel="name" itemValue="id" required="required"/>
 					</form:select>
-					<form:errors cssClass="error" path="travelPackId" />
+					
 				</fieldset>
 				<br>
 				<div class="row">

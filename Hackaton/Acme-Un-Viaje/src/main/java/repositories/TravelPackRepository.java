@@ -18,6 +18,24 @@ public interface TravelPackRepository extends JpaRepository<TravelPack, Integer>
 	@Query("select p from TravelPack p where p.travelAgency.id = ?1 and p.draft = true")
 	Collection<TravelPack> getTravelAgencyDraftPacks(int id);
 
+	@Query("select t from TravelPack t join t.accomodations ta where ta.accomodation.id = ?1")
+	Collection<TravelPack> getTravelPacksAccomodationId(int id);
+
+	@Query("select t from TravelPack t where t.customer.id = ?1")
+	Collection<TravelPack> getTravelPacksByCustomerId(int id);
+
 	@Query("select t from TravelPack t join t.complaints c where c.id = ?1")
 	TravelPack findFromComplaint(int complaintId);
+
+	@Query("select t from TravelPack t where t.customer.id = ?1 and t.draft = false and t.status=null")
+	Collection<TravelPack> getLoggedNotDraftStatusNull(int customerId);
+
+	@Query("select t from TravelPack t where t.customer.id = ?1 and t.draft = false and t.status=true")
+	Collection<TravelPack> getLoggedNotDraftStatusTrue(int id);
+
+	@Query("select t from TravelPack t where t.customer.id = ?1 and t.draft = false and t.status=false")
+	Collection<TravelPack> getLoggedNotDraftStatusFalse(int id);
+
+	@Query("select t from TravelPack t where t.customer.id = ?1")
+	Collection<TravelPack> getCustomerTravelPacks(int id);
 }

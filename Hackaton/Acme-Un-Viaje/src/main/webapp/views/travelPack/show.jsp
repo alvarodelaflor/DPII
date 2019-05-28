@@ -38,12 +38,20 @@
 				</div>
 				
 				<div class="row">
+					<spring:message code="travelPack.price" />
+					:
+					<jstl:out value="${price}"></jstl:out> EUR
+				</div>
+				
+				<div class="row">
 					<spring:message code="travelPack.accomodations" />
 					:
 				</div>
+				<jstl:if test="${travelPack.draft}">
 				<div class="col-md-4">
 					<acme:cancel url="finder/travelAgency/show.do" code="travelPack.newAcc" />
 				</div>
+				</jstl:if>
 				<display:table name="travelPack.accomodations" id="row" requestURI="${requestURI}"
 					pagesize="5" class="displaytag table table-hover">
 					<div class="row">
@@ -62,10 +70,11 @@
 					<spring:message code="travelPack.transports" />
 					:
 				</div>
+				<jstl:if test="${travelPack.draft}">
 				<div class="col-md-4">
 					<acme:cancel url="transport/travelAgency/list.do" code="travelPack.newTrans" />
 				</div>
-				
+				</jstl:if>
 				<display:table name="travelPack.transports" id="row" requestURI="${requestURI}"
 					pagesize="5" class="displaytag table table-hover">
 					<div class="row">
@@ -84,10 +93,36 @@
 				</display:table>
 				
 				<div class="row">
+					<spring:message code="travelPack.warranty" />
+					:
+					<jstl:out value="${travelPack.warranty.title}"></jstl:out>
+				</div>
+				
+				<div class="row">
 					<spring:message code="travelPack.complaint" />
 					:
-					<jstl:out value="${travelPack.complaint.description}"></jstl:out>
 				</div>
+				<display:table name="travelPack.complaints" id="row" requestURI="${requestURI}"
+					pagesize="5" class="displaytag table table-hover">
+					<div class="row">
+						<div class="col-md-12">
+							<fieldset>
+								<display:column titleKey="complaint.moment" property="moment" />
+								<display:column titleKey="complaint.customer">
+									<jstl:out value="${row.customer.name}"></jstl:out>
+								</display:column>
+								<display:column titleKey="complaint.description" property="description"/>
+								<display:column titleKey="complaint.host">
+									<jstl:out value="${row.host.name}"></jstl:out>
+								</display:column>
+								<display:column titleKey="complaint.transporter">
+									<jstl:out value="${row.transporter.name}"></jstl:out>
+								</display:column>
+							</fieldset>
+						</div>
+					</div>
+				</display:table>
+				
 			</fieldset>
 		</div>
 	</div>
@@ -98,8 +133,18 @@
 		<div class="col-md-4">
 			<acme:cancel url="travelPack/travelAgency/list.do" code="actor.back" />
 		</div>
-		<div class="col-md-4">
-			<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="curricula.delete" />
-		</div>
+		<jstl:choose>
+			<jstl:when test="${travelPack.draft}">
+				<div class="col-md-4">
+				<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="curricula.delete" />
+				</div>
+			</jstl:when>
+			<jstl:otherwise>
+				<div class="col-md-4">
+				<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="travelPack.cancel" />
+				</div>
+			</jstl:otherwise>
+		
+		</jstl:choose>
 	</div>
 </div>
