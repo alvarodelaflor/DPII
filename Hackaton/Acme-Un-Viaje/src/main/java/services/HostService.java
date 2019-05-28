@@ -54,6 +54,9 @@ public class HostService {
 	@Autowired
 	private SocialProfileService	socialProfileService;
 
+	@Autowired
+	private JobApplicationService	jobApplicationService;
+
 
 	//CRUD METHODS
 
@@ -277,6 +280,7 @@ public class HostService {
 		Assert.isTrue(host.getUserAccount().getId() == LoginService.getPrincipal().getId());
 		this.socialProfileService.deleteActorSocialProfiles(host);
 		this.accomodationService.deleteAllByHost(host);
+		this.jobApplicationService.deleteHostApplications(host);
 		this.complaintService.deleteHostComplaints(host);
 		this.valorationService.deleteAllByHost(host);
 		this.hostRepository.delete(host);
