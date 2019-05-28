@@ -58,7 +58,7 @@ public class AdminService {
 		final Actor actor = this.actorService.findOne(id);
 		Assert.notNull(actor, "not.found.error");
 		if (!actor.getUserAccount().getBanned())
-			Assert.isTrue(!actor.getUserAccount().getSpammerFlag(), "not.spammer.error"); //TODO: añadir la restriccion del score
+			Assert.isTrue(actor.getUserAccount().getSpammerFlag(), "not.spammer.error"); //TODO: añadir la restriccion del score
 
 		final UserAccount uacc = actor.getUserAccount();
 		uacc.setBanned(!uacc.getBanned());

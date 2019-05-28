@@ -10,9 +10,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.BookingAccomodationRepository;
 import domain.BookingAccomodation;
 import forms.BookingAccForm;
-import repositories.BookingAccomodationRepository;
 
 @Service
 @Transactional
@@ -55,8 +55,7 @@ public class BookingAccomodationService {
 				|| (b.getStartDate().before(bookingAccomodation.getEndDate()) && b.getEndDate().after(bookingAccomodation.getEndDate()))
 				|| (b.getStartDate().after(bookingAccomodation.getStartDate()) && b.getEndDate().before(bookingAccomodation.getEndDate()))
 				|| (b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear() && b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth()
-					&& b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear()
-					&& b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth())) {
+					&& b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear() && b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth())) {
 				res = true;
 				break;
 			}

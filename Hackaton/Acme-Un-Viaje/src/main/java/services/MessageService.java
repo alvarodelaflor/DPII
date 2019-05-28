@@ -153,6 +153,10 @@ public class MessageService {
 		
 		Message message = create();
 		
+		
+		message.setSubject("Notification about review done");	
+		message.setBody("A review has been made on the complaint with description" + " {" + complaint.getDescription() + "} about the travel pack " + travelPackService.findFromComplaint(complaint.getId()).getName() + ". The description of the review is {" + review.getDescription() + "}.");
+		
 		Customer customer = complaint.getCustomer();
 		TravelAgency travelAgency = complaint.getTravelAgency();
 		Host host = complaint.getHost();
@@ -207,9 +211,7 @@ public class MessageService {
 				}
 			
 		}
-			
-		message.setSubject("Notification about review done");	
-		message.setBody("A review has been made on the complaint with description" + " {" + complaint.getDescription() + "} about the travel pack " + travelPackService.findFromComplaint(complaint.getId()).getName() + ". The description of the review is {" + review.getDescription() + "}.");
+	
 			
 		return message;
 	}

@@ -197,4 +197,9 @@ public class TransportService {
 		res.addAll(this.transportRepository.getTransportersByCustomerId(id));
 		return res;
 	}
+
+	public Transporter findByUserAccountId(final int userAccountId) {
+
+		return this.transportRepository.findByUserAccountId(userAccountId);
+	}
 }

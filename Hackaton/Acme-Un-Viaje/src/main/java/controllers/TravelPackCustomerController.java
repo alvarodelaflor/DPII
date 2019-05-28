@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.TravelPackService;
@@ -54,6 +55,36 @@ public class TravelPackCustomerController extends AbstractController {
 			final Collection<TravelPack> travelPacks = this.travelPackService.getLoggedNotDraftStatusFalse();
 			res = new ModelAndView("travelPack/customer/listRejected");
 			res.addObject("travelPacks", travelPacks);
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/accept", method = RequestMethod.GET)
+	public ModelAndView accept(@RequestParam(required = false, value = "travelPackId") final Integer travelPackId) {
+		if (travelPackId == null)
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		ModelAndView res = null;
+		try {
+			this.travelPackService.accept(travelPackId);
+			res = new ModelAndView("redirect:/travelPack/customer/listAccepted.do");
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/reject", method = RequestMethod.GET)
+	public ModelAndView reject(@RequestParam(required = false, value = "travelPackId") final Integer travelPackId) {
+		if (travelPackId == null)
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		ModelAndView res = null;
+		try {
+			this.travelPackService.reject(travelPackId);
+			res = new ModelAndView("redirect:/travelPack/customer/listRejected.do");
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
