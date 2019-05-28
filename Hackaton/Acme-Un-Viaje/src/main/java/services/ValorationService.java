@@ -12,6 +12,7 @@ import domain.Cleaner;
 import domain.Customer;
 import domain.Host;
 import domain.JobApplication;
+import domain.Transporter;
 import domain.Valoration;
 import repositories.ValorationRepository;
 
@@ -68,6 +69,13 @@ public class ValorationService {
 			for (final Valoration valoration : valorations)
 				this.valorationRepository.delete(valoration);
 
+	}
+
+	public void deleteAllByTransporter(final Transporter transporter) {
+		final Collection<Valoration> valorations = this.valorationRepository.findValorationsByTransporter(transporter.getId());
+		if (valorations != null && !valorations.isEmpty())
+			for (final Valoration valoration : valorations)
+				this.valorationRepository.delete(valoration);
 	}
 
 }

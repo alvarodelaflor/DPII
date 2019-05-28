@@ -14,10 +14,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.TravelPackRepository;
-import security.Authority;
-import security.LoginService;
-import utilities.CommonUtils;
 import domain.Accomodation;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
@@ -27,6 +23,10 @@ import domain.Transport;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
+import repositories.TravelPackRepository;
+import security.Authority;
+import security.LoginService;
+import utilities.CommonUtils;
 
 @Service
 @Transactional
@@ -50,10 +50,17 @@ public class TravelPackService {
 	@Autowired
 	private TransportService		transportService;
 
+	@Autowired
+	private BookingTransportService	bookingTransportService;
+
 
 	public void delete(final TravelPack pack) {
 
 		Assert.isTrue(pack.getTravelAgency().getUserAccount().getId() == LoginService.getPrincipal().getId());
+		final Collection<BookingTransport> items = pack.getTransports();
+		if (items != null && !items.isEmpty())
+			for (final BookingTransport bookingTransport : items)
+				this.bookingTransportService.delete(bookingTransport);
 		this.travelPackRepository.delete(pack.getId());
 	}
 

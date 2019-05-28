@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -24,18 +24,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import services.ConfigService;
-import services.CustomerService;
-import services.TransporterService;
-import services.ValorationService;
 import domain.CreditCard;
 import domain.Customer;
 import domain.Transporter;
 import domain.Valoration;
 import forms.RegisterActor;
+import security.LoginService;
+import services.ConfigService;
+import services.CustomerService;
+import services.TransporterService;
+import services.ValorationService;
 
 @Controller
 @RequestMapping("/transporter")
@@ -225,6 +226,39 @@ public class TransporterController extends AbstractController {
 			result.addObject("registerActor", registerActor);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	//EXPORT
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody Transporter export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Transporter result = new Transporter();
+		result = this.transporterService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	//DELETE
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int transporterId) {
+		ModelAndView result;
+
+		final Transporter transporter = this.transporterService.findOne(transporterId);
+		System.out.println("Transporter encontrado: " + transporter);
+		if (this.transporterService.findOne(transporterId) == null || LoginService.getPrincipal().getId() != transporter.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(transporter, "transporter.null");
+
+			try {
+				this.transporterService.delete(transporter);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				e.printStackTrace();
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			}
 		}
 		return result;
 	}

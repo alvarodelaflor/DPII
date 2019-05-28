@@ -10,9 +10,10 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.BookingTransportRepository;
 import domain.BookingTransport;
+import domain.Transport;
 import forms.BookingTransportForm;
+import repositories.BookingTransportRepository;
 
 @Service
 @Transactional
@@ -22,13 +23,14 @@ public class BookingTransportService {
 	private BookingTransportRepository	bookingTransportRepository;
 
 	@Autowired
-	private TravelPackService			travelPackService;
-
-	@Autowired
 	private Validator					validator;
 
 
 	public void delete(final BookingTransport bAccomodation) {
+		final Transport transport = bAccomodation.getTransport();
+		Integer newPlaces = transport.getReservedPlaces() - 1;
+		newPlaces = newPlaces < 0 ? 0 : newPlaces;
+		transport.setReservedPlaces(newPlaces);
 		this.bookingTransportRepository.delete(bAccomodation);
 	}
 
