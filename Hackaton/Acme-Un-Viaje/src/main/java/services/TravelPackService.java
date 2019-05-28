@@ -226,4 +226,11 @@ public class TravelPackService {
 		final int bookings = this.getDistinctInRangeAccepted(a.getId(), a.getStartDate(), a.getEndDate());
 		return bookings == 0;
 	}
+
+	public void deleteAllByTravelAgency(final TravelAgency travelAgency) {
+		final Collection<TravelPack> items = this.getTravelAgencyPacks();
+		if (items != null && !items.isEmpty())
+			for (final TravelPack item : items)
+				this.delete(item);
+	}
 }

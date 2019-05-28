@@ -204,7 +204,7 @@ public class TransportService {
 		return this.transportRepository.findByUserAccountId(userAccountId);
 	}
 
-	public void deleteAllByHost(final Transporter transporter) {
+	public void deleteAllByTransporter(final Transporter transporter) {
 		final Collection<Transport> items = this.getLoggedTransporterTransports();
 		if (items != null && !items.isEmpty())
 			for (final Transport item : items)

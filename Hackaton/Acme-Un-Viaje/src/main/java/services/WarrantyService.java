@@ -10,8 +10,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Customer;
-import domain.Request;
 import domain.TravelAgency;
 import domain.Warranty;
 import repositories.WarrantyRepository;
@@ -23,18 +21,19 @@ import security.UserAccount;
 public class WarrantyService {
 
 	@Autowired
-	private WarrantyRepository warrantyRepository;
+	private WarrantyRepository	warrantyRepository;
 
 	@Autowired
-	private Validator validator;
+	private Validator			validator;
 
 	@Autowired
-	private TravelAgencyService travelAgencyService;
+	private TravelAgencyService	travelAgencyService;
+
 
 	public Warranty create() {
 		final Warranty warranty = new Warranty();
-		UserAccount userL = LoginService.getPrincipal();
-		TravelAgency travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(userL.getId());
+		final UserAccount userL = LoginService.getPrincipal();
+		final TravelAgency travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(userL.getId());
 		Assert.notNull(travelAgency);
 		warranty.setTravelAgency(travelAgency);
 		return warranty;
@@ -51,8 +50,8 @@ public class WarrantyService {
 		warrantyNew.setTitle(warranty.getTitle());
 		warrantyNew.setDraftMode(warranty.getDraftMode());
 
-		UserAccount userL = LoginService.getPrincipal();
-		TravelAgency travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(userL.getId());
+		final UserAccount userL = LoginService.getPrincipal();
+		final TravelAgency travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(userL.getId());
 		Assert.notNull(travelAgency);
 		warrantyNew.setTravelAgency(travelAgency);
 
@@ -60,20 +59,19 @@ public class WarrantyService {
 
 		return warrantyNew;
 	}
-	
+
 	public Warranty reconstructR(final Warranty warranty, final BindingResult binding) {
-		final TravelAgency actor = this.travelAgencyService
-				.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
+		final TravelAgency actor = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(actor);
-		Warranty warrantyNew = this.findOne(warranty.getId());
+		final Warranty warrantyNew = this.findOne(warranty.getId());
 		Assert.isTrue(warrantyNew.getTravelAgency().equals(actor));
 
 		warrantyNew.setTerms(warranty.getTerms());
 		warrantyNew.setTitle(warranty.getTitle());
 		warrantyNew.setDraftMode(warranty.getDraftMode());
 
-		UserAccount userL = LoginService.getPrincipal();
-		TravelAgency travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(userL.getId());
+		final UserAccount userL = LoginService.getPrincipal();
+		final TravelAgency travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(userL.getId());
 		Assert.notNull(travelAgency);
 		warrantyNew.setTravelAgency(travelAgency);
 
@@ -83,24 +81,29 @@ public class WarrantyService {
 	}
 
 	public Collection<Warranty> getTravelAgencyWarranty() {
-		final TravelAgency actor = this.travelAgencyService
-				.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
+		final TravelAgency actor = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.isTrue(actor != null);
 		return this.warrantyRepository.getWarrantiesByActor(actor.getId());
 	}
 
 	public void delete(final Warranty warranty) {
-		final TravelAgency actor = this.travelAgencyService
-				.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
+		final TravelAgency actor = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(actor);
 		Assert.isTrue(warranty.getTravelAgency().equals(actor));
-		Assert.isTrue(warranty.getDraftMode() == true);		
+		Assert.isTrue(warranty.getDraftMode() == true);
 		this.warrantyRepository.delete(warranty);
 	}
 
 	public Warranty findOne(final int id) {
 		final Warranty result = this.warrantyRepository.findOne(id);
 		return result;
+	}
+
+	public void deleteAllByTravelAgency(final TravelAgency travelAgency) {
+		final Collection<Warranty> items = this.getTravelAgencyWarranty();
+		if (items != null && !items.isEmpty())
+			for (final Warranty item : items)
+				this.warrantyRepository.delete(item);
 	}
 
 }

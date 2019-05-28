@@ -229,7 +229,7 @@ public class TransporterService {
 	public void delete(final Transporter transporter) {
 		Assert.isTrue(transporter.getUserAccount().getId() == LoginService.getPrincipal().getId());
 		this.socialProfileService.deleteActorSocialProfiles(transporter);
-		this.transportService.deleteAllByHost(transporter);
+		this.transportService.deleteAllByTransporter(transporter);
 		this.complaintService.deleteTransporterComplaints(transporter);
 		this.valorationService.deleteAllByTransporter(transporter);
 		this.transporterRepository.delete(transporter);

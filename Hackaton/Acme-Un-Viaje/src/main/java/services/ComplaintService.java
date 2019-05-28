@@ -14,6 +14,7 @@ import domain.Complaint;
 import domain.Customer;
 import domain.Host;
 import domain.Transporter;
+import domain.TravelAgency;
 import domain.TravelPack;
 import repositories.ComplaintRepository;
 import security.Authority;
@@ -141,6 +142,13 @@ public class ComplaintService {
 
 	public void deleteTransporterComplaints(final Transporter transporter) {
 		final Collection<Complaint> items = this.complaintRepository.getTransporterComplaints(transporter.getId());
+		if (items != null && !items.isEmpty())
+			for (final Complaint item : items)
+				this.delete(item.getId());
+	}
+
+	public void deleteTravelAgencyComplaints(final TravelAgency travelAgency) {
+		final Collection<Complaint> items = this.complaintRepository.getTravelAgencyComplaints(travelAgency.getId());
 		if (items != null && !items.isEmpty())
 			for (final Complaint item : items)
 				this.delete(item.getId());
