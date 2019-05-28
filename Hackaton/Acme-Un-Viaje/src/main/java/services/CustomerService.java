@@ -14,9 +14,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.CreditCard;
-import domain.Customer;
-import forms.RegisterActorE;
 import repositories.CustomerRepository;
 import security.Authority;
 import security.LoginService;
@@ -40,10 +37,10 @@ public class CustomerService {
 	private ActorService			actorService;
 
 	@Autowired
-	private TravelPackService	travelPackService;
+	private TravelPackService		travelPackService;
 
 	@Autowired
-	private ConfigService		configService;
+	private ConfigService			configService;
 
 	@Autowired
 	private SocialProfileService	socialProfileService;
@@ -53,9 +50,6 @@ public class CustomerService {
 
 	@Autowired
 	private ComplaintService		complaintService;
-
-	@Autowired
-	private TravelPackService		travelPackService;
 
 	@Autowired
 	private ValorationService		valorationService;

@@ -115,10 +115,6 @@ public class TravelAgencyService {
 		return this.travelAgencyRepository.findByUserAccountId(userAccountId);
 	}
 
-	public TravelAgency findOne(final int travelAgencyId) {
-		return this.travelAgencyRepository.findOne(travelAgencyId);
-	}
-
 	// RECONSTRUCT EDIT DATA PERONAL
 	// ---------------------------------------------------------------
 	public TravelAgency reconstructEditDataPeronal(final TravelAgency registerActor, final BindingResult binding) {

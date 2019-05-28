@@ -10,9 +10,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.BookingTransportRepository;
 import domain.BookingTransport;
 import forms.BookingTransportForm;
-import repositories.BookingTransportRepository;
 
 @Service
 @Transactional
@@ -41,10 +41,6 @@ public class BookingTransportService {
 		return this.bookingTransportRepository.save(bookingTransport);
 	}
 
-	public BookingTransport findOne(final int bookingTransportId) {
-		return this.bookingTransportRepository.findOne(bookingTransportId);
-	}
-
 	public boolean isReserved(final BookingTransport bookingTransport) {
 		boolean res = false;
 		final Collection<BookingTransport> bookings = this.bookingTransportRepository.getTransportBookings(bookingTransport.getTransport().getId());
@@ -64,7 +60,7 @@ public class BookingTransportService {
 		this.validator.validate(res, binding);
 		return res;
 	}
-	
+
 	public BookingTransport findOne(final int id) {
 		return this.bookingTransportRepository.findOne(id);
 	}

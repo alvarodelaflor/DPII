@@ -24,8 +24,6 @@ import domain.Host;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
-import repositories.TravelPackRepository;
-import security.LoginService;
 
 @Service
 @Transactional
@@ -39,6 +37,9 @@ public class TravelPackService {
 
 	@Autowired
 	private AccomodationService		accService;
+
+	@Autowired
+	private CustomerService			customerService;
 
 	@Autowired
 	private Validator				validator;
@@ -120,12 +121,6 @@ public class TravelPackService {
 		return tp;
 	}
 
-	public Collection<TravelPack> getLoggedNotDraftStatusNull() {
-		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
-		final Customer c = this.customerService.getLoggedCustomer();
-		return this.travelPackRepository.getLoggedNotDraftStatusNull(c.getId());
-	}
-
 	public Collection<TravelPack> getLoggedNotDraftStatusTrue() {
 		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
 		final Customer c = this.customerService.getLoggedCustomer();
@@ -137,6 +132,13 @@ public class TravelPackService {
 		final Customer c = this.customerService.getLoggedCustomer();
 		return this.travelPackRepository.getLoggedNotDraftStatusFalse(c.getId());
 	}
+
+	public Collection<TravelPack> getLoggedNotDraftStatusNull() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusNull(c.getId());
+	}
+
 	public void deleteCustomerTravelPacks(final Customer customer) {
 		final Collection<TravelPack> items = this.getCustomerPacks(customer.getId());
 		if (items != null && !items.isEmpty())
@@ -147,7 +149,6 @@ public class TravelPackService {
 	private Collection<TravelPack> getCustomerPacks(final int id) {
 		return this.travelPackRepository.getCustomerTravelPacks(id);
 	}
-
 
 	public Collection<Host> getHosts(final TravelPack travelPack) {
 		final Collection<Host> res = new HashSet<>();

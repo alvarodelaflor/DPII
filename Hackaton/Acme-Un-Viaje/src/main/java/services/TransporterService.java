@@ -201,11 +201,6 @@ public class TransporterService {
 		return this.getTransporterByUserAccountId(id);
 	}
 
-	public Transporter findOne(final int id) {
-
-		return this.transporterRepository.findOne(id);
-	}
-
 	public List<String> bestTransporter() {
 		final List<String> res = new ArrayList<>();
 		final List<Transporter> transporters = new ArrayList<>();
