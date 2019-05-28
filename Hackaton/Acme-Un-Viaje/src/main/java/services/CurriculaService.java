@@ -108,7 +108,7 @@ public class CurriculaService {
 		Assert.isTrue(checkValidCurricula(curricula), "No pass check");
 		final Curricula curriculaDB = this.curriculaRepository.findOne(curricula.getId());
 		if (curriculaDB != null) {
-			Assert.isTrue(curricula.getCleaner().equals(cleanerLogin), notValidUser);
+			Assert.isTrue(curriculaDB.getCleaner().equals(cleanerLogin), notValidUser);
 		}
 		return this.curriculaRepository.save(curricula);
 	}
