@@ -646,8 +646,8 @@
 
 	<!-- FINDERREQUEST -->
 	<bean id="finderRequest01" class="domain.FinderRequest">
-		<property name="price" value="80" />
-		<property name="place" value="Sevilla" />
+		<property name="price" value="0" />
+		<property name="place" value="" />
 		<property name="startDate" value="2019/12/11" />
 	</bean>
 	<!-- FINDERREQUEST -->

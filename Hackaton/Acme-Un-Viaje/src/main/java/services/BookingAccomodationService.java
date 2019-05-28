@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.BookingAccomodationRepository;
 import domain.BookingAccomodation;
 import forms.BookingAccForm;
 import repositories.BookingAccomodationRepository;
@@ -40,6 +39,7 @@ public class BookingAccomodationService {
 	public BookingAccomodation save(final BookingAccomodation bookingAccomodation) {
 		System.out.println("Service: " + bookingAccomodation.getAccomodation().toString());
 		Assert.isTrue(!this.isReserved(bookingAccomodation), "error.accomodationAlreadyReserved");
+		Assert.isTrue(bookingAccomodation.getStartDate().before(bookingAccomodation.getEndDate()), "error.startDateAfterEndDate");
 		return this.bookingAccomodationRepository.save(bookingAccomodation);
 	}
 

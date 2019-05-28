@@ -33,7 +33,17 @@ public class TravelPack extends DomainEntity {
 	private Double							price;
 	private Collection<Complaint>			complaints;
 	private Boolean							status;
+	private Warranty						warranty;
 
+
+	@ManyToOne(optional = true)
+	public Warranty getWarranty() {
+		return this.warranty;
+	}
+
+	public void setWarranty(final Warranty warranty) {
+		this.warranty = warranty;
+	}
 
 	public Boolean getDraft() {
 		return this.draft;

@@ -280,8 +280,8 @@
 								
 
 								<li class="nav-item">
-									<a href="finderRequest/travelAgency/show.do" class="nav-link">
-										<spring:message code="master.page.request.list" />
+									<a href="finder/travelAgency/show.do" class="nav-link">
+										<spring:message code="master.page.accomodation.list" />
 									</a>
 								</li>
 
@@ -290,10 +290,6 @@
 										<spring:message code="master.page.travelPack.list" />
 									</a>
 								</li>
-								<li class="nav-item"><a
-									href="travelPack/travelAgency/list.do" class="nav-link"> <spring:message
-											code="master.page.travelPack.list" />
-								</a></li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('HOST')">
