@@ -16,74 +16,58 @@
 			<fieldset>
 				<div class="row">
 					<div class="col-md-5">
-						<strong><spring:message code="bookingAccomodation.startDate" /></strong>
+						<strong><spring:message code="transport.numberOfPlaces" /></strong>
 					</div>
 					<div class="col-md-7">
-						<acme:displayDateTable date="${bookingAccomodation.startDate}" />
+						<jstl:out value="${bookingTransport.transport.numberOfPlaces}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-5">
-						<strong><spring:message code="bookingAccomodation.endDate" /></strong>
+						<strong><spring:message code="transport.reservedPlaces" /></strong>
 					</div>
 					<div class="col-md-7">
-						<acme:displayDateTable date="${bookingAccomodation.endDate}" />
+						<jstl:out value="${bookingTransport.transport.reservedPlaces}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-5">
-						<strong><spring:message code="accomodation.pricePerNight" /></strong>
+						<strong><spring:message code="transport.price" /></strong>
 					</div>
 					<div class="col-md-7">
-						<jstl:out value="${bookingAccomodation.accomodation.pricePerNight}" />
+						<jstl:out value="${bookingTransport.transport.price}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-5">
-						<strong><spring:message code="accomodation.rating" /></strong>
+						<strong><spring:message code="transport.date" /></strong>
 					</div>
 					<div class="col-md-7">
-						<jstl:out value="${bookingAccomodation.accomodation.rating}" />
+						<jstl:out value="${bookingTransport.transport.date}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-5">
-						<strong><spring:message code="accomodation.address" /></strong>
+						<strong><spring:message code="transport.vehicleType" /></strong>
 					</div>
 					<div class="col-md-7">
-						<jstl:out value="${bookingAccomodation.accomodation.address}" />
+						<jstl:out value="${bookingTransport.transport.vehicleType}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-5">
-						<strong><spring:message code="accomodation.place" /></strong>
+						<strong><spring:message code="transport.origin" /></strong>
 					</div>
 					<div class="col-md-7">
-						<jstl:out value="${bookingAccomodation.accomodation.place}" />
+						<jstl:out value="${bookingTransport.transport.origin}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-5">
-						<strong><spring:message code="accomodation.description" /></strong>
+						<strong><spring:message code="transport.destination" /></strong>
 					</div>
 					<div class="col-md-7">
-						<jstl:out value="${bookingAccomodation.accomodation.description}" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-5">
-						<strong><spring:message code="accomodation.maxPeople" /></strong>
-					</div>
-					<div class="col-md-7">
-						<jstl:out value="${bookingAccomodation.accomodation.maxPeople}" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-5">
-						<strong><spring:message code="accomodation.host" /></strong>
-					</div>
-					<div class="col-md-7">
-						<jstl:out value="${bookingAccomodation.accomodation.host.name} ${bookingAccomodation.accomodation.host.surname}" />
+						<jstl:out value="${bookingTransport.transport.destination}" />
 					</div>
 				</div>
 			</fieldset>
