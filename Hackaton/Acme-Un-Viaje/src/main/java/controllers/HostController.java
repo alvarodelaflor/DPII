@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -24,8 +24,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Customer;
+import domain.Host;
+import domain.JobApplication;
+import domain.Valoration;
+import forms.RegisterActor;
 import security.LoginService;
 import services.AccomodationService;
 import services.CleanerService;
@@ -34,13 +42,6 @@ import services.CustomerService;
 import services.HostService;
 import services.JobApplicationService;
 import services.ValorationService;
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Customer;
-import domain.Host;
-import domain.JobApplication;
-import domain.Valoration;
-import forms.RegisterActor;
 
 @Controller
 @RequestMapping("/host")
@@ -343,6 +344,39 @@ public class HostController extends AbstractController {
 			res.addObject("validCleaner", false);
 		}
 		return res;
+	}
+
+	//EXPORT
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody Host export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Host result = new Host();
+		result = this.hostService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	//DELETE
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int hostId) {
+		ModelAndView result;
+
+		final Host host = this.hostService.findOne(hostId);
+		System.out.println("Host encontrado: " + host);
+		if (this.hostService.findOne(hostId) == null || LoginService.getPrincipal().getId() != host.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(host, "host.null");
+
+			try {
+				this.hostService.delete(host);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				e.printStackTrace();
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			}
+		}
+		return result;
 	}
 
 }

@@ -14,40 +14,52 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.HostRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Cleaner;
 import domain.CreditCard;
 import domain.Host;
 import forms.RegisterActor;
+import repositories.HostRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
 public class HostService {
 
 	@Autowired
-	private HostRepository	hostRepository;
+	private HostRepository			hostRepository;
 
 	@Autowired
-	private CleanerService	cleanerService;
+	private CleanerService			cleanerService;
 
 	@Autowired
-	private Validator		validator;
+	private Validator				validator;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private ConfigService	configService;
+	private ConfigService			configService;
+
+	@Autowired
+	private AccomodationService		accomodationService;
+
+	@Autowired
+	private ComplaintService		complaintService;
+
+	@Autowired
+	private ValorationService		valorationService;
+
+	@Autowired
+	private SocialProfileService	socialProfileService;
 
 
 	//CRUD METHODS
 
 	/**
 	 * Return all hosts save in DataBase
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Host}>
 	 */
@@ -218,9 +230,9 @@ public class HostService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Return the host who is login if exits, null otherwise
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Host}
 	 */
@@ -237,7 +249,7 @@ public class HostService {
 	/**
 	 * Return the host available for an especific cleaner job application<br>
 	 * Cleaner must exits in DataBase
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link Host}>
 	 */
@@ -259,5 +271,15 @@ public class HostService {
 			return res;
 		else
 			return res.subList(0, 2);
+	}
+
+	public void delete(final Host host) {
+		Assert.isTrue(host.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.socialProfileService.deleteActorSocialProfiles(host);
+		this.accomodationService.deleteAllByHost(host);
+		this.complaintService.deleteHostComplaints(host);
+		this.valorationService.deleteAllByCustomer(host);
+		this.hostRepository.delete(host);
+
 	}
 }

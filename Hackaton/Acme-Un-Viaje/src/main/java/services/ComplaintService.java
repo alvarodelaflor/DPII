@@ -12,6 +12,7 @@ import org.springframework.validation.Validator;
 
 import domain.Complaint;
 import domain.Customer;
+import domain.Host;
 import domain.TravelPack;
 import repositories.ComplaintRepository;
 import security.Authority;
@@ -127,6 +128,14 @@ public class ComplaintService {
 		if (items != null && !items.isEmpty())
 			for (final Complaint item : items)
 				this.delete(item.getId());
+	}
+
+	public void deleteHostComplaints(final Host host) {
+		final Collection<Complaint> items = this.complaintRepository.getHostComplaints(host.getId());
+		if (items != null && !items.isEmpty())
+			for (final Complaint item : items)
+				this.delete(item.getId());
+
 	}
 
 }

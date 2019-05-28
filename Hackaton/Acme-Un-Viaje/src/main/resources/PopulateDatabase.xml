@@ -705,19 +705,6 @@
 	</bean>
 	<!-- FINDERACCOMODATION -->
 
-	<!-- BOOKINGACCOMODATION -->
-	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
-		<property name="startDate" value="2019/11/09" />
-		<property name="endDate" value="2019/11/10" />
-		<property name="accomodation" ref="accomodation01" />
-	</bean>
-
-	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
-		<property name="startDate" value="2019/11/11" />
-		<property name="endDate" value="2019/11/15" />
-		<property name="accomodation" ref="accomodation02" />
-	</bean>
-	<!-- BOOKINGACCOMODATION -->
 
 
 	<!-- FINDERREQUEST -->
@@ -738,6 +725,7 @@
 		<property name="accomodations">
 			<list>
 				<ref bean="bookingAccomodation02" />
+				<ref bean="bookingaccomodation02" />
 			</list>
 		</property>
 		<property name="transports">
@@ -760,6 +748,7 @@
 		<property name="accomodations">
 			<list>
 				<ref bean="bookingAccomodation01" />
+				<ref bean="bookingaccomodation01" />
 			</list>
 		</property>
 		<property name="transports">
@@ -769,6 +758,32 @@
 		</property>
 	</bean>
 	<!-- TRAVELPACK -->
+
+	<!-- BOOKINGACCOMODATION -->
+	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
+		<property name="accomodation" ref="accomodation01" />
+		<property name="endDate" value="2020/12/11" />
+		<property name="startDate" value="2019/12/11" />
+	</bean>
+
+	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
+		<property name="accomodation" ref="accomodation01" />
+		<property name="endDate" value="2020/12/11" />
+		<property name="startDate" value="2019/12/11" />
+	</bean>
+	
+	<bean id="bookingaccomodation01" class="domain.BookingAccomodation">
+		<property name="startDate" value="2018/11/11" />
+		<property name="endDate" value="2018/11/12" />
+		<property name="accomodation" ref="accomodation01" />
+	</bean>
+
+	<bean id="bookingaccomodation02" class="domain.BookingAccomodation">
+		<property name="startDate" value="2022/11/11" />
+		<property name="endDate" value="2022/11/11" />
+		<property name="accomodation" ref="accomodation01" />
+	</bean>
+	<!-- BOOKINGACCOMODATION -->
 
 	<!-- BOOKINGTRANSPORT -->
 	<bean id="bookingTransport01" class="domain.BookingTransport">

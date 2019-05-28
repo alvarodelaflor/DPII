@@ -155,9 +155,13 @@
 		<c:otherwise>
 			<div class="row">
 				<div class="col-md-4">
-					<acme:cancel url="" code="actor.back" />
-		
-				</div>
+			<acme:cancel url="" code="actor.back" />
+			<acme:cancel url="/host/export.do?id=${registerActor.id}" code="export"/><br>
+			<spring:message code="delete.actor"></spring:message><br>
+			<spring:message code="delete.host"></spring:message><br>
+			<acme:cancel url="/host/delete.do?id=${registerActor.id}" code="delete"/>
+		</div>
+
 			</div>
 		</c:otherwise>
 	</c:choose>
