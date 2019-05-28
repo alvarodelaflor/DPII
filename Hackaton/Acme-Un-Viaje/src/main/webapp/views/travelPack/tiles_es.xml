@@ -25,5 +25,19 @@
 		<put-attribute name="body" value="/views/travelPack/show.jsp" />
 	</definition>
 	
+	<definition name="travelPack/customer/listOffered" extends="master.page">	
+		<put-attribute name="title" value="Listado de paquetes ofrecidos" />
+		<put-attribute name="body" value="/views/travelPack/customer/list.jsp" />
+	</definition>
 	
+	<definition name="travelPack/customer/listAccepted" extends="master.page">	
+		<put-attribute name="title" value="Listado de paquetes aceptados" />
+		<put-attribute name="body" value="/views/travelPack/customer/list.jsp" />
+	</definition>
+	
+	<definition name="travelPack/customer/listRejected" extends="master.page">	
+		<put-attribute name="title" value="Listado de paquetes rechazados" />
+		<put-attribute name="body" value="/views/travelPack/customer/list.jsp" />
+	</definition>
+		
 </tiles-definitions>

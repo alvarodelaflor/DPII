@@ -3,29 +3,45 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+
 <tiles-definitions>
 
-		<definition name="travelPack/travelAgency/create" extends="master.page">	
+	<definition name="travelPack/travelAgency/create" extends="master.page">
 		<put-attribute name="title" value="Editing pack" />
 		<put-attribute name="body" value="/views/travelPack/edit.jsp" />
 	</definition>
-	
-	<definition name="travelPack/travelAgency/edit" extends="master.page">	
+
+	<definition name="travelPack/travelAgency/edit" extends="master.page">
 		<put-attribute name="title" value="Editing pack" />
 		<put-attribute name="body" value="/views/travelPack/edit.jsp" />
 	</definition>
-	
-	<definition name="travelPack/travelAgency/list" extends="master.page">	
+
+	<definition name="travelPack/travelAgency/list" extends="master.page">
 		<put-attribute name="title" value="Travel Packs" />
 		<put-attribute name="body" value="/views/travelPack/list.jsp" />
 	</definition>
 
-	<definition name="travelPack/travelAgency/show" extends="master.page">	
+	<definition name="travelPack/travelAgency/show" extends="master.page">
 		<put-attribute name="title" value="Details" />
 		<put-attribute name="body" value="/views/travelPack/show.jsp" />
 	</definition>
-	
-	
-	
+
+	<definition name="travelPack/customer/listOffered" extends="master.page">
+		<put-attribute name="title" value="List of offered packs" />
+		<put-attribute name="body"
+			value="/views/travelPack/customer/list.jsp" />
+	</definition>
+
+	<definition name="travelPack/customer/listAccepted" extends="master.page">
+		<put-attribute name="title" value="List of accepted packs" />
+		<put-attribute name="body"
+			value="/views/travelPack/customer/list.jsp" />
+	</definition>
+
+	<definition name="travelPack/customer/listRejected" extends="master.page">
+		<put-attribute name="title" value="List of rejected packs" />
+		<put-attribute name="body"
+			value="/views/travelPack/customer/list.jsp" />
+	</definition>
+
 </tiles-definitions>
