@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -9,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Actor;
+import domain.SocialProfile;
 import repositories.SocialProfileRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Actor;
-import domain.SocialProfile;
 
 @Service
 @Transactional
@@ -32,7 +33,7 @@ public class SocialProfileService {
 		return socialProfile;
 	}
 
-	public SocialProfile save(final SocialProfile socialProfile) { 
+	public SocialProfile save(final SocialProfile socialProfile) {
 		final UserAccount user = LoginService.getPrincipal();
 		final Actor test = this.actorService.getActorByUserId(user.getId());
 		Assert.isTrue(socialProfile != null);
@@ -65,6 +66,13 @@ public class SocialProfileService {
 		final Collection<SocialProfile> res = new ArrayList<>();
 		res.addAll(this.socialProfileRepository.getSocialProfilesByActor(actorId));
 		return res;
+	}
+
+	public void deleteActorSocialProfiles(final Actor actor) {
+		final Collection<SocialProfile> profiles = this.getSocialProfilesByActor(actor.getId());
+		if (profiles != null && !profiles.isEmpty())
+			for (final SocialProfile socialProfile : profiles)
+				this.delete(socialProfile);
 	}
 
 }

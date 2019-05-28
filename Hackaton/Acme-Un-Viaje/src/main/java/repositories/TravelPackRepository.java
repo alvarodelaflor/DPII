@@ -20,4 +20,7 @@ public interface TravelPackRepository extends JpaRepository<TravelPack, Integer>
 
 	@Query("select t from TravelPack t join t.complaints c where c.id = ?1")
 	TravelPack findFromComplaint(int complaintId);
+
+	@Query("select t from TravelPack t where t.customer.id = ?1")
+	Collection<TravelPack> getCustomerTravelPacks(int id);
 }

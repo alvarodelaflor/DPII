@@ -10,6 +10,7 @@
 
 package controllers;
 
+import java.text.DecimalFormat;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,8 +123,11 @@ public class TravelPackTravelAgencyController extends AbstractController {
 
 		ModelAndView result;
 		try {
+
 			final TravelPack travelPack = this.travelPackService.findOne(travelPackId);
+			final String price = new DecimalFormat("#.##").format(this.travelPackService.calculatePrice(travelPack));
 			result = new ModelAndView("travelPack/travelAgency/show");
+			result.addObject("price", price);
 			result.addObject("travelPack", travelPack);
 			result.addObject("requestURI", "travelPack/travelAgency/show.do?travelPackId=" + travelPackId);
 		} catch (final Throwable oops) {

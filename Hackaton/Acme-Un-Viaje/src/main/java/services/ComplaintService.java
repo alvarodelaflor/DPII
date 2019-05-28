@@ -10,15 +10,15 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ComplaintRepository;
-import security.Authority;
-import utilities.CommonUtils;
 import domain.Complaint;
 import domain.Customer;
 import domain.Host;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
+import repositories.ComplaintRepository;
+import security.Authority;
+import utilities.CommonUtils;
 
 @Service
 public class ComplaintService {
@@ -129,6 +129,13 @@ public class ComplaintService {
 	public Complaint getComplaintOfReview(final int reviewId) {
 		final Complaint res = this.complaintRepository.getComplaintOfReview(reviewId);
 		return res;
+	}
+
+	public void deleteCustomerComplaints(final Customer customer) {
+		final Collection<Complaint> items = this.complaintRepository.getCustomerComplaints(customer.getId());
+		if (items != null && !items.isEmpty())
+			for (final Complaint item : items)
+				this.delete(item.getId());
 	}
 
 }

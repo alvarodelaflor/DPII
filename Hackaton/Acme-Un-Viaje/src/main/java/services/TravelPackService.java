@@ -12,12 +12,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.TravelPackRepository;
-import security.LoginService;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
+import domain.Customer;
 import domain.TravelAgency;
 import domain.TravelPack;
+import repositories.TravelPackRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -109,6 +110,17 @@ public class TravelPackService {
 	public TravelPack findFromComplaint(final int complaintId) {
 		final TravelPack tp = this.travelPackRepository.findFromComplaint(complaintId);
 		return tp;
+	}
+
+	public void deleteCustomerTravelPacks(final Customer customer) {
+		final Collection<TravelPack> items = this.getCustomerPacks(customer.getId());
+		if (items != null && !items.isEmpty())
+			for (final TravelPack item : items)
+				this.travelPackRepository.delete(item);
+	}
+
+	private Collection<TravelPack> getCustomerPacks(final int id) {
+		return this.travelPackRepository.getCustomerTravelPacks(id);
 	}
 
 }
