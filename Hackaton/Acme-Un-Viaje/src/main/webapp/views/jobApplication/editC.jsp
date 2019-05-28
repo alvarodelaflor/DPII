@@ -55,6 +55,9 @@
 							<spring:message htmlEscape="false" code="createCurricula"/>
 						</a>		
 					</p>
+					<acme:historyBack/>
+					<br>
+					<br>
 					<br>
 					<br>
 					<br>

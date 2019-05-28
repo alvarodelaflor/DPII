@@ -1,21 +1,29 @@
-package hackerRankTest;
+package unViaje;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import domain.Cleaner;
+import domain.CreditCard;
 import domain.Curricula;
+import domain.EducationalData;
 import domain.MiscellaneousAttachment;
 import services.CleanerService;
+import services.ConfigService;
 import services.CurriculaService;
+import services.EducationalDataService;
 import services.MiscellaneousAttachmentService;
 import utilities.AbstractTest;
 
@@ -32,6 +40,12 @@ public class CurriculaServiceTest extends AbstractTest {
 	
 	@Autowired
 	private MiscellaneousAttachmentService miscellaneousAttachmentService;
+	
+	@Autowired
+	private EducationalDataService educationalDataService;
+	
+	@Autowired
+	private ConfigService configService;
 
 
 
@@ -44,7 +58,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	 * Analysis of data coverage
 	 * ~10%
 	 */
-//	@Test
+	@Test
 	public void Diver01Data() {
 		final Object testingData[][] = {
 			{
@@ -59,8 +73,6 @@ public class CurriculaServiceTest extends AbstractTest {
 				"Me gustaría entrar en su empresa", "Soy un experto programador Java", "+34695456123", null, "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
 				"Me gustaría entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", null, true, false,IllegalArgumentException.class
-			} , {
-				"Me gustaría entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", false, false,IllegalArgumentException.class
 			} , {
 				" ", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
@@ -80,7 +92,7 @@ public class CurriculaServiceTest extends AbstractTest {
 
 	}
 	
-//	@Test
+	@Test
 	public void Diver02Data() {
 		final Object testingData[][] = {
 			{
@@ -113,8 +125,72 @@ public class CurriculaServiceTest extends AbstractTest {
 			this.Diver02((Boolean) testingData[i][0],(Class<?>) testingData[i][1]);
 
 	}
+	
+	@Test
+	public void Diver04Data() {
+		final Object testingData[][] = {
+			{
+				true, null
+			}, {
+				false, IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.Diver03((Boolean) testingData[i][0],(Class<?>) testingData[i][1]);
+
+	}
 
 	//Ancillary methods------------------------------------------------------
+	
+	private Cleaner createCleaner() {
+		try {
+			final Cleaner cleaner2 = this.cleanerService.create();
+			List<String> make = (List<String>) this.configService.getConfiguration().getCreditCardMakeList();
+			
+			SimpleDateFormat parseador = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = parseador.parse("1998/11/11");
+			
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hashPassword = encoder.encodePassword("password", null);
+			cleaner2.getUserAccount().setPassword(hashPassword);
+			cleaner2.getUserAccount().setUsername("userAccountwrggrts");
+			cleaner2.setName("name");
+			cleaner2.setSurname("surname");
+			cleaner2.setEmail("email");
+			cleaner2.setPhone("phone");
+			cleaner2.setPhoto("https:///photo");
+			cleaner2.setBirthDate(date);
+			CreditCard creditCard = new CreditCard();
+			creditCard.setHolder("holder");
+			creditCard.setMake(make.get(0));
+			creditCard.setNumber("1234567890987654");
+			creditCard.setCVV("123");
+			creditCard.setExpiration("03/20");
+			cleaner2.setCreditCard(creditCard);
+			Cleaner cleanerCreate = this.cleanerService.saveRegisterAsCleaner(cleaner2);
+			return cleanerCreate;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	private Curricula createCurricula(String name, String statement, String phone, String linkStatement, String bannerLogo, Boolean cleanerBoolean) {
+		final Cleaner cleaner = this.cleanerService.findAll().iterator().next();
+		this.curriculaService.checkAnyLogger();
+		final Curricula curricula = this.curriculaService.create();
+		curricula.setName(name);
+		curricula.setStatement(statement);
+		curricula.setPhone(phone);
+		curricula.setLinkLinkedin(linkStatement);
+		curricula.setBannerLogo(bannerLogo);
+		curricula.setIsCopy(false);
+		curricula.setCleaner(cleaner);				
+		Curricula theSaved = this.curriculaService.save(curricula);		
+		Curricula curriculaReconstruct = this.curriculaService.reconstruct(curricula, null);
+		return theSaved;
+	}
 
 	protected void Diver01(String name, String statement, String phone, String linkStatement, String bannerLogo, Boolean cleanerBoolean, Boolean edit, final Class<?> expected) {
 		Class<?> caught = null;
@@ -122,49 +198,26 @@ public class CurriculaServiceTest extends AbstractTest {
 		try {
 			this.startTransaction();
 
-			final Cleaner cleaner = this.cleanerService.findAll().iterator().next();
-
-			super.authenticate(cleaner.getUserAccount().getUsername());
-
-			final Curricula curricula = this.curriculaService.create();
-			
+			// Creo una curricula con el actor cleaner
+			super.authenticate("cleaner");
+			Curricula theSaved = this.createCurricula(name, statement, phone, linkStatement, bannerLogo, cleanerBoolean);
+			super.unauthenticate();
 			
 			if (edit) {
-				
-
-				curricula.setName(name);
-				curricula.setStatement(statement);
-				curricula.setPhone(phone);
-				curricula.setLinkLinkedin(linkStatement);
-				curricula.setBannerLogo(bannerLogo);
-				curricula.setIsCopy(false);
-				curricula.setCleaner(cleaner);				
-				Curricula theSaved = this.curriculaService.save(curricula);
-				
-				super.unauthenticate();
-				
 				if (cleanerBoolean) {
-					super.authenticate(cleaner.getUserAccount().getUsername());
-				}
-				
-				
-				theSaved.setName("name edit");
-				this.curriculaService.save(theSaved);
-				Assert.isTrue(this.curriculaService.findOne(theSaved.getId()).getName().equals("name edit"), "Diferent");
-			} else {				
-				curricula.setName(name);
-				curricula.setStatement(statement);
-				curricula.setPhone(phone);
-				curricula.setLinkLinkedin(linkStatement);
-				curricula.setBannerLogo(bannerLogo);
-				curricula.setIsCopy(false);
-				if (cleanerBoolean) {
-					curricula.setCleaner(cleaner);				
+					// Logueo el actor que ha creado la curricula inicial
+					super.authenticate("cleaner");
 				} else {
-					curricula.setCleaner(null);
+					// Creo un actor para intentar editar la curricula
+					Cleaner cleanerCreate = this.createCleaner();
+					super.authenticate(cleanerCreate.getUserAccount().getUsername());
 				}
-				this.curriculaService.save(curricula);
-			}
+			theSaved.setName("name edit");
+			this.curriculaService.save(theSaved);
+			Assert.isTrue(this.curriculaService.findOne(theSaved.getId()).getName().equals("name edit"), "Diferent");
+			
+			this.curriculaService.flush();
+		}
 			
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -186,18 +239,12 @@ public class CurriculaServiceTest extends AbstractTest {
 
 			super.authenticate(cleaner.getUserAccount().getUsername());
 			
-			Curricula curriculaII = this.curriculaService.create();
-			
-			curriculaII.setName("Nombre");
-			curriculaII.setStatement("Statement");
-			curriculaII.setPhone("+34 665 381 121");
-			curriculaII.setLinkLinkedin("https://");
-			curriculaII.setBannerLogo("https://");
-			curriculaII.setIsCopy(false);
-			curriculaII.setCleaner(cleaner);				
+			Curricula curriculaII = this.createCurricula("Nombre", "Statement", "+34 665 381 121", "https://", "https://", false);	
 			this.curriculaService.save(curriculaII);
 			
 			Collection<Curricula> curriculas = this.curriculaService.findAllByCleaner(cleaner);
+			Collection<Curricula> curriculasAll = this.curriculaService.findAll();
+			Collection<Curricula> curriculasAll2 = this.curriculaService.findAllNotCopyByCleaner(cleaner);
 			
 			for (Curricula curricula : curriculas) {
 				
@@ -207,16 +254,61 @@ public class CurriculaServiceTest extends AbstractTest {
 				curricula.getName();
 				curricula.getPhone();
 				curricula.getStatement();
+				this.curriculaService.minCurriculaPerCleaner();
+				this.curriculaService.maxCurriculaPerCleaner();
+				this.curriculaService.avgCurriculaPerCleaner();
+				this.curriculaService.stddevCurriculaPerCleaner();
 				super.unauthenticate();
 				if (cleanerLogin) {
 					super.authenticate(cleaner.getUserAccount().getUsername());
 				}
 				MiscellaneousAttachment mis = this.miscellaneousAttachmentService.createWithHistory(curricula);
 				mis.setAttachment("Prueba");
-				MiscellaneousAttachment misSaved = this.miscellaneousAttachmentService.save(mis); 
+				this.miscellaneousAttachmentService.save(mis); 
+				super.unauthenticate();
+			}
+			this.curriculaService.flush();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+		this.checkExceptions(expected, caught);
+	}
+	
+	protected void Diver03(Boolean cleanerLogin, final Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+
+			Cleaner cleaner = this.cleanerService.findAll().iterator().next();
+			super.authenticate(cleaner.getUserAccount().getUsername());
+			Curricula curriculaII = this.createCurricula("Nombre", "Statement", "+34 665 381 121", "https://", "https://", false);
+			MiscellaneousAttachment mis = this.miscellaneousAttachmentService.createWithHistory(curriculaII);
+			mis.setAttachment("Prueba");
+			this.miscellaneousAttachmentService.save(mis); 
+			EducationalData educationalData = this.educationalDataService.createWithHistory(curriculaII);
+			educationalData.setDegree("Ing Info");
+			SimpleDateFormat parseador = new SimpleDateFormat("yyyy/MM/dd");
+			Date dateStart = parseador.parse("1998/11/11");
+			Date dateEnd = parseador.parse("2018/11/11");
+			educationalData.setStartDate(dateStart);
+			educationalData.setEndDate(dateEnd);
+			educationalData.setInstitution("ETSII");
+			educationalData.setIsCopy(false);
+			educationalData.setMark("A+");
+			this.educationalDataService.save(educationalData);
+			Curricula curriculaReconstruct = this.curriculaService.reconstruct(curriculaII, null);
+			Curricula toDelete = this.curriculaService.save(curriculaReconstruct);
+			
+			if (!cleanerLogin) {
 				super.unauthenticate();
 			}
 			
+			this.curriculaService.delete(toDelete);
+			this.curriculaService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		} finally {
