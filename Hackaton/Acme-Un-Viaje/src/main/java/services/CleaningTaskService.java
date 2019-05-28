@@ -95,4 +95,15 @@ public class CleaningTaskService {
 			return res;
 		}
 		
+		public void deleteCleanerTasks(final Cleaner cleaner) {
+		final Collection<CleaningTask> tasks = this.getCleanerCleaningTasks(cleaner.getId());
+		if (tasks != null && !tasks.isEmpty())
+			for (final CleaningTask task : tasks)
+				this.delete(task);
+		}
+		
+		private Collection<CleaningTask> getCleanerCleaningTasks(final int id) {
+		return this.cleaningTaskRepository.getCleanerCleaningTaks(id);
+		}
+		
 }
