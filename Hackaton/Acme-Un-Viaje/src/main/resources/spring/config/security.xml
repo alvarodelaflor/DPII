@@ -136,15 +136,17 @@
 		<security:intercept-url pattern="/message/editBroadcast.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/message/delete.do" access="permitAll" />
 		<security:intercept-url pattern="/message/editMailbox.do" access="permitAll" />
-
-		<security:intercept-url pattern="/cleaningTask/list.do" access="hasRole('HOST')" />
-		<security:intercept-url pattern="/cleaningTask/show.do" access="hasRole('HOST')" />
-		<security:intercept-url pattern="/cleaningTask/create.do" access="hasRole('HOST')" />
-		<security:intercept-url pattern="/cleaningTask/delete.do" access="hasRole('HOST')" />
-
-		<security:intercept-url pattern="/review/list.do" access="hasRole('REFEREE')" />
-		<security:intercept-url pattern="/review/show.do" access="hasRole('REFEREE')" />
-		<security:intercept-url pattern="/review/create.do" access="hasRole('REFEREE')" />
+		
+		<security:intercept-url pattern="/cleaningTask/list.do" access="hasRole('HOST')" /> 
+		<security:intercept-url pattern="/cleaningTask/cleaner/list.do" access="hasRole('CLEANER')" /> 
+		<security:intercept-url pattern="/cleaningTask/cleaner/show.do" access="hasRole('CLEANER')" /> 
+		<security:intercept-url pattern="/cleaningTask/show.do" access="hasRole('HOST')" /> 
+		<security:intercept-url pattern="/cleaningTask/create.do" access="hasRole('HOST')" /> 
+		<security:intercept-url pattern="/cleaningTask/delete.do" access="hasRole('HOST')" /> 
+		
+		<security:intercept-url pattern="/review/list.do" access="hasRole('REFEREE')" /> 
+		<security:intercept-url pattern="/review/show.do" access="hasRole('REFEREE')" /> 
+		<security:intercept-url pattern="/review/create.do" access="hasRole('REFEREE')" /> 
 		<!-- Antonio -->
 
 		<!-- HIPONA -->

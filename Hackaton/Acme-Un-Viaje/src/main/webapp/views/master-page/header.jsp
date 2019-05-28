@@ -87,6 +87,9 @@
 										<a href="jobApplication/cleaner/list.do" class="dropdown-item">
 											<spring:message code="jobApplication" />
 										</a>
+										<a href="cleaningTask/cleaner/list.do" class="dropdown-item">
+											<spring:message code="master.page.cleaningTask.list" />
+										</a>
 									</div>
 								</li>
 								<li class="nav-item dropdown">
