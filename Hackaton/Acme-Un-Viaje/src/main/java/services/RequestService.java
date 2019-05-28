@@ -10,11 +10,8 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Actor;
 import domain.Customer;
-import domain.Mailbox;
 import domain.Request;
-import domain.SocialProfile;
 import repositories.RequestRepository;
 import security.LoginService;
 import security.UserAccount;
@@ -24,18 +21,19 @@ import security.UserAccount;
 public class RequestService {
 
 	@Autowired
-	private RequestRepository requestRepository;
+	private RequestRepository	requestRepository;
 
 	@Autowired
-	private Validator validator;
+	private Validator			validator;
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerService		customerService;
+
 
 	public Request create() {
 		final Request request = new Request();
-		UserAccount userL = LoginService.getPrincipal();
-		Customer customer = this.customerService.getCustomerByUserAccountId(userL.getId());
+		final UserAccount userL = LoginService.getPrincipal();
+		final Customer customer = this.customerService.getCustomerByUserAccountId(userL.getId());
 		Assert.notNull(customer);
 		request.setCustomer(customer);
 		return request;
@@ -58,17 +56,15 @@ public class RequestService {
 		requestNew.setOrigin(request.getOrigin());
 		requestNew.setDestination(request.getDestination());
 
-		UserAccount userL = LoginService.getPrincipal();
-		Customer customer = this.customerService.getCustomerByUserAccountId(userL.getId());
+		final UserAccount userL = LoginService.getPrincipal();
+		final Customer customer = this.customerService.getCustomerByUserAccountId(userL.getId());
 		Assert.notNull(customer);
 		request.setCustomer(customer);
 
 		this.validator.validate(requestNew, binding);
 
-
-		if (binding.hasFieldErrors("numberOfPeople")) {
+		if (binding.hasFieldErrors("numberOfPeople"))
 			binding.getModel().put("numberOfPeople", "patatoide");
-		}
 		return requestNew;
 	}
 
@@ -79,26 +75,34 @@ public class RequestService {
 		return this.requestRepository.getCustomerRequest(actor.getId());
 	}
 
-	private void check(Request request, BindingResult binding) {
+	private void check(final Request request, final BindingResult binding) {
 
-		if (request.getEndDate() != null && request.getStartDate() != null
-				&& request.getStartDate().after(request.getEndDate())) {
+		if (request.getEndDate() != null && request.getStartDate() != null && request.getStartDate().after(request.getEndDate()))
 			binding.rejectValue("endDate", "error.beforeDate");
-		}
 	}
-	
+
 	public void delete(final Request request) {
-		Customer customer = this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId());
+		final Customer customer = this.customerService.getCustomerByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(customer);
 		Assert.isTrue(request.getCustomer().equals(customer));
-		Assert.isTrue(request.getStatus()==false);
+		Assert.isTrue(request.getStatus() == false);
 		this.requestRepository.delete(request);
 	}
-	
+	public void deleteByeActor(final Request request) {
+		this.requestRepository.delete(request);
+	}
+
 	public Request findOne(final int id) {
 		final Request result = this.requestRepository.findOne(id);
 		return result;
 	}
 
+	public void deleteCustomerRequests(final Customer customer) {
+		final Collection<Request> requests = this.getCustomerRequest();
+		if (requests != null && !requests.isEmpty())
+			for (final Request socialProfile : requests)
+				this.deleteByeActor(socialProfile);
+
+	}
 
 }

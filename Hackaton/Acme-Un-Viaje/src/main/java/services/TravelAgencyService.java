@@ -12,37 +12,38 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.TravelAgencyRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.CreditCard;
 import domain.FinderAccomodation;
 import domain.FinderRequest;
 import domain.TravelAgency;
 import forms.RegisterActor;
-import repositories.TravelAgencyRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
 public class TravelAgencyService {
 
 	@Autowired
-	private TravelAgencyRepository travelAgencyRepository;
+	private TravelAgencyRepository		travelAgencyRepository;
 
 	@Autowired
-	private Validator validator;
+	private Validator					validator;
 
 	@Autowired
-	private ActorService actorService;
-	
+	private ActorService				actorService;
+
 	@Autowired
-	private ConfigService configService;
-	
+	private ConfigService				configService;
+
 	@Autowired
-	private FinderAccomodationService finderAccomodationService;
-	
+	private FinderAccomodationService	finderAccomodationService;
+
 	@Autowired
-	private FinderRequestService finderRequestService;
+	private FinderRequestService		finderRequestService;
+
 
 	// REGISTER AS TRAVEL
 	// ---------------------------------------------------------------
@@ -52,12 +53,12 @@ public class TravelAgencyService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.TRAVELAGENCY);
-		
-		FinderAccomodation finderA = this.finderAccomodationService.create();
-		FinderAccomodation finderAs = this.finderAccomodationService.save(finderA);
-		FinderRequest finderR = this.finderRequestService.create();
-		FinderRequest finderRS = this.finderRequestService.save(finderR);
-		
+
+		final FinderAccomodation finderA = this.finderAccomodationService.create();
+		final FinderAccomodation finderAs = this.finderAccomodationService.save(finderA);
+		final FinderRequest finderR = this.finderRequestService.create();
+		final FinderRequest finderRS = this.finderRequestService.save(finderR);
+
 		travelAgency.setFinder(finderAs);
 		travelAgency.setFinderRequest(finderRS);
 
@@ -70,9 +71,8 @@ public class TravelAgencyService {
 	// SAVE REGISTER AS TRAVEL
 	// ---------------------------------------------------------------
 	public TravelAgency saveRegisterAsTravelAgency(final TravelAgency travelAgency) {
-		if (travelAgency.getPhone().matches("^([0-9]{4,})$")) {
-			 travelAgency.setPhone("+"+this.configService.getConfiguration().getDefaultPhoneCode()	+ " " + travelAgency.getPhone());
-		 }
+		if (travelAgency.getPhone().matches("^([0-9]{4,})$"))
+			travelAgency.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + travelAgency.getPhone());
 		return this.travelAgencyRepository.save(travelAgency);
 	}
 
@@ -112,6 +112,10 @@ public class TravelAgencyService {
 		return this.travelAgencyRepository.findByUserAccountId(userAccountId);
 	}
 
+	public TravelAgency findOne(final int travelAgencyId) {
+		return this.travelAgencyRepository.findOne(travelAgencyId);
+	}
+
 	// RECONSTRUCT EDIT DATA PERONAL
 	// ---------------------------------------------------------------
 	public TravelAgency reconstructEditDataPeronal(final TravelAgency registerActor, final BindingResult binding) {
@@ -129,7 +133,7 @@ public class TravelAgencyService {
 			travelAgency.setName(registerActor.getName());
 			travelAgency.setSurname(registerActor.getSurname());
 			travelAgency.setPhoto(registerActor.getPhoto());
-			CreditCard creditCard = travelAgency.getCreditCard();
+			final CreditCard creditCard = travelAgency.getCreditCard();
 			creditCard.setCVV(registerActor.getCreditCard().getCVV());
 			creditCard.setExpiration(registerActor.getCreditCard().getExpiration());
 			creditCard.setHolder(registerActor.getCreditCard().getHolder());
@@ -138,92 +142,84 @@ public class TravelAgencyService {
 			travelAgency.setCreditCard(creditCard);
 		}
 
-
 		return travelAgency;
 	}
-	
+
 	// CHECK EDIT DATA PERONAL
-		// ---------------------------------------------------------------
-		public void checkActorEdit(final TravelAgency registerActor, final BindingResult binding) {
+	// ---------------------------------------------------------------
+	public void checkActorEdit(final TravelAgency registerActor, final BindingResult binding) {
 
-			if (!registerActor.getCreditCard().getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
-				binding.rejectValue("creditCard.expiration", "error.expirationFormatter");
+		if (!registerActor.getCreditCard().getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}"))
+			binding.rejectValue("creditCard.expiration", "error.expirationFormatter");
 
-			final Calendar calendar = Calendar.getInstance();
-			if (registerActor.getCreditCard().getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}")) {
-				final String[] parts = registerActor.getCreditCard().getExpiration().split("/");
-				final String part1 = parts[0]; // MM
-				final String part2 = parts[1]; // YY
+		final Calendar calendar = Calendar.getInstance();
+		if (registerActor.getCreditCard().getExpiration().matches("([0-9]){2}" + "/" + "([0-9]){2}")) {
+			final String[] parts = registerActor.getCreditCard().getExpiration().split("/");
+			final String part1 = parts[0]; // MM
+			final String part2 = parts[1]; // YY
 
-				final int monthRigthNow = calendar.getTime().getMonth();
-				final int monthCreditCard = Integer.parseInt(part1);
+			final int monthRigthNow = calendar.getTime().getMonth();
+			final int monthCreditCard = Integer.parseInt(part1);
 
-				int yearRigthNow = calendar.getTime().getYear();
-				yearRigthNow = yearRigthNow % 100;
-				final int yearCredictCard = Integer.parseInt(part2);
+			int yearRigthNow = calendar.getTime().getYear();
+			yearRigthNow = yearRigthNow % 100;
+			final int yearCredictCard = Integer.parseInt(part2);
 
-				System.out.println(yearCredictCard >= yearRigthNow);
-				System.out.println(monthCreditCard > monthRigthNow);
+			System.out.println(yearCredictCard >= yearRigthNow);
+			System.out.println(monthCreditCard > monthRigthNow);
 
-				if (yearCredictCard < yearRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
-					binding.rejectValue("creditCard.expiration", "error.expirationFuture");
+			if (yearCredictCard < yearRigthNow || monthCreditCard == 00 || monthCreditCard > 12)
+				binding.rejectValue("creditCard.expiration", "error.expirationFuture");
 
-				if (yearCredictCard >= yearRigthNow && monthCreditCard != 00 && monthCreditCard > 12)
-					if (yearCredictCard == yearRigthNow)
-						if (monthCreditCard < monthRigthNow)
-							binding.rejectValue("creditCard.expiration", "error.expirationFuture");
-			}
-
-			if (!registerActor.getCreditCard().getNumber().matches("([0-9]){16}"))
-				binding.rejectValue("creditCard.number", "error.numberCredictCard");
-
-			if (!registerActor.getCreditCard().getCVV().matches("([0-9]){3}"))
-				binding.rejectValue("creditCard.CVV", "error.CVVCredictCard");
-
-			if (registerActor.getCreditCard().getHolder() == "")
-				binding.rejectValue("creditCard.holder", "error.holderCredictCard");
-
-			if (registerActor.getCreditCard().getMake() == "")
-				binding.rejectValue("creditCard.make", "error.makeCredictCard");
-
-			final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-			if (!registerActor.getEmail().matches(pattern)) {
-				binding.rejectValue("email", "email.wrong");
-			}
-			
-			if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<")) {
-				binding.rejectValue("creditCard.holder", "error.html");
-			}
-			
-			if (registerActor.getName().contains(">") || registerActor.getName().contains("<")) {
-				binding.rejectValue("name", "error.html");
-			}
-			
-			if (registerActor.getSurname().contains(">") || registerActor.getSurname().contains("<")) {
-				binding.rejectValue("surname", "error.html");
-			}
-			
-			if (registerActor.getPhone().contains(">") || registerActor.getPhone().contains("<")) {
-				binding.rejectValue("phone", "error.html");
-			}
-			
-			if (registerActor.getCreditCard().getMake().contains(">") || registerActor.getCreditCard().getMake().contains("<")) {
-				binding.rejectValue("creditCard.make", "error.html");
-			}
-			
-			UserAccount user = LoginService.getPrincipal();
-			TravelAgency t = this.getTravelAgencyByUserAccountId(user.getId());
-			
-			if (!registerActor.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
-				binding.rejectValue("email", "error.email");
-
-			if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
-				binding.rejectValue("birthDate", "error.birthDate");
-				Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
-				if (ageActor < 18) {
-					binding.rejectValue("birthDate", "error.birthDateM");
-				}
-			}
+			if (yearCredictCard >= yearRigthNow && monthCreditCard != 00 && monthCreditCard > 12)
+				if (yearCredictCard == yearRigthNow)
+					if (monthCreditCard < monthRigthNow)
+						binding.rejectValue("creditCard.expiration", "error.expirationFuture");
 		}
+
+		if (!registerActor.getCreditCard().getNumber().matches("([0-9]){16}"))
+			binding.rejectValue("creditCard.number", "error.numberCredictCard");
+
+		if (!registerActor.getCreditCard().getCVV().matches("([0-9]){3}"))
+			binding.rejectValue("creditCard.CVV", "error.CVVCredictCard");
+
+		if (registerActor.getCreditCard().getHolder() == "")
+			binding.rejectValue("creditCard.holder", "error.holderCredictCard");
+
+		if (registerActor.getCreditCard().getMake() == "")
+			binding.rejectValue("creditCard.make", "error.makeCredictCard");
+
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (!registerActor.getEmail().matches(pattern))
+			binding.rejectValue("email", "email.wrong");
+
+		if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<"))
+			binding.rejectValue("creditCard.holder", "error.html");
+
+		if (registerActor.getName().contains(">") || registerActor.getName().contains("<"))
+			binding.rejectValue("name", "error.html");
+
+		if (registerActor.getSurname().contains(">") || registerActor.getSurname().contains("<"))
+			binding.rejectValue("surname", "error.html");
+
+		if (registerActor.getPhone().contains(">") || registerActor.getPhone().contains("<"))
+			binding.rejectValue("phone", "error.html");
+
+		if (registerActor.getCreditCard().getMake().contains(">") || registerActor.getCreditCard().getMake().contains("<"))
+			binding.rejectValue("creditCard.make", "error.html");
+
+		final UserAccount user = LoginService.getPrincipal();
+		final TravelAgency t = this.getTravelAgencyByUserAccountId(user.getId());
+
+		if (!registerActor.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
+			binding.rejectValue("email", "error.email");
+
+		if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
+			binding.rejectValue("birthDate", "error.birthDate");
+			final Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
+			if (ageActor < 18)
+				binding.rejectValue("birthDate", "error.birthDateM");
+		}
+	}
 
 }

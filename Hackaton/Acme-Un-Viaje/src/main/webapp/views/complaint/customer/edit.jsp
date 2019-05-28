@@ -23,25 +23,19 @@
 <div class="container-fluid" style="padding-left: 2.5em">
 	<div class="row">
 		<div class="col-md-6">
-			<form:form class="formularioEdicion" method="POST" modelAttribute="transport" action="transport/transporter/edit.do">
+			<form:form class="formularioEdicion" method="POST" modelAttribute="complaint" action="complaint/customer/edit.do">
 				<form:hidden path="id" />
 				<fieldset>
 					<hr>
-					<acme:textbox code="transport.numberOfPlaces" path="numberOfPlaces" placeholder="4" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.price" path="price" placeholder="25" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.date" path="date" placeholder="2021/12/11 13:30" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.vehicleType" path="vehicleType" placeholder="Car" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.origin" path="origin" placeholder="Sevilla" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
-
-					<acme:textbox code="transport.destination" path="destination" placeholder="Valencia" cssError="col-md-5" cssLabel="col-md-3" cssInput="col-md-4" />
+					<acme:textbox code="complaint.description" path="description" placeholder="This is a description" cssError="col-md-4" cssLabel="col-md-3" cssInput="col-md-5" />
 				</fieldset>
 				<br>
 				<div class="row">
-					<span><acme:submit name="save" code="actor.save" /></span> <span style="padding-left: 0.5em"> <acme:cancel url="/transport/transporter/list.do" code="actor.back" />
+					<span>
+						<acme:submit name="save" code="actor.save" />
+					</span>
+					<span style="padding-left: 0.5em">
+						<acme:cancel url="/complaint/customer/list.do" code="actor.back" />
 					</span>
 				</div>
 			</form:form>

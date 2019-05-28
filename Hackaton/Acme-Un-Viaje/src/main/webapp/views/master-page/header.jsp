@@ -162,7 +162,7 @@
 											<spring:message code="review" />
 										</a>
 									</div>
-								</li>			
+								</li>
 								<li class="nav-item dropdown">
 									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop">
 										<spring:message code="master.page.actor.profile" />
@@ -201,6 +201,22 @@
 										</a>
 										<a href="socialProfile/list.do" class="dropdown-item">
 											<spring:message code="master.page.socialProfile.list" />
+										</a>
+									</div>
+								</li>
+								<li class="nav-item dropdown">
+									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbardrop">
+										<spring:message code="master.page.travelPack.customer" />
+									</a>
+									<div class="dropdown-menu">
+										<a href="travelPack/customer/listOffered.do" class="dropdown-item">
+											<spring:message code="master.page.travelPack.customer.listOffered" />
+										</a>
+										<a href="travelPack/customer/listAccepted.do" class="dropdown-item">
+											<spring:message code="master.page.travelPack.customer.listAccepted" />
+										</a>
+										<a href="travelPack/customer/listRejected.do" class="dropdown-item">
+											<spring:message code="master.page.travelPack.customer.listRejected" />
 										</a>
 									</div>
 								</li>

@@ -123,7 +123,8 @@
 		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
 		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />
-		
+		<security:intercept-url pattern="/socialProfile/listOnly.do" access="isAuthenticated()" />
+	
 		<security:intercept-url pattern="/request/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/request/customer/list.do" access="hasRole('CUSTOMER')" />	
 		<security:intercept-url pattern="/request/customer/delete.do" access="hasRole('CUSTOMER')" />	
@@ -167,8 +168,15 @@
 		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
 		
 		<security:intercept-url pattern="/complaint/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/complaint/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/delete.do" access="hasRole('CUSTOMER')" />
+		
+		<security:intercept-url pattern="/travelPack/customer/listOffered.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/listAccepted.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/listRejected.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/accept.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/travelPack/customer/reject.do" access="hasRole('CUSTOMER')" />
 		<!-- HIPONA -->
 		
 		<!-- FERRETE -->
@@ -187,6 +195,20 @@
 		<security:intercept-url pattern="/travelPack/travelAgency/edit.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/bookingAccomodation/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
 		<security:intercept-url pattern="/bookingTransport/travelAgency/create.do" access="hasRole('TRAVELAGENCY')" />
+		
+		<security:intercept-url pattern="/cleaner/delete.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/travelAgency/delete.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/host/delete.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/transporter/delete.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/referee/delete.do" access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/customer/delete.do" access="hasRole('CUSTOMER')" />
+
+		<security:intercept-url pattern="/cleaner/export.do" access="hasRole('CLEANER')" />
+		<security:intercept-url pattern="/travelAgency/export.do" access="hasRole('TRAVELAGENCY')" />
+		<security:intercept-url pattern="/host/export.do" access="hasRole('HOST')" />
+		<security:intercept-url pattern="/transporter/export.do" access="hasRole('TRANSPORTER')" />
+		<security:intercept-url pattern="/referee/export.do" access="hasRole('REFEREE')" />
+		<security:intercept-url pattern="/customer/export.do" access="hasRole('CUSTOMER')" />
 		<!-- FERRETE -->
 
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 

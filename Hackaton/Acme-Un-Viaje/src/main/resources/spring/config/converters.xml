@@ -40,6 +40,12 @@
 		<bean class="converters.CustomerToStringConverter" />
 		<bean class="converters.StringToAccomodationConverter" />		
 		<bean class="converters.AccomodationToStringConverter" />
+		<!-- HIPONA -->
+		<bean class="converters.TransporterToStringConverter" />
+		<bean class="converters.StringToTransporterConverter" />
+		<bean class="converters.TravelAgencyToStringConverter" />
+		<bean class="converters.StringToTravelAgencyConverter" />
+		<!-- HIPONA -->
 	</util:list>
 	
 </beans>

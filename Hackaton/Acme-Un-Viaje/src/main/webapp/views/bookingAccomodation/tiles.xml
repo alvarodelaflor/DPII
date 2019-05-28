@@ -3,16 +3,17 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+
 <tiles-definitions>
 
-		<definition name="bookingAccomodation/travelAgency/create" extends="master.page">	
+	<definition name="bookingAccomodation/travelAgency/create" extends="master.page">
 		<put-attribute name="title" value="Creating booking" />
 		<put-attribute name="body" value="/views/bookingAccomodation/edit.jsp" />
 	</definition>
-	
-	
-	
-	
-	
+
+	<definition name="bookingAccomodation/customer/show" extends="master.page">
+		<put-attribute name="title" value="Show an accomodation" />
+		<put-attribute name="body" value="/views/bookingAccomodation/customer/show.jsp" />
+	</definition>
+
 </tiles-definitions>

@@ -32,9 +32,6 @@
 							</jstl:otherwise>
 						</jstl:choose>
 					</display:column>
-					<display:column titleKey="travelPack.price">
-						<jstl:out value= "${row.price}"/>
-					</display:column>
 					
 					<display:column titleKey="curricula.edit">
 						<jstl:if test="${row.draft}">

@@ -121,6 +121,7 @@
 	<!--  Dependencies -->
 
 	<dependencies>
+		
 
 		<!-- Spring Framework -->
 
@@ -319,6 +320,15 @@
 		</dependency>		
 		<!-- SAFEHTML -->
 		
+		<!-- Jackson/JSON parser -->
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
+		<!-- Jackson/JSON parser -->
 	</dependencies>
 
 </project> 

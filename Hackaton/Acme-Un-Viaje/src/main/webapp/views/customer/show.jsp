@@ -7,7 +7,7 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  --%>
-
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -124,8 +124,9 @@
 	<div class="row">
 		<div class="col-md-4">
 			<acme:cancel url="" code="actor.back" />
-
+			<acme:cancel url="/customer/export.do?id=${registerActorE.id}" code="export"/><br>
+			<spring:message code="delete.actor"></spring:message><br>
+			<acme:cancel url="/customer/delete.do?id=${registerActorE.id}" code="delete"/>
 		</div>
 	</div>
-</div>
 </div>

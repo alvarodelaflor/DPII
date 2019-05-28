@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -20,10 +20,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Customer;
 import domain.CreditCard;
+import domain.Customer;
 import forms.RegisterActorE;
 import security.LoginService;
 import services.ConfigService;
@@ -34,10 +36,11 @@ import services.CustomerService;
 public class CustomerController extends AbstractController {
 
 	@Autowired
-	private CustomerService customerService;
-	
+	private CustomerService	customerService;
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService	configService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -55,7 +58,7 @@ public class CustomerController extends AbstractController {
 			final RegisterActorE registerActorE = new RegisterActorE();
 			result = new ModelAndView("customer/create");
 			result.addObject("registerActorE", registerActorE);
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -73,7 +76,7 @@ public class CustomerController extends AbstractController {
 		final Customer customer = this.customerService.reconstructRegisterAsCustomer(registerActorE, binding);
 		if (binding.hasErrors()) {
 			result = new ModelAndView("customer/create");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -98,11 +101,11 @@ public class CustomerController extends AbstractController {
 		final int idUserAccount = LoginService.getPrincipal().getId();
 		customer = this.customerService.getCustomerByUserAccountId(idUserAccount);
 		Assert.notNull(customer);
-		CreditCard creditCard = customer.getCreditCard();
+		final CreditCard creditCard = customer.getCreditCard();
 		result = new ModelAndView("customer/edit");
 		result.addObject("customer", customer);
 		result.addObject("creditCard", creditCard);
-		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 		result.addObject("makes", makes);
 		return result;
 	}
@@ -117,7 +120,7 @@ public class CustomerController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("customer/edit");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -142,6 +145,39 @@ public class CustomerController extends AbstractController {
 			result.addObject("registerActorE", registerActorE);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	//EXPORT
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody Customer export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Customer result = new Customer();
+		result = this.customerService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	//DELETE
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int customerId) {
+		ModelAndView result;
+
+		final Customer customer = this.customerService.findOne(customerId);
+		System.out.println("Customer encontrado: " + customer);
+		if (this.customerService.findOne(customerId) == null || LoginService.getPrincipal().getId() != customer.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(customer, "customer.null");
+
+			try {
+				this.customerService.delete(customer);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				e.printStackTrace();
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			}
 		}
 		return result;
 	}

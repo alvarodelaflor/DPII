@@ -15,7 +15,6 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -25,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
+import domain.Cleaner;
 import domain.SocialProfile;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.CleanerService;
 import services.SocialProfileService;
 
 @Controller
@@ -41,23 +42,54 @@ public class SocialProfileActorController extends AbstractController {
 	@Autowired
 	private ActorService actorService;
 
+	@Autowired
+	private CleanerService cleanerService;
+
 	// Constructors -----------------------------------------------------------
 	public SocialProfileActorController() {
 		super();
+	}
+
+	@RequestMapping(value = "/listOnly", method = RequestMethod.GET)
+	public ModelAndView listOnly(@RequestParam(value = "actorId", defaultValue = "-1") final int actorId) {
+		ModelAndView result;
+		try {
+
+			Actor a;
+
+			Cleaner cleaner = this.cleanerService.findOne(actorId);
+			System.out.println(cleaner);
+			a = this.actorService.findByUserAccountId(cleaner.getUserAccount().getId());
+
+			final Collection<SocialProfile> socialProfiles = this.socialProfileService
+					.getSocialProfilesByActor(a.getId());
+			result = new ModelAndView("socialProfile/listOnly");
+			result.addObject("socialProfiles", socialProfiles);
+			result.addObject("requestURI", "socialProfile/listOnly.do");
+		} catch (final Throwable oops) {
+			System.out.println(oops);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		try {
+
+			Actor a;
+
 			final UserAccount login = LoginService.getPrincipal();
-			final Actor a = this.actorService.getActorByUserId(login.getId());
+			a = this.actorService.getActorByUserId(login.getId());
+
 			final Collection<SocialProfile> socialProfiles = this.socialProfileService
 					.getSocialProfilesByActor(a.getId());
 			result = new ModelAndView("socialProfile/list");
 			result.addObject("socialProfiles", socialProfiles);
 			result.addObject("requestURI", "socialProfile/list.do");
 		} catch (final Throwable oops) {
+			System.out.println(oops);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
