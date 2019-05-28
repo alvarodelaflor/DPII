@@ -17,32 +17,41 @@
 					<display:column titleKey="travelPack.price" property="price" />
 					<display:column titleKey="travelPack.accomodations">
 						<jstl:forEach var="booking" items="${row.accomodations}">
-							<a href="accomodation/customer/show.do?bookingId=${booking.id}">
-								<jstl:out value="${booking.accomodation.place}"/>
-							</a>
+							[<a href="bookingAccomodation/customer/show.do?bookingId=${booking.id}">
+								<jstl:out value="${booking.accomodation.place}" />
+							</a>]
 						</jstl:forEach>
 					</display:column>
 					<display:column titleKey="travelPack.transport">
 						<jstl:forEach var="booking" items="${row.transports}">
-							<a href="transport/customer/show.do?bookingId=${booking.id}">
-								<jstl:out value="${booking.transport.vehicleType}"/>
-							</a>
+							[<a href="bookingTransport/customer/show.do?bookingId=${booking.id}">
+								<jstl:out value="${booking.transport.vehicleType}" />
+							</a>]
 						</jstl:forEach>
 					</display:column>
 					<display:column titleKey="travelPack.travelAgency">
 						<jstl:out value="${row.travelAgency.name} ${row.travelAgency.surname}" />
 					</display:column>
 
-					<display:column titleKey="travelPack.accept">
-						<a href="travelPack/customer/accept.do?travelPackId=${row.id}">
-							<spring:message code="travelPack.accept" />
-						</a>
-					</display:column>
-					<display:column titleKey="travelPack.reject">
-						<a href="travelPack/customer/reject.do?travelPackId=${row.id}">
-							<spring:message code="travelPack.reject" />
-						</a>
-					</display:column>
+					<jstl:if test="${offered eq true}">
+						<display:column titleKey="travelPack.accept">
+							<a href="travelPack/customer/accept.do?travelPackId=${row.id}">
+								<spring:message code="travelPack.accept" />
+							</a>
+						</display:column>
+						<display:column titleKey="travelPack.reject">
+							<a href="travelPack/customer/reject.do?travelPackId=${row.id}">
+								<spring:message code="travelPack.reject" />
+							</a>
+						</display:column>
+					</jstl:if>
+					<jstl:if test="${empty offered}">
+						<display:column titleKey="complaint.create">
+							<a href="complaint/customer/create.do?travelPackId=${row.id}">
+								<spring:message code="complaint.create" />
+							</a>
+						</display:column>
+					</jstl:if>
 				</fieldset>
 			</div>
 		</div>

@@ -27,6 +27,7 @@ public class TravelPackCustomerController extends AbstractController {
 			final Collection<TravelPack> travelPacks = this.travelPackService.getLoggedNotDraftStatusNull();
 			res = new ModelAndView("travelPack/customer/listOffered");
 			res.addObject("travelPacks", travelPacks);
+			res.addObject("offered", true);
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}

@@ -12,9 +12,6 @@ import org.springframework.validation.Validator;
 
 import domain.Complaint;
 import domain.Customer;
-import domain.Host;
-import domain.Transporter;
-import domain.TravelAgency;
 import domain.TravelPack;
 import repositories.ComplaintRepository;
 import security.Authority;
@@ -68,7 +65,7 @@ public class ComplaintService {
 		return res;
 	}
 
-	public Complaint reconstruct(final Integer travelAgencyId, final Integer hostId, final Integer transporterId, final Complaint complaint, final BindingResult binding) {
+	public Complaint reconstruct(final Complaint complaint, final BindingResult binding) {
 		final Complaint res = complaint;
 		if (complaint.getId() != 0) {
 			final Complaint dbComplaint = this.complaintRepository.findOne(res.getId());
@@ -80,15 +77,8 @@ public class ComplaintService {
 			res.setHost(dbComplaint.getHost());
 			res.setTransporter(dbComplaint.getTransporter());
 			res.setCustomer(dbComplaint.getCustomer());
-		} else {
-			final TravelAgency travelAgency = this.travelAgencyService.findOne(travelAgencyId);
-			final Host host = this.hostService.findOne(hostId);
-			final Transporter transporter = this.transporterService.findOne(transporterId);
-			res.setTravelAgency(travelAgency);
-			res.setHost(host);
-			res.setTransporter(transporter);
+		} else
 			res.setCustomer(this.customerService.getLoggedCustomer());
-		}
 
 		res.setMoment(new Date());
 
@@ -97,8 +87,9 @@ public class ComplaintService {
 		return res;
 	}
 	public void save(final Complaint reconstructedComplaint, final Integer travelPackId) {
-		// TODO: Gotta add this to the travel pack somehow
-		this.complaintRepository.save(reconstructedComplaint);
+		final Complaint c = this.complaintRepository.save(reconstructedComplaint);
+		if (travelPackId != null)
+			this.travelPackService.findOne(travelPackId).getComplaints().add(c);
 	}
 
 	public void saveWithoutSetMoment(final Complaint reconstructedComplaint) {

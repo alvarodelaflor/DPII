@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import utilities.CommonUtils;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
 import domain.Customer;
+import domain.Host;
+import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
 import repositories.TravelPackRepository;
@@ -144,4 +147,18 @@ public class TravelPackService {
 		return this.travelPackRepository.getCustomerTravelPacks(id);
 	}
 
+
+	public Collection<Host> getHosts(final TravelPack travelPack) {
+		final Collection<Host> res = new HashSet<>();
+		for (final BookingAccomodation ba : travelPack.getAccomodations())
+			res.add(ba.getAccomodation().getHost());
+		return res;
+	}
+
+	public Collection<Transporter> getTransporters(final TravelPack travelPack) {
+		final Collection<Transporter> res = new HashSet<>();
+		for (final BookingTransport bt : travelPack.getTransports())
+			res.add(bt.getTransport().getTransporter());
+		return res;
+	}
 }
