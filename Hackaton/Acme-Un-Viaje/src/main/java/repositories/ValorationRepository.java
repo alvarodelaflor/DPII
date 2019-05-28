@@ -18,4 +18,7 @@ public interface ValorationRepository extends JpaRepository<Valoration, Integer>
 	@Query("select v from Valoration v where v.customer.id = ?1")
 	Collection<Valoration> findValorationsByCustomer(int id);
 
+	@Query("select v from Valoration v where v.host.id = ?1")
+	Collection<Valoration> findValorationsByHost(int id);
+
 }

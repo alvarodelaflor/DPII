@@ -30,4 +30,7 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Integer> {
 	@Query("select c from Complaint c where c.customer.id = ?1")
 	Collection<Complaint> getCustomerComplaints(int id);
 
+	@Query("select c from Complaint c where c.host.id = ?1")
+	Collection<Complaint> getHostComplaints(int id);
+
 }
