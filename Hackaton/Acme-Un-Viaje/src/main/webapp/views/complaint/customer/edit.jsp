@@ -27,7 +27,7 @@
 				<form:hidden path="id" />
 				<fieldset>
 					<hr>
-					<acme:textbox code="complaint.description" path="description" placeholder="4" cssError="col-md-4" cssLabel="col-md-3" cssInput="col-md-5" />
+					<acme:textbox code="complaint.description" path="description" placeholder="This is a description" cssError="col-md-4" cssLabel="col-md-3" cssInput="col-md-5" />
 				</fieldset>
 				<br>
 				<div class="row">

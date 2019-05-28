@@ -116,8 +116,12 @@ public class ComplaintCustomerController extends AbstractController {
 		ModelAndView res = null;
 		try {
 			final Complaint complaint = this.complaintService.getLoggedCustomerComplaint(complaintId);
-			res = new ModelAndView("complaint/customer/edit");
-			res.addObject("complaint", complaint);
+			if (complaint == null)
+				res = new ModelAndView("redirect:/welcome/index.do");
+			else {
+				res = new ModelAndView("complaint/customer/edit");
+				res.addObject("complaint", complaint);
+			}
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
