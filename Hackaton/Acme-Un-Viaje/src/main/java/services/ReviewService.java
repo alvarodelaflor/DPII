@@ -50,6 +50,7 @@ public class ReviewService {
 	public Review  save(Review review) {
 		review.setMoment(LocalDateTime.now().toDate());
 		Referee referee = refereeService.getRefereeByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.isTrue(referee != null);
 		review.setReferee(referee);
 		return reviewRepository.save(review);
 	}
