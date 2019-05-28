@@ -21,13 +21,13 @@
 
 					<display:column titleKey="complaint.actor">
 						<jstl:if test="${row.host != null}">
-							<jstl:out value="${row.host.name} ${row.host.surname}" />
+							<jstl:out value="[${row.host.name} ${row.host.surname}]" />
 						</jstl:if>
 						<jstl:if test="${row.transporter != null}">
-							<jstl:out value="${row.transporter.name} ${row.transporter.surname}" />
+							<jstl:out value="[${row.transporter.name} ${row.transporter.surname}]" />
 						</jstl:if>
 						<jstl:if test="${row.travelAgency != null}">
-							<jstl:out value="${row.travelAgency.name} ${row.travelAgency.surname}" />
+							<jstl:out value="[${row.travelAgency.name} ${row.travelAgency.surname}]" />
 						</jstl:if>
 					</display:column>
 

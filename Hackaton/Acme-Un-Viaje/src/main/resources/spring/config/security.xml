@@ -165,6 +165,7 @@
 		<security:intercept-url pattern="/transport/transporter/delete.do" access="hasRole('TRANSPORTER')" />
 		
 		<security:intercept-url pattern="/complaint/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/complaint/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/complaint/customer/delete.do" access="hasRole('CUSTOMER')" />
 		
