@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.CreditCard;
-import domain.Customer;
-import forms.RegisterActorE;
 import repositories.CustomerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.CreditCard;
+import domain.Customer;
+import domain.TravelPack;
+import forms.RegisterActorE;
 
 @Service
 @Transactional
@@ -35,6 +37,9 @@ public class CustomerService {
 	private ActorService			actorService;
 
 	@Autowired
+	private TravelPackService		travelPackService;
+
+	@Autowired
 	private ConfigService			configService;
 
 	@Autowired
@@ -45,9 +50,6 @@ public class CustomerService {
 
 	@Autowired
 	private ComplaintService		complaintService;
-
-	@Autowired
-	private TravelPackService		travelPackService;
 
 	@Autowired
 	private ValorationService		valorationService;
@@ -227,5 +229,42 @@ public class CustomerService {
 		this.travelPackService.deleteCustomerTravelPacks(customer);
 		this.valorationService.deleteAllByCustomer(customer);
 		this.customerRepository.delete(customer);
+	}
+	public Collection<Customer> getCustomersByAccomodationId(final int id) {
+
+		final Collection<Customer> res = new ArrayList<>();
+
+		final Collection<TravelPack> travelPacks = this.travelPackService.getTravelPacksAccomodationId(id);
+		for (final TravelPack travelPack : travelPacks)
+			res.add(travelPack.getCustomer());
+
+		return res;
+	}
+
+	public List<Customer> getCustomersByTranspoterId(final int id) {
+
+		final List<Customer> res = new ArrayList<>();
+		res.addAll(this.customerRepository.getCustomersByTransporterId(id));
+		return res;
+	}
+
+	public List<String> bestCustomer() {
+
+		final List<String> res = new ArrayList<>();
+		final List<Customer> customers = new ArrayList<>();
+		customers.addAll(this.customerRepository.bestCustomer());
+		for (final Customer customer : customers)
+			res.add(customer.getUserAccount().getUsername());
+		if (customers.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
+	}
+
+	public List<Customer> getCustomersByHostId(final int id) {
+
+		final List<Customer> res = new ArrayList<>();
+		res.addAll(this.customerRepository.getCustomersByHostId(id));
+		return res;
 	}
 }

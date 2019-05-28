@@ -17,10 +17,12 @@ import org.springframework.validation.Validator;
 import domain.Cleaner;
 import domain.CreditCard;
 import forms.RegisterActor;
+import domain.Curricula;
 import repositories.CleanerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.JobApplication;
 
 @Service
 @Transactional
@@ -33,10 +35,10 @@ public class CleanerService {
 	private Validator				validator;
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private ConfigService			configService;
+	private ConfigService		configService;
 
 	@Autowired
 	private CurriculaService		curriculaService;
@@ -227,7 +229,6 @@ public class CleanerService {
 	/**
 	 *
 	 * Find a cleaner by id
-	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
@@ -274,6 +275,28 @@ public class CleanerService {
 		this.curriculaService.deleteAllByCleaner(cleaner);
 		this.valorationService.deleteAllByCleaner(cleaner);
 		this.cleanerRepository.delete(cleaner);
+	}
+
+
+	public Collection<Cleaner> getAllCleanersInJobList(final Collection<JobApplication> jobs) {
+
+		final Collection<Cleaner> res = new ArrayList<>();
+		for (final JobApplication job : jobs)
+			res.add(job.getCleaner());
+
+		return res;
+	}
+
+	public List<String> bestCleaner() {
+		final List<String> res = new ArrayList<>();
+		final List<Cleaner> cleaners = new ArrayList<>();
+		cleaners.addAll(this.cleanerRepository.bestCleaner());
+		for (final Cleaner cleaner : cleaners)
+			res.add(cleaner.getUserAccount().getUsername());
+		if (cleaners.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
 	}
 
 }

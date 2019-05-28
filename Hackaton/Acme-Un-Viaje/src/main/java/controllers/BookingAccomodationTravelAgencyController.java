@@ -91,7 +91,7 @@ public class BookingAccomodationTravelAgencyController extends AbstractControlle
 				final BookingAccomodation bc = this.bookingAccomodationService.save(book);
 				final TravelPack pack = this.travelPackService.findOne(form.getTravelPackId());
 				pack.getAccomodations().add(bc);
-				result = new ModelAndView("redirect:/travelPack/travelAgency/list.do");
+				result = new ModelAndView("redirect:/travelPack/travelAgency/show.do?travelPackId=" + form.getTravelPackId());
 
 			} catch (final Throwable oops) {
 				if (oops.getMessage() != null) {

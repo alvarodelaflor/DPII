@@ -15,74 +15,74 @@
 		<div class="col-md-4">
 			<fieldset>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="bookingAccomodation.startDate" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="bookingAccomodation.startDate" /></strong>
+					</div>
+					<div class="col-md-7">
 						<acme:displayDateTable date="${bookingAccomodation.startDate}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="bookingAccomodation.endDate" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="bookingAccomodation.endDate" /></strong>
+					</div>
+					<div class="col-md-7">
 						<acme:displayDateTable date="${bookingAccomodation.endDate}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="accomodation.pricePerNight" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="accomodation.pricePerNight" /></strong>
+					</div>
+					<div class="col-md-7">
 						<jstl:out value="${bookingAccomodation.accomodation.pricePerNight}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="accomodation.rating" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="accomodation.rating" /></strong>
+					</div>
+					<div class="col-md-7">
 						<jstl:out value="${bookingAccomodation.accomodation.rating}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="accomodation.address" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="accomodation.address" /></strong>
+					</div>
+					<div class="col-md-7">
 						<jstl:out value="${bookingAccomodation.accomodation.address}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="accomodation.place" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="accomodation.place" /></strong>
+					</div>
+					<div class="col-md-7">
 						<jstl:out value="${bookingAccomodation.accomodation.place}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="accomodation.description" />
-					</div>
 					<div class="col-md-5">
-						<jstl:out value="${bookingAccomodation.accomodation.place}" />
+						<strong><spring:message code="accomodation.description" /></strong>
+					</div>
+					<div class="col-md-7">
+						<jstl:out value="${bookingAccomodation.accomodation.description}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="accomodation.maxPeople" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="accomodation.maxPeople" /></strong>
+					</div>
+					<div class="col-md-7">
 						<jstl:out value="${bookingAccomodation.accomodation.maxPeople}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<spring:message code="accomodation.host" />
-					</div>
 					<div class="col-md-5">
+						<strong><spring:message code="accomodation.host" /></strong>
+					</div>
+					<div class="col-md-7">
 						<jstl:out value="${bookingAccomodation.accomodation.host.name} ${bookingAccomodation.accomodation.host.surname}" />
 					</div>
 				</div>
@@ -91,13 +91,9 @@
 	</div>
 
 	<br>
-
 	<div class="row">
-		<div class="col-md-4">
-			<acme:cancel url="travelPack/travelAgency/list.do" code="actor.back" />
-		</div>
-		<div class="col-md-4">
-			<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="curricula.delete" />
+		<div class="col-md-12">
+			<acme:historyBack />
 		</div>
 	</div>
 </div>

@@ -39,6 +39,7 @@ public class BookingAccomodationService {
 	public BookingAccomodation save(final BookingAccomodation bookingAccomodation) {
 		System.out.println("Service: " + bookingAccomodation.getAccomodation().toString());
 		Assert.isTrue(!this.isReserved(bookingAccomodation), "error.accomodationAlreadyReserved");
+		Assert.isTrue(bookingAccomodation.getStartDate().before(bookingAccomodation.getEndDate()), "error.startDateAfterEndDate");
 		return this.bookingAccomodationRepository.save(bookingAccomodation);
 	}
 
@@ -62,6 +63,10 @@ public class BookingAccomodationService {
 		return res;
 	}
 
+	public Collection<BookingAccomodation> getAccomodationBookings(final int id) {
+
+		return this.bookingAccomodationRepository.getAccomodationBookings(id);
+	}
 	public BookingAccomodation reconstructForm(final BookingAccForm form, final BindingResult binding) {
 		final BookingAccomodation res = this.create();
 		res.setAccomodation(form.getAccomodation());

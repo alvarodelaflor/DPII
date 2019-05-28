@@ -49,7 +49,7 @@ public class ActorService {
 	// ---------------------------------------------------------------
 	public Actor findOne(final int id) {
 
-		return this.actorRepository.findOne(id);
+		return this.actorRepository.findONE(id);
 	}
 
 	// CHECK REGISTER AS ACTOR
@@ -144,7 +144,7 @@ public class ActorService {
 	public Collection<Actor> getActorByEmail(final String email) {
 		return this.actorRepository.getActorByEmail(email);
 	}
-	
+
 	public Actor getActorByEmail2(final String email) {
 		return this.actorRepository.getActorByEmail2(email);
 	}
@@ -163,18 +163,17 @@ public class ActorService {
 		final Actor a = this.actorRepository.getActorByUserId(id);
 		return a;
 	}
-	
+
 	public Actor findByUserAccountId(final int id) {
 		return this.actorRepository.findByUserAccountId(id);
 	}
-	
+
 	public Collection<String> getEmailofActors() {
 		return this.actorRepository.getEmailofActors();
 	}
-	
+
 	public Actor getActorMailbox(final Integer id) {
 		return this.actorRepository.getActorByMailbox(id);
 	}
-	
 
 }

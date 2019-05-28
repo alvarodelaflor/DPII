@@ -93,6 +93,12 @@
 				</display:table>
 				
 				<div class="row">
+					<spring:message code="travelPack.warranty" />
+					:
+					<jstl:out value="${travelPack.warranty.title}"></jstl:out>
+				</div>
+				
+				<div class="row">
 					<spring:message code="travelPack.complaint" />
 					:
 				</div>
@@ -127,8 +133,18 @@
 		<div class="col-md-4">
 			<acme:cancel url="travelPack/travelAgency/list.do" code="actor.back" />
 		</div>
-		<div class="col-md-4">
-			<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="curricula.delete" />
-		</div>
+		<jstl:choose>
+			<jstl:when test="${travelPack.draft}">
+				<div class="col-md-4">
+				<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="curricula.delete" />
+				</div>
+			</jstl:when>
+			<jstl:otherwise>
+				<div class="col-md-4">
+				<acme:cancel url="travelPack/travelAgency/delete.do?travelPackId=${travelPack.id}" code="travelPack.cancel" />
+				</div>
+			</jstl:otherwise>
+		
+		</jstl:choose>
 	</div>
 </div>

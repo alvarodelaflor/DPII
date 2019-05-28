@@ -18,7 +18,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <body>
-
+<hr>
 <div class="content">
 				<table>    						
     				<tr><td><spring:message code="mailbox.show.name" /><jstl:out value="${mailbox.name}"></jstl:out></td></tr>

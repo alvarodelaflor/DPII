@@ -26,8 +26,13 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.AdminService;
+import services.CleanerService;
 import services.ConfigService;
 import services.CurriculaService;
+import services.CustomerService;
+import services.HostService;
+import services.TransporterService;
+import services.TravelAgencyService;
 import domain.Actor;
 import domain.Admin;
 import domain.Config;
@@ -49,6 +54,21 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private CurriculaService	curriculaService;
+
+	@Autowired
+	private CustomerService		customerService;
+
+	@Autowired
+	private HostService			hostService;
+
+	@Autowired
+	private TransporterService	transporterService;
+
+	@Autowired
+	private TravelAgencyService	travelAgencyService;
+
+	@Autowired
+	private CleanerService		cleanerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -74,6 +94,16 @@ public class AdministratorController extends AbstractController {
 			res.addObject("maxCurriculaPerCleaner", maxCurriculaPerCleaner);
 			res.addObject("avgCurriculaPerCleaner", avgCurriculaPerCleaner);
 			res.addObject("stddevCurriculaPerCleaner", stddevCurriculaPerCleaner);
+			//BestCustomer
+			res.addObject("bestCustomer", this.customerService.bestCustomer());
+			//BestHost
+			res.addObject("bestHost", this.hostService.bestHost());
+			//BestTransporter
+			res.addObject("bestTransporter", this.transporterService.bestTransporter());
+			//BestTravelAgency
+			res.addObject("bestTravelAgency", this.travelAgencyService.bestTravelAgency());
+			//BestCleaner
+			res.addObject("bestCleaner", this.cleanerService.bestCleaner());
 		} catch (final Throwable oops) {
 
 			if (oops.getMessage() == "rellenar.con.msg.code.del.service")
@@ -84,7 +114,6 @@ public class AdministratorController extends AbstractController {
 
 		return res;
 	}
-
 	// NEW DEFAULT PHONE CODE
 	// ---------------------------------------------------------------
 	@RequestMapping(value = "/newdpc", method = RequestMethod.GET)
@@ -396,6 +425,10 @@ public class AdministratorController extends AbstractController {
 			res = new ModelAndView("redirect:actorList.do");
 			if (oops.getMessage() == "not.found.error")
 				res.addObject("message", "not.found.error");
+			else if (oops.getMessage() == "not.spammer.error")
+				res.addObject("message", "not.spammer.error");
+			else if (oops.getMessage() == "not.low.score.error")
+				res.addObject("message", "not.low.score.error");
 			else
 				res = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -435,7 +468,7 @@ public class AdministratorController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("admin/create");
 			result.addObject("registerActor", registerActor);
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -453,7 +486,7 @@ public class AdministratorController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("admin/create");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -482,7 +515,7 @@ public class AdministratorController extends AbstractController {
 		result = new ModelAndView("admin/edit");
 		result.addObject("admin", admin);
 		result.addObject("creditCard", creditCard);
-		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 		result.addObject("makes", makes);
 		return result;
 	}
@@ -498,7 +531,7 @@ public class AdministratorController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("admin/edit");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {

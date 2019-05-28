@@ -201,4 +201,15 @@ public class TransporterService {
 		return this.getTransporterByUserAccountId(id);
 	}
 
+	public List<String> bestTransporter() {
+		final List<String> res = new ArrayList<>();
+		final List<Transporter> transporters = new ArrayList<>();
+		transporters.addAll(this.transporterRepository.bestTransporter());
+		for (final Transporter transporter : transporters)
+			res.add(transporter.getUserAccount().getUsername());
+		if (transporters.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
+	}
 }

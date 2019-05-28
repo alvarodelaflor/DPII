@@ -25,10 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import domain.Customer;
 import domain.TravelAgency;
 import domain.TravelPack;
+import domain.Warranty;
 import security.LoginService;
 import services.CustomerService;
 import services.TravelAgencyService;
 import services.TravelPackService;
+import services.WarrantyService;
 
 @Controller
 @RequestMapping("/travelPack/travelAgency")
@@ -42,6 +44,9 @@ public class TravelPackTravelAgencyController extends AbstractController {
 
 	@Autowired
 	private CustomerService		customerService;
+
+	@Autowired
+	private WarrantyService		warrantyService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -59,8 +64,10 @@ public class TravelPackTravelAgencyController extends AbstractController {
 			TravelPack travelPack;
 			travelPack = this.travelPackService.create();
 			travelPack.setCustomer(customer);
+			final Collection<Warranty> warranties = this.warrantyService.getTravelAgencyWarranty();
 			result = new ModelAndView("travelPack/travelAgency/create");
 			result.addObject("travelPack", travelPack);
+			result.addObject("warranties", warranties);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -76,8 +83,10 @@ public class TravelPackTravelAgencyController extends AbstractController {
 		try {
 			if (binding.hasErrors()) {
 				System.out.println(binding);
+				final Collection<Warranty> warranties = this.warrantyService.getTravelAgencyWarranty();
 				result = new ModelAndView("travelPack/travelAgency/create");
 				result.addObject("travelPack", travelPack);
+				result.addObject("warranties", warranties);
 			} else {
 				Assert.isTrue(travelPack != null);
 				final TravelPack savetravelPack = this.travelPackService.save(travelPackN);

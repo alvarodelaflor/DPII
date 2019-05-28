@@ -11,6 +11,30 @@
 	">
 
 	<!-- User accounts -->
+	
+	<bean id="userAccountCustomer02" class="security.UserAccount">
+		<property name="username" value="hackercustomer" />
+		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccountHost02" class="security.UserAccount">
+		<property name="username" value="hackerhost" />
+		<property name="password" value="67b3dba8bc6778101892eb77249db32e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HOST" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
@@ -171,6 +195,31 @@
 	</bean>
 	<!-- CLEANER -->
 
+	<!-- JOB APP -->
+	<bean id="jobApp01" class="domain.JobApplication">
+		<property name="rejectMessage"><null /></property>
+		<property name="cleanerMessage" value="Cleaner Message Job App 01" />
+		<property name="createMoment" value="1998/12/11" />
+		<property name="curricula" ref="curricula01" />
+		<property name="status" value="true" />
+		<property name="host" ref="host01"/>
+		<property name="cleaner" ref="cleaner01"/>
+		<property name="dropMoment"><null /></property>
+	</bean>
+	<!-- JOB APP -->
+	
+	<!-- CURRICULA -->
+	<bean id="curricula01" class="domain.Curricula">
+		<property name="name" value="Cleaner 1 Curriculum"/>
+		<property name="statement" value="Statement Curriculum 1 Cleaner 1" />
+		<property name="phone" value="123456789" />
+		<property name="linkLinkedin" value="https://www.linkedin.com/in/francisco-batista-n%C3%BA%C3%B1ez-336442172/" />
+		<property name="bannerLogo" value="https://www.bannerlogo.com" />
+		<property name="isCopy" value="true"/>
+		<property name="cleaner" ref="cleaner01"/>
+	</bean>
+	<!-- CURRICULA -->
+
 	<!-- TRANSPORTER -->
 	<bean id="transporter01" class="domain.Transporter">
 		<property name="name" value="Sr. Transporter" />
@@ -225,6 +274,21 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="host02" class="domain.Host">
+		<property name="name" value="Sr. Host 2" />
+		<property name="surname" value="host 2" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="email" value="host2@gmail.com" />
+		<property name="phone" value="+34678546678" />
+		<property name="userAccount" ref="userAccountHost02" />
+		<property name="creditCard" ref="creditCardHost02" />
+		<property name="mailboxes">
+			<list>
+				<ref bean="mailboxHost0201" />
+				<ref bean="mailboxHost0202" />
+			</list>
+		</property>
+	</bean>
 	<!-- HOTS -->
 
 	<!-- TRAVELAGENCY -->
@@ -264,9 +328,39 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="customer02" class="domain.Customer">
+		<property name="name" value="Customer Hacker" />
+		<property name="surname" value="Jojojocker" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="email" value="customerHacker@gmail.com" />
+		<property name="city" value="Carmona es una mergda" />
+		<property name="phone" value="+34678546678" />
+		<property name="userAccount" ref="userAccountCustomer02" />
+		<property name="creditCard" ref="creditCardCustomer02" />
+		<property name="mailboxes">
+			<list>
+				<ref bean="mailboxCustomer0201" />
+				<ref bean="mailboxCustomer0202" />
+			</list>
+		</property>
+	</bean>
 	<!-- CUSTOMER -->
 
 	<!-- CREDITCARD -->
+	<bean id="creditCardHost02" class="domain.CreditCard">
+		<property name="holder" value="Mr. Jojojocker" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	<bean id="creditCardCustomer02" class="domain.CreditCard">
+		<property name="holder" value="Mr. Jojojocker" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
 	<bean id="creditCard01" class="domain.CreditCard">
 		<property name="holder" value="Mr. Admin" />
 		<property name="make" value="VISA" />
@@ -398,6 +492,38 @@
 	<!-- TRANSPORTS -->
 
 	<!-- Mailbox -->
+	<bean id="mailboxHost0201" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailboxHost0202" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+	
+	<bean id="mailboxCustomer0201" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailboxCustomer0202" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+	
 	<bean id="mailbox01" class="domain.Mailbox">
 		<property name="name" value="inBox" />
 		<property name="isDefault" value="true" />
@@ -596,8 +722,8 @@
 
 	<!-- FINDERREQUEST -->
 	<bean id="finderRequest01" class="domain.FinderRequest">
-		<property name="price" value="80" />
-		<property name="place" value="Sevilla" />
+		<property name="price" value="0" />
+		<property name="place" value="" />
 		<property name="startDate" value="2019/12/11" />
 	</bean>
 	<!-- FINDERREQUEST -->

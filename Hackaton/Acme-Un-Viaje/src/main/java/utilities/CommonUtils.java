@@ -19,4 +19,5 @@ public class CommonUtils {
 		au.setAuthority(authority);
 		return account.getAuthorities().contains(au);
 	}
+
 }

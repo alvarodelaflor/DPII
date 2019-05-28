@@ -18,8 +18,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<p><spring:message code="listReview"/></p>
-  	
+<hr>   	
   	<div class="container-fluid" style="padding-left: 2.5em">
 	<display:table name="reviews" id="row"
 		requestURI="${requestURI}" pagesize="5"
@@ -38,7 +37,7 @@
 	</display:table>
 	<div class="row">
 		<div class="col-md-3">
-			<span style="padding-left: 2.5em"> <acme:create
+			<span style="padding-left: 0.5em"> <acme:create
 				url="review/create.do" name="buttonReview"
 				code="review.create" />
 			</span>

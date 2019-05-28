@@ -44,6 +44,9 @@ public class TravelAgencyService {
 	@Autowired
 	private FinderRequestService		finderRequestService;
 
+	@Autowired
+	private TravelPackService			travelPackService;
+
 
 	// REGISTER AS TRAVEL
 	// ---------------------------------------------------------------
@@ -110,10 +113,6 @@ public class TravelAgencyService {
 	// ------------------------------------------------------------------------------------
 	public TravelAgency getTravelAgencyByUserAccountId(final int userAccountId) {
 		return this.travelAgencyRepository.findByUserAccountId(userAccountId);
-	}
-
-	public TravelAgency findOne(final int travelAgencyId) {
-		return this.travelAgencyRepository.findOne(travelAgencyId);
 	}
 
 	// RECONSTRUCT EDIT DATA PERONAL
@@ -222,4 +221,27 @@ public class TravelAgencyService {
 		}
 	}
 
+	public List<TravelAgency> getTravelAgenciesByCustomerId(final int id) {
+
+		final List<TravelAgency> res = new ArrayList<>();
+		res.addAll(this.travelAgencyRepository.getTravelAgenciesByCustomerId(id));
+		return res;
+	}
+
+	public TravelAgency findOne(final int id) {
+
+		return this.travelAgencyRepository.findOne(id);
+	}
+
+	public List<String> bestTravelAgency() {
+		final List<String> res = new ArrayList<>();
+		final List<TravelAgency> travelAgencys = new ArrayList<>();
+		travelAgencys.addAll(this.travelAgencyRepository.bestTravelAgency());
+		for (final TravelAgency travelAgency : travelAgencys)
+			res.add(travelAgency.getUserAccount().getUsername());
+		if (travelAgencys.size() <= 3)
+			return res;
+		else
+			return res.subList(0, 2);
+	}
 }

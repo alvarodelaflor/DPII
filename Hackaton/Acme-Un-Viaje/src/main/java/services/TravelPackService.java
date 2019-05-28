@@ -24,8 +24,6 @@ import domain.Host;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
-import repositories.TravelPackRepository;
-import security.LoginService;
 
 @Service
 @Transactional
@@ -33,8 +31,12 @@ public class TravelPackService {
 
 	@Autowired
 	private TravelPackRepository	travelPackRepository;
+
 	@Autowired
 	private TravelAgencyService		travelAgencyService;
+
+	@Autowired
+	private AccomodationService		accService;
 
 	@Autowired
 	private CustomerService			customerService;
@@ -61,7 +63,7 @@ public class TravelPackService {
 		if (travelPack.getId() != 0) {
 			final TravelPack packDB = this.findOne(travelPack.getId());
 			Assert.notNull(packDB);
-			Assert.isTrue(packDB.getDraft(), "The travel pack is already in final mode");
+			Assert.isTrue(packDB.getDraft(), "travelPack.finalMode");
 		}
 		travelPack.setPrice(this.calculatePrice(travelPack));
 		return this.travelPackRepository.save(travelPack);
@@ -119,12 +121,6 @@ public class TravelPackService {
 		return tp;
 	}
 
-	public Collection<TravelPack> getLoggedNotDraftStatusNull() {
-		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
-		final Customer c = this.customerService.getLoggedCustomer();
-		return this.travelPackRepository.getLoggedNotDraftStatusNull(c.getId());
-	}
-
 	public Collection<TravelPack> getLoggedNotDraftStatusTrue() {
 		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
 		final Customer c = this.customerService.getLoggedCustomer();
@@ -136,6 +132,13 @@ public class TravelPackService {
 		final Customer c = this.customerService.getLoggedCustomer();
 		return this.travelPackRepository.getLoggedNotDraftStatusFalse(c.getId());
 	}
+
+	public Collection<TravelPack> getLoggedNotDraftStatusNull() {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final Customer c = this.customerService.getLoggedCustomer();
+		return this.travelPackRepository.getLoggedNotDraftStatusNull(c.getId());
+	}
+
 	public void deleteCustomerTravelPacks(final Customer customer) {
 		final Collection<TravelPack> items = this.getCustomerPacks(customer.getId());
 		if (items != null && !items.isEmpty())
@@ -146,7 +149,6 @@ public class TravelPackService {
 	private Collection<TravelPack> getCustomerPacks(final int id) {
 		return this.travelPackRepository.getCustomerTravelPacks(id);
 	}
-
 
 	public Collection<Host> getHosts(final TravelPack travelPack) {
 		final Collection<Host> res = new HashSet<>();
@@ -160,5 +162,14 @@ public class TravelPackService {
 		for (final BookingTransport bt : travelPack.getTransports())
 			res.add(bt.getTransport().getTransporter());
 		return res;
+	}
+	public Collection<TravelPack> getTravelPacksAccomodationId(final int id) {
+
+		return this.travelPackRepository.getTravelPacksAccomodationId(id);
+	}
+
+	public Collection<TravelPack> getTravelPacksByCustomerId(final int id) {
+
+		return this.getTravelPacksByCustomerId(id);
 	}
 }

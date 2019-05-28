@@ -26,12 +26,11 @@
 			<form:form class="formularioEdicion" method="POST" modelAttribute="complaint" action="complaint/customer/edit.do">
 				<form:hidden path="id" />
 				<fieldset>
-					<hr>
 					<acme:textbox code="complaint.description" path="description" placeholder="This is a description" cssError="col-md-4" cssLabel="col-md-3" cssInput="col-md-5" />
 				</fieldset>
 				<br>
 				<div class="row">
-					<span>
+					<span style="padding-left: 0.5em">
 						<acme:submit name="save" code="actor.save" />
 					</span>
 					<span style="padding-left: 0.5em">

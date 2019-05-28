@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -133,13 +134,19 @@ public class AccomodationService {
 		}
 		return res;
 	}
-	
-	public Accomodation findByAddress(String address) {
-		return accomodationRepo.findByAddress(address);
-	}
-	
-	public Collection<String> getAddressAccomodationsByActor(int id) {
-		return accomodationRepo.getAddressAccomodationsByActor(id);
+
+	public Accomodation findByAddress(final String address) {
+		return this.accomodationRepo.findByAddress(address);
 	}
 
+	public Collection<String> getAddressAccomodationsByActor(final int id) {
+		return this.accomodationRepo.getAddressAccomodationsByActor(id);
+	}
+
+	public List<Host> getAccomodationsByCustomerId(final int id) {
+
+		final List<Host> res = new ArrayList<>();
+		res.addAll(this.accomodationRepo.getAccomodationsByCustomerId(id));
+		return res;
+	}
 }
