@@ -22,4 +22,7 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
 
 	@Query("select distinct ta.transport.transporter from TravelPack t join t.transports ta where t.customer.id=?1")
 	Collection<Transporter> getTransportersByCustomerId(int id);
+
+	@Query("select t from Transporter t join t.userAccount bua where bua.id=?1")
+	Transporter findByUserAccountId(int userAccountId);
 }
