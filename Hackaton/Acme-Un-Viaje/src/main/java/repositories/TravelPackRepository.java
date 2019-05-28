@@ -2,6 +2,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,4 +30,7 @@ public interface TravelPackRepository extends JpaRepository<TravelPack, Integer>
 
 	@Query("select t from TravelPack t where t.customer.id = ?1 and t.draft = false and t.status=false")
 	Collection<TravelPack> getLoggedNotDraftStatusFalse(int id);
+
+	@Query("select count(t) from TravelPack t join t.accomodations ba where t.status = true and ba.id != ?1 and ((?2 < ba.startDate and ?3 > ba.endDate) or (?2 between ba.startDate and ba.endDate) or (?3 between ba.startDate and ba.endDate))")
+	int getDistinctInRangeAccepted(int id, Date startDate, Date endDate);
 }
