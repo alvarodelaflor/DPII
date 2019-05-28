@@ -32,6 +32,7 @@ public class TravelPack extends DomainEntity {
 	private Boolean							draft;
 	private Double							price;
 	private Collection<Complaint>			complaints;
+	private Boolean							status;
 
 
 	public Boolean getDraft() {
@@ -85,7 +86,13 @@ public class TravelPack extends DomainEntity {
 	}
 	@Transient
 	public Double getPrice() {
-		return this.price;
+		Double d = 0d;
+		for (final BookingTransport bt : this.transports)
+			d += bt.getTransport().getPrice();
+		for (final BookingAccomodation ba : this.accomodations)
+			d += ba.getAccomodation().getPricePerNight();
+
+		return d;
 	}
 	public void setPrice(final Double price) {
 		this.price = price;
@@ -98,6 +105,14 @@ public class TravelPack extends DomainEntity {
 
 	public void setComplaints(final Collection<Complaint> complaints) {
 		this.complaints = complaints;
+	}
+
+	public Boolean getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(final Boolean status) {
+		this.status = status;
 	}
 
 }

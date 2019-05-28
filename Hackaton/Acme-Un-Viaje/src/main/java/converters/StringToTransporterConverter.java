@@ -29,7 +29,7 @@ public class StringToTransporterConverter implements Converter<String, Transport
 				result = this.transporterRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
-			System.out.println("Error en StringToTransporterConverter CATCH: " + oops);
+			System.out.println("Error en StringToHostConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;

@@ -41,6 +41,8 @@
 		<bean class="converters.CustomerToStringConverter" />
 		<bean class="converters.StringToAccomodationConverter" />		
 		<bean class="converters.AccomodationToStringConverter" />
+		<bean class="converters.StringToWarrantyConverter" />		
+	</util:list>
 		<bean class="converters.StringToTransportConverter" />		
 		<bean class="converters.TransportToStringConverter" />
 		<bean class="converters.StringToWarrantyConverter" />		
@@ -52,6 +54,5 @@
 		<bean class="converters.StringToTransporterConverter" />	
 		<bean class="converters.TravelAgencyToStringConverter" />
 		<bean class="converters.StringToTravelAgencyConverter" />	
-	</util:list>
 	
 </beans>

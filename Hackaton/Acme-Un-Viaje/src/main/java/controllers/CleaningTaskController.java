@@ -74,6 +74,20 @@ public class CleaningTaskController extends AbstractController{
 		return result;
 	}
 	
+	@RequestMapping(value = "/cleaner/list", method = RequestMethod.GET)
+	public ModelAndView listCleaningTaskCleaner() {
+		final ModelAndView result;
+
+		Cleaner cleaner = cleanerService.getCleanerLogin();
+		Collection<CleaningTask> cleaningTasks = cleaningTaskService.getCleaningTaskCleaner(cleaner.getId());
+
+		result = new ModelAndView("cleaningTask/cleaner/list");
+		result.addObject("cleaningTasks", cleaningTasks);
+		result.addObject("requestURI", "cleaningTask/cleaner/list.do");
+
+		return result;
+	}
+	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam("cleaningTaskId") final int cleaningTaskId) {
 		ModelAndView result;
@@ -81,6 +95,26 @@ public class CleaningTaskController extends AbstractController{
 			final Host h = hostService.getHostLogin();
 			final CleaningTask cleaningTask = this.cleaningTaskService.findOne(cleaningTaskId);
 			if (!cleaningTask.getAccomodation().getHost().equals(h))
+				result = new ModelAndView("welcome/index");
+			else {
+				result = new ModelAndView("cleaningTask/show");
+				result.addObject("cleaningTask", cleaningTask);
+				result.addObject("requestURI", "cleaningTask/list.do");
+			}
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+
+	}
+	
+	@RequestMapping(value = "/cleaner/show", method = RequestMethod.GET)
+	public ModelAndView showCleaner(@RequestParam("cleaningTaskId") final int cleaningTaskId) {
+		ModelAndView result;
+		try {
+			final Cleaner c = cleanerService.getCleanerLogin();
+			final CleaningTask cleaningTask = this.cleaningTaskService.findOne(cleaningTaskId);
+			if (!cleaningTask.getCleaner().equals(c))
 				result = new ModelAndView("welcome/index");
 			else {
 				result = new ModelAndView("cleaningTask/show");

@@ -8,11 +8,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import repositories.ValorationRepository;
 import domain.Cleaner;
+import domain.Customer;
+import domain.Valoration;
+import repositories.ValorationRepository;
 import domain.Host;
 import domain.JobApplication;
-import domain.Valoration;
 
 @Service
 @Transactional
@@ -46,4 +47,20 @@ public class ValorationService {
 		final Collection<Cleaner> cleaners = this.cleanerService.getAllCleanersInJobList(loggedJobs);
 		return cleaners.contains(cleaner);
 	}
+	
+	public void deleteAllByCleaner(final Cleaner cleaner) {
+		final Collection<Valoration> valorations = this.valorationRepository.findValorationsByCleaner(cleaner.getId());
+		if (valorations != null && !valorations.isEmpty())
+			for (final Valoration valoration : valorations)
+				this.valorationRepo.delete(valoration);
+	}
+
+	public void deleteAllByCustomer(final Customer customer) {
+		final Collection<Valoration> valorations = this.valorationRepository.findValorationsByCustomer(customer.getId());
+		if (valorations != null && !valorations.isEmpty())
+			for (final Valoration valoration : valorations)
+				this.valorationRepo.delete(valoration);
+
+	}
+
 }

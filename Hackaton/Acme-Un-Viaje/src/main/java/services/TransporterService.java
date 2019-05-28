@@ -96,6 +96,9 @@ public class TransporterService {
 		return this.transporterRepository.findByUserAccountId(userAccountId);
 	}
 
+	public Transporter findOne(final int transporterId) {
+		return this.transporterRepository.findOne(transporterId);
+	}
 	// RECONSTRUCT EDIT DATA PERONAL
 	// ---------------------------------------------------------------
 	public Transporter reconstructEditDataPeronal(final Transporter registerActor, final BindingResult binding) {

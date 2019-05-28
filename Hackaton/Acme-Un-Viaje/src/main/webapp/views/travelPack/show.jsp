@@ -38,6 +38,12 @@
 				</div>
 				
 				<div class="row">
+					<spring:message code="travelPack.price" />
+					:
+					<jstl:out value="${price}"></jstl:out> EUR
+				</div>
+				
+				<div class="row">
 					<spring:message code="travelPack.accomodations" />
 					:
 				</div>
@@ -95,8 +101,28 @@
 				<div class="row">
 					<spring:message code="travelPack.complaint" />
 					:
-					<jstl:out value="${travelPack.complaint.description}"></jstl:out>
 				</div>
+				<display:table name="travelPack.complaints" id="row" requestURI="${requestURI}"
+					pagesize="5" class="displaytag table table-hover">
+					<div class="row">
+						<div class="col-md-12">
+							<fieldset>
+								<display:column titleKey="complaint.moment" property="moment" />
+								<display:column titleKey="complaint.customer">
+									<jstl:out value="${row.customer.name}"></jstl:out>
+								</display:column>
+								<display:column titleKey="complaint.description" property="description"/>
+								<display:column titleKey="complaint.host">
+									<jstl:out value="${row.host.name}"></jstl:out>
+								</display:column>
+								<display:column titleKey="complaint.transporter">
+									<jstl:out value="${row.transporter.name}"></jstl:out>
+								</display:column>
+							</fieldset>
+						</div>
+					</div>
+				</display:table>
+				
 			</fieldset>
 		</div>
 	</div>

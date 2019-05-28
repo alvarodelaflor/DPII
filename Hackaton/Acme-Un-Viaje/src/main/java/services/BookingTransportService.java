@@ -64,5 +64,8 @@ public class BookingTransportService {
 		this.validator.validate(res, binding);
 		return res;
 	}
-
+	
+	public BookingTransport findOne(final int id) {
+		return this.bookingTransportRepository.findOne(id);
+	}
 }

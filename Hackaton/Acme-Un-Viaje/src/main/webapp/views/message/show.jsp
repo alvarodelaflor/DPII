@@ -18,15 +18,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<HR>
       			
     <div class="container-fluid" style="padding-left: 2.5em">
     	<div class="col-md-6" style="padding-left: 2.5em">
 			<fieldset>
-				<h2>
-					<spring:message code="msg.show" />
-					&nbsp;
-				</h2>
-				<hr>
+				
 				<div class="row" style="padding-left: 1.5em">
 					<strong><spring:message code="msg.show.subject" />:&nbsp;</strong>
 					<jstl:out value="${msg.subject}"></jstl:out>

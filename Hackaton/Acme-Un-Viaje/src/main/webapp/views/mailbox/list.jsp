@@ -21,9 +21,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<p>
-	<spring:message code="listMailbox" />
-</p>
+<hr>
 <div class="container-fluid" style="padding-left: 2.5em">
 	<display:table name="mailboxes" id="row" requestURI="${requestURI}"
 		pagesize="5" class="displaytag table table-hover">
@@ -72,18 +70,15 @@
 			<span> <acme:create url="mailbox/create.do"
 					name="buttonMailbox" code="createMailbox" />
 			</span> 
-		</div>
-	</div>
-
-	<br>
-
-	<div class="row">
-		<div class="col-md-3">
+			<br>
 			<span> <a href="message/create.do"><spring:message
 				code="send.msg" /></a>
 			</span>
 		</div>
 	</div>
+
+	<br>
+
 	
 	<div class="row">
 		<div class="col-md-3">

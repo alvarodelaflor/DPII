@@ -10,33 +10,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Cleaner;
+import domain.CreditCard;
+import forms.RegisterActor;
+import domain.Curricula;
 import repositories.CleanerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Cleaner;
-import domain.CreditCard;
 import domain.JobApplication;
-import forms.RegisterActor;
 
 @Service
 @Transactional
 public class CleanerService {
 
 	@Autowired
-	private CleanerRepository	cleanerRepository;
+	private CleanerRepository		cleanerRepository;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
 
 	@Autowired
 	private ActorService		actorService;
 
 	@Autowired
 	private ConfigService		configService;
+
+	@Autowired
+	private CurriculaService		curriculaService;
+
+	@Autowired
+	private ValorationService		valorationService;
+
+	@Autowired
+	private SocialProfileService	socialProfileService;
+
+	@Autowired
+	private CleaningTaskService		cleaningTaskService;
 
 
 	// REGISTER AS CLEANER
@@ -196,9 +210,9 @@ public class CleanerService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Return the cleaner who is login if exits, null otherwise
-	 * 
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
@@ -213,9 +227,8 @@ public class CleanerService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Find a cleaner by id
-	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
@@ -254,6 +267,16 @@ public class CleanerService {
 
 		return result;
 	}
+
+	public void delete(final Cleaner cleaner) {
+		Assert.isTrue(cleaner.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.socialProfileService.deleteActorSocialProfiles(cleaner);
+		this.cleaningTaskService.deleteCleanerTasks(cleaner);
+		this.curriculaService.deleteAllByCleaner(cleaner);
+		this.valorationService.deleteAllByCleaner(cleaner);
+		this.cleanerRepository.delete(cleaner);
+	}
+
 
 	public Collection<Cleaner> getAllCleanersInJobList(final Collection<JobApplication> jobs) {
 

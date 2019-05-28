@@ -29,7 +29,7 @@ public class StringToTravelAgencyConverter implements Converter<String, TravelAg
 				result = this.travelAgencyRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
-			System.out.println("Error en StringToTravelAgencyConverter CATCH: " + oops);
+			System.out.println("Error en StringToHostConverter CATCH: " + oops);
 			throw new IllegalArgumentException(oops);
 		}
 		return result;

@@ -17,7 +17,7 @@ public class TransporterToStringConverter implements Converter<Transporter, Stri
 			result = null;
 		else
 			result = String.valueOf(transporter.getId());
-		System.out.println("CONVERTIDOR TransporterToStringConverter.java " + result);
+		System.out.println("CONVERTIDOR HostToStringConverter.java " + result);
 		return result;
 	}
 }

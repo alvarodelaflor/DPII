@@ -656,6 +656,7 @@
 	<bean id="travelPack01" class="domain.TravelPack">
 		<property name="name" value="travelPack1" />
 		<property name="draft" value="false" />
+		<property name="status" value="true"/>
 		<property name="customer" ref="customer01" />
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">

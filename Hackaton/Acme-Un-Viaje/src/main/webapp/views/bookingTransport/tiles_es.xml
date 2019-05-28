@@ -11,5 +11,9 @@
 		<put-attribute name="body" value="/views/bookingTransport/edit.jsp" />
 	</definition>
 	
+	<definition name="bookingTransport/customer/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar un transporte" />
+		<put-attribute name="body" value="/views/bookingTransport/customer/show.jsp" />
+	</definition>
 	
 </tiles-definitions>

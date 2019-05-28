@@ -20,7 +20,7 @@
 
 
 <body>
-		
+		<hr>
 		<div class="container-fluid"  style="padding-left: 2.5em" >
 				<div class="col-md-6" style="padding-left: 2.5em">
 			<form:form class="formularioEdicion" method="POST"

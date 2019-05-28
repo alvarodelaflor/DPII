@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.CreditCard;
+import domain.Customer;
+import forms.RegisterActorE;
 import repositories.CustomerRepository;
 import security.Authority;
 import security.LoginService;
@@ -27,19 +31,34 @@ import forms.RegisterActorE;
 public class CustomerService {
 
 	@Autowired
-	private CustomerRepository	customerRepository;
+	private CustomerRepository		customerRepository;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
 	private TravelPackService	travelPackService;
 
 	@Autowired
 	private ConfigService		configService;
+
+	@Autowired
+	private SocialProfileService	socialProfileService;
+
+	@Autowired
+	private RequestService			requestService;
+
+	@Autowired
+	private ComplaintService		complaintService;
+
+	@Autowired
+	private TravelPackService		travelPackService;
+
+	@Autowired
+	private ValorationService		valorationService;
 
 
 	// REGISTER AS CLEANER
@@ -206,6 +225,16 @@ public class CustomerService {
 
 	public Customer getLoggedCustomer() {
 		return this.customerRepository.findByUserAccountId(LoginService.getPrincipal().getId());
+	}
+
+	public void delete(final Customer customer) {
+		Assert.isTrue(customer.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.socialProfileService.deleteActorSocialProfiles(customer);
+		this.requestService.deleteCustomerRequests(customer);
+		this.complaintService.deleteCustomerComplaints(customer);
+		this.travelPackService.deleteCustomerTravelPacks(customer);
+		this.valorationService.deleteAllByCustomer(customer);
+		this.customerRepository.delete(customer);
 	}
 	public Collection<Customer> getCustomersByAccomodationId(final int id) {
 

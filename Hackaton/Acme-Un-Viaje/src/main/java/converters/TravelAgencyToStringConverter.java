@@ -17,7 +17,7 @@ public class TravelAgencyToStringConverter implements Converter<TravelAgency, St
 			result = null;
 		else
 			result = String.valueOf(travelAgency.getId());
-		System.out.println("CONVERTIDOR TravelAgencyToStringConverter.java " + result);
+		System.out.println("CONVERTIDOR HostToStringConverter.java " + result);
 		return result;
 	}
 }
