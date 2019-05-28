@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -17,10 +18,12 @@ import repositories.TravelPackRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.CommonUtils;
+import domain.Accomodation;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
 import domain.Customer;
 import domain.Host;
+import domain.Transport;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
@@ -43,6 +46,9 @@ public class TravelPackService {
 
 	@Autowired
 	private Validator				validator;
+
+	@Autowired
+	private TransportService		transportService;
 
 
 	public void delete(final TravelPack pack) {
@@ -171,5 +177,46 @@ public class TravelPackService {
 	public Collection<TravelPack> getTravelPacksByCustomerId(final int id) {
 
 		return this.getTravelPacksByCustomerId(id);
+	}
+
+	public void accept(final Integer travelPackId) {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final TravelPack travelPack = this.travelPackRepository.findOne(travelPackId);
+
+		System.out.println("TravelPackService::accept -> Reserving a place for 1 person in every transport");
+		Transport t = null;
+		for (final BookingTransport bt : travelPack.getTransports()) {
+			t = this.transportService.findOne(bt.getTransport().getId());
+			final int reservedPlaces = t.getReservedPlaces() + 1;
+			t.setReservedPlaces(reservedPlaces);
+			Assert.isTrue(t.getReservedPlaces() <= t.getNumberOfPlaces());
+		}
+
+		System.out.println("TravelPackService::accept -> Reserving each accomodation");
+		final Accomodation a = null;
+		for (final BookingAccomodation ba : travelPack.getAccomodations())
+			// Check if this accomodation has any other booking whose travel pack is not accepted
+			Assert.isTrue(this.canBook(ba));
+
+		travelPack.setStatus(true);
+		System.out.println("TravelPackService::accept -> Notifying travel agency");
+	}
+	public void reject(final Integer travelPackId) {
+		System.out.println("TravelPackService::reject -> Re-check logic");
+
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
+		final TravelPack travelPack = this.travelPackRepository.findOne(travelPackId);
+
+		travelPack.setStatus(false);
+		System.out.println("TravelPackService::accept -> Notifying travel agency");
+	}
+
+	public int getDistinctInRangeAccepted(final int id, final Date startDate, final Date endDate) {
+		return this.travelPackRepository.getDistinctInRangeAccepted(id, startDate, endDate);
+	}
+
+	private boolean canBook(final BookingAccomodation a) {
+		final int bookings = this.getDistinctInRangeAccepted(a.getId(), a.getStartDate(), a.getEndDate());
+		return bookings == 0;
 	}
 }
