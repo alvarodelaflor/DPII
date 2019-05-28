@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.BookingAccomodationService;
-import domain.BookingAccomodation;
+import services.BookingTransportService;
+import domain.BookingTransport;
 
 @Controller
-@RequestMapping("/bookingAccomodation/customer")
-public class BookingAccomodationCustomerController extends AbstractController {
+@RequestMapping("/bookingTransport/customer")
+public class BookingTransportCustomerController extends AbstractController {
 
 	@Autowired
-	private BookingAccomodationService	bookingAccomodationService;
+	private BookingTransportService	bookingTransportService;
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -26,12 +26,12 @@ public class BookingAccomodationCustomerController extends AbstractController {
 
 		ModelAndView res = null;
 		try {
-			final BookingAccomodation bookingAccomodation = this.bookingAccomodationService.findOne(bookingId);
-			if (bookingAccomodation == null)
+			final BookingTransport bookingTransport = this.bookingTransportService.findOne(bookingId);
+			if (bookingTransport == null)
 				res = new ModelAndView("redirect:/welcome/index.do");
 			else {
-				res = new ModelAndView("bookingAccomodation/customer/show");
-				res.addObject("bookingAccomodation", bookingAccomodation);
+				res = new ModelAndView("bookingTransport/customer/show");
+				res.addObject("bookingTransport", bookingTransport);
 			}
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");

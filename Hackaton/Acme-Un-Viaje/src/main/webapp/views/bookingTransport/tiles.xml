@@ -3,16 +3,19 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+
 <tiles-definitions>
 
-		<definition name="bookingTransport/travelAgency/create" extends="master.page">	
+	<definition name="bookingTransport/travelAgency/create" extends="master.page">
 		<put-attribute name="title" value="Adding transport" />
 		<put-attribute name="body" value="/views/bookingTransport/edit.jsp" />
 	</definition>
-	
-	
-	
-	
-	
+
+
+	<definition name="bookingTransport/customer/show" extends="master.page">
+		<put-attribute name="title" value="Show a transport" />
+		<put-attribute name="body" value="/views/bookingTransport/customer/show.jsp" />
+	</definition>
+
+
 </tiles-definitions>
