@@ -12,11 +12,11 @@ package unViaje;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,18 +26,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import domain.Customer;
-import domain.Host;
-import domain.Request;
-import domain.SocialProfile;
-import domain.Cleaner;
 import domain.CreditCard;
+import domain.Customer;
+import domain.SocialProfile;
 import security.LoginService;
-import services.CustomerService;
-import services.RequestService;
-import services.SocialProfileService;
-import services.AdminService;
+import services.ActorService;
 import services.ConfigService;
+import services.CustomerService;
+import services.SocialProfileService;
 import utilities.AbstractTest;
 
 @ContextConfiguration(locations = { "classpath:spring/junit.xml" })
@@ -53,6 +49,9 @@ public class SocialProfileServiceTest extends AbstractTest {
 	
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private ActorService actorService;
 	
 	/*
 	 * 18. Un actor autenticado podrá:
@@ -321,7 +320,62 @@ public class SocialProfileServiceTest extends AbstractTest {
 
 		this.checkExceptions(expected, caught);
 	}
+	
+	/*
+	 * 18. Un actor autenticado podrá:
+	 * 
+	 * 1. Administre sus perfiles sociales, que incluyen enumerarlos, mostrarlos, crearlos, actualizarlos y eliminarlos.
+	 * 
+	 * Analysis of sentence coverage:
+	 * ~25%
+	 * 
+	 * Analysis of data coverage:
+	 * ~15%
+	 */
+	@Test
+	public void diver04() throws ParseException {
 
+		final Object testingData[][] = {
+
+				{ 
+					"admin", null
+			}, {
+					"noExisto", IllegalArgumentException.class 
+			}, {
+					null, IllegalArgumentException.class 
+				} };
+
+		for (int i = 0; i < testingData.length; i++)
+			this.diver04((String) testingData[i][0],
+					(Class<?>) testingData[i][1]);
+
+	}
 	
-	
+	protected void diver04(final String actor, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			
+			this.authenticate(actor);
+			
+			List<SocialProfile> socialProfiles = (List<SocialProfile>) this.socialProfileService.getSocialProfilesByActor(LoginService.getPrincipal().getId());
+			
+			for (int i = 0; i < socialProfiles.size(); i++) {
+				socialProfiles.get(i).getLink();
+			}
+			
+			super.unauthenticate();
+			
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 }

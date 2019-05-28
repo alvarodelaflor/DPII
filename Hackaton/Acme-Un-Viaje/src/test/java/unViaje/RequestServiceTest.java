@@ -29,6 +29,7 @@ import org.springframework.util.Assert;
 import domain.Customer;
 import domain.Host;
 import domain.Request;
+import domain.SocialProfile;
 import domain.Cleaner;
 import domain.CreditCard;
 import security.LoginService;
@@ -232,6 +233,64 @@ public class RequestServiceTest extends AbstractTest {
 			//CONTROLADO EN CONTROLADOR
 			Assert.isTrue(!status);
 			this.requestService.delete(requestS);
+			
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+			super.unauthenticate();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+	
+	/*
+	 * 9. Un actor autenticado como cliente podrá:
+	 * 
+	 * 2. Borrar la solicitud realizada siempre y cuando esta no haya sido respondida aún por ninguna agencia de viaje.
+	 * 
+	 * Analysis of sentence coverage:
+	 * ~40%
+	 * 
+	 * Analysis of data coverage:
+	 * ~30%
+	 */
+	@Test
+	public void diver03() throws ParseException {
+
+		final Object testingData[][] = {
+
+				{ 
+					"customer", null
+			}, {
+					"admin", IllegalArgumentException.class 
+			}, {
+					null, IllegalArgumentException.class 
+				} };
+
+		for (int i = 0; i < testingData.length; i++)
+			this.diver03((String) testingData[i][0],
+					(Class<?>) testingData[i][1]);
+
+	}
+	
+	protected void diver03(final String actor, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			
+			this.authenticate(actor);
+			
+			List<Request> requests = (List<Request>) this.requestService.getCustomerRequest();
+			
+			for (int i = 0; i < requests.size(); i++) {
+				requests.get(i).getMaxPrice();
+			}
+			
+			super.unauthenticate();
 			
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
