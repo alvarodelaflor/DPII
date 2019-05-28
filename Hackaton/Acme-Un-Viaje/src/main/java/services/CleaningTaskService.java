@@ -44,6 +44,9 @@ public class CleaningTaskService {
 			cleaningTask.setDescription(result.getDescription());
 			result = cleaningTask;
 		}
+		this.validator.validate(cleaningTask, binding);
+		return result;
+	}
 		
 		public Collection<CleaningTask> getCleaningTaskHost(final int id) {
 			return this.cleaningTaskRepository.getCleaningTaskHost(id);
@@ -92,25 +95,4 @@ public class CleaningTaskService {
 	public CleaningTask save(final CleaningTask cleaningTask) {
 		return this.cleaningTaskRepository.save(cleaningTask);
 	}
-
-	public Collection<CleaningTask> getCleaningTaskHost(final int id) {
-		return this.cleaningTaskRepository.getCleaningTaskHost(id);
-	}
-
-	public Boolean checkDate(final Date startDate, final Date endDate) {
-		Boolean res = true;
-		if (startDate.before(endDate))
-			res = false;
-		return res;
-	}
-	public void deleteCleanerTasks(final Cleaner cleaner) {
-		final Collection<CleaningTask> tasks = this.getCleanerCleaningTasks(cleaner.getId());
-		if (tasks != null && !tasks.isEmpty())
-			for (final CleaningTask task : tasks)
-				this.delete(task);
-	}
-	private Collection<CleaningTask> getCleanerCleaningTasks(final int id) {
-		return this.cleaningTaskRepository.getCleanerCleaningTaks(id);
-	}
-
 }
