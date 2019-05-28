@@ -12,6 +12,7 @@ package domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,6 +29,8 @@ public class Curricula extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
+	@NotNull
+	@Size(max=256)
 	public String getName() {
 		return this.name;
 	}
@@ -38,7 +41,7 @@ public class Curricula extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
-	@Size(max=100000000)
+	@Size(max=256)
 	public String getStatement() {
 		return this.statement;
 	}
@@ -49,6 +52,8 @@ public class Curricula extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
+	@NotNull
+	@Size(max=256)
 	public String getPhone() {
 		return this.phone;
 	}
@@ -60,7 +65,7 @@ public class Curricula extends DomainEntity {
 	@NotBlank
 	@SafeHtml
 	@URL
-	// Hay que hacer un patron para las url de linkedin
+	@Size(max=256)
 	public String getLinkLinkedin() {
 		return this.linkLinkedin;
 	}
@@ -69,6 +74,7 @@ public class Curricula extends DomainEntity {
 		this.linkLinkedin = linkLinkedin;
 	}
 
+	@NotNull
 	public Boolean getIsCopy() {
 		return this.isCopy;
 	}
@@ -88,6 +94,9 @@ public class Curricula extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
+	@NotNull
+	@URL
+	@Size(max=256)
 	public String getBannerLogo() {
 		return bannerLogo;
 	}
