@@ -14,13 +14,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Transport;
-import domain.Transporter;
-import forms.TransportForm;
 import repositories.TransportRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.CommonUtils;
+import utilities.Log;
+import domain.Transport;
+import domain.Transporter;
+import forms.TransportForm;
 
 @Service
 @Transactional
@@ -88,6 +89,7 @@ public class TransportService {
 
 	public Transport reconstruct(final Transport transport, final BindingResult binding) {
 		Transport res = null;
+		Log.log.info("transportId: " + transport.getId());
 		if (transport.getId() == 0)
 			res = this.newTransport(transport);
 		else
@@ -95,6 +97,7 @@ public class TransportService {
 
 		this.validator.validate(res, binding);
 		this.injectDateOneYearLaterError(res.getDate(), "date", binding);
+		Log.log.info("bindingErrors: " + binding.getFieldErrors());
 		return res;
 	}
 	public void validateTransportForm(final TransportForm transportForm, final BindingResult binding) {
@@ -162,6 +165,8 @@ public class TransportService {
 	}
 
 	private void injectDateOneYearLaterError(final Date date, final String error, final BindingResult binding) {
+		if (date == null)
+			return;
 		final Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.YEAR, 1);
 		if (calendar.getTime().before(date))

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.TransportService;
+import utilities.Log;
 import domain.Transport;
 import forms.TransportForm;
 
@@ -143,6 +144,7 @@ public class TransportTransporterController extends AbstractController {
 		try {
 			t = this.transportService.reconstruct(transport, binding);
 		} catch (final Throwable oops) {
+			Log.log.severe("Fallo en reconstruct");
 			return new ModelAndView("redirect:/welcome/index.do");
 		}
 
@@ -155,12 +157,12 @@ public class TransportTransporterController extends AbstractController {
 				this.transportService.save(t);
 				result = new ModelAndView("redirect:/transport/transporter/list.do");
 			} catch (final Throwable oops) {
+				Log.log.severe("Fallo al guardar");
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		return result;
 	}
-
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(required = false, value = "transportId") final Integer transportId) {
 		if (transportId == null)
