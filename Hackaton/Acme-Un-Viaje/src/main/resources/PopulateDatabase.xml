@@ -260,11 +260,12 @@
 
 	<!-- HOST -->
 	<bean id="host01" class="domain.Host">
-		<property name="name" value="Sr. Host" />
-		<property name="surname" value="host" />
+		<property name="name" value="Manu" />
+		<property name="surname" value="Sanchez Vazquez" />
 		<property name="birthDate" value="1998/12/11" />
 		<property name="email" value="host@gmail.com" />
 		<property name="phone" value="+34678546678" />
+		<property name="photo" value="http://franciscoguerrero.es/content/15.CELEBRITY/Manu-Sanchez.jpg" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="creditCard" ref="creditCard05" />
 		<property name="mailboxes">
@@ -275,11 +276,12 @@
 		</property>
 	</bean>
 	<bean id="host02" class="domain.Host">
-		<property name="name" value="Sr. Host 2" />
-		<property name="surname" value="host 2" />
+		<property name="name" value="Don Manuel" />
+		<property name="surname" value="Ruiz de Lopera" />
 		<property name="birthDate" value="1998/12/11" />
 		<property name="email" value="host2@gmail.com" />
 		<property name="phone" value="+34678546678" />
+		<property name="photo" value="https://i.imgur.com/P5Dvnzi.jpg" />
 		<property name="userAccount" ref="userAccountHost02" />
 		<property name="creditCard" ref="creditCardHost02" />
 		<property name="mailboxes">

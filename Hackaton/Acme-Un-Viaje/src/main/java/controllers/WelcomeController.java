@@ -13,15 +13,22 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ConfigService;
+
 @Controller
 @RequestMapping("/welcome")
 public class WelcomeController extends AbstractController {
 
+	@Autowired
+	ConfigService configService;
+	
 	// Constructors -----------------------------------------------------------
 
 	public WelcomeController() {
@@ -35,12 +42,18 @@ public class WelcomeController extends AbstractController {
 		ModelAndView result;
 		SimpleDateFormat formatter;
 		String moment;
+		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
 
 		result = new ModelAndView("welcome/index");
 		result.addObject("name", name);
+		result.addObject("systemName", configService.getConfiguration().getSystemName());
+		result.addObject("systemNombre", configService.getConfiguration().getSystemNombre());
+		result.addObject("welcomeMessageEn", configService.getConfiguration().getWelcomeMessageEn());
+		result.addObject("welcomeMessageEs", configService.getConfiguration().getWelcomeMessageEs());
+		result.addObject("language", language);
 		result.addObject("moment", moment);
 
 		return result;
