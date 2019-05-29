@@ -1,27 +1,33 @@
 
 package unViaje;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.validation.Validator;
 
+import domain.BookingAccomodation;
+import domain.BookingTransport;
 import domain.CreditCard;
-import domain.FinderRequest;
 import domain.TravelAgency;
+import domain.TravelPack;
+import security.LoginService;
 import services.ConfigService;
-import services.FinderRequestService;
+import services.CustomerService;
 import services.TravelAgencyService;
+import services.TravelPackService;
 import utilities.AbstractTest;
 
 @ContextConfiguration(locations = {
@@ -29,23 +35,29 @@ import utilities.AbstractTest;
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class FinderRequestServiceTest extends AbstractTest {
+public class TravelPackServiceTest extends AbstractTest {
 
 	@Autowired
-	private FinderRequestService	finderService;
+	private TravelPackService	travelPackService;
 
 	@Autowired
-	private ConfigService			configService;
+	private ConfigService		configService;
 
 	@Autowired
-	private TravelAgencyService		travelAgencyService;
+	private TravelAgencyService	travelAgencyService;
+
+	@Autowired
+	private CustomerService		customerService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	/*
 	 * 15\. Un actor autenticado como agencia de viajes podrá:
-	 * - 1\. Filtrar las solicitudes de los clientes según: fecha, precio y lugar.
+	 * - 2\. Publicar paquetes de viaje para los clientes.
 	 *
-	 * Positivos : Probamos que con datos correctos no haya excepciones, comprobando los límites del mínimo del precio
+	 * Positivos : Probamos que con datos correctos no haya excepciones
 	 * Negativos: Probamos que con datos incorrectos y cross scripting se lancen excepciones.
 	 *
 	 * Analysis of sentence coverage:
@@ -55,30 +67,27 @@ public class FinderRequestServiceTest extends AbstractTest {
 	 * ~70%
 	 */
 	@Test
-	public void diver02() throws ParseException {
-
-		final SimpleDateFormat parseador = new SimpleDateFormat("yyyy/MM/dd");
-		final Date date = parseador.parse("1998/11/11");
+	public void diver02() {
 
 		final Object testingData[][] = {
 
 			{
-				date, 80., "", null
+				true, true, "Prueba", null
 			}, {
-				date, -5.0, "", ConstraintViolationException.class
+				false, true, "", ConstraintViolationException.class
 			}, {
-				date, 80., "<script>alert('hackeo')</script>", ConstraintViolationException.class
+				true, true, "<script>alert('hackeo')</script>", null
 			}, {
-				date, 0., "Carmona", null
+				true, false, "Prueba", IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.diver02((Date) testingData[i][0], (Double) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+			this.diver02((Boolean) testingData[i][0], (Boolean) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 
 	}
 
-	protected void diver02(final Date startDate, final Double price, final String address, final Class<?> expected) {
+	protected void diver02(final Boolean draft, final Boolean logged, final String penis, final Class<?> expected) {
 
 		Class<?> caught = null;
 
@@ -93,7 +102,7 @@ public class FinderRequestServiceTest extends AbstractTest {
 			final String hashPassword = encoder.encodePassword("password", null);
 			actor.getUserAccount().setPassword(hashPassword);
 			actor.getUserAccount().setUsername("userAccont");
-			actor.setName("name");
+			actor.setName("Roger");
 			actor.setSurname("surname");
 			actor.setEmail("email@email.com");
 			actor.setPhone("123456");
@@ -110,14 +119,25 @@ public class FinderRequestServiceTest extends AbstractTest {
 			actor.setCreditCard(creditCard);
 			final TravelAgency actorSave = this.travelAgencyService.saveRegisterAsTravelAgency(actor);
 			super.unauthenticate();
-
-			this.authenticate("userAccont");
-			final FinderRequest newFinder = actorSave.getFinderRequest();
-			newFinder.setPlace(address);
-			newFinder.setPrice(price);
-			newFinder.setStartDate(startDate);
-			this.finderService.save(newFinder);
-			this.flushTransaction();
+			this.authenticate("customer");
+			final Integer id = this.customerService.getLoggedCustomer().getId();
+			super.unauthenticate();
+			if (logged)
+				this.authenticate("userAccont");
+			final TravelPack pack = this.travelPackService.create();
+			final List<BookingTransport> transports = new ArrayList<BookingTransport>();
+			final List<BookingAccomodation> accomodations = new ArrayList<BookingAccomodation>();
+			pack.setAccomodations(accomodations);
+			pack.setTransports(transports);
+			pack.setName(penis);
+			pack.setCustomer(this.customerService.findOne(id));
+			pack.setPrice(0.);
+			pack.setStatus(draft);
+			pack.setTravelAgency(this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId()));
+			final TravelPack saved = this.travelPackService.save(pack);
+			Assert.assertNotNull(saved);
+			System.out.println(saved);
+			System.out.println(saved.getName());
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
