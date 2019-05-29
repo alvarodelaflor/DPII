@@ -8,12 +8,14 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.Cleaner;
 import domain.CleaningTask;
 import repositories.CleaningTaskRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -28,6 +30,10 @@ public class CleaningTaskService {
 
 	@Autowired
 	private ActorService			actorService;
+	
+	@Autowired
+	private HostService			hostService;
+
 
 
 	public CleaningTask reconstruct(final CleaningTask cleaningTask, final BindingResult binding) {
@@ -93,6 +99,8 @@ public class CleaningTaskService {
 	}
 
 	public CleaningTask save(final CleaningTask cleaningTask) {
+		Assert.isTrue(hostService.getHostByUserAccountId(LoginService.getPrincipal().getId()) != null);
+		Assert.isTrue(!checkDate(cleaningTask.getStartMoment(), cleaningTask.getEndMoment()));
 		return this.cleaningTaskRepository.save(cleaningTask);
 	}
 }
