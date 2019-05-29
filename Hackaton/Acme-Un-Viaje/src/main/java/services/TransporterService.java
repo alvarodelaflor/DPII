@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.CreditCard;
+import domain.Transporter;
+import forms.RegisterActor;
 import repositories.TransporterRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.CreditCard;
-import domain.Transporter;
-import forms.RegisterActor;
 
 @Service
 @Transactional
@@ -35,6 +36,18 @@ public class TransporterService {
 
 	@Autowired
 	private ConfigService			configService;
+
+	@Autowired
+	private TransportService		transportService;
+
+	@Autowired
+	private ComplaintService		complaintService;
+
+	@Autowired
+	private ValorationService		valorationService;
+
+	@Autowired
+	private SocialProfileService	socialProfileService;
 
 
 	// REGISTER AS TRASNSPORTER
@@ -211,5 +224,15 @@ public class TransporterService {
 			return res;
 		else
 			return res.subList(0, 2);
+	}
+
+	public void delete(final Transporter transporter) {
+		Assert.isTrue(transporter.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.socialProfileService.deleteActorSocialProfiles(transporter);
+		this.transportService.deleteAllByTransporter(transporter);
+		this.complaintService.deleteTransporterComplaints(transporter);
+		this.valorationService.deleteAllByTransporter(transporter);
+		this.transporterRepository.delete(transporter);
+
 	}
 }

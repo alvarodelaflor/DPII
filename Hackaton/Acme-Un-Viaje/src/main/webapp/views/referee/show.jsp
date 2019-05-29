@@ -124,8 +124,9 @@
 	<div class="row">
 		<div class="col-md-4">
 			<acme:cancel url="" code="actor.back" />
-
+			<acme:cancel url="/referee/export.do?id=${registerActor.id}" code="export"/><br>
+			<spring:message code="delete.actor"></spring:message><br>
+			<acme:cancel url="/referee/delete.do?id=${registerActor.id}" code="delete"/>
 		</div>
 	</div>
-</div>
 </div>

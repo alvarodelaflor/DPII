@@ -108,7 +108,7 @@ public class TravelPack extends DomainEntity {
 		this.price = price;
 	}
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Complaint> getComplaints() {
 		return this.complaints;
 	}

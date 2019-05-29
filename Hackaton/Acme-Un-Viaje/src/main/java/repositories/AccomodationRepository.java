@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import domain.Accomodation;
 import domain.BookingAccomodation;
+import domain.FinderAccomodation;
 import domain.Host;
 
 @Repository
@@ -29,5 +30,8 @@ public interface AccomodationRepository extends JpaRepository<Accomodation, Inte
 
 	@Query("select distinct ta.accomodation.host from TravelPack t join t.accomodations ta where t.customer.id=?1")
 	Collection<Host> getAccomodationsByCustomerId(int id);
+
+	@Query("select f from FinderAccomodation f join f.accomodations a where a.id = ?1")
+	Collection<FinderAccomodation> getAccomodationFinders(int id);
 
 }

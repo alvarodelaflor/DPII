@@ -7,6 +7,9 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -21,6 +24,7 @@ public class FinderAccomodation extends DomainEntity {
 	private Collection<Accomodation>	accomodations;
 
 
+	@SafeHtml
 	public String getKeyword() {
 		return this.keyword;
 	}
@@ -28,7 +32,7 @@ public class FinderAccomodation extends DomainEntity {
 	public void setKeyword(final String keyword) {
 		this.keyword = keyword;
 	}
-
+	@SafeHtml
 	public String getAddress() {
 		return this.address;
 	}
@@ -36,7 +40,6 @@ public class FinderAccomodation extends DomainEntity {
 	public void setAddress(final String address) {
 		this.address = address;
 	}
-
 	public Double getPrice() {
 		return this.price;
 	}
@@ -44,7 +47,7 @@ public class FinderAccomodation extends DomainEntity {
 	public void setPrice(final Double price) {
 		this.price = price;
 	}
-
+	@Min(1)
 	public Integer getPeople() {
 		return this.people;
 	}

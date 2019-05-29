@@ -9,18 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.TravelAgencyRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.CreditCard;
 import domain.FinderAccomodation;
 import domain.FinderRequest;
 import domain.TravelAgency;
 import forms.RegisterActor;
+import repositories.TravelAgencyRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -46,6 +47,15 @@ public class TravelAgencyService {
 
 	@Autowired
 	private TravelPackService			travelPackService;
+
+	@Autowired
+	private ComplaintService			complaintService;
+
+	@Autowired
+	private WarrantyService				warrantyService;
+
+	@Autowired
+	private SocialProfileService		socialProfileService;
 
 
 	// REGISTER AS TRAVEL
@@ -243,5 +253,15 @@ public class TravelAgencyService {
 			return res;
 		else
 			return res.subList(0, 2);
+	}
+
+	public void delete(final TravelAgency travelAgency) {
+		Assert.isTrue(travelAgency.getUserAccount().getId() == LoginService.getPrincipal().getId());
+		this.socialProfileService.deleteActorSocialProfiles(travelAgency);
+		this.travelPackService.deleteAllByTravelAgency(travelAgency);
+		this.warrantyService.deleteAllByTravelAgency(travelAgency);
+		this.complaintService.deleteTravelAgencyComplaints(travelAgency);
+		this.travelAgencyRepository.delete(travelAgency);
+
 	}
 }

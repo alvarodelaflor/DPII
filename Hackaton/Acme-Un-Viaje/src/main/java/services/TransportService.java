@@ -14,13 +14,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Transport;
+import domain.Transporter;
+import forms.TransportForm;
 import repositories.TransportRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.CommonUtils;
-import domain.Transport;
-import domain.Transporter;
-import forms.TransportForm;
 
 @Service
 @Transactional
@@ -189,6 +189,7 @@ public class TransportService {
 		Assert.isTrue(t.getReservedPlaces() == 0);
 
 		this.transportRepository.delete(transportId);
+
 	}
 
 	public List<Transporter> getTransportersByCustomerId(final int id) {
@@ -201,5 +202,12 @@ public class TransportService {
 	public Transporter findByUserAccountId(final int userAccountId) {
 
 		return this.transportRepository.findByUserAccountId(userAccountId);
+	}
+
+	public void deleteAllByTransporter(final Transporter transporter) {
+		final Collection<Transport> items = this.getLoggedTransporterTransports();
+		if (items != null && !items.isEmpty())
+			for (final Transport item : items)
+				this.delete(item.getId());
 	}
 }

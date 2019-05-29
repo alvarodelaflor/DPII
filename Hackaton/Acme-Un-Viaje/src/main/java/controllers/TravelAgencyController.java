@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -20,6 +20,8 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.CreditCard;
@@ -34,10 +36,11 @@ import services.TravelAgencyService;
 public class TravelAgencyController extends AbstractController {
 
 	@Autowired
-	private TravelAgencyService travelAgencyService;
-	
-	@Autowired 
-	private ConfigService configService;
+	private TravelAgencyService	travelAgencyService;
+
+	@Autowired
+	private ConfigService		configService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -55,7 +58,7 @@ public class TravelAgencyController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("travelAgency/create");
 			result.addObject("registerActor", registerActor);
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -74,7 +77,7 @@ public class TravelAgencyController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.err.println(binding);
 			result = new ModelAndView("travelAgency/create");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -99,11 +102,11 @@ public class TravelAgencyController extends AbstractController {
 		final int idUserAccount = LoginService.getPrincipal().getId();
 		travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(idUserAccount);
 		Assert.notNull(travelAgency);
-		CreditCard creditCard = travelAgency.getCreditCard();
+		final CreditCard creditCard = travelAgency.getCreditCard();
 		result = new ModelAndView("travelAgency/edit");
 		result.addObject("travelAgency", travelAgency);
 		result.addObject("creditCard", creditCard);
-		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 		result.addObject("makes", makes);
 		return result;
 	}
@@ -119,7 +122,7 @@ public class TravelAgencyController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("travelAgency/edit");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -144,6 +147,39 @@ public class TravelAgencyController extends AbstractController {
 			result.addObject("registerActor", registerActor);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	//EXPORT
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody TravelAgency export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		TravelAgency result = new TravelAgency();
+		result = this.travelAgencyService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	//DELETE
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int travelAgencyId) {
+		ModelAndView result;
+
+		final TravelAgency travelAgency = this.travelAgencyService.findOne(travelAgencyId);
+		System.out.println("TravelAgency encontrado: " + travelAgency);
+		if (this.travelAgencyService.findOne(travelAgencyId) == null || LoginService.getPrincipal().getId() != travelAgency.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(travelAgency, "travelAgency.null");
+
+			try {
+				this.travelAgencyService.delete(travelAgency);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				e.printStackTrace();
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			}
 		}
 		return result;
 	}

@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -20,10 +20,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Referee;
 import domain.CreditCard;
+import domain.Referee;
 import forms.RegisterActor;
 import security.LoginService;
 import services.ConfigService;
@@ -34,10 +36,11 @@ import services.RefereeService;
 public class RefereeController extends AbstractController {
 
 	@Autowired
-	private RefereeService refereeService;
-	
+	private RefereeService	refereeService;
+
 	@Autowired
-	private ConfigService configService;
+	private ConfigService	configService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -55,7 +58,7 @@ public class RefereeController extends AbstractController {
 			final RegisterActor registerActor = new RegisterActor();
 			result = new ModelAndView("referee/create");
 			result.addObject("registerActor", registerActor);
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -73,7 +76,7 @@ public class RefereeController extends AbstractController {
 		final Referee referee = this.refereeService.reconstructRegisterAsReferee(registerActor, binding);
 		if (binding.hasErrors()) {
 			result = new ModelAndView("referee/create");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -98,11 +101,11 @@ public class RefereeController extends AbstractController {
 		final int idUserAccount = LoginService.getPrincipal().getId();
 		referee = this.refereeService.getRefereeByUserAccountId(idUserAccount);
 		Assert.notNull(referee);
-		CreditCard creditCard = referee.getCreditCard();
+		final CreditCard creditCard = referee.getCreditCard();
 		result = new ModelAndView("referee/edit");
 		result.addObject("referee", referee);
 		result.addObject("creditCard", creditCard);
-		Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+		final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 		result.addObject("makes", makes);
 		return result;
 	}
@@ -117,7 +120,7 @@ public class RefereeController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("referee/edit");
-			Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
+			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
 		} else
 			try {
@@ -142,6 +145,39 @@ public class RefereeController extends AbstractController {
 			result.addObject("registerActor", registerActor);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+
+	//EXPORT
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public @ResponseBody Referee export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+		Referee result = new Referee();
+		result = this.refereeService.findOne(id);
+		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
+			return null;
+		return result;
+	}
+
+	//DELETE
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(value = "id", defaultValue = "-1") final int refereeId) {
+		ModelAndView result;
+
+		final Referee referee = this.refereeService.findOne(refereeId);
+		System.out.println("Referee encontrado: " + referee);
+		if (this.refereeService.findOne(refereeId) == null || LoginService.getPrincipal().getId() != referee.getUserAccount().getId())
+			result = new ModelAndView("redirect:list.do");
+		else {
+			Assert.notNull(referee, "referee.null");
+
+			try {
+				this.refereeService.delete(referee);
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			} catch (final Exception e) {
+				e.printStackTrace();
+				result = new ModelAndView("redirect:/j_spring_security_logout");
+			}
 		}
 		return result;
 	}
