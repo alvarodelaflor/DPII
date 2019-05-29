@@ -101,6 +101,10 @@ public class HostService {
 		final Host host = this.create();
 
 		this.actorService.checkActor(registerActor, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (!registerActor.getEmail().matches(pattern))
+			binding.rejectValue("email", "email.wrong");
 
 		host.getUserAccount().setUsername(registerActor.getUserName());
 		final String password = registerActor.getPassword();

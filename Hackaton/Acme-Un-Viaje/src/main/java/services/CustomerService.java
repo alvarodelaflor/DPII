@@ -84,6 +84,10 @@ public class CustomerService {
 		final Customer customer = this.create();
 
 		this.actorService.checkActor(registerActorE, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (!registerActorE.getEmail().matches(pattern))
+			binding.rejectValue("email", "email.wrong");
 
 		customer.getUserAccount().setUsername(registerActorE.getUserName());
 		final String password = registerActorE.getPassword();

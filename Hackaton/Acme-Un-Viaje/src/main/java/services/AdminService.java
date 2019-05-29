@@ -100,6 +100,11 @@ public class AdminService {
 		final Admin admin = this.create();
 
 		this.actorService.checkActor(registerActor, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		final String pattern2 = "(^((([a-zA-Z]|[0-9]){1,}[@])$)|(^(([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]>))$)";
+		if (!(!registerActor.getEmail().matches(pattern) || !registerActor.getEmail().matches(pattern2)))
+			binding.rejectValue("email", "email.wrong");
 
 		admin.getUserAccount().setUsername(registerActor.getUserName());
 		final String password = registerActor.getPassword();
@@ -204,7 +209,8 @@ public class AdminService {
 			binding.rejectValue("creditCard.make", "error.makeCredictCard");
 
 		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-		if (!registerActor.getEmail().matches(pattern))
+		final String pattern2 = "(^((([a-zA-Z]|[0-9]){1,}[@])$)|(^(([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]>))$)";
+		if (!(!registerActor.getEmail().matches(pattern) || !registerActor.getEmail().matches(pattern2)))
 			binding.rejectValue("email", "email.wrong");
 
 		if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<"))
