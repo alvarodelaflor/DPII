@@ -220,11 +220,15 @@ public class HostService {
 		if (!registerActor.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 
-		if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
-			binding.rejectValue("birthDate", "error.birthDate");
-			final Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
-			if (ageActor < 18)
+		if (registerActor.getBirthDate() != null) {
+			if (registerActor.getBirthDate().after(calendar.getTime())) {
+				binding.rejectValue("birthDate", "error.birthDate");
+			} 
+			calendar.add(Calendar.YEAR, -18);
+			if (registerActor.getBirthDate().after(calendar.getTime())) {
 				binding.rejectValue("birthDate", "error.birthDateM");
+			}
+
 		}
 	}
 
