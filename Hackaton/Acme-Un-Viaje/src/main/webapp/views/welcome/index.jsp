@@ -39,7 +39,7 @@
 			    	<h3 style="text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;">
 			    		<b>
 			    			<c:choose>
-			    				<c:when test="${language=='English' or language=='ingl&eacute;s' or language=='english' or language=='ingles' or language=='Ingl&eacute;s'}">
+			    				<c:when test="${language=='English' or language=='inglés' or language=='english' or language=='ingles' or language=='Inglés'}">
 			    					<jstl:out value="${systemName}"></jstl:out>	
 			    				</c:when>
 			    				<c:otherwise>
@@ -50,7 +50,7 @@
 			    	</h3>
 			    	<p style="text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;">
 			    		<c:choose>
-			    			<c:when test="${language=='English' or language=='ingl&eacute;s' or language=='english' or language=='ingles' or language=='Ingl&eacute;s'}">
+			    			<c:when test="${language=='English' or language=='inglés' or language=='english' or language=='ingles' or language=='Inglés'}">
 			    				<jstl:out value="${welcomeMessageEn}"></jstl:out>
 			    			</c:when>
 			    			<c:otherwise>
