@@ -205,11 +205,15 @@ public class CustomerService {
 		if (!registerActorE.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActorE.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 
-		if (registerActorE.getBirthDate() != null && registerActorE.getBirthDate().after(calendar.getTime())) {
-			binding.rejectValue("birthDate", "error.birthDate");
-			final Integer ageActor = calendar.getTime().getYear() - registerActorE.getBirthDate().getYear();
-			if (ageActor < 18)
+		if (registerActorE.getBirthDate() != null) {
+			if (registerActorE.getBirthDate().after(calendar.getTime())) {
+				binding.rejectValue("birthDate", "error.birthDate");
+			} 
+			calendar.add(Calendar.YEAR, -18);
+			if (registerActorE.getBirthDate().after(calendar.getTime())) {
 				binding.rejectValue("birthDate", "error.birthDateM");
+			}
+
 		}
 	}
 
