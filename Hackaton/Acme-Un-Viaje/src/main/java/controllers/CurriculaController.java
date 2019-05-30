@@ -26,10 +26,12 @@ import services.CurriculaService;
 import services.EducationalDataService;
 import services.MiscellaneousAttachmentService;
 import services.CleanerService;
+import services.CleaningTaskService;
 import domain.Curricula;
 import domain.EducationalData;
 import domain.MiscellaneousAttachment;
 import domain.Cleaner;
+import domain.CleaningTask;
 
 /*
  * CONTROL DE CAMBIOS CurriculaCleanerController.java
@@ -53,6 +55,9 @@ public class CurriculaController extends AbstractController {
 
 	@Autowired
 	private MiscellaneousAttachmentService	miscellaneousAttachmentService;
+	
+	@Autowired
+	private CleaningTaskService cleaningTaskService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -129,7 +134,10 @@ public class CurriculaController extends AbstractController {
 
 			final List<EducationalData> educationalDatas = (List<EducationalData>) this.educationalDataService.getEducationalDataFromCurricula(curriculaDB);
 			result.addObject("educationalDatas", educationalDatas);
-
+			
+			final List<CleaningTask> cleaningTask = (List<CleaningTask>) this.cleaningTaskService.getCleaningTaskCleaner(curriculaDB.getCleaner().getId());
+			result.addObject("cleaningTask", cleaningTask);
+			
 			final List<MiscellaneousAttachment> miscellaneousAttachments = (List<MiscellaneousAttachment>) this.miscellaneousAttachmentService.getMiscellaneousAttachmentFromCurricula(curriculaDB);
 			result.addObject("miscellaneousAttachments", miscellaneousAttachments);
 
