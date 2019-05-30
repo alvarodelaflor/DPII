@@ -764,19 +764,19 @@
 	<!-- BOOKINGACCOMODATION -->
 	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2020/12/11" />
+		<property name="endDate" value="2019/12/11" />
 		<property name="startDate" value="2019/12/11" />
 	</bean>
 
 	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2020/12/11" />
-		<property name="startDate" value="2019/12/11" />
+		<property name="endDate" value="2021/12/11" />
+		<property name="startDate" value="2021/12/11" />
 	</bean>
 	
 	<bean id="bookingaccomodation01" class="domain.BookingAccomodation">
-		<property name="startDate" value="2018/11/11" />
-		<property name="endDate" value="2018/11/12" />
+		<property name="startDate" value="2020/11/11" />
+		<property name="endDate" value="2020/11/12" />
 		<property name="accomodation" ref="accomodation01" />
 	</bean>
 
@@ -795,7 +795,7 @@
 
 	<bean id="bookingTransport02" class="domain.BookingTransport">
 		<property name="transport" ref="transport02" />
-		<property name="date" value="2020/12/11" />
+		<property name="date" value="2020/12/12" />
 	</bean>
 	<!-- BOOKINGTRANSPORT -->
 

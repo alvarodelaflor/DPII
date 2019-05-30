@@ -9,13 +9,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.BookingAccomodation;
@@ -134,10 +135,10 @@ public class TravelPackServiceTest extends AbstractTest {
 			pack.setPrice(0.);
 			pack.setStatus(draft);
 			pack.setTravelAgency(this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId()));
-			final TravelPack saved = this.travelPackService.save(pack);
-			Assert.assertNotNull(saved);
-			System.out.println(saved);
-			System.out.println(saved.getName());
+
+			final BindingResult binding = new BeanPropertyBindingResult(pack, "pack");
+			final TravelPack newPack = this.travelPackService.reconstruct(pack, binding);
+			final TravelPack saved = this.travelPackService.save(newPack);
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
