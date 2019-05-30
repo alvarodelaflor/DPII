@@ -29,4 +29,6 @@
           			
           			<a href="message/list.do?mailboxId=${mailbox.id}"><spring:message code="seeMessages" /></a>
           			
+          			
+          			
       			</div>
