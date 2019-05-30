@@ -31,6 +31,7 @@ import domain.Review;
 import domain.Tag;
 import domain.Transporter;
 import domain.TravelAgency;
+import domain.TravelPack;
 
 @Service
 @Transactional
@@ -205,7 +206,69 @@ public class MessageService {
 
 		return message;
 	}
-
+	
+	public Message sendNotificationTravelPack(TravelPack travelPack, TravelAgency travelAgency, Double price) {		
+		
+		Message message = create();
+				
+		String status;
+		
+		if(travelPack.getStatus() == true) {
+			status = "accepted";
+			message.setBody("The travel pack " + travelPack.getName() + "has been " + status + "for the price of " + price);
+		}else {
+			status = "rejected";
+			message.setBody("The travel pack " + travelPack.getName() + "has been " + status);
+		}
+		
+		message.setSubject("Notification about status of travel pack");	
+		
+			
+		List<String> emails = new ArrayList<String>();
+		
+		emails.add(travelAgency.getEmail());
+		
+		message.setEmailReceiver(emails);
+		
+		Collection<Mailbox> mailboxes = new ArrayList<Mailbox>();
+		
+		for (int i = 0; i < emails.size(); i++) {
+			mailboxes.add(mailboxService.getInBoxActorEmail(emails.get(i)));
+		}
+		
+		message.setTags(new ArrayList<Tag>());
+		
+				
+			for (final Mailbox box : mailboxes) {
+				message.getMailboxes().add(box);
+				box.getMessages().add(message);
+				Tag tag = tagService.create();
+				tag.setTag("NOTIFICATION");
+				Actor aacto = actorService.getActorMailbox(box.getId());
+				tag.setActorId(aacto.getId());
+				message.getTags().add(tag);
+				
+				if (checkSuspiciousWithBoolean(message)) {
+					Tag spam = tagService.create();
+					spam.setActorId(aacto.getId());
+					spam.setTag("SPAM");
+					message.getTags().add(spam);
+				}
+			
+		}
+			
+			Message saved = save(message);
+			List<Tag> tags = new ArrayList<Tag>();
+			tags.addAll(saved.getTags());
+			
+			for (int i = 0; i < tags.size(); i++) {
+				tags.get(i).setMessageId(saved.getId());
+				tagService.save(tags.get(i));
+			}
+			
+		return saved;
+	}
+	
 	public Message sendBroadcast(final Message message) {
 		final Admin a = this.administratorService.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Collection<Mailbox> inBoxAdmin = this.mailboxService.getAdminInBox();

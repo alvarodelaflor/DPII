@@ -83,7 +83,7 @@
 		<span style="padding-left: 2.5em"> <acme:create
 				url="socialProfile/create.do" name="buttonSocialProfile"
 				code="socialProfile.create" />
-		</span> <span style="padding-left: 0.5em"> <acme:cancel url=""
+		</span> <span style="padding-left: 0.5em"> <acme:cancel url="socialProfile/list.do"
 				code="actor.back" />
 		</span>
 	</div>

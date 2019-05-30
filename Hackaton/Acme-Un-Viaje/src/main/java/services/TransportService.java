@@ -14,14 +14,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Transport;
+import domain.Transporter;
+import forms.TransportForm;
 import repositories.TransportRepository;
 import security.Authority;
 import security.LoginService;
 import utilities.CommonUtils;
 import utilities.Log;
-import domain.Transport;
-import domain.Transporter;
-import forms.TransportForm;
 
 @Service
 @Transactional
@@ -174,6 +174,7 @@ public class TransportService {
 	}
 
 	public Collection<Transport> findAll() {
+		Assert.isTrue(LoginService.getPrincipal() != null);
 		return this.transportRepository.findAll();
 	}
 

@@ -20,6 +20,8 @@ import security.LoginService;
 import security.UserAccount;
 import domain.CreditCard;
 import domain.Customer;
+import domain.Mailbox;
+import domain.Message;
 import domain.TravelPack;
 import forms.RegisterActorE;
 
@@ -53,6 +55,9 @@ public class CustomerService {
 
 	@Autowired
 	private ValorationService		valorationService;
+	
+	@Autowired
+	private MailboxService		mailboxService;
 
 
 	// REGISTER AS CLEANER
@@ -63,6 +68,28 @@ public class CustomerService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.CUSTOMER);
+		
+		Mailbox inBox = mailboxService.create();
+		Mailbox outBox = mailboxService.create();
+		
+		inBox.setName("inBox");
+		outBox.setName("outBox");
+		
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		
+		inBox.setMessages(new ArrayList<Message>());
+		outBox.setMessages(new ArrayList<Message>());
+		
+		Mailbox inBoxSave = mailboxService.save(inBox);
+		Mailbox outBoxSave = mailboxService.save(outBox);
+		
+		Collection<Mailbox> boxes = new ArrayList<Mailbox>();
+		
+		boxes.add(inBoxSave);
+		boxes.add(outBoxSave);
+		
+		customer.setMailboxes(boxes);
 
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
@@ -84,6 +111,10 @@ public class CustomerService {
 		final Customer customer = this.create();
 
 		this.actorService.checkActor(registerActorE, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (!registerActorE.getEmail().matches(pattern))
+			binding.rejectValue("email", "email.wrong");
 
 		customer.getUserAccount().setUsername(registerActorE.getUserName());
 		final String password = registerActorE.getPassword();

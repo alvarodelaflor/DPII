@@ -14,10 +14,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.TravelPackRepository;
-import security.Authority;
-import security.LoginService;
-import utilities.CommonUtils;
 import domain.Accomodation;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
@@ -27,6 +23,10 @@ import domain.Transport;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
+import repositories.TravelPackRepository;
+import security.Authority;
+import security.LoginService;
+import utilities.CommonUtils;
 
 @Service
 @Transactional
@@ -52,6 +52,9 @@ public class TravelPackService {
 
 	@Autowired
 	private BookingTransportService	bookingTransportService;
+	
+	@Autowired
+	private MessageService	messageService;
 
 
 	public void delete(final TravelPack pack) {
@@ -200,7 +203,12 @@ public class TravelPackService {
 		// Notify travel agency with the money
 		final TravelAgency ta = travelPack.getTravelAgency();
 		final Double price = travelPack.getPrice();
+
+//      Not tested
+//		messageService.sendNotificationTravelPack(travelPack, ta, price);
 	}
+	
+	
 	public void reject(final Integer travelPackId) {
 		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
 
@@ -215,6 +223,10 @@ public class TravelPackService {
 
 		// Notify travel agency
 		final TravelAgency ta = travelPack.getTravelAgency();
+
+//      Not tested
+//		messageService.sendNotificationTravelPack(travelPack, ta, null);
+
 	}
 
 	public int getDistinctInRangeAccepted(final int id, final Date startDate, final Date endDate) {

@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.CreditCard;
+import domain.Mailbox;
+import domain.Message;
 import domain.Transporter;
 import forms.RegisterActor;
 import repositories.TransporterRepository;
@@ -48,6 +51,9 @@ public class TransporterService {
 
 	@Autowired
 	private SocialProfileService	socialProfileService;
+	
+	@Autowired
+	private MailboxService	mailboxService;
 
 
 	// REGISTER AS TRASNSPORTER
@@ -58,6 +64,28 @@ public class TransporterService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.TRANSPORTER);
+		
+		Mailbox inBox = mailboxService.create();
+		Mailbox outBox = mailboxService.create();
+		
+		inBox.setName("inBox");
+		outBox.setName("outBox");
+		
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		
+		inBox.setMessages(new ArrayList<Message>());
+		outBox.setMessages(new ArrayList<Message>());
+		
+		Mailbox inBoxSave = mailboxService.save(inBox);
+		Mailbox outBoxSave = mailboxService.save(outBox);
+		
+		Collection<Mailbox> boxes = new ArrayList<Mailbox>();
+		
+		boxes.add(inBoxSave);
+		boxes.add(outBoxSave);
+		
+		transporter.setMailboxes(boxes);
 
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
@@ -79,6 +107,10 @@ public class TransporterService {
 		final Transporter transporter = this.create();
 
 		this.actorService.checkActor(registerActor, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (!registerActor.getEmail().matches(pattern))
+			binding.rejectValue("email", "email.wrong");
 
 		transporter.getUserAccount().setUsername(registerActor.getUserName());
 		final String password = registerActor.getPassword();

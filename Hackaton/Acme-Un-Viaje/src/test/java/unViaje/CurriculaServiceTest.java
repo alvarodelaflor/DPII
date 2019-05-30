@@ -50,39 +50,56 @@ public class CurriculaServiceTest extends AbstractTest {
 
 
 	/*
-	 * 14. The system must be easy to customise at run time, including banner, system message and country code
-	 * //
-	 * * //
+	 * CREACI脫N DE CURRICULA
+	 * 
+	 * RI
+	 * 
+	 * 14\. Un operario de limpieza puede registrar uno o m谩s curriculums. Los curriculums constan de los siguientes datos: 
+	 * 		datos personales, que incluyen un nombre completo, una declaraci贸n, un n煤mero de tel茅fono (siguiendo el patr贸n de la web)
+	 * 		y un perfil de LinkedIn; datos de trabajo, que incluyen el t铆tulo, la descripci贸n, la fecha de inicio y la fecha de 
+	 * 		finalizaci贸n opcional de trabajos que ha tenido este operario as铆 como el propio trabajo adjunto; datos de educaci贸n, 
+	 * 		que incluyen el grado, la instituci贸n, la marca, la fecha de inicio y la fecha de finalizaci贸n opcional del t铆tulo de 
+	 * 		grado que tiene un operario; y datos miscel谩neos, que es texto libre con complementos opcionales.
+	 * 
+	 * RF
+	 * 
+	 * 16. 
+	 * 		B) Administre sus curr铆culums, que incluyen enumerarlos, mostrarlos, crearlos, actualizarlos y eliminarlos. 
+	 * 			Cuando un operario hace una solicitud, 茅l o ella debe seleccionar un curr铆culum para que se adjunte a la 
+	 * 			solicitud de empleo. Tenga en cuenta que adjuntar un curr铆culum hace una copia; Las actualizaciones que 
+	 * 			realiza un operario en el curr铆culum original no se propagan a las solicitudes a las que ha adjuntado una 
+	 * 			versi贸n anterior.
+	 * 
 	 * Analysis of sentence coverage
-	 * 12.6%
+	 * 40.6%
 	 * Analysis of data coverage
-	 * ~10%
+	 * ~3%
 	 */
 	@Test
 	public void Diver01Data() {
 		final Object testingData[][] = {
 			{
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false, null
+				"Me gustara entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false, null
 			} , {
 				null, "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", null, "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", null, "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", null, "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", "Soy un experto programador Java", null, "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", "+34695456123", null, "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", "Soy un experto programador Java", "+34695456123", null, "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", null, true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", null, true, false,IllegalArgumentException.class
 			} , {
 				" ", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", " ", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", " ", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", " ", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", "Soy un experto programador Java", " ", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", "+34695456123", " ", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", "Soy un experto programador Java", "+34695456123", " ", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, false,IllegalArgumentException.class
 			} , {
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", " ", true, false,IllegalArgumentException.class
+				"Me gustara entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", " ", true, false,IllegalArgumentException.class
 			}
 
 		};
@@ -92,13 +109,39 @@ public class CurriculaServiceTest extends AbstractTest {
 
 	}
 	
+	/*
+	 * EDICI脫N DE CURRICULA
+	 * 
+	 * RI
+	 * 
+	 * 14\. Un operario de limpieza puede registrar uno o m谩s curriculums. Los curriculums constan de los siguientes datos: 
+	 * 		datos personales, que incluyen un nombre completo, una declaraci贸n, un n煤mero de tel茅fono (siguiendo el patr贸n de la web)
+	 * 		y un perfil de LinkedIn; datos de trabajo, que incluyen el t铆tulo, la descripci贸n, la fecha de inicio y la fecha de 
+	 * 		finalizaci贸n opcional de trabajos que ha tenido este operario as铆 como el propio trabajo adjunto; datos de educaci贸n, 
+	 * 		que incluyen el grado, la instituci贸n, la marca, la fecha de inicio y la fecha de finalizaci贸n opcional del t铆tulo de 
+	 * 		grado que tiene un operario; y datos miscel谩neos, que es texto libre con complementos opcionales.
+	 * 
+	 * RF
+	 * 
+	 * 16. 
+	 * 		B) Administre sus curr铆culums, que incluyen enumerarlos, mostrarlos, crearlos, actualizarlos y eliminarlos. 
+	 * 			Cuando un operario hace una solicitud, 茅l o ella debe seleccionar un curr铆culum para que se adjunte a la 
+	 * 			solicitud de empleo. Tenga en cuenta que adjuntar un curr铆culum hace una copia; Las actualizaciones que 
+	 * 			realiza un operario en el curr铆culum original no se propagan a las solicitudes a las que ha adjuntado una 
+	 * 			versi贸n anterior.
+	 * 
+	 * Analysis of sentence coverage
+	 * 40.6%
+	 * Analysis of data coverage
+	 * ~1%
+	 */
 	@Test
 	public void Diver02Data() {
 		final Object testingData[][] = {
 			{
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, true, null
+				"Me gustar锟絘 entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", true, true, null
 			} , {
-				"Me gustar韆 entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", false, true, IllegalArgumentException.class
+				"Me gustar锟絘 entrar en su empresa", "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", false, true, IllegalArgumentException.class
 			} , {
 				null, "Soy un experto programador Java", "+34695456123", "http://www.prueba.com", "https://www.dzoom.org.es/wp-content/uploads/2008/12/panoramica-13-734x243.jpg", false, true, IllegalArgumentException.class
 			}
@@ -110,6 +153,32 @@ public class CurriculaServiceTest extends AbstractTest {
 
 	}
 	
+	/*
+	 * LISTAR Y MOSTRAR CURRICULA
+	 * 
+	 * RI
+	 * 
+	 * 14\. Un operario de limpieza puede registrar uno o m谩s curriculums. Los curriculums constan de los siguientes datos: 
+	 * 		datos personales, que incluyen un nombre completo, una declaraci贸n, un n煤mero de tel茅fono (siguiendo el patr贸n de la web)
+	 * 		y un perfil de LinkedIn; datos de trabajo, que incluyen el t铆tulo, la descripci贸n, la fecha de inicio y la fecha de 
+	 * 		finalizaci贸n opcional de trabajos que ha tenido este operario as铆 como el propio trabajo adjunto; datos de educaci贸n, 
+	 * 		que incluyen el grado, la instituci贸n, la marca, la fecha de inicio y la fecha de finalizaci贸n opcional del t铆tulo de 
+	 * 		grado que tiene un operario; y datos miscel谩neos, que es texto libre con complementos opcionales.
+	 * 
+	 * RF
+	 * 
+	 * 16. 
+	 * 		B) Administre sus curr铆culums, que incluyen enumerarlos, mostrarlos, crearlos, actualizarlos y eliminarlos. 
+	 * 			Cuando un operario hace una solicitud, 茅l o ella debe seleccionar un curr铆culum para que se adjunte a la 
+	 * 			solicitud de empleo. Tenga en cuenta que adjuntar un curr铆culum hace una copia; Las actualizaciones que 
+	 * 			realiza un operario en el curr铆culum original no se propagan a las solicitudes a las que ha adjuntado una 
+	 * 			versi贸n anterior.
+	 * 
+	 * Analysis of sentence coverage
+	 * 80.4%
+	 * Analysis of data coverage
+	 * ~54%
+	 */
 	@Test
 	public void Diver03Data() {
 		final Object testingData[][] = {
@@ -126,6 +195,32 @@ public class CurriculaServiceTest extends AbstractTest {
 
 	}
 	
+	/*
+	 * ELIMINAR CURRICULA
+	 * 
+	 * RI
+	 * 
+	 * 14\. Un operario de limpieza puede registrar uno o m谩s curriculums. Los curriculums constan de los siguientes datos: 
+	 * 		datos personales, que incluyen un nombre completo, una declaraci贸n, un n煤mero de tel茅fono (siguiendo el patr贸n de la web)
+	 * 		y un perfil de LinkedIn; datos de trabajo, que incluyen el t铆tulo, la descripci贸n, la fecha de inicio y la fecha de 
+	 * 		finalizaci贸n opcional de trabajos que ha tenido este operario as铆 como el propio trabajo adjunto; datos de educaci贸n, 
+	 * 		que incluyen el grado, la instituci贸n, la marca, la fecha de inicio y la fecha de finalizaci贸n opcional del t铆tulo de 
+	 * 		grado que tiene un operario; y datos miscel谩neos, que es texto libre con complementos opcionales.
+	 * 
+	 * RF
+	 * 
+	 * 16. 
+	 * 		B) Administre sus curr铆culums, que incluyen enumerarlos, mostrarlos, crearlos, actualizarlos y eliminarlos. 
+	 * 			Cuando un operario hace una solicitud, 茅l o ella debe seleccionar un curr铆culum para que se adjunte a la 
+	 * 			solicitud de empleo. Tenga en cuenta que adjuntar un curr铆culum hace una copia; Las actualizaciones que 
+	 * 			realiza un operario en el curr铆culum original no se propagan a las solicitudes a las que ha adjuntado una 
+	 * 			versi贸n anterior.
+	 * 
+	 * Analysis of sentence coverage
+	 * 25.6%
+	 * Analysis of data coverage
+	 * ~65%
+	 */
 	@Test
 	public void Diver04Data() {
 		final Object testingData[][] = {
@@ -188,7 +283,7 @@ public class CurriculaServiceTest extends AbstractTest {
 		curricula.setIsCopy(false);
 		curricula.setCleaner(cleaner);				
 		Curricula theSaved = this.curriculaService.save(curricula);		
-		Curricula curriculaReconstruct = this.curriculaService.reconstruct(curricula, null);
+		this.curriculaService.reconstruct(curricula, null);
 		return theSaved;
 	}
 
@@ -243,8 +338,8 @@ public class CurriculaServiceTest extends AbstractTest {
 			this.curriculaService.save(curriculaII);
 			
 			Collection<Curricula> curriculas = this.curriculaService.findAllByCleaner(cleaner);
-			Collection<Curricula> curriculasAll = this.curriculaService.findAll();
-			Collection<Curricula> curriculasAll2 = this.curriculaService.findAllNotCopyByCleaner(cleaner);
+			this.curriculaService.findAll();
+			this.curriculaService.findAllNotCopyByCleaner(cleaner);
 			
 			for (Curricula curricula : curriculas) {
 				

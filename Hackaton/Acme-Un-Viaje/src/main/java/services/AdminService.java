@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import domain.Actor;
 import domain.Admin;
 import domain.Config;
 import domain.CreditCard;
+import domain.Mailbox;
+import domain.Message;
 import forms.RegisterActor;
 
 @Service
@@ -38,6 +41,9 @@ public class AdminService {
 
 	@Autowired
 	private ConfigService	configService;
+	
+	@Autowired
+	private MailboxService	mailboxService;
 
 
 	// GET CONFIG
@@ -79,7 +85,29 @@ public class AdminService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
-
+		
+		Mailbox inBox = mailboxService.create();
+		Mailbox outBox = mailboxService.create();
+		
+		inBox.setName("inBox");
+		outBox.setName("outBox");
+		
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		
+		inBox.setMessages(new ArrayList<Message>());
+		outBox.setMessages(new ArrayList<Message>());
+		
+		Mailbox inBoxSave = mailboxService.save(inBox);
+		Mailbox outBoxSave = mailboxService.save(outBox);
+		
+		Collection<Mailbox> boxes = new ArrayList<Mailbox>();
+		
+		boxes.add(inBoxSave);
+		boxes.add(outBoxSave);
+		
+		admin.setMailboxes(boxes);
+		
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);
 		admin.setUserAccount(user);
@@ -100,6 +128,11 @@ public class AdminService {
 		final Admin admin = this.create();
 
 		this.actorService.checkActor(registerActor, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		final String pattern2 = "(^((([a-zA-Z]|[0-9]){1,}[@])$)|(^(([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]>))$)";
+		if (!(!registerActor.getEmail().matches(pattern) || !registerActor.getEmail().matches(pattern2)))
+			binding.rejectValue("email", "email.wrong");
 
 		admin.getUserAccount().setUsername(registerActor.getUserName());
 		final String password = registerActor.getPassword();
@@ -204,7 +237,8 @@ public class AdminService {
 			binding.rejectValue("creditCard.make", "error.makeCredictCard");
 
 		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-		if (!registerActor.getEmail().matches(pattern))
+		final String pattern2 = "(^((([a-zA-Z]|[0-9]){1,}[@])$)|(^(([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]>))$)";
+		if (!(!registerActor.getEmail().matches(pattern) || !registerActor.getEmail().matches(pattern2)))
 			binding.rejectValue("email", "email.wrong");
 
 		if (registerActor.getCreditCard().getHolder().contains(">") || registerActor.getCreditCard().getHolder().contains("<"))
