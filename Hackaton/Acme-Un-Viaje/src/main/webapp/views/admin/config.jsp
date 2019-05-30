@@ -93,7 +93,7 @@
 					action="admin/delsw.do?delsw='${delsw}'.do">
 					<spring:message code="deleteSpamWord" />
 					<input type=text name="delsw" required="required" />
-					<acme:submit name="save" code="delete" />
+					<acme:submit name="save" code="Delete" />
 				</form:form>
 				<br />
 			</div>
@@ -113,7 +113,7 @@
 					action="admin/delscw.do?delscw='${delscw}'.do">
 					<spring:message code="deleteScoreWord" />
 					<input type=text name="delscw" required="required" />
-					<acme:submit name="save" code="delete" />
+					<acme:submit name="save" code="Delete" />
 				</form:form>
 				<br />
 			</div>
@@ -133,7 +133,7 @@
 					action="admin/delccm.do?delccm='${delccm}'.do">
 					<spring:message code="deleteCreditCardMake" />
 					<input type=text name="delccm" required="required" />
-					<acme:submit name="save" code="delete" />
+					<acme:submit name="save" code="Delete" />
 				</form:form>
 				<br />
 			</div>

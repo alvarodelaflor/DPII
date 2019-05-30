@@ -235,6 +235,11 @@
 										<spring:message code="master.page.complaint.customer.list" />
 									</a>
 								</li>
+								<li class="nav-item">
+									<a href="customer/contacts.do" class="nav-link">
+										<spring:message code="master.page.contacts" />
+									</a>
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('TRAVELAGENCY')">

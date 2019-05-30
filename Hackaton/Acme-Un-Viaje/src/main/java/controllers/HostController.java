@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- *
+ * 
  * Copyright (C) 2018 Universidad de Sevilla
- *
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -13,7 +13,9 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -27,13 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Customer;
-import domain.Host;
-import domain.JobApplication;
-import domain.Valoration;
-import forms.RegisterActor;
 import security.LoginService;
 import services.AccomodationService;
 import services.CleanerService;
@@ -42,6 +37,13 @@ import services.CustomerService;
 import services.HostService;
 import services.JobApplicationService;
 import services.ValorationService;
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Customer;
+import domain.Host;
+import domain.JobApplication;
+import domain.Valoration;
+import forms.RegisterActor;
 
 @Controller
 @RequestMapping("/host")
@@ -208,7 +210,8 @@ public class HostController extends AbstractController {
 
 			res = new ModelAndView("host/customerList");
 			res.addObject("accomodationId", accomodationId);
-			final Collection<Customer> customers = this.customerService.getCustomersByAccomodationId(accomodationId);
+			final Collection<Customer> customersCollection = this.customerService.getCustomersByAccomodationId(accomodationId);
+			final Set<Customer> customers = new HashSet<>(customersCollection);
 			res.addObject("customers", customers);
 
 		} catch (final Throwable oops) {
@@ -348,7 +351,8 @@ public class HostController extends AbstractController {
 
 	//EXPORT
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public @ResponseBody Host export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+	public @ResponseBody
+	Host export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		Host result = new Host();
 		result = this.hostService.findOne(id);
 		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
