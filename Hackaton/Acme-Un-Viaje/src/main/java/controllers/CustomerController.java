@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- *
+ * 
  * Copyright (C) 2018 Universidad de Sevilla
- *
+ * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -27,9 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.CreditCard;
-import domain.Customer;
-import forms.RegisterActorE;
 import security.LoginService;
 import services.AccomodationService;
 import services.ConfigService;
@@ -132,7 +129,7 @@ public class CustomerController extends AbstractController {
 	// RATE TRANSPORTER
 	// ---------------------------------------------------------------
 	@RequestMapping(value = "/rateTransporter", method = RequestMethod.GET)
-	public ModelAndView rateTransporter(@RequestParam(value = "trasnporterId", defaultValue = "-1") final int transporterId) {
+	public ModelAndView rateTransporter(@RequestParam(value = "transporterId", defaultValue = "-1") final int transporterId) {
 
 		ModelAndView res;
 
@@ -350,7 +347,8 @@ public class CustomerController extends AbstractController {
 
 	//EXPORT
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public @ResponseBody Customer export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+	public @ResponseBody
+	Customer export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		Customer result = new Customer();
 		result = this.customerService.findOne(id);
 		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())

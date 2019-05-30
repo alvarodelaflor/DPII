@@ -2,19 +2,18 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
-import org.springframework.validation.Validator;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.MessageRepository;
 import security.LoginService;
@@ -22,6 +21,7 @@ import security.UserAccount;
 import domain.Actor;
 import domain.Admin;
 import domain.Complaint;
+import domain.Config;
 import domain.Customer;
 import domain.Host;
 import domain.Mailbox;
@@ -44,30 +44,31 @@ public class MessageService {
 	@Autowired
 	MailboxService				mailboxService;
 	@Autowired
-	AdminService		administratorService;
+	AdminService				administratorService;
 	@Autowired
 	ActorService				actorService;
 	@Autowired
-	TagService				tagService;
+	TagService					tagService;
 	@Autowired
 	ConfigService				configService;
 	@Autowired
 	RefereeService				refereeService;
 	@Autowired
-	TravelPackService				travelPackService;
+	TravelPackService			travelPackService;
 	@Autowired
 	private Validator			validator;
 
 	@Autowired
 	private CustomerService		customerService;
 
+
 	public Message reconstruct(final Message message, final BindingResult binding) {
 		Message result;
 		final Collection<Mailbox> boxes = new ArrayList<>();
-		Collection<Tag> tags = new ArrayList<Tag>();
-		
-		UserAccount user = LoginService.getPrincipal();
-		Actor a = actorService.getActorByUserId(user.getId());
+		final Collection<Tag> tags = new ArrayList<Tag>();
+
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserId(user.getId());
 
 		if (message.getId() == 0) {
 			message.setMoment(LocalDateTime.now().toDate());
@@ -101,7 +102,7 @@ public class MessageService {
 
 	public Message exchangeMessage(final Message message, final Integer receiverId) {
 		//this.checkSuspicious(message);
-		
+
 		Assert.isTrue(message.getSubject() != null);
 
 		final UserAccount userSender = LoginService.getPrincipal();
@@ -137,90 +138,81 @@ public class MessageService {
 			
 			if (message.getTags().size() == 1) {
 			message.setTags(new ArrayList<Tag>());
-			Collection<Tag> tagsActor = new ArrayList<Tag>();
+			final Collection<Tag> tagsActor = new ArrayList<Tag>();
 			tagsActor.add(old);
 			tagsActor.add(tag);
 			message.setTags(tagsActor);
-			
-			}else {
-				message.getTags().add(tag);
-			}
-			
-			if (checkSuspiciousWithBoolean(message)) {
-				Tag spam = tagService.create();
-				spam.setActorId(receiverId);
+
+		} else
+			message.getTags().add(tag);
+
+		if (this.checkSuspiciousWithBoolean(message)) {
+			final Tag spam = this.tagService.create();
+			spam.setActorId(receiverId);
+			spam.setTag("SPAM");
+			message.getTags().add(spam);
+		}
+
+		return message;
+	}
+
+	public Message sendBroadcastWithoutAdminReview(final Complaint complaint, final Review review) {
+
+		final Message message = this.create();
+
+		message.setSubject("Notification about review done");
+		message.setBody("A review has been made on the complaint with description" + " {" + complaint.getDescription() + "} about the travel pack " + this.travelPackService.findFromComplaint(complaint.getId()).getName()
+			+ ". The description of the review is {" + review.getDescription() + "}.");
+
+		final Customer customer = complaint.getCustomer();
+		final TravelAgency travelAgency = complaint.getTravelAgency();
+		final Host host = complaint.getHost();
+		final Transporter transporter = complaint.getTransporter();
+
+		final List<String> emails = new ArrayList<String>();
+		if (customer != null)
+			emails.add(customer.getEmail());
+
+		if (travelAgency != null)
+			emails.add(travelAgency.getEmail());
+
+		if (host != null)
+			emails.add(host.getEmail());
+
+		if (transporter != null)
+			emails.add(transporter.getEmail());
+
+		final Referee ref = this.refereeService.getRefereeByUserAccountId(LoginService.getPrincipal().getId());
+
+		emails.add(ref.getEmail());
+
+		message.setEmailReceiver(emails);
+
+		final Collection<Mailbox> mailboxes = new ArrayList<Mailbox>();
+
+		for (int i = 0; i < emails.size(); i++)
+			mailboxes.add(this.mailboxService.getInBoxActorEmail(emails.get(i)));
+
+		message.setTags(new ArrayList<Tag>());
+
+		for (final Mailbox box : mailboxes) {
+			message.getMailboxes().add(box);
+			box.getMessages().add(message);
+			final Tag tag = this.tagService.create();
+			tag.setTag("NOTIFICATION");
+			final Actor aacto = this.actorService.getActorMailbox(box.getId());
+			tag.setActorId(aacto.getId());
+			message.getTags().add(tag);
+
+			if (this.checkSuspiciousWithBoolean(message)) {
+				final Tag spam = this.tagService.create();
+				spam.setActorId(aacto.getId());
 				spam.setTag("SPAM");
 				message.getTags().add(spam);
 			}
-				
-			
-		return message;
-	}
-	
-	public Message sendBroadcastWithoutAdminReview(Complaint complaint, Review review) {		
-		
-		Message message = create();
-		
-		
-		message.setSubject("Notification about review done");	
-		message.setBody("A review has been made on the complaint with description" + " {" + complaint.getDescription() + "} about the travel pack " + travelPackService.findFromComplaint(complaint.getId()).getName() + ". The description of the review is {" + review.getDescription() + "}.");
-		
-		Customer customer = complaint.getCustomer();
-		TravelAgency travelAgency = complaint.getTravelAgency();
-		Host host = complaint.getHost();
-		Transporter transporter = complaint.getTransporter();
-			
-		List<String> emails = new ArrayList<String>();
-		if(customer != null) {
-			emails.add(customer.getEmail());
+
 		}
-		
-		if(travelAgency != null) {
-			emails.add(travelAgency.getEmail());
-		}
-		
-		if(host != null) {
-			emails.add(host.getEmail());
-		}
-		
-		if(transporter != null) {
-			emails.add(transporter.getEmail());
-		}
-		
-		Referee ref = refereeService.getRefereeByUserAccountId(LoginService.getPrincipal().getId());
-		
-		emails.add(ref.getEmail());
-		
-		message.setEmailReceiver(emails);
-		
-		Collection<Mailbox> mailboxes = new ArrayList<Mailbox>();
-		
-		for (int i = 0; i < emails.size(); i++) {
-			mailboxes.add(mailboxService.getInBoxActorEmail(emails.get(i)));
-		}
-		
-		message.setTags(new ArrayList<Tag>());
-		
-				
-			for (final Mailbox box : mailboxes) {
-				message.getMailboxes().add(box);
-				box.getMessages().add(message);
-				Tag tag = tagService.create();
-				tag.setTag("NOTIFICATION");
-				Actor aacto = actorService.getActorMailbox(box.getId());
-				tag.setActorId(aacto.getId());
-				message.getTags().add(tag);
-				
-				if (checkSuspiciousWithBoolean(message)) {
-					Tag spam = tagService.create();
-					spam.setActorId(aacto.getId());
-					spam.setTag("SPAM");
-					message.getTags().add(spam);
-				}
-			
-		}
-	
-			
+
 		return message;
 	}
 	
@@ -295,43 +287,41 @@ public class MessageService {
 
 		message.getMailboxes().add(outBoxAdmin);
 		outBoxAdmin.getMessages().add(message);
-		
-		Tag tagAdmin = tagService.create();
+
+		final Tag tagAdmin = this.tagService.create();
 		tagAdmin.setTag("NOTIFICATION");
 		tagAdmin.setActorId(a.getId());
 		message.getTags().add(tagAdmin);
-		
-		Collection<String> emails = actorService.getEmailofActors();
+
+		final Collection<String> emails = this.actorService.getEmailofActors();
 		emails.remove(a.getEmail());
-		
+
 		message.setEmailReceiver(emails);
-		
-		
+
 		Assert.notNull(a);
 
-			final Collection<Mailbox> result = this.mailboxService.getInbox();
+		final Collection<Mailbox> result = this.mailboxService.getInbox();
 
-			result.removeAll(inBoxAdmin);
+		result.removeAll(inBoxAdmin);
 
-			for (final Mailbox mailbox : result) {
-				message.getMailboxes().add(mailbox);
-				mailbox.getMessages().add(message);
-				Tag tag = tagService.create();
-				tag.setTag("NOTIFICATION");
-				Actor aacto = actorService.getActorMailbox(mailbox.getId());
-				tag.setActorId(aacto.getId());
-				message.getTags().add(tag);
-				
-				if (checkSuspiciousWithBoolean(message)) {
-					Tag spam = tagService.create();
-					spam.setActorId(aacto.getId());
-					spam.setTag("SPAM");
-					message.getTags().add(spam);
-				}
-			
+		for (final Mailbox mailbox : result) {
+			message.getMailboxes().add(mailbox);
+			mailbox.getMessages().add(message);
+			final Tag tag = this.tagService.create();
+			tag.setTag("NOTIFICATION");
+			final Actor aacto = this.actorService.getActorMailbox(mailbox.getId());
+			tag.setActorId(aacto.getId());
+			message.getTags().add(tag);
+
+			if (this.checkSuspiciousWithBoolean(message)) {
+				final Tag spam = this.tagService.create();
+				spam.setActorId(aacto.getId());
+				spam.setTag("SPAM");
+				message.getTags().add(spam);
+			}
+
 		}
-				
-			
+
 		return message;
 	}
 	public void delete(final Message message, final Integer mailboxId) {
@@ -339,44 +329,44 @@ public class MessageService {
 		final Actor a = this.actorService.findByUserAccountId(user.getId());
 
 		Assert.isTrue(message.getEmailReceiver().contains(a.getEmail()) || message.getSender().equals(a.getEmail()));
-		
-		Tag deleteTag = tagService.getTagByMessageDeleted(message.getId());
-		
-		if(deleteTag != null) {
-			if(message.getMailboxes().size() > 1) {
-				Mailbox m = mailboxService.findOne(mailboxId);
-				m.getMessages().remove(message);
-				message.getMailboxes().remove(m);				
-				List<Tag> tags = (List<Tag>) tagService.getTagByMessage(message.getId());
-				for (int i = 0; i < tags.size(); i++) {
-					message.getTags().remove(tags.get(i));
-					tagService.delete(tags.get(i));
-				}
-			}else {
-				Mailbox m = mailboxService.findOne(mailboxId);
+
+		final Tag deleteTag = this.tagService.getTagByMessageDeleted(message.getId());
+
+		if (deleteTag != null) {
+			if (message.getMailboxes().size() > 1) {
+				final Mailbox m = this.mailboxService.findOne(mailboxId);
 				m.getMessages().remove(message);
 				message.getMailboxes().remove(m);
-				List<Tag> tags = (List<Tag>) tagService.getTagByMessage(message.getId());
+				final List<Tag> tags = (List<Tag>) this.tagService.getTagByMessage(message.getId());
 				for (int i = 0; i < tags.size(); i++) {
 					message.getTags().remove(tags.get(i));
-					tagService.delete(tags.get(i));
+					this.tagService.delete(tags.get(i));
 				}
-				messageRepository.delete(message.getId());
+			} else {
+				final Mailbox m = this.mailboxService.findOne(mailboxId);
+				m.getMessages().remove(message);
+				message.getMailboxes().remove(m);
+				final List<Tag> tags = (List<Tag>) this.tagService.getTagByMessage(message.getId());
+				for (int i = 0; i < tags.size(); i++) {
+					message.getTags().remove(tags.get(i));
+					this.tagService.delete(tags.get(i));
+				}
+				this.messageRepository.delete(message.getId());
 			}
-		}else {
-			Tag tag = tagService.create();
+		} else {
+			final Tag tag = this.tagService.create();
 			tag.setActorId(a.getId());
 			tag.setMessageId(message.getId());
 			tag.setTag("DELETED");
 			message.getTags().add(tag);
-			
+
 		}
-		
+
 	}
 	public Message findOne(final int id) {
 		return this.messageRepository.findOne(id);
 	}
-	
+
 	private Boolean checkSuspiciousWithBoolean(final Message msg) {
 
 		Boolean res = false;
@@ -408,7 +398,7 @@ public class MessageService {
 	public Message save(final Message message) {
 		//Capturo actor logeado segun su Username
 		final UserAccount uacc = LoginService.getPrincipal();
-		Integer id = uacc.getId();
+		final Integer id = uacc.getId();
 		final Actor actor = this.actorService.getActorByUserId(id);
 		//Actualizo contador total de msg
 		actor.getUserAccount().setMsgCounter(uacc.getMsgCounter() + 1.);
@@ -422,7 +412,28 @@ public class MessageService {
 		//Guardo el Msg
 		return this.messageRepository.save(message);
 	}
-	
+
+	// TODO: revisar el metodo.
+	private Actor computeNewScore(final Actor actor, final Message message) {
+
+		Double res = actor.getUserAccount().getScore();
+		final Config config = this.configService.getConfiguration();
+		final String body = message.getBody();
+		body.trim();
+		body.replace(",", "");
+		body.replace(".", "");
+		body.replace(":", "");
+		body.replace(";", "");
+		final String[] words = body.split(" ");
+		final List<String> wordsList = Arrays.asList(words);
+		final List<String> copia = new ArrayList<String>(wordsList);
+		copia.removeAll(config.getScoreList());
+		final Integer count = (wordsList.size() - copia.size());
+		res += (double) (count / wordsList.size());
+		actor.getUserAccount().setScore(res / 2);
+		return actor;
+	}
+
 	public void editMailbox(final Message message) {
 		System.out.println("new Boxes");
 		System.out.println(message.getMailboxes());
