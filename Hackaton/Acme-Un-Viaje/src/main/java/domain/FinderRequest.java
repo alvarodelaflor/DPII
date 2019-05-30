@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMin;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -23,6 +25,7 @@ public class FinderRequest extends DomainEntity {
 	private Date	startDate;
 
 
+	@SafeHtml
 	public String getPlace() {
 		return this.place;
 	}
@@ -30,7 +33,7 @@ public class FinderRequest extends DomainEntity {
 	public void setPlace(final String place) {
 		this.place = place;
 	}
-
+	@DecimalMin(message = "0.0", value = "0.0")
 	public Double getPrice() {
 		return this.price;
 	}
