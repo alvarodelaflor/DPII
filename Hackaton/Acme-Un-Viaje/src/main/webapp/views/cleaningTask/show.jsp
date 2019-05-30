@@ -51,4 +51,11 @@
 			</fieldset>
 		</div>
 	</div>
+	
+	<div class="row">
+		<div class="col-md-3">
+			 <span><acme:historyBack />
+			</span>
+		</div>
+	</div>
 </div>

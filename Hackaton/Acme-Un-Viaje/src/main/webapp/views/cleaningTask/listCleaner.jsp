@@ -42,8 +42,7 @@
 				url="cleaningTask/create.do" name="buttonCleaningTask"
 				code="cleaningTask.create" />
 			</span>
-			 <span> <acme:cancel url=""
-					code="actor.back" />
+			 <span><acme:historyBack />
 			</span>
 		</div>
 	</div>

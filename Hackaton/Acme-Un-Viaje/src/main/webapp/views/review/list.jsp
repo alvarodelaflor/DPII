@@ -41,8 +41,7 @@
 				url="review/create.do" name="buttonReview"
 				code="review.create" />
 			</span>
-			 <span> <acme:cancel url=""
-					code="actor.back" />
+			 <span><acme:historyBack />
 			</span>
 		</div>
 	</div>
