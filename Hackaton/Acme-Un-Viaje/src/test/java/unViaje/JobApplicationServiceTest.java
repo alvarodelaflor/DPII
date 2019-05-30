@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 
 import domain.Cleaner;
 import domain.Curricula;
@@ -51,9 +53,9 @@ public class JobApplicationServiceTest extends AbstractTest {
 	 * //
 	 * * //
 	 * Analysis of sentence coverage
-	 * 12.6%
+	 * 90.6%
 	 * Analysis of data coverage
-	 * ~10%
+	 * ~35%
 	 */
 	@Test
 	public void Diver01Data() {
@@ -73,6 +75,15 @@ public class JobApplicationServiceTest extends AbstractTest {
 
 	}
 	
+	/*
+	 * 14. The system must be easy to customise at run time, including banner, system message and country code
+	 * //
+	 * * //
+	 * Analysis of sentence coverage
+	 * 98.6%
+	 * Analysis of data coverage
+	 * ~35%
+	 */
 	@Test
 	public void Diver02Data() {
 		final Object testingData[][] = {
@@ -125,8 +136,7 @@ public class JobApplicationServiceTest extends AbstractTest {
 	}
 	
 	private JobApplication createJobApplication(Host host, String cleanerMessage) {
-		final JobApplication jobApplication = this.jobApplicationService.create(host.getId());
-		
+		final JobApplication jobApplication = this.jobApplicationService.create(host.getId());		
 		jobApplication.setCleanerMessage(cleanerMessage);
 		Collection<Curricula> curriculas = this.curriculaService.findAllByCleaner(this.cleanerService.getCleanerLogin());
 		Collection<Curricula> curriculaCopy = new ArrayList<Curricula>();
@@ -139,7 +149,8 @@ public class JobApplicationServiceTest extends AbstractTest {
 			jobApplication.setCurricula(curriculaCopy.iterator().next());
 		}
 		jobApplication.setStatus(null);
-		
+		BindingResult result = new BeanPropertyBindingResult(jobApplication, "jobApplication");
+		this.jobApplicationService.reconstruct(jobApplication, result);
 		return this.jobApplicationService.save(jobApplication);
 	}
 
@@ -149,15 +160,17 @@ public class JobApplicationServiceTest extends AbstractTest {
 		try {
 			this.startTransaction();
 			
-			Collection<JobApplication> jobApplications = this.jobApplicationService.findAll();
-			this.jobApplicationRepository.delete(jobApplications);
 
 			super.authenticate("cleaner");
+			Collection<JobApplication> jobApplications = this.jobApplicationService.findAllByCleanerId(this.cleanerService.getCleanerLogin().getId());
+			this.jobApplicationRepository.delete(jobApplications);
 			if (tieneCurricula) {
 				this.createCurricula("Alvaro", "Me gustaria trabajar con usted", "+34 665 381 121", "https://www.google.com/", "https://www.imgnur.es/", true);				
 			}
 			JobApplication jobApplication = this.createJobApplication(this.hostService.findAll().iterator().next(), "Hola");
-			Assert.isTrue(this.jobApplicationService.findOne(jobApplication.getId())!=null);			
+			Assert.isTrue(this.jobApplicationService.findOne(jobApplication.getId())!=null);
+			BindingResult result = new BeanPropertyBindingResult(jobApplication, "jobApplication");
+			this.jobApplicationService.reconstruct(jobApplication, result);
 			if (repetirPeticion) {
 				this.createCurricula("Alvaro", "Me gustaria trabajar con usted", "+34 665 381 121", "https://www.google.com/", "https://www.imgnur.es/", true);
 				JobApplication jobApplication2 = this.createJobApplication(this.hostService.findAll().iterator().next(), "Hola");
@@ -209,6 +222,8 @@ public class JobApplicationServiceTest extends AbstractTest {
 			} else { // Es un host
 				super.authenticate("hosthost");
 				if (acceptOrReject!=null && acceptOrReject.equals(true)) { // Se acepta la aplicación
+					BindingResult result = new BeanPropertyBindingResult(jobApplication, "jobApplication");
+					this.jobApplicationService.reconstruct(jobApplication, result);
 					JobApplication saveJobApplication = this.jobApplicationService.acceptApplication(jobApplication.getId());
 					Assert.notNull(this.jobApplicationService.findOne(saveJobApplication.getId()));
 					Assert.isTrue(saveJobApplication.getStatus().equals(true));
@@ -219,11 +234,19 @@ public class JobApplicationServiceTest extends AbstractTest {
 					Assert.isTrue(saveJobApplication.getStatus().equals(false) && saveJobApplication.getRejectMessage()!=null);
 				} else { // Se acepta y luego se expulsa
 					Assert.isTrue(this.jobApplicationService.getExCleaners(this.hostService.getHostLogin().getId()).size() == 0);
+					Assert.isTrue(this.jobApplicationService.getJobApplicationPendingByHostId(this.hostService.getHostLogin().getId()).size() == 1);
+					Assert.isTrue(this.jobApplicationService.getJobApplicationByStatusAndHostId(true, this.hostService.getHostLogin().getId()).size() == 0);
+					Assert.isTrue(this.jobApplicationService.getJobApplicationByStatusAndHostId(false, this.hostService.getHostLogin().getId()).size() == 0);
 					JobApplication saveJobApplication = this.jobApplicationService.acceptApplication(jobApplication.getId());
 					Assert.notNull(this.jobApplicationService.findOne(saveJobApplication.getId()));
 					Assert.isTrue(saveJobApplication.getStatus().equals(true));
+					Assert.isTrue(this.jobApplicationService.getExCleaners(this.hostService.getHostLogin().getId()).size() == 0);
+					Assert.isTrue(this.jobApplicationService.getJobApplicationPendingByHostId(this.hostService.getHostLogin().getId()).size() == 0);
+					Assert.isTrue(this.jobApplicationService.getJobApplicationByStatusAndHostId(true, this.hostService.getHostLogin().getId()).size() == 1);
+					Assert.isTrue(this.jobApplicationService.getJobApplicationByStatusAndHostId(false, this.hostService.getHostLogin().getId()).size() == 0);
 					this.jobApplicationService.dropUser(saveJobApplication.getId());
 					Assert.isTrue(this.jobApplicationService.getExCleaners(this.hostService.getHostLogin().getId()).size() > 0);
+					this.jobApplicationService.deleteHostApplications(this.hostService.getHostLogin());
 				}
 				super.unauthenticate();
 			}
