@@ -45,6 +45,7 @@ public class AccomodationService {
 	// ---------- public class methods
 
 	public Collection<Accomodation> findAll() {
+		Assert.isTrue(LoginService.getPrincipal() != null);
 		return this.accomodationRepo.findAll();
 	}
 

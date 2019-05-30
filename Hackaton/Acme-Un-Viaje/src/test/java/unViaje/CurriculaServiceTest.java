@@ -188,7 +188,7 @@ public class CurriculaServiceTest extends AbstractTest {
 		curricula.setIsCopy(false);
 		curricula.setCleaner(cleaner);				
 		Curricula theSaved = this.curriculaService.save(curricula);		
-		Curricula curriculaReconstruct = this.curriculaService.reconstruct(curricula, null);
+		this.curriculaService.reconstruct(curricula, null);
 		return theSaved;
 	}
 
@@ -243,8 +243,8 @@ public class CurriculaServiceTest extends AbstractTest {
 			this.curriculaService.save(curriculaII);
 			
 			Collection<Curricula> curriculas = this.curriculaService.findAllByCleaner(cleaner);
-			Collection<Curricula> curriculasAll = this.curriculaService.findAll();
-			Collection<Curricula> curriculasAll2 = this.curriculaService.findAllNotCopyByCleaner(cleaner);
+			this.curriculaService.findAll();
+			this.curriculaService.findAllNotCopyByCleaner(cleaner);
 			
 			for (Curricula curricula : curriculas) {
 				

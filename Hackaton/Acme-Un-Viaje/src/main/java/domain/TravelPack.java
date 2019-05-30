@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 /**
@@ -53,6 +54,7 @@ public class TravelPack extends DomainEntity {
 		this.draft = draft;
 	}
 
+	@NotBlank
 	@SafeHtml
 	public String getName() {
 		return this.name;

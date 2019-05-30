@@ -40,6 +40,8 @@ public class BookingTransportService {
 
 	public BookingTransport save(final BookingTransport bookingTransport) {
 		Assert.isTrue(!this.isReserved(bookingTransport), "error.transportAlreadyReserved");
+		final Transport transport = bookingTransport.getTransport();
+		transport.setReservedPlaces(transport.getReservedPlaces() + 1);
 		return this.bookingTransportRepository.save(bookingTransport);
 	}
 

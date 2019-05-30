@@ -84,6 +84,10 @@ public class CustomerService {
 		final Customer customer = this.create();
 
 		this.actorService.checkActor(registerActorE, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (!registerActorE.getEmail().matches(pattern))
+			binding.rejectValue("email", "email.wrong");
 
 		customer.getUserAccount().setUsername(registerActorE.getUserName());
 		final String password = registerActorE.getPassword();
@@ -205,11 +209,15 @@ public class CustomerService {
 		if (!registerActorE.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActorE.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 
-		if (registerActorE.getBirthDate() != null && registerActorE.getBirthDate().after(calendar.getTime())) {
-			binding.rejectValue("birthDate", "error.birthDate");
-			final Integer ageActor = calendar.getTime().getYear() - registerActorE.getBirthDate().getYear();
-			if (ageActor < 18)
+		if (registerActorE.getBirthDate() != null) {
+			if (registerActorE.getBirthDate().after(calendar.getTime())) {
+				binding.rejectValue("birthDate", "error.birthDate");
+			} 
+			calendar.add(Calendar.YEAR, -18);
+			if (registerActorE.getBirthDate().after(calendar.getTime())) {
 				binding.rejectValue("birthDate", "error.birthDateM");
+			}
+
 		}
 	}
 

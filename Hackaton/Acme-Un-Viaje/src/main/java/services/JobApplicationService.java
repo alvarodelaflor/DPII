@@ -269,7 +269,7 @@ public class JobApplicationService {
 		Assert.isTrue(jobApplicationDB.getDropMoment() == null, "Cleaner is already drop");
 		Assert.isTrue(jobApplicationDB.getHost().equals(hostLogin), "Not allow to drop, diferent host");
 		jobApplicationDB.setDropMoment(DateTime.now().toDate());
-		return this.save(jobApplicationDB);
+		return this.jobApplicationRepository.save(jobApplicationDB);
 	}
 
 	public JobApplication rejectUser(final JobApplication jobApplication) {

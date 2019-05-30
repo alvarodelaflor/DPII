@@ -14,15 +14,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Cleaner;
-import domain.CreditCard;
-import forms.RegisterActor;
-import domain.Curricula;
 import repositories.CleanerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Cleaner;
+import domain.CreditCard;
 import domain.JobApplication;
+import forms.RegisterActor;
 
 @Service
 @Transactional
@@ -35,10 +34,10 @@ public class CleanerService {
 	private Validator				validator;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private ConfigService		configService;
+	private ConfigService			configService;
 
 	@Autowired
 	private CurriculaService		curriculaService;
@@ -72,7 +71,7 @@ public class CleanerService {
 	// ---------------------------------------------------------------
 	public Cleaner saveRegisterAsCleaner(final Cleaner cleaner) {
 		if (cleaner.getPhone().matches("^([0-9]{4,})$"))
-			
+
 			//BUG: WE ADD PHONE + 6
 			cleaner.setPhone("+" + this.configService.getConfiguration().getDefaultPhoneCode() + " " + cleaner.getPhone() + 6);
 		return this.cleanerRepository.save(cleaner);
@@ -84,6 +83,10 @@ public class CleanerService {
 		final Cleaner cleaner = this.create();
 
 		this.actorService.checkActor(registerActor, binding);
+		
+		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
+		if (!registerActor.getEmail().matches(pattern))
+			binding.rejectValue("email", "email.wrong");
 
 		cleaner.getUserAccount().setUsername(registerActor.getUserName());
 		final String password = registerActor.getPassword();
@@ -203,18 +206,20 @@ public class CleanerService {
 		if (!registerActor.getEmail().equals(t.getEmail()) && this.actorService.getActorByEmail(registerActor.getEmail()).size() >= 1)
 			binding.rejectValue("email", "error.email");
 
-		if (registerActor.getBirthDate() != null && registerActor.getBirthDate().after(calendar.getTime())) {
-			binding.rejectValue("birthDate", "error.birthDate");
-			final Integer ageActor = calendar.getTime().getYear() - registerActor.getBirthDate().getYear();
-			if (ageActor < 18)
+		if (registerActor.getBirthDate() != null) {
+			if (registerActor.getBirthDate().after(calendar.getTime()))
+				binding.rejectValue("birthDate", "error.birthDate");
+			calendar.add(Calendar.YEAR, -18);
+			if (registerActor.getBirthDate().after(calendar.getTime()))
 				binding.rejectValue("birthDate", "error.birthDateM");
+
 		}
 	}
 
 	/**
-	 *
+	 * 
 	 * Return the cleaner who is login if exits, null otherwise
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
@@ -229,8 +234,9 @@ public class CleanerService {
 	}
 
 	/**
-	 *
+	 * 
 	 * Find a cleaner by id
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Cleaner}
 	 */
@@ -279,7 +285,6 @@ public class CleanerService {
 		this.cleanerRepository.delete(cleaner);
 	}
 
-
 	public Collection<Cleaner> getAllCleanersInJobList(final Collection<JobApplication> jobs) {
 
 		final Collection<Cleaner> res = new ArrayList<>();
@@ -299,6 +304,11 @@ public class CleanerService {
 			return res;
 		else
 			return res.subList(0, 2);
+	}
+
+	public void save(final Cleaner cleaner) {
+
+		this.cleanerRepository.save(cleaner);
 	}
 
 }
