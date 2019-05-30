@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.validation.Validator;
 import domain.CreditCard;
 import domain.FinderAccomodation;
 import domain.FinderRequest;
+import domain.Mailbox;
+import domain.Message;
 import domain.TravelAgency;
 import forms.RegisterActor;
 import repositories.TravelAgencyRepository;
@@ -56,6 +59,9 @@ public class TravelAgencyService {
 
 	@Autowired
 	private SocialProfileService		socialProfileService;
+	
+	@Autowired
+	private MailboxService	mailboxService;
 
 
 	// REGISTER AS TRAVEL
@@ -66,6 +72,28 @@ public class TravelAgencyService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.TRAVELAGENCY);
+		
+		Mailbox inBox = mailboxService.create();
+		Mailbox outBox = mailboxService.create();
+		
+		inBox.setName("inBox");
+		outBox.setName("outBox");
+		
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		
+		inBox.setMessages(new ArrayList<Message>());
+		outBox.setMessages(new ArrayList<Message>());
+		
+		Mailbox inBoxSave = mailboxService.save(inBox);
+		Mailbox outBoxSave = mailboxService.save(outBox);
+		
+		Collection<Mailbox> boxes = new ArrayList<Mailbox>();
+		
+		boxes.add(inBoxSave);
+		boxes.add(outBoxSave);
+		
+		travelAgency.setMailboxes(boxes);
 
 		final FinderAccomodation finderA = this.finderAccomodationService.create();
 		final FinderAccomodation finderAs = this.finderAccomodationService.save(finderA);
