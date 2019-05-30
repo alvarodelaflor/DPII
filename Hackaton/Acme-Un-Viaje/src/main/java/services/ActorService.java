@@ -113,10 +113,6 @@ public class ActorService {
 			binding.rejectValue("accept", "error.termsAndConditions");
 		}
 
-		final String pattern = "(^(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})$)|(^((([a-zA-Z]|[0-9]){1,}[ ]{1}){1,}<(([a-zA-Z]|[0-9]){1,}[@]{1}([a-zA-Z]|[0-9]){1,}([.]{0,1}([a-zA-Z]|[0-9]){0,}){0,})>)$)";
-		if (!registerActor.getEmail().matches(pattern))
-			binding.rejectValue("email", "email.wrong");
-
 		if (registerActor.getHolder().contains(">") || registerActor.getHolder().contains("<"))
 			binding.rejectValue("holder", "error.html");
 
@@ -135,7 +131,7 @@ public class ActorService {
 		if (registerActor.getBirthDate() != null) {
 			if (registerActor.getBirthDate().after(calendar.getTime())) {
 				binding.rejectValue("birthDate", "error.birthDate");
-			} 
+			}
 			calendar.add(Calendar.YEAR, -18);
 			if (registerActor.getBirthDate().after(calendar.getTime())) {
 				binding.rejectValue("birthDate", "error.birthDateM");
@@ -173,6 +169,10 @@ public class ActorService {
 
 	public Collection<String> getEmailofActors() {
 		return this.actorRepository.getEmailofActors();
+	}
+	
+	public Collection<Actor> findAll() {
+		return this.actorRepository.findAll();
 	}
 
 	public Actor getActorMailbox(final Integer id) {

@@ -187,6 +187,12 @@ $(document).ready(function() {
 		</div>
 		<div class="col-md-6">
 		<!-- Para meter los trabajos que ha realizado el cleaner -->
+			<h3><strong><spring:message code="curricula.worked" /></strong></h3>
+			<br>
+			<display:table name="cleaningTask" id="row3" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
+				<display:column property="accomodation.address" titleKey="curricula.accomodation.adress"></display:column>
+				<display:column property="description" titleKey="cleaning.description"></display:column>
+			</display:table>		
 		</div>
 	</div>
 	<div class="row">

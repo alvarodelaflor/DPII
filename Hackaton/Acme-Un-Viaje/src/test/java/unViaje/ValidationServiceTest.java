@@ -378,4 +378,5 @@ public class ValidationServiceTest extends AbstractTest {
 
 		this.checkExceptions(expected, caught);
 	}
+
 }

@@ -42,8 +42,7 @@
 	</display:table>
 	<div class="row">
 		<div class="col-md-3">
-			 <span> <acme:cancel url=""
-					code="actor.back" />
+			 <span> <acme:historyBack />
 			</span>
 		</div>
 	</div>
