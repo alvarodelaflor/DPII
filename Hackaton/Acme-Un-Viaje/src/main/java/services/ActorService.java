@@ -170,6 +170,10 @@ public class ActorService {
 	public Collection<String> getEmailofActors() {
 		return this.actorRepository.getEmailofActors();
 	}
+	
+	public Collection<Actor> findAll() {
+		return this.actorRepository.findAll();
+	}
 
 	public Actor getActorMailbox(final Integer id) {
 		return this.actorRepository.getActorByMailbox(id);

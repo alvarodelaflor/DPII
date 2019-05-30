@@ -119,6 +119,13 @@ public class MessageService {
 			message.getMailboxes().add(boxReceiver);
 		
 			List<Tag> tags = (List<Tag>) message.getTags();
+			if(tags.size() == 0) {
+				Tag empty = tagService.create();
+				empty.setTag("");
+				Tag emptySave = tagService.save(empty);
+				tags.add(emptySave);
+				message.setTags(tags);
+			}
 			Tag old = tags.get(0);
 			old.setActorId(sender.getId());
 			
