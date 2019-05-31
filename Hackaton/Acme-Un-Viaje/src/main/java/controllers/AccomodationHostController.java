@@ -21,21 +21,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Host;
-import domain.Accomodation;
 import security.LoginService;
-import services.HostService;
 import services.AccomodationService;
+import services.HostService;
+import domain.Accomodation;
+import domain.Host;
 
 @Controller
 @RequestMapping("/accomodation/host")
 public class AccomodationHostController extends AbstractController {
 
 	@Autowired
-	private HostService hostService;
+	private HostService			hostService;
 
 	@Autowired
-	private AccomodationService accomodationService;
+	private AccomodationService	accomodationService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -83,7 +84,7 @@ public class AccomodationHostController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		try {
-			Collection<Accomodation> accomodations = this.accomodationService.getHostAccomodation();
+			final Collection<Accomodation> accomodations = this.accomodationService.getHostAccomodation();
 			result = new ModelAndView("accomodation/host/list");
 			result.addObject("accomodations", accomodations);
 			result.addObject("requestURI", "accomodation/host/list.do");
@@ -113,7 +114,7 @@ public class AccomodationHostController extends AbstractController {
 		ModelAndView result;
 		try {
 			final Host actor = this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId());
-			Accomodation accomodation = this.accomodationService.findOne(accomodationId);
+			final Accomodation accomodation = this.accomodationService.findOne(accomodationId);
 			Assert.notNull(actor);
 			Assert.isTrue(accomodation.getHost().equals(actor));
 			Assert.isTrue(!this.accomodationService.isReserved(accomodation));
@@ -127,16 +128,16 @@ public class AccomodationHostController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveEdit")
-	public ModelAndView saveEdit(Accomodation accomodation, final BindingResult binding) {
+	public ModelAndView saveEdit(final Accomodation accomodation, final BindingResult binding) {
 		ModelAndView result = null;
 
 		final Accomodation accomodationN = this.accomodationService.reconstructR(accomodation, binding);
 
 		try {
 
-			if (binding.hasErrors()) {
+			if (binding.hasErrors())
 				result = new ModelAndView("accomodation/host/edit");
-			} else {
+			else {
 
 				final Host actor = this.hostService.getHostByUserAccountId(LoginService.getPrincipal().getId());
 				Assert.notNull(actor);
@@ -155,8 +156,8 @@ public class AccomodationHostController extends AbstractController {
 	public ModelAndView show(@RequestParam(value = "accomodationId", defaultValue = "-1") final int accomodationId) {
 		ModelAndView result;
 		try {
-			Accomodation accomodation = this.accomodationService.findOne(accomodationId);
-			Boolean res = this.accomodationService.isReserved(accomodation);
+			final Accomodation accomodation = this.accomodationService.getLoggedHostAccomodation(accomodationId);
+			final Boolean res = this.accomodationService.isReserved(accomodation);
 			result = new ModelAndView("accomodation/host/show");
 			result.addObject("accomodation", accomodation);
 			result.addObject("res", res);
