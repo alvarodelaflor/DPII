@@ -482,13 +482,23 @@
 		<property name="transporter" ref="transporter01" />
 	</bean>
 	<bean id="transport02" class="domain.Transport">
-		<property name="reservedPlaces" value="0" />
+		<property name="reservedPlaces" value="1" />
 		<property name="numberOfPlaces" value="3" />
 		<property name="price" value="25" />
 		<property name="date" value="2019/12/11 18:30" />
 		<property name="vehicleType" value="Coche" />
 		<property name="origin" value="Granada" />
 		<property name="destination" value="Sevilla" />
+		<property name="transporter" ref="transporter01" />
+	</bean>
+	<bean id="transport03" class="domain.Transport">
+		<property name="reservedPlaces" value="0" />
+		<property name="numberOfPlaces" value="3" />
+		<property name="price" value="10" />
+		<property name="date" value="2019/07/05 13:30" />
+		<property name="vehicleType" value="Coche" />
+		<property name="origin" value="Carmona" />
+		<property name="destination" value="El Viso del Alcor" />
 		<property name="transporter" ref="transporter01" />
 	</bean>
 	<!-- TRANSPORTS -->

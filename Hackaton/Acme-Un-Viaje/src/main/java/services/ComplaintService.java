@@ -10,15 +10,15 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.ComplaintRepository;
+import security.Authority;
+import utilities.CommonUtils;
 import domain.Complaint;
 import domain.Customer;
 import domain.Host;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
-import repositories.ComplaintRepository;
-import security.Authority;
-import utilities.CommonUtils;
 
 @Service
 public class ComplaintService {
@@ -69,6 +69,7 @@ public class ComplaintService {
 	}
 
 	public Complaint reconstruct(final Complaint complaint, final BindingResult binding) {
+		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
 		final Complaint res = complaint;
 		if (complaint.getId() != 0) {
 			final Complaint dbComplaint = this.complaintRepository.findOne(res.getId());
@@ -89,10 +90,11 @@ public class ComplaintService {
 		System.out.println(binding.getFieldErrors());
 		return res;
 	}
-	public void save(final Complaint reconstructedComplaint, final Integer travelPackId) {
+	public Complaint save(final Complaint reconstructedComplaint, final Integer travelPackId) {
 		final Complaint c = this.complaintRepository.save(reconstructedComplaint);
 		if (travelPackId != null)
 			this.travelPackService.findOne(travelPackId).getComplaints().add(c);
+		return c;
 	}
 
 	public void saveWithoutSetMoment(final Complaint reconstructedComplaint) {
