@@ -33,9 +33,11 @@
 
 					<acme:textbox code="msg.body" path="body"
 						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
-						
-					<acme:textbox code="msg.tags" path="tags"
-						cssError="col-md-6" cssLabel="col-md-2" cssInput="col-md-4" />
+          				
+          				<form:label path="tags"><spring:message code="msg.tags" /></form:label>
+						<form:input value="${tag}" path="tags"/>
+						<form:errors cssClass="error" path="tags"/><br>
+          				<br />
 
 					<form:label path="emailReceiver">
 						<spring:message code="receiver.email" />:

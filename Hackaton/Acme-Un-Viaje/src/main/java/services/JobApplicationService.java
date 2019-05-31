@@ -102,6 +102,8 @@ public class JobApplicationService {
 
 	/**
 	 *
+	 * This method save an application. The host or cleaner owner must be login.
+	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return <{@link JobApplication}>
 	 */
@@ -129,25 +131,7 @@ public class JobApplicationService {
 
 	/**
 	 *
-	 * If we make a curriculum change in the edition of the working application<br>
-	 * we delete the previous copy
-	 *
-	 * @author Alvaro de la Flor Bonilla
-	 */
-	public void checkChangeCurricula(final JobApplication jobApplication) {
-		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
-		if (cleanerLogin != null)
-			try {
-				final JobApplication jobApplicationDB = this.findOne(jobApplication.getId());
-				Assert.isTrue(cleanerLogin.equals(jobApplicationDB.getCleaner()));
-				if (!jobApplication.getCurricula().equals(jobApplicationDB.getCurricula()))
-					this.curriculaService.delete(jobApplicationDB.getCurricula());
-			} catch (final Exception e) {
-
-			}
-	}
-
-	/**
+	 * This method save an application. The host or cleaner owner must be login.
 	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return <{@link JobApplication}>
@@ -166,6 +150,13 @@ public class JobApplicationService {
 
 	//AUXILIAR METHODS
 
+	/**
+	 *
+	 * This method validate an application. The host or cleaner owner must be login.
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return <{@link JobApplication}>
+	 */
 	public JobApplication reconstruct(final JobApplication jobApplication, final BindingResult binding) {
 		JobApplication result;
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
@@ -201,6 +192,13 @@ public class JobApplicationService {
 		return jobApplication;
 	}
 
+	/**
+	 *
+	 * Check if a cleaner if valid to create a jobapplication for an host
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return <{@link Boolean}>
+	 */
 	public Boolean checkValidForNewApplication(final int cleanerId, final int hostId) {
 		Boolean res = true;
 		final int aux = this.jobApplicationRepository.getJobApplicationAcceptedAndPending(cleanerId, hostId).size();
@@ -209,6 +207,14 @@ public class JobApplicationService {
 		return res;
 	}
 
+
+	/**
+	 *
+	 * Check if a cleaner if valid to edit a jobapplication for an host
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return <{@link Boolean}>
+	 */
 	public Boolean checkValidForEdit(final JobApplication jobApplication) {
 		Boolean res = false;
 		final Cleaner cleanerLogin = this.cleanerService.getCleanerLogin();
@@ -225,7 +231,6 @@ public class JobApplicationService {
 
 	/**
 	 *
-	 *
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection}<{@link JobApplication}>
 	 */
@@ -233,6 +238,11 @@ public class JobApplicationService {
 		return this.jobApplicationRepository.findAllByCleanerId(cleanerId);
 	}
 
+	/**
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link JobApplication}>
+	 */
 	public Collection<JobApplication> getJobApplicationByStatusAndHostId(final Boolean status, final int hostId) {
 		final Host hostLogin = this.hostService.getHostLogin();
 		final Host hostToCheck = this.hostService.findOne(hostId);
@@ -242,6 +252,11 @@ public class JobApplicationService {
 		return this.jobApplicationRepository.getJobApplicationByStatusAndHostId(status, hostId);
 	}
 
+	/**
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link JobApplication}>
+	 */
 	public Collection<JobApplication> getJobApplicationPendingByHostId(final int hostId) {
 		final Host hostLogin = this.hostService.getHostLogin();
 		final Host hostToCheck = this.hostService.findOne(hostId);
@@ -251,6 +266,13 @@ public class JobApplicationService {
 		return this.jobApplicationRepository.getJobApplicationPendingByHostId(hostId);
 	}
 
+	/**
+	 *
+	 * Get cleaners who their jobApplications are accepted but they have been drop of the company
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link JobApplication}>
+	 */
 	public Collection<JobApplication> getExCleaners(final int hostId) {
 		final Host hostLogin = this.hostService.getHostLogin();
 		final Host hostToCheck = this.hostService.findOne(hostId);
@@ -260,6 +282,13 @@ public class JobApplicationService {
 		return this.jobApplicationRepository.getExCleaners(hostId);
 	}
 
+	/**
+	 *
+	 * Drop an user (set a drop moment)
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link JobApplication}>
+	 */
 	public JobApplication dropUser(final int jobApplicationId) {
 		final Host hostLogin = this.hostService.getHostLogin();
 		Assert.notNull(hostLogin, this.hostNull);
@@ -272,6 +301,13 @@ public class JobApplicationService {
 		return this.jobApplicationRepository.save(jobApplicationDB);
 	}
 
+	/**
+	 *
+	 * Get the reject users
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link JobApplication}>
+	 */
 	public JobApplication rejectUser(final JobApplication jobApplication) {
 		final Host hostLogin = this.hostService.getHostLogin();
 		Assert.notNull(hostLogin, this.hostNull);
@@ -288,6 +324,13 @@ public class JobApplicationService {
 		return this.jobApplicationRepository.save(jobApplication);
 	}
 
+	/**
+	 *
+	 * Get the accept application
+	 *
+	 * @author Alvaro de la Flor Bonilla
+	 * @return {@link Collection}<{@link JobApplication}>
+	 */
 	public JobApplication acceptApplication(final int jobApplicationId) {
 		final Host hostLogin = this.hostService.getHostLogin();
 		Assert.notNull(hostLogin, this.hostNull);

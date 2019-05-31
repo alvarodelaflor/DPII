@@ -17,6 +17,8 @@ import org.springframework.validation.Validator;
 import domain.Cleaner;
 import domain.CreditCard;
 import domain.Host;
+import domain.Mailbox;
+import domain.Message;
 import forms.RegisterActor;
 import repositories.HostRepository;
 import security.Authority;
@@ -56,6 +58,9 @@ public class HostService {
 
 	@Autowired
 	private JobApplicationService	jobApplicationService;
+	
+	@Autowired
+	private MailboxService	mailboxService;
 
 
 	//CRUD METHODS
@@ -80,6 +85,28 @@ public class HostService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.HOST);
+		
+		Mailbox inBox = mailboxService.create();
+		Mailbox outBox = mailboxService.create();
+		
+		inBox.setName("inBox");
+		outBox.setName("outBox");
+		
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		
+		inBox.setMessages(new ArrayList<Message>());
+		outBox.setMessages(new ArrayList<Message>());
+		
+		Mailbox inBoxSave = mailboxService.save(inBox);
+		Mailbox outBoxSave = mailboxService.save(outBox);
+		
+		Collection<Mailbox> boxes = new ArrayList<Mailbox>();
+		
+		boxes.add(inBoxSave);
+		boxes.add(outBoxSave);
+		
+		host.setMailboxes(boxes);
 
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);

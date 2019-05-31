@@ -64,34 +64,45 @@ public class MessageController extends AbstractController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView listMessages(@RequestParam(value = "mailboxId", defaultValue = "-1") final int mailboxId) {
-		final ModelAndView result;
+		ModelAndView result;
+		
+		try {
+			final Mailbox m = this.mailboxService.findOne(mailboxId);
 
-		final Mailbox m = this.mailboxService.findOne(mailboxId);
+			final Collection<Message> msgs = m.getMessages();
 
-		final Collection<Message> msgs = m.getMessages();
-
-		result = new ModelAndView("message/list");
-		result.addObject("msgs", msgs);
-		result.addObject("mailboxId", mailboxId);
-		result.addObject("requestURI", "message/list.do");
+			result = new ModelAndView("message/list");
+			result.addObject("msgs", msgs);
+			result.addObject("mailboxId", mailboxId);
+			result.addObject("requestURI", "message/list.do");
+		} catch (Exception e) {
+			result = new ModelAndView("welcome/index");
+		}
 
 		return result;
 	}
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam("messageId") final int messageId, @RequestParam("mailboxId") final int mailboxId) {
+	public ModelAndView show(@RequestParam(value = "messageId", defaultValue = "aa") final int messageId, @RequestParam(value = "mailboxId", defaultValue = "-1") final int mailboxId) {
 		ModelAndView result;
-
-		final Message msg = this.messageService.findOne(messageId);
-		final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
 		
-		Collection<Tag> tags = tagService.getTagByMessage(messageId);
+		if (messageId == -1 || mailboxId == -1)
+			return new ModelAndView("redirect:/welcome/index.do");
+		
+		try {
+			final Message msg = this.messageService.findOne(messageId);
+			final String language = LocaleContextHolder.getLocale().getDisplayLanguage();
+			
+			Collection<Tag> tags = tagService.getTagByMessage(messageId);
 
-		result = new ModelAndView("message/show");
-		result.addObject("msg", msg);
-		result.addObject("tags",tags);
-		result.addObject("language", language);
-		result.addObject("mailboxId", mailboxId);
-		result.addObject("requestURI", "message/show.do");
+			result = new ModelAndView("message/show");
+			result.addObject("msg", msg);
+			result.addObject("tags",tags);
+			result.addObject("language", language);
+			result.addObject("mailboxId", mailboxId);
+			result.addObject("requestURI", "message/show.do");
+		} catch (Exception e) {
+			result = new ModelAndView("welcome/index");
+		}
 
 		return result;
 	}
@@ -157,11 +168,24 @@ public class MessageController extends AbstractController {
 		if (binding.hasErrors()) {
 			System.out.println("Entro en el binding messageController");
 			System.out.println(binding.getAllErrors().get(0));
+			
+			
+			
+			List<Tag> tags = new ArrayList<Tag>();
+			tags.addAll(msg.getTags());
+			
+			if (tags.size() == 0)
+				msg.setTags(null);
 
 			final Collection<Mailbox> mailboxes = sender.getMailboxes();
 			System.out.println(mailboxes);
 			result = new ModelAndView("message/edit");
 			result.addObject("messageId", msg.getId());
+			
+			
+			if (tags.size() > 0)
+				result.addObject("tag", tags.get(0).getTag());
+			
 			result.addObject("messageId", msg.getId());
 			result.addObject("mailboxes", mailboxes);
 			final Collection<String> emails2 = this.actorService.getEmailofActors();
@@ -207,9 +231,7 @@ public class MessageController extends AbstractController {
 
 
 			} catch (final Throwable oops) {
-				System.out.println("Es el oops");
-				System.out.println(oops);
-				result = this.createEditModelAndView(msg, "message.commit.error");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		return result;

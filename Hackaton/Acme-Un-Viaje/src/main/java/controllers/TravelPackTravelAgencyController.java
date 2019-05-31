@@ -156,6 +156,8 @@ public class TravelPackTravelAgencyController extends AbstractController {
 			Assert.isTrue(travelAgencyLogin.equals(travelPackDB.getTravelAgency()));
 			result = new ModelAndView("travelPack/travelAgency/edit");
 			result.addObject("travelPack", travelPackDB);
+			final Collection<Warranty> warranties = this.warrantyService.getTravelAgencyWarranty();
+			result.addObject("warranties", warranties);
 		} catch (final Exception e) {
 			if (travelAgencyLogin != null)
 				result = new ModelAndView("redirect:/travelPack/travelAgency/list.do");
@@ -188,6 +190,8 @@ public class TravelPackTravelAgencyController extends AbstractController {
 				final TravelPack saveTravelPack = this.travelPackService.save(travelPack);
 				result = new ModelAndView("redirect:/travelPack/show.do?travelPackId=" + saveTravelPack.getId());
 				result.addObject("requestURI", "travelPack/travelAgency/list.do");
+				final Collection<Warranty> warranties = this.warrantyService.getTravelAgencyWarranty();
+				result.addObject("warranties", warranties);
 			} catch (final Throwable oops) {
 				System.out.println("Error en SAVE TravelPackTravelAgencyController.java Throwable: " + oops);
 				result = new ModelAndView("travelPack/travelAgency/edit");

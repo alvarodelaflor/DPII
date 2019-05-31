@@ -21,6 +21,8 @@ import security.UserAccount;
 import domain.Cleaner;
 import domain.CreditCard;
 import domain.JobApplication;
+import domain.Mailbox;
+import domain.Message;
 import forms.RegisterActor;
 
 @Service
@@ -50,6 +52,9 @@ public class CleanerService {
 
 	@Autowired
 	private CleaningTaskService		cleaningTaskService;
+	
+	@Autowired
+	private MailboxService		mailboxService;
 
 
 	// REGISTER AS CLEANER
@@ -60,6 +65,28 @@ public class CleanerService {
 		final List<Authority> autoridades = new ArrayList<>();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.CLEANER);
+		
+		Mailbox inBox = mailboxService.create();
+		Mailbox outBox = mailboxService.create();
+		
+		inBox.setName("inBox");
+		outBox.setName("outBox");
+		
+		inBox.setIsDefault(true);
+		outBox.setIsDefault(true);
+		
+		inBox.setMessages(new ArrayList<Message>());
+		outBox.setMessages(new ArrayList<Message>());
+		
+		Mailbox inBoxSave = mailboxService.save(inBox);
+		Mailbox outBoxSave = mailboxService.save(outBox);
+		
+		Collection<Mailbox> boxes = new ArrayList<Mailbox>();
+		
+		boxes.add(inBoxSave);
+		boxes.add(outBoxSave);
+		
+		cleaner.setMailboxes(boxes);
 
 		autoridades.add(authority);
 		user.setAuthorities(autoridades);

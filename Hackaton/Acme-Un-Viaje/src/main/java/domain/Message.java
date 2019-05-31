@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -50,6 +51,7 @@ public class Message extends DomainEntity {
 		this.mailboxes = mailboxes;
 	}
 
+	@SafeHtml
 	@NotBlank
 	public String getSubject() {
 		return this.subject;
@@ -59,6 +61,7 @@ public class Message extends DomainEntity {
 		this.subject = subject;
 	}
 
+	@SafeHtml
 	@NotBlank
 	public String getBody() {
 		return this.body;
