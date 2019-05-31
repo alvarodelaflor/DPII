@@ -372,11 +372,9 @@ public class TransportServiceTest extends AbstractTest {
 	 * 6. Un actor autenticado como transportista podrá:
 	 * 
 	 * 3. Ver uno de sus transportes
-	 * Analysis of sentence coverage:
-	 * TODO
+	 * Analysis of sentence coverage: ~29%
 	 * 
-	 * Analysis of data coverage:
-	 * TODO
+	 * Analysis of data coverage: ~15%
 	 */
 	@Test
 	public void showTransport() throws ParseException {
@@ -432,11 +430,9 @@ public class TransportServiceTest extends AbstractTest {
 	 * 6. Un actor autenticado como transportista podrá:
 	 * 
 	 * 4. Ver una lista de sus transportes
-	 * Analysis of sentence coverage:
-	 * TODO
+	 * Analysis of sentence coverage: ~29%
 	 * 
-	 * Analysis of data coverage:
-	 * TODO
+	 * Analysis of data coverage: ~40%
 	 */
 	@Test
 	public void listTransports() throws ParseException {

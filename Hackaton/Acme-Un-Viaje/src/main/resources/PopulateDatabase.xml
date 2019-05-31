@@ -482,13 +482,23 @@
 		<property name="transporter" ref="transporter01" />
 	</bean>
 	<bean id="transport02" class="domain.Transport">
-		<property name="reservedPlaces" value="0" />
+		<property name="reservedPlaces" value="1" />
 		<property name="numberOfPlaces" value="3" />
 		<property name="price" value="25" />
 		<property name="date" value="2019/12/11 18:30" />
 		<property name="vehicleType" value="Coche" />
 		<property name="origin" value="Granada" />
 		<property name="destination" value="Sevilla" />
+		<property name="transporter" ref="transporter01" />
+	</bean>
+	<bean id="transport03" class="domain.Transport">
+		<property name="reservedPlaces" value="0" />
+		<property name="numberOfPlaces" value="3" />
+		<property name="price" value="10" />
+		<property name="date" value="2019/07/05 13:30" />
+		<property name="vehicleType" value="Coche" />
+		<property name="origin" value="Carmona" />
+		<property name="destination" value="El Viso del Alcor" />
 		<property name="transporter" ref="transporter01" />
 	</bean>
 	<!-- TRANSPORTS -->
@@ -726,8 +736,8 @@
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">
 			<list>
+				<ref bean="bookingAccomodation01" />
 				<ref bean="bookingAccomodation02" />
-				<ref bean="bookingaccomodation02" />
 			</list>
 		</property>
 		<property name="transports">
@@ -749,8 +759,8 @@
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">
 			<list>
-				<ref bean="bookingAccomodation01" />
-				<ref bean="bookingaccomodation01" />
+				<ref bean="bookingAccomodation03" />
+				<ref bean="bookingAccomodation04" />
 			</list>
 		</property>
 		<property name="transports">
@@ -764,26 +774,26 @@
 	<!-- BOOKINGACCOMODATION -->
 	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/12/11" />
-		<property name="startDate" value="2019/12/11" />
+		<property name="endDate" value="2019/11/12" />
+		<property name="startDate" value="2019/11/15" />
 	</bean>
 
 	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2021/12/11" />
-		<property name="startDate" value="2021/12/11" />
+		<property name="endDate" value="2019/11/15" />
+		<property name="startDate" value="2019/11/17" />
 	</bean>
 	
-	<bean id="bookingaccomodation01" class="domain.BookingAccomodation">
-		<property name="startDate" value="2020/11/11" />
-		<property name="endDate" value="2020/11/12" />
+	<bean id="bookingAccomodation03" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
+		<property name="endDate" value="2019/12/12" />
+		<property name="startDate" value="2019/12/15" />
 	</bean>
 
-	<bean id="bookingaccomodation02" class="domain.BookingAccomodation">
-		<property name="startDate" value="2022/11/11" />
-		<property name="endDate" value="2022/11/11" />
+	<bean id="bookingAccomodation04" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
+		<property name="endDate" value="2019/12/15" />
+		<property name="startDate" value="2019/12/17" />
 	</bean>
 	<!-- BOOKINGACCOMODATION -->
 

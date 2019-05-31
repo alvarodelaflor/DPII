@@ -22,7 +22,14 @@
 	<h3>
 		<spring:message code="curricula.principalMessage" />
 		<small class="text-muted">
-			<spring:message code="curricula.moreInfo" />
+			<c:choose>
+				<c:when test="${empty curriculas}">
+					<spring:message htmlEscape="false" code="oopsNoCurriculas"/>
+				</c:when>
+				<c:otherwise>				
+					<spring:message code="curricula.moreInfo" />
+				</c:otherwise>
+			</c:choose>
 		</small>
 	</h3>
 	<jstl:if test="${cleanerLogger==true}">
