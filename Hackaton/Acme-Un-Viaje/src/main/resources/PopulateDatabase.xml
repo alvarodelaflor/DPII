@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- * PopulateDatabase.xml * * Copyright (C) 2018 Universidad de Sevilla 
-	* * The use of this project is hereby constrained to the conditions of the 
-	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2018 Universidad de Sevilla * * The use of this project is hereby constrained to the conditions of the * TDG Licence, a copy of which you 
+	may download from * http://www.tdg-seville.info/License.html -->
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
 
 	<!-- User accounts -->
-	
+
 	<bean id="userAccountCustomer02" class="security.UserAccount">
 		<property name="username" value="hackercustomer" />
 		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
@@ -23,7 +21,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccountHost02" class="security.UserAccount">
 		<property name="username" value="hackerhost" />
 		<property name="password" value="67b3dba8bc6778101892eb77249db32e" />
@@ -180,8 +178,7 @@
 		<property name="name" value="Mr. Potato" />
 		<property name="surname" value="Fritito" />
 		<property name="birthDate" value="1998/12/11" />
-		<property name="photo"
-			value="https://simg.nicepng.com/png/small/17-170013_mr-potato-head-free-png-image-mr-potato.png" />
+		<property name="photo" value="https://simg.nicepng.com/png/small/17-170013_mr-potato-head-free-png-image-mr-potato.png" />
 		<property name="email" value="cleaner@gmail.com" />
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount2" />
@@ -197,26 +194,30 @@
 
 	<!-- JOB APP -->
 	<bean id="jobApp01" class="domain.JobApplication">
-		<property name="rejectMessage"><null /></property>
+		<property name="rejectMessage">
+			<null />
+		</property>
 		<property name="cleanerMessage" value="Cleaner Message Job App 01" />
 		<property name="createMoment" value="1998/12/11" />
 		<property name="curricula" ref="curricula01" />
 		<property name="status" value="true" />
-		<property name="host" ref="host01"/>
-		<property name="cleaner" ref="cleaner01"/>
-		<property name="dropMoment"><null /></property>
+		<property name="host" ref="host01" />
+		<property name="cleaner" ref="cleaner01" />
+		<property name="dropMoment">
+			<null />
+		</property>
 	</bean>
 	<!-- JOB APP -->
-	
+
 	<!-- CURRICULA -->
 	<bean id="curricula01" class="domain.Curricula">
-		<property name="name" value="Cleaner 1 Curriculum"/>
+		<property name="name" value="Cleaner 1 Curriculum" />
 		<property name="statement" value="Statement Curriculum 1 Cleaner 1" />
 		<property name="phone" value="123456789" />
 		<property name="linkLinkedin" value="https://www.linkedin.com/in/francisco-batista-n%C3%BA%C3%B1ez-336442172/" />
 		<property name="bannerLogo" value="https://www.bannerlogo.com" />
-		<property name="isCopy" value="true"/>
-		<property name="cleaner" ref="cleaner01"/>
+		<property name="isCopy" value="true" />
+		<property name="cleaner" ref="cleaner01" />
 	</bean>
 	<!-- CURRICULA -->
 
@@ -225,8 +226,7 @@
 		<property name="name" value="Sr. Transporter" />
 		<property name="surname" value="Car" />
 		<property name="birthDate" value="1998/12/11" />
-		<property name="photo"
-			value="https://cdn.pixabay.com/photo/2016/12/31/01/43/auto-1941991_960_720.png" />
+		<property name="photo" value="https://cdn.pixabay.com/photo/2016/12/31/01/43/auto-1941991_960_720.png" />
 		<property name="email" value="transporter@gmail.com" />
 		<property name="phone" value="+34678546678" />
 		<property name="userAccount" ref="userAccount3" />
@@ -519,7 +519,7 @@
 			<null />
 		</property>
 	</bean>
-	
+
 	<bean id="mailboxCustomer0201" class="domain.Mailbox">
 		<property name="name" value="inBox" />
 		<property name="isDefault" value="true" />
@@ -535,7 +535,7 @@
 			<null />
 		</property>
 	</bean>
-	
+
 	<bean id="mailbox01" class="domain.Mailbox">
 		<property name="name" value="inBox" />
 		<property name="isDefault" value="true" />
@@ -680,6 +680,12 @@
 		<property name="terms" value="terms0001" />
 		<property name="draftMode" value="false" />
 	</bean>
+	<bean id="warranty02" class="domain.Warranty">
+		<property name="travelAgency" ref="travelAgency01" />
+		<property name="title" value="Guarranti" />
+		<property name="terms" value="Terminets" />
+		<property name="draftMode" value="true" />
+	</bean>
 	<!-- WARRANTY -->
 
 
@@ -690,8 +696,7 @@
 		<property name="place" value="Sevilla" />
 		<property name="description" value="Bonita habitación con vistas al asfalto" />
 		<property name="host" ref="host01" />
-		<property name="pictures"
-			value="https://www.recoletos-hotel.com/files/hotel/hotel-recoletos/02-habitaciones/estandard/vp-jardin-de-recoletos-madrid-habitacion-doble-estandard-03.jpg" />
+		<property name="pictures" value="https://www.recoletos-hotel.com/files/hotel/hotel-recoletos/02-habitaciones/estandard/vp-jardin-de-recoletos-madrid-habitacion-doble-estandard-03.jpg" />
 		<property name="maxPeople" value="4" />
 		<property name="rating" value="3" />
 	</bean>
@@ -701,8 +706,7 @@
 		<property name="place" value="Sevilla" />
 		<property name="description" value="Ático de mala muerte" />
 		<property name="host" ref="host01" />
-		<property name="pictures"
-			value="https://t-ec.bstatic.com/images/hotel/max1024x768/170/170499069.jpg'https://rincondelobizarro.files.wordpress.com/2011/12/cuartocutre.jpg" />
+		<property name="pictures" value="https://t-ec.bstatic.com/images/hotel/max1024x768/170/170499069.jpg'https://rincondelobizarro.files.wordpress.com/2011/12/cuartocutre.jpg" />
 		<property name="maxPeople" value="2" />
 		<property name="rating" value="0.5" />
 	</bean>
@@ -731,7 +735,7 @@
 	<bean id="travelPack01" class="domain.TravelPack">
 		<property name="name" value="travelPack1" />
 		<property name="draft" value="false" />
-		<property name="status" value="true"/>
+		<property name="status" value="true" />
 		<property name="customer" ref="customer01" />
 		<property name="travelAgency" ref="travelAgency01" />
 		<property name="accomodations">
@@ -783,7 +787,7 @@
 		<property name="endDate" value="2019/11/15" />
 		<property name="startDate" value="2019/11/17" />
 	</bean>
-	
+
 	<bean id="bookingAccomodation03" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
 		<property name="endDate" value="2019/12/12" />
