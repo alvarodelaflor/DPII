@@ -76,7 +76,7 @@ public class MailboxService {
 		final Mailbox oldMailbox = this.mailboxRepository.findOne(mailbox.getId());
 		System.out.println(oldMailbox);
 		if (oldMailbox != null)
-			if (oldMailbox.getName() == "inBox" || oldMailbox.getName() == "outBox" || oldMailbox.getName() == "spamBox" || oldMailbox.getName() == "trashBox")
+			if (oldMailbox.getName() == "inBox" || oldMailbox.getName() == "outBox" || oldMailbox.getName() == "spamBox" || oldMailbox.getName() == "trashBox" )
 				Assert.isTrue(oldMailbox.getName() == mailbox.getName());
 		System.out.println("falla aqui");
 		final Mailbox result = this.mailboxRepository.save(mailbox);

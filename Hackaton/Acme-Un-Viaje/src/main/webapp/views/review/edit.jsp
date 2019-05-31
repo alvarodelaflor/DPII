@@ -69,8 +69,8 @@
 				<div class="row">
 					<div class="col-md-6">
 						<acme:submit name="save" code="actor.save" />
-						<span style="padding-left: 0.5em"> <acme:cancel url=""
-								code="actor.back" />
+						<span style="padding-left: 0.5em"> <acme:cancel url="/review/list.do"
+							code="back" />
 						</span>
 					</div>
 				</div>

@@ -18,6 +18,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <hr>
 	<div class="container-fluid">
@@ -35,13 +36,13 @@
 
 			<br />
 
-
-			<input type="submit" name="save"
-				value="<spring:message code="editMailbox" />" />
+				
+			<div class="row">
+					<div class="col-md-8">
+						<acme:submit name="save" code="actor.save" />
+						<acme:cancel url="/mailbox/list.do"	code="back" />					
+					</div>
+				</div>
 
 		</form:form>
-
-		<input type="button" name="cancel"
-			value="<spring:message code="mailbox.cancel"/>"
-			onclick="javascript:relativeRedir('mailbox/list.do');" />
 </div>

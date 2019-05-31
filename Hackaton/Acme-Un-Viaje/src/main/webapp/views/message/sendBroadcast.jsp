@@ -39,6 +39,8 @@
 				<div class="row">
 					<div class="col-md-8">
 						<acme:submit name="save" code="actor.save" />
+						<acme:cancel url="/mailbox/list.do"
+							code="back" />
 					</div>
 				</div>
 			</form:form>

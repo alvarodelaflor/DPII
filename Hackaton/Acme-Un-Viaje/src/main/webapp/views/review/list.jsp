@@ -37,9 +37,14 @@
 	</display:table>
 	<div class="row">
 		<div class="col-md-3">
-			<span style="padding-left: 0.5em"> <acme:create
-				url="review/create.do" name="buttonReview"
-				code="review.create" />
+			<span style="padding-left: 0.5em"> 
+				<jstl:if test="${complaintsEmpty==true}">
+					<p class="lead">
+						<acme:create url="review/create.do" name="buttonReview"	code="review.create" />
+					</p>
+				</jstl:if>
+				
+				
 			</span>
 			 <span><acme:historyBack />
 			</span>

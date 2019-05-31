@@ -119,7 +119,7 @@ public class MailboxController extends AbstractController {
 		final Actor logged = this.actorService.findByUserAccountId(login.getId());
 		final Collection<Mailbox> mailboxes = logged.getMailboxes();
 		for (final Mailbox mailboxCheck : mailboxes)
-			if (mailboxCheck.getName().equals(mailboxToCreate.getName())) {
+			if (mailboxCheck.getName().equals(mailboxToCreate.getName()) && mailboxCheck.getId() != mailboxToCreate.getId()) {
 				res = true;
 				break;
 			}

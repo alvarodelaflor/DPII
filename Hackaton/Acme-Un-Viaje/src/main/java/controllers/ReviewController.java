@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import javax.validation.Valid;
+
 import org.junit.runner.Computer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,9 +58,15 @@ public class ReviewController extends AbstractController{
 		ModelAndView result;
 		try {
 			Collection<Review> reviews = reviewService.findReviewRefereeLogged();
+			List<Complaint> complaints = (List<Complaint>) complaintService.getComplaintsWithoutReview();
+			Boolean complaintsEmpty = true;
+			if(complaints.size() == 0) {
+				complaintsEmpty = false;
+			}
 
 			result = new ModelAndView("review/list");
 			result.addObject("reviews", reviews);
+			result.addObject("complaintsEmpty",complaintsEmpty);
 			result.addObject("requestURI", "review/list.do");
 		} catch (Exception e) {
 			result = new ModelAndView("welcome/index");
@@ -105,7 +113,7 @@ public class ReviewController extends AbstractController{
 	
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveEdit( Review review, final BindingResult binding,@RequestParam(value = "complaintId", defaultValue = "-1") final int complaintId) {
+	public ModelAndView saveEdit(@Valid Review review, final BindingResult binding,@RequestParam(value = "complaintId", defaultValue = "-1") final int complaintId) {
 		ModelAndView result;
 		try {
 			Complaint complaint = complaintService.findOne(complaintId);
