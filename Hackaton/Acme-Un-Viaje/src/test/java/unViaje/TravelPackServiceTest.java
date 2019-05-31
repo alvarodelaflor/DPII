@@ -19,17 +19,17 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.BookingAccomodation;
-import domain.BookingTransport;
-import domain.CreditCard;
-import domain.TravelAgency;
-import domain.TravelPack;
 import security.LoginService;
 import services.ConfigService;
 import services.CustomerService;
 import services.TravelAgencyService;
 import services.TravelPackService;
 import utilities.AbstractTest;
+import domain.BookingAccomodation;
+import domain.BookingTransport;
+import domain.CreditCard;
+import domain.TravelAgency;
+import domain.TravelPack;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -57,13 +57,13 @@ public class TravelPackServiceTest extends AbstractTest {
 	/*
 	 * 15\. Un actor autenticado como agencia de viajes podrá:
 	 * - 2\. Publicar paquetes de viaje para los clientes.
-	 *
+	 * 
 	 * Positivos : Probamos que con datos correctos no haya excepciones
 	 * Negativos: Probamos que con datos incorrectos y cross scripting se lancen excepciones.
-	 *
+	 * 
 	 * Analysis of sentence coverage:
 	 * ~80%
-	 *
+	 * 
 	 * Analysis of data coverage:
 	 * ~70%
 	 */
@@ -145,6 +145,103 @@ public class TravelPackServiceTest extends AbstractTest {
 		} finally {
 			this.rollbackTransaction();
 			super.unauthenticate();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 12. Un actor autenticado como cliente podrá:
+	 * 
+	 * Aceptar un paquete de viajes
+	 * 
+	 * Analysis of sentence coverage: ~12%
+	 * 
+	 * Analysis of data coverage: ~45%
+	 */
+	@Test
+	public void acceptTravelPack() {
+
+		final Object testingData[][] = {
+
+			{
+				"customer", null
+			}, {
+				"hosthost", IllegalArgumentException.class
+			}, {
+				"admin", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.acceptTravelPack((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	protected void acceptTravelPack(final String user, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			this.authenticate(user);
+			final int tpId = this.getEntityId("travelPack02");
+
+			this.travelPackService.accept(tpId);
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 12. Un actor autenticado como cliente podrá:
+	 * 
+	 * Rechazar un paquete de viajes
+	 * 
+	 * Analysis of sentence coverage: ~10%
+	 * 
+	 * Analysis of data coverage: ~45%
+	 */
+	@Test
+	public void rejectTravelPack() {
+
+		final Object testingData[][] = {
+
+			{
+				"customer", null
+			}, {
+				"hosthost", IllegalArgumentException.class
+			}, {
+				"admin", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.rejectTravelPack((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	protected void rejectTravelPack(final String user, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			this.authenticate(user);
+			final int tpId = this.getEntityId("travelPack02");
+
+			this.travelPackService.reject(tpId);
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
 		}
 
 		this.checkExceptions(expected, caught);
