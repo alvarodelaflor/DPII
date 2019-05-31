@@ -13,14 +13,14 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.AccomodationRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Accomodation;
 import domain.BookingAccomodation;
 import domain.CleaningTask;
 import domain.FinderAccomodation;
 import domain.Host;
-import repositories.AccomodationRepository;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -174,5 +174,12 @@ public class AccomodationService {
 			for (final Accomodation item : items)
 				this.delete(item);
 
+	}
+
+	public Accomodation getLoggedHostAccomodation(final int accomodationId) {
+		final Accomodation ac = this.accomodationRepo.findOne(accomodationId);
+		final Host host = this.hostService.getHostLogin();
+		Assert.isTrue(host.getId() == ac.getHost().getId());
+		return ac;
 	}
 }
