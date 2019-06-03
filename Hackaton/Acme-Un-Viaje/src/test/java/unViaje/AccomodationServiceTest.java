@@ -219,4 +219,114 @@ public class AccomodationServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
+	/*
+	 * 7. Un actor autenticado como anfitrión podrá:
+	 * 
+	 * Editar un hospedaje
+	 * 
+	 * Analysis of sentence coverage: ~7%
+	 * 
+	 * Analysis of data coverage:~35%
+	 */
+	@Test
+	public void editAccomodation() throws ParseException {
+
+		final Object testingData[][] = {
+
+			{
+				"hosthost", null
+			}, {
+				"customer", NullPointerException.class
+			}, {
+				"admin", NullPointerException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.editAccomodation((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	protected void editAccomodation(final String user, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			this.authenticate(user);
+			final int id = this.getEntityId("accomodation01");
+
+			final Accomodation ac = this.accomodationService.getLoggedHostAccomodation(id);
+			ac.setDescription("testeroni");
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 7. Un actor autenticado como anfitrión podrá:
+	 * 
+	 * Borrar un hospedaje
+	 * 
+	 * Analysis of sentence coverage: ~30%
+	 * 
+	 * Analysis of data coverage:~35%
+	 */
+	@Test
+	public void deleteAccomodation() throws ParseException {
+
+		final Object testingData[][] = {
+
+			{
+				"hosthost", null
+			}, {
+				"customer", IllegalArgumentException.class
+			}, {
+				"admin", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.deleteAccomodation((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+	}
+
+	protected void deleteAccomodation(final String user, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+
+			this.startTransaction();
+			// Create as host to delete after
+			this.authenticate("hosthost");
+			final Accomodation accomodation = this.accomodationService.create();
+			accomodation.setAddress("test");
+			accomodation.setDescription("test");
+			accomodation.setMaxPeople(4);
+			accomodation.setPictures("http://test.com");
+			accomodation.setPlace("Test place");
+			accomodation.setPricePerNight(25.5d);
+			accomodation.setRating(3d);
+
+			final Accomodation ac = this.accomodationService.save(accomodation);
+			this.unauthenticate();
+			this.authenticate(user);
+			this.accomodationService.delete(ac);
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 }
