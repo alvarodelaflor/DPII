@@ -145,7 +145,7 @@ public class ComplaintServiceTest extends AbstractTest {
 	 * 
 	 * Borrar una queja
 	 * 
-	 * Analysis of sentence coverage: TODO
+	 * Analysis of sentence coverage: ~32%
 	 * 
 	 * Analysis of data coverage: ~45%
 	 */
@@ -189,6 +189,54 @@ public class ComplaintServiceTest extends AbstractTest {
 			this.authenticate(user);
 
 			this.complaintService.delete(c.getId());
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+			this.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * 19. Un actor autentificado como cliente podrá:
+	 * 
+	 * Listar sus quejas
+	 * 
+	 * Analysis of sentence coverage: ~9%
+	 * 
+	 * Analysis of data coverage: ~45%
+	 */
+	@Test
+	public void listComplaints() {
+
+		final Object testingData[][] = {
+
+			{
+				"customer", null
+			}, {
+				"transporter", IllegalArgumentException.class
+			}, {
+				"admin", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.listComplaints((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	private void listComplaints(final String user, final Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			this.authenticate(user);
+
+			this.complaintService.getLoggedCustomerAssignedComplaints();
+			this.complaintService.getLoggedCustomerUnassignedComplaints();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
