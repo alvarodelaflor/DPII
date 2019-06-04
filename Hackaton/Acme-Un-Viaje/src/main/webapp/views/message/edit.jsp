@@ -38,7 +38,7 @@
 				<div class="row">
 					<div class="col-md-8">
 						<acme:submit name="save" code="actor.save" />
-						<acme:cancel url="javascript:relativeRedir('mailbox/list.do');" code="msg.cancel"/>
+						<acme:cancel url="/message/list.do?mailboxId=${box.id}"	code="back" />
 					</div>
 				</div>
 			</form:form>
