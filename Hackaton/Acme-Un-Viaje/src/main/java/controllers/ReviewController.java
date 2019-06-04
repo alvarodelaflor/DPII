@@ -142,10 +142,7 @@ public class ReviewController extends AbstractController{
 					}
 					
 
-					result = new ModelAndView("review/list");
-					Collection<Review> reviews = reviewService.findReviewRefereeLogged();
-					result.addObject("reviews", reviews);
-					result.addObject("requestURI", "review/list.do");
+					result = listReviews();
 				
 			}
 		}catch (final Throwable oops) {
