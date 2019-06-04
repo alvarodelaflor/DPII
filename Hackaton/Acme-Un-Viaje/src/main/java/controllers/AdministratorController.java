@@ -376,7 +376,7 @@ public class AdministratorController extends AbstractController {
 		ModelAndView res;
 		try {
 
-			this.configService.deleteScoreWord(delsw);
+			this.configService.deleteSpamWord(delsw);
 			res = new ModelAndView("redirect:config.do");
 		} catch (final Throwable oops) {
 
