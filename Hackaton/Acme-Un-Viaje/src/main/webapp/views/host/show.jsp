@@ -156,10 +156,12 @@
 			<div class="row">
 				<div class="col-md-4">
 			<acme:cancel url="" code="actor.back" />
+			<jstl:if test="${owner}">
 			<acme:cancel url="/host/export.do?id=${registerActor.id}" code="export"/><br>
 			<spring:message code="delete.actor"></spring:message><br>
 			<spring:message code="delete.host"></spring:message><br>
 			<acme:cancel url="/host/delete.do?id=${registerActor.id}" code="delete"/>
+			</jstl:if>
 		</div>
 
 			</div>

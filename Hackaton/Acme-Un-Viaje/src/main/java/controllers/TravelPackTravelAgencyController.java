@@ -82,7 +82,6 @@ public class TravelPackTravelAgencyController extends AbstractController {
 
 		try {
 			if (binding.hasErrors()) {
-				System.out.println(binding);
 				final Collection<Warranty> warranties = this.warrantyService.getTravelAgencyWarranty();
 				result = new ModelAndView("travelPack/travelAgency/create");
 				result.addObject("travelPack", travelPack);
@@ -173,13 +172,11 @@ public class TravelPackTravelAgencyController extends AbstractController {
 		try {
 			travelPack = this.travelPackService.reconstruct(travelPack, binding);
 		} catch (final Exception e) {
-			System.out.println("Error e reconstruct de travelPack: " + e);
 			result = new ModelAndView("redirect:/welcome/index.do");
 			return result;
 		}
 
 		if (binding.hasErrors()) {
-			System.out.println("Error en TravelPackTravelAgencyController.java, binding: " + binding);
 			result = new ModelAndView("travelPack/travelAgency/create");
 			result.addObject("travelPack", travelPack);
 		} else
@@ -193,7 +190,6 @@ public class TravelPackTravelAgencyController extends AbstractController {
 				final Collection<Warranty> warranties = this.warrantyService.getTravelAgencyWarranty();
 				result.addObject("warranties", warranties);
 			} catch (final Throwable oops) {
-				System.out.println("Error en SAVE TravelPackTravelAgencyController.java Throwable: " + oops);
 				result = new ModelAndView("travelPack/travelAgency/edit");
 				result.addObject("travelPack", travelPack);
 				result.addObject("message", "travelPack.commit.error");

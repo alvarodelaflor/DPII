@@ -77,34 +77,35 @@ public class BookingAccomodationTravelAgencyController extends AbstractControlle
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final BookingAccForm form, final BindingResult binding) {
 		ModelAndView result = null;
-		final BookingAccomodation book = this.bookingAccomodationService.reconstructForm(form, binding);
-		if (binding.hasErrors()) {
-			System.err.println(binding);
-			result = new ModelAndView("bookingAccomodation/travelAgency/create");
-			result.addObject("form", form);
-			final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
-			result.addObject("packs", packs);
-			result.addObject("message", "error.createbAccomodation");
-		} else
-			try {
+
+		try {
+			final BookingAccomodation book = this.bookingAccomodationService.reconstructForm(form, binding);
+			if (binding.hasErrors()) {
+				System.err.println(binding);
+				result = new ModelAndView("bookingAccomodation/travelAgency/create");
+				result.addObject("form", form);
+				final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
+				result.addObject("packs", packs);
+				result.addObject("message", "error.createbAccomodation");
+			} else {
 
 				final BookingAccomodation bc = this.bookingAccomodationService.save(book);
 				final TravelPack pack = this.travelPackService.findOne(form.getTravelPackId());
 				pack.getAccomodations().add(bc);
 				result = new ModelAndView("redirect:/travelPack/travelAgency/show.do?travelPackId=" + form.getTravelPackId());
-
-			} catch (final Throwable oops) {
-				if (oops.getMessage() != null) {
-					result = new ModelAndView("bookingAccomodation/travelAgency/create");
-					result.addObject("form", form);
-					final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
-					result.addObject("packs", packs);
-					result.addObject("message", oops.getMessage());
-				} else {
-					oops.printStackTrace();
-					result = new ModelAndView("redirect:/welcome/index.do");
-				}
 			}
+		} catch (final Throwable oops) {
+			if (oops.getMessage() != null) {
+				result = new ModelAndView("bookingAccomodation/travelAgency/create");
+				result.addObject("form", form);
+				final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
+				result.addObject("packs", packs);
+				result.addObject("message", oops.getMessage());
+			} else {
+				oops.printStackTrace();
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		}
 		return result;
 	}
 

@@ -1,8 +1,8 @@
 /*
  * CustomerController.java
- * 
+ *
  * Copyright (C) 2018 Universidad de Sevilla
- * 
+ *
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
@@ -29,6 +29,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Cleaner;
+import domain.CreditCard;
+import domain.Customer;
+import domain.Host;
+import domain.JobApplication;
+import domain.Valoration;
+import forms.RegisterActor;
 import security.LoginService;
 import services.AccomodationService;
 import services.CleanerService;
@@ -37,13 +44,6 @@ import services.CustomerService;
 import services.HostService;
 import services.JobApplicationService;
 import services.ValorationService;
-import domain.Cleaner;
-import domain.CreditCard;
-import domain.Customer;
-import domain.Host;
-import domain.JobApplication;
-import domain.Valoration;
-import forms.RegisterActor;
 
 @Controller
 @RequestMapping("/host")
@@ -312,12 +312,14 @@ public class HostController extends AbstractController {
 	public ModelAndView show(@RequestParam(value = "hostId", defaultValue = "-1") final int hotId) {
 		ModelAndView result;
 		Boolean res;
+		Boolean owner = false;
 		try {
 			final Host registerActor;
 			if (hotId == -1) {
 				final int userLoggin = LoginService.getPrincipal().getId();
 				registerActor = this.hostService.getHostByUserAccountId(userLoggin);
 				res = true;
+				owner = true;
 			} else {
 				registerActor = this.hostService.findOne(hotId);
 				res = false;
@@ -329,6 +331,7 @@ public class HostController extends AbstractController {
 			// ALVARO
 			result.addObject("registerActor", registerActor);
 			result.addObject("res", res);
+			result.addObject("owner", owner);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -351,8 +354,7 @@ public class HostController extends AbstractController {
 
 	//EXPORT
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public @ResponseBody
-	Host export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+	public @ResponseBody Host export(@RequestParam(value = "id", defaultValue = "-1") final int id) {
 		Host result = new Host();
 		result = this.hostService.findOne(id);
 		if (result == null || LoginService.getPrincipal().getId() != result.getUserAccount().getId())
