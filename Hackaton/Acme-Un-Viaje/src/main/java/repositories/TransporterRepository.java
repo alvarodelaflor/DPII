@@ -15,6 +15,7 @@ public interface TransporterRepository extends JpaRepository<Transporter, Intege
 	@Query("select b from Transporter b join b.userAccount bua where bua.id=?1")
 	Transporter findByUserAccountId(int userAccountId);
 
-	@Query("select c from Transporter c order by(avg(cast((select avg(v.score) from Valoration v where v.transporter = c) as float)))")
-	Collection<? extends Transporter> bestTransporter();
+	@Query("select v.transporter from Valoration v group by v.host order by avg(v.score) desc")
+	Collection<Transporter> bestTransporter();
+
 }

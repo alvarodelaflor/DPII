@@ -62,9 +62,8 @@ public class AccomodationHostController extends AbstractController {
 	public ModelAndView save(final Accomodation accomodation, final BindingResult binding) {
 		ModelAndView result;
 
-		final Accomodation accomodationN = this.accomodationService.reconstruct(accomodation, binding);
-
 		try {
+			final Accomodation accomodationN = this.accomodationService.reconstruct(accomodation, binding);
 			if (binding.hasErrors()) {
 				System.out.println(binding);
 				result = new ModelAndView("accomodation/host/create");

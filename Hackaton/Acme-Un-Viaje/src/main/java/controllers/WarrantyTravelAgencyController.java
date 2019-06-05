@@ -137,7 +137,6 @@ public class WarrantyTravelAgencyController extends AbstractController {
 			if (binding.hasErrors()) {
 				result = new ModelAndView("warranty/travelAgency/edit");
 			} else {
-
 				this.warrantyService.save(warrantyN);
 				result = new ModelAndView("redirect:list.do");
 			}

@@ -836,4 +836,32 @@
 		<property name="host" ref="host01" />
 	</bean>
 	<!-- COMPLAINT -->
+	<!-- VALORATION -->
+	<bean id="valoration01" class="domain.Valoration">
+		<property name="score" value="4" />
+		<property name="customer" ref="customer01" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration02" class="domain.Valoration">
+		<property name="score" value="2" />
+		<property name="customer" ref="customer01" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration03" class="domain.Valoration">
+		<property name="score" value="4" />
+		<property name="customer" ref="customer01" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration04" class="domain.Valoration">
+		<property name="score" value="2" />
+		<property name="customer" ref="customer02" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration05" class="domain.Valoration">
+		<property name="score" value="3" />
+		<property name="customer" ref="customer02" />
+		<property name="host" ref="host01" />
+	</bean>
+	<!-- VALORATION -->
+	
 </beans>

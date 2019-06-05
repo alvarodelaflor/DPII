@@ -43,7 +43,8 @@
 				</h3>
 				<br />
 				<p>
-					<jstl:out value="${bestCustomer}"></jstl:out>
+					<c:if test="${not empty bestCustomer}"><jstl:out value="${bestCustomer}"></jstl:out></c:if>
+						<c:if test="${empty bestCustomer}">---</c:if>
 				</p>
 			</div>
 			<div>
@@ -52,7 +53,8 @@
 				</h3>
 				<br />
 				<p>
-					<jstl:out value="${bestHost}"></jstl:out>
+					<c:if test="${not empty bestHost}"><jstl:out value="${bestHost}"></jstl:out></c:if>
+						<c:if test="${empty bestHost}">---</c:if>
 				</p>
 			</div>
 			<div>
@@ -61,7 +63,8 @@
 				</h3>
 				<br />
 				<p>
-					<jstl:out value="${bestTransporter}"></jstl:out>
+					<c:if test="${not empty bestTransporter}"><jstl:out value="${bestTransporter}"></jstl:out></c:if>
+						<c:if test="${empty bestTransporter}">---</c:if>
 				</p>
 			</div>
 			<div>
@@ -70,7 +73,8 @@
 				</h3>
 				<br />
 				<p>
-					<jstl:out value="${bestTravelAgency}"></jstl:out>
+						<c:if test="${not empty bestTravelAgency}"><jstl:out value="${bestTravelAgency}"></jstl:out></c:if>
+						<c:if test="${empty bestTravelAgency}">---</c:if>
 				</p>
 			</div>
 			<div>
@@ -79,7 +83,8 @@
 				</h3>
 				<br />
 				<p>
-					<jstl:out value="${bestCleaner}"></jstl:out>
+					<c:if test="${not empty bestCleaner}"><jstl:out value="${bestCleaner}"></jstl:out></c:if>
+						<c:if test="${empty bestCleaner}">---</c:if>
 				</p>
 			</div>
 			<div>

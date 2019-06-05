@@ -54,7 +54,7 @@ public class WarrantyService {
 		final TravelAgency travelAgency = this.travelAgencyService.getTravelAgencyByUserAccountId(userL.getId());
 		Assert.notNull(travelAgency);
 		warrantyNew.setTravelAgency(travelAgency);
-
+		
 		this.validator.validate(warrantyNew, binding);
 
 		return warrantyNew;
@@ -64,6 +64,7 @@ public class WarrantyService {
 		final TravelAgency actor = this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId());
 		Assert.notNull(actor);
 		final Warranty warrantyNew = this.findOne(warranty.getId());
+		Assert.isTrue(warrantyNew.getDraftMode() == true);
 		Assert.isTrue(warrantyNew.getTravelAgency().equals(actor));
 
 		warrantyNew.setTerms(warranty.getTerms());
