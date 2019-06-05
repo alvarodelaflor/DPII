@@ -131,7 +131,7 @@
 
 	<div class="row">
 		<div class="col-md-4">
-			<acme:cancel url="finder/travelAgency/show.do" code="actor.back" />
+			<acme:cancel url="travelPack/travelAgency/list.do" code="actor.back" />
 		</div>
 		<jstl:choose>
 			<jstl:when test="${travelPack.draft}">

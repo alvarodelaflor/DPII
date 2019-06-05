@@ -78,33 +78,35 @@ public class BookingTransportTravelAgencyController extends AbstractController {
 	public ModelAndView save(final BookingTransportForm form, final BindingResult binding) {
 		ModelAndView result = null;
 		final BookingTransport book = this.bookingTransportService.reconstructForm(form, binding);
-		if (binding.hasErrors()) {
-			System.err.println(binding);
-			result = new ModelAndView("bookingTransport/travelAgency/create");
-			result.addObject("form", form);
-			final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
-			result.addObject("packs", packs);
-			result.addObject("message", "error.createbTransport");
-		} else
-			try {
+
+		try {
+
+			if (binding.hasErrors()) {
+				System.err.println(binding);
+				result = new ModelAndView("bookingTransport/travelAgency/create");
+				result.addObject("form", form);
+				final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
+				result.addObject("packs", packs);
+				result.addObject("message", "error.createbTransport");
+			} else {
 
 				final BookingTransport bc = this.bookingTransportService.save(book);
 				final TravelPack pack = this.travelPackService.findOne(form.getTravelPackId());
 				pack.getTransports().add(bc);
 				result = new ModelAndView("redirect:/travelPack/travelAgency/show.do?travelPackId=" + form.getTravelPackId());
-
-			} catch (final Throwable oops) {
-				if (oops.getMessage() != null) {
-					result = new ModelAndView("bookingTransport/travelAgency/create");
-					result.addObject("form", form);
-					final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
-					result.addObject("packs", packs);
-					result.addObject("message", oops.getMessage());
-				} else {
-					oops.printStackTrace();
-					result = new ModelAndView("redirect:/welcome/index.do");
-				}
 			}
+		} catch (final Throwable oops) {
+			if (oops.getMessage() != null) {
+				result = new ModelAndView("bookingTransport/travelAgency/create");
+				result.addObject("form", form);
+				final Collection<TravelPack> packs = this.travelPackService.getTravelAgencyDraftPacks();
+				result.addObject("packs", packs);
+				result.addObject("message", oops.getMessage());
+			} else {
+				oops.printStackTrace();
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}
+		}
 		return result;
 	}
 
