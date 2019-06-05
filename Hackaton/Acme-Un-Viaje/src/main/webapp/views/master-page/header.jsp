@@ -150,6 +150,11 @@
 										<spring:message code="master.page.mailbox.list" />
 									</a>
 								</li>
+								<li class="nav-item dropdown">
+									<a href="transporter/myCustomers.do" class="nav-link">
+										<spring:message code="master.page.myCustomers" />
+									</a>
+								</li>
 							</security:authorize>
 
 							<security:authorize access="hasRole('REFEREE')">
