@@ -30,8 +30,6 @@
 								<display:column property="surname" titleKey="surname" />
 								<display:column property="email" titleKey="email" />
 								<display:column property="phone" titleKey="phone" />
-								<display:column property="userAccount.username"
-									titleKey="username" />
 								<display:column>
 									<a href="admin/ban.do?id=${row.id}"><spring:message
 											code="unban" /></a>
@@ -58,11 +56,23 @@
 								<display:column property="surname" titleKey="surname" />
 								<display:column property="email" titleKey="email" />
 								<display:column property="phone" titleKey="phone" />
-								<display:column property="userAccount.username"
-									titleKey="username" />
+								<c:choose>
+								<c:when test="${row.userAccount.spammerFlag == false}">
+									<display:column  titleKey="spammer">				
+									<spring:message code="spammer.show.isFinal.NO" />
+									</display:column>
+								</c:when>
+								<c:otherwise>
+									<display:column  titleKey="spammer">						
+									<spring:message	code="spammer.show.isFinal.SI" />
+									</display:column>
+								</c:otherwise>
+								</c:choose>
 								<display:column>
+									<c:if test="${row.userAccount.spammerFlag}">
 									<a href="admin/ban.do?id=${row.id}"><spring:message
 											code="ban" /></a>
+									</c:if>
 								</display:column>
 							</fieldset>
 						</div>

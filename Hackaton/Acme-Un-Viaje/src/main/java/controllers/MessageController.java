@@ -502,6 +502,15 @@ public class MessageController extends AbstractController {
 		System.out.println("editModelAndView");
 		System.out.println(mailboxes);
 		System.out.println(nameMailbox);
+		
+		Mailbox show = null;
+		List<Mailbox> boxesList1 = (List<Mailbox>) mailboxes;
+		for (int i = 0; i < boxesList1.size(); i++) {
+			if(boxesList1.get(i).getMessages().contains(msg)) {
+				show = boxesList1.get(i);
+			}
+		}
+		
 
 		final UserAccount login = LoginService.getPrincipal();
 		final Actor sender = this.actorService.findByUserAccountId(login.getId());
@@ -522,11 +531,14 @@ public class MessageController extends AbstractController {
 		if (!this.checkUserOwner(sender, msg)) {
 			result = new ModelAndView("welcome/index");
 			result.addObject("nameMailbox", nameMailbox);
+			result.addObject("box",show);
 			result.addObject("msgCode", msgCode);
 		} else {
 			result = new ModelAndView("message/editMailbox");
 			result.addObject("msg", msg);
 			result.addObject("nameMailbox", nameMailbox);
+			result.addObject("box",show);
+
 			result.addObject("msgCode", msgCode);
 		}
 		return result;
