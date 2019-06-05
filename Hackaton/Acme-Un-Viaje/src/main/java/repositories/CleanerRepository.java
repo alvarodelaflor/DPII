@@ -25,6 +25,7 @@ public interface CleanerRepository extends JpaRepository<Cleaner, Integer> {
 	@Query("select c from Cleaner c where c.name=?1 and c.surname=?2")
 	Cleaner findByNameSurname(String name, String surname);
 
-	@Query("select c from Cleaner c order by(avg(cast((select avg(v.score) from Valoration v where v.cleaner = c) as float)))")
+	@Query("select v.cleaner from Valoration v group by v.host order by avg(v.score) desc")
 	Collection<Cleaner> bestCleaner();
+
 }

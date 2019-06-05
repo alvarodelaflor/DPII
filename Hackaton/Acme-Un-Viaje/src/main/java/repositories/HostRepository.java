@@ -18,6 +18,6 @@ public interface HostRepository extends JpaRepository<Host, Integer> {
 	@Query("select h from JobApplication j join j.host h where j.cleaner.id=?1 and (j.status=null or (j.status=true and j.dropMoment=null))")
 	Collection<Host> findHostNotAvailableForCleaner(int cleanerId);
 
-	@Query("select c from Host c order by(avg(cast((select avg(v.score) from Valoration v where v.host = c) as float)))")
+	@Query("select v.host from Valoration v group by v.host order by avg(v.score) desc")
 	Collection<Host> bestHost();
 }
