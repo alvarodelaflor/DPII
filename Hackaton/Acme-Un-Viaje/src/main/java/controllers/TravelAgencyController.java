@@ -120,7 +120,6 @@ public class TravelAgencyController extends AbstractController {
 		travelAgency = this.travelAgencyService.reconstructEditDataPeronal(travelAgency, binding);
 
 		if (binding.hasErrors()) {
-			System.out.println("HAY ERRORES 2" + binding);
 			result = new ModelAndView("travelAgency/edit");
 			final Collection<String> makes = this.configService.getConfiguration().getCreditCardMakeList();
 			result.addObject("makes", makes);
@@ -167,7 +166,6 @@ public class TravelAgencyController extends AbstractController {
 		ModelAndView result;
 
 		final TravelAgency travelAgency = this.travelAgencyService.findOne(travelAgencyId);
-		System.out.println("TravelAgency encontrado: " + travelAgency);
 		if (this.travelAgencyService.findOne(travelAgencyId) == null || LoginService.getPrincipal().getId() != travelAgency.getUserAccount().getId())
 			result = new ModelAndView("redirect:list.do");
 		else {

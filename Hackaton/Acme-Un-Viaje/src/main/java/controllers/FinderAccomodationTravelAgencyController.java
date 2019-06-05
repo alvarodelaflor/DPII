@@ -63,7 +63,6 @@ public class FinderAccomodationTravelAgencyController extends AbstractController
 
 				res = this.finderService.findNoCache(res);
 				final FinderAccomodation saved = this.finderService.save(res);
-				System.out.println(saved.getAccomodations());
 				result = new ModelAndView("finder/show");
 				boolean canBook = true;
 				final Collection<TravelPack> draftPacks = this.travelPackService.getTravelAgencyDraftPacks();
