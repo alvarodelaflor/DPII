@@ -205,7 +205,7 @@ public class TravelPackService {
 		final Double price = travelPack.getPrice();
 
 		//      Not tested
-		//		messageService.sendNotificationTravelPack(travelPack, ta, price);
+				messageService.sendNotificationTravelPack(travelPack, ta, price);
 	}
 
 	public void reject(final Integer travelPackId) {
@@ -224,7 +224,7 @@ public class TravelPackService {
 		final TravelAgency ta = travelPack.getTravelAgency();
 
 		//      Not tested
-		//		messageService.sendNotificationTravelPack(travelPack, ta, null);
+				messageService.sendNotificationTravelPack(travelPack, ta, null);
 
 	}
 

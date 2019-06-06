@@ -29,7 +29,7 @@
 						<form:label path="mailboxes">
 			<spring:message code="msg.mailboxes" />:
 		</form:label>
-		<form:select path="mailboxes">
+		<form:select path="mailboxes" required="true">
    		 	<form:options items="${nameMailbox}" />
 		</form:select>
 		<form:errors cssClass="error" path="mailboxes" />

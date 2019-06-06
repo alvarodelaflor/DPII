@@ -352,4 +352,11 @@ public class JobApplicationService {
 				this.jobApplicationRepository.delete(item);
 	}
 
+	public void deleteCleanerApps(Cleaner cleaner) {
+		final Collection<JobApplication> items = this.jobApplicationRepository.getCleanerApplications(cleaner.getId());
+		if (items != null && !items.isEmpty())
+			for (final JobApplication item : items)
+				this.jobApplicationRepository.delete(item);
+	}
+
 }

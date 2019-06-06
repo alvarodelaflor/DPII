@@ -1,5 +1,5 @@
 Las pruebas se han realizado para medir el rendimiento con respecto a las valora
-ciones de transporter. Solo se prueba hacia un tipo de actor porque el rendimiento 
+ciones de un host. Solo se prueba hacia un tipo de actor porque el rendimiento 
 debe ser el mismo.
 ================================================================================
 Información General:
@@ -29,14 +29,19 @@ Prueba 1:
 Prueba 2: 
 
 #usuariosConcurrentes = 50;
-   - 90%Line: Bajo. Admite más usuarios.
+   - 90%Line: Tiempos medios (1500ms). Admite más usuarios.
 ================================================================================
 Prueba 3: 
 
-#usuariosConcurrentes = 75;
-   - 90%Line: Delays bajo.
+#usuariosConcurrentes = 100;
+   - 90%Line: Delays muy bajos. Admite mas usuarios.
+	** En este punto se ejecuto de nuevo "PopulateDataBase.java" a causa de
+	la falta de memoria de la MV. Por ello, el rendimiento se incremento 
+	exponencialmente. Además, aunque podría aumentar más el número de hilos
+	de la prueba, el máx. de usuarios concurrentes ya esta limitado a mucho
+	menos de los que esta prueba podría admitir.
 ================================================================================
 --CONCLUSIÓN--
 ================================================================================
-El nº de usuarios concurrentes oscila en unos 80 usuarios.
+El nº de usuarios concurrentes podría ser muy superior a otras partes de la app.
 ================================================================================
