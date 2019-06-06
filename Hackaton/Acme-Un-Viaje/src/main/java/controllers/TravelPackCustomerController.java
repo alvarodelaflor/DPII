@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.TravelPackService;
 import domain.TravelPack;
@@ -62,7 +63,7 @@ public class TravelPackCustomerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/accept", method = RequestMethod.GET)
-	public ModelAndView accept(@RequestParam(required = false, value = "travelPackId") final Integer travelPackId) {
+	public ModelAndView accept(@RequestParam(required = false, value = "travelPackId") final Integer travelPackId, final RedirectAttributes redirectAttrs) {
 		if (travelPackId == null)
 			return new ModelAndView("redirect:/welcome/index.do");
 
@@ -72,6 +73,11 @@ public class TravelPackCustomerController extends AbstractController {
 			res = new ModelAndView("redirect:/travelPack/customer/listAccepted.do");
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
+			if (oops.getMessage().equals("Can't book")) {
+				res = new ModelAndView("redirect:/travelPack/customer/listOffered.do");
+				redirectAttrs.addFlashAttribute("bookError", true);
+				this.travelPackService.reject(travelPackId);
+			}
 		}
 		return res;
 	}

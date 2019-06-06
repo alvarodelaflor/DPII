@@ -14,6 +14,10 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.TravelPackRepository;
+import security.Authority;
+import security.LoginService;
+import utilities.CommonUtils;
 import domain.Accomodation;
 import domain.BookingAccomodation;
 import domain.BookingTransport;
@@ -23,10 +27,6 @@ import domain.Transport;
 import domain.Transporter;
 import domain.TravelAgency;
 import domain.TravelPack;
-import repositories.TravelPackRepository;
-import security.Authority;
-import security.LoginService;
-import utilities.CommonUtils;
 
 @Service
 @Transactional
@@ -52,9 +52,9 @@ public class TravelPackService {
 
 	@Autowired
 	private BookingTransportService	bookingTransportService;
-	
+
 	@Autowired
-	private MessageService	messageService;
+	private MessageService			messageService;
 
 
 	public void delete(final TravelPack pack) {
@@ -189,14 +189,14 @@ public class TravelPackService {
 		return this.getTravelPacksByCustomerId(id);
 	}
 
-	public void accept(final Integer travelPackId) {
+	public void accept(final Integer travelPackId) throws Exception {
 		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
 		final TravelPack travelPack = this.travelPackRepository.findOne(travelPackId);
 
-		System.out.println("TravelPackService::accept -> Reserving each accomodation");
 		final Accomodation a = null;
 		for (final BookingAccomodation ba : travelPack.getAccomodations())
-			Assert.isTrue(this.canBook(ba));
+			if (this.canBook(ba) == false)
+				throw new Exception("Can't book");
 
 		travelPack.setStatus(true);
 
@@ -204,11 +204,10 @@ public class TravelPackService {
 		final TravelAgency ta = travelPack.getTravelAgency();
 		final Double price = travelPack.getPrice();
 
-//      Not tested
-//		messageService.sendNotificationTravelPack(travelPack, ta, price);
+		//      Not tested
+		//		messageService.sendNotificationTravelPack(travelPack, ta, price);
 	}
-	
-	
+
 	public void reject(final Integer travelPackId) {
 		Assert.isTrue(CommonUtils.hasAuthority(Authority.CUSTOMER));
 
@@ -224,8 +223,8 @@ public class TravelPackService {
 		// Notify travel agency
 		final TravelAgency ta = travelPack.getTravelAgency();
 
-//      Not tested
-//		messageService.sendNotificationTravelPack(travelPack, ta, null);
+		//      Not tested
+		//		messageService.sendNotificationTravelPack(travelPack, ta, null);
 
 	}
 

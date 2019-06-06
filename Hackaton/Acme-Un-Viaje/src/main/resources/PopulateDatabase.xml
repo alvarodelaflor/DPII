@@ -778,26 +778,26 @@
 	<!-- BOOKINGACCOMODATION -->
 	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/11/12" />
-		<property name="startDate" value="2019/11/15" />
+		<property name="startDate" value="2019/11/12" />
+		<property name="endDate" value="2019/11/15" />
 	</bean>
 
 	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/11/15" />
-		<property name="startDate" value="2019/11/17" />
+		<property name="startDate" value="2019/11/15" />
+		<property name="endDate" value="2019/11/17" />
 	</bean>
 
 	<bean id="bookingAccomodation03" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/12/12" />
-		<property name="startDate" value="2019/12/15" />
+		<property name="startDate" value="2019/12/12" />
+		<property name="endDate" value="2019/12/15" />
 	</bean>
 
 	<bean id="bookingAccomodation04" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/12/15" />
-		<property name="startDate" value="2019/12/17" />
+		<property name="startDate" value="2019/12/15" />
+		<property name="endDate" value="2019/12/17" />
 	</bean>
 	<!-- BOOKINGACCOMODATION -->
 
