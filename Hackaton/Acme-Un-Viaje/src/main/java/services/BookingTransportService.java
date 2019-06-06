@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class BookingTransportService {
 	}
 
 	public BookingTransport save(final BookingTransport bookingTransport) {
+		Assert.isTrue(this.validateDate(bookingTransport.getDate()), "error.pastDates");
 		Assert.isTrue(!this.isReserved(bookingTransport), "error.transportAlreadyReserved");
 		final Transport transport = bookingTransport.getTransport();
 		transport.setReservedPlaces(transport.getReservedPlaces() + 1);
@@ -67,5 +69,11 @@ public class BookingTransportService {
 
 	public BookingTransport findOne(final int id) {
 		return this.bookingTransportRepository.findOne(id);
+	}
+
+	private Boolean validateDate(final Date date) {
+		final Date now = new Date();
+		final Boolean res = now.before(date);
+		return res;
 	}
 }

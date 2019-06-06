@@ -40,11 +40,7 @@ public class ConfigService {
 	}
 	public void deleteSpamWord(final String word) {
 
-		final Config config = this.adminService.getConfig();
-		final HashSet<String> spamWords = new HashSet<>(config.getSpamList());
-		spamWords.remove(word);
-		config.setSpamList(spamWords);
-		this.configRepo.save(config);
+		this.adminService.getConfig().getSpamList().remove(word);
 	}
 
 	public void newScoreWord(final String word) {
@@ -82,7 +78,7 @@ public class ConfigService {
 		config.setCreditCardMakeList(makes);
 		this.configRepo.save(config);
 	}
-	
+
 	public void newTransporterBanRatio(final int ratio) {
 
 		Assert.isTrue(ratio > 0 && ratio < 100, "not.in.range.error");
@@ -144,7 +140,7 @@ public class ConfigService {
 
 		return this.configRepo.findAll().iterator().next().getBannerLogo();
 	}
-	
+
 	public Config getConfiguration() {
 		return this.configRepo.findAll().iterator().next();
 	}

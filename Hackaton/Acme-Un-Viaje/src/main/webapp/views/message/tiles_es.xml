@@ -18,37 +18,37 @@
 
 	
 	<definition name="message/create" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Crear mensaje" />
+		<put-attribute name="title" value="Crear mensaje" />
 		<put-attribute name="body" value="/views/message/send.jsp" />
 	</definition>
 	
 	<definition name="message/createBroadcast" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Crear mensaje" />
+		<put-attribute name="title" value="Crear mensaje" />
 		<put-attribute name="body" value="/views/message/sendBroadcast.jsp" />
 	</definition>
 	
 	<definition name="message/list" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Lista de mensajes" />
+		<put-attribute name="title" value="Lista de mensajes" />
 		<put-attribute name="body" value="/views/message/list.jsp" />
 	</definition>
 	
 	<definition name="message/edit" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Editar mensaje" />
+		<put-attribute name="title" value="Editar mensaje" />
 		<put-attribute name="body" value="/views/message/send.jsp" />
 	</definition>
 	
 	<definition name="message/editBroadcast" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Editar mensaje" />
+		<put-attribute name="title" value="Editar mensaje" />
 		<put-attribute name="body" value="/views/message/sendBroadcast.jsp" />
 	</definition>
 	
 	<definition name="message/editMailbox" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Editar mensaje" />
+		<put-attribute name="title" value="Editar mensaje" />
 		<put-attribute name="body" value="/views/message/edit.jsp" />
 	</definition>
 	
 	<definition name="message/show" extends="master.page">	
-		<put-attribute name="title" value="Administrador: Ver mensaje" />
+		<put-attribute name="title" value="Ver mensaje" />
 		<put-attribute name="body" value="/views/message/show.jsp" />
 	</definition>
 	

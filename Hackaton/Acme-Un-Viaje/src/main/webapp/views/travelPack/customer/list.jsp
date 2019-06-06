@@ -9,6 +9,7 @@
 
 <hr>
 <div class="container-fluid" style="padding-left: 2.5em">
+	<p class="error"><jstl:if test="${bookError}"><spring:message code="travelPack.bookError"/></jstl:if></p>
 	<display:table name="travelPacks" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag table table-hover">
 		<div class="row">
 			<div class="col-md-12">

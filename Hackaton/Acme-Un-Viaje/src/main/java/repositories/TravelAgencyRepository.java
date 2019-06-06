@@ -18,6 +18,7 @@ public interface TravelAgencyRepository extends JpaRepository<TravelAgency, Inte
 	@Query("select distinct t.travelAgency from TravelPack t where t.customer.id=?1")
 	Collection<TravelAgency> getTravelAgenciesByCustomerId(int id);
 
-	@Query("select c from TravelAgency c order by(avg(cast((select avg(v.score) from Valoration v where v.travelAgency = c) as float)))")
-	Collection<? extends TravelAgency> bestTravelAgency();
+	@Query("select v.travelAgency from Valoration v group by v.host order by avg(v.score) desc")
+	Collection<TravelAgency> bestTravelAgency();
+
 }

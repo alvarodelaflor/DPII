@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.BookingAccomodationRepository;
 import domain.BookingAccomodation;
 import forms.BookingAccForm;
+import repositories.BookingAccomodationRepository;
 
 @Service
 @Transactional
@@ -39,6 +40,8 @@ public class BookingAccomodationService {
 	public BookingAccomodation save(final BookingAccomodation bookingAccomodation) {
 		System.out.println("Service: " + bookingAccomodation.getAccomodation().toString());
 		Assert.isTrue(!this.isReserved(bookingAccomodation), "error.accomodationAlreadyReserved");
+		Assert.isTrue(this.validateDate(bookingAccomodation.getStartDate()), "error.pastDates");
+		Assert.isTrue(this.validateDate(bookingAccomodation.getEndDate()), "error.pastDates");
 		Assert.isTrue(bookingAccomodation.getStartDate().before(bookingAccomodation.getEndDate()), "error.startDateAfterEndDate");
 		return this.bookingAccomodationRepository.save(bookingAccomodation);
 	}
@@ -55,7 +58,8 @@ public class BookingAccomodationService {
 				|| (b.getStartDate().before(bookingAccomodation.getEndDate()) && b.getEndDate().after(bookingAccomodation.getEndDate()))
 				|| (b.getStartDate().after(bookingAccomodation.getStartDate()) && b.getEndDate().before(bookingAccomodation.getEndDate()))
 				|| (b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear() && b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth()
-					&& b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear() && b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth())) {
+					&& b.getStartDate().getDate() == bookingAccomodation.getStartDate().getDate() && b.getStartDate().getYear() == bookingAccomodation.getStartDate().getYear()
+					&& b.getStartDate().getMonth() == bookingAccomodation.getStartDate().getMonth())) {
 				res = true;
 				break;
 			}
@@ -73,6 +77,12 @@ public class BookingAccomodationService {
 		res.setEndDate(form.getEndDate());
 
 		this.validator.validate(res, binding);
+		return res;
+	}
+
+	private Boolean validateDate(final Date date) {
+		final Date now = new Date();
+		final Boolean res = now.before(date);
 		return res;
 	}
 

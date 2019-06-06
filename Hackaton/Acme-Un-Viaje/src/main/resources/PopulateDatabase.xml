@@ -778,26 +778,26 @@
 	<!-- BOOKINGACCOMODATION -->
 	<bean id="bookingAccomodation01" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/11/12" />
-		<property name="startDate" value="2019/11/15" />
+		<property name="startDate" value="2019/11/12" />
+		<property name="endDate" value="2019/11/15" />
 	</bean>
 
 	<bean id="bookingAccomodation02" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/11/15" />
-		<property name="startDate" value="2019/11/17" />
+		<property name="startDate" value="2019/11/15" />
+		<property name="endDate" value="2019/11/17" />
 	</bean>
 
 	<bean id="bookingAccomodation03" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/12/12" />
-		<property name="startDate" value="2019/12/15" />
+		<property name="startDate" value="2019/12/12" />
+		<property name="endDate" value="2019/12/15" />
 	</bean>
 
 	<bean id="bookingAccomodation04" class="domain.BookingAccomodation">
 		<property name="accomodation" ref="accomodation01" />
-		<property name="endDate" value="2019/12/15" />
-		<property name="startDate" value="2019/12/17" />
+		<property name="startDate" value="2019/12/15" />
+		<property name="endDate" value="2019/12/17" />
 	</bean>
 	<!-- BOOKINGACCOMODATION -->
 
@@ -836,4 +836,32 @@
 		<property name="host" ref="host01" />
 	</bean>
 	<!-- COMPLAINT -->
+	<!-- VALORATION -->
+	<bean id="valoration01" class="domain.Valoration">
+		<property name="score" value="4" />
+		<property name="customer" ref="customer01" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration02" class="domain.Valoration">
+		<property name="score" value="2" />
+		<property name="customer" ref="customer01" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration03" class="domain.Valoration">
+		<property name="score" value="4" />
+		<property name="customer" ref="customer01" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration04" class="domain.Valoration">
+		<property name="score" value="2" />
+		<property name="customer" ref="customer02" />
+		<property name="host" ref="host01" />
+	</bean>
+	<bean id="valoration05" class="domain.Valoration">
+		<property name="score" value="3" />
+		<property name="customer" ref="customer02" />
+		<property name="host" ref="host01" />
+	</bean>
+	<!-- VALORATION -->
+	
 </beans>
