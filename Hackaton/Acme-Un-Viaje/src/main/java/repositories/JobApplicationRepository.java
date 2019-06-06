@@ -29,4 +29,7 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
 
 	@Query("select j from JobApplication j where j.host.id = ?1")
 	Collection<JobApplication> getHostApplications(int id);
+	
+	@Query("select j from JobApplication j where j.cleaner.id = ?1")
+	Collection<JobApplication> getCleanerApplications(int id);
 }

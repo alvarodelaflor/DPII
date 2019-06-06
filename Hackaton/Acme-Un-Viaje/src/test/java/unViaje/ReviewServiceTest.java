@@ -49,13 +49,13 @@ public class ReviewServiceTest extends AbstractTest{
 
 		final Object testingData[][] = {
 
-				{ "descriptionTry","referee", 300 ,null
+				{ "descriptionTry","referee", 438 ,null
 			}, {
-				null,"referee", 300, ConstraintViolationException.class
+				null,"referee", 438, ConstraintViolationException.class
 			}, {
-				 "descriptionTry","cleaner",300,  IllegalArgumentException.class
+				 "descriptionTry","cleaner",438,  IllegalArgumentException.class
 			}, {
-				null,"cleaner", 300, IllegalArgumentException.class
+				null,"cleaner", 438, IllegalArgumentException.class
 			} };
 
 		for (int i = 0; i < testingData.length; i++)

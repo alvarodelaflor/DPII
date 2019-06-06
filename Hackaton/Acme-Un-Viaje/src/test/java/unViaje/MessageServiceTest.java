@@ -39,11 +39,11 @@ public class MessageServiceTest extends AbstractTest{
 
 		final Object testingData[][] = {
 
-				{ "subjectTest", "bodyTest", "tagTest" , "admin@gmail.com", 262, null
+				{ "subjectTest", "bodyTest", "tagTest" , "admin@gmail.com", 402, null
 			}, {
-				null, "bodyTest", "tagTest" , "admin@gmail.com", 262, IllegalArgumentException.class
+				null, "bodyTest", "tagTest" , "admin@gmail.com", 402, IllegalArgumentException.class
 			},{
-				"subjectTest", null, "tagTest" , "admin@gmail.com", 262, NullPointerException.class
+				"subjectTest", null, "tagTest" , "admin@gmail.com", 402, NullPointerException.class
 			}
 				};
 
@@ -160,7 +160,7 @@ public class MessageServiceTest extends AbstractTest{
 				tagService.save(tagsList.get(i));
 			}
 			
-			Assert.isTrue(message.getTags().size() == 7);
+			Assert.isTrue(message.getTags().size() == 9);
 			
 						
 			this.flushTransaction();

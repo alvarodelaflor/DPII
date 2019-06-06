@@ -55,6 +55,9 @@ public class CleanerService {
 	
 	@Autowired
 	private MailboxService		mailboxService;
+	
+	@Autowired
+	private JobApplicationService		jobApplicationService;
 
 
 	// REGISTER AS CLEANER
@@ -305,6 +308,7 @@ public class CleanerService {
 		Assert.isTrue(cleaner.getUserAccount().getId() == LoginService.getPrincipal().getId());
 		this.socialProfileService.deleteActorSocialProfiles(cleaner);
 		this.cleaningTaskService.deleteCleanerTasks(cleaner);
+		this.jobApplicationService.deleteCleanerApps(cleaner);
 		this.curriculaService.deleteAllByCleaner(cleaner);
 		this.valorationService.deleteAllByCleaner(cleaner);
 		this.cleanerRepository.delete(cleaner);

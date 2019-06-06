@@ -75,9 +75,9 @@ public class TravelPackServiceTest extends AbstractTest {
 			{
 				true, true, "Prueba", null
 			}, {
-				false, true, "", ConstraintViolationException.class
+				false, true, "", AssertionError.class
 			}, {
-				true, true, "<script>alert('hackeo')</script>", null
+				true, true, "<script>alert('hackeo')</script>", AssertionError.class
 			}, {
 				true, false, "Prueba", IllegalArgumentException.class
 			}
@@ -135,9 +135,10 @@ public class TravelPackServiceTest extends AbstractTest {
 			pack.setPrice(0.);
 			pack.setStatus(draft);
 			pack.setTravelAgency(this.travelAgencyService.getTravelAgencyByUserAccountId(LoginService.getPrincipal().getId()));
-
-			final BindingResult binding = new BeanPropertyBindingResult(pack, "pack");
-			final TravelPack newPack = this.travelPackService.reconstruct(pack, binding);
+			
+			final BindingResult result = new BeanPropertyBindingResult(pack, pack.getClass().getName());
+			final TravelPack newPack = this.travelPackService.reconstruct(pack, result);
+			assert result.hasErrors() == false;
 			final TravelPack saved = this.travelPackService.save(newPack);
 
 		} catch (final Throwable oops) {

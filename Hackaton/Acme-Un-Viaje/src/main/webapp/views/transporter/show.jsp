@@ -125,9 +125,12 @@
 		<div class="col-md-4">
 			<acme:cancel url="" code="actor.back" />
 			<acme:cancel url="/transporter/export.do?id=${registerActor.id}" code="export"/><br>
+			<br>
 			<spring:message code="delete.actor"></spring:message><br>
-			<spring:message code="delete.transporter"></spring:message><br>
-			<acme:cancel url="/transporter/delete.do?id=${registerActor.id}" code="delete"/>
+			<br>
+			<acme:cancel url="/transporter/delete.do?id=${registerActor.id}" code="delete"/><br>
+			<spring:message code="delete.transporter"></spring:message>
 	</div>
+</div>
 </div>
 

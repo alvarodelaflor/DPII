@@ -53,15 +53,15 @@ public class CleaningTaskServiceTest extends AbstractTest{
 		final Object testingData[][] = {
 
 				{ 
-					331,dateStart,dateEnd,365, "descriptionTry", "hosthost", null
+					392,dateStart,dateEnd,427, "descriptionTry", "hosthost", null
 				}, {
-					331, dateStart, dateEnd2,365, "descriptionTry","hosthost", IllegalArgumentException.class 
+					392, dateStart, dateEnd2,427, "descriptionTry","hosthost", IllegalArgumentException.class 
 				}, {
-					0, dateStart,dateEnd,365, "descriptionTry","hosthost", DataIntegrityViolationException.class 
+					0, dateStart,dateEnd,427, "descriptionTry","hosthost", DataIntegrityViolationException.class 
 				}, {
-					331, dateStart, dateEnd,0, "descriptionTry","hosthost", DataIntegrityViolationException.class 
+					392, dateStart, dateEnd,0, "descriptionTry","hosthost", DataIntegrityViolationException.class 
 				},{ 
-					331, dateStart,dateEnd,365, "descriptionTry", "cleaner", IllegalArgumentException.class 
+					392, dateStart,dateEnd,427, "descriptionTry", "cleaner", IllegalArgumentException.class 
 				} };
 
 		for (int i = 0; i < testingData.length; i++)

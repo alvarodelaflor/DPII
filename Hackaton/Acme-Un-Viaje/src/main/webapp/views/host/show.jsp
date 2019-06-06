@@ -158,9 +158,11 @@
 			<acme:cancel url="" code="actor.back" />
 			<jstl:if test="${owner}">
 			<acme:cancel url="/host/export.do?id=${registerActor.id}" code="export"/><br>
+			<br>
 			<spring:message code="delete.actor"></spring:message><br>
-			<spring:message code="delete.host"></spring:message><br>
-			<acme:cancel url="/host/delete.do?id=${registerActor.id}" code="delete"/>
+			<br>
+			<acme:cancel url="/host/delete.do?id=${registerActor.id}" code="delete"/><br>
+			<spring:message code="delete.host"></spring:message>
 			</jstl:if>
 		</div>
 
