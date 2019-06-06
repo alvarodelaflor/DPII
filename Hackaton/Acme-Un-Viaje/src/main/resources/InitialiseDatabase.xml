@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="creditCard01" class="domain.CreditCard">
+		<property name="holder" value="Mr. Admin" />
+		<property name="make" value="VISA" />
+		<property name="number" value="1234567891234567" />
+		<property name="CVV" value="234" />
+		<property name="expiration" value="12/22" />
+	</bean>
+	
+	<!-- User accounts -->
+
+	
+	<!-- Other domain beans come here -->
+	
+	<!-- ADMIN -->
+	<bean id="admin01" class="domain.Admin">
+		<property name="name" value="Mr. Admin" />
+		<property name="surname" value="Nistrator" />
+		<property name="birthDate" value="1998/12/11" />
+		<property name="email" value="admin@gmail.com" />
+		<property name="phone" value="+34678546678" />
+		<property name="userAccount" ref="userAccount1" />
+		<property name="creditCard" ref="creditCard01" />
+		<property name="config" ref="config" />
+		<property name="mailboxes">
+			<list>
+				<ref bean="mailbox01" />
+				<ref bean="mailbox02" />
+			</list>
+		</property>
+	</bean>
+	<!-- ADMIN -->
+	
+	<!-- CONFIG -->
+	<bean id="config" class="domain.Config">
+		<property name="spamList">
+			<list value-type="java.lang.String">
+				<value>sex</value>
+				<value>sexo</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>Un millón</value>
+				<value>Nigeria</value>
+			</list>
+		</property>
+		<property name="scoreList">
+			<list value-type="java.lang.String">
+				<value>good</value>
+				<value>bueno</value>
+				<value>bad</value>
+				<value>malo</value>
+			</list>
+		</property>
+		<property name="creditCardMakeList">
+			<list value-type="java.lang.String">
+				<value>VISA</value>
+				<value>MASTERCARD</value>
+			</list>
+		</property>
+		<property name="transporterBanRatio" value="10" />
+		<property name="systemNombre" value="Acme Un Viaje"></property>
+		<property name="systemName" value="Acme A Trip"></property>
+		<property name="welcomeMessageEs" value="Bienvenido a Acme Un Viaje"></property>
+		<property name="welcomeMessageEn" value="Welcome to Acme A Trip"></property>
+		<property name="bannerLogo" value="images/logo.png"></property>
+		<property name="defaultPhoneCode" value="34 "></property>
+	</bean>
+		
+	<!-- MAILBOX -->
+	<bean id="mailbox01" class="domain.Mailbox">
+		<property name="name" value="inBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+
+	<bean id="mailbox02" class="domain.Mailbox">
+		<property name="name" value="outBox" />
+		<property name="isDefault" value="true" />
+		<property name="messages">
+			<null />
+		</property>
+	</bean>
+	<!-- MAILBOX  -->
+</beans>
