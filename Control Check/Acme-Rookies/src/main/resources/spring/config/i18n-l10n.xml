@@ -51,6 +51,10 @@
 		<!-- ANTONIO S -->
 		<value>/views/finder/messages</value>
 		<value>/views/sponsorship/messages</value>
+		
+		<!-- HIPONA -->
+		<value>/views/xxxx/messages</value>
+		<!-- HIPONA -->
 	</util:list>
 
 </beans>

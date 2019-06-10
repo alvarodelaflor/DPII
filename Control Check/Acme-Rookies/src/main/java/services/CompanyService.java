@@ -372,4 +372,9 @@ public class CompanyService {
 			res = this.companyRepository.avgSalaryOfCompany(companies.get(0).getId());
 		return res;
 	}
+
+	public Company getLoggedCompany() {
+		final Company company = this.getCompanyByUserAccountId(LoginService.getPrincipal().getId());
+		return company;
+	}
 }

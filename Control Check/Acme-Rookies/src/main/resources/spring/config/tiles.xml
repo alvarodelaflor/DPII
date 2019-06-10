@@ -52,7 +52,8 @@
 		<value>/views/sponsorship/tiles.xml</value>
 
 		<!-- HIPONA -->
-		<value>/views/auditor/tiles.xml</value>		
+		<value>/views/auditor/tiles.xml</value>
+		<value>/views/xxxx/tiles.xml</value>
 		<!-- HIPONA -->
 	</util:list>
 
