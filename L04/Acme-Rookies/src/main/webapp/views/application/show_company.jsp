@@ -25,7 +25,52 @@
 		<tr><td><strong><spring:message code="application.applyMoment" /></strong>: <jstl:out value="${application.applyMoment}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="application.response" /></strong>: <jstl:out value="${application.response}"></jstl:out></td></tr>
 		<tr><td><strong><spring:message code="application.link" /></strong>: <jstl:out value="${application.link}"></jstl:out></td></tr>
-		<tr><td><strong><spring:message code="application.status" /></strong>: <jstl:out value="${application.status}"></jstl:out></td></tr>
+
+		<c:choose>
+				<c:when test="${application.status == 'SUBMITTED'}">
+					<tr>
+						<td><strong><spring:message code="application.status" /></strong>:
+							<spring:message code="status.SUBMITTED"/></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+
+			<c:choose>
+				<c:when test="${application.status == 'PENDING'}">
+					<tr>
+						<td><strong><spring:message code="application.status" /></strong>:
+							<spring:message code="status.PENDING"/></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+
+			<c:choose>
+				<c:when test="${application.status == 'ACCEPTED'}">
+					<tr>
+						<td><strong><spring:message code="application.status" /></strong>:
+							<spring:message code="status.ACCEPTED"/></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+
+			<c:choose>
+				<c:when test="${application.status == 'REJECTED'}">
+					<tr>
+						<td><strong><spring:message code="application.status" /></strong>:
+							<spring:message code="status.REJECTED"/></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+
+
 	</table>
 	<jstl:if test="${application.status eq 'SUBMITTED'}">
 		<input type="button" value="<spring:message code='application.accept' />" onclick="window.location = 'application/company/accept.do?applicationId=${application.id}'" /> 

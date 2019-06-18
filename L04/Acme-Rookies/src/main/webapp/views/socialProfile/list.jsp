@@ -27,4 +27,4 @@
 
 <p class="create"><input type="button" value=<spring:message code="createSocialProfile" /> id="buttonSocialProfile" name="buttonSocialProfile"  onclick="location.href='socialProfile/create.do';"/></p>
 
-<acme:cancel url=" " code="cancel"/>
+<acme:cancel url=" " code="back"/>
