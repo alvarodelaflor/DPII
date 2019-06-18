@@ -41,6 +41,11 @@
 						res = true;
 						alert("<spring:message code='PN' />");
 					}
+					
+					if (/^([a-z]{0,}[A-Z]{0,})$/.test(phoneNumber)) {
+						res = true;
+						alert("<spring:message code='PN1' />");
+					}
 				}
 			</script>
 		</header>
