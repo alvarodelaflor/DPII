@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -140,6 +141,13 @@ public class ParadeChapterController extends AbstractController {
 		ModelAndView result;
 
 		parade = this.paradeService.reconstructStatus(parade, binding);
+		
+		if (parade.getRejectionReason() == null || (parade.getRejectionReason() != null && parade.getRejectionReason().length() <= 0)) {
+			final ObjectError error = new ObjectError("rejectionReason", "Reject message can not be blank");
+			binding.addError(error);
+			binding.rejectValue("rejectionReason", "error.rejectionReason");
+		}
+		
 		if (binding.hasErrors()) {
 			System.out.println("Binding con errores: " + binding.getAllErrors());
 			result = this.createEditModelAndView(parade);
