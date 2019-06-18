@@ -153,9 +153,13 @@ public class ChapterController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") final int id) {
+	public ModelAndView show(@RequestParam(value = "id", defaultValue = "-1") int id) {
 		ModelAndView result;
 		try {
+			Chapter chapterLogger = this.chapterService.getChapterByUserAccountId(LoginService.getPrincipal().getId());
+			if (id == -1 && chapterLogger != null) {
+				id = chapterLogger.getId();
+			}
 			final Chapter chapter = this.chapterService.findOne(id);
 			Assert.notNull(chapter);
 			Boolean checkChapter = false;
