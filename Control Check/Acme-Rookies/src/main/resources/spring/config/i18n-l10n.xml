@@ -53,7 +53,7 @@
 		<value>/views/sponsorship/messages</value>
 		
 		<!-- HIPONA -->
-		<value>/views/xxxx/messages</value>
+		<value>/views/quolet/messages</value>
 		<!-- HIPONA -->
 	</util:list>
 

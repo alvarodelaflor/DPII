@@ -39,10 +39,11 @@ public class QuoletCompanyController extends AbstractController {
 		ModelAndView res;
 
 		try {
-			final Collection<Quolet> quolets = this.quoletService.getLoggedQuolets();
+			final Collection<Quolet> quolets = this.quoletService.getLoggedQuolets(auditId);
 			res = new ModelAndView("quolet/company/list");
 			res.addObject("quolets", quolets);
-			res.addObject("requestURI", "quolet/company/list.do");
+			res.addObject("requestURI", "quolet/company/list.do?auditId=" + auditId);
+			res.addObject("auditId", auditId);
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -68,15 +69,13 @@ public class QuoletCompanyController extends AbstractController {
 
 	// Create
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(@RequestParam(defaultValue = "-1", value = "auditId") final int auditId) {
 		ModelAndView res;
 
 		try {
-			final Quolet quolet = this.quoletService.create();
+			final Quolet quolet = this.quoletService.create(auditId);
 			res = new ModelAndView("quolet/company/create");
-			// TODO final Collection<Audit>
-			res.addObject("Quolet", quolet);
-			//res.addObject("audits", audits);
+			res.addObject("quolet", quolet);
 			res.addObject("creating", true);
 			res.addObject("URI", "quolet/company/create.do");
 		} catch (final Throwable oops) {
@@ -99,14 +98,14 @@ public class QuoletCompanyController extends AbstractController {
 		if (binding.hasErrors()) {
 			res = new ModelAndView("quolet/company/create");
 			// TODO final Collection<Problem> problems = this.problemService.findAllProblemsByLoggedCompany();
-			res.addObject("Quolet", quolet);
+			res.addObject("quolet", quolet);
 			// res.addObject("problems", problems);
 			res.addObject("creating", true);
 			res.addObject("URI", "quolet/company/create.do");
 		} else
 			try {
 				this.quoletService.save(reconstructed);
-				res = new ModelAndView("redirect:/quolet/company/list.do");
+				res = new ModelAndView("redirect:/quolet/company/list.do?auditId=" + quolet.getAudit().getId());
 			} catch (final Throwable oops) {
 				res = new ModelAndView("redirect:/welcome/index.do");
 			}
@@ -122,7 +121,7 @@ public class QuoletCompanyController extends AbstractController {
 		try {
 			final Quolet quolet = this.quoletService.getLoggedQuoletForEdit(quoletId);
 			res = new ModelAndView("quolet/company/edit");
-			res.addObject("Quolet", quolet);
+			res.addObject("quolet", quolet);
 			res.addObject("URI", "quolet/company/edit.do");
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
@@ -143,12 +142,12 @@ public class QuoletCompanyController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			res = new ModelAndView("quolet/company/edit");
-			res.addObject("Quolet", quolet);
+			res.addObject("quolet", quolet);
 			res.addObject("URI", "quolet/company/edit.do");
 		} else
 			try {
 				this.quoletService.save(reconstructed);
-				res = new ModelAndView("redirect:/quolet/company/list.do");
+				res = new ModelAndView("redirect:/quolet/company/list.do?auditId=" + quolet.getAudit().getId());
 			} catch (final Throwable oops) {
 				res = new ModelAndView("redirect:/welcome/index.do");
 			}
@@ -162,8 +161,9 @@ public class QuoletCompanyController extends AbstractController {
 		ModelAndView res;
 
 		try {
+			final Quolet quolet = this.quoletService.getLoggedQuolet(quoletId);
+			res = new ModelAndView("redirect:/quolet/company/list.do?auditId=" + quolet.getAudit().getId());
 			this.quoletService.delete(quoletId);
-			res = new ModelAndView("redirect:/quolet/company/list.do");
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:/welcome/index.do");
 		}

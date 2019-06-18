@@ -12,8 +12,8 @@ import domain.Quolet;
 @Repository
 public interface QuoletRepository extends JpaRepository<Quolet, Integer> {
 
-	@Query("select x from Quolet x where x.audit.position.company.id = ?1")
-	Collection<Quolet> getLoggedQuolets(int id);
+	@Query("select x from Quolet x where x.audit.id = ?1 and x.audit.position.company.id = ?2")
+	Collection<Quolet> getLoggedQuolets(int id, int i);
 
 	@Query("select x from Quolet x where x.id = ?1 and x.audit.position.company.id = ?2")
 	Quolet getLoggedQuolet(int quoletId, int companyId);

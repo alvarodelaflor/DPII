@@ -31,41 +31,38 @@
 <div class="content">
 	<table>
 		<tr>
-			<td><strong><spring:message code="xxxx.ticker" />: </strong> <jstl:out value="${xxxx.ticker}"></jstl:out></td>
+			<td><strong><spring:message code="quolet.ticker" />: </strong> <jstl:out value="${quolet.ticker}"></jstl:out></td>
 		</tr>
 		<tr>
-			<td><strong><spring:message code="xxxx.publicationMoment" />: </strong> <c:choose>
-					<c:when test="${xxxx.publicationMoment gt oneMonth}">
+			<td><strong><spring:message code="quolet.publicationMoment" />: </strong> <c:choose>
+					<c:when test="${quolet.publicationMoment gt oneMonth}">
 						<span style="color: Indigo">
-							<spring:message code='xxxx.dateFormat' var="dateFormat" />
-							<acme:customDate date="${xxxx.publicationMoment}" pattern="${dateFormat}" />
+							<spring:message code='quolet.dateFormat' var="dateFormat" />
+							<acme:customDate date="${quolet.publicationMoment}" pattern="${dateFormat}" />
 						</span>
 					</c:when>
-					<c:when test="${xxxx.publicationMoment gt twoMonths}">
+					<c:when test="${quolet.publicationMoment gt twoMonths}">
 						<span style="color: DarkSlateGrey">
-							<spring:message code='xxxx.dateFormat' var="dateFormat" />
-							<acme:customDate date="${xxxx.publicationMoment}" pattern="${dateFormat}" />
+							<spring:message code='quolet.dateFormat' var="dateFormat" />
+							<acme:customDate date="${quolet.publicationMoment}" pattern="${dateFormat}" />
 						</span>
 					</c:when>
 					<c:otherwise>
 						<span style="color: PapayaWhip">
-							<spring:message code='xxxx.dateFormat' var="dateFormat" />
-							<acme:customDate date="${xxxx.publicationMoment}" pattern="${dateFormat}" />
+							<spring:message code='quolet.dateFormat' var="dateFormat" />
+							<acme:customDate date="${quolet.publicationMoment}" pattern="${dateFormat}" />
 						</span>
 					</c:otherwise>
 				</c:choose></td>
 		</tr>
 		<tr>
-			<td><strong><spring:message code="xxxx.body" />: </strong> <jstl:out value="${xxxx.body}"></jstl:out></td>
+			<td><strong><spring:message code="quolet.body" />: </strong> <jstl:out value="${quolet.body}"></jstl:out></td>
 		</tr>
 		<tr>
-			<td><strong><spring:message code="xxxx.picture" />: </strong> <img style="width: 200px;" alt="Picture" src="${xxxx.picture}"></img></td>
+			<td><strong><spring:message code="quolet.picture" />: </strong> <img style="width: 200px;" alt="Picture" src="${quolet.picture}"></img></td>
 		</tr>
 		<tr>
-			<td><strong><spring:message code="xxxx.draftMode" />: </strong> <spring:message code="xxxx.draftMode.${xxxx.draftMode}" /></td>
-		</tr>
-		<tr>
-			<td><strong><spring:message code="xxxx.problem" />: </strong> <a href="problem/company/show.do?problemId=${xxxx.problem.id}"><spring:message code="problem.show" /></a></td>
+			<td><strong><spring:message code="quolet.draftMode" />: </strong> <spring:message code="quolet.draftMode.${quolet.draftMode}" /></td>
 		</tr>
 	</table>
 </div>

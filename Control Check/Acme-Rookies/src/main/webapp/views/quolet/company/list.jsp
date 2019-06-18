@@ -29,51 +29,48 @@
 <c:set var="oneMonth" value="<%=oneMonth.getTime()%>" />
 <c:set var="twoMonths" value="<%=twoMonths.getTime()%>" />
 
-<input type="button" value="<spring:message code='xxxx.create' />" onclick="window.location = 'xxxx/company/create.do'" formmethod="get"/>
+<input type="button" value="<spring:message code='quolet.create' />" onclick="window.location = 'quolet/company/create.do?auditId=${auditId}'" formmethod="get"/>
 
-<display:table name="xxxxs" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
-	<display:column titleKey="xxxx.ticker" property="ticker" />
-	<display:column titleKey="xxxx.publicationMoment">
+<display:table name="quolets" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	<display:column titleKey="quolet.ticker" property="ticker" />
+	<display:column titleKey="quolet.publicationMoment">
 		<c:choose>
 			<c:when test="${row.publicationMoment gt oneMonth}">
 				<span style="color: Indigo">
-					<spring:message code='xxxx.dateFormat' var="dateFormat" />
+					<spring:message code='quolet.dateFormat' var="dateFormat" />
 					<acme:customDate date="${row.publicationMoment}" pattern="${dateFormat}" />
 				</span>
 			</c:when>
 			<c:when test="${row.publicationMoment gt twoMonths}">
 				<span style="color: DarkSlateGrey">
-					<spring:message code='xxxx.dateFormat' var="dateFormat" />
+					<spring:message code='quolet.dateFormat' var="dateFormat" />
 					<acme:customDate date="${row.publicationMoment}" pattern="${dateFormat}" />
 				</span>
 			</c:when>
 			<c:otherwise>
 				<span style="color: PapayaWhip">
-					<spring:message code='xxxx.dateFormat' var="dateFormat" />
+					<spring:message code='quolet.dateFormat' var="dateFormat" />
 					<acme:customDate date="${row.publicationMoment}" pattern="${dateFormat}" />
 				</span>
 			</c:otherwise>
 		</c:choose>
 	</display:column>
-	<display:column titleKey="xxxx.body" property="body" />
-	<display:column titleKey="xxxx.draftMode">
-		<spring:message code="xxxx.draftMode.${row.draftMode}" />
+	<display:column titleKey="quolet.body" property="body" />
+	<display:column titleKey="quolet.draftMode">
+		<spring:message code="quolet.draftMode.${row.draftMode}" />
 	</display:column>
 
-	<display:column titleKey="xxxx.problem">
-		<jstl:out value="${row.problem.title }" />
-	</display:column>
-	<display:column titleKey="xxxx.edit">
+	<display:column titleKey="quolet.edit">
 		<jstl:if test="${row.draftMode}">
-			<a href="xxxx/company/edit.do?xxxxId=${row.id}"><spring:message code="xxxx.edit" /></a>
+			<a href="quolet/company/edit.do?quoletId=${row.id}"><spring:message code="quolet.edit" /></a>
 		</jstl:if>
 	</display:column>
-	<display:column titleKey="xxxx.show">
-		<a href="xxxx/company/show.do?xxxxId=${row.id}"><spring:message code="xxxx.show" /></a>
+	<display:column titleKey="quolet.show">
+		<a href="quolet/company/show.do?quoletId=${row.id}"><spring:message code="quolet.show" /></a>
 	</display:column>
-	<display:column titleKey="xxxx.delete">
+	<display:column titleKey="quolet.delete">
 		<jstl:if test="${row.draftMode}">
-			<a href="xxxx/company/delete.do?xxxxId=${row.id}"><spring:message code="xxxx.delete" /></a>
+			<a href="quolet/company/delete.do?quoletId=${row.id}"><spring:message code="quolet.delete" /></a>
 		</jstl:if>
 	</display:column>
 </display:table>
