@@ -56,8 +56,7 @@ public class Quolet extends DomainEntity {
 		this.publicationMoment = publicationMoment;
 	}
 
-	@Size(max = 100)
-	@NotBlank
+	@Size(min = 1, max = 100, message = "{quolet.sizeError}")
 	@SafeHtml
 	public String getBody() {
 		return this.body;
