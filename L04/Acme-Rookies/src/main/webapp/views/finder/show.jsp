@@ -65,4 +65,4 @@
 	
 </display:table>
 
-<acme:cancel url="position/list.do" code="back" />
+<acme:cancel url="" code="back" />

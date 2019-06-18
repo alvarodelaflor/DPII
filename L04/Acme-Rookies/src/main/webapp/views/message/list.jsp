@@ -21,8 +21,7 @@
 
 <div class="content">
 	
-			<p>Sended Messages</p>
-
+			<h3><spring:message code="sentMessages" /></h3>
 			<display:table name="msgsSend" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 				<display:column titleKey="show"> 
 					<a href="message/show.do?messageId=${row.id}">${row.subject}</a>
@@ -33,8 +32,7 @@
 			
 			<br>
 			
-			<p>Received Messages</p>
-			
+			<h3><spring:message code="recievedMessages" /></h3>
 			<display:table name="msgsReceive" id="row1" requestURI="${requestURI}" pagesize="5" class="displaytag">
 				<display:column titleKey="show"> 
 					<a href="message/show.do?messageId=${row1.id}">${row1.subject}</a>
@@ -43,7 +41,9 @@
 				<display:column property="tags" titleKey="tag"></display:column>
 			</display:table>	
 			
-			<br>
+			<br />
+			<br />
+			
   		<a href="message/create.do"><spring:message code="send.msg" /></a>
   	
   	<br>
@@ -52,6 +52,7 @@
   		<a href="message/sendNoti.do"><spring:message code="send.msg.broadcast" /></a>
 	</security:authorize>
 
+	<br />
 	<div>
 		<form method="get" action="#">
 			<button type="submit">
