@@ -24,17 +24,19 @@
 			<form:form class="formularioEdicion" method="POST" modelAttribute="quolet" action="${URI}">
 				<form:input path="id" type="hidden" />
 				<form:input path="audit" type="hidden" />
-				
+
 				<acme:textbox code="quolet.body" path="body" />
 				<acme:textbox code="quolet.picture" path="picture" />
-	
+
 				<table style="width: 3em">
 					<tr>
 						<th><spring:message code="quolet.draftMode" /></th>
 						<td><spring:message code="quolet.draftMode.true" /> <form:radiobutton path="draftMode" value="true" checked="checked" /></td>
 						<td><spring:message code="quolet.draftMode.false" /> <form:radiobutton path="draftMode" value="false" /></td>
-						<td><br> <input type="button" value="<spring:message code='problem.delete' />" name="problem.delete"
-							onclick="window.location = 'quolet/company/delete.do?quoletId=${quolet.id}'" /></td>
+						<jstl:if test="${quolet.id != 0}">
+							<td><br> <input type="button" value="<spring:message code='problem.delete' />" name="problem.delete"
+								onclick="window.location = 'quolet/company/delete.do?quoletId=${quolet.id}'" /></td>
+						</jstl:if>
 					</tr>
 				</table>
 
