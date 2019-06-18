@@ -22,8 +22,8 @@
 	<article>
 		<div class="content">
 			<form:form class="formularioEdicion" method="POST" modelAttribute="quolet" action="${URI}">
-				<form:input path="id" type="hidden" />
-				<form:input path="audit" type="hidden" />
+				<form:hidden path="id" />
+				<form:hidden path="audit"  />
 
 				<acme:textbox code="quolet.body" path="body" />
 				<acme:textbox code="quolet.picture" path="picture" />
