@@ -25,11 +25,11 @@
 	oneMonth.add(Calendar.MONTH, -1);
 	Calendar twoMonths = Calendar.getInstance();
 	twoMonths.add(Calendar.MONTH, -2);
-	out.print(twoMonths.getTime());
 %>
 <c:set var="oneMonth" value="<%=oneMonth.getTime()%>" />
 <c:set var="twoMonths" value="<%=twoMonths.getTime()%>" />
 
+<input type="button" value="<spring:message code='xxxx.create' />" onclick="window.location = 'xxxx/company/create.do'" formmethod="get"/>
 
 <display:table name="xxxxs" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<display:column titleKey="xxxx.ticker" property="ticker" />
@@ -56,13 +56,25 @@
 		</c:choose>
 	</display:column>
 	<display:column titleKey="xxxx.body" property="body" />
-	<display:column titleKey="xxxx.picture" property="picture" />
 	<display:column titleKey="xxxx.draftMode">
 		<spring:message code="xxxx.draftMode.${row.draftMode}" />
 	</display:column>
 
 	<display:column titleKey="xxxx.problem">
-		<a href="problem/company/show.do?id=${row.problem.id}"><spring:message code="problem.show" /></a>
+		<jstl:out value="${row.problem.title }" />
+	</display:column>
+	<display:column titleKey="xxxx.edit">
+		<jstl:if test="${row.draftMode}">
+			<a href="xxxx/company/edit.do?xxxxId=${row.id}"><spring:message code="xxxx.edit" /></a>
+		</jstl:if>
+	</display:column>
+	<display:column titleKey="xxxx.show">
+		<a href="xxxx/company/show.do?xxxxId=${row.id}"><spring:message code="xxxx.show" /></a>
+	</display:column>
+	<display:column titleKey="xxxx.delete">
+		<jstl:if test="${row.draftMode}">
+			<a href="xxxx/company/delete.do?xxxxId=${row.id}"><spring:message code="xxxx.delete" /></a>
+		</jstl:if>
 	</display:column>
 </display:table>
 

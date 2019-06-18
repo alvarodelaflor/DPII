@@ -86,6 +86,7 @@ public class XXXX extends DomainEntity {
 	}
 
 	@ManyToOne(optional = false)
+	@NotNull
 	public Problem getProblem() {
 		return this.problem;
 	}

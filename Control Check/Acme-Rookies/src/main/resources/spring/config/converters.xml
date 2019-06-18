@@ -31,6 +31,10 @@
 		<!-- ALVARO -->
 		<bean class="converters.StringToTagConverter"/>
 		<!-- ALVARO -->
+		<!-- HIPONA -->
+		<bean class="converters.StringToProblemConverter"/>
+		<bean class="converters.ProblemToStringConverter"/>
+		<!-- HIPONA -->
 
 	</util:list>
 	
