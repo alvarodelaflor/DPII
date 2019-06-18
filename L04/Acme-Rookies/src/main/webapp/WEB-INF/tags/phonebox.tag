@@ -32,7 +32,7 @@
 						res = true;
 					}
 					if (/(\+[0-9]{1,3})\s([0-9]{4,})$/.test(phoneNumber)) {
-				res = true;
+						res = true;
 					}
 					if (/^([0-9]{4,})\:(\+[0-9]{1,3})$/.test(phoneNumber)) {
 						res = true;
