@@ -18,12 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.AuditService;
 import services.MessageService;
 import services.PositionService;
 import services.ProblemService;
 import services.RookieService;
 import services.TagService;
 import domain.Actor;
+import domain.Audit;
 import domain.Message;
 import domain.Position;
 import domain.Problem;
@@ -51,6 +53,9 @@ public class PositionCompanyController extends AbstractController {
 
 	@Autowired
 	private ActorService	actorService;
+
+	@Autowired
+	private AuditService	auditService;
 
 
 	// List of my positions ---------------------------------------------------------------		
@@ -80,6 +85,7 @@ public class PositionCompanyController extends AbstractController {
 			final Position position = this.positionService.findOneLoggedIsOwner(positionId);
 			result = new ModelAndView("position/company/show");
 			result.addObject("position", position);
+			this.setAuditOfPosition(position.getId(), result);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
@@ -318,5 +324,21 @@ public class PositionCompanyController extends AbstractController {
 		result.addObject("logo", this.getLogo());
 		result.addObject("system", this.getSystem());
 		return result;
+	}
+
+	private void setAuditOfPosition(final int positionId, final ModelAndView result) {
+		try {
+			final Collection<Audit> audits = this.auditService.getAuditByPositionId(positionId);
+			final Collection<Audit> aux = new ArrayList<Audit>();
+			for (final Audit audit : audits)
+				if (audit != null && audit.getStatus() != null && audit.getStatus().equals(true))
+					aux.add(audit);
+			if (!aux.isEmpty())
+				result.addObject("audits", aux);
+			else
+				result.addObject("audits", null);
+		} catch (final Exception e) {
+			result.addObject("audit", null);
+		}
 	}
 }
