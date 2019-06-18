@@ -35,7 +35,7 @@ public class QuoletCompanyController extends AbstractController {
 
 	// List
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(defaultValue = "-1", value = "auditId") final int auditId) {
 		ModelAndView res;
 
 		try {

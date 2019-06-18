@@ -153,12 +153,12 @@
 		<security:intercept-url pattern="/application/company/reject.do" access="hasRole('COMPANY')" />
 		<!--  administrator -->
 		<security:intercept-url pattern="/administrator/calculateCompaniesScores.do" access="hasRole('ADMIN')" />
-		<!--  xxxx/company -->
-		<security:intercept-url pattern="/xxxx/company/list.do" access="hasRole('COMPANY')" />
-		<security:intercept-url pattern="/xxxx/company/create.do" access="hasRole('COMPANY')" />
-		<security:intercept-url pattern="/xxxx/company/edit.do" access="hasRole('COMPANY')" />
-		<security:intercept-url pattern="/xxxx/company/show.do" access="hasRole('COMPANY')" />
-		<security:intercept-url pattern="/xxxx/company/delete.do" access="hasRole('COMPANY')" />
+		<!--  quolet/company -->
+		<security:intercept-url pattern="/quolet/company/list.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/quolet/company/create.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/quolet/company/edit.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/quolet/company/show.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/quolet/company/delete.do" access="hasRole('COMPANY')" />
 		<!-- HIPONA -->
 		
 		<!-- FRAN -->						
