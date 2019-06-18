@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,7 @@ public class QuoletCompanyController extends AbstractController {
 		ModelAndView res;
 
 		try {
+			Assert.isTrue(auditId != -1);
 			final Collection<Quolet> quolets = this.quoletService.getLoggedQuolets(auditId);
 			res = new ModelAndView("quolet/company/list");
 			res.addObject("quolets", quolets);
@@ -97,10 +99,7 @@ public class QuoletCompanyController extends AbstractController {
 
 		if (binding.hasErrors()) {
 			res = new ModelAndView("quolet/company/create");
-			// TODO final Collection<Problem> problems = this.problemService.findAllProblemsByLoggedCompany();
 			res.addObject("quolet", quolet);
-			// res.addObject("problems", problems);
-			res.addObject("creating", true);
 			res.addObject("URI", "quolet/company/create.do");
 		} else
 			try {

@@ -69,6 +69,7 @@ public class QuoletService {
 			res = this.copy(quolet); // We create a copy from db
 		else
 			res.setTicker(this.createTicker()); // New valid ticker
+		Assert.notNull(quolet.getAudit());
 		res.setPublicationMoment(new Date()); // Update the publicationMoment
 
 		System.out.println("reconstruction completed!");

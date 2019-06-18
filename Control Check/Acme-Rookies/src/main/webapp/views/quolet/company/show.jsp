@@ -59,7 +59,7 @@
 			<td><strong><spring:message code="quolet.body" />: </strong> <jstl:out value="${quolet.body}"></jstl:out></td>
 		</tr>
 		<tr>
-			<td><strong><spring:message code="quolet.picture" />: </strong> <img style="width: 200px;" alt="Picture" src="${quolet.picture}"></img></td>
+			<td><strong><spring:message code="quolet.picture" />: </strong> <img style="width: 200px;" alt="<spring:message code="quolet.picture" />" src="${quolet.picture}"></img></td>
 		</tr>
 		<tr>
 			<td><strong><spring:message code="quolet.draftMode" />: </strong> <spring:message code="quolet.draftMode.${quolet.draftMode}" /></td>
