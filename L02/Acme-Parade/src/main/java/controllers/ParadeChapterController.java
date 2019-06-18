@@ -142,7 +142,7 @@ public class ParadeChapterController extends AbstractController {
 
 		parade = this.paradeService.reconstructStatus(parade, binding);
 		
-		if (parade.getRejectionReason() == null || (parade.getRejectionReason() != null && parade.getRejectionReason().length() <= 0)) {
+		if ((parade.getStatus()!= null && parade.getStatus().equals("REJECTED")) && (parade.getRejectionReason() == null || (parade.getRejectionReason() != null && parade.getRejectionReason().trim().length() <= 0))) {
 			final ObjectError error = new ObjectError("rejectionReason", "Reject message can not be blank");
 			binding.addError(error);
 			binding.rejectValue("rejectionReason", "error.rejectionReason");
