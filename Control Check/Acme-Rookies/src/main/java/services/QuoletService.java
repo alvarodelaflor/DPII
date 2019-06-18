@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.QuoletRepository;
+import domain.Audit;
 import domain.Company;
 import domain.Quolet;
 
@@ -32,11 +33,17 @@ public class QuoletService {
 	@Autowired
 	private Validator			validator;
 
+	@Autowired
+	private AuditService		auditService;
+
 
 	// Methods
-	public Quolet create() {
+	public Quolet create(final int auditId) {
 		final Quolet res = new Quolet();
 		res.setDraftMode(true);
+		final Audit audit = this.auditService.findOne(auditId);
+		res.setAudit(audit);
+		System.out.println(audit);
 		return res;
 	}
 
@@ -44,14 +51,14 @@ public class QuoletService {
 		this.quoletRepository.save(reconstructed);
 	}
 
-	public Collection<Quolet> getLoggedQuolets() {
+	public Collection<Quolet> getLoggedQuolets(final int auditId) {
 		final Company company = this.companyService.getLoggedCompany();
-		return this.quoletRepository.getLoggedQuolets(company.getId());
+		return this.quoletRepository.getLoggedQuolets(auditId, company.getId());
 	}
 
-	public Quolet getLoggedQuolet(final int QuoletId) {
+	public Quolet getLoggedQuolet(final int quoletId) {
 		final Company company = this.companyService.getLoggedCompany();
-		final Quolet res = this.quoletRepository.getLoggedQuolet(QuoletId, company.getId());
+		final Quolet res = this.quoletRepository.getLoggedQuolet(quoletId, company.getId());
 		Assert.notNull(res);
 		return res;
 	}
@@ -103,6 +110,9 @@ public class QuoletService {
 		final Quolet dbQuolet = this.quoletRepository.getLoggedQuolet(quolet.getId(), this.companyService.getLoggedCompany().getId());
 		Assert.notNull(dbQuolet);
 		Assert.isTrue(dbQuolet.getDraftMode());
+
+		final Company logged = this.companyService.getLoggedCompany();
+		Assert.isTrue(quolet.getAudit().getPosition().getCompany().getId() == logged.getId());
 
 		// We want this from db
 		res.setId(dbQuolet.getId());

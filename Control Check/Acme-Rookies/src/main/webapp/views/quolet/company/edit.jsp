@@ -21,27 +21,25 @@
 <section id="main-content">
 	<article>
 		<div class="content">
-			<form:form class="formularioEdicion" method="POST" modelAttribute="XXXX" action="${URI}">
+			<form:form class="formularioEdicion" method="POST" modelAttribute="quolet" action="${URI}">
 				<form:input path="id" type="hidden" />
-
-				<acme:textbox code="xxxx.body" path="body" />
-				<acme:textbox code="xxxx.picture" path="picture" />
+				<form:input path="audit" type="hidden" />
+				
+				<acme:textbox code="quolet.body" path="body" />
+				<acme:textbox code="quolet.picture" path="picture" />
 	
-				<jstl:if test="${creating}">
-					<acme:select items="${problems}" itemLabel="title" code="xxxx.problem" path="problem"/>
-				</jstl:if>
 				<table style="width: 3em">
 					<tr>
-						<th><spring:message code="xxxx.draftMode" /></th>
-						<td><spring:message code="xxxx.draftMode.true" /> <form:radiobutton path="draftMode" value="true" checked="checked" /></td>
-						<td><spring:message code="xxxx.draftMode.false" /> <form:radiobutton path="draftMode" value="false" /></td>
+						<th><spring:message code="quolet.draftMode" /></th>
+						<td><spring:message code="quolet.draftMode.true" /> <form:radiobutton path="draftMode" value="true" checked="checked" /></td>
+						<td><spring:message code="quolet.draftMode.false" /> <form:radiobutton path="draftMode" value="false" /></td>
 						<td><br> <input type="button" value="<spring:message code='problem.delete' />" name="problem.delete"
-							onclick="window.location = 'xxxx/company/delete.do?xxxxId=${XXXX.id}'" /></td>
+							onclick="window.location = 'quolet/company/delete.do?quoletId=${quolet.id}'" /></td>
 					</tr>
 				</table>
 
-				<acme:submit name="save" code="problem.save" />
-				<input type="button" value="<spring:message code='problem.back' />" onclick="window.location = 'xxxx/company/list.do'" />
+				<acme:submit name="save" code="quolet.save" />
+				<input type="button" value="<spring:message code='problem.back' />" onclick="window.location = 'quolet/company/list.do'" />
 			</form:form>
 		</div>
 	</article>
