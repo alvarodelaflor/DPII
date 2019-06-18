@@ -6,19 +6,19 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import repositories.XXXXRepository;
-import domain.XXXX;
+import repositories.QuoletRepository;
+import domain.Quolet;
 
 @Component
-public class StringToXXXXConverter implements Converter<String, XXXX> {
+public class StringToQuoletConverter implements Converter<String, Quolet> {
 
 	@Autowired
-	XXXXRepository	xxxxRepository;
+	QuoletRepository	quoletRepository;
 
 
 	@Override
-	public XXXX convert(final String text) {
-		XXXX result;
+	public Quolet convert(final String text) {
+		Quolet result;
 		int id;
 
 		try {
@@ -26,7 +26,7 @@ public class StringToXXXXConverter implements Converter<String, XXXX> {
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.xxxxRepository.findOne(id);
+				result = this.quoletRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);

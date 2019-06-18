@@ -13,53 +13,53 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.XXXXRepository;
+import repositories.QuoletRepository;
 import domain.Company;
-import domain.XXXX;
+import domain.Quolet;
 
 @Service
 @Transactional
-public class XXXXService {
+public class QuoletService {
 
 	// Repository
 	@Autowired
-	private XXXXRepository	xxxxRepository;
+	private QuoletRepository	quoletRepository;
 
 	// Services
 	@Autowired
-	private CompanyService	companyService;
+	private CompanyService		companyService;
 
 	@Autowired
-	private Validator		validator;
+	private Validator			validator;
 
 
 	// Methods
-	public XXXX create() {
-		final XXXX res = new XXXX();
+	public Quolet create() {
+		final Quolet res = new Quolet();
 		res.setDraftMode(true);
 		return res;
 	}
 
-	public void save(final XXXX reconstructed) {
-		this.xxxxRepository.save(reconstructed);
+	public void save(final Quolet reconstructed) {
+		this.quoletRepository.save(reconstructed);
 	}
 
-	public Collection<XXXX> getLoggedXXXXs() {
+	public Collection<Quolet> getLoggedQuolets() {
 		final Company company = this.companyService.getLoggedCompany();
-		return this.xxxxRepository.getLoggedXXXXs(company.getId());
+		return this.quoletRepository.getLoggedQuolets(company.getId());
 	}
 
-	public XXXX getLoggedXXXX(final int XXXXId) {
+	public Quolet getLoggedQuolet(final int QuoletId) {
 		final Company company = this.companyService.getLoggedCompany();
-		final XXXX res = this.xxxxRepository.getLoggedXXXX(XXXXId, company.getId());
+		final Quolet res = this.quoletRepository.getLoggedQuolet(QuoletId, company.getId());
 		Assert.notNull(res);
 		return res;
 	}
-	public XXXX reconstruct(final XXXX xxxx, final BindingResult binding) {
+	public Quolet reconstruct(final Quolet quolet, final BindingResult binding) {
 		System.out.println("reconstructing...");
-		XXXX res = xxxx;
-		if (xxxx.getId() != 0)
-			res = this.copy(xxxx); // We create a copy from db
+		Quolet res = quolet;
+		if (quolet.getId() != 0)
+			res = this.copy(quolet); // We create a copy from db
 		else
 			res.setTicker(this.createTicker()); // New valid ticker
 		res.setPublicationMoment(new Date()); // Update the publicationMoment
@@ -67,7 +67,6 @@ public class XXXXService {
 		System.out.println("reconstruction completed!");
 		System.out.println("validating...");
 		this.validator.validate(res, binding);
-		System.out.println("problem: " + res.getProblem());
 		System.out.println("validation completed");
 		System.out.println(binding.getFieldErrors());
 		return res;
@@ -94,41 +93,41 @@ public class XXXXService {
 				ticker += ALPHA_NUMERIC_STRING.charAt(character);
 			}
 
-			tickerInUse = this.xxxxRepository.findByTicker(ticker);
+			tickerInUse = this.quoletRepository.findByTicker(ticker);
 		}
 
 		return ticker;
 	}
-	private XXXX copy(final XXXX xxxx) {
-		final XXXX res = new XXXX();
-		final XXXX dbXXXX = this.xxxxRepository.getLoggedXXXX(xxxx.getId(), this.companyService.getLoggedCompany().getId());
-		Assert.notNull(dbXXXX);
-		Assert.isTrue(dbXXXX.getDraftMode());
+	private Quolet copy(final Quolet quolet) {
+		final Quolet res = new Quolet();
+		final Quolet dbQuolet = this.quoletRepository.getLoggedQuolet(quolet.getId(), this.companyService.getLoggedCompany().getId());
+		Assert.notNull(dbQuolet);
+		Assert.isTrue(dbQuolet.getDraftMode());
 
 		// We want this from db
-		res.setId(dbXXXX.getId());
-		res.setVersion(dbXXXX.getVersion());
-		res.setProblem(dbXXXX.getProblem());
-		res.setTicker(dbXXXX.getTicker());
+		res.setId(dbQuolet.getId());
+		res.setVersion(dbQuolet.getVersion());
+		res.setAudit(dbQuolet.getAudit());
+		res.setTicker(dbQuolet.getTicker());
 
 		// This is new
-		res.setDraftMode(xxxx.getDraftMode());
-		res.setBody(xxxx.getBody());
-		res.setPicture(xxxx.getPicture());
+		res.setDraftMode(quolet.getDraftMode());
+		res.setBody(quolet.getBody());
+		res.setPicture(quolet.getPicture());
 		return res;
 	}
 
-	public void delete(final int xxxxId) {
+	public void delete(final int quoletId) {
 		final Company company = this.companyService.getLoggedCompany();
-		final XXXX res = this.xxxxRepository.getLoggedXXXX(xxxxId, company.getId());
-		Assert.isTrue(res.getDraftMode(), "XXXX is not in draft mode, it can't be deleted");
-		this.xxxxRepository.delete(res.getId());
+		final Quolet res = this.quoletRepository.getLoggedQuolet(quoletId, company.getId());
+		Assert.isTrue(res.getDraftMode(), "Quolet is not in draft mode, it can't be deleted");
+		this.quoletRepository.delete(res.getId());
 	}
 
-	public XXXX getLoggedXXXXForEdit(final int xxxxId) {
-		final XXXX xxxx = this.getLoggedXXXX(xxxxId);
-		Assert.isTrue(xxxx.getDraftMode(), "User can't edit a xxxx that is not in draft mode");
-		return xxxx;
+	public Quolet getLoggedQuoletForEdit(final int quoletId) {
+		final Quolet quolet = this.getLoggedQuolet(quoletId);
+		Assert.isTrue(quolet.getDraftMode(), "User can't edit a quolet that is not in draft mode");
+		return quolet;
 	}
 
 }

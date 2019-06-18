@@ -4,19 +4,19 @@ package converters;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import domain.XXXX;
+import domain.Quolet;
 
 @Component
-public class XXXXToStringConverter implements Converter<XXXX, String> {
+public class QuoletToStringConverter implements Converter<Quolet, String> {
 
 	@Override
-	public String convert(final XXXX xxxx) {
+	public String convert(final Quolet quolet) {
 		String result;
 
-		if (xxxx == null)
+		if (quolet == null)
 			result = null;
 		else
-			result = String.valueOf(xxxx.getId());
+			result = String.valueOf(quolet.getId());
 		return result;
 	}
 }

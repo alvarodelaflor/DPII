@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class XXXX extends DomainEntity {
+public class Quolet extends DomainEntity {
 
 	// Attributes
 	private String	ticker;
@@ -32,7 +32,7 @@ public class XXXX extends DomainEntity {
 	private boolean	draftMode;
 
 	// Relations
-	private Problem	problem;
+	private Audit	audit;
 
 
 	@NotBlank
@@ -87,12 +87,12 @@ public class XXXX extends DomainEntity {
 
 	@ManyToOne(optional = false)
 	@NotNull
-	public Problem getProblem() {
-		return this.problem;
+	public Audit getAudit() {
+		return this.audit;
 	}
 
-	public void setProblem(final Problem problem) {
-		this.problem = problem;
+	public void setAudit(final Audit audit) {
+		this.audit = audit;
 	}
 
 }

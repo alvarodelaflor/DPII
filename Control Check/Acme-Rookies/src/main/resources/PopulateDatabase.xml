@@ -700,38 +700,38 @@
 		<property name="position" ref="position09"/>
     </bean>
 	<!-- AUDIT -->
-	<!-- XXXX -->
-	<bean id="xxxx01" class="domain.XXXX">
+	<!-- Quolet -->
+	<bean id="quolet01" class="domain.Quolet">
     	<property name="ticker" value="190610-RO1P5"/>
     	<property name="publicationMoment" value= "2019/06/10 16:00"/>
     	<property name="body" value= "TEST Body number one"/>
     	<property name="picture" value= "https://png.pngtree.com/element_origin_min_pic/00/00/07/04577a0a26ba42b.jpg"/>
  		<property name="draftMode" value="true"/>
-		<property name="problem" ref="problem01"/>
+		<property name="audit" ref="audit01"/>
     </bean>
-    <bean id="xxxx02" class="domain.XXXX">
+    <bean id="quolet02" class="domain.Quolet">
     	<property name="ticker" value="190510-XJ4TL"/>
     	<property name="publicationMoment" value= "2019/05/10 16:00"/>
     	<property name="body" value= "TEST Body number two"/>
     	<property name="picture" value= "https://img1.freepng.es/20190212/fg/kisspng-squidward-tentacles-patrick-star-image-dab-portabl-ftestickers-squidward-dab-dance-5c62c9ab85e494.9309980915499780275484.jpg"/>
  		<property name="draftMode" value="false"/>
-		<property name="problem" ref="problem01"/>
+		<property name="audit" ref="audit01"/>
     </bean>
-    <bean id="xxxx03" class="domain.XXXX">
+    <bean id="quolet03" class="domain.Quolet">
     	<property name="ticker" value="190410-NT92M"/>
     	<property name="publicationMoment" value= "2019/04/10 16:00"/>
     	<property name="body" value= "TEST Body number three"/>
     	<property name="picture" value= "https://img2.freepng.es/20190329/kkr/kisspng-patrick-star-squidward-tentacles-mr-krabs-portabl-spongebob-clip-svg-transparent-amp-png-clipart-f-5c9d9eaee2dba0.3532622315538336469292.jpg"/>
  		<property name="draftMode" value="true"/>
-		<property name="problem" ref="problem03"/>
+		<property name="audit" ref="audit01"/>
     </bean>
-    <bean id="xxxx04" class="domain.XXXX">
+    <bean id="quolet04" class="domain.Quolet">
     	<property name="ticker" value="190410-AHE78"/>
     	<property name="publicationMoment" value= "2019/04/10 16:00"/>
     	<property name="body" value= "TEST Body number four"/>
     	<property name="picture" value= "https://banner2.kisspng.com/20171217/2d1/pikachu-png-5a366dd9850ec4.106496781513516505545.jpg"/>
  		<property name="draftMode" value="false"/>
-		<property name="problem" ref="problem03"/>
+		<property name="audit" ref="audit01"/>
     </bean>
-	<!-- XXXX -->
+	<!-- Quolet -->
 </beans>
