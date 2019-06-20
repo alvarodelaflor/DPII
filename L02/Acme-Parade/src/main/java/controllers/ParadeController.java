@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
 import services.BrotherhoodService;
 import services.ConfigurationService;
 import services.MemberService;
 import services.ParadeService;
+import services.PathService;
 import services.PositionAuxService;
 import services.RequestService;
 import services.SponsorshipService;
@@ -53,6 +53,9 @@ public class ParadeController extends AbstractController {
 
 	@Autowired
 	ParadeService			paradeService;
+
+	@Autowired
+	PathService				pathService;
 
 	@Autowired
 	MemberService			memberService;
@@ -95,7 +98,6 @@ public class ParadeController extends AbstractController {
 		result.addObject("system", this.welcomeService.getSystem());
 		return result;
 	}
-
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam(value = "paradeId", defaultValue = "-1") final int paradeId) {
 		ModelAndView result;
@@ -126,8 +128,8 @@ public class ParadeController extends AbstractController {
 			final Parade parade = this.paradeService.findOne(paradeId);
 			final int brotherhoodId = this.paradeService.findOne(paradeId).getBrotherhood().getId();
 			if (parade == null || !this.requestService.validMemberToCreateRequest(paradeId) || !this.memberService.checkIsInBrotherhood(brotherhoodId) || !parade.getStatus().equals("ACCEPTED"))
-				res = false;	
-		} catch (Exception e) {
+				res = false;
+		} catch (final Exception e) {
 			res = false;
 		}
 		return res;

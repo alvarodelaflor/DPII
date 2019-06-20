@@ -10,13 +10,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Brotherhood;
-import domain.Enrolled;
-import domain.Member;
 import repositories.EnrolledRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Brotherhood;
+import domain.Enrolled;
+import domain.Member;
 
 /*
  * CONTROL DE CAMBIOS EnrolledService.java
@@ -71,9 +71,8 @@ public class EnrolledService {
 	}
 
 	public Enrolled save(final Enrolled enrolled) {
-		if (enrolled.getState()!=null && enrolled.getState().equals(true) && enrolled.getDropMoment()==null) {
+		if (enrolled.getState() != null && enrolled.getState().equals(true) && enrolled.getDropMoment() == null)
 			enrolled.setCreateMoment(DateTime.now().toDate());
-		}
 		return this.enrolledRepository.save(enrolled);
 	}
 
@@ -138,6 +137,11 @@ public class EnrolledService {
 	public Collection<Enrolled> findAllByPositionId(final int positionId) {
 
 		return this.enrolledRepository.findAllByPositionId(positionId);
+	}
+
+	public Collection<Enrolled> findAllByPositionUsedId(final int positionId) {
+
+		return this.enrolledRepository.findAllByPositionUsedId(positionId);
 	}
 
 }

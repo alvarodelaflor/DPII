@@ -19,11 +19,11 @@
 
 <display:table name="parade" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<!-- We are showing this publicly so we only want to show the accepted ones -->
-	<display:column titleKey="parade.title"> 
 	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
+	<display:column titleKey="parade.title"> 
 		<jstl:out value="${row.title}"></jstl:out> 
-	</jstl:if>
 	</display:column>
+	</jstl:if>
 	
 	<display:column titleKey="parade.moment"> 
 	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
@@ -44,7 +44,7 @@
 	</display:column>
 
 	<display:column titleKey="parade.path"> 
-	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED')}">
+	<jstl:if test="${row.isFinal and (row.status eq 'ACCEPTED') }">
 		<a href="path/show.do?paradeId=${row.id}"><spring:message code="parade.path" /></a>
 	</jstl:if>
 	</display:column>

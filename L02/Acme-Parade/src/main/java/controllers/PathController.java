@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import security.LoginService;
 import services.BrotherhoodService;
+import services.MemberService;
 import services.PathService;
 import services.SegmentService;
 import services.WelcomeService;
@@ -33,6 +34,9 @@ public class PathController extends AbstractController {
 	private SegmentService		segmentService;
 
 	@Autowired
+	private MemberService		memberService;
+
+	@Autowired
 	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
@@ -46,28 +50,39 @@ public class PathController extends AbstractController {
 		try {
 			result = new ModelAndView("path/show");
 			Path path = this.pathService.getParadePath(paradeId);
-			// We don't have a path? Then we create it, no problem
-			if (path == null)
-				path = this.pathService.createFromParade(paradeId);
-
-			final Brotherhood loggedBrotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
-
-			List<Segment> segments = null;
-			// In case we are logged as the brotherhood who owns this parade we want to also modify the path
-			if (loggedBrotherhood != null && loggedBrotherhood.getId() == path.getParade().getBrotherhood().getId()) {
-				result.addObject("owner", true);
-				segments = this.segmentService.getAllSegments(path);
+			if (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null && path == null) {
+				result.addObject("paradeId", paradeId);
+				result.addObject("pathNull", true);
+				result.addObject("memberLogged", (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null));
+				result.addObject("logo", this.welcomeService.getLogo());
+				result.addObject("system", this.welcomeService.getSystem());
 			} else {
-				result.addObject("owner", false);
-				segments = new ArrayList<Segment>(this.segmentService.getAllSegments(path));
-				if (segments.size() > 0)
-					segments.remove(segments.size() - 1);
-			}
 
-			result.addObject("segments", segments);
-			result.addObject("paradeId", paradeId);
-			result.addObject("logo", this.welcomeService.getLogo());
-			result.addObject("system", this.welcomeService.getSystem());
+				// We don't have a path? Then we create it, no problem
+				if (path == null)
+					path = this.pathService.createFromParade(paradeId);
+
+				final Brotherhood loggedBrotherhood = this.brotherhoodService.getBrotherhoodByUserAccountId(LoginService.getPrincipal().getId());
+
+				List<Segment> segments = null;
+				// In case we are logged as the brotherhood who owns this parade we want to also modify the path
+				if (loggedBrotherhood != null && loggedBrotherhood.getId() == path.getParade().getBrotherhood().getId()) {
+					result.addObject("owner", true);
+					segments = this.segmentService.getAllSegments(path);
+				} else {
+					result.addObject("owner", false);
+					segments = new ArrayList<Segment>(this.segmentService.getAllSegments(path));
+					if (segments.size() > 0)
+						segments.remove(segments.size() - 1);
+				}
+
+				result.addObject("segments", segments);
+				result.addObject("paradeId", paradeId);
+				result.addObject("pathNull", false);
+				result.addObject("memberLogged", (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null));
+				result.addObject("logo", this.welcomeService.getLogo());
+				result.addObject("system", this.welcomeService.getSystem());
+			}
 		} catch (final IllegalArgumentException e) {
 			result = new ModelAndView("path/show");
 			Path path = this.pathService.getParadePath(paradeId);
@@ -79,6 +94,8 @@ public class PathController extends AbstractController {
 				segments.remove(segments.size() - 1);
 			result.addObject("segments", segments);
 			result.addObject("paradeId", paradeId);
+			result.addObject("pathNull", false);
+			result.addObject("memberLogged", (this.memberService.getMemberByUserAccountId(LoginService.getPrincipal().getId()) != null));
 			result.addObject("logo", this.welcomeService.getLogo());
 			result.addObject("system", this.welcomeService.getSystem());
 
