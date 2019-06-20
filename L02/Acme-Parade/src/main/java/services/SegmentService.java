@@ -105,13 +105,16 @@ public class SegmentService {
 
 		// We don't delete this segment, we assign this one the destination attributes if any
 		if (segment.getDestination() != null) {
+			System.out.println("Tenemos destination... " + segment.getDestination());
 			final int segmentToDelete = segment.getDestination().getId();
+			segment.setArrivalTime(segment.getDestination().getArrivalTime());
 			segment.setLatitude(segment.getDestination().getLatitude());
 			segment.setLongitude(segment.getDestination().getLongitude());
 			segment.setDestination(segment.getDestination().getDestination());
 			// We delete the segment which was the destination
 			this.segmentRepository.delete(segmentToDelete);
 		} else {
+			System.out.println("NO Tenemos destination... " + segment.getDestination());
 			// We want to delete the last segment of a path, which is this one, 
 			// so we have to dereference it on the parent segment
 			final Segment parent = this.segmentRepository.findParent(segmentId);

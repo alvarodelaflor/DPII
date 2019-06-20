@@ -159,6 +159,9 @@
 		<security:intercept-url pattern="/quolet/company/edit.do" access="hasRole('COMPANY')" />
 		<security:intercept-url pattern="/quolet/company/show.do" access="hasRole('COMPANY')" />
 		<security:intercept-url pattern="/quolet/company/delete.do" access="hasRole('COMPANY')" />
+		
+		<security:intercept-url pattern="/quolet/auditor/show.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/quolet/auditor/list.do" access="hasRole('AUDITOR')" />
 		<!-- HIPONA -->
 		
 		<!-- FRAN -->						

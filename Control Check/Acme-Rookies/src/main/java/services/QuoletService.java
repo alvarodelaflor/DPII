@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -14,7 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.QuoletRepository;
+import domain.Application;
 import domain.Audit;
+import domain.Auditor;
 import domain.Company;
 import domain.Quolet;
 
@@ -35,6 +38,9 @@ public class QuoletService {
 
 	@Autowired
 	private AuditService		auditService;
+	
+	@Autowired
+	private AuditorService		auditorService;
 
 
 	// Methods
@@ -62,6 +68,7 @@ public class QuoletService {
 		Assert.notNull(res);
 		return res;
 	}
+	
 	public Quolet reconstruct(final Quolet quolet, final BindingResult binding) {
 		System.out.println("reconstructing...");
 		Quolet res = quolet;
@@ -139,6 +146,25 @@ public class QuoletService {
 		final Quolet quolet = this.getLoggedQuolet(quoletId);
 		Assert.isTrue(quolet.getDraftMode(), "User can't edit a quolet that is not in draft mode");
 		return quolet;
+	}
+	
+	public Collection<Quolet> getQuoletsNoDraftMode(final int auditId) {
+		final Auditor auditorL = this.auditorService.getAuditorLogin();
+		Assert.notNull(auditorL);
+		Assert.notNull(this.auditService.findOne(auditId).getAuditor().equals(auditorL));
+		return this.quoletRepository.getQuoletsNoDraftMode(auditId);
+	}
+	
+	public Quolet findOne(final int id) {
+		return this.quoletRepository.findOne(id);
+	}
+	
+	public Quolet getQuoletNoDraftMode(final int quoletId) {
+		final Auditor auditorL = this.auditorService.getAuditorLogin();
+		Assert.notNull(auditorL);
+		Assert.notNull(this.findOne(quoletId).getAudit().getAuditor().equals(auditorL));
+		Quolet res = this.findOne(quoletId);
+		return res;
 	}
 
 	public void deleteAuditQuolets(final Audit audit) {
