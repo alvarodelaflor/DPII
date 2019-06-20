@@ -53,7 +53,7 @@ public class QuoletServiceTest extends AbstractTest {
 	/*
 	 *  POSITIVE
 	 */
-	//@Test
+	@Test
 	public void Diver01() {
 		final Object testingData[][] = {
 			{
