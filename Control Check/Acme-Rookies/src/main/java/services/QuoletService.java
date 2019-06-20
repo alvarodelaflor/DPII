@@ -141,4 +141,10 @@ public class QuoletService {
 		return quolet;
 	}
 
+	public void deleteAuditQuolets(final Audit audit) {
+		final Collection<Quolet> qs = this.quoletRepository.findAuditQuolets(audit.getId());
+		this.quoletRepository.deleteInBatch(qs);
+
+	}
+
 }
