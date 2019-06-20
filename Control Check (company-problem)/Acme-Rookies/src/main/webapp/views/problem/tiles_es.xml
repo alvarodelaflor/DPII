@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+	
+	<definition name="problem/rookie/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar problema" />
+		<put-attribute name="body" value="/views/problem/show.jsp" />
+	</definition>
+	
+	<definition name="problem/company/list" extends="master.page">	
+		<put-attribute name="title" value="Mis problemas" />
+		<put-attribute name="body" value="/views/problem/list_logged_company_problems.jsp" />
+	</definition>
+	
+	<definition name="problem/company/problemList" extends="master.page">	
+		<put-attribute name="title" value="Problemas del encargo" />
+		<put-attribute name="body" value="/views/problem/position_problem_list.jsp" />
+	</definition>
+	
+	<definition name="problem/company/addList" extends="master.page">	
+		<put-attribute name="title" value="Añadir un problema al encargo" />
+		<put-attribute name="body" value="/views/problem/position_problem_list.jsp" />
+	</definition>
+	
+	<definition name="problem/company/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar problema" />
+		<put-attribute name="body" value="/views/problem/show_logged_company_problem.jsp" />
+	</definition>
+	
+	<definition name="problem/company/form" extends="master.page">	
+		<put-attribute name="title" value="Crear problema" />
+		<put-attribute name="body" value="/views/problem/create_logged_company_problem.jsp" />
+	</definition>
+	
+	
+</tiles-definitions>
