@@ -26,4 +26,13 @@
 		<put-attribute name="body" value="/views/quolet/company/edit.jsp" />
 	</definition>
 	
+	<definition name="quolet/auditor/list" extends="master.page">	
+		<put-attribute name="title" value="List of quolets" />
+		<put-attribute name="body" value="/views/quolet/auditor/list.jsp" />
+	</definition>
+	
+	<definition name="quolet/auditor/show" extends="master.page">	
+		<put-attribute name="title" value="Show a quolet" />
+		<put-attribute name="body" value="/views/quolet/auditor/show.jsp" />
+	</definition>
 </tiles-definitions>

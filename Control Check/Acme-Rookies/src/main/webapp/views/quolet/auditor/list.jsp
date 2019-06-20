@@ -29,7 +29,6 @@
 <c:set var="oneMonth" value="<%=oneMonth.getTime()%>" />
 <c:set var="twoMonths" value="<%=twoMonths.getTime()%>" />
 
-<input type="button" value="<spring:message code='quolet.create' />" onclick="window.location = 'quolet/company/create.do?auditId=${auditId}'" formmethod="get"/>
 
 <display:table name="quolets" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<display:column titleKey="quolet.ticker" property="ticker" />
@@ -56,23 +55,13 @@
 		</c:choose>
 	</display:column>
 	<display:column titleKey="quolet.body" property="body" />
-	<display:column titleKey="quolet.draftMode">
-		<spring:message code="quolet.draftMode.${row.draftMode}" />
-	</display:column>
 
-	<display:column titleKey="quolet.edit">
-		<jstl:if test="${row.draftMode}">
-			<a href="quolet/company/edit.do?quoletId=${row.id}"><spring:message code="quolet.edit" /></a>
-		</jstl:if>
-	</display:column>
 	<display:column titleKey="quolet.show">
-		<a href="quolet/company/show.do?quoletId=${row.id}"><spring:message code="quolet.show" /></a>
-	</display:column>
-	<display:column titleKey="quolet.delete">
-		<jstl:if test="${row.draftMode}">
-			<a href="quolet/company/delete.do?quoletId=${row.id}"><spring:message code="quolet.delete" /></a>
-		</jstl:if>
+		<a href="quolet/auditor/show.do?quoletId=${row.id}"><spring:message code="quolet.show" /></a>
 	</display:column>
 </display:table>
 
-<acme:cancel url=" " code="position.cancel" />
+
+
+<input type="button" value="<spring:message code='problem.back' />" onclick="window.location = 'audit/list.do'" />
+
