@@ -75,7 +75,4 @@
 	</display:column>
 </display:table>
 
-
-
 <acme:cancel url=" " code="position.cancel" />
-

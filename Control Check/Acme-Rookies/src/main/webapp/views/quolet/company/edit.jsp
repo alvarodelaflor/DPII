@@ -41,7 +41,7 @@
 				</table>
 
 				<acme:submit name="save" code="quolet.save" />
-				<input type="button" value="<spring:message code='problem.back' />" onclick="window.location = 'quolet/company/list.do'" />
+				<input type="button" value="<spring:message code='problem.back' />" onclick="window.location = 'quolet/company/list.do?auditId=${quolet.audit.id}'" />
 			</form:form>
 		</div>
 	</article>
