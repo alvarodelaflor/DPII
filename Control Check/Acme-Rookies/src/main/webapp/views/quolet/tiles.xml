@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="quolet/company/list" extends="master.page">	
+		<put-attribute name="title" value="List of quolets" />
+		<put-attribute name="body" value="/views/quolet/company/list.jsp" />
+	</definition>
+	
+	<definition name="quolet/company/show" extends="master.page">	
+		<put-attribute name="title" value="Show a quolet" />
+		<put-attribute name="body" value="/views/quolet/company/show.jsp" />
+	</definition>
+	
+	<definition name="quolet/company/create" extends="master.page">	
+		<put-attribute name="title" value="Create a quolet" />
+		<put-attribute name="body" value="/views/quolet/company/edit.jsp" />
+	</definition>
+	
+	<definition name="quolet/company/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit a quolet" />
+		<put-attribute name="body" value="/views/quolet/company/edit.jsp" />
+	</definition>
+	
+	<definition name="quolet/auditor/list" extends="master.page">	
+		<put-attribute name="title" value="List of quolets" />
+		<put-attribute name="body" value="/views/quolet/auditor/list.jsp" />
+	</definition>
+	
+	<definition name="quolet/auditor/show" extends="master.page">	
+		<put-attribute name="title" value="Show a quolet" />
+		<put-attribute name="body" value="/views/quolet/auditor/show.jsp" />
+	</definition>
+</tiles-definitions>

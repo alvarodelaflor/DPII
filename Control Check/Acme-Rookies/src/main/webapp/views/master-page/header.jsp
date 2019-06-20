@@ -200,15 +200,6 @@
 					</li>
 				</ul>
 			</li>
-			<li>
-				<a class="fNiv"><spring:message code="master.page.xxxx" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li>
-						<a href="xxxx/company/list.do"><spring:message code="master.page.list.xxxx" /></a>
-					</li>
-				</ul>
-			</li>
 
 		</security:authorize>
 

@@ -3,9 +3,9 @@ package services;
 
 /**
  * AuditService.java
- *
+ * 
  * @author Alvaro de la Flor Bonilla GitHub: alvar017
- *
+ * 
  *         CONTROL:
  *         29/04/2019 14:00 Creation
  */
@@ -25,11 +25,10 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Application;
+import repositories.AuditRepository;
 import domain.Audit;
 import domain.Auditor;
 import domain.Position;
-import repositories.AuditRepository;
 
 @Service
 @Transactional
@@ -47,6 +46,9 @@ public class AuditService {
 	private PositionService	positionService;
 
 	@Autowired
+	private QuoletService	quoletService;
+
+	@Autowired
 	private Validator		validator;
 
 	// Default messages
@@ -60,7 +62,7 @@ public class AuditService {
 
 	/**
 	 * Create an audit. Must exist a {@link Auditor} login to create it.
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
@@ -71,7 +73,7 @@ public class AuditService {
 
 	/**
 	 * Find an audit by ID
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
@@ -87,7 +89,7 @@ public class AuditService {
 
 	/**
 	 * Return all audit in DataBase
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection} < {@link Audit} >
 	 */
@@ -97,7 +99,7 @@ public class AuditService {
 
 	/**
 	 * Return a map, audit in final mode has de key true, draft audits has the key false
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Map}< {@link Boolean} , {@link Audit} >
 	 */
@@ -118,7 +120,7 @@ public class AuditService {
 
 	/**
 	 * Get all Position available by an audit
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection} < {@link Position} >
 	 */
@@ -128,18 +130,17 @@ public class AuditService {
 		Assert.notNull(auditor, this.notAuditor);
 		res.removeAll(this.positionService.findAllPositionByAuditor(auditor.getId()));
 		final Audit auditDB = this.findOne(audit.getId());
-		if (audit.getPosition()!= null && auditDB != null && audit.getStatus() != null && audit.getStatus().equals(false)) {
+		if (audit.getPosition() != null && auditDB != null && audit.getStatus() != null && audit.getStatus().equals(false)) {
 			Assert.isTrue(auditDB.getPosition().equals(audit.getPosition()) || res.contains(audit.getPosition()));
 			res.add(auditDB.getPosition());
-		} else if (auditDB!= null && auditDB.getPosition()!=null) {
+		} else if (auditDB != null && auditDB.getPosition() != null)
 			res.add(auditDB.getPosition());
-		}
 		return res;
 	}
 
 	/**
 	 * Save an audit and return it. Must exist a {@link Auditor} login to create it.
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
@@ -169,7 +170,7 @@ public class AuditService {
 
 	/**
 	 * Must exist a {@link Auditor} login to delete and he must be de owner of the audit.
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 */
 	public void delete(final Audit audit) {
@@ -188,7 +189,7 @@ public class AuditService {
 	/**
 	 * Return the reconstruct Audit. Must exits an auditor login. <br>
 	 * If the audit exits in database it must be in final mode and the login Auditor must be his owner.
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Audit}
 	 */
@@ -214,7 +215,7 @@ public class AuditService {
 
 	/**
 	 * Return a collection of audit filter by status and auditorId
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection} < {@link Audit} >
 	 */
@@ -224,7 +225,7 @@ public class AuditService {
 
 	/**
 	 * Return an audit of a position
-	 *
+	 * 
 	 * @author Alvaro de la Flor Bonilla
 	 * @return {@link Collection} < {@link Audit} >
 	 */
@@ -235,13 +236,17 @@ public class AuditService {
 
 	public void deleteAuditorAudits(final Auditor auditor) {
 		final Collection<Collection<Audit>> audits = this.findAllByAuditorLogin(auditor.getId()).values();
-		for (final Collection<Audit> collection : audits)
+		for (final Collection<Audit> collection : audits) {
+			for (final Audit audit : collection)
+				this.quoletService.deleteAuditQuolets(audit);
 			this.auditRepository.deleteInBatch(collection);
+		}
 	}
 
-	public void deleteAllByPosition(int id) {
-		Collection<Audit> apps = this.auditRepository.getPositionApps(id);
+	public void deleteAllByPosition(final int id) {
+		final Collection<Audit> apps = this.auditRepository.getPositionApps(id);
+		for (final Audit audit : apps)
+			this.quoletService.deleteAuditQuolets(audit);
 		this.auditRepository.deleteInBatch(apps);
 	}
-
 }

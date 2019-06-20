@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="administrator/dashboard" extends="master.page">	
+		<put-attribute name="title" value="Administrator: DashBoard" />
+		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
+	</definition>
+	
+	<definition name="administrator/actorList" extends="master.page">	
+		<put-attribute name="title" value="Administrator: User´s List" />
+		<put-attribute name="body" value="/views/administrator/actorList.jsp" />
+	</definition>
+	
+	<definition name="administrator/create" extends="master.page">	
+		<put-attribute name="title" value="Administrator:" />
+		<put-attribute name="body" value="/views/administrator/form.jsp" />
+	</definition>
+	
+	<definition name="administrator/listSponsorships" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Sponsorships" />
+		<put-attribute name="body" value="/views/sponsorship/list.jsp" />
+	</definition>
+	
+	<!-- Ferrete -->
+	<definition name="administrator/list" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Configuration" />
+		<put-attribute name="body" value="/views/administrator/list.jsp" />
+	</definition>
+	
+		<definition name="administrator/show" extends="master.page">	
+		<put-attribute name="title" value="Administrator: Show" />
+		<put-attribute name="body" value="/views/administrator/show.jsp" />
+	</definition>
+	
+	<definition name="administrator/edit" extends="master.page">	
+		<put-attribute name="title" value="Adminsitrator: Edit" />
+		<put-attribute name="body" value="/views/administrator/edit.jsp" />
+	</definition>
+	
+</tiles-definitions>
