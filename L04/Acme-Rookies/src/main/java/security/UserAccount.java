@@ -160,7 +160,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Transient
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return !this.banned;
 	}
 
 	@Transient
@@ -172,7 +172,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Transient
 	@Override
 	public boolean isEnabled() {
-		return !this.spammerFlag;
+		return !this.banned;
 	}
 
 }

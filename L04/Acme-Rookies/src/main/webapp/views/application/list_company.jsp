@@ -33,7 +33,45 @@
 				code="application.show" /></a>
 	</display:column>
 
-	<display:column property="status" titleKey="application.status"></display:column>
+		<c:choose>
+		<c:when test="${row1.status == 'SUBMITTED'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.SUBMITTED" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${row1.status == 'PENDING'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.PENDING" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${row1.status == 'ACCEPTED'}">
+				<display:column titleKey="application.status">
+					<spring:message code="status.ACCEPTED" />
+				</display:column>
+			</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+
+	<c:choose>
+		<c:when test="${row1.status == 'REJECTED'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.REJECTED" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
 
 	<display:column titleKey="application.position">
 		<a href="position/company/show.do?positionId=${row1.position.id}"><jstl:out
@@ -61,7 +99,45 @@
 				code="application.show" /></a>
 	</display:column>
 
-	<display:column property="status" titleKey="application.status"></display:column>
+		<c:choose>
+		<c:when test="${row2.status == 'SUBMITTED'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.SUBMITTED" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${row2.status == 'PENDING'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.PENDING" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${row2.status == 'ACCEPTED'}">
+				<display:column titleKey="application.status">
+					<spring:message code="status.ACCEPTED" />
+				</display:column>
+			</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+
+	<c:choose>
+		<c:when test="${row2.status == 'REJECTED'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.REJECTED" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
 
 	<display:column titleKey="application.position">
 		<a href="position/company/show.do?positionId=${row2.position.id}"><jstl:out
@@ -89,7 +165,45 @@
 				code="application.show" /></a>
 	</display:column>
 
-	<display:column property="status" titleKey="application.status"></display:column>
+		<c:choose>
+		<c:when test="${row3.status == 'SUBMITTED'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.SUBMITTED" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${row3.status == 'PENDING'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.PENDING" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${row3.status == 'ACCEPTED'}">
+				<display:column titleKey="application.status">
+					<spring:message code="status.ACCEPTED" />
+				</display:column>
+			</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+
+	<c:choose>
+		<c:when test="${row3.status == 'REJECTED'}">
+			<display:column titleKey="application.status">
+				<spring:message code="status.REJECTED" />
+			</display:column>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
 
 	<display:column titleKey="application.position">
 		<a href="position/company/show.do?positionId=${row3.position.id}"><jstl:out

@@ -220,6 +220,7 @@ public class SponsorshipController extends AbstractController {
 
 				result = new ModelAndView("sponsorship/list");
 				result.addObject("sponsorships", savedSponsorship.getSponsor().getSponsorships());
+				result.addObject("validSponsor", this.sponsorshipService.checkAnyParade());
 				result.addObject("requestURI", "sponsorship/list.do");
 			} catch (final Throwable oops) {
 				System.out.println("El error es en SponsorshipController: ");

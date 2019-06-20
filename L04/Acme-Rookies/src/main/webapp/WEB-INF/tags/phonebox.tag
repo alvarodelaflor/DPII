@@ -32,7 +32,7 @@
 						res = true;
 					}
 					if (/(\+[0-9]{1,3})\s([0-9]{4,})$/.test(phoneNumber)) {
-				res = true;
+						res = true;
 					}
 					if (/^([0-9]{4,})\:(\+[0-9]{1,3})$/.test(phoneNumber)) {
 						res = true;
@@ -40,6 +40,11 @@
 					if (/^([0-9]{4,})$/.test(phoneNumber)) {
 						res = true;
 						alert("<spring:message code='PN' />");
+					}
+					
+					if (/^([a-z]{0,}[A-Z]{0,})$/.test(phoneNumber)) {
+						res = true;
+						alert("<spring:message code='PN1' />");
 					}
 				}
 			</script>

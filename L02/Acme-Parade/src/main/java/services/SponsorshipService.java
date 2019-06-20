@@ -250,6 +250,7 @@ public class SponsorshipService {
 			for (Parade parade : this.paradeService.findAll()) {
 				if (parade.getIsFinal().equals(true) && parade.getStatus().equals("ACCEPTED")) {
 					res = true;
+					break;
 				}
 			}
 		} catch (Exception e) {
