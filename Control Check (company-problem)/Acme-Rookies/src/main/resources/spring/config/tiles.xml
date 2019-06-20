@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+  * tiles.xml 
+  * 
+  * Copyright (C) 2018 Universidad de Sevilla 
+  * 
+  * The use of this project is hereby constrained to the conditions of the 
+  * TDG Licence, a copy of which you may download from 
+  * http://www.tdg-seville.info/License.html 
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+	">
+
+	<util:list id="tiles">
+		<value>/views/master-page/tiles.xml</value>		
+		<value>/views/misc/tiles.xml</value>		
+		<value>/views/security/tiles.xml</value>
+		<value>/views/welcome/tiles.xml</value>
+		
+		<value>/views/administrator/tiles.xml</value>
+		<value>/views/profile/tiles.xml</value>
+		<value>/views/finder/tiles.xml</value>
+		
+		<!-- ALVARO -->
+		<value>/views/curricula/tiles.xml</value>
+		<value>/views/educationalData/tiles.xml</value>
+		<value>/views/positionData/tiles.xml</value>
+		<value>/views/audit/tiles.xml</value>
+		<!-- ALVARO -->
+		
+		<!-- CARMEN -->
+		<value>/views/rookie/tiles.xml</value>
+		<value>/views/company/tiles.xml</value>
+		<value>/views/actor/tiles.xml</value>
+		<value>/views/position/tiles.xml</value>
+		<value>/views/application/tiles.xml</value>
+		<value>/views/problem/tiles.xml</value>
+		<value>/views/provider/tiles.xml</value>
+		<value>/views/item/tiles.xml</value>
+		<value>/views/auditor/tiles.xml</value>
+		<!-- CARMEN -->
+		<!-- ANTONIO S -->
+		<value>/views/socialProfile/tiles.xml</value>
+		<value>/views/message/tiles.xml</value>		
+		<!-- ANTONIO S -->
+		<value>/views/sponsorship/tiles.xml</value>
+
+		<!-- HIPONA -->
+		<value>/views/auditor/tiles.xml</value>
+		<value>/views/xxxx/tiles.xml</value>
+		<!-- HIPONA -->
+	</util:list>
+
+</beans>

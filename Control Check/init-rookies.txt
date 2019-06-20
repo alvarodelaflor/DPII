@@ -2,6 +2,8 @@ drop database if exists `acme-rookies`;
 
 create database `acme-rookies`;
 
+use `acme-rookies`;
+
 drop user 'acme-user';
 
 create user 'acme-user'@'%'

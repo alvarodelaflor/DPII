@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="application/rookie/list" extends="master.page">	
+		<put-attribute name="title" value="Listado de aplicationes" />
+		<put-attribute name="body" value="/views/application/list.jsp" />
+	</definition>
+	
+	<definition name="application/rookie/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar aplicaión" />
+		<put-attribute name="body" value="/views/application/show.jsp" />
+	</definition>
+	
+	<definition name="application/rookie/create" extends="master.page">	
+		<put-attribute name="title" value="Mostrar encargos" />
+		<put-attribute name="body" value="/views/position/show.jsp" />
+	</definition>
+	
+	<definition name="application/rookie/save" extends="master.page">	
+		<put-attribute name="title" value="Listado de aplicaciones" />
+		<put-attribute name="body" value="/views/application/list.jsp" />
+	</definition>
+	
+	<definition name="application/rookie/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar una aplicacón" />
+		<put-attribute name="body" value="/views/application/edit.jsp" />
+	</definition>
+	
+	<definition name="application/company/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de solicitudes" />
+		<put-attribute name="body" value="/views/application/list_company.jsp" />
+	</definition>
+	
+	<definition name="application/company/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar solicitud" />
+		<put-attribute name="body" value="/views/application/show_company.jsp" />
+	</definition>
+	
+</tiles-definitions>

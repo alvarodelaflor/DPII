@@ -19,6 +19,10 @@
 <h2> <spring:message code='segment.info'/> </h2>
 
 <!-- When we are not the parade owner and have segments-->
+<jstl:if test="${pathNull}">
+	<span class="error"><spring:message code="pathNull"/></span>
+</jstl:if>
+
 <jstl:if test="${not owner and fn:length(segments) > 0}">
 <ol>
 <jstl:forEach var="segment" items="${segments}">
@@ -128,8 +132,12 @@
 	<span class="error"><spring:message code="segment.error"/></span>
 </jstl:if>
 
+<jstl:if test="${memberLogged}">
+	<input type="button" value="Back" name="volver atrás2" onclick="history.back()" /></jstl:if>
+<jstl:if test="${!memberLogged}">
+	<acme:cancel url="parade/brotherhood/list.do" code="cancel"/>
+</jstl:if>
 
-<acme:cancel url="parade/brotherhood/list.do" code="cancel"/>
 
 
 

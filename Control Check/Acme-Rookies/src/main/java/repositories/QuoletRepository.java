@@ -24,4 +24,7 @@ public interface QuoletRepository extends JpaRepository<Quolet, Integer> {
 	@Query("select x from Quolet x where x.audit.id = ?1 and x.draftMode=false")
 	Collection<Quolet> getQuoletsNoDraftMode(int auditorId);
 
+	@Query("select x from Quolet x where x.audit.id = ?1")
+	Collection<Quolet> findAuditQuolets(int id);
+
 }

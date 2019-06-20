@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * security.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    ">
+
+	<!-- Security infrastructure -->
+
+	<bean id="loginService" class="security.LoginService" />
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+
+	<!-- Access control -->
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/" access="permitAll" /> 
+		
+		<!-- CARMEM -->
+		<security:intercept-url pattern="/rookie/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/rookie/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/rookie/edit.do" access="hasRole('ROOKIE')" />
+		
+		<security:intercept-url pattern="/company/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/company/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/company/edit.do" access="hasRole('COMPANY')"/>  
+		<security:intercept-url pattern="/company/list.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/position/listCompany.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/position/newPalabra.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/actor/conditions.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/application/rookie/list.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/show.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/save.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/saveE.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/application/rookie/edit.do" access="hasRole('ROOKIE')" />
+		
+		<security:intercept-url pattern="/problem/rookie/show.do" access="hasRole('ROOKIE')" />
+		
+		<security:intercept-url pattern="/provider/create.do" access="permitAll" />
+		<security:intercept-url pattern="/provider/show.do" access="permitAll" /> 
+		<security:intercept-url pattern="/provider/list.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/item/listByProvider.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/auditor/create.do" access="hasRole('ADMIN')" /> 	
+		
+		<security:intercept-url pattern="/administrator/edit.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/auditor/edit.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/administrator/show.do" access="hasRole('ADMIN')" /> 	 	 
+		<security:intercept-url pattern="/auditor/show.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/provider/edit.do" access="hasRole('PROVIDER')" />
+		
+<!-- CARMEM -->
+		
+		<!-- ANTONIO S -->
+		<security:intercept-url pattern="/socialProfile/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/create.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/socialProfile/edit.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/delete.do" access="isAuthenticated()" />		
+		<security:intercept-url pattern="/socialProfile/show.do" access="isAuthenticated()" />	
+		
+		<security:intercept-url pattern="/message/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/send.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/sendNoti.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/create.do" access="isAuthenticated()" />	
+		<security:intercept-url pattern="/message/show.do" access="isAuthenticated()" />			
+		<security:intercept-url pattern="/message/delete.do" access="isAuthenticated()" />			
+
+		<security:intercept-url pattern="/message/sendRebranding.do" access="hasRole('ADMIN')" />				
+		<!-- ANTONIO S -->
+
+		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
+		<security:intercept-url pattern="/images/**" access="permitAll" /> 
+		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
+		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
+
+		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
+
+		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
+		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
+		
+		<!-- ALVARO -->
+		<security:intercept-url pattern="/curricula/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/curricula/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/curricula/rookie/delete.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/curricula/list.do" access="permitAll" />
+		<security:intercept-url pattern="/curricula/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/educationalData/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/educationalData/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/educationalData/rookie/delete.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/educationalData/show.do" access="permitAll" />
+
+		<security:intercept-url pattern="/miscellaneousAttachment/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/miscellaneousAttachment/rookie/delete.do" access="hasRole('ROOKIE')" />
+		
+		<security:intercept-url pattern="/positionData/rookie/create.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/positionData/rookie/edit.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/positionData/rookie/delete.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/positionData/show.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/audit/auditor/create.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/auditor/edit.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/auditor/delete.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/list.do" access="permitAll" />
+		<security:intercept-url pattern="/audit/show.do" access="permitAll" />
+		<!-- ALVARO -->
+		
+		<!-- HIPONA -->
+		<!-- position/company -->
+		<security:intercept-url pattern="/position/company/list.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/show.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/create.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/edit.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/cancel.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/company/delete.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/problemList.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/addProblemView.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/addProblemAction.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/position/company/detachProblem.do" access="hasRole('COMPANY')" />
+		<!-- problem/company -->
+		<security:intercept-url pattern="/problem/company/list.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/problem/company/show.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/problem/company/create.do" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/problem/company/edit.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/problem/company/delete.do" access="hasRole('COMPANY')" />
+		<!-- application/company -->
+		<security:intercept-url pattern="/application/company/list.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/application/company/show.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/application/company/accept.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/application/company/reject.do" access="hasRole('COMPANY')" />
+		<!--  administrator -->
+		<security:intercept-url pattern="/administrator/calculateCompaniesScores.do" access="hasRole('ADMIN')" />
+		<!--  xxxx/company -->
+		<security:intercept-url pattern="/xxxx/company/list.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/xxxx/company/create.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/xxxx/company/edit.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/xxxx/company/show.do" access="hasRole('COMPANY')" />
+		<security:intercept-url pattern="/xxxx/company/delete.do" access="hasRole('COMPANY')" />
+		<!-- HIPONA -->
+		
+		<!-- FRAN -->						
+		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/actorList.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/banCompany.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/administrator/banRookie.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/administrator/create.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/save.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newFair.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/newVAT.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/administrator/collect.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/sponsorship/provider/list.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/sponsorship/provider/create.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/sponsorship/provider/show.do" access="hasRole('PROVIDER')" />  
+		<security:intercept-url pattern="/sponsorship/provider/edit.do" access="hasRole('PROVIDER')" /> 
+		<security:intercept-url pattern="/sponsorship/provider/delete.do" access="hasRole('PROVIDER')" /> 
+		<!-- FRAN -->
+		
+		<!-- FERRETE -->
+		<security:intercept-url pattern="/administrator/export.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/rookie/export.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/company/export.do" access="hasRole('COMPANY')" />
+				<security:intercept-url pattern="/administrator/delete.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/rookie/delete.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/company/delete.do" access="hasRole('COMPANY')" />
+		
+		<security:intercept-url pattern="/administrator/list.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newPriority.do" access="hasRole('ADMIN')" />	
+		<security:intercept-url pattern="/administrator/deletePriority.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/deleteSpamWord.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/newSpamWord.do" access="hasRole('ADMIN')" />		
+		<security:intercept-url pattern="/administrator/newWelcome.do" access="hasRole('ADMIN')" />	
+		<security:intercept-url pattern="/administrator/newSystem.do" access="hasRole('ADMIN')" />	
+		<security:intercept-url pattern="/administrator/listSponsorships.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/header.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newLogo.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/newPhone.do" access="hasRole('ADMIN')" />				
+		<security:intercept-url pattern="/configuration/administrator/edit.do" access="hasRole('ADMIN')" />	
+		
+		<security:intercept-url pattern="/finder/rookie/show.do" access="hasRole('ROOKIE')" />
+		<security:intercept-url pattern="/finder/rookie/refresh.do" access="hasRole('ROOKIE')" />
+		<!-- BUG ADDED: any user can delete an item -->
+		<security:intercept-url pattern="/item/provider/delete.do" access="permitAll" />
+		<!-- BUG ADDED: any user can delete an item -->
+		<security:intercept-url pattern="/item/provider/create.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/item/provider/edit.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/item/listProvider.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/item/provider/list.do" access="hasRole('PROVIDER')" />
+		
+		<security:intercept-url pattern="/provider/export.do" access="hasRole('PROVIDER')" />
+		<security:intercept-url pattern="/provider/delete.do" access="hasRole('PROVIDER')" />
+		
+		<security:intercept-url pattern="/auditor/export.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/auditor/delete.do" access="hasRole('AUDITOR')" />
+		
+		<security:intercept-url pattern="/item/show.do" access="permitAll" />
+		<security:intercept-url pattern="/item/list.do" access="permitAll" />
+		<!-- FERRETE -->
+		
+		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+
+		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
+		
+	
+	
+		<security:form-login 
+			login-page="/security/login.do"
+			password-parameter="password" 
+			username-parameter="username"
+			authentication-failure-url="/security/loginFailure.do" />
+
+		<security:logout 
+			logout-success-url="/" 
+			invalidate-session="true" />
+	</security:http>
+
+		
+</beans>
