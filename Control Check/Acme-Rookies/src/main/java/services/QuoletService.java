@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.QuoletRepository;
+import security.Authority;
+import utilities.AuthUtils;
 import domain.Application;
 import domain.Audit;
 import domain.Auditor;
@@ -46,6 +48,7 @@ public class QuoletService {
 	// Methods
 	public Quolet create(final int auditId) {
 		final Quolet res = new Quolet();
+		Assert.isTrue(AuthUtils.checkLoggedAuthority(Authority.COMPANY));
 		res.setDraftMode(true);
 		final Audit audit = this.auditService.findOne(auditId);
 		res.setAudit(audit);
@@ -167,4 +170,7 @@ public class QuoletService {
 		return res;
 	}
 
+	public void flush() {
+		this.quoletRepository.flush();
+	}
 }
