@@ -51,7 +51,11 @@
 		<a href="audit/show.do?auditId=${row01.id}"><img width="35" height="35" src="./images/show.png" alt="${row01.id}" /></a>	
 	</display:column>
 	<display:column property="text" titleKey="audit.text"></display:column>
+	<display:column titleKey="quolet.list">
+		<input type="button" value="<spring:message code='quolet.list' />" onclick="window.location = 'quolet/auditor/list.do?auditId=${row01.id}'" />
+	</display:column>
 </display:table>
+
 <br>
 <br>
 
@@ -73,6 +77,9 @@
 			<a href="audit/show.do?auditId=${row02.id}"><img width="35" height="35" src="./images/show.png" alt="${row02.id}" /></a>	
 		</display:column>
 		<display:column property="text" titleKey="audit.text"></display:column>
+		<display:column titleKey="quolet.list">
+					<input type="button" value="<spring:message code='quolet.list' />" onclick="window.location = 'quolet/auditor/list.do?auditId=${row02.id}'" />
+		</display:column>
 	</display:table>
 	<br>
 	</jstl:if>
