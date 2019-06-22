@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -17,7 +16,6 @@ import org.springframework.validation.Validator;
 import repositories.QuoletRepository;
 import security.Authority;
 import utilities.AuthUtils;
-import domain.Application;
 import domain.Audit;
 import domain.Auditor;
 import domain.Company;
@@ -40,7 +38,7 @@ public class QuoletService {
 
 	@Autowired
 	private AuditService		auditService;
-	
+
 	@Autowired
 	private AuditorService		auditorService;
 
@@ -71,7 +69,7 @@ public class QuoletService {
 		Assert.notNull(res);
 		return res;
 	}
-	
+
 	public Quolet reconstruct(final Quolet quolet, final BindingResult binding) {
 		System.out.println("reconstructing...");
 		Quolet res = quolet;
@@ -80,6 +78,10 @@ public class QuoletService {
 		else
 			res.setTicker(this.createTicker()); // New valid ticker
 		Assert.notNull(quolet.getAudit());
+
+		final Company logged = this.companyService.getLoggedCompany();
+		Assert.isTrue(quolet.getAudit().getPosition().getCompany().getId() == logged.getId());
+
 		res.setPublicationMoment(new Date()); // Update the publicationMoment
 
 		System.out.println("reconstruction completed!");
@@ -95,7 +97,8 @@ public class QuoletService {
 
 		final Calendar calendar = Calendar.getInstance();
 		final String year = String.valueOf(calendar.get(Calendar.YEAR)).substring(2);
-		final String month = calendar.get(Calendar.MONTH) < 10 ? "0" + String.valueOf(calendar.get(Calendar.MONTH)) : String.valueOf(calendar.get(Calendar.MONTH));
+		final int monthNumber = calendar.get(Calendar.MONTH) + 1;
+		final String month = monthNumber < 10 ? "0" + String.valueOf(monthNumber) : String.valueOf(monthNumber);
 		final String day = calendar.get(Calendar.DATE) < 10 ? "0" + String.valueOf(calendar.get(Calendar.DATE)) : String.valueOf(calendar.get(Calendar.DATE));
 
 		int tickerInUse = 1;
@@ -122,9 +125,6 @@ public class QuoletService {
 		Assert.notNull(dbQuolet);
 		Assert.isTrue(dbQuolet.getDraftMode());
 
-		final Company logged = this.companyService.getLoggedCompany();
-		Assert.isTrue(quolet.getAudit().getPosition().getCompany().getId() == logged.getId());
-
 		// We want this from db
 		res.setId(dbQuolet.getId());
 		res.setVersion(dbQuolet.getVersion());
@@ -150,23 +150,23 @@ public class QuoletService {
 		Assert.isTrue(quolet.getDraftMode(), "User can't edit a quolet that is not in draft mode");
 		return quolet;
 	}
-	
+
 	public Collection<Quolet> getQuoletsNoDraftMode(final int auditId) {
 		final Auditor auditorL = this.auditorService.getAuditorLogin();
 		Assert.notNull(auditorL);
 		Assert.notNull(this.auditService.findOne(auditId).getAuditor().equals(auditorL));
 		return this.quoletRepository.getQuoletsNoDraftMode(auditId);
 	}
-	
+
 	public Quolet findOne(final int id) {
 		return this.quoletRepository.findOne(id);
 	}
-	
+
 	public Quolet getQuoletNoDraftMode(final int quoletId) {
 		final Auditor auditorL = this.auditorService.getAuditorLogin();
 		Assert.notNull(auditorL);
 		Assert.notNull(this.findOne(quoletId).getAudit().getAuditor().equals(auditorL));
-		Quolet res = this.findOne(quoletId);
+		final Quolet res = this.findOne(quoletId);
 		return res;
 	}
 
