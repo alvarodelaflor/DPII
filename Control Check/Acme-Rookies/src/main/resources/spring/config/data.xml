@@ -22,10 +22,27 @@
 	<!-- Data source -->
 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"> 
-		<property name="driverClass" value="com.mysql.jdbc.Driver" /> 
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		
+		<!-- LOCAL --> 
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Acme-Rookies" /> 
 		<property name="user" value="acme-user" /> 
-		<property name="password" value="ACME-Us3r-P@ssw0rd" /> 
+		<property name="password" value="ACME-Us3r-P@ssw0rd" />
+		<!-- LOCAL -->
+		
+		<!-- CLEVER CLOUD -->
+		<!-- 
+		Recuerda cambiar los 3 valores de abajo: jbcdUrl, user y password
+		Como chuleta para jdbcUrl:
+		<property name="jdbcUrl" value="jdbc:mysql://host:3306/DatabaseName" />
+		-->
+		<!--
+		<property name="jdbcUrl" value="jdbc:mysql://bbxewnsi4e849qwc8njq-mysql.services.clever-cloud.com:3306/bbxewnsi4e849qwc8njq" /> 
+		<property name="user" value="uw6pn3sscgebdr7t" /> 
+		<property name="password" value="xMUteyJrdnqXO86x9U0o" />
+		-->
+		<!-- CLEVER CLOUD -->
+		
 		<property name="minPoolSize" value="1" /> 
 		<property name="maxPoolSize" value="5" /> 
 	</bean>
