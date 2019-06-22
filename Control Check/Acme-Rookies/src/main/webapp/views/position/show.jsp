@@ -105,6 +105,11 @@
 			</display:column>
 			<display:column property="auditor.email" titleKey="audit.auditor.emailContact"></display:column>
 			<display:column property="score" titleKey="audit.score"></display:column>
+			<!-- ALVARO -->
+			<display:column titleKey="quolet.list">
+				<input type="button" value="<spring:message code='quolet.list' />" onclick="window.location = 'quolet/company/list.do?auditId=${row01.id}'" />
+			</display:column>
+			<!-- ALVARO -->
 		</display:table>
 	</jstl:if>
 </div>

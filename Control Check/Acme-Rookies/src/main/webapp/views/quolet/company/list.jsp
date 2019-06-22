@@ -29,7 +29,11 @@
 <c:set var="oneMonth" value="<%=oneMonth.getTime()%>" />
 <c:set var="twoMonths" value="<%=twoMonths.getTime()%>" />
 
-<input type="button" value="<spring:message code='quolet.create' />" onclick="window.location = 'quolet/company/create.do?auditId=${auditId}'" formmethod="get"/>
+<!-- ALVARO -->
+<jstl:if test="${validToCreate}">
+	<input type="button" value="<spring:message code='quolet.create' />" onclick="window.location = 'quolet/company/create.do?auditId=${auditId}'" formmethod="get"/>
+</jstl:if>
+<!-- ALVARO -->
 
 <display:table name="quolets" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<display:column titleKey="quolet.ticker" property="ticker" />
@@ -75,4 +79,13 @@
 	</display:column>
 </display:table>
 
-<acme:cancel url=" " code="position.cancel" />
+<!-- ALVARO -->
+<c:choose>
+	<c:when test="${empty quolets}">
+		<input type="button" value="back" name="problem.back" onclick="history.back()" />
+	</c:when>
+	<c:otherwise>
+		<acme:cancel url="position/company/show.do?positionId=${quolets[0].audit.position.id}" code="position.cancel" />
+	</c:otherwise>
+</c:choose>
+<!-- ALVARO -->

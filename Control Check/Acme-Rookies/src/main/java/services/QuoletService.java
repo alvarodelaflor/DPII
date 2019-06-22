@@ -15,6 +15,7 @@ import org.springframework.validation.Validator;
 
 import repositories.QuoletRepository;
 import security.Authority;
+import security.LoginService;
 import utilities.AuthUtils;
 import domain.Audit;
 import domain.Auditor;
@@ -49,6 +50,14 @@ public class QuoletService {
 		Assert.isTrue(AuthUtils.checkLoggedAuthority(Authority.COMPANY));
 		res.setDraftMode(true);
 		final Audit audit = this.auditService.findOne(auditId);
+		Assert.notNull(audit, "Null audit");
+
+		// ALVARO
+		final Company company = audit.getPosition().getCompany();
+		final Company companyLogger = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId());
+		Assert.isTrue(company.equals(companyLogger));
+		// ALVARO
+
 		res.setAudit(audit);
 		System.out.println(audit);
 		return res;
@@ -62,6 +71,12 @@ public class QuoletService {
 		final Company company = this.companyService.getLoggedCompany();
 		return this.quoletRepository.getLoggedQuolets(auditId, company.getId());
 	}
+
+	// ALVARO
+	public Collection<Quolet> getLoggedQuoletsV2(final int auditId) {
+		return this.quoletRepository.getLoggedQuolets(auditId);
+	}
+	// ALVARO
 
 	public Quolet getLoggedQuolet(final int quoletId) {
 		final Company company = this.companyService.getLoggedCompany();
@@ -157,6 +172,12 @@ public class QuoletService {
 		Assert.notNull(this.auditService.findOne(auditId).getAuditor().equals(auditorL));
 		return this.quoletRepository.getQuoletsNoDraftMode(auditId);
 	}
+
+	// ALVARO
+	public Collection<Quolet> getQuoletsNoDraftModeV2(final int auditId) {
+		return this.quoletRepository.getQuoletsNoDraftMode(auditId);
+	}
+	// ALVARO
 
 	public Quolet findOne(final int id) {
 		return this.quoletRepository.findOne(id);
