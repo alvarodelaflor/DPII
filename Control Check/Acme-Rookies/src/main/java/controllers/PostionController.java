@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Audit;
-import domain.Position;
-import forms.PositionForm;
 import services.AuditService;
+import services.AuditorService;
 import services.PositionFormService;
 import services.PositionService;
 import services.ProblemService;
 import services.SponsorshipService;
+import domain.Audit;
+import domain.Auditor;
 import domain.Position;
 import domain.Sponsorship;
 import forms.PositionForm;
@@ -45,12 +45,15 @@ public class PostionController extends AbstractController {
 
 	@Autowired
 	private ProblemService		problemService;
-	
+
 	@Autowired
-	private AuditService auditService;
+	private AuditService		auditService;
 
 	@Autowired
 	private SponsorshipService	sponsorshipService;
+
+	@Autowired
+	private AuditorService		auditorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -128,6 +131,15 @@ public class PostionController extends AbstractController {
 			result.addObject("position", position);
 			this.setAuditOfPosition(position.getId(), result);
 			result.addObject("hasProblem", hasProblem);
+
+			// ALVARO
+			final Auditor auditor = this.auditorService.getAuditorLogin();
+			if (auditor != null)
+				result.addObject("anAuditorIsLogger", true);
+			else
+				result.addObject("anAuditorIsLogger", false);
+			// ALVARO
+
 			result.addObject("requestURI", "position/show.do");
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

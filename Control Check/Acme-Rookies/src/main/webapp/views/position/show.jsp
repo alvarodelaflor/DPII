@@ -107,7 +107,14 @@
 			<display:column property="score" titleKey="audit.score"></display:column>
 			<!-- ALVARO -->
 			<display:column titleKey="quolet.list">
-				<input type="button" value="<spring:message code='quolet.list' />" onclick="window.location = 'quolet/company/list.do?auditId=${row01.id}'" />
+				<c:choose>
+					<c:when test="${anAuditorIsLogger}">
+						<input type="button" value="<spring:message code='quolet.list' />" onclick="window.location = 'quolet/auditor/list.do?auditId=${row01.id}'" />
+					</c:when>
+					<c:otherwise>
+						<input type="button" value="<spring:message code='quolet.list' />" onclick="window.location = 'quolet/company/list.do?auditId=${row01.id}'" />
+					</c:otherwise>
+				</c:choose>
 			</display:column>
 			<!-- ALVARO -->
 		</display:table>
