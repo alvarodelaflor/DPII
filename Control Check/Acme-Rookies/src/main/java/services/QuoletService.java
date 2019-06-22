@@ -73,8 +73,30 @@ public class QuoletService {
 	}
 
 	// ALVARO
+	public Boolean checkCompany(final Audit audit) {
+		Boolean res = true;
+		try {
+			final Company company = this.companyService.getCompanyByUserAccountId(LoginService.getPrincipal().getId());
+			if (!audit.getPosition().getCompany().equals(company))
+				res = false;
+		} catch (final Exception e) {
+			res = false;
+		}
+		return res;
+	}
+	// ALVARO
+
+	// ALVARO
 	public Collection<Quolet> getLoggedQuoletsV2(final int auditId) {
-		return this.quoletRepository.getLoggedQuolets(auditId);
+		final Audit audit = this.auditService.findOne(auditId);
+		Assert.notNull(audit, "Audit not found in DB");
+		Collection<Quolet> res = null;
+		if (this.checkCompany(audit))
+			res = this.quoletRepository.getLoggedQuolets(auditId);
+		else
+			res = this.getQuoletsNoDraftModeV2(auditId);
+
+		return res;
 	}
 	// ALVARO
 

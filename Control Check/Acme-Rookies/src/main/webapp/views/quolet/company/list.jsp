@@ -63,20 +63,25 @@
 	<display:column titleKey="quolet.draftMode">
 		<spring:message code="quolet.draftMode.${row.draftMode}" />
 	</display:column>
-
-	<display:column titleKey="quolet.edit">
-		<jstl:if test="${row.draftMode}">
-			<a href="quolet/company/edit.do?quoletId=${row.id}"><spring:message code="quolet.edit" /></a>
-		</jstl:if>
-	</display:column>
 	<display:column titleKey="quolet.show">
 		<a href="quolet/company/show.do?quoletId=${row.id}"><spring:message code="quolet.show" /></a>
 	</display:column>
-	<display:column titleKey="quolet.delete">
-		<jstl:if test="${row.draftMode}">
-			<a href="quolet/company/delete.do?quoletId=${row.id}"><spring:message code="quolet.delete" /></a>
-		</jstl:if>
-	</display:column>
+	<!-- ALVARO -->
+	<jstl:if test="${validToCreate}">
+	<!-- ALVARO -->
+		<display:column titleKey="quolet.edit">
+			<jstl:if test="${row.draftMode}">
+				<a href="quolet/company/edit.do?quoletId=${row.id}"><spring:message code="quolet.edit" /></a>
+			</jstl:if>
+		</display:column>
+		<display:column titleKey="quolet.delete">
+			<jstl:if test="${row.draftMode}">
+				<a href="quolet/company/delete.do?quoletId=${row.id}"><spring:message code="quolet.delete" /></a>
+			</jstl:if>
+		</display:column>
+	<!-- ALVARO -->
+	</jstl:if>
+	<!-- ALVARO -->
 </display:table>
 
 <!-- ALVARO -->
