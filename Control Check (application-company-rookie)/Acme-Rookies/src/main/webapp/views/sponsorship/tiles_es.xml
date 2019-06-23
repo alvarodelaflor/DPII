@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="sponsorship/provider/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de Patrocinios" />
+		<put-attribute name="body" value="/views/sponsorship/list.jsp" />
+	</definition>
+	
+	<definition name="sponsorship/provider/show" extends="master.page">	
+		<put-attribute name="title" value="Detalles del Patrocinio" />
+		<put-attribute name="body" value="/views/sponsorship/show.jsp" />
+	</definition>
+	
+	<definition name="sponsorship/provider/create" extends="master.page">	
+		<put-attribute name="title" value="Crear Patrocinio" />
+		<put-attribute name="body" value="/views/sponsorship/edit.jsp" />
+	</definition>
+	
+	<definition name="sponsorship/provider/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar Patrocinio" />
+		<put-attribute name="body" value="/views/sponsorship/edit.jsp" />
+	</definition>
+
+</tiles-definitions>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount01" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Other domain beans come here -->
+	
+	<!-- ADMIN -->
+	 <bean id="admin01" class="domain.Administrator">
+    	<property name="name" value="Admin" />
+    	<property name="surname" value="Nistrator" />
+    	<property name="photo" value="https://pbs.twimg.com/profile_images/2422330214/sonrisa_entera_jajajajajajaajajajajja.png" />
+		<property name="email" value="admin@admin.com" />
+        <property name="phone" value="+34123456789" />
+        <property name="address" value="Calle del Admin" />
+        <property name="userAccount" ref= "userAccount01"/>
+		<property name="config" ref="config" />
+		<property name="creditCard" ref="creditCard03" />
+		<property name="vatNumber" value="ee44f" />
+		</bean>
+	<!-- ADMIN -->
+	
+	<!-- CONFIG -->
+	 <bean id="config" class="domain.Configuration">
+		<property name="systemName" value="Acme-Rookies" />
+		<property name="countryCode" value="+34"></property>
+		<property name="cacheHours" value="1" />
+		<property name="fair" value="150.0" />
+		<property name="VAT" value="21.0" />
+		<property name="firsTime" value="0" />
+		<property name="cacheAmount" value="10" />
+		<property name="systemMessageEs" value="¡Bienvenidos a Acme Rookie! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		<property name="systemMessageEn" value="Welcome to Acme rookie! We’re IT rookie’s favourite job marketplace!" />
+		<property name="spamWords">
+			<list value-type="java.lang.String">
+				<value>sex</value>
+				<value>sexo</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>Un millón</value>
+				<value>Nigeria</value>
+			</list>
+		</property>
+		
+		<property name="priorities">
+			<list value-type="java.lang.String">
+				<value>HIGH</value>
+				<value>LOW</value>
+				<value>MEDIUM</value>
+			</list>
+		</property>
+		
+		<property name="banner" value="https://i.imgur.com/jlSVXO8.png" />
+	</bean>
+	<!-- CONFIG -->
+	
+	<bean id="creditCard03" class="domain.CreditCard">
+    	<property name="holder" value= "Manuel Ruiz de Lopera"/>
+    	<property name="make" value= "VISA"/>
+    	<property name="number" value= "1234567891234567"/>
+    	<property name="CVV" value= "234"/>
+ 		<property name="expiration" value= "22/10"/>
+    </bean>
+	
+</beans>
