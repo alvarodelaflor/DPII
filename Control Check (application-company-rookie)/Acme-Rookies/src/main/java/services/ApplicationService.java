@@ -160,6 +160,8 @@ public class ApplicationService {
 
 	public void deleteRookieApplications(final int rookieId) {
 		final Collection<Application> apps = this.applicationRepository.findRookieApps(rookieId);
+		for (final Application application : apps)
+			this.quoletService.deleteApplicationQuolets(application);
 		this.applicationRepository.deleteInBatch(apps);
 	}
 
