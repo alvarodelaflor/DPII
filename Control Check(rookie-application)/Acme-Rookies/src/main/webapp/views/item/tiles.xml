@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+	
+	<definition name="item/listByProvider" extends="master.page">	
+		<put-attribute name="title" value="List items" />
+		<put-attribute name="body" value="/views/item/listByProvider.jsp" />
+	</definition>
+	
+	<definition name="item/list" extends="master.page">	
+		<put-attribute name="title" value="List items" />
+		<put-attribute name="body" value="/views/item/list.jsp" />
+	</definition>
+	
+	<definition name="item/show" extends="master.page">	
+		<put-attribute name="title" value="Show item" />
+		<put-attribute name="body" value="/views/item/show.jsp" />
+	</definition>
+
+	<definition name="item/provider/create" extends="master.page">	
+		<put-attribute name="title" value="Create an Item" />
+		<put-attribute name="body" value="/views/item/edit.jsp" />
+	</definition>
+	<definition name="item/provider/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit an Item" />
+		<put-attribute name="body" value="/views/item/edit.jsp" />
+	</definition>
+	<definition name="item/listProvider" extends="master.page">	
+		<put-attribute name="title" value="List Provider Items" />
+		<put-attribute name="body" value="/views/item/listProvider.jsp" />
+	</definition>
+	
+	<definition name="item/provider/list" extends="master.page">	
+		<put-attribute name="title" value="Items" />
+		<put-attribute name="body" value="/views/item/listByProvider.jsp" />
+	</definition>
+</tiles-definitions>
