@@ -273,11 +273,15 @@ public class ApplicationService {
 
 	public void deleteProblemApps(final Problem problem) {
 		final Collection<Application> apps = this.applicationRepository.getProblemApps(problem.getId());
+		for (final Application application : apps)
+			this.quoletService.deleteApplicationQuolets(application);
 		this.applicationRepository.deleteInBatch(apps);
 	}
 
 	public void deleteAllByPosition(final int id) {
 		final Collection<Application> apps = this.applicationRepository.getPositionApps(id);
+		for (final Application application : apps)
+			this.quoletService.deleteApplicationQuolets(application);
 		this.applicationRepository.deleteInBatch(apps);
 	}
 }
