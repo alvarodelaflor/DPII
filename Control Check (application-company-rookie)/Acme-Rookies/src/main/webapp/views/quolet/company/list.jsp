@@ -87,7 +87,7 @@
 <!-- ALVARO -->
 <c:choose>
 	<c:when test="${empty quolets}">
-		<input type="button" value="back" name="problem.back" onclick="history.back()" />
+		<input type="button" value=<spring:message code="back" /> name="back" onclick="history.back()" />
 	</c:when>
 	<c:otherwise>
 		<acme:cancel url="position/company/show.do?positionId=${quolets[0].application.position.id}" code="position.cancel" />
