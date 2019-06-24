@@ -19,6 +19,17 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@ page import="java.util.Date,java.util.Calendar"%>
 
+<%
+	Calendar oneMonth = Calendar.getInstance();
+	oneMonth.add(Calendar.MONTH, -1);
+	Calendar twoMonths = Calendar.getInstance();
+	twoMonths.add(Calendar.MONTH, -2);
+%>
+<c:set var="oneMonth" value="<%=oneMonth.getTime()%>" />
+<c:set var="twoMonths" value="<%=twoMonths.getTime()%>" />
+
+
+
 <security:authorize access="hasRole('AUDITOR')">
 	<style>
 		.linea
@@ -126,16 +137,6 @@
 		</display:table>
 	</c:when>
 	<c:otherwise>
-		<%
-			Calendar oneMonth = Calendar.getInstance();
-			oneMonth.add(Calendar.MONTH, -1);
-			Calendar twoMonths = Calendar.getInstance();
-			twoMonths.add(Calendar.MONTH, -2);
-		%>
-		<c:set var="oneMonth" value="<%=oneMonth.getTime()%>" />
-		<c:set var="twoMonths" value="<%=twoMonths.getTime()%>" />
-		
-		
 		<display:table name="quolets" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 			<display:column titleKey="quolet.ticker" property="ticker" />
 			<display:column titleKey="quolet.publicationMoment">
